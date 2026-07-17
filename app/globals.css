@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+/*
+  Design tokens — CLAUDE.md §3.
+  Tailwind v4 has no tailwind.config.ts; @theme is the equivalent layer and
+  generates the same utilities (bg-cream, text-forest-green, font-heading, …).
+  The site is light-only by brand direction: cream dominates, forest green is a
+  grounding accent, never a background.
+*/
+@theme {
+  --color-growth-green: #3b8f5c;
+  --color-growth-green-hover: #327d4f;
+  --color-cream: #fbfaf6;
+  --color-sunlight-gold: #f2b84b;
+  --color-forest-green: #1f3d2c;
+  --color-stone-grey: #8c8a83;
+
+  /* Stone Grey fails AA on cream at body sizes; this is the muted text colour. */
+  --color-stone-grey-text: #6b6960;
+
+  --color-surface: #ffffff;
+  --color-border-soft: #e8e5dc;
+
+  --font-heading: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: 20px;
+  --radius-card-lg: 24px;
+
+  --shadow-soft: 0 1px 2px rgb(31 61 44 / 0.04), 0 8px 24px -8px rgb(31 61 44 / 0.08);
+  --shadow-lift: 0 2px 4px rgb(31 61 44 / 0.05), 0 16px 40px -12px rgb(31 61 44 / 0.14);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-forest-green);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-forest-green);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
