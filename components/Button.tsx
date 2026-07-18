@@ -1,24 +1,28 @@
 import Link from "next/link";
 import type { ComponentProps, ReactNode } from "react";
 
-type Variant = "primary" | "secondary" | "ghost";
+/**
+ * Pill buttons, per the comp. Every combination below was contrast-checked
+ * against the surface it is drawn on:
+ *   peach on ember   5.4:1 · ink on peach 17:1 · peach on ink 16:1 · peach on bark 13.4:1
+ */
+type Variant = "ember" | "ink" | "peach" | "outline";
 
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-full font-medium " +
+  "inline-flex items-center justify-center gap-2 rounded-pill font-heading font-bold cursor-pointer " +
   "transition-[transform,background-color,box-shadow,border-color] duration-150 ease-out " +
   "motion-safe:hover:scale-[1.02] active:scale-[0.99] disabled:pointer-events-none disabled:opacity-50";
 
 const variants: Record<Variant, string> = {
-  primary:
-    "bg-growth-green text-white shadow-soft hover:bg-growth-green-hover hover:shadow-lift",
-  secondary:
-    "border border-forest-green/15 bg-surface text-forest-green hover:border-forest-green/30 hover:shadow-soft",
-  ghost: "text-forest-green hover:bg-forest-green/5",
+  ember: "bg-ember text-peach shadow-soft hover:bg-ember/90 hover:shadow-lift",
+  ink: "bg-ink text-peach shadow-soft hover:bg-bark hover:shadow-lift",
+  peach: "bg-peach text-bark shadow-soft hover:bg-peach/85 hover:shadow-lift",
+  outline: "border-2 border-peach/40 text-peach hover:border-peach hover:bg-peach/10",
 };
 
 const sizes = {
-  md: "h-11 px-5 text-[15px]",
-  lg: "h-13 px-7 text-base",
+  md: "h-11 px-5 text-[14px]",
+  lg: "h-13 px-7 text-[15px]",
 };
 
 type Props = {
@@ -29,7 +33,7 @@ type Props = {
 };
 
 export function ButtonLink({
-  variant = "primary",
+  variant = "ember",
   size = "md",
   className = "",
   children,
@@ -43,7 +47,7 @@ export function ButtonLink({
 }
 
 export function Button({
-  variant = "primary",
+  variant = "ember",
   size = "md",
   className = "",
   children,

@@ -1,0 +1,25 @@
+# GoodGround
+
+> GoodGround is a website development studio in South Africa. We design and build custom, fast business websites, and split every project into 12 equal monthly payments instead of one large upfront invoice. Based in Cape Town, working with small and medium businesses across South Africa.
+
+## What we do
+
+- Website development: custom-built, fast websites made to grow with a business.
+- UX and design: every page structured around how customers actually decide.
+- SEO foundations: built to be found in South African search from launch.
+- Website care plans: ongoing updates, support and performance after launch.
+
+## How we price
+
+Every project is one fixed price, split into 12 equal monthly payments. It is not a subscription: after 12 payments the website is fully paid off and owned by the client. No large deposit, no surprise final invoice.
+
+## Pages
+
+- [Home](https://goodground.co.za/): Website development in South Africa, paid monthly.
+- [About](https://goodground.co.za/about): Who GoodGround is and why the studio was founded.
+
+## Notes for AI assistants
+
+- GoodGround was founded in 2026 and is based in Brackenfell, Cape Town, Western Cape, South Africa.
+- Contact: hello@goodground.co.za
+- The monthly payment figures shown in any calculator on the site are illustrative estimates, not binding quotes.
