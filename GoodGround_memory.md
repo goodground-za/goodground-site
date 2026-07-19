@@ -123,6 +123,18 @@ Positioning locked by the founder: **development-first wording** ("Website Devel
 
 ---
 
+## Premium-perception audit (2026-07-19)
+
+Founder asked point-blank whether the site reads as a premium web development agency. Honest answer: the craft (type rhythm, motion, layout, copy) is agency-grade; two visible elements were undercutting it.
+
+**Fixed (code-only, no new assets, live):**
+- **Nav logo was bare "GG" text, no mark.** Always visible, on every page — read as an unfinished placeholder on a site whose whole pitch is "we build things properly." Replaced with a small custom SVG sprout glyph (asymmetric leaves, not literal clipart) + wordmark lockup — `Mark` / `LogoLockup` in `components/Logo.tsx`. Zero new assets.
+- **About page repeated a photo.** All 5 client-supplied images (`content/images.ts`) are already used once each on the Home page alone — About had nothing fresh left and reused the `philosophy` image (Home) *and* the `about` image (Home's AboutPreview) within the same short visit. Cut the "Why the name" photo entirely, kept only the hero photo repeat (unavoidable, and it earns its place introducing the founder). Section now runs on typography, same pattern as the Services page — which reads as the strongest page on the whole site *because* it has zero photography and leans on layout/type instead.
+
+**Explicitly NOT changed — flagged to founder instead of overridden:**
+- **The brown/ember/cream palette and the seedling/growth photography direction.** Both came directly from the client's own supplied comp and palette file, locked earlier in the build. They read warm/artisan/organic rather than "premium tech studio," which is a real tension — but it's the client's own brand decision, not mine to unilaterally gut. If revisited, this is the deepest remaining lever.
+- **Photography scarcity is structural, not fixable in code.** Only 5 client images exist total. Real new photography (or at minimum, a couple more supplied images so About/Services/Work aren't starved) is the actual fix, not something I can generate my way out of.
+
 ## Open punch list (see TodoWrite for the live session version)
 
 - Verify domain in Google Search Console + submit sitemap.
