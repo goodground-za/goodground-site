@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { images } from "@/content/images";
 import { footerLinks, legalLinks, site } from "@/content/site";
-import { Wordmark } from "./Logo";
+import { FooterLogo } from "./Logo";
 import { NewsletterForm } from "./NewsletterForm";
 
 /**
@@ -31,8 +31,8 @@ export function Footer() {
           <div className="relative z-[2] px-6 pt-12 pb-8 sm:px-10 md:px-14 md:pt-16">
             <div className="grid gap-10 md:grid-cols-12">
               <div className="md:col-span-5">
-                <Link href="/" className="text-peach inline-block" aria-label="GoodGround — home">
-                  <Wordmark className="text-[clamp(2rem,3.6vw,3rem)]" />
+                <Link href="/" className="inline-block" aria-label="GoodGround — home">
+                  <FooterLogo />
                 </Link>
                 <p className="font-heading mt-3 text-[15px] font-bold">{site.tagline}</p>
 

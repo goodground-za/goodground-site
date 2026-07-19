@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { ButtonLink } from "@/components/Button";
-import { Wordmark } from "@/components/Logo";
+import { HeroLogo } from "@/components/Logo";
 import { Reveal } from "@/components/motion/KineticText";
 import { MaskReveal } from "@/components/motion/MaskReveal";
 import { images } from "@/content/images";
@@ -19,15 +19,16 @@ export function Hero() {
     <>
       <section className="px-3 pt-8 pb-0 sm:px-5 sm:pt-12">
         <div className="mx-auto max-w-[1434px] px-3 sm:px-6 md:px-11">
-          {/* The whole heading is one H1: the giant wordmark plus the keyword
-              subtitle, so the page's main heading actually contains "Website
-              Development ... South Africa" for ranking, not just the brand name.
-              Montserrat Bold renders "GoodGround" at a fixed 6.45:1 width-to-
-              font-size ratio, so the wordmark fills the measured gutter exactly
-              at any width instead of a vw guess that drifts. */}
+          {/* The whole heading is one H1: the client's real logo lockup plus the
+              keyword subtitle, so the page's main heading actually contains
+              "Website Development ... South Africa" for ranking, not just the
+              brand name. The logo fills the container at its own aspect ratio
+              (no font-metric sizing hack needed now it's a real asset); the
+              alt text on HeroLogo ("GoodGround") is what a screen reader or
+              crawler sees here, since nothing wraps this in its own label. */}
           <h1 className="text-pine">
-            <MaskReveal className="text-[calc((100vw-48px)/6.45)] leading-[0.8] md:text-[min(calc((100vw-128px)/6.45),202px)]">
-              <Wordmark />
+            <MaskReveal className="leading-[0.8]">
+              <HeroLogo />
             </MaskReveal>
             <MaskReveal
               delay={0.4}

@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { navLinks } from "@/content/site";
 import { ButtonLink } from "./Button";
-import { LogoLockup } from "./Logo";
+import { NavLogo } from "./Logo";
 
 /**
  * The comp draws a dark pine bar with rounded bottom corners, inset from the page
@@ -37,7 +37,7 @@ export function Nav() {
       >
         <div className="flex h-18 items-center justify-between">
           <Link href="/" className="text-peach" aria-label="GoodGround — home">
-            <LogoLockup />
+            <NavLogo />
           </Link>
 
           <ul className="hidden items-center gap-7 lg:flex">
