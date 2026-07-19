@@ -88,12 +88,22 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Why the name */}
-      <section className="px-3 py-12 sm:px-5 md:py-20">
-        <div className="mx-auto grid max-w-[1434px] items-center gap-10 lg:grid-cols-12 lg:gap-14">
-          <div className="lg:col-span-7">
+      {/*
+        Why the name. Typography-led rather than paired with a photo: the
+        philosophy image is already shown on Home seconds before a visitor
+        reaches this page, so repeating it here read as thin rather than
+        considered. Every other client-supplied image is already in use
+        elsewhere, so this section leans on the strongest asset it actually
+        has — the copy itself — the same way the Services page does.
+      */}
+      <section className="border-bark/10 border-y px-3 py-16 sm:px-5 md:py-24">
+        <div className="mx-auto grid max-w-[1434px] gap-10 lg:grid-cols-12 lg:gap-14">
+          <div className="lg:col-span-4">
             <Eyebrow tone="ember">Why the name</Eyebrow>
-            <div className="mt-6 max-w-[44ch] text-[clamp(1.15rem,2vw,1.6rem)] leading-[1.35]">
+          </div>
+
+          <div className="lg:col-span-8">
+            <div className="max-w-[52ch] text-[clamp(1.35rem,2.6vw,2rem)] leading-[1.3]">
               <KineticText
                 as="p"
                 phrases={[
@@ -106,7 +116,7 @@ export default function AboutPage() {
               />
             </div>
             <Reveal delay={0.1}>
-              <p className="text-bark-muted mt-6 max-w-[50ch] text-[15px] leading-[1.7]">
+              <p className="text-bark-muted mt-8 max-w-[52ch] text-[16px] leading-[1.7]">
                 A logo without strategy has little value. A website without purpose rarely performs.
                 Marketing can&rsquo;t fix a poor customer experience. Growth is the result of a
                 strong foundation, not a substitute for one.
@@ -116,17 +126,6 @@ export default function AboutPage() {
               </p>
             </Reveal>
           </div>
-
-          <Reveal className="lg:col-span-5" delay={0.08}>
-            <Image
-              src={images.philosophy.src}
-              alt={images.philosophy.alt}
-              width={images.philosophy.width}
-              height={images.philosophy.height}
-              sizes="(max-width: 1024px) 90vw, 38vw"
-              className="ml-auto h-auto w-full max-w-[480px]"
-            />
-          </Reveal>
         </div>
       </section>
 

@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { navLinks } from "@/content/site";
 import { ButtonLink } from "./Button";
-import { Monogram } from "./Logo";
+import { LogoLockup } from "./Logo";
 
 /**
  * The comp draws a dark pine bar with rounded bottom corners, inset from the page
@@ -36,10 +36,8 @@ export function Nav() {
         className="bg-pine mx-auto max-w-[1434px] rounded-b-[32px] px-5 sm:px-8"
       >
         <div className="flex h-18 items-center justify-between">
-          {/* The accessible name must contain the visible text ("GG"), or voice
-              control can't target it and the names mismatch (WCAG 2.5.3). */}
-          <Link href="/" className="text-peach" aria-label="GG — GoodGround home">
-            <Monogram />
+          <Link href="/" className="text-peach" aria-label="GoodGround — home">
+            <LogoLockup />
           </Link>
 
           <ul className="hidden items-center gap-7 lg:flex">
