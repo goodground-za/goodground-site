@@ -1,0 +1,242 @@
+===============================================================================
+GOODGROUND — CONTEXT HANDOFF
+Last updated: 2026-07-20
+===============================================================================
+
+READ FIRST
+-----------
+`GoodGround_memory.md` in this repo root is the master living document: stack,
+design system, content model, conventions, every trap already hit, business
+details, and the open punch list. This handoff covers the CURRENT session's
+work and the immediate next steps. The memory doc is the long-term record —
+update it after significant changes.
+
+
+1. PROJECT
+-----------
+GoodGround is a Cape Town (Brackenfell) website studio founded 2026, operating
+under The Trail Tribe. This is their own marketing site. Founder: Johandre
+Saayman (also founder of Grow Brand Agency).
+
+App location:
+  c:\Volumes\growbrand\growbrand-hub\GROW - CLAUDE\PROJECTS\GROW BRAND\
+  GROW-PROSPECT\clients\goodground\site
+
+Stack: Next.js 16.2.10 (App Router, Turbopack) + TypeScript + Tailwind v4 +
+Framer Motion. npm. Deployed on Vercel from GitHub `main`.
+
+Repo:  https://github.com/goodground-za/goodground-site  (public)
+Live:  https://goodground.co.za  -> 308 redirects to https://www.goodground.co.za
+
+IMPORTANT — repo-local AGENTS.md instruction: "This is NOT the Next.js you
+know." Next 16 has breaking changes vs training data. Read the relevant guide
+in `node_modules/next/dist/docs/` before writing code. This was followed this
+session and caught a real detail (correct <GoogleAnalytics> placement).
+
+
+2. THIS SESSION'S TASK — GOOGLE ANALYTICS (COMPLETE)
+-----------------------------------------------------
+Goal: set up Google Analytics for GoodGround.
+Status: DONE, deployed, and verified live in production.
+
+GA4 measurement ID: G-T4JF7EJLW9
+Env var name:       NEXT_PUBLIC_GA_ID
+Vercel setting:     added by the founder, Production environment only
+
+Files created:
+  components/Analytics.tsx   — owns BOTH the GA mount and the cookie banner
+  .env.example               — documents NEXT_PUBLIC_GA_ID + NEXT_PUBLIC_WEB3FORMS_KEY
+  .env.local                 — local only, gitignored, holds the real GA ID
+
+Files modified:
+  app/layout.tsx             — renders <Analytics gaId={gaId} /> inside <body>
+  app/legal/page.tsx         — section 12 (Cookies) rewritten
+  .gitignore                 — added `!.env.example` exception + `.screenshots/`
+  package.json / lock        — added @next/third-parties
+  GoodGround_memory.md       — new Analytics section, trap #13, punch list
+
+Commits pushed to main (all green: tsc, lint, build):
+  95affb3  Add GA4 with opt-in cookie consent
+  3219558  Correct the note on how GA pageviews are tracked
+  f901dd3  Add focus-ring contrast audit to the punch list
+
+
+3. KEY DECISIONS AND WHY
+-------------------------
+(a) Used @next/third-parties <GoogleAnalytics> rather than pasting the raw
+    gtag snippet. Reason: it loads gtag via next/script so it is scheduled
+    rather than render-blocking.
+
+    !! CORRECTION MADE THIS SESSION — DO NOT REPEAT THE ORIGINAL CLAIM !!
+    I initially told the founder the package handles App Router route changes.
+    That is FALSE. Reading node_modules/@next/third-parties/dist/google/ga.js,
+    the component only injects the gtag init snippet + the gtag/js tag. There
+    is NO router subscription.
+
+    SPA pageviews work because GA4 **Enhanced Measurement** ("page changes
+    based on browser history events") is ON BY DEFAULT in the property.
+    If anyone disables Enhanced Measurement in the GA4 admin, every pageview
+    after the first hard load stops silently, and Analytics.tsx would then
+    need to send page_view itself on route change.
+
+(b) Consent is enforced by NOT MOUNTING <GoogleAnalytics> until the visitor
+    accepts — deliberately NOT Google Consent Mode. Reason: no cookie is
+    written and no request leaves the browser pre-consent, which is a far
+    easier POPIA position to defend than "we sent the request but flagged it
+    as unconsented."
+
+(c) Consent state is read with useSyncExternalStore, NOT useState+useEffect.
+    Reason: this repo's lint rule `react-hooks/set-state-in-effect` rejects
+    setState in an effect body. Details:
+      - localStorage key: `gg-cookie-consent`, values "granted" | "denied"
+      - server snapshot is a distinct "unread" state so the banner is not
+        baked into SSR HTML and flashed at people who already answered
+      - a module-level `fallback` var carries the answer when localStorage is
+        blocked (private mode); without it the write fails silently and the
+        banner could never be dismissed
+      - custom `gg-cookie-consent-change` event, because the native `storage`
+        event only fires in OTHER tabs
+
+(d) Banner does not render at all when gaId is unset. Reason: asking consent
+    for something that cannot load is theatre and trains people to dismiss a
+    banner that does nothing. Side effect: the banner appearing IS the
+    confirmation that the env var took effect.
+
+(e) Banner styling matches the house system: `rounded-block` (40px) + `grain`,
+    bark background, peach text, ember Accept. A peach hairline border was
+    added because on mobile the bark banner sat flush against the ember hero
+    band and read as one continuous dark shape.
+
+
+4. VERIFICATION ALREADY PERFORMED (do not redo unless something changed)
+-------------------------------------------------------------------------
+Two-pass screenshots in `.screenshots/ga-consent-banner/` (folder is
+gitignored and user-owned; never auto-delete it):
+  pass-1-desktop-2026-07-20T00-01.png   pass-1-mobile-2026-07-20T00-02.png
+  pass-2-desktop-2026-07-20T00-08.png   pass-2-mobile-2026-07-20T00-07.png
+
+Verified on LIVE production (www.goodground.co.za) via Chrome DevTools MCP:
+  - pre-consent: no googletagmanager request, window.gtag undefined, no _ga cookie
+  - after Accept: gtag/js?id=G-T4JF7EJLW9 loads, _ga set, choice persists on reload
+  - after Decline: no script, no gtag, banner does not re-ask on reload
+  - soft nav / -> /about -> /services produced three en=page_view beacons with
+    correct dl= URLs
+
+TIMING GOTCHA: GA collect beacons take roughly 5 seconds to land. Checking at
+3 seconds reads as a false negative — this caused a wrong conclusion mid-session.
+
+NOTE FOR THE FOUNDER: the live verification clicked Accept and browsed three
+pages, so ONE REAL SESSION FROM THIS TESTING APPEARS IN THE GA4 DATA. Filter it
+out when reading early numbers.
+
+
+5. OPEN ITEM CARRIED FORWARD — FOCUS-RING CONTRAST AUDIT
+----------------------------------------------------------
+This is the agreed NEXT PIECE OF WORK. It is on the punch list in
+GoodGround_memory.md and recorded as trap #13.
+
+Problem: app/globals.css sets a global `:focus-visible` outline of 2px solid
+var(--color-ember). Measured contrast:
+    ember #ac4119 on cream  = 4.90:1  PASS
+    ember #ac4119 on bark #331816 = 2.75:1  FAIL (WCAG needs 3:1 for focus
+                                                  indicators)
+
+Fixed so far: the cookie banner only, via `[&_:focus-visible]:outline-peach`
+(peach #fde5c1 on bark = 13.4:1).
+
+STILL TO AUDIT — any interactive element sitting on a bark or pine surface:
+    components/sections/Process.tsx
+    components/sections/CTABanner.tsx
+    components/Marquee.tsx
+    components/Footer.tsx  (footer links)
+    components/Nav.tsx     (nav is pine #1c261d — check this one too)
+    components/sections/WhatWeBuild.tsx
+    components/sections/Hero.tsx (ember band)
+Plus anything using components/Block.tsx with a dark variant.
+
+Suggested approach: rather than sprinkling the override per component,
+consider scoping it once — e.g. a utility applied by Block.tsx for dark
+variants, so future dark panels inherit the correct ring automatically.
+Verify with real measurement, not eyeballing.
+
+TRAP WHEN MEASURING CONTRAST IN-BROWSER: read alpha from a TRANSPARENT canvas.
+Compositing over white first makes every colour read opaque and produces false
+failures. (Already recorded in the memory doc.)
+
+
+6. OTHER OPEN PUNCH LIST ITEMS (from GoodGround_memory.md)
+------------------------------------------------------------
+  - Verify domain in Google Search Console + submit sitemap
+  - Google Business Profile (founder to create)
+  - Replace placeholder Unsplash photography with real GoodGround images
+  - Add real phone number + Facebook/Instagram URLs
+  - Write the 3 outstanding FAQ answers (Q4/Q6/Q8)
+  - Full SEO audit — DEFERRED, do not run unprompted
+  - Payment gateway + National Credit Act legal review before any live billing
+  - More blog articles
+  - Real case studies for /work
+  - Re-verify all 4 Afrihost nameservers have synced on the DNS change
+  - Company registration number still "To be confirmed" — DO NOT INVENT ONE
+  - Marlize's role unconfirmed — About names Johandre only, do not invent a
+    co-founder
+
+
+7. FACTS AND SPECIFICS BEING RELIED ON
+----------------------------------------
+GA4 ID:            G-T4JF7EJLW9
+Env var:           NEXT_PUBLIC_GA_ID  (Vercel, Production only)
+localStorage key:  gg-cookie-consent  ("granted" | "denied")
+Custom event:      gg-cookie-consent-change
+Email:             hello@goodground.co.za  (real, from client artwork)
+Web3Forms key:     beae6de4-74ed-4868-a4eb-e479e0f43e6c  (hardcoded in
+                   lib/enquiry.ts; Web3Forms keys are public by design)
+                   DO NOT reuse Grow Brand's key 15fb306f... — different inbox
+
+Palette tokens:
+  --color-bark  #331816   dominant dark sections/footer
+  --color-pine  #1c261d   nav
+  --color-ember #ac4119   CTA bands
+  --color-peach #fde5c1   text on dark
+  --color-cream #f1e8d7   light sections
+  --color-stone #4f5450
+  --color-ink   #010602
+Radii: --radius-block 40px, --radius-card 24px, --radius-pill 999px
+Font: Montserrat only (Bold 700 all headings, per client)
+
+Dev server: `npm run dev`. NOTE — it may already be running on port 3210 from
+a previous session; Next will refuse to start a second one and prints the PID
+to kill. Do not assume port 3000.
+
+
+8. EXACT NEXT STEPS
+--------------------
+1. Nothing is blocking. GA is done and verified; no action needed there.
+2. Start the focus-ring contrast audit described in section 5. Suggested
+   opening move: grep for `bg-bark`, `bg-pine`, `bg-ember` across components/
+   and app/, list every interactive child (a, button, input, summary), and
+   measure the ember ring against each surface before deciding whether to fix
+   per-component or centrally in Block.tsx.
+3. Follow the project working loop in the root CLAUDE.md: two-pass screenshots
+   into `.screenshots/<task-slug>/` at 1440x900 and 390x844 for any visual
+   change, and run the `impeccable` skill for UI work.
+4. Update GoodGround_memory.md and this handoff file after significant changes.
+
+
+9. WORKING AGREEMENTS WITH THIS FOUNDER
+-----------------------------------------
+  - Copy edits ARE now allowed (was "verbatim only" earlier in the project).
+  - `humanizer` runs on newly written microcopy only — the client copy deck is
+    approved and stays as-is, em dashes included.
+  - `ui-ux-pro-max --design-system` returns nothing usable for this brief; the
+    client's own comp and brief override it.
+  - Do not fabricate content: no fake portfolio, no invented registration
+    number, no invented co-founder.
+  - Pushing to `main` directly is the established deploy flow (Vercel builds
+    from main). Confirm before pushing if the change is risky.
+  - `.claude/settings.json` sets includeCoAuthoredBy: false — no co-author
+    trailer on commits.
+  - When writing commit messages via the Bash tool, use a heredoc. PowerShell
+    here-string syntax (@'...'@) is NOT valid in Bash and silently produced a
+    commit with "@" as the subject line this session.
+
+===============================================================================
