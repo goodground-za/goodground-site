@@ -173,6 +173,41 @@ Re-run this audit once these are available — several scores will move:
 
 ---
 
+## Queued for later
+
+### 15. Finish Google Search Console setup
+**Effort: 10 minutes · Owner: founder · Started 2026-07-20**
+
+Verification tag is shipped and live (`verification.google` in
+`app/layout.tsx`, token `RDMvId_yS37hPFjJbBuZg4A8c1pZ0IBobkOrX6l1Ih4`). It is
+emitted site-wide, not just on the homepage, because Search Console
+re-validates periodically. **Do not remove it once verified.**
+
+Left to do:
+- Confirm verification passed
+- Submit `sitemap.xml` (10 URLs, all 200, no redirects)
+- Use the **URL prefix** property for `https://www.goodground.co.za/`. The apex
+  308-redirects to www, so an apex property would report almost nothing.
+
+### 16. Re-run this audit once Search Console has data
+**Effort: 1 hour · Owner: dev · Wait a few weeks after item 15**
+
+The 2026-07-20 audit scored **85/100** with no indexation, query, CTR or CrUX
+field data available. Everything in "Deliberately not measured" below was
+genuinely unmeasured, not passing.
+
+When re-running, compare against `FULL-AUDIT-REPORT.md` rather than starting
+fresh, so the movement is visible. Expect the biggest changes in:
+- **Performance** — currently lab-only from one machine; CrUX gives real South
+  African mobile numbers, which may be materially worse.
+- **Content Quality (68)** — the score holding the total down. Indexation data
+  will show whether the thin pages (`/work` especially) are actually being
+  indexed as suspected.
+- **AI Search Readiness** — brand-mention signals should improve once the
+  Google Business Profile exists.
+
+---
+
 ## What's actually left
 
 Everything a developer could do without a business decision is done. The
@@ -185,13 +220,11 @@ remaining high-value items are all yours to answer:
 | 4 | Google Business Profile | The phone number (6) |
 | 6 | Confirm the phone number | Business decision |
 
-Plus one dev item that is unblocked and worth doing next:
+**Google Search Console (item 15) is part-done** as of 2026-07-20: the
+verification tag is shipped and live, founder was finishing verification in the
+GSC UI. Once that passes and the sitemap is submitted, item 16 (re-run this
+audit) unlocks after a few weeks of data.
 
-**Set up Google Search Console** and submit the sitemap. Every URL now returns
-200 with no redirect, so nothing is in the way. It is the single biggest missing
-data source, and until it exists there is no indexation or query data to audit
-against.
-
-Then re-run the audit and re-score. Content Quality (68) is what is holding the
+Content Quality (68) is what is holding the
 overall 85 down, and most of that lifts as soon as there is proof of work and a
 named author.

@@ -1,12 +1,12 @@
 ===============================================================================
 GOODGROUND — CONTEXT HANDOFF
-Last updated: 2026-07-20 (session 2: analytics, SEO audit, copy pass, blog)
+Last updated: 2026-07-20 (session 2: analytics, SEO audit, copy pass, blog, GSC)
 ===============================================================================
 
 READ FIRST
 -----------
 `GoodGround_memory.md` in this repo root is the master living document: stack,
-design system, content model, conventions, 15 numbered "traps already hit",
+design system, content model, conventions, numbered "traps already hit",
 business details, copy rules and the punch list. Read it before touching
 anything. This handoff is the session-level view and the immediate next steps.
 
@@ -46,12 +46,19 @@ produced the correct `<GoogleAnalytics>` placement and the correct
 2. WHAT SESSION 2 DELIVERED (all live and verified on production)
 ------------------------------------------------------------------
 Commits, oldest first:
+  95affb3  Add GA4 with opt-in cookie consent
+  3219558  Correct the note on how GA pageviews are tracked
+  f901dd3  Add focus-ring contrast audit to the punch list
+  532569f  Add handoff doc
   28a03fa  Point canonical URLs at www to match what Vercel serves
   e52c070  Add social preview images, security headers and site cleanup
   715d2db  Remove em dashes and fix awkward sentences sitewide
   eeff7f4  Record the git-credential-manager push hang in traps
-(earlier in the session: 95affb3 GA4, 3219558 GA correction, f901dd3 punch list,
- 532569f handoff)
+  070a0bb  Update memory, punch list and handoff after the SEO and copy work
+  e48f384  Add article on the biggest website mistakes SA SMEs make
+  b992ccb  Give /insights a featured article above a three-across grid
+  2d31347  Update handoff for the second article and the new insights layout
+  78b532c  Add Google Search Console verification meta tag
 
 (a) GOOGLE ANALYTICS 4 — done, verified live
     ID `G-T4JF7EJLW9`, env var `NEXT_PUBLIC_GA_ID`, set in Vercel as Production
@@ -113,6 +120,28 @@ Commits, oldest first:
         ("look nice" / "look good").
 
     Lighthouse held at 100/100/100/100, 0 failed, after all of the above.
+
+(e) SECOND BLOG ARTICLE + NEW /insights LAYOUT
+    "The biggest website mistakes South African SMEs make", 1658 words,
+    targeting "small business website mistakes South Africa". Eight numbered
+    mistakes, each with a fix. No invented statistics anywhere: claims that
+    would normally carry a percentage are argued from mechanism instead, per
+    the no-fabrication rule.
+
+    Added inline link support to the article renderer. The content model is
+    plain typed data with no JSX, so contextual internal links had nowhere to
+    live, which is why the audit found the first article had one inbound link
+    and zero outbound. `withLinks()` in `app/insights/[slug]/page.tsx` parses
+    `[label](/path)` in p and ul text. Use it when adding articles.
+
+    /insights now features the newest article in a full-width bark panel and
+    stacks the rest three across on desktop. The featured panel is ONE column
+    on purpose: an 8/4 split left the right third empty, which is the same
+    negative-space problem PageHero exists to fix, and there is no article
+    artwork to fill it. With two articles the grid looks sparse, which is
+    correct and resolves as articles are added.
+
+(f) GOOGLE SEARCH CONSOLE VERIFICATION TAG — shipped, see §6.
 
 
 3. STANDING RULES (violating these has caused real rework)
@@ -210,13 +239,32 @@ already states this correctly and carries no registration-number field.
 
 6. NEXT DEV TASK (unblocked, do this first)
 ---------------------------------------------
-**Google Search Console.** Verify the domain and submit the sitemap. Every URL
-now returns 200 with no redirect, so nothing is in the way. It is the single
-biggest missing data source; until it exists there is no indexation or query
-data to audit against.
-  - Use a URL prefix property for `https://www.goodground.co.za/` (www is
-    canonical), or a Domain property verified by DNS TXT via Afrihost.
-  - Then submit `sitemap.xml`.
+**Google Search Console — PART DONE, 2026-07-20.**
+The HTML-tag verification is shipped from our side and confirmed live on
+production. `verification.google` in `app/layout.tsx` metadata emits
+<meta name="google-site-verification" content="RDMvId_yS37hPFjJbBuZg4A8c1pZ0IBobkOrX6l1Ih4">
+site-wide.
+
+  !! DO NOT REMOVE THAT TAG once verification passes. Search Console
+  re-validates periodically and will drop the property. It is in the ROOT
+  LAYOUT rather than only the homepage for the same reason: Google may
+  re-check a URL other than /.
+
+The founder was completing verification in the GSC UI. Remaining:
+  - Confirm verification succeeded.
+  - Submit `sitemap.xml` (10 URLs, all 200, no redirects, both articles in).
+  - Use a **URL prefix** property for `https://www.goodground.co.za/`. The apex
+    308-redirects to www, so an apex-only property reports almost nothing. A
+    Domain property via DNS TXT through Afrihost also works but needs a
+    different verification method than the tag above.
+
+**Then, queued for later: re-run the full SEO audit** once GSC has a few weeks
+of data. The 2026-07-20 audit scored 85/100 with NO indexation, query, CTR or
+CrUX field data available, and said so explicitly. Compare against
+`seo-audit/FULL-AUDIT-REPORT.md` rather than starting fresh. Expect movement in
+Performance (currently lab-only from one machine; real SA mobile field data may
+be materially worse), Content Quality (68, the score holding the total down),
+and AI Search Readiness once the Google Business Profile exists.
 
 Then, in rough order:
   - **Focus-ring contrast audit on dark panels.** The global `:focus-visible`
