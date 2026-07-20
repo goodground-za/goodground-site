@@ -170,7 +170,8 @@ Home section order is now: Hero → Marquee → Philosophy → **WhatWeBuild** �
 ## Open punch list (see TodoWrite for the live session version)
 
 - Verify domain in Google Search Console + submit sitemap.
-- Wire up GA4 (need measurement ID).
+- **Focus-ring contrast audit on dark panels.** The global `:focus-visible` ember ring is only 2.75:1 against bark — under the 3:1 WCAG requires for focus indicators (fine on cream at 4.90:1). Fixed on the cookie banner via `[&_:focus-visible]:outline-peach`; still to check: Process, CTABanner, Marquee, footer links, and any other interactive element sitting on a bark/pine surface. See trap #13.
+- ~~Wire up GA4~~ — done 2026-07-20, `G-T4JF7EJLW9`, opt-in gated. See Analytics section.
 - Google Business Profile (founder to create).
 - Replace placeholder Unsplash photography with real GoodGround images.
 - Add real phone number + Facebook/Instagram URLs.
