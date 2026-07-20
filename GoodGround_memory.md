@@ -60,7 +60,10 @@ Contrast-checked as drawn: peach on bark 13.4:1, white on ember 5.96:1, ember on
 - `faq.ts` — 8 Q&As; **3 have `answer: null`** (cancellation policy, project timeline, service area) and render an honest "still working this one out" state. Do not invent answers.
 - `pricing.ts` — `PLACEHOLDER_PRICING = true` gates every rand figure show as illustrative. Tier totals are fake placeholders. Calculator/component still exists but is unused (Pricing page was removed).
 - `stats.ts`, `testimonials.ts`, `caseStudies.ts` — built, intentionally empty (no fabricated numbers/quotes/logos for a studio founded 2026).
-- `articles.ts` — blog content model (typed `Block[]`), one article live: "why-small-businesses-in-south-africa-need-a-website" (~1620 words, targets "website design in South Africa").
+- `articles.ts` — blog content model (typed `Block[]`). **Maintained newest-first: the first entry is what the /insights page features.** Two articles live:
+  - "biggest-website-mistakes-south-african-smes-make" (~1660 words, targets "small business website mistakes South Africa", 2026-07-20)
+  - "why-small-businesses-in-south-africa-need-a-website" (~1620 words, targets "website design in South Africa", 2026-07-17)
+  **Inline links:** article `p` and `ul` text supports `[label](/path)` markdown-style links, parsed by `withLinks()` in `app/insights/[slug]/page.tsx`. This exists because the content model is plain typed data with no JSX, so contextual internal links had nowhere to live. Internal paths render via `next/link`; external ones get `rel="noopener noreferrer"`. Use it to cross-link articles, which the SEO audit flagged as missing.
 
 ---
 
@@ -207,7 +210,7 @@ Full detail and effort estimates live in `seo-audit/ACTION-PLAN.md`. That file i
 - Add external citations to the article (zero outbound links sitewide; recognised E-E-A-T signal).
 - Add `Service` schema per offering (`/services` currently uses `ItemList`).
 - Convert source PNGs to WebP (repo weight and build time only; `next/image` already handles serve-time).
-- More blog articles.
+- More blog articles. The /insights layout is built for this: newest article becomes the featured panel automatically, the rest fill a 3-across grid. With only two articles the grid looks sparse by design, and fills out as articles are added.
 - Re-verify all 4 Afrihost nameservers have synced on the DNS change.
 
 ### Done 2026-07-20
