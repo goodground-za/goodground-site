@@ -85,6 +85,18 @@ Both forms POST to **Web3Forms** with GoodGround's own key (hardcoded fallback i
 
 ---
 
+## Copy rules (updated 2026-07-20)
+
+**No em dashes in user-facing copy.** The founder reversed the earlier "em-dash density is normal house style, leave it" rule and asked for all of them removed sitewide. A humanizer pass on 2026-07-20 rewrote roughly 30 user-facing sentences across Home, Services, About, the FAQ, and the shared sections. Verified zero em dashes in rendered HTML across all 9 pages. **Keep it that way: use commas, full stops or a colon instead.** Code comments and `aria-label`s were left alone (not prose).
+
+The rewrite also fixed a broken sentence the founder flagged: About opened "We'd watched good businesses invest in websites…", a past perfect with no anchoring reference point, left over from dropping "both" out of the copy deck's "We'd both watched". Now reads "We kept seeing…", which works for a single founder without inventing a co-founder.
+
+**"X, not just Y" is deliberate brand voice, not an AI tell.** The humanizer flags it as negative parallelism, but it recurs across client-approved positioning lines ("We build foundations, not just front-ends", "Built to be found, not just built to look nice"). Left intact on purpose. Do not strip these; it would flatten the voice.
+
+**Article author is currently the Organization, not a person.** `content/articles.ts` has `author: "GoodGround"`, rendered as a byline and as `Organization` in `BlogPosting` schema. A named `Person` would be the stronger E-E-A-T signal, but the founder asked to be described by experience rather than by name on About, so **naming him is a founder decision, not a dev fix.** Left as-is pending that call.
+
+---
+
 ## Analytics (2026-07-20)
 
 GA4 property `G-T4JF7EJLW9`, wired via **`@next/third-parties`** (`<GoogleAnalytics>`), which loads gtag through `next/script` so it's scheduled rather than blocking.
@@ -123,7 +135,7 @@ Positioning locked by the founder: **development-first wording** ("Website Devel
 7. **A modal/dialog rendered inline (not portalled) can end up nested inside a `<p>`** if its trigger is inline text inside a paragraph — breaks HTML validity and throws hydration errors (block elements like `<h2>`/`<ol>` inside `<p>`). `ParableModal` fixed by portalling to `document.body` via `createPortal`. Any future inline-triggered overlay needs the same treatment.
 8. **Nav "GG" monogram needed its visible text inside the `aria-label`** (WCAG 2.5.3 — accessible name must contain visible text) — `aria-label="GG — GoodGround home"`, not just "GoodGround — home".
 9. **`ui-ux-pro-max --design-system` returns nothing usable for this brief** — its results (florist-green/agency-pink palettes, Cinzel fonts, testimonial-carousel landing patterns) don't fit a studio with zero clients. The client's own brief/comp overrides it; only its generic a11y checklist carried over.
-10. **`humanizer` found nothing to fix on most passes** — the copy deck's voice was already clean. Don't manufacture edits to already-human copy just to show activity; only fix genuine tells (found exactly one: the word "premium" on the homepage).
+10. **`humanizer` found nothing to fix on most passes** — the copy deck's voice was already clean. Don't manufacture edits to already-human copy just to show activity; only fix genuine tells (found exactly one: the word "premium" on the homepage). **Superseded 2026-07-20 for em dashes only, see the Copy rules section.**
 11. **21st.dev MCP was broken for ~4 attempts** via the old stdio server (`@21st-dev/magic`, malformed responses). Fixed 2026-07-18 by switching `~/.claude.json` to the HTTP transport (`type:"http"`, `url:"https://21st.dev/api/mcp"`, `x-api-key` header). Tools are now `mcp__21st__*`. `search` is free; `get_component`/`generate` are paid/rate-limited — use sparingly.
 12. **Non-interactive `git push` cannot complete GitHub's browser/device auth flow** and will hang or fail with a misleading "Repository not found" (that error is what an unauthenticated request to a private repo looks like, not a typo in the URL). Needs a real terminal session (or a PAT) to complete the login once.
 13. **The global `:focus-visible` ember outline fails WCAG on bark surfaces.** `globals.css` sets a 2px ember ring, which is fine on cream (ember on cream 4.90:1) but only **2.75:1 against bark** — under the 3:1 that focus indicators require. Any interactive element placed on a bark/pine panel needs `[&_:focus-visible]:outline-peach` (peach on bark 13.4:1). Applied on the cookie banner; **worth auditing the other dark panels** (Process, CTABanner, Marquee, footer links) for the same gap.

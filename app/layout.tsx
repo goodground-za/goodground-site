@@ -40,6 +40,14 @@ export const metadata: Metadata = {
     description:
       "A South African website development studio building custom business websites, paid over 12 equal monthly instalments.",
   },
+  // The generated opengraph-image is 1200x630, so it should render as a large
+  // card rather than the default small thumbnail.
+  twitter: {
+    card: "summary_large_image",
+    title: "Website Development in South Africa | GoodGround",
+    description:
+      "A South African website development studio building custom business websites, paid over 12 equal monthly instalments.",
+  },
 };
 
 // GA only loads when the ID is set AND the visitor has accepted cookies, so

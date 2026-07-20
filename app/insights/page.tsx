@@ -6,7 +6,9 @@ import { RevealGroup, RevealItem } from "@/components/motion/KineticText";
 import { articles } from "@/content/articles";
 
 export const metadata: Metadata = {
-  title: "Insights | Website Design & Growth for South African Businesses",
+  // Kept under ~60 chars so it doesn't truncate in search results. The layout
+  // template appends " | GoodGround".
+  title: "Website Advice for South African Businesses",
   description:
     "Practical articles on website design, online presence and growth for South African small businesses. No jargon, no spam.",
   alternates: { canonical: "/insights" },
