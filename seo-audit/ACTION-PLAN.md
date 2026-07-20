@@ -5,38 +5,54 @@ Derived from `FULL-AUDIT-REPORT.md`, 2026-07-20. Health score at audit: **85/100
 Ordered by value per unit of effort. Effort estimates assume someone already
 familiar with the codebase.
 
+> **Status update, 2026-07-20 (same day).** Items 1, 5, 8, 9, 10, 11 are done and
+> live, plus item 7 and the `noise.png` half of item 14. Verified on production.
+> Commits `e52c070` and `715d2db`. What remains is mostly founder decisions, not
+> dev work. Re-score once Search Console has data.
+
 ---
 
 ## Critical — do before pushing for traffic
 
-### 1. Add social preview (OG) images
-**Effort: 1–2 hours · Impact: high · Owner: dev**
+### 1. ~~Add social preview (OG) images~~ — DONE
+**Shipped 2026-07-20 · commit `e52c070`**
 
-No `og:image` exists on any page, so every share on WhatsApp, LinkedIn or
-Facebook renders as a bare text link. For a web design studio this actively
-undercuts credibility.
+Shared `ImageResponse` card at `app/_og/card.tsx`, used by home, services,
+about, contact, insights and per-article routes. `twitter:card` set to
+`summary_large_image`. Montserrat ships as a repo asset so the build has no
+network dependency.
 
-- Add `app/opengraph-image.tsx` using Next's `ImageResponse` (1200×630), or a
-  static `app/opengraph-image.png`
-- Give `/services`, `/about` and each article their own via route-level files
-- Change `twitter:card` from `summary` to `summary_large_image`
-- Verify with the LinkedIn Post Inspector and WhatsApp before calling it done
+Two things worth knowing for future edits: the card uses `logo-footer.png`
+because `logo-hero.png` is the dark wordmark and vanishes on bark; and Satori
+cannot parse WOFF2, so the font must stay TTF.
 
-Blocked on nothing. Brand assets already exist.
+Verified live: `https://www.goodground.co.za/opengraph-image` returns a 1200×630
+PNG. **Still worth checking in the LinkedIn Post Inspector** — their cache is
+sticky.
+
 
 ---
 
 ## High — within a week
 
-### 2. Add a named author to the blog article
-**Effort: 30 minutes · Impact: high · Owner: dev + founder decision**
+### 2. Decide whether to name a person as the article author
+**Effort: 30 minutes once decided · Impact: medium–high · Owner: founder**
 
-The site's one substantial content asset is anonymous. "Experience" is the first
-E in E-E-A-T and this is the cheapest credibility signal available.
+**Correction to the original audit:** the report said the article had no author.
+It does. `content/articles.ts` sets `author: "GoodGround"`, which renders as a
+byline and appears in `BlogPosting` schema as an `Organization`. The real gap is
+`Organization` → `Person`, which is smaller than first stated.
 
-- Add a byline (Johandre Saayman) with a 2–3 sentence bio
-- Add `author` as a `Person` to the `BlogPosting` schema
-- Link the byline to `/about`
+A named person is still the stronger E-E-A-T signal, since "Experience" is the
+first E and a founder writing about SA businesses is exactly that. But the About
+page deliberately describes the founder by experience rather than by name, at his
+own request, so **naming him contradicts a standing instruction and is a founder
+decision, not a dev fix.**
+
+If the answer is yes:
+- Set `author` to the person's name in `content/articles.ts`
+- Change the schema `author` to `{"@type": "Person", ...}` with a `url` to `/about`
+- Add a 2–3 sentence bio under the byline
 
 ### 3. Decide what to do with `/work`
 **Effort: varies · Impact: medium–high · Owner: founder**
@@ -62,19 +78,20 @@ limited by authority rather than structure.
 
 ## Medium — within a month
 
-### 5. Add security headers
-**Effort: 30 minutes · Impact: medium (trust, not ranking) · Owner: dev**
+### 5. ~~Add security headers~~ — DONE
+**Shipped 2026-07-20 · commit `e52c070`**
 
-Only HSTS is set. Add via `headers()` in `next.config.ts`:
-`X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`,
-`Permissions-Policy`, and a `Content-Security-Policy`.
+Added CSP, `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy` and
+`Permissions-Policy` via `headers()` in `next.config.ts`.
 
-**Caution:** CSP must allow `googletagmanager.com` and the GA inline init script
-(or use a nonce), or analytics silently breaks. Test consent → GA fires after
-shipping.
+The CSP allows `'unsafe-inline'` for scripts deliberately. The strict
+alternative is a per-request nonce, which forces dynamic rendering and would
+give up static generation and the 490ms LCP. This site renders no user-submitted
+content, so the widened XSS surface is close to nil.
 
-A studio that gets asked "do you follow security best practice?" wants its own
-site to answer yes.
+Verified after shipping: GA still fires after consent, and no CSP violations
+appear in the console. **If you edit the CSP, keep `googletagmanager.com` in
+`script-src` and `connect-src` or analytics breaks silently.**
 
 ### 6. Confirm and publish the phone number
 **Effort: 5 minutes once decided · Impact: medium · Owner: founder**
@@ -83,42 +100,38 @@ NAP consistency is foundational for local SEO and one third of it is missing.
 Add to `content/site.ts` → flows to schema and the contact page automatically.
 Also unblocks the Google Business Profile.
 
-### 7. Add contextual internal links
-**Effort: 1 hour · Impact: medium · Owner: dev**
+### 7. ~~Add contextual internal links~~ — DONE
+**Shipped 2026-07-20 · commit `e52c070`**
 
-All internal linking is currently navigation and footer only — every page has
-exactly 9 inbound links and the article has 1.
+`/services` now links to the article, and the article links back to `/services`.
+The article previously had exactly one inbound link, from the `/insights`
+listing.
 
-- Link `/services` → the article on why SA businesses need a website
-- Link the article → `/services` and `/start-project` in-body
-- Link `/about` → the article
+### 8. ~~Trim five long meta descriptions~~ — DONE
+**Shipped 2026-07-20 · commit `e52c070`**
 
-### 8. Trim five long meta descriptions
-**Effort: 20 minutes · Impact: low–medium (CTR) · Owner: dev**
+Rewritten to 138–146 characters each so the call to action lands inside the
+visible window.
 
-Over ~160 chars and truncating mid-sentence: `/contact` (181), `/` (179), the
-article (179), `/about` (163), `/services` (160). Rewrite so the call to action
-lands inside the visible window.
+### 9. ~~Shorten the `/insights` title~~ — DONE
+**Shipped 2026-07-20. Now "Website Advice for South African Businesses".**
 
-### 9. Shorten the `/insights` title
-**Effort: 5 minutes · Impact: low · Owner: dev**
-
-76 characters, will truncate, uses two separators. Suggested:
-"Insights | Website Advice for South African Businesses".
 
 ---
 
 ## Low — backlog
 
-### 10. Add a real `favicon.ico`
-**Effort: 10 minutes.** `/favicon.ico` 404s. Browsers are fine via the declared
-`icon.png`, but some crawlers and link-preview services request the root path by
-convention.
+### 10. ~~Add a real `favicon.ico`~~ — DONE 2026-07-20
 
-### 11. Delete leftover Next.js boilerplate from `public/`
-**Effort: 2 minutes.** `next.svg`, `vercel.svg`, `file.svg`, `globe.svg`,
-`window.svg` are create-next-app defaults still publicly served on a client-facing
-studio domain.
+Generated from `app/icon.png`. Browsers were already fine via the declared
+`icon.png`; this covers crawlers and link-preview services that request the root
+path by convention.
+
+### 11. ~~Delete leftover Next.js boilerplate from `public/`~~ — DONE 2026-07-20
+
+Removed `next.svg`, `vercel.svg`, `file.svg`, `globe.svg`, `window.svg`, and
+**the unused 1.7MB `noise.png`**, which was still being served despite having
+been replaced by an inline SVG grain long ago. All now 404.
 
 ### 12. Add external citations to the article
 **Effort: 30 minutes.** Zero outbound links site-wide. Citing POPIA legislation,
@@ -160,11 +173,25 @@ Re-run this audit once these are available — several scores will move:
 
 ---
 
-## Sequencing suggestion
+## What's actually left
 
-**This week:** items 1, 2, 3 (dev) and 4, 6 (founder).
-**This month:** items 5, 7, 8, 9.
-**Then:** re-run the audit with Search Console connected and re-score.
+Everything a developer could do without a business decision is done. The
+remaining high-value items are all yours to answer:
 
-The technical foundation is strong. Items 1–4 are where the actual movement is —
-everything below item 5 is polish.
+| # | Item | Blocked on |
+|---|---|---|
+| 2 | Name a person as article author? | Contradicts the "describe me by experience, not name" instruction |
+| 3 | Case study for `/work`, or drop it from the sitemap? | Having work to show |
+| 4 | Google Business Profile | The phone number (6) |
+| 6 | Confirm the phone number | Business decision |
+
+Plus one dev item that is unblocked and worth doing next:
+
+**Set up Google Search Console** and submit the sitemap. Every URL now returns
+200 with no redirect, so nothing is in the way. It is the single biggest missing
+data source, and until it exists there is no indexation or query data to audit
+against.
+
+Then re-run the audit and re-score. Content Quality (68) is what is holding the
+overall 85 down, and most of that lifts as soon as there is proof of work and a
+named author.

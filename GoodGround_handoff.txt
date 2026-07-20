@@ -1,242 +1,333 @@
 ===============================================================================
 GOODGROUND — CONTEXT HANDOFF
-Last updated: 2026-07-20
+Last updated: 2026-07-20 (session 2: analytics, SEO audit, copy pass)
 ===============================================================================
 
 READ FIRST
 -----------
 `GoodGround_memory.md` in this repo root is the master living document: stack,
-design system, content model, conventions, every trap already hit, business
-details, and the open punch list. This handoff covers the CURRENT session's
-work and the immediate next steps. The memory doc is the long-term record —
-update it after significant changes.
+design system, content model, conventions, 15 numbered "traps already hit",
+business details, copy rules and the punch list. Read it before touching
+anything. This handoff is the session-level view and the immediate next steps.
+
+`seo-audit/ACTION-PLAN.md` is the working to-do for anything SEO. It is kept
+current with what has shipped.
+
+NOTE: `goodground-handoff.md` (lowercase, .md) is an OLDER handoff from a
+previous session. It is superseded by this file and its content has been folded
+in here. Its git-push advice is wrong, see section 9. Safe to delete.
 
 
 1. PROJECT
 -----------
-GoodGround is a Cape Town (Brackenfell) website studio founded 2026, operating
+GoodGround is a website studio in Brackenfell (Cape Town), founded 2026, trading
 under The Trail Tribe. This is their own marketing site. Founder: Johandre
-Saayman (also founder of Grow Brand Agency).
+Saayman, who also runs Grow Brand Agency.
 
 App location:
   c:\Volumes\growbrand\growbrand-hub\GROW - CLAUDE\PROJECTS\GROW BRAND\
   GROW-PROSPECT\clients\goodground\site
 
 Stack: Next.js 16.2.10 (App Router, Turbopack) + TypeScript + Tailwind v4 +
-Framer Motion. npm. Deployed on Vercel from GitHub `main`.
+Framer Motion. npm. Vercel (Hobby). No CMS — content lives in typed files under
+`/content`. That is a hard client requirement.
 
-Repo:  https://github.com/goodground-za/goodground-site  (public)
-Live:  https://goodground.co.za  -> 308 redirects to https://www.goodground.co.za
+Repo:  https://github.com/goodground-za/goodground-site  (PUBLIC — see §9)
+Live:  https://www.goodground.co.za   <- canonical, serves 200
+       https://goodground.co.za       <- 308-redirects to www
 
-IMPORTANT — repo-local AGENTS.md instruction: "This is NOT the Next.js you
-know." Next 16 has breaking changes vs training data. Read the relevant guide
-in `node_modules/next/dist/docs/` before writing code. This was followed this
-session and caught a real detail (correct <GoogleAnalytics> placement).
-
-
-2. THIS SESSION'S TASK — GOOGLE ANALYTICS (COMPLETE)
------------------------------------------------------
-Goal: set up Google Analytics for GoodGround.
-Status: DONE, deployed, and verified live in production.
-
-GA4 measurement ID: G-T4JF7EJLW9
-Env var name:       NEXT_PUBLIC_GA_ID
-Vercel setting:     added by the founder, Production environment only
-
-Files created:
-  components/Analytics.tsx   — owns BOTH the GA mount and the cookie banner
-  .env.example               — documents NEXT_PUBLIC_GA_ID + NEXT_PUBLIC_WEB3FORMS_KEY
-  .env.local                 — local only, gitignored, holds the real GA ID
-
-Files modified:
-  app/layout.tsx             — renders <Analytics gaId={gaId} /> inside <body>
-  app/legal/page.tsx         — section 12 (Cookies) rewritten
-  .gitignore                 — added `!.env.example` exception + `.screenshots/`
-  package.json / lock        — added @next/third-parties
-  GoodGround_memory.md       — new Analytics section, trap #13, punch list
-
-Commits pushed to main (all green: tsc, lint, build):
-  95affb3  Add GA4 with opt-in cookie consent
-  3219558  Correct the note on how GA pageviews are tracked
-  f901dd3  Add focus-ring contrast audit to the punch list
+REPO-LOCAL INSTRUCTION (AGENTS.md): "This is NOT the Next.js you know." Next 16
+has breaking changes vs training data. Read the relevant guide in
+`node_modules/next/dist/docs/` before writing code. Following this in session 2
+produced the correct `<GoogleAnalytics>` placement and the correct
+`opengraph-image` + `generateStaticParams` conventions.
 
 
-3. KEY DECISIONS AND WHY
--------------------------
-(a) Used @next/third-parties <GoogleAnalytics> rather than pasting the raw
-    gtag snippet. Reason: it loads gtag via next/script so it is scheduled
-    rather than render-blocking.
+2. WHAT SESSION 2 DELIVERED (all live and verified on production)
+------------------------------------------------------------------
+Commits, oldest first:
+  28a03fa  Point canonical URLs at www to match what Vercel serves
+  e52c070  Add social preview images, security headers and site cleanup
+  715d2db  Remove em dashes and fix awkward sentences sitewide
+  eeff7f4  Record the git-credential-manager push hang in traps
+(earlier in the session: 95affb3 GA4, 3219558 GA correction, f901dd3 punch list,
+ 532569f handoff)
 
-    !! CORRECTION MADE THIS SESSION — DO NOT REPEAT THE ORIGINAL CLAIM !!
-    I initially told the founder the package handles App Router route changes.
-    That is FALSE. Reading node_modules/@next/third-parties/dist/google/ga.js,
-    the component only injects the gtag init snippet + the gtag/js tag. There
-    is NO router subscription.
+(a) GOOGLE ANALYTICS 4 — done, verified live
+    ID `G-T4JF7EJLW9`, env var `NEXT_PUBLIC_GA_ID`, set in Vercel as Production
+    only. Wired with `@next/third-parties`. `components/Analytics.tsx` owns both
+    the GA mount and the cookie banner.
 
-    SPA pageviews work because GA4 **Enhanced Measurement** ("page changes
-    based on browser history events") is ON BY DEFAULT in the property.
-    If anyone disables Enhanced Measurement in the GA4 admin, every pageview
-    after the first hard load stops silently, and Analytics.tsx would then
-    need to send page_view itself on route change.
+    Consent is enforced by NOT MOUNTING GA until the visitor accepts, rather
+    than via Google Consent Mode. No cookie is written and no request leaves the
+    browser pre-consent, which is far easier to defend under POPIA. Verified
+    both paths on production.
 
-(b) Consent is enforced by NOT MOUNTING <GoogleAnalytics> until the visitor
-    accepts — deliberately NOT Google Consent Mode. Reason: no cookie is
-    written and no request leaves the browser pre-consent, which is a far
-    easier POPIA position to defend than "we sent the request but flagged it
-    as unconsented."
+    !! CORRECTION — DO NOT REPEAT THE ORIGINAL CLAIM !!
+    I first said @next/third-parties handles App Router route changes. It does
+    NOT. Reading node_modules/@next/third-parties/dist/google/ga.js, the
+    component only injects the gtag snippet; there is no router subscription.
+    SPA pageviews work because GA4 **Enhanced Measurement** ("page changes based
+    on browser history events") is ON BY DEFAULT. If anyone disables that in the
+    GA4 admin, every pageview after the first hard load stops silently.
 
-(c) Consent state is read with useSyncExternalStore, NOT useState+useEffect.
-    Reason: this repo's lint rule `react-hooks/set-state-in-effect` rejects
-    setState in an effect body. Details:
-      - localStorage key: `gg-cookie-consent`, values "granted" | "denied"
-      - server snapshot is a distinct "unread" state so the banner is not
-        baked into SSR HTML and flashed at people who already answered
-      - a module-level `fallback` var carries the answer when localStorage is
-        blocked (private mode); without it the write fails silently and the
-        banner could never be dismissed
-      - custom `gg-cookie-consent-change` event, because the native `storage`
-        event only fires in OTHER tabs
+(b) FULL SEO AUDIT — ran at the founder's request (was previously deferred)
+    Score **85/100**. Reports in `seo-audit/`. Category scores: Technical 90,
+    Content 68, On-Page 90, Schema 92, Performance 97, AI Readiness 85,
+    Images 88. Content Quality is what holds the total down, and that is almost
+    entirely "new studio with no published work", not sloppy execution.
 
-(d) Banner does not render at all when gaId is unset. Reason: asking consent
-    for something that cannot load is theatre and trains people to dismiss a
-    banner that does nothing. Side effect: the banner appearing IS the
-    confirmation that the env var took effect.
+(c) SEO FIXES SHIPPED
+    - Social preview images. The audit's one critical finding: the site had NO
+      og:image at all, so every WhatsApp/LinkedIn/Facebook share rendered as a
+      bare text link. Shared ImageResponse card in `app/_og/card.tsx`, used by
+      home, services, about, contact, insights and per-article routes.
+      twitter:card now summary_large_image.
+    - Security headers. Only HSTS was set. Added CSP + X-Content-Type-Options,
+      X-Frame-Options, Referrer-Policy, Permissions-Policy.
+    - Canonical host fix. `site.url` pointed at the apex while Vercel serves www,
+      so all 9 sitemap URLs and every canonical tag pointed at a redirect.
+    - Cleanup: real favicon.ico; deleted create-next-app boilerplate SVGs and
+      the unused **1.7MB noise.png** that was still being served despite having
+      been replaced by an inline SVG grain long ago.
+    - Five over-length meta descriptions trimmed, 76-char /insights title
+      shortened, contextual internal links added between /services and the
+      article (which previously had ONE inbound link).
 
-(e) Banner styling matches the house system: `rounded-block` (40px) + `grain`,
-    bark background, peach text, ember Accept. A peach hairline border was
-    added because on mobile the bark banner sat flush against the ember hero
-    band and read as one continuous dark shape.
+(d) COPY / HUMANIZER PASS
+    Founder asked for every em dash gone and the sentences to read properly.
+    **This reversed a standing project rule** that treated em-dash density as
+    house style. ~30 sentences rewritten across Home, Services, About, FAQ and
+    the shared sections. Verified ZERO em dashes in rendered HTML on all pages,
+    live.
 
+    The flagged sentence: About opened "We'd watched good businesses invest in
+    websites...", a past perfect with nothing anchoring it, left over from
+    dropping "both" from the copy deck's "We'd both watched". Now reads "We kept
+    seeing...", which works for one founder without inventing a co-founder.
 
-4. VERIFICATION ALREADY PERFORMED (do not redo unless something changed)
--------------------------------------------------------------------------
-Two-pass screenshots in `.screenshots/ga-consent-banner/` (folder is
-gitignored and user-owned; never auto-delete it):
-  pass-1-desktop-2026-07-20T00-01.png   pass-1-mobile-2026-07-20T00-02.png
-  pass-2-desktop-2026-07-20T00-08.png   pass-2-mobile-2026-07-20T00-07.png
+    Two bugs surfaced while reading the copy back:
+      - Home rendered "the biblical THE Parable of the Sower" because
+        ParableLink's default label already starts with "the".
+      - SEO Foundations had a near-duplicate description and subheading
+        ("look nice" / "look good").
 
-Verified on LIVE production (www.goodground.co.za) via Chrome DevTools MCP:
-  - pre-consent: no googletagmanager request, window.gtag undefined, no _ga cookie
-  - after Accept: gtag/js?id=G-T4JF7EJLW9 loads, _ga set, choice persists on reload
-  - after Decline: no script, no gtag, banner does not re-ask on reload
-  - soft nav / -> /about -> /services produced three en=page_view beacons with
-    correct dl= URLs
-
-TIMING GOTCHA: GA collect beacons take roughly 5 seconds to land. Checking at
-3 seconds reads as a false negative — this caused a wrong conclusion mid-session.
-
-NOTE FOR THE FOUNDER: the live verification clicked Accept and browsed three
-pages, so ONE REAL SESSION FROM THIS TESTING APPEARS IN THE GA4 DATA. Filter it
-out when reading early numbers.
-
-
-5. OPEN ITEM CARRIED FORWARD — FOCUS-RING CONTRAST AUDIT
-----------------------------------------------------------
-This is the agreed NEXT PIECE OF WORK. It is on the punch list in
-GoodGround_memory.md and recorded as trap #13.
-
-Problem: app/globals.css sets a global `:focus-visible` outline of 2px solid
-var(--color-ember). Measured contrast:
-    ember #ac4119 on cream  = 4.90:1  PASS
-    ember #ac4119 on bark #331816 = 2.75:1  FAIL (WCAG needs 3:1 for focus
-                                                  indicators)
-
-Fixed so far: the cookie banner only, via `[&_:focus-visible]:outline-peach`
-(peach #fde5c1 on bark = 13.4:1).
-
-STILL TO AUDIT — any interactive element sitting on a bark or pine surface:
-    components/sections/Process.tsx
-    components/sections/CTABanner.tsx
-    components/Marquee.tsx
-    components/Footer.tsx  (footer links)
-    components/Nav.tsx     (nav is pine #1c261d — check this one too)
-    components/sections/WhatWeBuild.tsx
-    components/sections/Hero.tsx (ember band)
-Plus anything using components/Block.tsx with a dark variant.
-
-Suggested approach: rather than sprinkling the override per component,
-consider scoping it once — e.g. a utility applied by Block.tsx for dark
-variants, so future dark panels inherit the correct ring automatically.
-Verify with real measurement, not eyeballing.
-
-TRAP WHEN MEASURING CONTRAST IN-BROWSER: read alpha from a TRANSPARENT canvas.
-Compositing over white first makes every colour read opaque and produces false
-failures. (Already recorded in the memory doc.)
+    Lighthouse held at 100/100/100/100, 0 failed, after all of the above.
 
 
-6. OTHER OPEN PUNCH LIST ITEMS (from GoodGround_memory.md)
+3. STANDING RULES (violating these has caused real rework)
 ------------------------------------------------------------
-  - Verify domain in Google Search Console + submit sitemap
-  - Google Business Profile (founder to create)
-  - Replace placeholder Unsplash photography with real GoodGround images
-  - Add real phone number + Facebook/Instagram URLs
-  - Write the 3 outstanding FAQ answers (Q4/Q6/Q8)
-  - Full SEO audit — DEFERRED, do not run unprompted
-  - Payment gateway + National Credit Act legal review before any live billing
-  - More blog articles
-  - Real case studies for /work
-  - Re-verify all 4 Afrihost nameservers have synced on the DNS change
-  - Company registration number still "To be confirmed" — DO NOT INVENT ONE
-  - Marlize's role unconfirmed — About names Johandre only, do not invent a
-    co-founder
+- **NO EM DASHES in user-facing copy.** Use commas, full stops or a colon.
+  Code comments and aria-labels are exempt (not prose).
+- **"X, not just Y" is deliberate brand voice, NOT an AI tell.** The humanizer
+  flags it as negative parallelism. It recurs across client-approved positioning
+  lines ("We build foundations, not just front-ends"). LEAVE IT.
+- **THE FOUNDER IS NOT NAMED ANYWHERE ON THE SITE.** At his explicit request,
+  About describes him by experience only ("a web developer with more than 10
+  years' experience across UX and UI design, website design and graphic
+  design"). This is why the article byline is still the Organization
+  "GoodGround" rather than a person — see §5.
+- **No fabricated content, ever.** `testimonials.ts`, `caseStudies.ts`,
+  `stats.ts` are intentionally empty. FAQ entries with `answer: null` render an
+  honest "still working this one out" state. /work says "coming soon" instead of
+  inventing a portfolio. Never add aggregateRating/review schema until real
+  reviews exist — fabricated review markup is a manual-action risk.
+- **Do not invent** a phone number, registration number, or co-founder.
+- **Do not run a full SEO audit unprompted** — that deferral was lifted once, on
+  2026-07-20, by explicit request. It is not a standing licence.
+- `ui-ux-pro-max --design-system` returns nothing usable for this brief. The
+  client's own comp and brief override it.
 
 
-7. FACTS AND SPECIFICS BEING RELIED ON
-----------------------------------------
+4. VERIFICATION ALREADY DONE (don't redo unless something changed)
+--------------------------------------------------------------------
+On LIVE production, via Chrome DevTools MCP and curl:
+  - GA: pre-consent no googletagmanager request, window.gtag undefined, no _ga
+    cookie. After Accept: gtag/js?id=G-T4JF7EJLW9 loads, cookie set, persists.
+    After Decline: nothing loads, banner does not re-ask.
+  - Soft nav / -> /about -> /services produced three en=page_view beacons.
+  - All 9 sitemap URLs return 200 with no redirect.
+  - og:image + twitter:image present with absolute www URLs, 1200x630.
+    https://www.goodground.co.za/opengraph-image returns a valid PNG.
+  - All five security headers present on live responses.
+  - GA still fires under the CSP; zero CSP violations in console.
+  - favicon.ico 200; /next.svg and /images/noise.png now 404.
+  - Zero user-facing em dashes across all pages.
+  - Lighthouse mobile 100/100/100/100, 0 failed.
+
+TIMING GOTCHA: GA collect beacons take ~5s to land. Checking at 3s reads as a
+false negative — this caused a wrong conclusion mid-session.
+
+NOTE: the live verification accepted cookies and browsed three pages, so ONE
+REAL TEST SESSION APPEARS IN THE GA4 DATA. Filter it out when reading early
+numbers.
+
+Screenshots: `.screenshots/ga-consent-banner/` and
+`.screenshots/seo-and-copy-pass/`. That folder is gitignored and user-owned —
+never auto-delete it.
+
+
+5. OPEN DECISIONS — THESE ARE THE FOUNDER'S, NOT DEV WORK
+------------------------------------------------------------
+Everything a developer could do without a business decision is DONE. What
+remains at the top of the value list is all blocked on answers:
+
+  1. **Name a person as the article author?** `content/articles.ts` has
+     `author: "GoodGround"`, rendered as a byline and as `Organization` in
+     BlogPosting schema. A named Person is the strongest remaining E-E-A-T
+     signal. BUT §3 says the founder is deliberately unnamed sitewide, so the
+     likely answer is NO — in which case close this item rather than leaving it
+     open.
+     (Correction to the audit: it originally reported the article had NO author.
+     It has one. The real gap is Organization -> Person, smaller than stated.)
+
+  2. **Case study for /work, or drop it from the sitemap?** 154 words, currently
+     indexed as near-empty. Best: publish one real case study — this site itself,
+     written up as a build story, is legitimate and available now. Interim:
+     remove /work from `app/sitemap.ts` until it has content.
+
+  3. **Confirm the phone number.** NAP consistency is foundational for local SEO
+     and one third of it is missing. Goes in `content/site.ts`, flows to schema
+     automatically. Blocks the Google Business Profile.
+
+  4. **Google Business Profile.** Highest-value off-site action for a Cape Town
+     service business and the main lever on AI-search visibility, which is
+     limited by authority rather than structure. Blocked on (3).
+
+  5. Real photography to replace placeholder Unsplash images. Only 5 real client
+     images exist — a genuine content bottleneck, not fixable in code.
+
+  6. Facebook/Instagram URLs (`socials: []`).
+
+  7. The 3 outstanding FAQ answers (cancellation policy, project timeline,
+     service area outside Cape Town).
+
+CLOSED, so it stops being re-raised: the **company registration number** is NOT
+an open item, despite older notes listing it as "to be confirmed". GoodGround
+has no separate registration number; it trades under The Trail Tribe. /legal
+already states this correctly and carries no registration-number field.
+
+
+6. NEXT DEV TASK (unblocked, do this first)
+---------------------------------------------
+**Google Search Console.** Verify the domain and submit the sitemap. Every URL
+now returns 200 with no redirect, so nothing is in the way. It is the single
+biggest missing data source; until it exists there is no indexation or query
+data to audit against.
+  - Use a URL prefix property for `https://www.goodground.co.za/` (www is
+    canonical), or a Domain property verified by DNS TXT via Afrihost.
+  - Then submit `sitemap.xml`.
+
+Then, in rough order:
+  - **Focus-ring contrast audit on dark panels.** The global `:focus-visible`
+    ember ring is only 2.75:1 against bark, under the 3:1 WCAG requires for
+    focus indicators (fine on cream at 4.90:1). Fixed on the cookie banner via
+    `[&_:focus-visible]:outline-peach`. Still to check: Process, CTABanner,
+    Marquee, Footer links, Nav (pine), anything using `Block.tsx` with a dark
+    tone. Consider scoping the override once inside `Block.tsx` instead of per
+    component. See trap #14.
+    TRAP WHEN MEASURING: read alpha from a TRANSPARENT canvas. Compositing over
+    white first makes every colour read opaque and produces false failures.
+  - External citations in the article (zero outbound links sitewide).
+  - `Service` schema per offering (/services currently uses ItemList).
+  - More blog articles.
+  - Re-verify all 4 Afrihost nameservers have synced.
+  - Convert source PNGs to WebP (repo weight/build time only).
+
+
+7. FACTS AND SPECIFICS
+------------------------
 GA4 ID:            G-T4JF7EJLW9
-Env var:           NEXT_PUBLIC_GA_ID  (Vercel, Production only)
-localStorage key:  gg-cookie-consent  ("granted" | "denied")
+Env var:           NEXT_PUBLIC_GA_ID   (Vercel, Production only)
+localStorage key:  gg-cookie-consent   ("granted" | "denied")
 Custom event:      gg-cookie-consent-change
 Email:             hello@goodground.co.za  (real, from client artwork)
 Web3Forms key:     beae6de4-74ed-4868-a4eb-e479e0f43e6c  (hardcoded in
                    lib/enquiry.ts; Web3Forms keys are public by design)
-                   DO NOT reuse Grow Brand's key 15fb306f... — different inbox
+                   DO NOT reuse Grow Brand's key — different inbox
+                   (info@growbrandagency.com)
+GitHub identity:   jsaayman94-design  (the account that pushes)
+Hosting:           Vercel, Hobby plan
+DNS:               Afrihost. Root A -> 216.198.79.1 (Vercel).
+                   www CNAME -> 8f461b901d171a7f.vercel-dns-017.com
+                   An old conflicting A record (197.242.159.147) was found and
+                   deleted.
 
-Palette tokens:
-  --color-bark  #331816   dominant dark sections/footer
+Palette:
+  --color-bark  #331816   dark sections/footer
   --color-pine  #1c261d   nav
   --color-ember #ac4119   CTA bands
   --color-peach #fde5c1   text on dark
   --color-cream #f1e8d7   light sections
+  --color-surface #fdfbf6 form cards/inputs
   --color-stone #4f5450
   --color-ink   #010602
 Radii: --radius-block 40px, --radius-card 24px, --radius-pill 999px
 Font: Montserrat only (Bold 700 all headings, per client)
-
-Dev server: `npm run dev`. NOTE — it may already be running on port 3210 from
-a previous session; Next will refuse to start a second one and prints the PID
-to kill. Do not assume port 3000.
+Tailwind v4: no config file, tokens live in @theme in app/globals.css
 
 
-8. EXACT NEXT STEPS
---------------------
-1. Nothing is blocking. GA is done and verified; no action needed there.
-2. Start the focus-ring contrast audit described in section 5. Suggested
-   opening move: grep for `bg-bark`, `bg-pine`, `bg-ember` across components/
-   and app/, list every interactive child (a, button, input, summary), and
-   measure the ember ring against each surface before deciding whether to fix
-   per-component or centrally in Block.tsx.
-3. Follow the project working loop in the root CLAUDE.md: two-pass screenshots
-   into `.screenshots/<task-slug>/` at 1440x900 and 390x844 for any visual
-   change, and run the `impeccable` skill for UI work.
-4. Update GoodGround_memory.md and this handoff file after significant changes.
+8. OG IMAGE GOTCHAS (for whoever edits the card next)
+-------------------------------------------------------
+`app/_og/card.tsx` renders in Satori, not a browser:
+  - Use `logo-footer.png`, NOT `logo-hero.png`. The hero wordmark is the dark
+    variant for the cream hero and is invisible on bark. This was caught by
+    actually looking at the generated PNG.
+  - Satori CANNOT parse WOFF2. The font must stay TTF. Montserrat-Bold.ttf ships
+    as a repo asset so the build has no network dependency.
+  - CSS custom properties do not resolve. Use literal hex.
+  - `<img>` is required; next/image has no meaning there. The eslint rule is
+    suppressed with a comment explaining why.
+LinkedIn caches previews aggressively — re-check via their Post Inspector after
+any change.
 
 
-9. WORKING AGREEMENTS WITH THIS FOUNDER
------------------------------------------
-  - Copy edits ARE now allowed (was "verbatim only" earlier in the project).
-  - `humanizer` runs on newly written microcopy only — the client copy deck is
-    approved and stays as-is, em dashes included.
-  - `ui-ux-pro-max --design-system` returns nothing usable for this brief; the
-    client's own comp and brief override it.
-  - Do not fabricate content: no fake portfolio, no invented registration
-    number, no invented co-founder.
-  - Pushing to `main` directly is the established deploy flow (Vercel builds
-    from main). Confirm before pushing if the change is risky.
-  - `.claude/settings.json` sets includeCoAuthoredBy: false — no co-author
-    trailer on commits.
-  - When writing commit messages via the Bash tool, use a heredoc. PowerShell
-    here-string syntax (@'...'@) is NOT valid in Bash and silently produced a
-    commit with "@" as the subject line this session.
+9. ENVIRONMENT GOTCHAS
+------------------------
+**git push hangs silently (cost ~40 minutes this session).**
+Symptom: `git push` produces no output and times out, while `git ls-remote` and
+`git fetch` work instantly. That asymmetry is the tell — the repo is public, so
+reads need no auth and only the push touches the credential layer.
+`GIT_TRACE=1 GIT_CURL_VERBOSE=1` shows the stall inside `git credential-manager
+get`, blocking ~60s trying to raise a GUI dialog that cannot display in a
+non-interactive session. `GIT_TERMINAL_PROMPT=0` does NOT help — it suppresses
+terminal prompts, not GCM's GUI flow.
+
+  FIX:  git -c credential.helper= -c credential.helper=store push origin main
+
+The empty value is REQUIRED. `credential.helper` is multi-valued (manager,
+store), so `-c credential.helper=store` alone just appends and `manager` still
+runs first and still hangs.
+
+**The older handoff's advice on this is wrong.** It says to retry with
+`run_in_background: true`. Background push hangs too — it is the same blocked
+process, just not in the foreground. Use the credential-helper reset above.
+
+**Commit messages via the Bash tool: use a heredoc.** PowerShell here-string
+syntax (@'...'@) is NOT valid in Bash and silently produced a commit with "@" as
+the subject line this session.
+
+**Dev server:** `npm run dev`. It may already be running on a stale port from a
+previous session; Next refuses to start a second one and prints the PID to kill.
+Do not assume port 3000.
+
+**Vercel deploy-block history:** was caused by the pushing GitHub account not
+being an explicit collaborator on the then-private repo, which is what Vercel
+Hobby's check keys off. Fixed by making the repo PUBLIC. Not the co-author
+trailer, which was the first and wrong diagnosis. `.claude/settings.json` sets
+`includeCoAuthoredBy: false` regardless.
+
+
+10. WORKING AGREEMENTS
+------------------------
+- Copy edits ARE allowed (was "verbatim only" earlier in the project).
+- `humanizer` runs on newly written microcopy and now on the whole site for em
+  dashes; the client copy deck's voice otherwise stands.
+- Push straight to `main` — that is the deploy flow, Vercel builds from main.
+  Confirm first if the change is risky.
+- Keep `GoodGround_memory.md`, `seo-audit/ACTION-PLAN.md` and this file updated
+  after significant changes.
+- Two-pass screenshots into `.screenshots/<task-slug>/` at 1440x900 and 390x844
+  for any visual change.
 
 ===============================================================================

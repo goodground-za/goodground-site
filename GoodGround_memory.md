@@ -184,17 +184,44 @@ Founder asked for GoodGround's homepage to get equivalents of three Grow Brand s
 
 Home section order is now: Hero → Marquee → Philosophy → **WhatWeBuild** → **Industries** → PaymentPlan → Process → WhyUs → Testimonials → AboutPreview → FAQ → CTABanner. Lighthouse mobile still 100/100/100/100 after the change.
 
-## Open punch list (see TodoWrite for the live session version)
+## Open punch list
 
-- Verify domain in Google Search Console + submit sitemap.
-- **Focus-ring contrast audit on dark panels.** The global `:focus-visible` ember ring is only 2.75:1 against bark — under the 3:1 WCAG requires for focus indicators (fine on cream at 4.90:1). Fixed on the cookie banner via `[&_:focus-visible]:outline-peach`; still to check: Process, CTABanner, Marquee, footer links, and any other interactive element sitting on a bark/pine surface. See trap #13.
-- ~~Wire up GA4~~ — done 2026-07-20, `G-T4JF7EJLW9`, opt-in gated. See Analytics section.
-- Google Business Profile (founder to create).
+Full detail and effort estimates live in `seo-audit/ACTION-PLAN.md`. That file is the working to-do for anything SEO; this list is the wider project view.
+
+### Blocked on the founder (not dev work)
+
+- **Google Business Profile.** Highest-value single off-site action for a Cape Town service business, and the main lever on AI-search visibility, which is currently limited by authority rather than structure. **Blocked on the phone number.**
+- **Confirm the phone number.** NAP consistency is foundational for local SEO and one third of it is missing. Goes in `content/site.ts` and flows to schema automatically. Do not invent one.
+- **Article byline: name a person, or keep the Organization?** `content/articles.ts` has `author: "GoodGround"`, rendered as a byline and as `Organization` in `BlogPosting` schema. A named `Person` is the strongest remaining E-E-A-T win, but the founder asked to be described by experience rather than name on About, so this is a founder call. See Copy rules.
+- **Real case studies for `/work`**, or drop `/work` from `app/sitemap.ts` until it has content. It is currently 154 words and will index as thin. This site itself, written up as a build story, is legitimate proof of work.
 - Replace placeholder Unsplash photography with real GoodGround images.
-- Add real phone number + Facebook/Instagram URLs.
-- Write the 3 outstanding FAQ answers.
-- Full SEO audit — deferred, don't run unprompted.
+- Add Facebook/Instagram URLs.
+- Write the 3 outstanding FAQ answers (Q4/Q6/Q8).
+- ~~Company registration number~~ — NOT an open item, despite older notes saying "to be confirmed". GoodGround has no separate registration number; it trades under The Trail Tribe. `/legal` already states this correctly ("Business Name: GoodGround", "Operated by: The Trail Tribe") and carries no registration-number field at all. Nothing to fill in.
 - Payment gateway + NCA legal review before any live billing.
+
+### Dev work outstanding
+
+- **Verify domain in Google Search Console + submit the sitemap.** Sitemap is clean and every URL 200s, so this is unblocked and is the single biggest missing data source. Use the **URL prefix** property for `https://www.goodground.co.za/` (www is canonical), or a Domain property via DNS.
+- **Focus-ring contrast audit on dark panels.** The global `:focus-visible` ember ring is only 2.75:1 against bark, under the 3:1 WCAG requires for focus indicators (fine on cream at 4.90:1). Fixed on the cookie banner via `[&_:focus-visible]:outline-peach`; still to check: Process, CTABanner, Marquee, footer links, Nav (pine), and anything using `Block.tsx` with a dark tone. Consider scoping the override once in `Block.tsx` rather than per component. See trap #14.
+- Add external citations to the article (zero outbound links sitewide; recognised E-E-A-T signal).
+- Add `Service` schema per offering (`/services` currently uses `ItemList`).
+- Convert source PNGs to WebP (repo weight and build time only; `next/image` already handles serve-time).
 - More blog articles.
-- Real case studies for `/work`.
 - Re-verify all 4 Afrihost nameservers have synced on the DNS change.
+
+### Done 2026-07-20
+
+- ~~Wire up GA4~~ — `G-T4JF7EJLW9`, opt-in consent gated. See Analytics.
+- ~~Full SEO audit~~ — ran at founder's request, scored **85/100**. Reports in `seo-audit/`.
+- ~~Social preview images~~ — was the audit's one critical finding; the site had no `og:image` at all.
+- ~~Security headers~~ — CSP + 4 others. Only HSTS was set before.
+- ~~Canonical host mismatch~~ — sitemap and canonicals pointed at the redirecting apex.
+- ~~Em dashes removed sitewide~~ — see Copy rules.
+- ~~favicon.ico, boilerplate SVGs, unused 1.7MB noise.png, meta description lengths, `/insights` title, contextual internal links.~~
+
+### Explicitly do NOT do
+
+- No `aggregateRating` or `review` schema until genuine reviews exist. Fabricated review markup is a manual-action risk.
+- No invented portfolio, registration number, phone number, or co-founder.
+- Do not strip "X, not just Y" from the copy — that is brand voice, not an AI tell.
