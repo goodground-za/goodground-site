@@ -29,6 +29,186 @@ export type Article = {
 
 export const articles: Article[] = [
   {
+    slug: "biggest-website-mistakes-south-african-smes-make",
+    title: "The biggest website mistakes South African SMEs make (and how to fix them)",
+    excerpt:
+      "Most small business websites do not fail because they look bad. They fail for duller reasons: nobody can find them, they take too long to load on a phone, and they never ask anyone to do anything.",
+    metaTitle: "The Biggest Website Mistakes South African SMEs Make",
+    metaDescription:
+      "The eight website mistakes that quietly cost South African small businesses enquiries, and what to do about each one. Practical, no jargon.",
+    keyword: "small business website mistakes South Africa",
+    author: "GoodGround",
+    date: "2026-07-20",
+    readingMinutes: 9,
+    category: "Websites",
+    body: [
+      {
+        type: "p",
+        text: "Most small business websites in South Africa are not bad in the way people expect. The colours are fine. The logo is where it should be. Somebody clearly put effort in. And yet the thing sits there quietly for two years without producing a single enquiry, and the owner slowly concludes that websites do not really work for a business like theirs.",
+      },
+      {
+        type: "p",
+        text: "They do work. What usually went wrong is duller than bad design. The site cannot be found, or it takes eight seconds to load on a phone with two bars of signal, or it never actually asks the visitor to do anything. These are fixable problems, and most of them are cheaper to fix than owners assume.",
+      },
+      {
+        type: "p",
+        text: "Here are the mistakes we see most often, roughly in order of how much damage they do.",
+      },
+
+      { type: "h2", text: "1. Building a brochure when you needed a salesperson" },
+      {
+        type: "p",
+        text: "The most common website in South Africa is a digital pamphlet. A homepage with a nice photo, an About page that opens with \"Founded in 2013, we pride ourselves on quality service\", a Services page listing what you do, and a Contact page. Nothing on it is wrong. Nothing on it is working either.",
+      },
+      {
+        type: "p",
+        text: "A brochure describes you. A salesperson answers the question the customer actually walked in with. Those are different jobs. Someone landing on your site is usually trying to work out three things in about ten seconds: do these people do the thing I need, can I trust them, and how do I get hold of them. If your homepage opens with your company history, you have answered none of those.",
+      },
+      {
+        type: "p",
+        text: "The fix is not more copy. It is usually less, arranged better. Say what you do and who you do it for in the first sentence a visitor reads. Put the proof underneath. Make the next step obvious. You can keep the company history. Just stop leading with it.",
+      },
+
+      { type: "h2", text: "2. Nobody can find it" },
+      {
+        type: "p",
+        text: "A surprising number of small business websites are effectively invisible to Google. Not penalised, not blocked, just never given a reason to rank. No page titles that match what people search for, no mention of the towns you actually work in, thin pages that say very little, and no Google Business Profile pointing back at the site.",
+      },
+      {
+        type: "p",
+        text: "This matters more here than owners realise, because South Africans search locally and specifically. People do not search \"electrical services\". They search \"electrician Durbanville\" or \"emergency electrician near me\". If the words a customer types never appear anywhere on your site, Google has nothing to match them against, and you never enter the running.",
+      },
+      {
+        type: "p",
+        text: "We have written about this side of things in more depth in [why small businesses in South Africa need a website](/insights/why-small-businesses-in-south-africa-need-a-website), including how a Google Business Profile and a real website reinforce each other. The short version: being findable is not a marketing extra you add later. It is part of building the site properly in the first place.",
+      },
+
+      { type: "h2", text: "3. It is slow, on exactly the connection your customers are using" },
+      {
+        type: "p",
+        text: "Most South Africans will meet your website on a phone, often on mobile data, sometimes on a patchy signal, occasionally during load shedding on whatever the router is running off. A site that feels snappy on fibre in an office can be genuinely unusable in those conditions.",
+      },
+      {
+        type: "p",
+        text: "The usual culprits are boring. Enormous uncompressed images straight off a camera. A page loading six different fonts. A pile of plugins each dragging in scripts nobody needed. A video autoplaying in the background that eats a visitor's data before they have read a word.",
+      },
+      {
+        type: "p",
+        text: "People do not send a polite complaint about this. They leave, and you never learn it happened. Speed is not a technical vanity metric. On a slow connection it is the difference between an enquiry and silence.",
+      },
+      {
+        type: "quote",
+        text: "Every second your site takes to load is a second a customer is deciding whether to bother.",
+      },
+
+      { type: "h2", text: "4. Making people hunt for the way to contact you" },
+      {
+        type: "p",
+        text: "Somebody has read enough. They want to phone you, or send a message, or find out where you are. And now they are hunting. The number is only on the Contact page. The Contact page is a form with eleven fields, three of which are compulsory and one of which asks for a budget range they have not thought about yet.",
+      },
+      {
+        type: "p",
+        text: "Every extra step here loses people. Not everybody, but enough to matter over a year.",
+      },
+      {
+        type: "ul",
+        items: [
+          "Put your phone number in the header where people expect it, and make it tappable on a phone.",
+          "Cut the form down to the fields you genuinely need to reply. Name, contact, and what they need is usually enough.",
+          "Say what happens after they send it, and how long you take to come back to them.",
+          "If you are a local business, put the suburb and area you serve somewhere obvious. People are checking whether you come out to them.",
+        ],
+      },
+      {
+        type: "p",
+        text: "A form is not a qualification exam. You can ask the rest of your questions once someone is actually talking to you.",
+      },
+
+      { type: "h2", text: "5. Not actually owning your own website" },
+      {
+        type: "p",
+        text: "This one is quieter than the rest, and it bites later. A lot of small business sites are built inside a platform where the business does not really own anything. The domain is registered to the agency that built it. The hosting is bundled into a monthly fee nobody can itemise. The site itself only exists inside one builder and cannot be moved anywhere else.",
+      },
+      {
+        type: "p",
+        text: "It works fine right up until it does not. The developer stops replying. The monthly fee goes up. You want to move to someone else and discover that moving means rebuilding from scratch, because there is nothing to take with you.",
+      },
+      {
+        type: "p",
+        text: "You do not need to be technical to avoid this. You need to be able to answer three questions: whose name is the domain registered in, where is the site hosted, and can you get a copy of it. If the answer to any of those is \"the person who built it knows\", that is worth sorting out now rather than during a disagreement.",
+      },
+
+      { type: "h2", text: "6. Launching it and then leaving it" },
+      {
+        type: "p",
+        text: "A website is not a job you finish. It is a thing you own, closer to a bakkie than a billboard. Left alone, it quietly rots. Plugins fall out of date and become a security hole. Prices go stale. The team page still lists someone who left in 2024. A form breaks silently and nobody notices for four months, which means four months of enquiries went nowhere.",
+      },
+      {
+        type: "p",
+        text: "That last one is more common than you would think, and it is brutal. The site looks perfectly healthy from the outside while quietly dropping every message someone sends you.",
+      },
+      {
+        type: "p",
+        text: "You do not need to touch it weekly. But somebody should be checking that it still loads quickly, that the forms still deliver, and that what it says about your business is still true. If nobody in the business is going to do that, it is worth having someone do it for you. Our [website care plans](/services) exist for exactly this reason.",
+      },
+
+      { type: "h2", text: "7. Spending the entire budget on day one" },
+      {
+        type: "p",
+        text: "This one is specific to how websites tend to get bought here. A business saves up, pays a large amount upfront for a site, launches it, and then has nothing left for the twelve months afterwards. No budget for content, none for search visibility, none for fixing the things you only discover once real people start using it.",
+      },
+      {
+        type: "p",
+        text: "The result is a site that peaks on launch day and declines from there. Which is the opposite of how it should work, because a website should get more valuable over time as it accumulates pages, search visibility and trust.",
+      },
+      {
+        type: "p",
+        text: "This is the whole reason we split every project into twelve equal monthly payments instead of asking for one large invoice before you have seen a page. It is not a payment gimmick. It changes what you can afford to do in the year after launch, which is the year that actually decides whether the site works.",
+      },
+
+      { type: "h2", text: "8. Flying blind" },
+      {
+        type: "p",
+        text: "Ask most small business owners how many people visited their website last month and you get a shrug. Which is fair enough, because nobody installed anything to tell them.",
+      },
+      {
+        type: "p",
+        text: "Without any measurement you are guessing about everything. You cannot tell whether people are finding you, which pages they actually read, where they give up, or whether the enquiry form is even working. You end up redesigning things on instinct and never knowing if it helped.",
+      },
+      {
+        type: "p",
+        text: "Basic analytics takes an afternoon to set up and costs nothing. You do not need dashboards or reports. You mostly need to know three things: how many people are arriving, what they looked at, and how many got in touch. That is enough to make better decisions than a guess.",
+      },
+
+      { type: "h2", text: "The short version" },
+      {
+        type: "p",
+        text: "Almost none of these are design problems. They are decisions made early, usually for sensible-sounding reasons, that quietly cost you enquiries for years afterwards.",
+      },
+      {
+        type: "ul",
+        items: [
+          "Lead with what you do and who you do it for, not your company history.",
+          "Use the words your customers actually search for, including the places you work in.",
+          "Assume a phone on mobile data, and build for that.",
+          "Make contacting you a single obvious step.",
+          "Own your domain, your hosting and your content.",
+          "Check it regularly, especially that the forms still deliver.",
+          "Keep budget for the year after launch, not only the launch.",
+          "Measure enough to know whether any of it is working.",
+        ],
+      },
+      {
+        type: "p",
+        text: "If you recognised your own site in more than two of these, that is normal, and none of it is urgent in the way a burst geyser is urgent. But it is the kind of slow leak that is much easier to fix deliberately than to keep paying for.",
+      },
+      {
+        type: "p",
+        text: "If you would rather not work through it alone, [tell us about your business](/start-project) and we will come back with next steps.",
+      },
+    ],
+  },
+  {
     slug: "why-small-businesses-in-south-africa-need-a-website",
     title: "Why every small business in South Africa needs a website (and what a good one actually does)",
     excerpt:

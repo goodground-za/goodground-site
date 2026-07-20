@@ -121,6 +121,52 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   );
 }
 
+/**
+ * Renders `[label](/path)` inside article text as a real link.
+ *
+ * The content model is deliberately plain typed data with no JSX (no CMS, see
+ * the project constraint), so contextual internal links had no way to exist.
+ * A tiny markdown-ish parser keeps `content/articles.ts` as data while letting
+ * articles link to each other, which is what the SEO audit asked for.
+ *
+ * Internal paths use next/link; anything else renders as a normal anchor with
+ * rel="noopener noreferrer" since it leaves the site.
+ */
+const LINK_RE = /\[([^\]]+)\]\(([^)]+)\)/g;
+
+function withLinks(text: string) {
+  const out: React.ReactNode[] = [];
+  let last = 0;
+  for (const m of text.matchAll(LINK_RE)) {
+    const [full, label, href] = m;
+    const at = m.index ?? 0;
+    if (at > last) out.push(text.slice(last, at));
+    out.push(
+      href.startsWith("/") ? (
+        <Link
+          key={`${href}-${at}`}
+          href={href}
+          className="text-ember font-medium underline underline-offset-4 hover:no-underline"
+        >
+          {label}
+        </Link>
+      ) : (
+        <a
+          key={`${href}-${at}`}
+          href={href}
+          rel="noopener noreferrer"
+          className="text-ember font-medium underline underline-offset-4 hover:no-underline"
+        >
+          {label}
+        </a>
+      ),
+    );
+    last = at + full.length;
+  }
+  if (last < text.length) out.push(text.slice(last));
+  return out.length ? out : text;
+}
+
 function BlockView({ block }: { block: Block }) {
   if (block.type === "h2") {
     return (
@@ -135,7 +181,7 @@ function BlockView({ block }: { block: Block }) {
         {block.items.map((item) => (
           <li key={item} className="text-bark flex items-start gap-3 text-[clamp(1rem,1.3vw,1.15rem)] leading-[1.7]">
             <span aria-hidden="true" className="bg-ember mt-[11px] size-1.5 shrink-0 rounded-full" />
-            <span>{item}</span>
+            <span>{withLinks(item)}</span>
           </li>
         ))}
       </ul>
@@ -151,6 +197,6 @@ function BlockView({ block }: { block: Block }) {
     );
   }
   return (
-    <p className="text-bark mt-4 text-[clamp(1rem,1.3vw,1.15rem)] leading-[1.75]">{block.text}</p>
+    <p className="text-bark mt-4 text-[clamp(1rem,1.3vw,1.15rem)] leading-[1.75]">{withLinks(block.text)}</p>
   );
 }
