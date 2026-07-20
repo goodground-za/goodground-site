@@ -58,13 +58,13 @@ export function Process() {
         <AuroraGlow intensity={0.3} />
         <div className="relative z-[2] pt-14 pb-12 md:pt-20 md:pb-14">
           <div className="px-6 sm:px-10 md:px-14">
-            <Eyebrow>Our Process</Eyebrow>
+            <Eyebrow>Our web design process</Eyebrow>
             <h2 className="font-heading mt-6 max-w-[14ch] text-[clamp(2rem,4.6vw,3.75rem)] leading-[1.05] font-bold tracking-[-0.03em]">
               From first seed to lasting harvest.
             </h2>
             <p className="mt-6 max-w-[42ch] text-[15px] leading-[1.6] text-peach/70">
-              We&rsquo;re a website development studio — every project we build includes the design,
-              UX, and SEO foundations to make it work, not just look good.
+              Good results aren&rsquo;t luck. Here&rsquo;s how a project runs, start to finish, on time
+              and on budget.
             </p>
 
             <div

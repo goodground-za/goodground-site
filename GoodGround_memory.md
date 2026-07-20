@@ -140,6 +140,16 @@ Founder asked point-blank whether the site reads as a premium web development ag
 - **The brown/ember/cream palette and the seedling/growth photography direction.** Both came directly from the client's own supplied comp and palette file, locked earlier in the build. They read warm/artisan/organic rather than "premium tech studio," which is a real tension — but it's the client's own brand decision, not mine to unilaterally gut. If revisited, this is the deepest remaining lever.
 - **Photography scarcity is structural, not fixable in code.** Only 5 client images exist total. Real new photography (or at minimum, a couple more supplied images so About/Services/Work aren't starved) is the actual fix, not something I can generate my way out of.
 
+## Three new Home sections, adapted from Grow Brand (2026-07-20)
+
+Founder asked for GoodGround's homepage to get equivalents of three Grow Brand sections, in GoodGround's own layout/design language, not Grow Brand's:
+
+- **"What We Build"** (`components/sections/WhatWeBuild.tsx`) — **replaces** the old bento-grid Services section (deleted, along with its now-orphaned `ServiceIcon.tsx`). Reuses `content/services.ts` directly (title/subheading/problem/solution/outcome — same data the `/services` page's deep-dives already use) as an accordion, so Home never contradicts the Services page. Reason for replacing rather than adding alongside: a static bento grid and this accordion both covering the identical 4 services back-to-back on one scroll read as repetitive; the accordion is strictly more informative anyway.
+- **"Industries"** (`components/sections/Industries.tsx`, `content/industries.ts`, `components/IndustryIcon.tsx`) — new section, 6 category cards (trades, health, hospitality, retail, professional, non-profit). **Grow Brand's version names real past clients per card** ("like Trail Tribe and TipTap") — GoodGround has none (founded 2026), so this was rewritten to stay at the category level with no track-record claim and no fabricated names anywhere, consistent with the hard no-fabrication rule everywhere else on this site.
+- **Process section intro copy** — did NOT duplicate a second "How We Work" section (the existing 5-step carousel already covers this and duplicating it would be redundant/confusing). Instead adopted Grow Brand's framing line directly into the existing section: eyebrow → "Our web design process", lead → "Good results aren't luck. Here's how a project runs, start to finish, on time and on budget." Kept GoodGround's own H2 ("From first seed to lasting harvest.") rather than overwriting it with Grow Brand's generic "How we work" — that headline carries the brand voice.
+
+Home section order is now: Hero → Marquee → Philosophy → **WhatWeBuild** → **Industries** → PaymentPlan → Process → WhyUs → Testimonials → AboutPreview → FAQ → CTABanner. Lighthouse mobile still 100/100/100/100 after the change.
+
 ## Open punch list (see TodoWrite for the live session version)
 
 - Verify domain in Google Search Console + submit sitemap.

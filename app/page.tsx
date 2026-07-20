@@ -5,11 +5,12 @@ import { AboutPreview } from "@/components/sections/AboutPreview";
 import { CTABanner } from "@/components/sections/CTABanner";
 import { FAQ } from "@/components/sections/FAQ";
 import { Hero } from "@/components/sections/Hero";
+import { Industries } from "@/components/sections/Industries";
 import { PaymentPlan } from "@/components/sections/PaymentPlan";
 import { Philosophy } from "@/components/sections/Philosophy";
 import { Process } from "@/components/sections/Process";
-import { Services } from "@/components/sections/Services";
 import { Testimonials } from "@/components/sections/Testimonials";
+import { WhatWeBuild } from "@/components/sections/WhatWeBuild";
 import { WhyUs } from "@/components/sections/WhyUs";
 
 /**
@@ -42,7 +43,8 @@ export default function HomePage() {
       {/* The stat strip (12 / 0 / 1:1 / 100%) is not in the client's comp. The
           component and content/stats.ts remain if it comes back. */}
       <Philosophy />
-      <Services />
+      <WhatWeBuild />
+      <Industries />
       <PaymentPlan />
       <Process />
       <WhyUs />
