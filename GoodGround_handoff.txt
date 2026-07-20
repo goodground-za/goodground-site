@@ -1,6 +1,6 @@
 ===============================================================================
 GOODGROUND — CONTEXT HANDOFF
-Last updated: 2026-07-20 (session 2: analytics, SEO audit, copy pass)
+Last updated: 2026-07-20 (session 2: analytics, SEO audit, copy pass, blog)
 ===============================================================================
 
 READ FIRST
@@ -230,7 +230,11 @@ Then, in rough order:
     white first makes every colour read opaque and produces false failures.
   - External citations in the article (zero outbound links sitewide).
   - `Service` schema per offering (/services currently uses ItemList).
-  - More blog articles.
+  - More blog articles. Two are live. /insights features whichever article is
+    first in the `articles` array and stacks the rest three across, so adding
+    one is purely a content edit in `content/articles.ts`. Article body text
+    supports `[label](/path)` inline links via `withLinks()`; use it to
+    cross-link new pieces to existing ones.
   - Re-verify all 4 Afrihost nameservers have synced.
   - Convert source PNGs to WebP (repo weight/build time only).
 
