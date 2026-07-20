@@ -21,7 +21,7 @@ import { WhyUs } from "@/components/sections/WhyUs";
 export const metadata: Metadata = {
   title: "Website Development in South Africa | Pay Monthly | GoodGround",
   description:
-    "GoodGround is a website development studio building custom, fast business websites across South Africa. Spread the cost over 12 equal monthly payments, with no large upfront bill.",
+    "A South African studio building custom, fast business websites. Spread the cost over 12 equal monthly payments, with no large upfront bill.",
   alternates: { canonical: "/" },
 };
 

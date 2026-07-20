@@ -26,7 +26,7 @@ export function AboutPreview() {
             <p className="text-bark-muted mt-8 max-w-[44ch] text-[clamp(0.95rem,1.2vw,1.1rem)] leading-[1.6]">
               GoodGround was founded in Cape Town&rsquo;s Northern Suburbs. We started GoodGround
               because too many good businesses were being let down by websites that looked fine and
-              did nothing — no strategy, no structure, no follow-through.
+              did nothing for them. No strategy, no structure, nothing after launch.
             </p>
             <div className="mt-9">
               <ButtonLink href="/about" variant="ink" size="lg">

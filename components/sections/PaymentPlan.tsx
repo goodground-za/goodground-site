@@ -8,7 +8,7 @@ const steps = [
   {
     number: "1",
     title: "We scope your project",
-    rest: " and agree on a fixed price — no hidden extras.",
+    rest: " and agree on a fixed price, with no hidden extras.",
   },
   {
     number: "2",
@@ -18,7 +18,7 @@ const steps = [
   {
     number: "3",
     title: "You keep growing",
-    rest: " — your site launches, and your investment stays predictable.",
+    rest: ". Your site launches, and your investment stays predictable.",
   },
 ];
 
@@ -44,7 +44,7 @@ export function PaymentPlan() {
           <div className="lg:col-span-6">
             <div className="text-bark max-w-[46ch] space-y-5 text-[clamp(0.95rem,1.25vw,1.1rem)] leading-[1.6]">
               <p>
-                Most agencies ask for the full project cost upfront — before you&rsquo;ve seen a
+                Most agencies ask for the full project cost upfront, before you&rsquo;ve seen a
                 single page. We don&rsquo;t work that way.
               </p>
               <p>

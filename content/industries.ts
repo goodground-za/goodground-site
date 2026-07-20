@@ -28,7 +28,7 @@ export const industries: Industry[] = [
   {
     title: "Hospitality & food",
     description:
-      "Cafés and small venues that need to look as good online as they do in person — menus, hours, and a way to get in touch.",
+      "Cafés and small venues that need to look as good online as they do in person, with menus, hours, and an easy way to get in touch.",
     icon: "hospitality",
   },
   {

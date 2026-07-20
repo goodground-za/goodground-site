@@ -19,7 +19,7 @@ export function NewsletterForm() {
       {/* The pitch is a description, not a label: as a <label> it became the
           input's accessible name and screen readers read the whole sentence. */}
       <p id="newsletter-pitch" className="text-[14px] leading-[1.6] text-peach/75">
-        Get practical website and growth advice for South African small businesses — no jargon, no
+        Practical website and growth advice for South African small businesses. No jargon, no
         spam.
       </p>
       <div className="mt-3 flex gap-2">

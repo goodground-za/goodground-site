@@ -25,7 +25,7 @@ export function FAQ() {
           Everything you need to know before you start.
         </h2>
         <p className="mt-6 max-w-[44ch] text-[15px] leading-[1.6] text-peach/75">
-          Fill in the form and we&rsquo;ll get back to you directly — no chatbot, no call centre.
+          Fill in the form and we&rsquo;ll get back to you directly. No chatbot, no call centre.
         </p>
 
         {/* The comp insets the rows into a centred column rather than running

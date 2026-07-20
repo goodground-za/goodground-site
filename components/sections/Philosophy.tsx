@@ -21,9 +21,8 @@ export function Philosophy() {
           <div className="lg:col-span-6">
             <div className="text-bark max-w-[46ch] space-y-6 text-[clamp(1rem,1.35vw,1.15rem)] leading-[1.6]">
               <p>
-                Every business wants the same thing — more enquiries, more customers, more
-                opportunity. But growth doesn&rsquo;t start with marketing. It starts with the
-                foundation underneath it.
+                Every business wants more enquiries and more customers. But growth doesn&rsquo;t start
+                with marketing. It starts with the foundation underneath it.
               </p>
               <p>
                 Good ground is where seeds take root, grow, and produce a harvest. Businesses work
@@ -31,10 +30,14 @@ export function Philosophy() {
                 rarely performs. No amount of marketing can fix a weak foundation.
               </p>
               <p className="font-heading text-pine text-[clamp(1.1rem,1.5vw,1.3rem)] leading-snug font-bold">
-                That&rsquo;s the ground we help you build on — before you grow.
+                That&rsquo;s the ground we help you build on, before you grow.
               </p>
               <p className="text-bark-muted max-w-[44ch] text-[15px] leading-relaxed italic">
-                The name comes from the biblical <ParableLink />. Good ground represents
+                {/* ParableLink's default text already starts with "the", so
+                    "the biblical <ParableLink/>" rendered as "the biblical the
+                    Parable of the Sower". Pass the label explicitly instead. */}
+                The name comes from the biblical{" "}
+                <ParableLink>Parable of the Sower</ParableLink>. Good ground represents
                 preparation, intention, and growth.
               </p>
             </div>

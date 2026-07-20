@@ -9,7 +9,7 @@ import { site } from "@/content/site";
 export const metadata: Metadata = {
   title: { absolute: "Contact GoodGround | Website Development, South Africa" },
   description:
-    "Start your website project with GoodGround, a website development studio in South Africa. Tell us about your business and we'll come back with next steps and a monthly payment plan.",
+    "Tell us about your business and we'll come back with next steps and a monthly payment plan. A website development studio in South Africa.",
   alternates: { canonical: "/contact" },
 };
 

@@ -16,7 +16,7 @@ export const faq: FAQItem[] = [
   {
     question: "How does the 12-month payment plan actually work?",
     answer:
-      "We agree on one fixed price for your project up front — no hourly billing, no scope surprises. That price is then split into 12 equal monthly payments, starting once your project begins. You always know exactly what you're paying and when.",
+      "We agree on one fixed price for your project up front. No hourly billing and no scope surprises. That price is then split into 12 equal monthly payments, starting once your project begins. You always know exactly what you're paying and when.",
   },
   {
     question: "Is there a large deposit before you start?",
@@ -36,7 +36,7 @@ export const faq: FAQItem[] = [
   {
     question: "Do you only build websites, or do you handle design and SEO too?",
     answer:
-      "Every website we build includes the design, UX, and SEO foundations as part of one process — you don't need to brief a separate designer or SEO specialist. It's one team, one project, one monthly payment.",
+      "Every website we build includes the design, UX, and SEO foundations as part of one process, so you don't need to brief a separate designer or SEO specialist. One team, one project, one monthly payment.",
   },
   {
     // Copy deck: an inaccurate timeline promise is worse than none.
@@ -46,7 +46,7 @@ export const faq: FAQItem[] = [
   {
     question: "What happens after my website launches?",
     answer:
-      "Launch isn't the finish line — it's the start of Cultivate Growth. We offer ongoing Website Care Plans for updates, monitoring, and small changes, so your site keeps performing after the 12 payments are complete.",
+      "Launch is the start of Cultivate Growth, not the finish line. We offer ongoing Website Care Plans for updates, monitoring, and small changes, so your site keeps performing after the 12 payments are complete.",
   },
   {
     // Copy deck: affects local SEO framing; confirm service area before publishing.

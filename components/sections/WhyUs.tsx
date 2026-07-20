@@ -19,7 +19,7 @@ const reasons = [
   },
   {
     title: "A partner, not a vendor",
-    body: "We build with you. Our Care Plans mean the relationship doesn't end at launch — and neither does the payment shock.",
+    body: "We build with you. Our Care Plans keep the relationship going after launch, without a sudden bill to go with it.",
   },
 ];
 

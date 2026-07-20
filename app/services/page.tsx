@@ -13,7 +13,7 @@ import { site } from "@/content/site";
 export const metadata: Metadata = {
   title: "Website Development Services in South Africa",
   description:
-    "Website development, UX and design, SEO foundations, and website care plans — all built in-house in South Africa, and payable over 12 equal monthly instalments.",
+    "Website development, UX and design, SEO foundations, and care plans. Built in-house in South Africa, payable over 12 monthly instalments.",
   alternates: { canonical: "/services" },
 };
 
@@ -100,6 +100,24 @@ export default function ServicesPage() {
               </ButtonLink>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Contextual link into the blog. Before this the article had exactly one
+          inbound link (the /insights listing), so nothing passed relevance to it
+          from the commercial pages. */}
+      <section className="px-3 pb-4 sm:px-5">
+        <div className="mx-auto max-w-[1434px] px-3 sm:px-6 md:px-11">
+          <p className="text-bark-muted text-[15px] leading-[1.7]">
+            Not sure a website is the right spend right now?{" "}
+            <Link
+              href="/insights/why-small-businesses-in-south-africa-need-a-website"
+              className="text-ember underline underline-offset-4 hover:no-underline"
+            >
+              We wrote about why it matters for South African businesses
+            </Link>
+            .
+          </p>
         </div>
       </section>
 

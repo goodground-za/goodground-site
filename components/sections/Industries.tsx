@@ -50,8 +50,8 @@ export function Industries() {
         <Reveal delay={0.1}>
           <div className="border-bark/10 mt-10 flex flex-col items-start gap-5 border-t pt-8 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-bark-muted max-w-[46ch] text-[15px] leading-[1.6]">
-              And plenty more. If your business isn&rsquo;t on this list, that&rsquo;s not a problem —
-              it&rsquo;s a conversation.
+              And plenty more. If your business isn&rsquo;t on this list, get in touch anyway. It
+              usually just means we have a few questions first.
             </p>
             <ButtonLink href="/start-project" size="lg" className="shrink-0">
               Start the conversation →

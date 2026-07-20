@@ -18,7 +18,7 @@ import { process } from "@/content/process";
 export const metadata: Metadata = {
   title: { absolute: "About GoodGround | Website Development Studio, South Africa" },
   description:
-    "GoodGround is a website development studio in South Africa, founded on the belief that businesses grow best on strong foundations. Based in Brackenfell, Cape Town.",
+    "A website development studio in South Africa, built on the idea that businesses grow best on strong foundations. Based in Brackenfell, Cape Town.",
   alternates: { canonical: "/about" },
 };
 
@@ -26,10 +26,10 @@ export const metadata: Metadata = {
 const beliefs = [
   "Strong businesses are built on strong foundations.",
   "Strategy comes before design.",
-  "Design should always solve a problem — never just decorate one.",
+  "Design should solve a problem, not decorate one.",
   "Growth is earned through consistency, not a single big launch.",
   "Simple is powerful.",
-  "Relationships matter more than transactions — which is also why we don't ask for your entire budget on day one.",
+  "Relationships matter more than transactions, which is why we don't ask for your entire budget on day one.",
 ];
 
 export default function AboutPage() {
@@ -55,19 +55,20 @@ export default function AboutPage() {
               <Reveal delay={0.08}>
                 <div className="text-bark mt-8 max-w-[46ch] space-y-4 text-[clamp(1rem,1.3vw,1.15rem)] leading-[1.65]">
                   {/* Founder named by experience rather than by name, at the
-                      owner's request. This also settles the old unconfirmed
-                      co-founder line: "We'd watched" reads fine for one founder. */}
+                      owner's request. The copy deck's "We'd both watched" implied
+                      a second founder we can't confirm, so this reads as "We kept
+                      seeing", which works for one founder without inventing one. */}
                   <p className="font-heading font-bold">
                     GoodGround was founded in 2026 in Brackenfell, in Cape Town&rsquo;s Northern
                     Suburbs, by a web developer with more than 10 years&rsquo; experience across UX
                     and UI design, website design and graphic design.
                   </p>
                   <p className="text-bark-muted">
-                    We&rsquo;d watched good businesses invest in websites that looked polished and
-                    did nothing — no strategy behind the design, no plan for what happens after
-                    launch, and often, an upfront bill that made &ldquo;getting a proper
-                    website&rdquo; feel out of reach for a growing business. We started GoodGround to
-                    fix both problems at once.
+                    We kept seeing good businesses pay for websites that looked polished and did
+                    nothing for them. There was no strategy behind the design and no plan for what
+                    happened after launch. On top of that, the bill usually landed upfront, which
+                    put a proper website out of reach for a business that was still growing. We
+                    started GoodGround to fix both problems at once.
                   </p>
                 </div>
               </Reveal>
@@ -110,8 +111,8 @@ export default function AboutPage() {
                   "The name comes from the biblical Parable of the Sower:",
                   "good ground is where seeds take root,",
                   "grow, and produce a harvest.",
-                  "It's not a slogan we picked because it sounded nice —",
-                  "it's how we think about building.",
+                  "We didn't pick it because it sounded nice.",
+                  "It's how we think about building.",
                 ]}
               />
             </div>

@@ -20,7 +20,7 @@ export function CTABanner() {
           />
           <Reveal delay={0.08}>
             <p className="mx-auto mt-6 max-w-[46ch] text-[clamp(1rem,1.5vw,1.25rem)] leading-[1.4]">
-              Let&rsquo;s create something built to grow — and a plan that makes it easy to start.
+              Let&rsquo;s build something made to grow, with a plan that makes it easy to start.
             </p>
             <div className="mt-9 flex flex-wrap justify-center gap-4">
               <ButtonLink href="/start-project" variant="peach" size="lg">

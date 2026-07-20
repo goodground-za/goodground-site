@@ -15,7 +15,7 @@ export const process: ProcessStep[] = [
   {
     number: "02",
     title: "Lay the Foundation",
-    description: "Strategy, messaging, and site structure — before a single pixel is designed.",
+    description: "Strategy, messaging, and site structure, settled before a single pixel is designed.",
   },
   {
     number: "03",

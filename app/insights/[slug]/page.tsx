@@ -102,7 +102,11 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
               </h2>
               <p className="mt-3 max-w-[46ch] text-[15px] leading-[1.6] text-peach/90">
                 We build fast, honest websites for South African small businesses, paid over 12 equal
-                monthly payments. Let&rsquo;s talk about yours.
+                monthly payments. Have a look at{" "}
+                <Link href="/services" className="underline underline-offset-4 hover:no-underline">
+                  what we do
+                </Link>
+                , or tell us about yours.
               </p>
               <div className="mt-6">
                 <ButtonLink href="/start-project" variant="ink" size="lg">
