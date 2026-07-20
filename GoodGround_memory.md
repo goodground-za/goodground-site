@@ -87,7 +87,9 @@ Both forms POST to **Web3Forms** with GoodGround's own key (hardcoded fallback i
 
 ## Analytics (2026-07-20)
 
-GA4 property `G-T4JF7EJLW9`, wired via **`@next/third-parties`** (`<GoogleAnalytics>`), not a hand-rolled `<Script>` tag. This matters: a raw gtag snippet only fires a pageview on the initial hard load, so App Router client-side navigations to /about, /services etc. would silently never register. The package handles route changes.
+GA4 property `G-T4JF7EJLW9`, wired via **`@next/third-parties`** (`<GoogleAnalytics>`), which loads gtag through `next/script` so it's scheduled rather than blocking.
+
+**Correction — route-change tracking does NOT come from the component.** Reading `node_modules/@next/third-parties/dist/google/ga.js`, it only injects the standard gtag init snippet and the `gtag/js` tag; there is no router subscription. SPA pageviews work because **GA4 Enhanced Measurement's "Page changes based on browser history events"** is on by default and listens to History API pushes. Verified live: soft-navigating / → /about → /services produced three `en=page_view` beacons with the correct `dl=` URLs. **If anyone turns Enhanced Measurement off in the GA4 admin, every pageview after the first hard load disappears silently** — at that point add an explicit router-driven `gtag('event','page_view')`. Note the beacons take ~5s to land; a check at 3s reads as a false negative.
 
 `components/Analytics.tsx` owns both the GA mount and the cookie banner. It reads the ID from **`NEXT_PUBLIC_GA_ID`** — unset means no analytics at all, which keeps local dev and Vercel previews out of the reporting data. Set it in Vercel as **Production-only**. `.env.local` holds it for local testing; `.env.example` documents it (`.gitignore` needed a `!.env.example` exception, since `.env*` was catching it).
 

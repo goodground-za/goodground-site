@@ -48,6 +48,12 @@ function getSnapshot(): State {
 const getServerSnapshot = (): State => "unread";
 
 /**
+ * Note on pageviews: <GoogleAnalytics> only injects the gtag snippet — it does
+ * not subscribe to the router. Client-side navigations are counted by GA4's
+ * Enhanced Measurement ("page changes based on browser history events"), which
+ * is on by default. If that setting is ever disabled, pageviews after the first
+ * hard load stop silently and this component needs an explicit page_view event.
+ *
  * POPIA-shaped consent: GA4 sets cookies, so nothing loads until the visitor
  * says yes. We gate the <GoogleAnalytics> render rather than using Google's
  * Consent Mode — with the script never mounting, no cookie is written and no
