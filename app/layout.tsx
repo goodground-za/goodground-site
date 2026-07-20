@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
+import { Analytics } from "@/components/Analytics";
 import { Footer } from "@/components/Footer";
 import { Nav } from "@/components/Nav";
 import { site } from "@/content/site";
@@ -41,6 +42,11 @@ export const metadata: Metadata = {
   },
 };
 
+// GA only loads when the ID is set AND the visitor has accepted cookies, so
+// local dev and preview builds stay out of the reporting data unless you
+// deliberately set the var there too.
+const gaId = process.env.NEXT_PUBLIC_GA_ID;
+
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     // data-scroll-behavior: globals.css sets scroll-behavior:smooth for in-page
@@ -72,6 +78,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           {children}
         </main>
         <Footer />
+        {/* Renders the consent banner, and GA only once consent is granted.
+            Lives inside <body> because the banner is a positioned element. */}
+        <Analytics gaId={gaId} />
       </body>
     </html>
   );

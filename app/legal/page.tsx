@@ -273,11 +273,25 @@ export default function LegalPage() {
             </Section>
 
             <Section num="12" id="sec-cookies" title="Cookies and Tracking Technologies">
-              <P>We use cookies and similar technologies to improve your experience. Cookies help us:</P>
-              <UL items={["Remember user preferences", "Analyse site usage", "Improve performance and functionality"]} />
               <P>
-                You can manage or disable cookies through your browser settings. Some features of the
-                website may not function correctly if cookies are disabled.
+                We use Google Analytics 4 to understand which pages visitors find useful. It sets
+                cookies that record things like the pages you view, roughly where in the world you
+                are, and whether you have visited before.
+              </P>
+              <P>
+                These cookies only load if you accept them. When you first arrive, we ask, and
+                nothing is set until you choose &ldquo;Accept&rdquo;. If you decline, the analytics
+                script is never loaded and no analytics cookie is written. The rest of the site works
+                exactly the same either way.
+              </P>
+              <P>
+                Your choice is remembered in your browser&rsquo;s local storage. To change it, clear
+                this site&rsquo;s data in your browser settings and we will ask again. You can also
+                block or delete cookies through your browser at any time.
+              </P>
+              <P>
+                We do not use advertising or cross-site tracking cookies, and we do not sell your
+                data.
               </P>
             </Section>
 
