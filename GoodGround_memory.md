@@ -10,7 +10,7 @@ Living master reference for the GoodGround marketing site. Read this first befor
 
 ## Status
 
-- **Live:** https://goodground.co.za and https://www.goodground.co.za (deployed on Vercel, SSL issued, both resolving 200).
+- **Live:** https://www.goodground.co.za (deployed on Vercel, SSL issued). **www is the canonical host** — the apex `goodground.co.za` 308-redirects to it, so it does NOT resolve 200 despite an earlier note here saying both did. `site.url` in `content/site.ts` was pointing at the apex until 2026-07-20, which meant every sitemap URL, canonical tag, `robots.txt` Host line and schema URL pointed at a redirect. Fixed to www. **If the canonical host is ever changed, `content/site.ts` and the hardcoded URLs in `public/llms.txt` must both be updated** — llms.txt is a static file and does not read `site.url`.
 - **GitHub:** https://github.com/goodground-za/goodground-site.git — `main` branch, pushed and tracked.
 - **DNS:** Afrihost. Root A record → Vercel (`216.198.79.1`), `www` CNAME → Vercel. As of 2026-07-18, propagation across Afrihost's 4 nameservers (`ns.dns1.co.za`, `ns.dns2.co.za`, `ns.otherdns.com`, `ns.otherdns.net`) was mid-sync — one nameserver had already picked up the change, three hadn't. Re-verify all four agree before treating DNS as fully settled (see punch list).
 - **Pages live:** Home, Services, About, Contact, Work, Insights (+ 1 article), Start-project, Legal, 404. No `/pricing` (removed by founder — see Decisions).

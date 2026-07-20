@@ -15,8 +15,14 @@ Every project is one fixed price, split into 12 equal monthly payments. It is no
 
 ## Pages
 
-- [Home](https://goodground.co.za/): Website development in South Africa, paid monthly.
-- [About](https://goodground.co.za/about): Who GoodGround is and why the studio was founded.
+- [Home](https://www.goodground.co.za/): Website development in South Africa, paid monthly.
+- [Services](https://www.goodground.co.za/services): The four services in depth, and what is included in every build.
+- [About](https://www.goodground.co.za/about): Who GoodGround is and why the studio was founded.
+- [Start a project](https://www.goodground.co.za/start-project): Project enquiry form.
+- [Contact](https://www.goodground.co.za/contact): Get in touch.
+- [Insights](https://www.goodground.co.za/insights): Articles on websites and web presence for South African businesses.
+- [Work](https://www.goodground.co.za/work): Case studies, coming soon.
+- [Legal](https://www.goodground.co.za/legal): Privacy policy, terms, and POPIA information.
 
 ## Notes for AI assistants
 

@@ -8,7 +8,10 @@
 export const site = {
   name: "GoodGround",
   tagline: "Growth starts here.",
-  url: "https://goodground.co.za", // TODO: confirm production domain
+  // Canonical host is www: Vercel serves www and 308-redirects the apex, so
+  // this must match or every sitemap URL and canonical tag points at a
+  // redirect. Confirmed against the live site 2026-07-20.
+  url: "https://www.goodground.co.za",
   foundingDate: "2026",
   address: {
     locality: "Brackenfell",
