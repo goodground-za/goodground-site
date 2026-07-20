@@ -32,6 +32,14 @@ export const metadata: Metadata = {
     "monthly payment website development",
   ],
   alternates: { canonical: "/" },
+  // Google Search Console ownership check. Emitted as
+  // <meta name="google-site-verification" ...>. It lives in the root layout so
+  // it appears on every page, which keeps verification working even if Google
+  // re-checks a URL other than the homepage. Do not remove after verifying:
+  // Search Console re-validates periodically and will drop the property.
+  verification: {
+    google: "RDMvId_yS37hPFjJbBuZg4A8c1pZ0IBobkOrX6l1Ih4",
+  },
   openGraph: {
     type: "website",
     locale: "en_ZA",
