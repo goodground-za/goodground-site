@@ -45,8 +45,9 @@ export const footerLinks = [
   { label: "Contact", href: "/contact" },
 ];
 
-/** Both point into the single /legal page, matching the source content. */
 export const legalLinks = [
+  { label: "FAQ", href: "/faq" },
+  // Both of these point into the single /legal page, matching the source content.
   { label: "Privacy Policy", href: "/legal#privacy" },
   { label: "Terms", href: "/legal#terms" },
 ];

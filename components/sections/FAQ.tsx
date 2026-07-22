@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
 import { Block, BlockInner } from "@/components/Block";
@@ -13,8 +14,10 @@ import { faq } from "@/content/faq";
  * "still working it out" state. They're the questions buyers actually ask, and a
  * guessed cancellation policy is worse than an admitted gap.
  */
-export function FAQ() {
+export function FAQ({ limit }: { limit?: number } = {}) {
   const [open, setOpen] = useState<number | null>(null);
+  const items = limit ? faq.slice(0, limit) : faq;
+  const truncated = limit ? faq.length > limit : false;
 
   return (
     <Block tone="bark">
@@ -31,7 +34,7 @@ export function FAQ() {
         {/* The comp insets the rows into a centred column rather than running
             them the full width of the block. */}
         <ul className="mx-auto mt-12 max-w-[1090px] space-y-3">
-          {faq.map((item, i) => (
+          {items.map((item, i) => (
             <FAQRow
               key={item.question}
               item={item}
@@ -40,6 +43,17 @@ export function FAQ() {
             />
           ))}
         </ul>
+
+        {truncated ? (
+          <div className="mt-8 flex justify-center">
+            <Link
+              href="/faq"
+              className="rounded-pill bg-peach text-bark hover:bg-peach/85 font-heading inline-flex h-11 items-center px-6 text-[14px] font-bold shadow-sm transition-colors duration-150 hover:shadow-md"
+            >
+              See all FAQs
+            </Link>
+          </div>
+        ) : null}
       </BlockInner>
     </Block>
   );

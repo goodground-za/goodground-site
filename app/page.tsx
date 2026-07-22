@@ -50,7 +50,7 @@ export default function HomePage() {
       <WhyUs />
       <Testimonials />
       <AboutPreview />
-      <FAQ />
+      <FAQ limit={4} />
       <CTABanner />
     </>
   );

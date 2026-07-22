@@ -146,7 +146,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <FAQ />
+      <FAQ limit={4} />
       <CTABanner />
     </>
   );

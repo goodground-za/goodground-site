@@ -234,6 +234,15 @@ Full detail and effort estimates live in `seo-audit/ACTION-PLAN.md`. That file i
   - Metadata description on `/services` updated to mention Google & Meta Ads.
   - Verified: `npx eslint` clean, both pages checked at 1440×900 and 390×844 in a live dev server, homepage accordion confirmed picking up the new items with the Growth pill.
 
+### Done 2026-07-22 (b): dedicated /faq page
+
+- The FAQ accordion had grown to 13 questions (8 original + 5 from the Growth section) and felt long on both Home and Services. `components/sections/FAQ.tsx` now takes an optional `limit` prop: `<FAQ limit={4} />` on Home and Services shows only the first 4 with a "See all FAQs" pill button beneath; `<FAQ />` with no limit (used on the new `/faq` page) shows all of them and never renders the button.
+- New page: `app/faq/page.tsx` — `PageHero` (eyebrow "FAQ", distinct headline/intro from the FAQ block's own, so the two don't read as duplicated back-to-back) + the full `<FAQ />` + the existing `CTABanner`.
+- `content/site.ts`: `legalLinks` gained a third entry, `{ label: "FAQ", href: "/faq" }`, first in the list (before Privacy Policy / Terms) — this is the array `Footer.tsx` already renders as the small pill row next to the copyright line, so no `Footer.tsx` changes were needed.
+- Added `/faq` to `app/sitemap.ts` (priority 0.7, alongside Contact/Insights).
+- `HomeSchema`'s `FAQPage` JSON-LD (in `components/Schema.tsx`) already includes every answered FAQ item regardless of how many are visually shown on any given page, so trimming the visible list on Home/Services has no SEO/rich-result impact — verified this before making the change, not assumed.
+- Verified: `npx eslint` clean, checked live at 1440×900 and 390×844 (Home's trimmed list + button, `/faq`'s full list with no button, footer link).
+
 ### Explicitly do NOT do
 
 - No `aggregateRating` or `review` schema until genuine reviews exist. Fabricated review markup is a manual-action risk.
