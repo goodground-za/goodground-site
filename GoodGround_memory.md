@@ -224,6 +224,16 @@ Full detail and effort estimates live in `seo-audit/ACTION-PLAN.md`. That file i
 - ~~Em dashes removed sitewide~~ — see Copy rules.
 - ~~favicon.ico, boilerplate SVGs, unused 1.7MB noise.png, meta description lengths, `/insights` title, contextual internal links.~~
 
+### Done 2026-07-22
+
+- ~~New "Growth" service section (Google Ads + Meta Ads)~~ — client sent `brief/GoodGround_Ads_Copy_Deck.docx`; folded into the existing `/services` page as items 05/06 (founder's placement choice over a standalone `/growth` page), reusing the exact `Service` type / `ServiceDeepDive` deep-dive pattern so it costs nothing extra in nav/routing/schema — the jump index, `ItemList` schema, and the homepage `WhatWeBuild` accordion all pick the two new items up automatically since they share `content/services.ts`.
+  - `content/services.ts`: added `growth?: boolean` to `Service`, plus `google-ads` and `meta-ads` entries (slugs `#google-ads` / `#meta-ads`).
+  - New pill tag "Growth service" (`bg-pine`) added alongside the existing Flagship (ember) / Included (bark) tags, in both `app/services/page.tsx`'s `ServiceDeepDive` and `WhatWeBuild.tsx`'s `ServiceRow`.
+  - 5 new components, each mirroring an existing homepage section's exact pattern rather than inventing new visual language: `GrowthIntro.tsx` (section header + 2 CTAs), `GrowthProblem.tsx` (Philosophy.tsx-style narrative prose, no image), `GrowthBenefits.tsx` (Industries.tsx-style bark card grid, 7 items from `content/growth-benefits.ts`, checkmark badge not a per-item icon since the deck didn't specify icon meanings), `GrowthHowItWorks.tsx` (PaymentPlan.tsx-style numbered steps, borderless rows not cards — a card-on-cream first draft was invisible against the page's own cream body background, caught before shipping), `GrowthWhyUs.tsx` (WhyUs.tsx's ember-card trio, verbatim pattern), `GrowthCTA.tsx` (CTABanner.tsx pattern, closes the Growth block specifically; the page's original CTABanner still closes the whole page further down).
+  - `content/faq.ts`: appended 5 new Q&A pairs (ad spend, do-you-need-a-new-site, Google-vs-Meta, contract length, ad account ownership) — all fully answered, so they flow straight into the existing `FAQPage` schema filter with no extra work.
+  - Metadata description on `/services` updated to mention Google & Meta Ads.
+  - Verified: `npx eslint` clean, both pages checked at 1440×900 and 390×844 in a live dev server, homepage accordion confirmed picking up the new items with the Growth pill.
+
 ### Explicitly do NOT do
 
 - No `aggregateRating` or `review` schema until genuine reviews exist. Fabricated review markup is a manual-action risk.

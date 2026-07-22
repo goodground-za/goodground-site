@@ -11,6 +11,8 @@ export type Service = {
   description: string;
   /** Flagship leads the homepage bento and the Services page. */
   flagship?: boolean;
+  /** Growth services (ads) are tagged distinctly from the build services. */
+  growth?: boolean;
 
   // Services-page detail.
   subheading: string;
@@ -79,5 +81,33 @@ export const services: Service[] = [
     outcome:
       "A website that keeps performing months and years after launch, backed by a team that already knows exactly how it was built.",
     cta: { label: "Talk to Us About a Care Plan", href: "/contact" },
+  },
+  {
+    slug: "google-ads",
+    title: "Google Ads",
+    description: "Be there the moment someone searches for you.",
+    growth: true,
+    subheading: "Be there the moment someone searches for you.",
+    problem:
+      "Most small businesses either don't advertise on Google or hand it to an 'expert' who burns the budget on broad keywords and vague clicks. Money goes out; enquiries don't come in.",
+    solution:
+      "We build search campaigns around what your customers actually type when they're ready to act, 'emergency electrician near me', not 'electricity'. Tight keywords, honest ad copy, proper tracking, and landing pages that match the promise. We manage the budget like it's our own, because your trust is the account we care about most.",
+    outcome:
+      "Qualified enquiries you can see and measure, a cost-per-lead you actually understand, and a tap you can turn up when you're quiet and down when you're full.",
+    cta: { label: "Start Your Project", href: "/start-project" },
+  },
+  {
+    slug: "meta-ads",
+    title: "Meta Ads (Facebook & Instagram)",
+    description: "Stay in front of the people deciding whether to trust you.",
+    growth: true,
+    subheading: "Stay in front of the people deciding whether to trust you.",
+    problem:
+      "'Boosting a post' feels like marketing, but it rarely builds anything. It reaches the wrong people, teaches you nothing, and stops working the second you stop paying.",
+    solution:
+      "We plan Facebook and Instagram campaigns around real audiences, your local area, your ideal customer, and the people who've already visited your site. Scroll-stopping creative, a clear offer, and remarketing that quietly follows up with visitors who didn't enquire the first time.",
+    outcome:
+      "A brand people recognise before they need you, a steady stream of interest from the right area, and warm leads that already know who you are by the time they get in touch.",
+    cta: { label: "Start Your Project", href: "/start-project" },
   },
 ];

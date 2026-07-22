@@ -97,6 +97,10 @@ function ServiceRow({
             <span className="bg-bark text-peach rounded-pill hidden shrink-0 px-3 py-1 text-[12px] font-bold sm:inline-block">
               Included
             </span>
+          ) : service.growth ? (
+            <span className="bg-pine text-peach rounded-pill hidden shrink-0 px-3 py-1 text-[12px] font-bold sm:inline-block">
+              Growth
+            </span>
           ) : null}
           <span
             aria-hidden="true"

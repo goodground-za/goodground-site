@@ -53,4 +53,30 @@ export const faq: FAQItem[] = [
     question: "Do you work with businesses outside Cape Town?",
     answer: null,
   },
+  // Copy deck: Google Ads & Meta Ads (Growth), §7.
+  {
+    question: "How much should I spend on ads?",
+    answer:
+      "It depends on your goals and margins, but we'll always start with a budget you're comfortable with and only recommend increases once the results justify it. You're never locked into a number.",
+  },
+  {
+    question: "Do I need a new website to start?",
+    answer:
+      "Not necessarily, but ads work far better when they point to a fast, well-structured site. If your foundation needs work first, we'll tell you honestly.",
+  },
+  {
+    question: "What's the difference between Google Ads and Meta Ads?",
+    answer:
+      "Google captures people already searching for what you offer, high intent, ready to act. Meta (Facebook and Instagram) builds awareness and trust with the right people before they need you. Most businesses do best with a mix.",
+  },
+  {
+    question: "Is there a long contract?",
+    answer:
+      "No. We work month to month with 30 days' notice. We'd rather earn your business every month than trap you in it.",
+  },
+  {
+    question: "Will I own my ad accounts?",
+    answer:
+      "Always. Your accounts, your data, your audiences, they belong to you, whatever happens down the line.",
+  },
 ];

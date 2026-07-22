@@ -6,6 +6,12 @@ import { KineticText, Reveal, RevealGroup, RevealItem } from "@/components/motio
 import { PageHero } from "@/components/PageHero";
 import { CTABanner } from "@/components/sections/CTABanner";
 import { FAQ } from "@/components/sections/FAQ";
+import { GrowthBenefits } from "@/components/sections/GrowthBenefits";
+import { GrowthCTA } from "@/components/sections/GrowthCTA";
+import { GrowthHowItWorks } from "@/components/sections/GrowthHowItWorks";
+import { GrowthIntro } from "@/components/sections/GrowthIntro";
+import { GrowthProblem } from "@/components/sections/GrowthProblem";
+import { GrowthWhyUs } from "@/components/sections/GrowthWhyUs";
 import { type Service, services } from "@/content/services";
 import { site } from "@/content/site";
 
@@ -13,7 +19,7 @@ import { site } from "@/content/site";
 export const metadata: Metadata = {
   title: "Website Development Services in South Africa",
   description:
-    "Website development, UX and design, SEO foundations, and care plans. Built in-house in South Africa, payable over 12 monthly instalments.",
+    "Website development, UX and design, SEO foundations, care plans, and Google & Meta Ads management. Built in-house in South Africa, payable over 12 monthly instalments.",
   alternates: { canonical: "/services" },
 };
 
@@ -71,10 +77,29 @@ export default function ServicesPage() {
 
       {/* Service deep-dives */}
       <div className="mx-auto max-w-[1434px] px-3 sm:px-6 md:px-11">
-        {services.map((service, i) => (
-          <ServiceDeepDive key={service.slug} service={service} index={i} />
-        ))}
+        {services.map((service, i) => {
+          // Growth services (Google Ads / Meta Ads) get an intro + problem
+          // framing right before the first one, instead of jumping straight
+          // from Care Plans into a deep-dive with no context.
+          const isFirstGrowthService = service.growth && !services[i - 1]?.growth;
+          return (
+            <div key={service.slug}>
+              {isFirstGrowthService ? (
+                <>
+                  <GrowthIntro />
+                  <GrowthProblem />
+                </>
+              ) : null}
+              <ServiceDeepDive service={service} index={i} />
+            </div>
+          );
+        })}
       </div>
+
+      <GrowthBenefits />
+      <GrowthHowItWorks />
+      <GrowthWhyUs />
+      <GrowthCTA />
 
       {/* Payment recap */}
       <section className="px-3 py-8 sm:px-5">
@@ -151,6 +176,10 @@ function ServiceDeepDive({ service, index }: { service: Service; index: number }
               ) : service.includedInEveryBuild ? (
                 <span className="bg-bark text-peach rounded-pill px-3 py-1 text-[12px] font-bold">
                   Included in every build
+                </span>
+              ) : service.growth ? (
+                <span className="bg-pine text-peach rounded-pill px-3 py-1 text-[12px] font-bold">
+                  Growth service
                 </span>
               ) : null}
             </div>
