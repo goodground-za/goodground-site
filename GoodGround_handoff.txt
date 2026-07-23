@@ -1,6 +1,6 @@
 ===============================================================================
 GOODGROUND — CONTEXT HANDOFF
-Last updated: 2026-07-20 (session 2: analytics, SEO audit, copy pass, blog, GSC)
+Last updated: 2026-07-22 (session 3: Growth services section, dedicated FAQ page)
 ===============================================================================
 
 READ FIRST
@@ -142,6 +142,83 @@ Commits, oldest first:
     correct and resolves as articles are added.
 
 (f) GOOGLE SEARCH CONSOLE VERIFICATION TAG — shipped, see §6.
+
+
+2b. WHAT SESSION 3 DELIVERED (all live and verified on production)
+--------------------------------------------------------------------
+Commits, oldest first:
+  64261fc  Add Google Ads & Meta Ads growth services to /services
+  317e774  Add dedicated /faq page and trim the homepage/services FAQ accordions
+
+(a) NEW "GROWTH" SERVICES: GOOGLE ADS + META ADS
+    Client sent `brief/GoodGround_Ads_Copy_Deck.docx` asking for a new ads
+    section. Founder chose to fold it into the existing /services page as
+    items 05/06 (the deck's alternative was a standalone /growth page) rather
+    than build new nav/routing.
+
+    `content/services.ts`: `Service` type gained `growth?: boolean`. Two new
+    entries, slugs `google-ads` / `meta-ads`. Because WhatWeBuild.tsx (the
+    homepage accordion) and the Services page deep-dives BOTH read from this
+    one array, the two new services appeared in both places, the jump index,
+    and the ItemList schema with zero extra wiring — that shared-data design
+    already existed, this just proved it works for a second content type.
+
+    New pill "Growth service" (bg-pine) alongside the existing Flagship
+    (ember) / Included (bark) tags — added in both `ServiceDeepDive`
+    (app/services/page.tsx) and `ServiceRow` (WhatWeBuild.tsx).
+
+    Six new components, each DELIBERATELY copying an existing homepage
+    section's pattern instead of inventing new visual language:
+      GrowthIntro.tsx        - section header + 2 CTAs
+      GrowthProblem.tsx       - Philosophy.tsx-style narrative prose, no image
+      GrowthBenefits.tsx      - Industries.tsx-style bark card grid, 7 items
+                                (content/growth-benefits.ts), checkmark badge
+      GrowthHowItWorks.tsx    - PaymentPlan.tsx-style numbered steps
+      GrowthWhyUs.tsx         - WhyUs.tsx's ember-card trio, verbatim pattern
+      GrowthCTA.tsx           - CTABanner.tsx pattern, closes the Growth block
+                                specifically (the page's original CTABanner
+                                still closes the whole page further down)
+
+    BUG CAUGHT BEFORE SHIPPING: GrowthHowItWorks.tsx's first draft put the
+    numbered steps in bg-cream cards. This page's body background IS
+    --color-cream, so the cards were invisible. Switched to bordered rows
+    (no fill) instead. LESSON: check the actual page background token before
+    picking a card fill color, don't assume a pairing that works elsewhere in
+    the design system will contrast here too.
+
+    content/faq.ts gained 5 new Q&A pairs (ad spend, need-a-new-site,
+    Google-vs-Meta, contract length, ad account ownership) — all answered, so
+    they flow straight into the existing FAQPage schema with no extra work.
+
+(b) DEDICATED /faq PAGE
+    The FAQ accordion had grown to 13 questions (8 original + 5 from (a)) and
+    read long inline on both Home and Services.
+
+    `components/sections/FAQ.tsx` now takes an optional `limit` prop:
+    `<FAQ limit={4} />` (Home, Services) shows the first 4 + a "See all FAQs"
+    pill button; `<FAQ />` (new /faq page) shows all of them, no button.
+
+    New `app/faq/page.tsx`: PageHero + full <FAQ /> + the existing CTABanner.
+    Gave the PageHero its own eyebrow ("FAQ") and headline distinct from the
+    FAQ block's own ("Have questions?" / "Everything you need to know...") —
+    a first draft repeated the exact same eyebrow+headline back-to-back,
+    caught in the screenshot pass before shipping.
+
+    `content/site.ts`: `legalLinks` gained `{ label: "FAQ", href: "/faq" }`,
+    first in the array (before Privacy Policy / Terms) — Footer.tsx already
+    renders that array as-is, so no Footer.tsx changes were needed.
+
+    Added /faq to app/sitemap.ts (priority 0.7).
+
+    VERIFIED BEFORE ASSUMING: HomeSchema's FAQPage JSON-LD (Schema.tsx)
+    already includes every answered FAQ item regardless of how many are
+    visually shown on any page. Trimming the visible list to 4 has NO
+    SEO/rich-result impact - checked the schema code, did not just assume it.
+
+Both verified live via a local dev server (this app is not the live prod
+instance during dev, but same code): eslint clean, checked at 1440x900 and
+390x844, homepage accordion + services page + new /faq page + footer link
+all confirmed rendering correctly before pushing.
 
 
 3. STANDING RULES (violating these has caused real rework)

@@ -200,7 +200,6 @@ Full detail and effort estimates live in `seo-audit/ACTION-PLAN.md`. That file i
 - Replace placeholder Unsplash photography with real GoodGround images.
 - Add Facebook/Instagram URLs.
 - Write the 3 outstanding FAQ answers (Q4/Q6/Q8).
-- ~~Company registration number~~ — NOT an open item, despite older notes saying "to be confirmed". GoodGround has no separate registration number; it trades under The Trail Tribe. `/legal` already states this correctly ("Business Name: GoodGround", "Operated by: The Trail Tribe") and carries no registration-number field at all. Nothing to fill in.
 - Payment gateway + NCA legal review before any live billing.
 
 ### Dev work outstanding
@@ -243,8 +242,17 @@ Full detail and effort estimates live in `seo-audit/ACTION-PLAN.md`. That file i
 - `HomeSchema`'s `FAQPage` JSON-LD (in `components/Schema.tsx`) already includes every answered FAQ item regardless of how many are visually shown on any given page, so trimming the visible list on Home/Services has no SEO/rich-result impact — verified this before making the change, not assumed.
 - Verified: `npx eslint` clean, checked live at 1440×900 and 390×844 (Home's trimmed list + button, `/faq`'s full list with no button, footer link).
 
+### Done 2026-07-23: real registration number, no longer "operating under The Trail Tribe"
+
+- **Founder confirmed real, final values — supersedes every older note saying GoodGround has no separate registration and trades under The Trail Tribe.** GoodGround is now its own standalone registered entity: legal name **GoodGround (Pty) Ltd**, registration number **2024/641034/07**, trading as **GoodGround**. Not VAT registered — all displayed prices are VAT inclusive.
+- `content/site.ts` (the single NAP source of truth) gained `legalName`, `registrationNumber`, `vatRegistered: false`.
+- `/legal`'s Company Details block rebuilt: was `Business Name: GoodGround` / `Operated by: The Trail Tribe`, now `Registered Company Name` / `Trading As` / `Registration Number` / `VAT Status`, all pulling from `site.*` rather than hardcoded strings. The founder explicitly confirmed dropping the Trail Tribe line entirely (asked before assuming, since it's a legal-notice change) — GoodGround (Pty) Ltd is its own entity now, no relationship mentioned.
+- `HomeSchema` (`components/Schema.tsx`) gained `legalName` on the `ProfessionalService` node. No `vatID`/`taxID` added since there isn't one (not registered).
+- Verified live at 1440×900 before pushing: all six Company Details fields render correctly, prose paragraph reads naturally with the new legal name substituted in.
+
 ### Explicitly do NOT do
 
 - No `aggregateRating` or `review` schema until genuine reviews exist. Fabricated review markup is a manual-action risk.
-- No invented portfolio, registration number, phone number, or co-founder.
+- No invented phone number or co-founder. (Registration number is now real and confirmed — see 2026-07-23 above — this rule is about values nobody has actually given us, not this one specifically.)
+- No invented portfolio.
 - Do not strip "X, not just Y" from the copy — that is brand voice, not an AI tell.

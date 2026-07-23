@@ -88,12 +88,17 @@ export default function LegalPage() {
               Company Details
             </p>
             <dl className="mt-5 grid gap-5 sm:grid-cols-2">
-              <CompanyItem label="Business Name" value="GoodGround" />
-              <CompanyItem label="Operated by" value="The Trail Tribe" />
+              <CompanyItem label="Registered Company Name" value={site.legalName} />
+              <CompanyItem label="Trading As" value={site.name} />
+              <CompanyItem label="Registration Number" value={site.registrationNumber} />
               <CompanyItem label="Founded" value="2026" />
               <CompanyItem
                 label="Registered Location"
                 value={`${site.address.locality}, ${site.address.city}, South Africa`}
+              />
+              <CompanyItem
+                label="VAT Status"
+                value={site.vatRegistered ? "VAT registered" : "Not VAT registered — all prices are VAT inclusive"}
               />
             </dl>
           </div>
@@ -101,8 +106,8 @@ export default function LegalPage() {
           <div className="mt-12 space-y-12">
             <Section num="01" id="terms" title="Legal Notice">
               <P>
-                GoodGround is a website design and development studio operating under The Trail
-                Tribe, committed to transparency, data protection, and responsible use of
+                {site.legalName}, trading as {site.name}, is a website design and development
+                studio committed to transparency, data protection, and responsible use of
                 information.
               </P>
               <Banner>

@@ -14,6 +14,7 @@ export function HomeSchema() {
     "@type": "ProfessionalService",
     "@id": `${site.url}/#organization`,
     name: site.name,
+    legalName: site.legalName,
     description:
       "Website development studio building custom, fast business websites across South Africa. Every project is one fixed price split into 12 equal monthly payments.",
     url: site.url,
