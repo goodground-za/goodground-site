@@ -1,7 +1,53 @@
 ===============================================================================
 GOODGROUND — CONTEXT HANDOFF
-Last updated: 2026-07-22 (session 3: Growth services section, dedicated FAQ page)
+Last updated: 2026-07-23 (new-machine handover section added)
 ===============================================================================
+
+0. NEW COMPUTER / NEW CLAUDE SETUP (do this first if you're picking this
+   project up somewhere it hasn't run before)
+------------------------------------------------------------------------
+a) Clone the repo — it is PUBLIC, everything code-side lives here:
+     git clone https://github.com/goodground-za/goodground-site.git
+   This includes GoodGround_memory.md, this handoff, PRODUCT.md, seo-audit/,
+   all source, and full git history. Nothing code-related is missing from git.
+
+b) Get the `brief/` folder — this is the ONE thing that is NOT in git (it's a
+   sibling of `site/`, not inside the repo, and is 14MB of client-supplied
+   binaries so it was deliberately kept out of version control). It holds:
+     GoodGround-Development-Brief.md   — original dev brief
+     GoodGround-Website-Copy.md        — the copy deck (client-approved, verbatim)
+     GoodGround_Ads_Copy_Deck.docx     — Google/Meta ads copy (source for /services 05/06)
+     reference/Palette.png             — the source the design-token hex values were sampled from
+     reference/Good Ground - Webiste colour and layout.png — client's own comp
+     reference/goodground-index-page-images/*  — client's homepage reference images
+     GoodGround logos/*                — logo source files
+   Was zipped to hand over: see the .zip this session produced. Unzip it
+   alongside `site/` so the path is `clients/goodground/{brief,site}` (matches
+   what `GoodGround_memory.md` assumes). Not strictly required to run the site
+   day-to-day, but required before touching design/copy/brand decisions — the
+   memory file references it as source of truth repeatedly.
+
+c) `npm install` inside `site/`.
+
+d) `.env.local` (gitignored, not in the zip/repo — recreate if needed):
+     NEXT_PUBLIC_GA_ID=<GA4 measurement ID, optional — analytics only loads if set>
+   Everything else (the Web3Forms key) is hardcoded in lib/enquiry.ts on
+   purpose — Web3Forms keys are public by design. No other secrets exist.
+
+e) Accounts the human operator (Johandre) already holds and that a new Claude
+   cannot self-provision — flag if a task needs one of these and confirm access
+   first rather than assuming:
+     GitHub    — goodground-za org, repo is public so read access needs nothing,
+                 but pushing needs Johandre's collaborator credentials.
+     Vercel    — Hobby plan, deploys from `main` automatically.
+     Domain    — Afrihost (goodground.co.za), DNS points at Vercel.
+     Google Search Console / GA4 — see punch list below, GSC verification meta
+                 tag is already in the code either way.
+
+f) Read order for a fresh Claude: this file → GoodGround_memory.md → PRODUCT.md
+   → seo-audit/ACTION-PLAN.md if the task is SEO. Do not start editing before
+   reading GoodGround_memory.md — section 51-58 alone documents several bugs
+   that are easy to reintroduce blind.
 
 READ FIRST
 -----------
