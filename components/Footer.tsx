@@ -42,7 +42,10 @@ export function Footer() {
                       <li key={social.href}>
                         <a
                           href={social.href}
-                          className="bg-peach text-bark font-heading grid size-9 place-items-center rounded-full text-[12px] font-bold"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`${social.label} — GoodGround on ${social.name}`}
+                          className="bg-peach text-bark font-heading grid size-9 place-items-center rounded-full text-[12px] font-bold transition-transform duration-150 hover:scale-105"
                         >
                           {social.label}
                         </a>

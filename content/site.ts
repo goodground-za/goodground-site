@@ -28,8 +28,11 @@ export const site = {
   phone: null as string | null, // TODO: client to confirm
   // Taken from the client's own footer artwork.
   email: "hello@goodground.co.za",
-  // The comp shows FB and IG marks but no destinations yet.
-  socials: [] as { label: string; href: string }[], // TODO: client to confirm URLs
+  // Confirmed by the founder 2026-07-25.
+  socials: [
+    { label: "FB", name: "Facebook", href: "https://www.facebook.com/share/14jTaX4tHhU/" },
+    { label: "IG", name: "Instagram", href: "https://www.instagram.com/goodground.company" },
+  ] as { label: string; name: string; href: string }[],
 } as const;
 
 export const navLinks = [

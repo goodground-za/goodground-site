@@ -1,6 +1,7 @@
 ===============================================================================
 GOODGROUND — CONTEXT HANDOFF
-Last updated: 2026-07-23 (new-machine handover section added)
+Last updated: 2026-07-25 (Facebook/Instagram links added to the footer —
+see GoodGround_memory.md "Done 2026-07-25" for the full writeup)
 ===============================================================================
 
 0. NEW COMPUTER / NEW CLAUDE SETUP (do this first if you're picking this

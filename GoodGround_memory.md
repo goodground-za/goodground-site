@@ -53,7 +53,7 @@ Contrast-checked as drawn: peach on bark 13.4:1, white on ember 5.96:1, ember on
 
 ## Content model (`/content`, no CMS)
 
-- `site.ts` — NAP, nav links, footer links, legal links. `phone: null`, `socials: []` still unconfirmed — don't invent.
+- `site.ts` — NAP, nav links, footer links, legal links. `phone: null` still unconfirmed — don't invent. `socials` confirmed 2026-07-25 (Facebook + Instagram).
 - `images.ts` — the client's real supplied artwork (pre-masked PNGs) for Home/About/Philosophy/Payment/Footer, **plus** placeholder Unsplash URLs used elsewhere (hero photography on inner sections) — these still need swapping for real GoodGround photography.
 - `services.ts` — 4 services, each with homepage one-liner + full Problem/Solution/Outcome detail for the Services page deep-dives.
 - `process.ts` — the 5-step "Prepare the Ground → Harvest" sequence.
@@ -157,7 +157,8 @@ Positioning locked by the founder: **development-first wording** ("Website Devel
 - **Trading structure:** operates under **The Trail Tribe** (no separate company registration number for "GoodGround" itself — legal page reflects this, not a placeholder).
 - **Email:** hello@goodground.co.za (confirmed real, sourced from the client's own footer artwork).
 - **Founder:** described by experience, not named, at the founder's explicit request — "a web developer with more than 10 years' experience across UX and UI design, website design and graphic design." No name appears anywhere on the site.
-- **Phone / socials:** still unconfirmed — `null` / `[]` in `content/site.ts`.
+- **Phone:** still unconfirmed — `null` in `content/site.ts`.
+- **Socials:** confirmed 2026-07-25 — Facebook `https://www.facebook.com/share/14jTaX4tHhU/`, Instagram `https://www.instagram.com/goodground.company`. Live in the footer (all pages, shared layout) and in `HomeSchema`'s `sameAs`.
 
 ---
 
@@ -198,7 +199,6 @@ Full detail and effort estimates live in `seo-audit/ACTION-PLAN.md`. That file i
 - **Article byline: name a person, or keep the Organization?** `content/articles.ts` has `author: "GoodGround"`, rendered as a byline and as `Organization` in `BlogPosting` schema. A named `Person` is the strongest remaining E-E-A-T win, but the founder asked to be described by experience rather than name on About, so this is a founder call. See Copy rules.
 - **Real case studies for `/work`**, or drop `/work` from `app/sitemap.ts` until it has content. It is currently 154 words and will index as thin. This site itself, written up as a build story, is legitimate proof of work.
 - Replace placeholder Unsplash photography with real GoodGround images.
-- Add Facebook/Instagram URLs.
 - Write the 3 outstanding FAQ answers (Q4/Q6/Q8).
 - Payment gateway + NCA legal review before any live billing.
 
@@ -249,6 +249,13 @@ Full detail and effort estimates live in `seo-audit/ACTION-PLAN.md`. That file i
 - `/legal`'s Company Details block rebuilt: was `Business Name: GoodGround` / `Operated by: The Trail Tribe`, now `Registered Company Name` / `Trading As` / `Registration Number` / `VAT Status`, all pulling from `site.*` rather than hardcoded strings. The founder explicitly confirmed dropping the Trail Tribe line entirely (asked before assuming, since it's a legal-notice change) — GoodGround (Pty) Ltd is its own entity now, no relationship mentioned.
 - `HomeSchema` (`components/Schema.tsx`) gained `legalName` on the `ProfessionalService` node. No `vatID`/`taxID` added since there isn't one (not registered).
 - Verified live at 1440×900 before pushing: all six Company Details fields render correctly, prose paragraph reads naturally with the new legal name substituted in.
+
+### Done 2026-07-25: Facebook and Instagram links
+
+- Founder supplied real URLs: Facebook `https://www.facebook.com/share/14jTaX4tHhU/`, Instagram `https://www.instagram.com/goodground.company`. `content/site.ts`'s `socials` array (previously empty, comp showed the marks but no destinations) now populated with `{ label, name, href }` per entry — `label` is the short glyph text the footer's circular badge renders ("FB"/"IG"), `name` is the full platform name used only in the accessible name.
+- `components/Footer.tsx`: the social-icon rendering already existed (gated on `socials.length > 0`, was just never populated), so this was a content-only change plus three small hardening additions the real external links now warrant: `target="_blank" rel="noopener noreferrer"` (external links, avoid reverse tabnabbing) and an `aria-label` combining the visible label with the full platform name (`"FB — GoodGround on Facebook"`) — same WCAG 2.5.3 pattern as trap #8 (nav "GG" monogram), since the visible badge text alone ("FB") isn't a self-explanatory accessible name on its own.
+- `HomeSchema`'s `sameAs` (`components/Schema.tsx`) already read `site.socials.map(s => s.href)` unconditionally, so both URLs now flow into `ProfessionalService` schema automatically — no schema code changed.
+- Footer is a shared layout component, so this appears on every page with no per-page changes needed. Verified live via Chrome DevTools MCP at 1440×900, 820×1180 and 390×844 on both `/` and `/contact`; confirmed via `evaluate_script` that both anchors carry the correct `href`, `target`, `rel` and `aria-label`.
 
 ### Explicitly do NOT do
 
