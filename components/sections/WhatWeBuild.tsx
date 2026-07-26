@@ -81,7 +81,7 @@ function ServiceRow({
           onClick={onToggle}
           aria-expanded={isOpen}
           aria-controls={panelId}
-          className="flex w-full cursor-pointer items-center gap-5 px-6 py-5 text-left sm:px-8"
+          className="flex w-full cursor-pointer items-center gap-5 px-6 py-5 text-left transition-colors duration-200 ease-out hover:bg-ember/[0.04] sm:px-8"
         >
           <span className="font-heading text-ember text-[13px] font-bold tabular-nums">
             {String(index + 1).padStart(2, "0")}

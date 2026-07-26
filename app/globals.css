@@ -36,8 +36,17 @@
   --radius-card: 24px;
   --radius-pill: 999px;
 
+  /* Shadows are tinted with the bark hue (rgb 1 6 2), not pure black, so they
+     sit in the warm palette instead of greying it out. */
   --shadow-soft: 0 1px 2px rgb(1 6 2 / 0.05), 0 8px 24px -8px rgb(1 6 2 / 0.1);
   --shadow-lift: 0 2px 4px rgb(1 6 2 / 0.06), 0 16px 40px -12px rgb(1 6 2 / 0.18);
+
+  /* Strong custom easing curves (Emil Kowalski's craft bar — the built-in CSS
+     ease-outs are too weak to feel intentional). --ease-out is the default for
+     UI feedback; --ease-in-out for on-screen movement. Exposed as Tailwind
+     tokens so components can use `ease-[var(--ease-out)]`. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 @layer base {
@@ -56,9 +65,12 @@
     color: var(--color-bark);
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 
-  /* Montserrat Bold for every heading, per the client. */
+  /* Montserrat Bold for every heading, per the client. `text-wrap: balance`
+     evens out ragged headline line-lengths and kills single-word orphans on
+     the last line — a small thing that reads as deliberate typesetting. */
   h1,
   h2,
   h3,
@@ -66,12 +78,35 @@
     font-family: var(--font-heading);
     font-weight: 700;
     letter-spacing: -0.02em;
+    text-wrap: balance;
   }
 
+  /* Paragraphs get `pretty`: it only reflows the last few lines to prevent
+     orphans, without the full rebalancing that would hurt long body copy. */
+  p {
+    text-wrap: pretty;
+  }
+
+  /*
+    Two-tone focus ring that stays visible on EVERY surface in the palette,
+    fixing the old single-ember ring which was invisible on ember bands (~1:1)
+    and only 2.75:1 on bark/pine (under the 3:1 WCAG needs for focus). The ink
+    outline carries light surfaces (ink on cream ~15:1) and the peach halo
+    carries dark ones (peach on bark 13.4:1, peach on ember 5.4:1); on ember
+    both clear 3:1, so at least one ring is always visible. The real `outline`
+    (not box-shadow alone) keeps it working in forced-colors / high-contrast
+    mode too.
+  */
   :focus-visible {
-    outline: 2px solid var(--color-ember);
-    outline-offset: 3px;
-    border-radius: 4px;
+    outline: 2px solid var(--color-ink);
+    outline-offset: 2px;
+    /* !important so the peach halo wins over a component's own decorative
+       shadow (buttons carry shadow-soft/lift, which would otherwise override
+       this base-layer box-shadow and wipe the halo on dark surfaces). The
+       decorative shadow returns on blur; focus visibility is the requirement
+       that must take precedence while focused. */
+    box-shadow: 0 0 0 4px var(--color-peach) !important;
+    border-radius: 5px;
   }
 }
 
@@ -109,6 +144,22 @@
   }
   to {
     transform: translateX(-50%);
+  }
+}
+
+/* Each step of the start-project wizard fades up as it mounts, so advancing
+   through the flow feels like moving forward rather than the content snapping
+   in place. CSS (not Framer) so it runs off the main thread and can't
+   interfere with the step's focus management. Neutralised by the global
+   reduced-motion block below. */
+@keyframes step-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

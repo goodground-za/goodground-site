@@ -8,10 +8,14 @@ import type { ComponentProps, ReactNode } from "react";
  */
 type Variant = "ember" | "ink" | "peach" | "outline";
 
+// Press feedback is scale(0.97) — enough to feel the interface "hear" the tap
+// (Emil's bar is 0.95–0.98; the old 0.99 was too faint to register). The
+// stronger ease-out curve comes from the --ease-out token override in
+// globals.css, so every button inherits it without a per-variant change.
 const base =
   "inline-flex items-center justify-center gap-2 rounded-pill font-heading font-bold cursor-pointer " +
   "transition-[transform,background-color,box-shadow,border-color] duration-150 ease-out " +
-  "motion-safe:hover:scale-[1.02] active:scale-[0.99] disabled:pointer-events-none disabled:opacity-50";
+  "motion-safe:hover:scale-[1.02] motion-safe:active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50";
 
 const variants: Record<Variant, string> = {
   ember: "bg-ember text-peach shadow-soft hover:bg-ember/90 hover:shadow-lift",

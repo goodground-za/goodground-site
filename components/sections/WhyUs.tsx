@@ -32,12 +32,23 @@ export function WhyUs() {
         </h2>
 
         <RevealGroup className="mt-12 grid gap-4 md:grid-cols-3">
-          {reasons.map((reason) => (
+          {reasons.map((reason, i) => (
             <RevealItem key={reason.title}>
               <div className="rounded-card bg-ember grain h-full overflow-hidden">
-                <div className="relative z-[2] p-7">
-                  <h3 className="font-heading text-peach text-[17px] font-bold">{reason.title}</h3>
-                  <p className="mt-4 max-w-[34ch] text-[14px] leading-[1.6] text-peach/85">
+                <div className="relative z-[2] flex h-full flex-col p-7">
+                  {/* A large index number breaks the three-identical-cards
+                      pattern and gives each card its own anchor. tabular-nums
+                      keeps the digits aligned across the row. */}
+                  <span
+                    aria-hidden="true"
+                    className="font-heading text-peach/35 text-[15px] font-bold tabular-nums"
+                  >
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="font-heading text-peach mt-5 text-[17px] font-bold text-balance">
+                    {reason.title}
+                  </h3>
+                  <p className="mt-3 max-w-[34ch] text-[14px] leading-[1.6] text-peach/85">
                     {reason.body}
                   </p>
                 </div>

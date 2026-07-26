@@ -100,12 +100,10 @@ export function Analytics({ gaId }: { gaId?: string }) {
           >
             {/* rounded-block + grain matches every other bark surface on the
                 site; the peach hairline lifts it off the dark hero bands, which
-                otherwise read as one continuous shape on mobile.
-
-                The global :focus-visible ring is ember, which is only 2.75:1
-                against bark — under the 3:1 WCAG wants for focus indicators.
-                Peach is 13.4:1 here, so override it inside this panel. */}
-            <div className="bg-bark text-peach shadow-lift rounded-block grain border-peach/15 mx-auto flex max-w-4xl flex-col gap-5 border p-6 [&_:focus-visible]:outline-peach sm:flex-row sm:items-center sm:gap-8 sm:p-7">
+                otherwise read as one continuous shape on mobile. Focus rings are
+                handled globally now (two-tone ink+peach ring in globals.css),
+                so no per-panel override is needed here. */}
+            <div className="bg-bark text-peach shadow-lift rounded-block grain border-peach/15 mx-auto flex max-w-4xl flex-col gap-5 border p-6 sm:flex-row sm:items-center sm:gap-8 sm:p-7">
               <p className="text-[14px] leading-relaxed sm:flex-1">
                 We&rsquo;d like to use analytics cookies to see which pages people find useful.
                 Nothing loads until you agree, and we never sell your data.{" "}

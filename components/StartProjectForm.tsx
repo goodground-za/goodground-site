@@ -169,9 +169,15 @@ export function StartProjectForm() {
         />
       </div>
 
-      {/* Choice steps */}
+      {/* Choice steps. key={step} remounts the block on each advance so the
+          step-in fade replays; motion-safe keeps it out of reduced-motion. */}
       {!isDetails ? (
-        <div role="group" aria-labelledby="step-heading" className="mt-8">
+        <div
+          key={step}
+          role="group"
+          aria-labelledby="step-heading"
+          className="mt-8 motion-safe:animate-[step-in_260ms_var(--ease-out)_both]"
+        >
           <p className="text-ember font-heading text-[13px] font-bold">{choiceSteps[step].eyebrow}</p>
           <h2 id="step-heading" ref={headingRef} tabIndex={-1} className="font-heading text-bark mt-2 text-[clamp(1.5rem,3.2vw,2.25rem)] leading-tight font-bold tracking-[-0.02em] outline-none">
             {choiceSteps[step].heading}
@@ -200,7 +206,7 @@ export function StartProjectForm() {
         </div>
       ) : (
         // Details step
-        <form onSubmit={submit} noValidate className="mt-8">
+        <form onSubmit={submit} noValidate className="mt-8 motion-safe:animate-[step-in_260ms_var(--ease-out)_both]">
           <p className="text-ember font-heading text-[13px] font-bold">Almost done</p>
           <h2 id="step-heading" ref={headingRef} tabIndex={-1} className="font-heading text-bark mt-2 text-[clamp(1.5rem,3.2vw,2.25rem)] leading-tight font-bold tracking-[-0.02em] outline-none">
             How can we reach you?

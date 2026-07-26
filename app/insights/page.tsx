@@ -41,7 +41,7 @@ export default function InsightsPage() {
           <Reveal>
             <Link
               href={`/insights/${featured.slug}`}
-              className="bg-bark rounded-block grain group relative block overflow-hidden transition-[transform,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:shadow-lift [&_:focus-visible]:outline-peach"
+              className="bg-bark rounded-block grain group relative block overflow-hidden transition-[transform,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:shadow-lift"
             >
               {/* Deliberately one column. A 8/4 split left the right third of a
                   1300px card empty, which is the same negative-space problem
