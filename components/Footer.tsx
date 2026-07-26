@@ -4,6 +4,7 @@ import { images } from "@/content/images";
 import { footerLinks, legalLinks, site } from "@/content/site";
 import { FooterLogo } from "./Logo";
 import { NewsletterForm } from "./NewsletterForm";
+import { SocialIcon } from "./SocialIcon";
 
 /**
  * Per the comp: the seedling artwork sits behind, with a bark card overlaid and
@@ -44,10 +45,10 @@ export function Footer() {
                           href={social.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          aria-label={`${social.label} — GoodGround on ${social.name}`}
-                          className="bg-peach text-bark font-heading grid size-9 place-items-center rounded-full text-[12px] font-bold transition-transform duration-150 hover:scale-105"
+                          aria-label={`GoodGround on ${social.name}`}
+                          className="bg-peach text-bark grid size-9 place-items-center rounded-full transition-transform duration-150 hover:scale-105"
                         >
-                          {social.label}
+                          <SocialIcon platform={social.platform} className="size-4" />
                         </a>
                       </li>
                     ))}

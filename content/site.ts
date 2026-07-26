@@ -30,9 +30,9 @@ export const site = {
   email: "hello@goodground.co.za",
   // Confirmed by the founder 2026-07-25.
   socials: [
-    { label: "FB", name: "Facebook", href: "https://www.facebook.com/share/14jTaX4tHhU/" },
-    { label: "IG", name: "Instagram", href: "https://www.instagram.com/goodground.company" },
-  ] as { label: string; name: string; href: string }[],
+    { platform: "facebook", name: "Facebook", href: "https://www.facebook.com/share/14jTaX4tHhU/" },
+    { platform: "instagram", name: "Instagram", href: "https://www.instagram.com/goodground.company" },
+  ] as { platform: "facebook" | "instagram"; name: string; href: string }[],
 } as const;
 
 export const navLinks = [
