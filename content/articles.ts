@@ -29,6 +29,146 @@ export type Article = {
 
 export const articles: Article[] = [
   {
+    slug: "hand-coded-websites-vs-drag-and-drop-builders",
+    title: "Why hand-coded websites will always beat drag-and-drop website builders",
+    excerpt:
+      "Drag-and-drop builders win the first afternoon. Hand-coded websites win every day after that. Here's what you're actually trading away for the convenience, and when it does and doesn't matter.",
+    metaTitle: "Hand-Coded Websites vs Drag-and-Drop Website Builders",
+    metaDescription:
+      "Wix, Squarespace and GoDaddy get you online fast, but at a cost you only notice later. Here's what hand-coded websites actually get you that builders can't.",
+    keyword: "hand-coded website vs website builder",
+    author: "GoodGround",
+    date: "2026-07-27",
+    readingMinutes: 8,
+    category: "Websites",
+    body: [
+      {
+        type: "p",
+        text: "Somewhere in the process of shopping for a website, most business owners see two very different numbers. One is a monthly fee from a drag-and-drop builder, small enough to feel like nothing, with a promise that you'll have a live site by the end of the afternoon. The other is a quote from someone who is going to sit down and write the thing by hand, which takes longer and costs more upfront.",
+      },
+      {
+        type: "p",
+        text: "On paper the builder looks like the obvious choice. It's cheaper today, it's faster today, and it doesn't require you to trust a stranger with weeks of your time and money. The problem is that a website isn't judged on today. It's judged on the two or three years it sits there working, or not working, for your business. Measured over that stretch, the maths flips completely.",
+      },
+      {
+        type: "p",
+        text: "This isn't an argument that drag-and-drop tools are badly made. Wix, Squarespace and GoDaddy's builder are genuinely impressive pieces of software for what they're trying to do. The argument is narrower than that: they're trying to do something different from what most growing businesses actually need, and the gap between the two only shows up once you're living with the result.",
+      },
+
+      { type: "h2", text: "What a drag-and-drop builder is actually building" },
+      {
+        type: "p",
+        text: "A builder isn't building your site from scratch when you drag a block onto the page. It's assembling your site out of a fixed set of components that every other customer on that platform is also using, wrapped in code written to handle every possible thing anyone might ever want, not the specific thing you want. Your \"custom\" layout is really a configuration of someone else's system.",
+      },
+      {
+        type: "p",
+        text: "That's a reasonable trade when you have no other option. It stops being reasonable once you realise what it costs you: every page loads code for features you're not using, every layout is bent to fit a grid someone else designed, and every change you want to make has to be possible within the builder's menu of options, not just possible in principle.",
+      },
+
+      { type: "h2", text: "Page weight, and who actually pays for it" },
+      {
+        type: "p",
+        text: "Because a builder has to support everyone's possible use case at once, it ships a lot of code your visitor never asked for. Widgets for features you've never touched, styling systems layered on top of styling systems, tracking scripts baked in by default. A hand-coded site ships exactly what that page needs and nothing else, because there was no library of extra features to drag in.",
+      },
+      {
+        type: "p",
+        text: "That difference is invisible on fast fibre in an office. It's not invisible on the connection most of your customers are actually using. We've written before about how [most South African website visitors arrive on a phone, often on patchy mobile data](/insights/biggest-website-mistakes-south-african-smes-make), and a bloated page is one of the quietest ways a business loses an enquiry it never even knew it had.",
+      },
+      {
+        type: "quote",
+        text: "A builder gives every visitor the code for every feature on the platform. A hand-coded site gives them only the page they asked for.",
+      },
+
+      { type: "h2", text: "Design that stops where the template stops" },
+      {
+        type: "p",
+        text: "Every builder has a ceiling, even the good ones. You can rearrange the furniture, but you're still working inside someone else's floor plan. Want a layout that breaks the grid, an interaction that doesn't exist as a pre-built widget, or a page that behaves differently for two kinds of customer? You're either stuck, or you're paying for a third-party plugin that half-works and slows the whole site down further.",
+      },
+      {
+        type: "p",
+        text: "Hand-coded work has no ceiling like that, because nothing was pre-built to fight against. If it can be described, it can be built. That matters less for a single static page than it does for a business that's actually trying to differentiate itself from three competitors running the exact same template with different logos in the corner.",
+      },
+
+      { type: "h2", text: "SEO you can actually control" },
+      {
+        type: "p",
+        text: "Most builders give you a title field and a description field, and call that SEO. What actually decides whether Google understands and ranks a page goes much deeper: clean heading structure, markup that matches what the page is really about, structured data describing your business correctly, a sitemap that reflects your real pages, and page speed that a stack of unused widgets is actively working against.",
+      },
+      {
+        type: "p",
+        text: "A hand-coded site gives you control over every one of those layers, because there's no platform standing between you and the code. That's a big part of why [being findable has to be built into the site from the start rather than bolted on later](/insights/why-small-businesses-in-south-africa-need-a-website), and it's much harder to do properly when the tool you're using was never designed to hand you that level of control in the first place.",
+      },
+
+      { type: "h2", text: "Whose website is it, really?" },
+      {
+        type: "p",
+        text: "This is the one that bites hardest, and latest. A site built inside a drag-and-drop platform only exists inside that platform. There's no folder of files you can hand to someone else. If you ever want to leave, and prices do go up, features do get discontinued, accounts do get suspended over nothing, leaving means rebuilding the entire site from scratch somewhere else.",
+      },
+      {
+        type: "p",
+        text: "We've covered this trap in more detail in [the biggest website mistakes South African SMEs make](/insights/biggest-website-mistakes-south-african-smes-make), but the short version is worth repeating here: you should always be able to answer who owns the domain, where the site is hosted, and whether you can get a real copy of it. With a hand-coded site those answers are simple, because there's nothing standing between you and your own work.",
+      },
+      {
+        type: "ul",
+        items: [
+          "Your domain is registered in your business's name, not the builder's account.",
+          "The actual code exists as files you can hand to anyone, not a configuration locked inside one platform.",
+          "Leaving, if you ever want to, means moving house. It doesn't mean starting over.",
+        ],
+      },
+
+      { type: "h2", text: "The subscription that never stops" },
+      {
+        type: "p",
+        text: "Builders are rarely sold as one fee. There's the plan itself, then a fee to remove their branding, then a fee for the app that handles bookings, then another for the one that handles forms properly, then a jump to a higher tier once you hit a traffic or feature limit. None of these are large on their own. Stacked over three or four years, they usually add up to more than a proper build would have cost outright.",
+      },
+      {
+        type: "p",
+        text: "The difference is what you're left holding at the end. Keep paying a builder for four years and you own nothing you can walk away with. This is exactly why we split every GoodGround project into 12 equal monthly payments instead of one large invoice: you get the predictable monthly cost without the ongoing rent, because at the end of it the finished site is genuinely yours.",
+      },
+
+      { type: "h2", text: "What happens when the business actually grows" },
+      {
+        type: "p",
+        text: "A template is sized for an average business doing average things. The moment yours needs something specific, a quote calculator, a booking flow that matches how your team actually works, an integration with the system you already use to run the business, the builder either can't do it or forces you into a workaround held together with third-party plugins and hope.",
+      },
+      {
+        type: "p",
+        text: "A hand-coded site was never fighting a template to begin with, so it grows the way the business grows. New pages, new functionality and new integrations get added to a foundation that was built to take them, instead of bolted onto a system that was never meant to hold that much weight.",
+      },
+
+      { type: "h2", text: "Where a builder is honestly the right call" },
+      {
+        type: "p",
+        text: "None of this means drag-and-drop tools are always the wrong answer. If you're testing an idea before it's a real business, running a market stall for one weekend, or you genuinely have no budget and need something online today, a builder is a sensible stopgap. Nobody should feel bad about starting there.",
+      },
+      {
+        type: "p",
+        text: "The distinction worth holding onto is that a builder is a starting point, not a destination. It's fine for the business you have on day one. It quietly becomes the wrong tool for the business you're trying to build, and the businesses that outgrow it fastest are usually the ones actually succeeding.",
+      },
+
+      { type: "h2", text: "The short version" },
+      {
+        type: "ul",
+        items: [
+          "A builder assembles your site from a shared template. A hand-coded site is built around your business specifically.",
+          "Builders ship code for features you don't use. Hand-coded sites load only what the page needs.",
+          "Design, SEO and structured data are only fully in your control when there's no platform standing between you and the code.",
+          "A builder site only exists inside that platform's account. A hand-coded site is files you actually own.",
+          "Monthly builder fees stack up for years and leave you with nothing to show for them. A proper build, paid off monthly, ends with you owning the result outright.",
+        ],
+      },
+      {
+        type: "p",
+        text: "A drag-and-drop builder will always win the first afternoon. A hand-coded site is built to win every day after that, which is the part that actually decides whether a website helps your business or just sits there costing you a small amount every month for years.",
+      },
+      {
+        type: "p",
+        text: "If you've outgrown the template you started with, or you'd rather skip it altogether, [tell us about your business](/start-project) and we'll come back with next steps.",
+      },
+    ],
+  },
+  {
     slug: "biggest-website-mistakes-south-african-smes-make",
     title: "The biggest website mistakes South African SMEs make (and how to fix them)",
     excerpt:
