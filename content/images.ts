@@ -52,7 +52,7 @@ export const images = {
    * into it (WhyUs → AboutPreview). Decorative, so alt is empty.
    */
   forest: {
-    src: "/images/body-forest-image.png",
+    src: "/images/body-forest-image.webp",
     width: 1344,
     height: 752,
     alt: "",
