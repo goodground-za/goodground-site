@@ -14,9 +14,9 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative mt-auto px-3 pb-3 sm:px-5 sm:pb-5">
+    <footer className="relative mt-auto">
       <div className="relative mx-auto max-w-[1434px]">
-        <div className="rounded-block overflow-hidden">
+        <div className="overflow-hidden rounded-t-[40px]">
           <Image
             src={images.footer.src}
             alt=""
@@ -27,8 +27,9 @@ export function Footer() {
           />
         </div>
 
-        {/* Overlaps the artwork, as drawn, leaving the seedling visible above. */}
-        <div className="rounded-block bg-bark grain text-peach -mt-[26%] overflow-hidden sm:-mt-[22%]">
+        {/* Overlaps the artwork, as drawn, leaving the seedling visible above.
+            Rounded top corners match the comp's footer card. */}
+        <div className="bg-bark grain text-peach rounded-t-[40px] -mt-[26%] overflow-hidden sm:-mt-[22%]">
           <div className="relative z-[2] px-6 pt-12 pb-8 sm:px-10 md:px-14 md:pt-16">
             <div className="grid gap-10 md:grid-cols-12">
               <div className="md:col-span-5">

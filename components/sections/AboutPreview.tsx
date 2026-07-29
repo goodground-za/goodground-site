@@ -1,53 +1,43 @@
-import Image from "next/image";
 import { ButtonLink } from "@/components/Button";
 import { Eyebrow } from "@/components/Eyebrow";
 import { KineticText, Reveal } from "@/components/motion/KineticText";
-import { images } from "@/content/images";
 
 /**
- * Copy deck §1 Section 7. On cream per the comp, with the artwork bleeding to
- * the right edge and an ink button rather than a peach one.
+ * Copy deck §1 Section 7. Rendered inside the WhyUs panel, over the forest half
+ * of its shared background — so this is just the copy, no surface of its own. A
+ * left-anchored scrim keeps it readable where it overlaps the brighter canopy.
  *
  * The founder is described by experience, not by name, at the owner's request.
  */
 export function AboutPreview() {
   return (
-    <section className="overflow-hidden px-3 py-12 sm:px-5 md:py-16">
-      <div className="mx-auto grid max-w-[1434px] items-center gap-8 lg:grid-cols-12">
-        <div className="px-3 sm:px-6 md:px-11 lg:col-span-6">
+    <div className="relative mt-16 md:mt-24">
+      <div aria-hidden="true" className="forest-text-scrim absolute inset-0" />
+
+      <div className="relative z-[2] mx-auto max-w-[1434px] px-6 pb-20 sm:px-10 md:px-14 md:pb-28">
+        <div className="max-w-[48ch]">
           <Eyebrow tone="ember">Who we are</Eyebrow>
 
           <KineticText
+            tone="light"
             phrases={["Built by people", "who care about", "the foundation."]}
-            className="font-heading text-bark mt-6 max-w-[13ch] text-[clamp(2rem,4.6vw,3.75rem)] leading-[1.03] font-bold tracking-[-0.03em]"
+            className="font-heading mt-6 max-w-[13ch] text-[clamp(2rem,4.6vw,3.75rem)] leading-[1.03] font-bold tracking-[-0.03em]"
           />
 
           <Reveal delay={0.08}>
-            <p className="text-bark-muted mt-8 max-w-[44ch] text-[clamp(0.95rem,1.2vw,1.1rem)] leading-[1.6]">
+            <p className="text-peach/85 mt-8 max-w-[44ch] text-[clamp(0.95rem,1.2vw,1.1rem)] leading-[1.6]">
               GoodGround was founded in Cape Town&rsquo;s Northern Suburbs. We started GoodGround
               because too many good businesses were being let down by websites that looked fine and
               did nothing for them. No strategy, no structure, nothing after launch.
             </p>
             <div className="mt-9">
-              <ButtonLink href="/about" variant="ink" size="lg">
+              <ButtonLink href="/about" variant="peach" size="lg">
                 Read our story
               </ButtonLink>
             </div>
           </Reveal>
         </div>
-
-        {/* Bleeds off the right edge, as drawn. */}
-        <div className="lg:col-span-6">
-          <Image
-            src={images.about.src}
-            alt={images.about.alt}
-            width={images.about.width}
-            height={images.about.height}
-            sizes="(max-width: 1024px) 100vw, 50vw"
-            className="ml-auto h-auto w-full max-w-[640px]"
-          />
-        </div>
       </div>
-    </section>
+    </div>
   );
 }

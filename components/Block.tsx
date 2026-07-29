@@ -2,9 +2,10 @@ import type { ReactNode } from "react";
 import { AuroraGlow } from "@/components/AuroraGlow";
 
 /**
- * The comp's core layout unit: a large-radius block, inset from the page edges,
- * in one of three surfaces. Everything on the Home page is one of these, so the
- * inset and radius live here rather than being retyped per section.
+ * An inset layout unit: a large-radius block, held to the centred max-width with
+ * a page-edge gutter around it, in one of four surfaces. Used for sections the
+ * comp draws as floating rounded cards (the FAQ block, and the About/Insights
+ * pages) rather than as full-bleed bands.
  */
 export function Block({
   children,

@@ -31,8 +31,8 @@ const steps = [
  */
 export function PaymentPlan() {
   return (
-    <section id="payment-plan" className="px-3 py-16 sm:px-5 md:py-24">
-      <div className="mx-auto max-w-[1434px]">
+    <section id="payment-plan" className="bg-cream py-16 md:py-24">
+      <div className="mx-auto max-w-[1434px] px-6 sm:px-10 md:px-14">
         <Eyebrow tone="ember">How it works</Eyebrow>
 
         <KineticText

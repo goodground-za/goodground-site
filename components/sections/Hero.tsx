@@ -43,25 +43,25 @@ export function Hero() {
       </section>
 
       {/* Pre-masked artwork: rounded corners and the transparent break-out are
-          baked into the PNG, so it is placed at its own ratio and never cropped. */}
-      <div className="relative -mt-[4vw] px-3 sm:px-5">
-        <div className="mx-auto max-w-[1434px]">
-          <Image
-            src={images.header.src}
-            alt={images.header.alt}
-            width={images.header.width}
-            height={images.header.height}
-            priority
-            sizes="100vw"
-            className="h-auto w-full"
-          />
-        </div>
+          baked into the PNG, so it is placed at its own ratio and never cropped.
+          Runs full-bleed edge-to-edge. */}
+      <div className="relative -mt-[4vw]">
+        <Image
+          src={images.header.src}
+          alt={images.header.alt}
+          width={images.header.width}
+          height={images.header.height}
+          priority
+          sizes="100vw"
+          className="h-auto w-full"
+        />
       </div>
 
-      {/* The orange band overlaps the image bottom, as drawn. */}
-      <div className="relative z-[3] -mt-[8vw] px-3 sm:px-5">
-        <div className="bg-ember rounded-block grain text-peach mx-auto max-w-[1434px] overflow-hidden">
-          <div className="relative z-[2] px-6 py-12 text-center sm:px-10 md:py-16">
+      {/* The orange band overlaps the image bottom, as drawn. Full-bleed with
+          rounded bottom corners lifting it off the section below. */}
+      <div className="relative z-[3] -mt-[8vw]">
+        <div className="bg-ember grain text-peach rounded-b-[40px] overflow-hidden">
+          <div className="relative z-[2] mx-auto max-w-[1434px] px-6 py-12 text-center sm:px-10 md:py-16">
             <Reveal>
               <p className="font-heading text-[clamp(0.9rem,1.4vw,1.05rem)] font-bold">Build on</p>
               <p className="font-heading mt-1 text-[clamp(1.75rem,4.2vw,3.5rem)] leading-none font-bold tracking-[-0.02em]">

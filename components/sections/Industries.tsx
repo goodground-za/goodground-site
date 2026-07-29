@@ -13,8 +13,8 @@ import { industries } from "@/content/industries";
  */
 export function Industries() {
   return (
-    <section className="px-3 py-20 sm:px-5 md:py-28">
-      <div className="mx-auto max-w-[1434px] px-3 sm:px-6 md:px-11">
+    <section className="bg-cream py-20 md:py-28">
+      <div className="mx-auto max-w-[1434px] px-6 sm:px-10 md:px-14">
         <Eyebrow tone="ember">Industries we serve</Eyebrow>
         <KineticText
           phrases={["Who we build for."]}

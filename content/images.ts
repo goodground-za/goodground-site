@@ -46,4 +46,15 @@ export const images = {
     height: 613,
     alt: "",
   },
+  /**
+   * Aerial forest road. Used purely as a full-bleed background twice on Home:
+   * once fading down into brown (Philosophy) and once with green fading down
+   * into it (WhyUs → AboutPreview). Decorative, so alt is empty.
+   */
+  forest: {
+    src: "/images/body-forest-image.png",
+    width: 1344,
+    height: 752,
+    alt: "",
+  },
 } satisfies Record<string, Img>;

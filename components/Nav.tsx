@@ -8,9 +8,9 @@ import { ButtonLink } from "./Button";
 import { NavLogo } from "./Logo";
 
 /**
- * The comp draws a dark pine bar with rounded bottom corners, inset from the page
- * edges and sitting on the cream field. It stays sticky so the CTA is always
- * reachable, which the comp can't show.
+ * A dark pine bar running full-bleed edge-to-edge, matching the full-width flow
+ * of the page below it. It stays sticky so the CTA is always reachable, which
+ * the comp can't show.
  */
 export function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -30,11 +30,9 @@ export function Nav() {
   }, [menuOpen]);
 
   return (
-    <header className="sticky top-0 z-50 px-3 pt-0 sm:px-5">
-      <nav
-        aria-label="Main"
-        className="bg-pine mx-auto max-w-[1434px] rounded-b-[32px] px-5 sm:px-8"
-      >
+    <header className="sticky top-0 z-50">
+      <nav aria-label="Main" className="bg-pine">
+        <div className="mx-auto max-w-[1434px] px-5 sm:px-8">
         <div className="flex h-18 items-center justify-between">
           <Link href="/" className="text-peach" aria-label="GoodGround — home">
             <NavLogo />
@@ -109,6 +107,7 @@ export function Nav() {
               </ButtonLink>
             </li>
           </ul>
+        </div>
         </div>
       </nav>
     </header>

@@ -4,56 +4,62 @@ import { ParableLink } from "@/components/ParableModal";
 import { images } from "@/content/images";
 
 /**
- * Copy deck §1 Section 2, with one client-side change carried from the comp:
- * the closing note now names the Parable of the Sower outright, where the deck
- * deliberately kept the reference implicit.
+ * Copy deck §1 Section 2.
+ *
+ * Drawn per the comp as a full-bleed forest panel: the aerial forest road reads
+ * clearly behind the heading up top, then dissolves down into solid textured
+ * bark (#331816) so the section hands straight off into the dark "What we build"
+ * block with no seam. Text is a single readable column rather than the old
+ * text-left / photo-right split — the photo IS the section now.
  */
 export function Philosophy() {
   return (
-    <section className="px-3 py-16 sm:px-5 md:py-24">
-      <div className="mx-auto max-w-[1434px]">
+    // Pulled up under the hero's "Build on GoodGround" band (which paints above
+    // at z-[3]); the forest then sits behind that band's rounded bottom corners
+    // instead of the cream page, so the corners read as cut out of the forest.
+    <section className="grain relative isolate -mt-[64px] overflow-hidden">
+      {/* Back layer: the forest photo, covering the whole panel. */}
+      <Image
+        src={images.forest.src}
+        alt={images.forest.alt}
+        fill
+        sizes="100vw"
+        className="object-cover object-top"
+      />
+      {/* Fade the photo down into solid bark. */}
+      <div aria-hidden="true" className="forest-brown absolute inset-0 z-[1]" />
+
+      <div className="relative z-[2] mx-auto max-w-[1434px] px-6 py-24 sm:px-10 md:px-14 md:py-32">
         <KineticText
+          tone="light"
           phrases={["Growth starts with the", "ground you build on."]}
-          className="font-heading text-pine max-w-[18ch] text-[clamp(2rem,5.6vw,4.5rem)] leading-[1.05] font-bold tracking-[-0.03em]"
+          className="font-heading max-w-[18ch] text-[clamp(2rem,5.6vw,4.5rem)] leading-[1.05] font-bold tracking-[-0.03em]"
         />
 
-        <div className="mt-12 grid items-end gap-10 lg:grid-cols-12 lg:gap-14">
-          <div className="lg:col-span-6">
-            <div className="text-bark max-w-[46ch] space-y-6 text-[clamp(1rem,1.35vw,1.15rem)] leading-[1.6]">
-              <p>
-                Every business wants more enquiries and more customers. But growth doesn&rsquo;t start
-                with marketing. It starts with the foundation underneath it.
-              </p>
-              <p>
-                Good ground is where seeds take root, grow, and produce a harvest. Businesses work
-                the same way. A logo without strategy has little value. A website without purpose
-                rarely performs. No amount of marketing can fix a weak foundation.
-              </p>
-              <p className="font-heading text-pine text-[clamp(1.1rem,1.5vw,1.3rem)] leading-snug font-bold">
-                That&rsquo;s the ground we help you build on, before you grow.
-              </p>
-              <p className="text-bark-muted max-w-[44ch] text-[15px] leading-relaxed italic">
-                {/* ParableLink's default text already starts with "the", so
-                    "the biblical <ParableLink/>" rendered as "the biblical the
-                    Parable of the Sower". Pass the label explicitly instead. */}
-                The name comes from the biblical{" "}
-                <ParableLink>Parable of the Sower</ParableLink>. Good ground represents
-                preparation, intention, and growth.
-              </p>
-            </div>
+        <Reveal delay={0.08} className="mt-10 max-w-[52ch]">
+          <div className="text-peach/90 space-y-6 text-[clamp(1rem,1.35vw,1.15rem)] leading-[1.6]">
+            <p>
+              Every business wants more enquiries and more customers. But growth doesn&rsquo;t start
+              with marketing. It starts with the foundation underneath it.
+            </p>
+            <p>
+              Good ground is where seeds take root, grow, and produce a harvest. Businesses work
+              the same way. A logo without strategy has little value. A website without purpose
+              rarely performs. No amount of marketing can fix a weak foundation.
+            </p>
+            <p className="font-heading text-peach text-[clamp(1.1rem,1.5vw,1.3rem)] leading-snug font-bold">
+              That&rsquo;s the ground we help you build on, before you grow.
+            </p>
+            <p className="text-peach/70 max-w-[44ch] text-[15px] leading-relaxed italic">
+              {/* ParableLink's default text already starts with "the", so
+                  "the biblical <ParableLink/>" rendered as "the biblical the
+                  Parable of the Sower". Pass the label explicitly instead. */}
+              The name comes from the biblical{" "}
+              <ParableLink>Parable of the Sower</ParableLink>. Good ground represents
+              preparation, intention, and growth.
+            </p>
           </div>
-
-          <Reveal className="lg:col-span-6" delay={0.08}>
-            <Image
-              src={images.philosophy.src}
-              alt={images.philosophy.alt}
-              width={images.philosophy.width}
-              height={images.philosophy.height}
-              sizes="(max-width: 1024px) 90vw, 46vw"
-              className="ml-auto h-auto w-full max-w-[560px]"
-            />
-          </Reveal>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

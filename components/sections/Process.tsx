@@ -53,8 +53,10 @@ export function Process() {
   };
 
   return (
-    <section id="process" className="px-3 py-8 sm:px-5">
-      <div className="bg-bark rounded-block grain text-peach mx-auto max-w-[1434px] overflow-hidden">
+    // Inset rounded card, floating on the cream field with space above and below
+    // (the comp draws this one as a card, not a full-bleed band).
+    <section id="process" className="px-3 py-8 sm:px-5 md:py-12">
+      <div className="bg-bark rounded-block grain text-peach relative isolate mx-auto max-w-[1434px] overflow-hidden">
         <AuroraGlow intensity={0.3} />
         <div className="relative z-[2] pt-14 pb-12 md:pt-20 md:pb-14">
           <div className="px-6 sm:px-10 md:px-14">

@@ -19,14 +19,15 @@ export function Marquee({ items }: { items: string[] }) {
   );
 
   return (
-    <section className="px-3 py-5 sm:px-5" aria-label="What we do">
-      <div className="bg-bark grain rounded-block mx-auto max-w-[1434px] overflow-hidden">
-        <div className="relative z-[2] overflow-hidden py-5">
-          {/* w-max so the two rows lay out at full width; hover pauses the loop. */}
-          <div className="flex w-max animate-[marquee_32s_linear_infinite] hover:[animation-play-state:paused] motion-reduce:animate-none">
-            <Row />
-            <Row hidden />
-          </div>
+    <section
+      className="bg-bark grain relative isolate overflow-hidden py-5"
+      aria-label="What we do"
+    >
+      <div className="relative z-[2] overflow-hidden py-5">
+        {/* w-max so the two rows lay out at full width; hover pauses the loop. */}
+        <div className="flex w-max animate-[marquee_32s_linear_infinite] hover:[animation-play-state:paused] motion-reduce:animate-none">
+          <Row />
+          <Row hidden />
         </div>
       </div>
     </section>

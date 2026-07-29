@@ -135,6 +135,74 @@
   }
 }
 
+/*
+  Full-bleed forest backgrounds (content/images.forest), used twice on Home.
+  The <Image> lays at the back; these gradient overlays sit above it (z-[1]) to
+  fade the photo into a solid palette colour, so a coloured section can dissolve
+  into the forest and back out again with no hard seam. Grain (::after) sits on
+  the same layer for the "textured" look; content sits at z-[2].
+
+  forest-brown — Philosophy: forest legible up top (a soft scrim keeps the
+  heading readable over the misty canopy), dissolving down to solid bark #331816
+  so it flows straight into the dark "What we build" block below.
+*/
+@utility forest-brown {
+  background-image: linear-gradient(
+    to bottom,
+    rgba(20, 28, 21, 0.5) 0%,
+    rgba(51, 24, 22, 0.28) 34%,
+    rgba(51, 24, 22, 0.82) 72%,
+    var(--color-bark) 100%
+  );
+}
+
+/*
+  forest-green — the AboutPreview panel that continues out of WhyUs: solid pine
+  #1c261d at the very top (seamless with WhyUs's solid-green base, so the green
+  reads as "fading into the image"), the forest revealed through the middle, then
+  resolving to bark at the bottom for a clean hand-off into the FAQ block.
+*/
+@utility forest-green {
+  background-image: linear-gradient(
+    to bottom,
+    var(--color-pine) 0%,
+    var(--color-pine) 7%,
+    rgba(28, 38, 29, 0.22) 46%,
+    rgba(51, 24, 22, 0.5) 80%,
+    var(--color-bark) 100%
+  );
+}
+
+/*
+  forest-panel — the combined "We build foundations → Who we are" card: solid
+  pine at the top (behind the heading and the top of the three cards) that melts
+  down into the forest photo through the lower half, staying a dark canopy green
+  at the bottom (not brown) to match the comp. This is the smoother green→image
+  blend the panel calls for.
+*/
+@utility forest-panel {
+  background-image: linear-gradient(
+    to bottom,
+    var(--color-pine) 0%,
+    var(--color-pine) 14%,
+    rgba(28, 38, 29, 0.58) 32%,
+    rgba(28, 38, 29, 0.22) 54%,
+    rgba(20, 28, 21, 0.38) 100%
+  );
+}
+
+/* A left-anchored dark wash so body copy stays readable where it overlaps the
+   brighter mid-canopy of the forest. Fades out to the right so the photo still
+   breathes on the image side of the column. */
+@utility forest-text-scrim {
+  background-image: linear-gradient(
+    to right,
+    rgba(16, 23, 17, 0.7) 0%,
+    rgba(16, 23, 17, 0.32) 48%,
+    transparent 82%
+  );
+}
+
 /* Continuous ticker. The track holds two identical rows and slides exactly one
    row-width, so the loop is seamless. Paused on hover; killed by reduced-motion
    through the global override below. */
