@@ -1,7 +1,10 @@
 ===============================================================================
 GOODGROUND — CONTEXT HANDOFF
-Last updated: 2026-07-25 (Facebook/Instagram links added to the footer —
-see GoodGround_memory.md "Done 2026-07-25" for the full writeup)
+Last updated: 2026-07-29 (home page re-skinned to the client's full-bleed
+comp: full-bleed sections, forest photo used twice, WhyUs+AboutPreview
+merged into one green->forest panel with SVG-placeholder card images,
+Marquee + PaymentPlan removed. See GoodGround_memory.md "Done 2026-07-29"
+and §2c below. Palette unchanged; two small copy edits.)
 ===============================================================================
 
 0. NEW COMPUTER / NEW CLAUDE SETUP (do this first if you're picking this
@@ -268,6 +271,63 @@ instance during dev, but same code): eslint clean, checked at 1440x900 and
 all confirmed rendering correctly before pushing.
 
 
+2c. WHAT SESSION 4 DELIVERED (2026-07-29, live on production)
+--------------------------------------------------------------------
+Commits: b2f0cb0 (full-bleed redesign), 39867c9 (SVG placeholders,
+gradient seam fix, humanize copy). Full detail in GoodGround_memory.md
+"Done 2026-07-29" — this is the short version.
+
+Founder walked through a fresh full-page comp (brief/reference/
+reference-image.png + body-forest-image.png) and the HOME PAGE was
+rebuilt from inset rounded blocks to the comp's FULL-BLEED layout.
+
+MENTAL MODEL: most home sections now run full-bleed edge-to-edge (no
+side gutter, no gap), inner content still capped at max-w-[1434px]. The
+exceptions, drawn as inset rounded cards, are PROCESS and FAQ (plus the
+two ember CTA panels, Hero pitch + CTABanner).
+
+  - Block.tsx REVERTED to its original inset design (it had been made
+    full-bleed mid-session, which rippled to /about and /insights — the
+    only other Block consumers — reverting fixed those too). Home's
+    full-bleed sections don't use Block; they set their own bg + grain.
+  - New forest photo public/images/body-forest-image.png used TWICE as a
+    full-bleed background via 3 new globals.css utilities: forest-brown
+    (Philosophy fades to bark), forest-panel (WhyUs pine->forest,
+    MONOTONIC on purpose), forest-text-scrim (soft radial for legibility).
+  - WhyUs + AboutPreview MERGED into one rounded green->forest panel.
+    WhyUs.tsx now renders <AboutPreview /> inside itself, so AboutPreview
+    is NO LONGER in page.tsx. The 3 reason cards got image caps with a
+    numbered badge — currently SVG PLACEHOLDERS (CardImagePlaceholder in
+    WhyUs.tsx), awaiting real artwork.
+  - WhatWeBuild: flat bark, AuroraGlow removed (founder wanted no
+    animated bg here), rounded-b. Nav full-bleed. Footer rounded-t back.
+    Hero image + "Build on GoodGround" band full-bleed; band rounded-b,
+    with Philosophy pulled up (-mt-[64px]) so the forest shows behind the
+    band's rounded corners.
+  - MARQUEE and PAYMENTPLAN removed from the page (component files kept,
+    just unimported; nothing links to the old #payment-plan anchor).
+
+New home order: Hero -> Philosophy -> WhatWeBuild -> Industries ->
+Process -> WhyUs(+AboutPreview inside) -> Testimonials(hidden) -> FAQ ->
+CTABanner.
+
+Copy: humanizer pass touched only 2 spots (AboutPreview repetition +
+rule-of-three; Process "on time and on budget" cliche). Rest was clean.
+
+TRAPS HIT (new, also in memory):
+  - Full-page screenshots don't fire Framer scroll-reveals; below-fold
+    data-reveal elements stay opacity:0 and look "empty". Step-scroll the
+    page via evaluate_script before capturing, or shoot per-section.
+  - A gradient with a local opacity minimum reads as a hard line (the
+    "green line" the founder flagged). Keep panel gradients monotonic and
+    use a soft radial for any text scrim.
+
+NOTE: git push worked cleanly this session (no credential-manager hang;
+the §9 workaround was not needed this time, but keep it documented).
+
+NEW OPEN ITEM: real artwork for the 3 WhyUs reason cards (placeholders now).
+
+
 3. STANDING RULES (violating these has caused real rework)
 ------------------------------------------------------------
 - **NO EM DASHES in user-facing copy.** Use commas, full stops or a colon.
@@ -391,15 +451,15 @@ be materially worse), Content Quality (68, the score holding the total down),
 and AI Search Readiness once the Google Business Profile exists.
 
 Then, in rough order:
-  - **Focus-ring contrast audit on dark panels.** The global `:focus-visible`
-    ember ring is only 2.75:1 against bark, under the 3:1 WCAG requires for
-    focus indicators (fine on cream at 4.90:1). Fixed on the cookie banner via
-    `[&_:focus-visible]:outline-peach`. Still to check: Process, CTABanner,
-    Marquee, Footer links, Nav (pine), anything using `Block.tsx` with a dark
-    tone. Consider scoping the override once inside `Block.tsx` instead of per
-    component. See trap #14.
-    TRAP WHEN MEASURING: read alpha from a TRANSPARENT canvas. Compositing over
-    white first makes every colour read opaque and produces false failures.
+  - **Focus-ring contrast audit on dark panels — DONE 2026-07-26.** Fixed
+    globally, not panel by panel: a two-tone `:focus-visible` ring (ink
+    outline for light surfaces + peach box-shadow halo `!important` for dark)
+    that stays visible on every surface sitewide. All the per-panel
+    `[&_:focus-visible]:outline-peach` overrides were removed. See trap #14 in
+    GoodGround_memory.md for the full rationale and the `!important` gotcha.
+    TRAP WHEN MEASURING (kept for any future contrast work): read alpha from a
+    TRANSPARENT canvas. Compositing over white first makes every colour read
+    opaque and produces false failures.
   - External citations in the article (zero outbound links sitewide).
   - `Service` schema per offering (/services currently uses ItemList).
   - More blog articles. Two are live. /insights features whichever article is
