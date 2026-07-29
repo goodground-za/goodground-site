@@ -18,13 +18,21 @@ export function Philosophy() {
     // at z-[3]); the forest then sits behind that band's rounded bottom corners
     // instead of the cream page, so the corners read as cut out of the forest.
     <section className="grain relative isolate -mt-[64px] overflow-hidden">
-      {/* Back layer: the forest photo, covering the whole panel. */}
+      {/* Back layer: the forest photo, covering the whole panel. Portrait crop
+          below sm (tall/narrow), landscape from sm up. */}
       <Image
-        src={images.forest.src}
-        alt={images.forest.alt}
+        src={images.forestPortrait.src}
+        alt=""
         fill
         sizes="100vw"
-        className="object-cover object-top"
+        className="object-cover object-top sm:hidden"
+      />
+      <Image
+        src={images.forest.src}
+        alt=""
+        fill
+        sizes="100vw"
+        className="hidden object-cover object-top sm:block"
       />
       {/* Fade the photo down into solid bark. */}
       <div aria-hidden="true" className="forest-brown absolute inset-0 z-[1]" />

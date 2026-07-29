@@ -57,4 +57,15 @@ export const images = {
     height: 1504,
     alt: "",
   },
+  /**
+   * Portrait crop of the same aerial forest road, for the tall/narrow forest
+   * panels on mobile where the landscape version would be cropped to a thin
+   * centre strip. Swapped in below the `sm` breakpoint.
+   */
+  forestPortrait: {
+    src: "/images/body-forest-image-portrait.webp",
+    width: 1520,
+    height: 2688,
+    alt: "",
+  },
 } satisfies Record<string, Img>;

@@ -38,13 +38,21 @@ export function WhyUs() {
     // floating card, matching the comp's spacing off the Process card and FAQ.
     <section className="bg-cream py-4 md:py-8">
       <div className="rounded-[40px] grain bg-pine relative isolate overflow-hidden">
-        {/* Shared forest photo + gradient behind both halves of the panel. */}
+        {/* Shared forest photo + gradient behind both halves of the panel.
+            Portrait crop below sm, landscape from sm up. */}
         <Image
-          src={images.forest.src}
-          alt={images.forest.alt}
+          src={images.forestPortrait.src}
+          alt=""
           fill
           sizes="100vw"
-          className="object-cover object-bottom"
+          className="object-cover object-bottom sm:hidden"
+        />
+        <Image
+          src={images.forest.src}
+          alt=""
+          fill
+          sizes="100vw"
+          className="hidden object-cover object-bottom sm:block"
         />
         <div aria-hidden="true" className="forest-panel absolute inset-0 z-[1]" />
 
