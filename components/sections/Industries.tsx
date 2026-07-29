@@ -13,7 +13,7 @@ import { industries } from "@/content/industries";
  */
 export function Industries() {
   return (
-    <section className="bg-cream py-20 md:py-28">
+    <section className="bg-cream py-14 md:py-28">
       <div className="mx-auto max-w-[1434px] px-6 sm:px-10 md:px-14">
         <Eyebrow tone="ember">Industries we serve</Eyebrow>
         <KineticText

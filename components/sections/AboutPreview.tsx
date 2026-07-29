@@ -11,10 +11,10 @@ import { KineticText, Reveal } from "@/components/motion/KineticText";
  */
 export function AboutPreview() {
   return (
-    <div className="relative mt-16 md:mt-24">
+    <div className="relative mt-10 md:mt-24">
       <div aria-hidden="true" className="forest-text-scrim absolute inset-0" />
 
-      <div className="relative z-[2] mx-auto max-w-[1434px] px-6 pb-20 sm:px-10 md:px-14 md:pb-28">
+      <div className="relative z-[2] mx-auto max-w-[1434px] px-6 pt-4 pb-14 sm:px-10 md:px-14 md:pt-0 md:pb-28">
         <div className="max-w-[48ch]">
           <Eyebrow tone="ember">Who we are</Eyebrow>
 

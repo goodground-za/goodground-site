@@ -32,7 +32,7 @@ const reasons = [
 /** Placeholder image cap for the reason cards, swapped for real artwork later. */
 function CardImagePlaceholder() {
   return (
-    <div className="bg-surface relative flex aspect-[16/11] w-full items-center justify-center overflow-hidden rounded-t-[20px]">
+    <div className="bg-surface relative flex aspect-[16/9] w-full items-center justify-center overflow-hidden rounded-t-[20px] sm:aspect-[16/11]">
       <svg
         aria-hidden="true"
         viewBox="0 0 24 24"
@@ -69,12 +69,12 @@ export function WhyUs() {
 
         <div className="relative z-[2]">
           {/* We build foundations, not just front-ends. */}
-          <div className="mx-auto max-w-[1434px] px-6 pt-16 sm:px-10 md:px-14 md:pt-24">
+          <div className="mx-auto max-w-[1434px] px-6 pt-14 sm:px-10 md:px-14 md:pt-24">
             <h2 className="font-heading text-peach max-w-[18ch] text-[clamp(2rem,5.2vw,4rem)] leading-[1.05] font-bold tracking-[-0.03em]">
               We build foundations, not just front-ends.
             </h2>
 
-            <RevealGroup className="mt-12 grid gap-5 sm:grid-cols-2 md:grid-cols-3 md:gap-6">
+            <RevealGroup className="mt-8 grid gap-4 sm:grid-cols-2 md:mt-12 md:grid-cols-3 md:gap-6">
               {reasons.map((reason, i) => (
                 <RevealItem key={reason.title}>
                   <article className="flex h-full flex-col">

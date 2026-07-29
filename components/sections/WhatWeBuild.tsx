@@ -23,7 +23,7 @@ export function WhatWeBuild() {
     // Flat dark brown, no aurora, with rounded bottom corners lifting it off the
     // cream section below (the comp draws it as a panel, not a full band).
     <section className="bg-bark grain text-peach rounded-b-[40px] relative isolate overflow-hidden">
-      <div className="relative z-[2] mx-auto max-w-[1434px] px-6 py-16 sm:px-10 md:px-14 md:py-24">
+      <div className="relative z-[2] mx-auto max-w-[1434px] px-6 py-12 sm:px-10 md:px-14 md:py-24">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
               <Eyebrow>Our web design services</Eyebrow>
