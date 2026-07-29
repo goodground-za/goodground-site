@@ -18,19 +18,38 @@ const reasons = [
   {
     title: "Strategy before design",
     body: "We don't start developing until we understand your business. Design without strategy is decoration.",
-    image: images.philosophy,
   },
   {
     title: "Built for the long term",
     body: "We think in years, not launch dates. Every decision is made with growth in mind.",
-    image: images.budget,
   },
   {
     title: "A partner, not a vendor",
     body: "We build with you. Our Care Plans keep the relationship going after launch, without a sudden bill to go with it.",
-    image: images.about,
   },
 ];
+
+/** Placeholder image cap for the reason cards, swapped for real artwork later. */
+function CardImagePlaceholder() {
+  return (
+    <div className="bg-surface relative flex aspect-[16/11] w-full items-center justify-center overflow-hidden rounded-t-[20px]">
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="text-bark-muted/45 size-12"
+      >
+        <rect x="3" y="3" width="18" height="18" rx="2.5" />
+        <circle cx="8.5" cy="8.5" r="1.6" />
+        <path d="M21 14.5 16 10 5 20.5" />
+      </svg>
+    </div>
+  );
+}
 
 export function WhyUs() {
   return (
@@ -59,16 +78,8 @@ export function WhyUs() {
               {reasons.map((reason, i) => (
                 <RevealItem key={reason.title}>
                   <article className="flex h-full flex-col">
-                    {/* Image cap. */}
-                    <div className="relative aspect-[16/11] w-full overflow-hidden rounded-t-[20px]">
-                      <Image
-                        src={reason.image.src}
-                        alt=""
-                        fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
-                        className="object-cover"
-                      />
-                    </div>
+                    {/* Image cap — placeholder until real artwork is supplied. */}
+                    <CardImagePlaceholder />
                     {/* Ember body, with the step number straddling the seam. */}
                     <div className="bg-ember relative flex flex-1 flex-col rounded-b-[20px] px-7 pt-10 pb-7">
                       <span

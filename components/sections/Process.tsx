@@ -65,8 +65,8 @@ export function Process() {
               From first seed to lasting harvest.
             </h2>
             <p className="mt-6 max-w-[42ch] text-[15px] leading-[1.6] text-peach/70">
-              Good results aren&rsquo;t luck. Here&rsquo;s how a project runs, start to finish, on time
-              and on budget.
+              Good results aren&rsquo;t luck. Here&rsquo;s how a project runs, from your first call
+              through to launch.
             </p>
 
             <div

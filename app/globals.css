@@ -181,25 +181,29 @@
   blend the panel calls for.
 */
 @utility forest-panel {
+  /* Monotonic fade — opacity only ever decreases downward, so the forest is
+     revealed progressively with no bright mid-panel band (an earlier local
+     minimum here read as a hard green line running across the section). */
   background-image: linear-gradient(
     to bottom,
     var(--color-pine) 0%,
-    var(--color-pine) 14%,
-    rgba(28, 38, 29, 0.58) 32%,
-    rgba(28, 38, 29, 0.22) 54%,
-    rgba(20, 28, 21, 0.38) 100%
+    var(--color-pine) 15%,
+    rgba(28, 38, 29, 0.72) 40%,
+    rgba(28, 38, 29, 0.46) 72%,
+    rgba(28, 38, 29, 0.32) 100%
   );
 }
 
-/* A left-anchored dark wash so body copy stays readable where it overlaps the
-   brighter mid-canopy of the forest. Fades out to the right so the photo still
-   breathes on the image side of the column. */
+/* A soft dark wash so body copy stays readable where it overlaps the brighter
+   canopy. Radial (not a hard-edged linear box) so it has no visible top edge —
+   it just glows out from the text column and fades to nothing on every side, so
+   the photo still breathes on the image side. */
 @utility forest-text-scrim {
-  background-image: linear-gradient(
-    to right,
-    rgba(16, 23, 17, 0.7) 0%,
-    rgba(16, 23, 17, 0.32) 48%,
-    transparent 82%
+  background-image: radial-gradient(
+    120% 135% at 14% 58%,
+    rgba(16, 23, 17, 0.72) 0%,
+    rgba(16, 23, 17, 0.32) 42%,
+    transparent 72%
   );
 }
 
