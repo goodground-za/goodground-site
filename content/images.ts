@@ -53,8 +53,8 @@ export const images = {
    */
   forest: {
     src: "/images/body-forest-image.webp",
-    width: 1344,
-    height: 752,
+    width: 2688,
+    height: 1504,
     alt: "",
   },
 } satisfies Record<string, Img>;
