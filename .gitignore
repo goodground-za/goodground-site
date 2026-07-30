@@ -44,3 +44,6 @@ next-env.d.ts
 
 # local design QA screenshots
 .screenshots/
+
+# local impeccable critique snapshots (QA state, like .screenshots)
+.impeccable/

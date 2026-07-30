@@ -1,10 +1,11 @@
 ===============================================================================
 GOODGROUND — CONTEXT HANDOFF
-Last updated: 2026-07-29 (home page re-skinned to the client's full-bleed
-comp: full-bleed sections, forest photo used twice, WhyUs+AboutPreview
-merged into one green->forest panel with SVG-placeholder card images,
-Marquee + PaymentPlan removed. See GoodGround_memory.md "Done 2026-07-29"
-and §2c below. Palette unchanged; two small copy edits.)
+Last updated: 2026-07-30 (follow-ups to the full-bleed redesign: hi-res +
+responsive forest images, real WhyUs card textures, full-bleed footer,
+mobile spacing, and the 12-payments band REINSTATED after an impeccable
+critique. See GoodGround_memory.md "Done 2026-07-30" and §2d below. The
+07-29 notes on the forest asset, SVG card placeholders, and the removed
+payment section are SUPERSEDED.)
 ===============================================================================
 
 0. NEW COMPUTER / NEW CLAUDE SETUP (do this first if you're picking this
@@ -326,6 +327,40 @@ NOTE: git push worked cleanly this session (no credential-manager hang;
 the §9 workaround was not needed this time, but keep it documented).
 
 NEW OPEN ITEM: real artwork for the 3 WhyUs reason cards (placeholders now).
+
+
+2d. WHAT SESSION 5 DELIVERED (2026-07-30, live on production)
+--------------------------------------------------------------------
+Commits: 1356efa, 88bef6b, a0ec6ff, 16f6502, 43c13d4, 8caf048 (plus the
+memory/handoff commit). Full detail in GoodGround_memory.md "Done
+2026-07-30" — short version here. SUPERSEDES parts of §2c.
+
+  - FOREST IMAGE: now hi-res AND responsive. 2688x1504 landscape
+    (body-forest-image.webp) for sm+, 1520x2688 portrait
+    (body-forest-image-portrait.webp) for mobile (the landscape cropped to
+    a thin strip on narrow panels). Registered as forest / forestPortrait
+    in content/images.ts. Philosophy + WhyUs each render TWO <Image>s
+    toggled sm:hidden / hidden sm:block. LESSON: full-bleed bg blur = a
+    resolution problem (source too small for the upscale), not compression.
+  - WHYUS CARDS: real supplied textures now (foundation-strategy/
+    longterm/partner.webp, 1024px), NOT SVG placeholders. Mapped by title.
+  - PAYMENT BAND REINSTATED (reverses the 07-29 removal). The impeccable
+    critique flagged the removal as the #1 issue (PRODUCT.md wants the
+    12-payments model at hero level; top failure = reading it as a
+    subscription). PaymentPlan.tsx rebuilt as a compact full-bleed EMBER
+    band (oversize "12" + "then it's yours. It's not a subscription…" +
+    CTA), placed back AFTER Industries.
+  - Footer full-bleed; mobile vertical spacing tightened; forest-warm CSS
+    filter added to warm the cool green toward the palette.
+
+  CURRENT HOME ORDER: Hero -> Philosophy -> WhatWeBuild -> Industries ->
+  PaymentPlan -> Process -> WhyUs(+AboutPreview) -> Testimonials(hidden)
+  -> FAQ -> CTABanner.
+
+  VERIFIED ON PROD 2026-07-30: Lighthouse mobile 100/100/100/100;
+  perf trace LCP 744ms, CLS 0; impeccable detect 0/27; impeccable
+  critique 33 -> 34/40. Card textures accepted by user (logged in
+  .impeccable/critique/ignore.md).
 
 
 3. STANDING RULES (violating these has caused real rework)
