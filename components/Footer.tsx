@@ -32,7 +32,7 @@ export function Footer() {
         <div className="bg-bark grain text-peach rounded-t-[40px] -mt-[26%] overflow-hidden sm:-mt-[22%]">
           <div className="relative z-[2] mx-auto max-w-[1434px] px-6 pt-12 pb-8 sm:px-10 md:px-14 md:pt-16">
             <div className="grid gap-10 md:grid-cols-12">
-              <div className="md:col-span-5">
+              <div className="md:col-span-4">
                 <Link href="/" className="inline-block" aria-label="GoodGround — home">
                   <FooterLogo />
                 </Link>
@@ -57,9 +57,26 @@ export function Footer() {
                 ) : null}
               </div>
 
-              <nav aria-label="Footer" className="md:col-span-3">
-                <ul className="space-y-2.5">
+              <nav aria-label="Quick links" className="md:col-span-2">
+                <h2 className="font-heading text-[15px] font-bold">Quick Links</h2>
+                <ul className="mt-4 space-y-2.5">
                   {footerLinks.map((link) => (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        className="font-heading text-[15px] font-bold text-peach/85 transition-colors duration-150 hover:text-peach"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+
+              <nav aria-label="Useful links" className="md:col-span-2">
+                <h2 className="font-heading text-[15px] font-bold">Useful Links</h2>
+                <ul className="mt-4 space-y-2.5">
+                  {legalLinks.map((link) => (
                     <li key={link.href}>
                       <Link
                         href={link.href}
@@ -105,20 +122,8 @@ export function Footer() {
               </div>
             </div>
 
-            <div className="mt-12 flex flex-col gap-4 border-t border-peach/15 pt-5 text-[13px] text-peach/60 sm:flex-row sm:items-center sm:justify-between">
+            <div className="mt-12 border-t border-peach/15 pt-5 text-[13px] text-peach/60">
               <p>© {year} GoodGround. All rights reserved.</p>
-              <ul className="flex gap-3">
-                {legalLinks.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="rounded-pill border border-peach/25 px-4 py-1.5 transition-colors duration-150 hover:border-peach/60 hover:text-peach"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
             </div>
           </div>
         </div>
