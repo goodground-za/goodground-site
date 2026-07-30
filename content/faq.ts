@@ -1,10 +1,10 @@
 /**
- * Copy verbatim from the copy deck §1 Section 8.
+ * Copy from the copy deck §1 Section 8, plus the Growth (ads) items.
  *
- * `answer: null` means GoodGround has not confirmed the answer yet. The
- * accordion renders an honest "coming soon" state for those and they are
- * excluded from FAQPage schema — publishing a guessed cancellation policy or
- * project timeline would be worse than publishing nothing (copy deck Q4/Q6/Q8).
+ * `answer: null` renders an honest "coming soon" state and excludes the item
+ * from FAQPage schema, for questions GoodGround has not confirmed yet. As of
+ * 2026-07-30 the three that were open (cancellation, timeline, service area)
+ * are answered per the founder; keep the null mechanism for any future ones.
  */
 
 export type FAQItem = {
@@ -29,9 +29,9 @@ export const faq: FAQItem[] = [
       "We'll always let you know before any change affects the price. If you add scope beyond what was originally agreed, we'll quote that separately rather than silently adjusting your monthly payment.",
   },
   {
-    // Copy deck: must not be published until the real cancellation policy is finalised.
     question: "What if I need to pause or cancel partway through the 12 months?",
-    answer: null,
+    answer:
+      "The project price is fixed, and the 12 monthly payments are simply how it's spread out. If you cancel partway through, the outstanding balance of that agreed price becomes payable. The full cancellation terms are set out in our Terms and Conditions and written into the contract you sign before we start, so nothing about it catches you out later.",
   },
   {
     question: "Do you only build websites, or do you handle design and SEO too?",
@@ -39,9 +39,9 @@ export const faq: FAQItem[] = [
       "Every website we build includes the design, UX, and SEO foundations as part of one process, so you don't need to brief a separate designer or SEO specialist. One team, one project, one monthly payment.",
   },
   {
-    // Copy deck: an inaccurate timeline promise is worse than none.
     question: "How long does a typical project take?",
-    answer: null,
+    answer:
+      "Most website projects take about 4 to 6 weeks from start to launch. The exact time depends on the scope and what your project needs, and we'll give you a firmer estimate once we've scoped it together.",
   },
   {
     question: "What happens after my website launches?",
@@ -49,9 +49,9 @@ export const faq: FAQItem[] = [
       "Launch is the start of Cultivate Growth, not the finish line. We offer ongoing Website Care Plans for updates, monitoring, and small changes, so your site keeps performing after the 12 payments are complete.",
   },
   {
-    // Copy deck: affects local SEO framing; confirm service area before publishing.
     question: "Do you work with businesses outside Cape Town?",
-    answer: null,
+    answer:
+      "Yes. We're based in Cape Town's Northern Suburbs, but we work with businesses right across South Africa. The whole process runs comfortably online, so where you're based is never a barrier.",
   },
   // Copy deck: Google Ads & Meta Ads (Growth), §7.
   {
