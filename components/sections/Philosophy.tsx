@@ -37,7 +37,7 @@ export function Philosophy() {
       {/* Fade the photo down into solid bark. */}
       <div aria-hidden="true" className="forest-brown absolute inset-0 z-[1]" />
 
-      <div className="relative z-[2] mx-auto max-w-[1434px] px-6 pt-16 pb-14 sm:px-10 md:px-14 md:py-32">
+      <div className="relative z-[2] mx-auto max-w-[1434px] px-6 pt-28 pb-14 sm:px-10 md:px-14 md:py-32">
         <KineticText
           tone="light"
           phrases={["Growth starts with the", "ground you build on."]}
