@@ -1,98 +1,64 @@
-import Image from "next/image";
 import { ButtonLink } from "@/components/Button";
 import { Eyebrow } from "@/components/Eyebrow";
 import { KineticText, Reveal } from "@/components/motion/KineticText";
-import { images } from "@/content/images";
-
-const steps = [
-  {
-    number: "1",
-    title: "We scope your project",
-    rest: " and agree on a fixed price, with no hidden extras.",
-  },
-  {
-    number: "2",
-    title: "We split it into 12 equal monthly payments",
-    rest: ", starting once your project begins.",
-  },
-  {
-    number: "3",
-    title: "You keep growing",
-    rest: ". Your site launches, and your investment stays predictable.",
-  },
-];
 
 /**
- * Copy deck §1 Section 4, on cream per the comp.
+ * The studio's one differentiator, given the emphasis colour and a full-bleed
+ * band so it can't be missed (PRODUCT.md: "hero-level treatment, not a pricing
+ * footnote"). A compact reinstatement of the old §4 section after it was cut in
+ * the full-bleed redesign. The number is spelled out as an oversize figure, and
+ * the subscription-vs-ownership line is stated plainly, which is the single
+ * thing PRODUCT.md flags as most likely to be misread.
  *
- * Copy stays illustrative: the interactive calculator/pricing page was dropped
- * per the founder, so the CTA routes into the /start-project flow where a real
- * quote is scoped rather than shown as a fixed number (dev brief §6).
+ * Copy stays illustrative: no live figure. The CTA routes into /start-project
+ * where a real quote is scoped (dev brief §6).
  */
 export function PaymentPlan() {
   return (
-    <section id="payment-plan" className="bg-cream py-16 md:py-24">
-      <div className="mx-auto max-w-[1434px] px-6 sm:px-10 md:px-14">
-        <Eyebrow tone="ember">How it works</Eyebrow>
+    <section
+      id="payment-plan"
+      className="bg-ember grain text-peach relative isolate overflow-hidden"
+    >
+      <div className="relative z-[2] mx-auto max-w-[1434px] px-6 py-16 sm:px-10 md:px-14 md:py-24">
+        <div className="grid gap-10 md:grid-cols-12 md:items-center md:gap-14">
+          <div className="md:col-span-7">
+            <Eyebrow>How it works</Eyebrow>
 
-        <KineticText
-          phrases={["A website you can", "actually budget for."]}
-          className="font-heading text-pine mt-6 max-w-[16ch] text-[clamp(2rem,5.2vw,4rem)] leading-[1.05] font-bold tracking-[-0.03em]"
-        />
+            <KineticText
+              tone="light"
+              phrases={["A website you can", "actually budget for."]}
+              className="font-heading mt-6 max-w-[16ch] text-[clamp(2rem,5vw,3.75rem)] leading-[1.05] font-bold tracking-[-0.03em]"
+            />
 
-        <div className="mt-12 grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
-          <div className="lg:col-span-6">
-            <div className="text-bark max-w-[46ch] space-y-5 text-[clamp(0.95rem,1.25vw,1.1rem)] leading-[1.6]">
-              <p>
-                Most agencies ask for the full project cost upfront, before you&rsquo;ve seen a
-                single page. We don&rsquo;t work that way.
+            <Reveal delay={0.08}>
+              <p className="mt-6 max-w-[48ch] text-[clamp(1rem,1.4vw,1.2rem)] leading-[1.55]">
+                Most agencies want the full project cost upfront. We split every GoodGround website
+                into <strong className="font-bold">12 equal monthly payments</strong>. Then it&rsquo;s
+                yours. <strong className="font-bold">It&rsquo;s not a subscription</strong>, and
+                you&rsquo;re not renting your website.
               </p>
-              <p>
-                Every GoodGround website is split into{" "}
-                <strong className="font-bold">12 equal monthly payments</strong>, so the cost of a
-                proper website spreads across your year like any other monthly expense, instead of
-                landing as one large invoice.
-              </p>
-            </div>
 
-            <ol className="mt-8 space-y-4">
-              {steps.map((step) => (
-                <li key={step.number} className="flex gap-4">
-                  <span
-                    aria-hidden="true"
-                    className="font-heading bg-ember text-peach mt-0.5 grid size-6 shrink-0 place-items-center rounded-full text-[12px] font-bold"
-                  >
-                    {step.number}
-                  </span>
-                  <p className="text-bark max-w-[44ch] text-[15px] leading-[1.6]">
-                    <strong className="font-bold">{step.title}</strong>
-                    {step.rest}
-                  </p>
-                </li>
-              ))}
-            </ol>
-
-            <Reveal>
-              <div className="mt-9">
-                <ButtonLink href="/start-project" size="lg">
-                  Find out more
+              <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+                <ButtonLink href="/start-project" variant="ink" size="lg">
+                  See how it works
                 </ButtonLink>
+                <span className="text-[13px] leading-relaxed text-peach/80">
+                  Fixed price. Fixed monthly amount. No interest surprises.
+                </span>
               </div>
-              <p className="text-bark-muted mt-5 text-[13px] leading-relaxed">
-                Fixed price. Fixed monthly amount. No interest surprises.
-              </p>
             </Reveal>
           </div>
 
-          <Reveal className="lg:col-span-6" delay={0.08}>
-            <Image
-              src={images.budget.src}
-              alt={images.budget.alt}
-              width={images.budget.width}
-              height={images.budget.height}
-              sizes="(max-width: 1024px) 90vw, 46vw"
-              className="ml-auto h-auto w-full max-w-[560px]"
-            />
+          {/* The number, spelled large so it lands before the copy does. */}
+          <Reveal delay={0.12} className="md:col-span-5">
+            <div className="flex items-end gap-4 md:justify-end">
+              <span className="font-heading text-[clamp(5rem,20vw,11rem)] leading-[0.78] font-bold tracking-[-0.05em]">
+                12
+              </span>
+              <span className="font-heading mb-2 max-w-[7ch] text-[clamp(1rem,1.6vw,1.5rem)] leading-tight font-bold text-peach/85">
+                equal monthly payments
+              </span>
+            </div>
           </Reveal>
         </div>
       </div>

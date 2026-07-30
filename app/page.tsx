@@ -4,6 +4,7 @@ import { CTABanner } from "@/components/sections/CTABanner";
 import { FAQ } from "@/components/sections/FAQ";
 import { Hero } from "@/components/sections/Hero";
 import { Industries } from "@/components/sections/Industries";
+import { PaymentPlan } from "@/components/sections/PaymentPlan";
 import { Philosophy } from "@/components/sections/Philosophy";
 import { Process } from "@/components/sections/Process";
 import { Testimonials } from "@/components/sections/Testimonials";
@@ -30,6 +31,7 @@ export default function HomePage() {
       <Philosophy />
       <WhatWeBuild />
       <Industries />
+      <PaymentPlan />
       <Process />
       {/* WhyUs renders the "Who we are" (AboutPreview) block inside its own
           forest panel, so AboutPreview is not placed separately here. */}

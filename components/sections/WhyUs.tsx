@@ -45,14 +45,14 @@ export function WhyUs() {
           alt=""
           fill
           sizes="100vw"
-          className="object-cover object-bottom sm:hidden"
+          className="forest-warm object-cover object-bottom sm:hidden"
         />
         <Image
           src={images.forest.src}
           alt=""
           fill
           sizes="100vw"
-          className="hidden object-cover object-bottom sm:block"
+          className="hidden forest-warm object-cover object-bottom sm:block"
         />
         <div aria-hidden="true" className="forest-panel absolute inset-0 z-[1]" />
 

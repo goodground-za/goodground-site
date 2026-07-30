@@ -194,6 +194,14 @@
   );
 }
 
+/* A gentle warm grade on the forest photo so its cool, misty green sits closer
+   to the warm cream/ember palette instead of reading as a separate cool world.
+   Kept light — enough to take the blue edge off the fog, not enough to turn the
+   canopy olive. */
+@utility forest-warm {
+  filter: sepia(0.13) saturate(0.92) brightness(1.02);
+}
+
 /* A soft dark wash so body copy stays readable where it overlaps the brighter
    canopy. Radial (not a hard-edged linear box) so it has no visible top edge —
    it just glows out from the text column and fades to nothing on every side, so

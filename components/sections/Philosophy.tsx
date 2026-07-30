@@ -25,14 +25,14 @@ export function Philosophy() {
         alt=""
         fill
         sizes="100vw"
-        className="object-cover object-top sm:hidden"
+        className="forest-warm object-cover object-top sm:hidden"
       />
       <Image
         src={images.forest.src}
         alt=""
         fill
         sizes="100vw"
-        className="hidden object-cover object-top sm:block"
+        className="hidden forest-warm object-cover object-top sm:block"
       />
       {/* Fade the photo down into solid bark. */}
       <div aria-hidden="true" className="forest-brown absolute inset-0 z-[1]" />
