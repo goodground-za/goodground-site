@@ -94,7 +94,7 @@ export default function LegalPage() {
               <CompanyItem label="Founded" value="2026" />
               <CompanyItem
                 label="Registered Location"
-                value={`${site.address.locality}, ${site.address.city}, South Africa`}
+                value={`${site.address.locality}, ${site.address.area}, ${site.address.region}, South Africa`}
               />
               <CompanyItem
                 label="VAT Status"

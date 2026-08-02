@@ -4,7 +4,7 @@ register: brand
 
 ## What this is
 
-GoodGround is a website design and development studio in Brackenfell, Cape Town, founded in 2026. This is their own marketing site.
+GoodGround is a website design and development studio in George, on the Garden Route (Western Cape), founded in 2026. This is their own marketing site.
 
 Two things make it unusual to build:
 

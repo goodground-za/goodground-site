@@ -26,7 +26,7 @@ export function AboutPreview() {
 
           <Reveal delay={0.08}>
             <p className="text-peach/85 mt-8 max-w-[44ch] text-[clamp(0.95rem,1.2vw,1.1rem)] leading-[1.6]">
-              We started GoodGround in Cape Town&rsquo;s Northern Suburbs. Too many good businesses
+              We started GoodGround in George, on the Garden Route. Too many good businesses
               were being let down by websites that looked fine but did nothing for them. No strategy
               behind them, and no help after launch.
             </p>

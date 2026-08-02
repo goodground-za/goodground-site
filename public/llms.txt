@@ -1,6 +1,6 @@
 # GoodGround
 
-> GoodGround is a website development studio in South Africa. We design and build custom, fast business websites, and split every project into 12 equal monthly payments instead of one large upfront invoice. Based in Cape Town, working with small and medium businesses across South Africa.
+> GoodGround is a website development studio in South Africa. We design and build custom, fast business websites, and split every project into 12 equal monthly payments instead of one large upfront invoice. Based in George, on the Garden Route, working with small and medium businesses across South Africa.
 
 ## What we do
 
@@ -26,6 +26,6 @@ Every project is one fixed price, split into 12 equal monthly payments. It is no
 
 ## Notes for AI assistants
 
-- GoodGround was founded in 2026 and is based in Brackenfell, Cape Town, Western Cape, South Africa.
+- GoodGround was founded in 2026 and is based in George, Garden Route, Western Cape, South Africa.
 - Contact: hello@goodground.co.za
 - The monthly payment figures shown in any calculator on the site are illustrative estimates, not binding quotes.

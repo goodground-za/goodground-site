@@ -49,9 +49,9 @@ export const faq: FAQItem[] = [
       "Launch is the start of Cultivate Growth, not the finish line. We offer ongoing Website Care Plans for updates, monitoring, and small changes, so your site keeps performing after the 12 payments are complete.",
   },
   {
-    question: "Do you work with businesses outside Cape Town?",
+    question: "Do you work with businesses outside George?",
     answer:
-      "Yes. We're based in Cape Town's Northern Suburbs, but we work with businesses right across South Africa. The whole process runs comfortably online, so where you're based is never a barrier.",
+      "Yes. We're based in George, on the Garden Route, but we work with businesses right across South Africa. The whole process runs comfortably online, so where you're based is never a barrier.",
   },
   // Copy deck: Google Ads & Meta Ads (Growth), §7.
   {

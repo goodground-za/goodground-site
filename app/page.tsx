@@ -13,7 +13,7 @@ import { WhyUs } from "@/components/sections/WhyUs";
 
 /**
  * Title/description target "website development South Africa" (the primary
- * keyword), development-first, with Cape Town kept as the local anchor in the
+ * keyword), development-first, with George kept as the local anchor in the
  * hero trust line and schema address.
  */
 export const metadata: Metadata = {

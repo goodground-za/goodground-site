@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   keywords: [
     "website development South Africa",
     "web development company South Africa",
-    "website development Cape Town",
+    "website development George",
     "website design South Africa",
     "custom website development",
     "monthly payment website development",

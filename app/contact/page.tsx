@@ -85,9 +85,9 @@ export default function ContactPage() {
                       Based in
                     </dt>
                     <dd className="mt-1.5 text-[15px] leading-[1.6] text-peach/85">
-                      {site.address.locality}, {site.address.city}
+                      {site.address.locality}, {site.address.area}
                       <br />
-                      Northern Suburbs, South Africa
+                      {site.address.region}, South Africa
                     </dd>
                   </div>
                 </dl>

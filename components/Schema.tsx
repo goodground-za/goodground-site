@@ -19,7 +19,7 @@ export function HomeSchema() {
       "Website development studio building custom, fast business websites across South Africa. Every project is one fixed price split into 12 equal monthly payments.",
     url: site.url,
     foundingDate: site.foundingDate,
-    // Serves the country, based in Cape Town: South Africa first for reach, the
+    // Serves the country, based in George: South Africa first for reach, the
     // locality kept for the local pack.
     serviceType: "Website development and design",
     areaServed: { "@type": "Country", name: "South Africa" },

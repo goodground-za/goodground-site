@@ -18,7 +18,7 @@ import { process } from "@/content/process";
 export const metadata: Metadata = {
   title: { absolute: "About GoodGround | Website Development Studio, South Africa" },
   description:
-    "A website development studio in South Africa, built on the idea that businesses grow best on strong foundations. Based in Brackenfell, Cape Town.",
+    "A website development studio in South Africa, built on the idea that businesses grow best on strong foundations. Based in George, on the Garden Route.",
   alternates: { canonical: "/about" },
 };
 
@@ -59,9 +59,9 @@ export default function AboutPage() {
                       a second founder we can't confirm, so this reads as "We kept
                       seeing", which works for one founder without inventing one. */}
                   <p className="font-heading font-bold">
-                    GoodGround was founded in 2026 in Brackenfell, in Cape Town&rsquo;s Northern
-                    Suburbs, by a web developer with more than 10 years&rsquo; experience across UX
-                    and UI design, website design and graphic design.
+                    GoodGround was founded in 2026 in George, on the Garden Route, by a web
+                    developer with more than 10 years&rsquo; experience across UX and UI design,
+                    website design and graphic design.
                   </p>
                   <p className="text-bark-muted">
                     We kept seeing good businesses pay for websites that looked polished and did

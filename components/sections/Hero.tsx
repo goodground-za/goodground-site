@@ -85,7 +85,7 @@ export function Hero() {
               {/* Kept from the copy deck: the comp omits it, but this is the
                   studio's whole differentiator and it belongs above the fold. */}
               <ul className="mt-7 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-[13px] font-medium text-peach/85">
-                {["No large upfront cost", "12 equal monthly payments", "Based in Cape Town"].map(
+                {["No large upfront cost", "12 equal monthly payments", "Based in George"].map(
                   (item, i) => (
                     <li key={item} className="flex items-center gap-3">
                       {i > 0 ? (

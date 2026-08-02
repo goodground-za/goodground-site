@@ -19,12 +19,12 @@ export const site = {
   url: "https://www.goodground.co.za",
   foundingDate: "2026",
   address: {
-    locality: "Brackenfell",
+    locality: "George",
+    area: "Garden Route",
     region: "Western Cape",
-    city: "Cape Town",
     country: "ZA",
   },
-  areaServed: "Cape Town, Western Cape, South Africa",
+  areaServed: "George, Garden Route, Western Cape, South Africa",
   phone: null as string | null, // TODO: client to confirm
   // Taken from the client's own footer artwork.
   email: "hello@goodground.co.za",

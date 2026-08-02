@@ -2,7 +2,7 @@
 
 Living master reference for the GoodGround marketing site. Read this first before picking up any work here. Not deployed — this file isn't imported or served by the app, it just travels with the repo.
 
-**What GoodGround is:** a website design & development studio, founded 2026, operating under **The Trail Tribe**. Based in Brackenfell, Cape Town, Western Cape, South Africa. The one differentiator: every project is one fixed price split into **12 equal monthly payments**, not a subscription.
+**What GoodGround is:** a website design & development studio, founded 2026 (its own registered company, GoodGround (Pty) Ltd — the older "operating under The Trail Tribe" note is superseded, see Done 2026-07-23). **Based in George, on the Garden Route, Western Cape, South Africa** (relocated from Brackenfell/Cape Town on 2026-07-30 — see Done 2026-07-30). The one differentiator: every project is one fixed price split into **12 equal monthly payments**, not a subscription.
 
 **Source docs (outside this repo):** `PROJECTS/GROW BRAND/GROW-PROSPECT/clients/goodground/brief/` — `GoodGround-Development-Brief.md`, `GoodGround-Website-Copy.md` (copy deck), and `reference/` (the client's palette/comp artwork this build was re-skinned against).
 
@@ -118,7 +118,7 @@ Legal §12 (Cookies) was rewritten to describe what actually happens — GA4 by 
 
 ## SEO
 
-Positioning locked by the founder: **development-first wording** ("Website Development & Design Studio" — kept "studio" to match the client's own comp artwork, not "agency") and **South Africa-first geography** (Cape Town kept only as the local-pack anchor in hero trust line + schema address). Primary target keyword: "website development South Africa" / "website design South Africa".
+Positioning locked by the founder: **development-first wording** ("Website Development & Design Studio" — kept "studio" to match the client's own comp artwork, not "agency") and **South Africa-first geography** (George / Garden Route is the local-pack anchor in the hero trust line + schema address, as of the 2026-07-30 relocation). Primary target keyword: "website development South Africa" / "website design South Africa".
 
 - Every page has unique title/description, one `<h1>`, canonical.
 - Schema: `ProfessionalService` + `serviceType` + `areaServed: Country South Africa`, `WebSite`, `FAQPage` (answered Qs only), `BreadcrumbList` on inner pages, `BlogPosting` on articles.
@@ -153,7 +153,7 @@ Positioning locked by the founder: **development-first wording** ("Website Devel
 
 ## Business details on file
 
-- **NAP:** GoodGround | Brackenfell, Cape Town, Western Cape, South Africa | Founded 2026.
+- **NAP:** GoodGround | George, Garden Route, Western Cape, South Africa | Founded 2026. (Relocated from Brackenfell/Cape Town 2026-07-30. `content/site.ts` `address` is now `{ locality: "George", area: "Garden Route", region: "Western Cape", country: "ZA" }` — the old `city` field was replaced by `area`; schema `addressLocality` = George.)
 - **Trading structure:** operates under **The Trail Tribe** (no separate company registration number for "GoodGround" itself — legal page reflects this, not a placeholder).
 - **Email:** hello@goodground.co.za (confirmed real, sourced from the client's own footer artwork).
 - **Founder:** described by experience, not named, at the founder's explicit request — "a web developer with more than 10 years' experience across UX and UI design, website design and graphic design." No name appears anywhere on the site.
@@ -194,7 +194,7 @@ Full detail and effort estimates live in `seo-audit/ACTION-PLAN.md`. That file i
 
 ### Blocked on the founder (not dev work)
 
-- **Google Business Profile.** Highest-value single off-site action for a Cape Town service business, and the main lever on AI-search visibility, which is currently limited by authority rather than structure. **Blocked on the phone number.**
+- **Google Business Profile.** Highest-value single off-site action for a George / Garden Route service business, and the main lever on AI-search visibility, which is currently limited by authority rather than structure. **Blocked on the phone number.** (Note: the business relocated to George 2026-07-30, so any GBP must use the George location.)
 - **Confirm the phone number.** NAP consistency is foundational for local SEO and one third of it is missing. Goes in `content/site.ts` and flows to schema automatically. Do not invent one.
 - **Article byline: name a person, or keep the Organization?** `content/articles.ts` has `author: "GoodGround"`, rendered as a byline and as `Organization` in `BlogPosting` schema. A named `Person` is the strongest remaining E-E-A-T win, but the founder asked to be described by experience rather than name on About, so this is a founder call. See Copy rules.
 - **Real case studies for `/work`**, or drop `/work` from `app/sitemap.ts` until it has content. It is currently 154 words and will index as thin. This site itself, written up as a build story, is legitimate proof of work.

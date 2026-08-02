@@ -93,7 +93,7 @@ export function Footer() {
                 <h2 className="font-heading text-[15px] font-bold">Get in touch</h2>
                 <address className="mt-4 space-y-4 text-[14px] not-italic text-peach/75">
                   <p>
-                    {site.address.city}
+                    {site.address.locality}, {site.address.area}
                     <br />
                     {site.address.region}, South Africa
                   </p>

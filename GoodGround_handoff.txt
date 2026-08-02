@@ -71,9 +71,11 @@ in here. Its git-push advice is wrong, see section 9. Safe to delete.
 
 1. PROJECT
 -----------
-GoodGround is a website studio in Brackenfell (Cape Town), founded 2026, trading
-under The Trail Tribe. This is their own marketing site. Founder: Johandre
-Saayman, who also runs Grow Brand Agency.
+GoodGround is a website studio in George, on the Garden Route (Western Cape),
+founded 2026 (relocated from Brackenfell/Cape Town 2026-07-30). It is its own
+registered company (GoodGround (Pty) Ltd), not "under The Trail Tribe" anymore.
+This is their own marketing site. Founder: Johandre Saayman, who also runs Grow
+Brand Agency.
 
 App location:
   c:\Volumes\growbrand\growbrand-hub\GROW - CLAUDE\PROJECTS\GROW BRAND\
@@ -438,7 +440,7 @@ remains at the top of the value list is all blocked on answers:
      and one third of it is missing. Goes in `content/site.ts`, flows to schema
      automatically. Blocks the Google Business Profile.
 
-  4. **Google Business Profile.** Highest-value off-site action for a Cape Town
+  4. **Google Business Profile.** Highest-value off-site action for a George
      service business and the main lever on AI-search visibility, which is
      limited by authority rather than structure. Blocked on (3).
 
@@ -448,7 +450,7 @@ remains at the top of the value list is all blocked on answers:
   6. Facebook/Instagram URLs (`socials: []`).
 
   7. The 3 outstanding FAQ answers (cancellation policy, project timeline,
-     service area outside Cape Town).
+     service area outside George). [ANSWERED 2026-07-30 — this item is done.]
 
 CLOSED, so it stops being re-raised: the **company registration number** is NOT
 an open item, despite older notes listing it as "to be confirmed". GoodGround
