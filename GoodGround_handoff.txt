@@ -2,10 +2,12 @@
 GOODGROUND — CONTEXT HANDOFF
 Last updated: 2026-07-30 (follow-ups to the full-bleed redesign: hi-res +
 responsive forest images, real WhyUs card textures, full-bleed footer,
-mobile spacing, and the 12-payments band REINSTATED after an impeccable
-critique. See GoodGround_memory.md "Done 2026-07-30" and §2d below. The
-07-29 notes on the forest asset, SVG card placeholders, and the removed
-payment section are SUPERSEDED.)
+mobile spacing, 12-payments band REINSTATED after an impeccable critique,
+all 3 FAQ answers written, footer Quick/Useful Links columns, and the
+studio RELOCATED Brackenfell/Cape Town -> George, Garden Route. See
+GoodGround_memory.md "Done 2026-07-30" and §2d below. The 07-29 notes on
+the forest asset, SVG card placeholders, removed payment section, and the
+Brackenfell/Cape Town location are all SUPERSEDED.)
 ===============================================================================
 
 0. NEW COMPUTER / NEW CLAUDE SETUP (do this first if you're picking this
@@ -363,6 +365,21 @@ memory/handoff commit). Full detail in GoodGround_memory.md "Done
   perf trace LCP 744ms, CLS 0; impeccable detect 0/27; impeccable
   critique 33 -> 34/40. Card textures accepted by user (logged in
   .impeccable/critique/ignore.md).
+
+  ALSO SHIPPED 2026-07-30 (later same day):
+  - All 3 open FAQ answers written (cancellation = outstanding balance
+    payable per T&Cs/contract; timeline ~4-6 weeks; service area = all of
+    SA). content/faq.ts now has zero answer:null. FOLLOW-UP: /legal needs a
+    matching cancellation clause (still gated on gateway/NCA before billing).
+  - Footer: added "Quick Links" heading over the nav + a new "Useful Links"
+    column (FAQ/Privacy/Terms), 4/2/2/4 grid; removed the duplicate legal
+    pills from the bottom bar.
+  - RELOCATED Brackenfell/Cape Town -> George, Garden Route (Western Cape),
+    everywhere. content/site.ts address.city replaced by address.area;
+    schema addressLocality=George. This re-anchors local SEO from Cape Town
+    to George — any Google Business Profile must use George. The historical
+    seo-audit/FULL-AUDIT-REPORT.md still says Brackenfell (dated snapshot,
+    left as-is).
 
 
 3. STANDING RULES (violating these has caused real rework)

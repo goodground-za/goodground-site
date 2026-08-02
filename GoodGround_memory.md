@@ -199,7 +199,7 @@ Full detail and effort estimates live in `seo-audit/ACTION-PLAN.md`. That file i
 - **Article byline: name a person, or keep the Organization?** `content/articles.ts` has `author: "GoodGround"`, rendered as a byline and as `Organization` in `BlogPosting` schema. A named `Person` is the strongest remaining E-E-A-T win, but the founder asked to be described by experience rather than name on About, so this is a founder call. See Copy rules.
 - **Real case studies for `/work`**, or drop `/work` from `app/sitemap.ts` until it has content. It is currently 154 words and will index as thin. This site itself, written up as a build story, is legitimate proof of work.
 - Replace placeholder Unsplash photography with real GoodGround images.
-- Write the 3 outstanding FAQ answers (Q4/Q6/Q8).
+- ~~Write the 3 outstanding FAQ answers (Q4/Q6/Q8).~~ **DONE 2026-07-30** — cancellation (outstanding balance payable, per T&Cs/contract), timeline (~4–6 weeks), service area (all of SA). `content/faq.ts` has no `answer: null` left; all 13 now flow into FAQPage schema. **Follow-up:** the cancellation answer points at the T&Cs, so `/legal` should gain a matching cancellation clause (still gated on the payment-gateway / NCA review before any live billing).
 - Payment gateway + NCA legal review before any live billing.
 
 ### Dev work outstanding
@@ -311,7 +311,13 @@ Follow-up refinements the founder asked for after the 07-29 redesign, plus an `i
 - **Mobile vertical spacing tightened** across Philosophy / WhatWeBuild / Industries / WhyUs / AboutPreview (desktop `md:` values untouched), and extra top padding added to Philosophy on mobile so its heading isn't flush against the hero band where the `-mt` overlap had cancelled the padding.
 - **`forest-warm` utility** (`sepia .13 saturate .92 brightness 1.02`) applied to the forest images to warm the cool misty green toward the cream/ember palette. One-line, tunable.
 - **Verified 2026-07-30 on production:** Lighthouse mobile **100/100/100/100** (55 pass, 0 fail); performance trace **LCP 744ms, CLS 0** (the big new images are below-fold/lazy so they don't touch LCP; still no CrUX field data). `impeccable detect`: **0 of 27** anti-patterns across all home components.
-- **`impeccable critique` scores: 33 → 34/40 (Strong).** Snapshots in `.impeccable/critique/` (local, gitignored-candidate). The user **accepted the decorative card textures** (recorded in `.impeccable/critique/ignore.md` so it's not re-raised). Remaining minor notes: three ember touchpoints on one scroll (hero pitch / payment band / CTA — deliberate, watch it), repeated pill eyebrows, no long-scroll orientation cue on mobile.
+- **`impeccable critique` scores: 33 → 34/40 (Strong).** Snapshots in `.impeccable/critique/` (local, gitignored). The user **accepted the decorative card textures** (recorded in `.impeccable/critique/ignore.md` so it's not re-raised). Remaining minor notes: three ember touchpoints on one scroll (hero pitch / payment band / CTA — deliberate, watch it), repeated pill eyebrows, no long-scroll orientation cue on mobile.
+
+Also shipped 2026-07-30 (same day, later):
+
+- **All 3 open FAQ answers written** (cancellation / timeline / service area) — see the punch-list line above. `content/faq.ts` now has zero `answer: null`.
+- **Footer gained two titled link columns.** `components/Footer.tsx` now shows a **"Quick Links"** heading over the main nav (Home/About/Services/Our Work/Insights/Contact) and a new **"Useful Links"** column (FAQ / Privacy Policy / Terms), on a 4/2/2/4 grid. The old duplicate legal-link pills were removed from the bottom bar, which now carries just the copyright.
+- **Studio relocated Brackenfell/Cape Town → George, Garden Route** (see the NAP and "What GoodGround is" lines for the full detail). `content/site.ts` `address.city` was replaced by `address.area`; consumers updated (Footer, Contact, `/legal`). Schema `addressLocality` = George. This is a real **local-SEO re-anchor** from Cape Town to George — any future Google Business Profile must use the George location. The historical `seo-audit/FULL-AUDIT-REPORT.md` was deliberately left saying "Brackenfell" (dated snapshot).
 
 ### Explicitly do NOT do
 
