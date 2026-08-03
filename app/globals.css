@@ -215,6 +215,24 @@
   );
 }
 
+/* A slow ambient pulse for the hero's single CTA, so it draws the eye without
+   shouting: the ring breathes out and back, never disappearing entirely.
+   Paused on hover (the button's own hover state should read as the "response",
+   not compete with the idle loop); killed by reduced-motion below. */
+@keyframes cta-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(253, 229, 193, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(253, 229, 193, 0);
+  }
+}
+
+@utility animate-cta-pulse {
+  animation: cta-pulse 2.4s ease-in-out infinite;
+}
+
 /* Continuous ticker. The track holds two identical rows and slides exactly one
    row-width, so the loop is seamless. Paused on hover; killed by reduced-motion
    through the global override below. */

@@ -3,17 +3,34 @@ import { ButtonLink } from "@/components/Button";
 import { HeroLogo } from "@/components/Logo";
 import { Reveal } from "@/components/motion/KineticText";
 import { MaskReveal } from "@/components/motion/MaskReveal";
+import { RotatingWords } from "@/components/motion/RotatingWords";
 import { images } from "@/content/images";
 
 /**
  * Per the client's comp: the wordmark IS the H1, set enormous across the cream
  * field, with the seedling photo below breaking out of its own frame, and the
- * orange band carrying the pitch and the CTAs.
+ * orange band carrying the pitch and the CTA.
  *
  * The comp's subhead drops the copy deck's 12-payment sentence. That is the
- * studio's one differentiator, so the micro-trust line is kept under the CTAs
+ * studio's one differentiator, so the micro-trust line is kept under the CTA
  * (client-approved) to hold it in the first fold.
+ *
+ * The H1 subtitle keeps "Website Development & Design Studio / South Africa"
+ * on purpose (that phrase is why the H1 exists, for ranking on the primary
+ * keyword) — the founder's new AI-first / specialisms pitch lives in the
+ * ember band below instead, which is the section built to carry a pitch.
  */
+const SPECIALTIES = [
+  "Website Development",
+  "Website Design",
+  "UX Design",
+  "UI Design",
+  "Branding",
+  "Graphic Design",
+  "SEO",
+  "Digital Marketing Campaigns",
+];
+
 export function Hero() {
   return (
     <>
@@ -68,17 +85,27 @@ export function Hero() {
                 GoodGround
               </p>
 
-              <p className="mx-auto mt-7 max-w-[52ch] text-[clamp(1rem,1.9vw,1.6rem)] leading-[1.3] font-normal">
-                We&rsquo;re a website development studio. We build small and medium businesses a
-                strong digital foundation, made to grow, not just launch.
+              <p className="mx-auto mt-7 max-w-[56ch] text-[clamp(1.15rem,2.2vw,1.85rem)] leading-[1.3] font-bold">
+                We&rsquo;re an AI-first digital agency based in George, South Africa. We build
+                websites and experiences that convert.
               </p>
 
-              <div className="mt-8 flex flex-wrap justify-center gap-3">
-                <ButtonLink href="/start-project" variant="ink" size="lg">
-                  Start your project
-                </ButtonLink>
-                <ButtonLink href="/work" variant="peach" size="lg">
-                  View our work
+              <p className="font-heading mt-6 flex flex-wrap items-center justify-center gap-x-2.5 gap-y-2 text-[clamp(1rem,1.8vw,1.35rem)] font-bold">
+                <span>We specialise in</span>
+                <RotatingWords
+                  words={SPECIALTIES}
+                  className="bg-peach text-bark rounded-pill px-4 py-1"
+                />
+              </p>
+
+              <div className="mt-8 flex justify-center">
+                <ButtonLink
+                  href="/start-project"
+                  variant="peach"
+                  size="lg"
+                  className="animate-cta-pulse"
+                >
+                  Let&rsquo;s talk
                 </ButtonLink>
               </div>
 
