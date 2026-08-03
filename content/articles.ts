@@ -29,6 +29,113 @@ export type Article = {
 
 export const articles: Article[] = [
   {
+    slug: "website-that-converts-and-grows-with-your-business",
+    title: "How to build a website that converts customers and grows with your business",
+    excerpt:
+      "Most businesses treat conversion and growth as separate problems: marketing worries about one, the developer worries about the other. Build them into the same site from day one and neither costs you customers later.",
+    metaTitle: "A Website That Converts Customers and Grows With Your Business",
+    metaDescription:
+      "Two questions decide whether a website works: does it turn visitors into enquiries, and can it grow without a rebuild? Here's how to get both right from the start.",
+    keyword: "website that converts South Africa",
+    author: "GoodGround",
+    date: "2026-08-03",
+    readingMinutes: 7,
+    category: "Websites",
+    body: [
+      {
+        type: "p",
+        text: "A website has one real job at first: turn a visitor into an enquiry. Six months later it picks up a second job nobody planned for: hold up while the business adds services, pages and traffic on top of it. Most sites are built for the first job and quietly fail the second, because clarity and growth get treated as two separate problems. Marketing owns conversion. The developer owns the code. Nobody owns the point where they meet.",
+      },
+      {
+        type: "p",
+        text: "That split is the mistake. A site built to convert today and a site built to grow tomorrow are not two projects. They are the same project, decided at the same wireframe, and the businesses that get this right end up with a site that keeps performing years after launch instead of one that has to be rebuilt the moment it starts working.",
+      },
+
+      { type: "h2", text: "Clarity converts. A menu of options doesn't." },
+      {
+        type: "p",
+        text: "Visitors do not convert because a page is clever. They convert because it removes every reason to hesitate. A confused visitor does not ask you a question. They close the tab and try the next result on Google.",
+      },
+      {
+        type: "p",
+        text: "Three things do almost all of the work here, and none of them are decoration:",
+      },
+      {
+        type: "ul",
+        items: [
+          "One obvious next step per page. Not three buttons competing for attention. One.",
+          "A first sentence that answers what you do, who it's for, and what happens if they get in touch, before they have to scroll to find out.",
+          "Proof placed exactly where the doubt shows up, not buried on a separate page nobody visits.",
+        ],
+      },
+      {
+        type: "p",
+        text: "Look at how most service pages handle pricing. A page that leads with one clear offer and one clear call to action converts better than a page listing five tiers, four add-ons and a paragraph of fine print. Not because the options are wrong to have. Because a visitor deciding whether to trust a stranger with their money does not want to do maths first.",
+      },
+      {
+        type: "quote",
+        text: "A confused visitor doesn't ask a question. They close the tab.",
+      },
+
+      { type: "h2", text: "Speed is the first impression, not a technical detail" },
+      {
+        type: "p",
+        text: "Before a visitor reads a word of your copy, the page has already made an argument for or against you: how fast it appeared. A page that loads instantly feels like a business that has its act together. A page that hangs for three seconds on mobile data feels like a warning sign, whether that's fair or not.",
+      },
+      {
+        type: "p",
+        text: "We've written before about why this matters even more on the connections most South Africans are actually using in [the biggest website mistakes South African SMEs make](/insights/biggest-website-mistakes-south-african-smes-make). The short version applies here too: a slow site and a bloated site are usually the same site, and every extra second is a visitor quietly deciding whether you're worth the wait.",
+      },
+      {
+        type: "p",
+        text: "The fix is not glamorous. Compress the images. Load only the fonts you're using. Keep the layout stable so a button doesn't jump out from under someone's thumb the moment they go to tap it. None of that shows up in a mockup, and all of it shows up in whether the enquiry actually arrives.",
+      },
+
+      { type: "h2", text: "Built to grow, not just built to launch" },
+      {
+        type: "p",
+        text: "A site that converts on day one still has to survive day two hundred, when you add a fourth service, a second location, or a colleague who needs to update a page without breaking the one next to it. Most sites were never built with that day in mind, which is why adding one new page so often means paying someone to carefully avoid breaking three others.",
+      },
+      {
+        type: "p",
+        text: "A site built to grow is built on a small number of reusable pieces instead of one-off pages stitched together as they were needed. The same button, the same card, the same heading style, used consistently across the whole site rather than reinvented per page. Content that lives in a structure, not scattered across whatever layout felt right at the time. Get that foundation right once, and adding a new page becomes an afternoon's work instead of a small redesign.",
+      },
+      {
+        type: "ul",
+        items: [
+          "One set of components reused everywhere, so a new page looks and behaves like the rest of the site automatically.",
+          "Content kept in a clear structure, so a new service or location slots in without touching the pages around it.",
+          "Patterns simple enough that someone new to the site can add to it safely, without needing to understand the whole codebase first.",
+        ],
+      },
+
+      { type: "h2", text: "Why we build every GoodGround site this way" },
+      {
+        type: "p",
+        text: "This is the actual argument for [building a site by hand instead of assembling one inside a drag-and-drop builder](/insights/hand-coded-websites-vs-drag-and-drop-builders): a template is sized for an average business doing average things, and it fights you the moment your business needs something specific. A foundation built around your business, not a shared template, is what lets a site handle both jobs at once: converting the visitor in front of it today, and taking on whatever the business needs next year without a rebuild.",
+      },
+      {
+        type: "p",
+        text: "It's also why we split every project into 12 equal monthly payments instead of one invoice before you've seen a single page. A website that's actually built to grow keeps earning its cost well past launch day, and the way you pay for it should match that, not front-load all the risk into month one.",
+      },
+
+      { type: "h2", text: "The short version" },
+      {
+        type: "ul",
+        items: [
+          "Conversion comes from clarity: one next step, an answer in the first sentence, proof at the point of doubt.",
+          "Speed is not a nice-to-have. It's the first thing a visitor judges you on, before they've read anything.",
+          "A site built on reusable components and structured content grows by addition, not by rebuild.",
+          "Treat conversion and growth as the same project from the first wireframe, and neither one costs you the other later.",
+        ],
+      },
+      {
+        type: "p",
+        text: "A website that converts today and a website that scales tomorrow are built the same way: on a clear, deliberate foundation. If yours is fighting you on either front, [tell us about your business](/start-project) and we'll come back with next steps.",
+      },
+    ],
+  },
+  {
     slug: "hand-coded-websites-vs-drag-and-drop-builders",
     title: "Why hand-coded websites will always beat drag-and-drop website builders",
     excerpt:
