@@ -49,6 +49,32 @@
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
+/*
+  /home-test A/B variant tokens — namespaced `ht-*` so they're unmistakably
+  scoped to this experiment, never touched by the live site's components, and
+  trivial to grep-and-delete if the variant is retired. Hex values are the
+  client's supplied palette for the new comp, used exactly as given.
+*/
+@theme {
+  --color-ht-pink: #fe9dd2; /* CTA band bg, card glow/border accent */
+  --color-ht-orange: #fe431a; /* primary action colour: marquee, section bg, buttons */
+  --color-ht-crimson: #ac3026; /* depth/shadow under orange elements, hover states */
+  --color-ht-purple: #2e1848; /* ink: dark section bg, footer bg, headings on cream */
+  --color-ht-cream: #fbf7ec; /* base page background */
+
+  --font-ht-display: var(--font-clash-display), ui-sans-serif, system-ui, sans-serif;
+  --font-ht-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* Fluid type scale, ~1.333 ratio, matching the mockup's oversized headline
+     treatment. Named distinctly from the live site's own type sizing so the
+     two systems never collide. */
+  --text-ht-display: clamp(2.5rem, 6vw, 5.5rem);
+  --text-ht-h3: clamp(1.5rem, 2.5vw, 2rem);
+  --text-ht-body-lg: clamp(1.1rem, 1.6vw, 1.4rem);
+  --text-ht-body: 1rem;
+  --text-ht-label: 0.8125rem;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;

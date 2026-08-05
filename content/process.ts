@@ -9,27 +9,32 @@ export type ProcessStep = {
 export const process: ProcessStep[] = [
   {
     number: "01",
-    title: "Prepare the Ground",
-    description: "We start by understanding your business, your customers, and your goals.",
+    title: "Research",
+    description: "We understand your goals, users, and friction points before shaping the solution.",
   },
   {
     number: "02",
-    title: "Lay the Foundation",
-    description: "Strategy, messaging, and site structure, settled before a single pixel is designed.",
+    title: "Direction",
+    description: "We turn insights into flows, wireframes, and prototypes that make the direction clear.",
   },
   {
     number: "03",
-    title: "Build with Purpose",
-    description: "Design, development, UX, and SEO foundations, built as one system.",
+    title: "Design",
+    description: "We design the interface, system, content, and assets with careful production detail.",
   },
   {
     number: "04",
-    title: "Cultivate Growth",
-    description: "Testing, optimisation, and refinement after launch.",
+    title: "Revisions",
+    description: "We refine the work against your feedback, tightening details until everything holds up.",
   },
   {
     number: "05",
-    title: "The Harvest",
-    description: "A website that keeps working for your business, month after month.",
+    title: "Handoff",
+    description: "We hand off files, guidelines, and support so the work lands cleanly.",
+  },
+  {
+    number: "06",
+    title: "Beyond Launch",
+    description: "One month of support, included.",
   },
 ];

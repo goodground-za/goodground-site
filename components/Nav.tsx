@@ -29,6 +29,11 @@ export function Nav() {
     };
   }, [menuOpen]);
 
+  // The /home-test A/B variant renders its own HomeTestNav with a completely
+  // different visual system — bail out after the hooks above (rules of
+  // hooks), before rendering anything for that route.
+  if (pathname.startsWith("/home-test")) return null;
+
   return (
     <header className="sticky top-0 z-50">
       <nav aria-label="Main" className="bg-pine">

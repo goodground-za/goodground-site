@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { images } from "@/content/images";
 import { footerLinks, legalLinks, site } from "@/content/site";
 import { FooterLogo } from "./Logo";
@@ -12,6 +15,11 @@ import { SocialIcon } from "./SocialIcon";
  */
 export function Footer() {
   const year = new Date().getFullYear();
+  const pathname = usePathname();
+
+  // The /home-test A/B variant renders its own HomeTestFooter with a
+  // completely different visual system.
+  if (pathname.startsWith("/home-test")) return null;
 
   return (
     <footer className="relative mt-auto">
