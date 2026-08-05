@@ -22,7 +22,7 @@ export function HomeTestFooter() {
     <footer className="bg-ht-purple relative z-40">
       <CloudDivider
         fill="var(--color-ht-purple)"
-        className="pointer-events-none absolute inset-x-0 top-0 h-auto w-full -translate-y-full"
+        className="pointer-events-none absolute inset-x-0 top-0 h-auto w-full -translate-y-[calc(100%-3px)]"
       />
 
       <div className="relative z-[2] mx-auto max-w-[1600px] px-6 pt-20 pb-10 sm:px-10 md:px-14">

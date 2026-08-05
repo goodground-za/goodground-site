@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import type { MouseEvent as ReactMouseEvent, PointerEvent as ReactPointerEvent } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { processBanner } from "@/content/home-test";
 import { process } from "@/content/process";
@@ -22,6 +23,8 @@ export function CreativeProcess() {
   const [progress, setProgress] = useState(0);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const dragState = useRef({ startX: 0, startScrollLeft: 0, moved: false, active: false });
 
   const sync = useCallback(() => {
     const el = trackRef.current;
@@ -52,6 +55,49 @@ export function CreativeProcess() {
     const amount = card ? card.getBoundingClientRect().width + 20 : el.clientWidth * 0.8;
     el.scrollBy({ left: amount * dir, behavior: "smooth" });
   };
+
+  // Mouse drag-to-scroll: native touch/trackpad scrolling already works on
+  // the overflow-x-auto track, but a mouse has no scroll gesture of its own,
+  // so desktop users need click-and-drag added explicitly.
+  const onPointerDown = useCallback((e: ReactPointerEvent<HTMLOListElement>) => {
+    if (e.pointerType === "touch") return;
+    const el = trackRef.current;
+    if (!el) return;
+    dragState.current = { startX: e.clientX, startScrollLeft: el.scrollLeft, moved: false, active: true };
+    setIsDragging(true);
+    try {
+      el.setPointerCapture(e.pointerId);
+    } catch {
+      // Pointer capture can fail to attach (e.g. no live hardware pointer);
+      // dragState.active still gates onPointerMove so dragging keeps working.
+    }
+  }, []);
+
+  const onPointerMove = useCallback((e: ReactPointerEvent<HTMLOListElement>) => {
+    const el = trackRef.current;
+    if (!el || !dragState.current.active) return;
+    const delta = e.clientX - dragState.current.startX;
+    if (Math.abs(delta) > 4) dragState.current.moved = true;
+    el.scrollLeft = dragState.current.startScrollLeft - delta;
+  }, []);
+
+  const endDrag = useCallback((e: ReactPointerEvent<HTMLOListElement>) => {
+    const el = trackRef.current;
+    if (el?.hasPointerCapture(e.pointerId)) el.releasePointerCapture(e.pointerId);
+    dragState.current.active = false;
+    setIsDragging(false);
+  }, []);
+
+  // Swallow the click that follows a drag so links/buttons under the
+  // pointer don't fire (e.g. "Start Your Project") when the user was
+  // dragging, not clicking.
+  const onClickCapture = useCallback((e: ReactMouseEvent<HTMLOListElement>) => {
+    if (dragState.current.moved) {
+      e.preventDefault();
+      e.stopPropagation();
+      dragState.current.moved = false;
+    }
+  }, []);
 
   return (
     // z-10 + -mt-16: sits ABOVE the ServiceCarousel section before it (which
@@ -91,7 +137,15 @@ export function CreativeProcess() {
           ref={trackRef}
           tabIndex={0}
           aria-label="Our creative process"
-          className="relative z-[2] mt-8 flex gap-5 overflow-x-auto scroll-smooth px-6 pb-10 [scrollbar-width:none] sm:px-10 [&::-webkit-scrollbar]:hidden"
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={endDrag}
+          onPointerLeave={endDrag}
+          onPointerCancel={endDrag}
+          onClickCapture={onClickCapture}
+          className={`relative z-[2] mt-8 flex gap-5 overflow-x-auto px-6 pb-10 [scrollbar-width:none] sm:px-10 [&::-webkit-scrollbar]:hidden ${
+            isDragging ? "cursor-grabbing scroll-auto select-none" : "cursor-grab scroll-smooth"
+          }`}
         >
           {process.map((item) => (
             <li

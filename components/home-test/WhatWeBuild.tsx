@@ -19,7 +19,7 @@ export function WhatWeBuild() {
     <section className="bg-ht-purple relative z-30 px-6 pt-8 pb-20 sm:px-10 sm:pt-10 md:pb-28">
       <CloudDivider
         fill="var(--color-ht-purple)"
-        className="pointer-events-none absolute inset-x-0 top-0 h-auto w-full -translate-y-full"
+        className="pointer-events-none absolute inset-x-0 top-0 h-auto w-full -translate-y-[calc(100%-3px)]"
       />
 
       <RevealSection className="mx-auto max-w-[1600px]">
@@ -33,7 +33,7 @@ export function WhatWeBuild() {
           One team, one connected process. Here&rsquo;s what&rsquo;s actually included.
         </p>
 
-        <RevealStagger className="mt-10 space-y-5" y={16}>
+        <RevealStagger className="mt-10 space-y-8" y={16}>
           {services.map((service, i) => (
             <AccordionRow
               key={service.slug}
