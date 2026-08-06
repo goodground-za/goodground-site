@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { MouseEvent as ReactMouseEvent, PointerEvent as ReactPointerEvent } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { processBanner } from "@/content/home-test";
+import { processBanner } from "@/content/homepage";
 import { process } from "@/content/process";
 import { MagneticButton } from "@/components/motion-gsap/MagneticButton";
 import { SplitWords } from "@/components/motion-gsap/SplitWords";

@@ -49,20 +49,16 @@ export default function LegalPage() {
       {/* Hero */}
       <PageHero
         eyebrow="Legal"
-        phrases={["Legal Notice &", "Privacy Policy"]}
-        intro={
-          <>
-            GoodGround is committed to transparency, data protection, and responsible use of
-            information. By using this website, you agree to the terms below.
-          </>
-        }
+        title="Legal Notice & Privacy Policy"
+        intro="GoodGround is committed to transparency, data protection, and responsible use of information. By using this website, you agree to the terms below."
       />
 
-      <div className="mx-auto grid max-w-[1434px] gap-10 px-3 pb-16 sm:px-6 md:px-11 lg:grid-cols-12 lg:gap-14 md:pb-24">
+      {/* pb-[24vw]: last section before the footer's CloudDivider. */}
+      <div className="bg-ht-cream mx-auto grid max-w-[1434px] gap-10 px-6 pt-16 pb-[24vw] sm:px-10 md:pt-24 lg:grid-cols-12 lg:gap-14">
         {/* TOC */}
-        <aside className="lg:col-span-4">
-          <nav aria-label="On this page" className="lg:sticky lg:top-24">
-            <p className="text-bark-muted text-[13px] font-bold tracking-[0.12em] uppercase">
+        <aside className="min-w-0 lg:col-span-4">
+          <nav aria-label="On this page" className="lg:sticky lg:top-28">
+            <p className="text-ht-purple/60 text-[13px] font-bold tracking-[0.12em] uppercase">
               Contents
             </p>
             <ul className="mt-4 space-y-1">
@@ -70,7 +66,7 @@ export default function LegalPage() {
                 <li key={item.id}>
                   <a
                     href={`#${item.id}`}
-                    className="text-bark-muted hover:text-ember block py-1 text-[14px] transition-colors"
+                    className="text-ht-purple/60 hover:text-ht-orange block py-1 text-[14px] transition-colors"
                   >
                     {item.label}
                   </a>
@@ -81,10 +77,10 @@ export default function LegalPage() {
         </aside>
 
         {/* Document */}
-        <div className="lg:col-span-8">
+        <div className="min-w-0 lg:col-span-8">
           {/* Company details */}
-          <div className="rounded-card bg-surface border-bark/10 border p-6 sm:p-8">
-            <p className="text-bark-muted text-[13px] font-bold tracking-[0.12em] uppercase">
+          <div className="rounded-card ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] bg-white p-6 ring-2 sm:p-8">
+            <p className="text-ht-purple/60 text-[13px] font-bold tracking-[0.12em] uppercase">
               Company Details
             </p>
             <dl className="mt-5 grid gap-5 sm:grid-cols-2">
@@ -126,7 +122,7 @@ export default function LegalPage() {
               <P>
                 We take your privacy seriously. This section explains how we collect, use, store, and
                 protect your personal information in accordance with applicable laws, including the{" "}
-                <strong className="text-bark font-bold">
+                <strong className="text-ht-purple font-bold">
                   Protection of Personal Information Act (POPIA)
                 </strong>{" "}
                 in South Africa.
@@ -199,7 +195,7 @@ export default function LegalPage() {
                 ]}
               />
               <P>
-                Your data may be stored for up to <strong className="text-bark font-bold">24 months</strong> unless
+                Your data may be stored for up to <strong className="text-ht-purple font-bold">24 months</strong> unless
                 you request deletion earlier. You may request access, correction, or deletion of your
                 data at any time.
               </P>
@@ -210,9 +206,9 @@ export default function LegalPage() {
                 We do not sell, rent, or trade your personal information. We may share data with
                 trusted third-party providers where necessary to operate our business.
               </P>
-              <div className="rounded-card bg-cream mt-4 flex flex-wrap items-center justify-between gap-2 p-4">
-                <span className="font-heading text-bark font-bold">Google</span>
-                <span className="text-bark-muted text-[14px]">Analytics and performance tracking</span>
+              <div className="rounded-card bg-ht-cream mt-4 flex flex-wrap items-center justify-between gap-2 p-4">
+                <span className="font-ht-display text-ht-purple font-bold">Google</span>
+                <span className="text-ht-purple/60 text-[14px]">Analytics and performance tracking</span>
               </div>
               <P>
                 These providers are selected based on their compliance with data protection
@@ -234,8 +230,8 @@ export default function LegalPage() {
               <ul className="mt-4 grid gap-3 sm:grid-cols-2">
                 {rights.map((r) => (
                   <li key={r} className="flex items-start gap-3">
-                    <span aria-hidden="true" className="bg-ember mt-2 size-1.5 shrink-0 rounded-full" />
-                    <span className="text-bark text-[15px] leading-[1.5]">{r}</span>
+                    <span aria-hidden="true" className="bg-ht-orange mt-2 size-1.5 shrink-0 rounded-full" />
+                    <span className="text-ht-purple text-[15px] leading-[1.5]">{r}</span>
                   </li>
                 ))}
               </ul>
@@ -245,7 +241,7 @@ export default function LegalPage() {
               </P>
               <P>
                 You also have the right to lodge a complaint with the{" "}
-                <strong className="text-bark font-bold">Information Regulator of South Africa</strong>.
+                <strong className="text-ht-purple font-bold">Information Regulator of South Africa</strong>.
               </P>
             </Section>
 
@@ -311,7 +307,7 @@ export default function LegalPage() {
             <Section num="14" id="sec-minors" title="Minors">
               <P>
                 Our services are not intended for individuals under the age of{" "}
-                <strong className="text-bark font-bold">16</strong>. We do not knowingly collect personal data from
+                <strong className="text-ht-purple font-bold">16</strong>. We do not knowingly collect personal data from
                 minors without parental or guardian consent.
               </P>
               <P>If such data is identified, it will be removed promptly.</P>
@@ -330,7 +326,7 @@ export default function LegalPage() {
                 If you have any questions about this legal notice or how your data is handled, contact
                 GoodGround{site.email ? " at " : " through the website"}
                 {site.email ? (
-                  <a href={`mailto:${site.email}`} className="text-ember font-bold underline underline-offset-2">
+                  <a href={`mailto:${site.email}`} className="text-ht-orange font-bold underline underline-offset-2">
                     {site.email}
                   </a>
                 ) : null}
@@ -353,8 +349,8 @@ export default function LegalPage() {
 function CompanyItem({ label, value, muted }: { label: string; value: string; muted?: boolean }) {
   return (
     <div>
-      <dt className="text-bark-muted text-[12px] font-medium tracking-[0.08em] uppercase">{label}</dt>
-      <dd className={`font-heading mt-1 text-[16px] font-bold ${muted ? "text-bark-muted italic" : "text-bark"}`}>
+      <dt className="text-ht-purple/60 text-[12px] font-medium tracking-[0.08em] uppercase">{label}</dt>
+      <dd className={`font-ht-display mt-1 text-[16px] font-bold ${muted ? "text-ht-purple/60 italic" : "text-ht-purple"}`}>
         {value}
       </dd>
     </div>
@@ -364,8 +360,8 @@ function CompanyItem({ label, value, muted }: { label: string; value: string; mu
 function Section({ num, id, title, children }: { num: string; id: string; title: string; children: ReactNode }) {
   return (
     <section id={id} className="scroll-mt-24">
-      <p className="font-heading text-ember text-[13px] font-bold tabular-nums">{num}</p>
-      <h2 className="font-heading text-pine mt-2 text-[clamp(1.5rem,3vw,2.25rem)] leading-tight font-bold tracking-[-0.02em]">
+      <p className="font-ht-display text-ht-orange text-[13px] font-bold tabular-nums">{num}</p>
+      <h2 className="font-ht-display text-ht-purple mt-2 text-[clamp(1.5rem,3vw,2.25rem)] leading-tight font-bold uppercase">
         {title}
       </h2>
       <div className="mt-4 space-y-4">{children}</div>
@@ -374,19 +370,19 @@ function Section({ num, id, title, children }: { num: string; id: string; title:
 }
 
 function P({ children }: { children: ReactNode }) {
-  return <p className="text-bark-muted max-w-[68ch] text-[15px] leading-[1.7]">{children}</p>;
+  return <p className="text-ht-purple/70 max-w-[68ch] text-[15px] leading-[1.7]">{children}</p>;
 }
 
 function H3({ children }: { children: ReactNode }) {
-  return <h3 className="font-heading text-bark pt-1 text-[15px] font-bold">{children}</h3>;
+  return <h3 className="font-ht-display text-ht-purple pt-1 text-[15px] font-bold">{children}</h3>;
 }
 
 function UL({ items }: { items: string[] }) {
   return (
     <ul className="space-y-2">
       {items.map((item) => (
-        <li key={item} className="text-bark-muted flex items-start gap-3 text-[15px] leading-[1.6]">
-          <span aria-hidden="true" className="bg-ember/50 mt-2.5 size-1.5 shrink-0 rounded-full" />
+        <li key={item} className="text-ht-purple/70 flex items-start gap-3 text-[15px] leading-[1.6]">
+          <span aria-hidden="true" className="bg-ht-orange/50 mt-2.5 size-1.5 shrink-0 rounded-full" />
           {item}
         </li>
       ))}
@@ -396,7 +392,7 @@ function UL({ items }: { items: string[] }) {
 
 function Banner({ children }: { children: ReactNode }) {
   return (
-    <div className="rounded-card border-ember/25 bg-ember/8 text-bark border-l-0 p-5 text-[15px] leading-[1.6]">
+    <div className="rounded-card border-ht-orange/25 bg-ht-orange/8 text-ht-purple border-l-0 p-5 text-[15px] leading-[1.6]">
       {children}
     </div>
   );

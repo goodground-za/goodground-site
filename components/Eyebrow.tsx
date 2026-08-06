@@ -1,13 +1,17 @@
 /**
- * The comp draws section eyebrows as filled pills, not tracked uppercase labels.
- * That also settles an earlier tension: a repeated tiny uppercase label above
- * every section reads as scaffolding, whereas a pill is a deliberate brand mark.
+ * Matches the promoted /home-test design language's eyebrow treatment:
+ * plain tracked uppercase text, not a filled pill — used above nearly every
+ * section heading site-wide (e.g. "OUR WEB DESIGN SERVICES", "GET IN
+ * TOUCH"). Tone prop values are kept from the previous palette (peach/ember)
+ * so no call site needed updating; "ember" now maps to the pink used on
+ * dark ht-purple/ht-orange surfaces (PageHero's band, accent sections),
+ * default maps to ht-purple for light ht-cream surfaces.
  */
 export function Eyebrow({ children, tone = "peach" }: { children: string; tone?: "peach" | "ember" }) {
   return (
     <p
-      className={`rounded-pill font-heading inline-block px-4 py-1.5 text-[14px] font-bold ${
-        tone === "ember" ? "bg-ember text-peach" : "bg-peach text-bark"
+      className={`font-ht-display inline-block text-[13px] font-bold tracking-[0.15em] uppercase ${
+        tone === "ember" ? "text-ht-pink" : "text-ht-purple"
       }`}
     >
       {children}

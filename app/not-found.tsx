@@ -1,57 +1,66 @@
 import Link from "next/link";
-import { AuroraGlow } from "@/components/AuroraGlow";
-import { ButtonLink } from "@/components/Button";
-import { Eyebrow } from "@/components/Eyebrow";
-import { KineticText, Reveal } from "@/components/motion/KineticText";
+import { MagneticButton } from "@/components/motion-gsap/MagneticButton";
+import { RevealSection } from "@/components/motion-gsap/RevealSection";
+import { SplitWords } from "@/components/motion-gsap/SplitWords";
 import { navLinks } from "@/content/site";
 
 /**
  * 404. Copy verbatim from the copy deck §5. Rendered inside the root layout, so
  * nav and footer are already present; this is just the panel. Given a warm
  * branded treatment rather than a cold error, with links out so it's useful.
+ * pb-[24vw] reserves room for the footer's CloudDivider (same reasoning as
+ * CTABand), since this is the only section on the page.
  */
 export default function NotFound() {
   return (
-    <section className="px-3 py-8 sm:px-5 md:py-12">
-      <div className="bg-bark rounded-block grain text-peach mx-auto max-w-[1434px] overflow-hidden">
-        <AuroraGlow intensity={0.5} />
-        <div className="relative z-[2] px-6 py-24 sm:px-10 md:px-14 md:py-32">
-          <Reveal>
-            <Eyebrow>404</Eyebrow>
-          </Reveal>
+    <div className="bg-ht-cream pb-[24vw]">
+      <section className="bg-ht-purple relative z-10 rounded-b-[40px] px-6 pt-28 pb-16 text-center sm:rounded-b-[56px] sm:px-10 sm:pt-32 sm:pb-20">
+        <div className="mx-auto max-w-[900px]">
+          <RevealSection>
+            <p className="font-ht-display text-ht-pink text-[13px] font-bold tracking-[0.15em] uppercase">404</p>
+          </RevealSection>
 
-          <KineticText
+          <SplitWords
             as="h1"
-            tone="light"
-            phrases={["This page", "hasn't taken root."]}
-            className="font-heading mt-6 max-w-[16ch] text-[clamp(2.5rem,7vw,5.5rem)] leading-[1.02] font-bold tracking-[-0.03em]"
+            text="This page hasn't taken root."
+            trigger="mount"
+            className="font-ht-display mx-auto mt-4 max-w-[20ch] text-[clamp(2.25rem,5.5vw,4rem)] leading-[1.05] font-bold text-white uppercase"
           />
 
-          <Reveal delay={0.1}>
-            <p className="mt-7 max-w-[46ch] text-[clamp(1rem,1.5vw,1.25rem)] leading-[1.6] text-peach/75">
-              The page you&rsquo;re looking for doesn&rsquo;t exist &mdash; but the rest of
-              GoodGround does.
+          <RevealSection delay={0.1} className="mt-6">
+            <p className="mx-auto max-w-[46ch] text-[clamp(1rem,1.4vw,1.2rem)] leading-[1.6] text-white/75">
+              The page you&rsquo;re looking for doesn&rsquo;t exist &mdash; but the rest of GoodGround does.
             </p>
 
-            <div className="mt-10 flex flex-wrap gap-3">
-              <ButtonLink href="/" variant="peach" size="lg">
-                Back to Home →
-              </ButtonLink>
-              <ButtonLink href="/start-project" variant="outline" size="lg">
-                Start your project
-              </ButtonLink>
+            <div className="mt-10 flex flex-wrap justify-center gap-3">
+              <MagneticButton>
+                <Link
+                  href="/"
+                  className="font-ht-display bg-ht-cream text-ht-purple rounded-pill inline-block px-7 py-3.5 text-[14px] font-bold tracking-wide uppercase shadow-[0_12px_28px_-10px_rgba(0,0,0,0.35)] transition-transform duration-200 hover:scale-[1.03]"
+                >
+                  Back to Home →
+                </Link>
+              </MagneticButton>
+              <MagneticButton>
+                <Link
+                  href="/start-project"
+                  className="font-ht-display rounded-pill inline-block border-2 border-white px-7 py-3.5 text-[14px] font-bold tracking-wide text-white uppercase transition-transform duration-200 hover:scale-[1.03]"
+                >
+                  Start Your Project
+                </Link>
+              </MagneticButton>
             </div>
 
-            <nav aria-label="Popular pages" className="mt-12 border-t border-peach/15 pt-6">
-              <p className="text-[13px] font-medium tracking-[0.12em] text-peach/50 uppercase">
+            <nav aria-label="Popular pages" className="border-white/15 mt-12 border-t pt-6">
+              <p className="text-[13px] font-medium tracking-[0.12em] text-white/50 uppercase">
                 Or head somewhere useful
               </p>
-              <ul className="mt-4 flex flex-wrap gap-2">
+              <ul className="mt-4 flex flex-wrap justify-center gap-2">
                 {navLinks.map((link) => (
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="rounded-pill border border-peach/20 px-4 py-2 text-[14px] font-medium text-peach/85 transition-colors duration-150 hover:border-peach/50 hover:text-peach"
+                      className="rounded-pill border-white/20 hover:border-white/50 inline-block border px-4 py-2 text-[14px] font-medium text-white/85 transition-colors duration-150 hover:text-white"
                     >
                       {link.label}
                     </Link>
@@ -59,9 +68,9 @@ export default function NotFound() {
                 ))}
               </ul>
             </nav>
-          </Reveal>
+          </RevealSection>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }

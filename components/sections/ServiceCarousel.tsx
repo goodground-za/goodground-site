@@ -3,7 +3,7 @@
 import gsap from "gsap";
 import Image from "next/image";
 import { useLayoutEffect, useRef, useState } from "react";
-import { carouselCards } from "@/content/home-test";
+import { carouselCards } from "@/content/homepage";
 import { RevealSection } from "@/components/motion-gsap/RevealSection";
 
 const N = carouselCards.length;

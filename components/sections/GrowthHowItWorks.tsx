@@ -1,5 +1,5 @@
-import { Eyebrow } from "@/components/Eyebrow";
-import { KineticText, Reveal } from "@/components/motion/KineticText";
+import { RevealSection, RevealStagger } from "@/components/motion-gsap/RevealSection";
+import { SplitWords } from "@/components/motion-gsap/SplitWords";
 
 const steps = [
   {
@@ -25,51 +25,50 @@ const steps = [
 ];
 
 /**
- * Ads copy deck §5 ("How it works"), deliberately mirroring PaymentPlan.tsx's
- * numbered-steps pattern so the build and growth services feel like one
- * family, per the deck's own note.
+ * Ads copy deck §5 ("How it works"), deliberately mirroring the About page's
+ * "How we work" numbered-step pattern so the build and growth services feel
+ * like one family, per the deck's own note.
  */
 export function GrowthHowItWorks() {
   return (
-    <section id="growth-how-it-works" className="scroll-mt-24 px-3 py-16 sm:px-5 md:py-24">
+    <section id="growth-how-it-works" className="scroll-mt-24 px-6 py-16 sm:px-10 md:py-24">
       <div className="mx-auto max-w-[1434px]">
-        <Eyebrow tone="ember">How it works</Eyebrow>
+        <RevealSection>
+          <p className="font-ht-display text-ht-purple text-[13px] font-bold tracking-[0.15em] uppercase">How it works</p>
+        </RevealSection>
 
-        <KineticText
+        <SplitWords
           as="h2"
-          phrases={["Growth you can", "actually budget for."]}
-          className="font-heading text-pine mt-6 max-w-[16ch] text-[clamp(2rem,5.2vw,4rem)] leading-[1.05] font-bold tracking-[-0.03em]"
+          text="Growth you can actually budget for."
+          className="font-ht-display text-ht-purple mt-6 max-w-[16ch] text-[clamp(2rem,5.2vw,4rem)] leading-[1.05] font-bold uppercase"
         />
 
-        <Reveal delay={0.08}>
-          <p className="text-bark mt-6 max-w-[56ch] text-[clamp(0.95rem,1.25vw,1.1rem)] leading-[1.6]">
+        <RevealSection delay={0.08}>
+          <p className="text-ht-purple/70 mt-6 max-w-[56ch] text-[clamp(0.95rem,1.25vw,1.1rem)] leading-[1.6]">
             No lock-in contracts and no surprise invoices. Just a clear monthly management fee and
             an ad budget you control, agreed upfront.
           </p>
-        </Reveal>
+        </RevealSection>
 
-        <ol className="border-bark/10 mt-10 grid gap-x-8 gap-y-6 border-t pt-8 sm:grid-cols-2 lg:grid-cols-4">
+        <RevealStagger className="border-ht-purple/15 mt-10 grid gap-x-8 gap-y-6 border-t pt-8 sm:grid-cols-2 lg:grid-cols-4" y={16}>
           {steps.map((step) => (
-            <li key={step.number}>
-              <span
-                aria-hidden="true"
-                className="font-heading bg-ember text-peach grid size-8 place-items-center rounded-full text-[13px] font-bold"
-              >
+            <div key={step.number}>
+              <span aria-hidden="true" className="font-ht-display bg-ht-orange grid size-8 place-items-center rounded-full text-[13px] font-bold text-white">
                 {step.number}
               </span>
-              <p className="text-bark mt-5 max-w-[26ch] text-[15px] leading-[1.6]">
-                <strong className="font-heading font-bold">{step.title}</strong>
+              <p className="text-ht-purple/85 mt-5 max-w-[26ch] text-[15px] leading-[1.6]">
+                <strong className="font-ht-display font-bold">{step.title}</strong>
                 {step.rest}
               </p>
-            </li>
+            </div>
           ))}
-        </ol>
+        </RevealStagger>
 
-        <Reveal delay={0.1}>
-          <p className="text-bark-muted mt-8 text-[13px] leading-relaxed">
+        <RevealSection delay={0.1}>
+          <p className="text-ht-purple/60 mt-8 text-[13px] leading-relaxed">
             Clear monthly fee. Budget you control. Cancel with 30 days&rsquo; notice.
           </p>
-        </Reveal>
+        </RevealSection>
       </div>
     </section>
   );

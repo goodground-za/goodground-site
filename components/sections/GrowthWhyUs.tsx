@@ -1,6 +1,8 @@
-import { RevealGroup, RevealItem } from "@/components/motion/KineticText";
+import { HoverCard } from "@/components/motion-gsap/HoverCard";
+import { RevealStagger } from "@/components/motion-gsap/RevealSection";
+import { SplitWords } from "@/components/motion-gsap/SplitWords";
 
-/** Ads copy deck §6 ("Why GoodGround"), matching WhyUs.tsx's ember-card trio exactly. */
+/** Ads copy deck §6 ("Why GoodGround"), matching the site's hard-shadow card trio. */
 const reasons = [
   {
     title: "Foundation first, then growth",
@@ -18,34 +20,28 @@ const reasons = [
 
 export function GrowthWhyUs() {
   return (
-    <section className="px-3 py-16 sm:px-5 md:py-24">
-      <div className="mx-auto max-w-[1434px] px-3 sm:px-6 md:px-11">
-        <h2 className="font-heading text-bark max-w-[18ch] text-[clamp(2rem,5.2vw,4rem)] leading-[1.05] font-bold tracking-[-0.03em]">
-          Why grow with GoodGround.
-        </h2>
+    <section className="px-6 py-16 sm:px-10 md:py-24">
+      <div className="mx-auto max-w-[1434px]">
+        <SplitWords
+          as="h2"
+          text="Why grow with GoodGround."
+          className="font-ht-display text-ht-purple max-w-[18ch] text-[clamp(2rem,5.2vw,4rem)] leading-[1.05] font-bold uppercase"
+        />
 
-        <RevealGroup className="mt-12 grid gap-4 md:grid-cols-3">
+        <RevealStagger className="mt-12 grid gap-5 md:grid-cols-3" y={16}>
           {reasons.map((reason, i) => (
-            <RevealItem key={reason.title}>
-              <div className="rounded-card bg-ember grain h-full overflow-hidden">
-                <div className="relative z-[2] flex h-full flex-col p-7">
-                  <span
-                    aria-hidden="true"
-                    className="font-heading text-peach/35 text-[15px] font-bold tabular-nums"
-                  >
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <h3 className="font-heading text-peach mt-5 text-[17px] font-bold text-balance">
-                    {reason.title}
-                  </h3>
-                  <p className="mt-3 max-w-[34ch] text-[14px] leading-[1.6] text-peach/85">
-                    {reason.body}
-                  </p>
-                </div>
-              </div>
-            </RevealItem>
+            <HoverCard
+              key={reason.title}
+              className="bg-ht-orange ring-ht-crimson shadow-[0_14px_0_0_var(--color-ht-crimson)] rounded-card flex h-full flex-col p-7 ring-2"
+            >
+              <span aria-hidden="true" className="font-ht-display text-[15px] font-bold text-white/40 tabular-nums">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3 className="font-ht-display mt-5 text-[17px] font-bold text-balance text-white">{reason.title}</h3>
+              <p className="mt-3 max-w-[34ch] text-[14px] leading-[1.6] text-white/85">{reason.body}</p>
+            </HoverCard>
           ))}
-        </RevealGroup>
+        </RevealStagger>
       </div>
     </section>
   );

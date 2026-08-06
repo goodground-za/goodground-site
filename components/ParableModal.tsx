@@ -55,7 +55,7 @@ export function ParableLink({
         ref={triggerRef}
         type="button"
         onClick={() => setOpen(true)}
-        className={`text-ember decoration-ember/40 hover:decoration-ember cursor-pointer font-bold underline underline-offset-2 transition-colors ${className}`}
+        className={`text-ht-orange decoration-ht-orange/40 hover:decoration-ht-orange cursor-pointer font-bold underline underline-offset-2 transition-colors ${className}`}
       >
         {children}
       </button>
@@ -151,7 +151,7 @@ function ParableDialog({
             aria-label="Close"
             tabIndex={-1}
             onClick={onClose}
-            className="bg-ink/60 absolute inset-0 cursor-default backdrop-blur-sm"
+            className="bg-ht-purple/60 absolute inset-0 cursor-default backdrop-blur-sm"
           />
 
           <motion.div
@@ -160,14 +160,14 @@ function ParableDialog({
             aria-modal="true"
             aria-labelledby={titleId}
             aria-describedby={descId}
-            className="rounded-block bg-surface text-bark shadow-lift relative z-1 max-h-[88vh] w-full max-w-[640px] overflow-y-auto p-6 sm:p-9"
+            className="rounded-block bg-ht-cream text-ht-purple shadow-lift relative z-1 max-h-[88vh] w-full max-w-[640px] overflow-y-auto p-6 sm:p-9"
             initial={reduced ? false : { opacity: 0, y: 24, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={reduced ? undefined : { opacity: 0, y: 16, scale: 0.98 }}
             transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="flex items-start justify-between gap-4">
-              <p className="bg-ember text-peach rounded-pill font-heading inline-block px-4 py-1.5 text-[13px] font-bold">
+              <p className="bg-ht-orange text-white rounded-pill font-ht-display inline-block px-4 py-1.5 text-[13px] font-bold">
                 Why &ldquo;GoodGround&rdquo;
               </p>
               <button
@@ -175,7 +175,7 @@ function ParableDialog({
                 data-autofocus
                 onClick={onClose}
                 aria-label="Close"
-                className="text-bark hover:bg-bark/8 -mt-1 -mr-1 grid size-10 shrink-0 cursor-pointer place-items-center rounded-full transition-colors"
+                className="text-ht-purple hover:bg-ht-purple/8 -mt-1 -mr-1 grid size-10 shrink-0 cursor-pointer place-items-center rounded-full transition-colors"
               >
                 <svg aria-hidden="true" viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                   <path d="M6 6l12 12M18 6L6 18" />
@@ -185,12 +185,12 @@ function ParableDialog({
 
             <h2
               id={titleId}
-              className="font-heading mt-5 text-[clamp(1.5rem,3.4vw,2.25rem)] leading-tight font-bold tracking-[-0.02em]"
+              className="font-ht-display mt-5 text-[clamp(1.5rem,3.4vw,2.25rem)] leading-tight font-bold tracking-[-0.02em]"
             >
               The Parable of the Sower
             </h2>
 
-            <p id={descId} className="text-bark-muted mt-4 text-[15px] leading-[1.7]">
+            <p id={descId} className="text-ht-purple/70 mt-4 text-[15px] leading-[1.7]">
               The Parable of the Sower, recorded in Matthew 13, Mark 4 and Luke 8, features a farmer
               scattering seeds on four different types of soil. Jesus later explained that the seed
               represents the Word of God, and the soils represent four distinct ways people respond
@@ -202,33 +202,33 @@ function ParableDialog({
                 <li
                   key={soil.name}
                   className={`rounded-card p-5 ${
-                    soil.highlight ? "bg-ember text-peach" : "bg-cream text-bark"
+                    soil.highlight ? "bg-ht-orange text-white" : "bg-white text-ht-purple"
                   }`}
                 >
                   <div className="flex items-baseline gap-3">
                     <span
-                      className={`font-heading text-[13px] font-bold tabular-nums ${
-                        soil.highlight ? "text-peach/70" : "text-ember"
+                      className={`font-ht-display text-[13px] font-bold tabular-nums ${
+                        soil.highlight ? "text-white/70" : "text-ht-orange"
                       }`}
                     >
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    <h3 className="font-heading text-[16px] font-bold">
+                    <h3 className="font-ht-display text-[16px] font-bold">
                       {soil.name}{" "}
-                      <span className={soil.highlight ? "text-peach/75" : "text-bark-muted"}>
+                      <span className={soil.highlight ? "text-white/75" : "text-ht-purple/70"}>
                         ({soil.heart})
                       </span>
                     </h3>
                   </div>
                   <p
                     className={`mt-2 text-[14px] leading-[1.6] ${
-                      soil.highlight ? "text-peach/90" : "text-bark-muted"
+                      soil.highlight ? "text-white/90" : "text-ht-purple/70"
                     }`}
                   >
                     {soil.text}
                   </p>
                   {soil.highlight ? (
-                    <p className="text-peach mt-3 text-[13px] font-medium italic">
+                    <p className="mt-3 text-[13px] font-medium text-white italic">
                       This is the ground GoodGround is named for.
                     </p>
                   ) : null}

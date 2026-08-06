@@ -1,17 +1,27 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
+import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import { Analytics } from "@/components/Analytics";
 import { Footer } from "@/components/Footer";
+import { LenisProvider } from "@/components/motion-gsap/LenisProvider";
 import { Nav } from "@/components/Nav";
 import { site } from "@/content/site";
 import "./globals.css";
 
-// One family, weights carrying the hierarchy: Bold for every heading (client
-// instruction), Regular/Medium for body.
-const montserrat = Montserrat({
-  variable: "--font-montserrat",
+// The site's design language (promoted from the /home-test A/B variant, now
+// the one look): Clash Display Bold for every heading, Inter for body copy.
+// Bold-only — the brief specifies a single weight, no other Clash Display
+// cut is used anywhere on the site.
+const clashDisplay = localFont({
+  src: "../public/fonts/ClashDisplay-Bold.otf",
+  variable: "--font-clash-display",
+  weight: "700",
+  display: "swap",
+});
+
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -70,7 +80,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html
       lang="en-ZA"
       data-scroll-behavior="smooth"
-      className={`${montserrat.variable} h-full`}
+      className={`${clashDisplay.variable} ${inter.variable} h-full`}
     >
       <head>
         {/*
@@ -85,15 +95,17 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className="flex min-h-full flex-col">
         <a
           href="#main"
-          className="bg-ink text-peach sr-only rounded-full px-5 py-3 focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-100"
+          className="bg-ht-purple text-white sr-only rounded-full px-5 py-3 focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-100"
         >
           Skip to content
         </a>
-        <Nav />
-        <main id="main" className="flex-1">
-          {children}
-        </main>
-        <Footer />
+        <LenisProvider>
+          <Nav />
+          <main id="main" className="flex-1">
+            {children}
+          </main>
+          <Footer />
+        </LenisProvider>
         {/* Renders the consent banner, and GA only once consent is granted.
             Lives inside <body> because the banner is a positioned element. */}
         <Analytics gaId={gaId} />

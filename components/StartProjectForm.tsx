@@ -59,8 +59,8 @@ const choiceSteps: { key: string; eyebrow: string; heading: string; sub: string;
 const TOTAL_STEPS = choiceSteps.length + 1; // + details step
 
 const inputBase =
-  "w-full rounded-2xl border bg-cream px-4 py-3 text-[15px] text-bark placeholder:text-bark-muted/60 " +
-  "transition-colors duration-150 focus:border-ember focus:outline-none";
+  "w-full rounded-2xl border bg-ht-cream px-4 py-3 text-[15px] text-ht-purple placeholder:text-ht-purple/40 " +
+  "transition-colors duration-150 focus:border-ht-orange focus:outline-none";
 
 type DetailErrors = Partial<Record<"fullName" | "email", string>>;
 
@@ -115,16 +115,16 @@ export function StartProjectForm() {
 
   if (status === "success" || status === "mail") {
     return (
-      <div className="rounded-block bg-surface border-bark/10 border p-8 text-center sm:p-12" role="status" aria-live="polite">
-        <span className="bg-ember text-peach mx-auto grid size-12 place-items-center rounded-full">
+      <div className="rounded-block ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] bg-white p-8 text-center ring-2 sm:p-12" role="status" aria-live="polite">
+        <span className="bg-ht-orange mx-auto grid size-12 place-items-center rounded-full text-white">
           <svg aria-hidden="true" viewBox="0 0 24 24" className="size-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="m5 13 4 4L19 7" />
           </svg>
         </span>
-        <h2 className="font-heading text-bark mt-6 text-[clamp(1.5rem,3vw,2rem)] font-bold tracking-[-0.02em]">
+        <h2 className="font-ht-display text-ht-purple mt-6 text-[clamp(1.5rem,3vw,2rem)] font-bold">
           {status === "success" ? "That's landed with us." : "Check your email app."}
         </h2>
-        <p className="text-bark-muted mx-auto mt-3 max-w-[44ch] text-[16px] leading-[1.6]">
+        <p className="text-ht-purple/70 mx-auto mt-3 max-w-[44ch] text-[16px] leading-[1.6]">
           {status === "success"
             ? "Thanks. We'll be in touch within 1–2 business days to talk through your project."
             : `We've opened a message to ${site.email} with your answers. Hit send and we'll take it from there.`}
@@ -136,17 +136,17 @@ export function StartProjectForm() {
   const isDetails = step === choiceSteps.length;
 
   return (
-    <div className="rounded-block bg-surface border-bark/10 border p-6 sm:p-8 md:p-10">
+    <div className="rounded-block ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] bg-white p-6 ring-2 sm:p-8 md:p-10">
       {/* Progress */}
       <div className="flex items-center justify-between gap-4">
-        <p className="text-bark-muted text-[13px] font-bold tracking-[0.1em] uppercase" aria-hidden="true">
+        <p className="text-ht-purple/60 text-[13px] font-bold tracking-[0.1em] uppercase" aria-hidden="true">
           Step {step + 1} of {TOTAL_STEPS}
         </p>
         {step > 0 ? (
           <button
             type="button"
             onClick={back}
-            className="text-bark-muted hover:text-ember inline-flex cursor-pointer items-center gap-1.5 text-[14px] font-medium transition-colors"
+            className="text-ht-purple/60 hover:text-ht-orange inline-flex cursor-pointer items-center gap-1.5 text-[14px] font-medium transition-colors"
           >
             <svg aria-hidden="true" viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M19 12H5M11 6l-6 6 6 6" />
@@ -156,7 +156,7 @@ export function StartProjectForm() {
         ) : null}
       </div>
       <div
-        className="bg-cream mt-3 h-[6px] w-full overflow-hidden rounded-full"
+        className="bg-ht-cream mt-3 h-[6px] w-full overflow-hidden rounded-full"
         role="progressbar"
         aria-valuenow={step + 1}
         aria-valuemin={1}
@@ -164,7 +164,7 @@ export function StartProjectForm() {
         aria-label={`Step ${step + 1} of ${TOTAL_STEPS}`}
       >
         <div
-          className="bg-ember h-full origin-left rounded-full transition-transform duration-300 ease-out"
+          className="bg-ht-orange h-full origin-left rounded-full transition-transform duration-300 ease-out"
           style={{ transform: `scaleX(${(step + 1) / TOTAL_STEPS})` }}
         />
       </div>
@@ -178,11 +178,11 @@ export function StartProjectForm() {
           aria-labelledby="step-heading"
           className="mt-8 motion-safe:animate-[step-in_260ms_var(--ease-out)_both]"
         >
-          <p className="text-ember font-heading text-[13px] font-bold">{choiceSteps[step].eyebrow}</p>
-          <h2 id="step-heading" ref={headingRef} tabIndex={-1} className="font-heading text-bark mt-2 text-[clamp(1.5rem,3.2vw,2.25rem)] leading-tight font-bold tracking-[-0.02em] outline-none">
+          <p className="text-ht-orange font-ht-display text-[13px] font-bold">{choiceSteps[step].eyebrow}</p>
+          <h2 id="step-heading" ref={headingRef} tabIndex={-1} className="font-ht-display text-ht-purple mt-2 text-[clamp(1.5rem,3.2vw,2.25rem)] leading-tight font-bold outline-none">
             {choiceSteps[step].heading}
           </h2>
-          <p className="text-bark-muted mt-2 text-[15px]">{choiceSteps[step].sub}</p>
+          <p className="text-ht-purple/70 mt-2 text-[15px]">{choiceSteps[step].sub}</p>
 
           <div className="mt-6 grid gap-3 sm:grid-cols-2">
             {choiceSteps[step].choices.map((choice) => {
@@ -194,11 +194,11 @@ export function StartProjectForm() {
                   aria-pressed={selected}
                   onClick={() => choose(choiceSteps[step].key, choice.value)}
                   className={`rounded-card group cursor-pointer border p-5 text-left transition-[border-color,background-color,transform] duration-150 hover:-translate-y-0.5 ${
-                    selected ? "border-ember bg-ember/8" : "border-bark/15 bg-cream hover:border-ember/50"
+                    selected ? "border-ht-orange bg-ht-orange/8" : "border-ht-purple/15 bg-ht-cream hover:border-ht-orange/50"
                   }`}
                 >
-                  <span className="font-heading text-bark block text-[16px] font-bold">{choice.label}</span>
-                  <span className="text-bark-muted mt-1 block text-[13px] leading-[1.5]">{choice.desc}</span>
+                  <span className="font-ht-display text-ht-purple block text-[16px] font-bold">{choice.label}</span>
+                  <span className="text-ht-purple/70 mt-1 block text-[13px] leading-[1.5]">{choice.desc}</span>
                 </button>
               );
             })}
@@ -207,11 +207,11 @@ export function StartProjectForm() {
       ) : (
         // Details step
         <form onSubmit={submit} noValidate className="mt-8 motion-safe:animate-[step-in_260ms_var(--ease-out)_both]">
-          <p className="text-ember font-heading text-[13px] font-bold">Almost done</p>
-          <h2 id="step-heading" ref={headingRef} tabIndex={-1} className="font-heading text-bark mt-2 text-[clamp(1.5rem,3.2vw,2.25rem)] leading-tight font-bold tracking-[-0.02em] outline-none">
+          <p className="text-ht-orange font-ht-display text-[13px] font-bold">Almost done</p>
+          <h2 id="step-heading" ref={headingRef} tabIndex={-1} className="font-ht-display text-ht-purple mt-2 text-[clamp(1.5rem,3.2vw,2.25rem)] leading-tight font-bold outline-none">
             How can we reach you?
           </h2>
-          <p className="text-bark-muted mt-2 text-[15px]">
+          <p className="text-ht-purple/70 mt-2 text-[15px]">
             We&rsquo;ll get back to you within 1&ndash;2 business days.
           </p>
 
@@ -223,8 +223,8 @@ export function StartProjectForm() {
           </div>
 
           <div className="mt-5">
-            <label htmlFor="message" className="font-heading text-bark mb-2 block text-[14px] font-bold">
-              Anything else? <span className="text-bark-muted font-medium">(optional)</span>
+            <label htmlFor="message" className="font-ht-display text-ht-purple mb-2 block text-[14px] font-bold">
+              Anything else? <span className="text-ht-purple/60 font-medium">(optional)</span>
             </label>
             <textarea
               id="message"
@@ -232,12 +232,12 @@ export function StartProjectForm() {
               value={details.message}
               onChange={(e) => setDetails((d) => ({ ...d, message: e.target.value }))}
               placeholder="Tell us more about what you're building."
-              className={`${inputBase} resize-y border-bark/15`}
+              className={`${inputBase} resize-y border-ht-purple/15`}
             />
           </div>
 
           {status === "error" ? (
-            <p className="text-ember mt-6 text-[14px] font-medium" role="alert">
+            <p className="text-ht-orange mt-6 text-[14px] font-medium" role="alert">
               Something went wrong sending that. Please email us directly at{" "}
               <a href={`mailto:${site.email}`} className="underline">
                 {site.email}
@@ -249,7 +249,7 @@ export function StartProjectForm() {
           <button
             type="submit"
             disabled={status === "submitting"}
-            className="rounded-pill bg-ember font-heading text-peach mt-8 inline-flex h-13 cursor-pointer items-center justify-center gap-2 px-7 text-[15px] font-bold shadow-soft transition-[transform,background-color] duration-150 hover:bg-ember/90 motion-safe:hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-60"
+            className="rounded-pill bg-ht-orange font-ht-display text-white mt-8 inline-flex h-13 cursor-pointer items-center justify-center gap-2 px-7 text-[15px] font-bold uppercase tracking-wide shadow-soft transition-[transform,background-color] duration-150 hover:bg-ht-orange/90 motion-safe:hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-60"
           >
             {status === "submitting" ? "Sending…" : "Send Your Enquiry"}
             {status === "submitting" ? null : <span aria-hidden="true">→</span>}
@@ -281,9 +281,9 @@ function DetailField({
 }) {
   return (
     <div>
-      <label htmlFor={name} className="font-heading text-bark mb-2 block text-[14px] font-bold">
+      <label htmlFor={name} className="font-ht-display text-ht-purple mb-2 block text-[14px] font-bold">
         {label}
-        {required ? <span className="text-ember"> *</span> : <span className="text-bark-muted font-medium"> (optional)</span>}
+        {required ? <span className="text-ht-orange"> *</span> : <span className="text-ht-purple/60 font-medium"> (optional)</span>}
       </label>
       <input
         id={name}
@@ -295,10 +295,10 @@ function DetailField({
         aria-invalid={!!error}
         aria-describedby={error ? `${name}-error` : undefined}
         onChange={(e) => onChange(e.target.value)}
-        className={`${inputBase} ${error ? "border-ember" : "border-bark/15"}`}
+        className={`${inputBase} ${error ? "border-ht-orange" : "border-ht-purple/15"}`}
       />
       {error ? (
-        <p id={`${name}-error`} className="text-ember mt-1.5 text-[13px] font-medium">
+        <p id={`${name}-error`} className="text-ht-orange mt-1.5 text-[13px] font-medium">
           {error}
         </p>
       ) : null}

@@ -6,9 +6,17 @@ import { useLayoutEffect, useRef, useState } from "react";
 import { faq, type FAQItem } from "@/content/faq";
 import { RevealSection, RevealStagger } from "@/components/motion-gsap/RevealSection";
 
-export function FAQAccordion() {
+/**
+ * Promoted from the approved /home-test variant's FAQAccordion — now the
+ * site's only FAQ component, used both as the homepage's abbreviated
+ * preview (`limit={4}`) and as the full list on /faq (no limit). The
+ * "All Questions" link only shows when the list has actually been
+ * truncated, so /faq itself doesn't link to a shorter version of itself.
+ */
+export function FAQAccordion({ limit }: { limit?: number } = {}) {
   const [open, setOpen] = useState<number | null>(null);
-  const items = faq.slice(0, 4);
+  const items = limit ? faq.slice(0, limit) : faq;
+  const truncated = limit ? faq.length > limit : false;
 
   return (
     <section className="bg-ht-pink overflow-hidden rounded-[40px] px-6 py-20 sm:rounded-[56px] sm:px-10 md:py-28">
@@ -23,17 +31,19 @@ export function FAQAccordion() {
           ))}
         </RevealStagger>
 
-        <div className="mt-10 flex justify-center">
-          <Link
-            href="/faq"
-            className="font-ht-display bg-white text-ht-purple rounded-pill inline-flex items-center gap-2 px-6 py-3 text-[13px] font-bold tracking-wide uppercase transition-transform duration-200 hover:scale-[1.03]"
-          >
-            All Questions
-            <svg viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M7 17 17 7M8 7h9v9" />
-            </svg>
-          </Link>
-        </div>
+        {truncated ? (
+          <div className="mt-10 flex justify-center">
+            <Link
+              href="/faq"
+              className="font-ht-display bg-white text-ht-purple rounded-pill inline-flex items-center gap-2 px-6 py-3 text-[13px] font-bold tracking-wide uppercase transition-transform duration-200 hover:scale-[1.03]"
+            >
+              All Questions
+              <svg viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M7 17 17 7M8 7h9v9" />
+              </svg>
+            </Link>
+          </div>
+        ) : null}
       </RevealSection>
     </section>
   );
@@ -42,7 +52,7 @@ export function FAQAccordion() {
 function FAQRow({ item, isOpen, onToggle }: { item: FAQItem; isOpen: boolean; onToggle: () => void }) {
   const panelRef = useRef<HTMLDivElement>(null);
   const iconRef = useRef<SVGSVGElement>(null);
-  const panelId = `ht-faq-panel-${item.question.slice(0, 12).replace(/\W/g, "")}`;
+  const panelId = `faq-panel-${item.question.slice(0, 12).replace(/\W/g, "")}`;
 
   useLayoutEffect(() => {
     const panel = panelRef.current;

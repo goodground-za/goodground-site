@@ -1,43 +1,29 @@
 @import "tailwindcss";
 
 /*
-  Design tokens — sampled directly from the client's palette artwork
-  (brief/reference/Palette.png), not eyeballed from the comp.
-
-  This is the third art direction and a full replacement of the green/cream one:
-  dark brown and near-black carry the page, cream sections break it up, and burnt
-  orange does the CTA work. Contrast was measured before adopting it:
-    cream/peach on brown  13.4:1
-    white on orange        5.96:1
-    orange on cream        4.90:1
-  All clear AA, so the palette is used exactly as drawn.
+  Design tokens for the site's one design language (promoted from the
+  approved /home-test A/B variant — see the ht-* block below for full
+  history/rationale). A few generic tokens survive from the previous
+  bark/pine/ember palette because they're palette-agnostic:
+    --color-ink     near-black, used where a surface needs a genuinely dark
+                    (not brand-purple) text color for contrast reasons —
+                    see components/Button.tsx's outline variant and
+                    app/about/page.tsx's CTA card.
+    --radius-*      the site's shared corner-radius scale.
+    --shadow-*      neutral ink-tinted shadows (not literally palette-colored).
+    --ease-*        custom easing curves used by CSS-only animations.
 
   Tailwind v4 has no tailwind.config.ts; @theme is the equivalent layer.
 */
 @theme {
-  --color-bark: #331816; /* dominant dark sections, footer card */
-  --color-pine: #1c261d; /* nav bar, deepest sections */
-  --color-ember: #ac4119; /* CTA bands, buttons, accents */
-  --color-peach: #fde5c1; /* headings/text on dark, pill eyebrows */
-  --color-cream: #f1e8d7; /* light sections */
-  --color-surface: #fdfbf6; /* warm off-white: form cards, inputs on cream */
-  --color-stone: #4f5450; /* muted */
-  --color-ink: #010602; /* near-black buttons */
+  --color-ink: #010602; /* near-black, for text needing max contrast on a bright surface */
 
-  /* Muted text that still clears AA on each surface. */
-  --color-peach-muted: rgba(253, 229, 193, 0.72);
-  --color-bark-muted: #5c4a45;
-
-  --font-heading: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
-  --font-body: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
-
-  /* The comp draws sections as inset blocks with a large radius. */
   --radius-block: 40px;
   --radius-card: 24px;
   --radius-pill: 999px;
 
-  /* Shadows are tinted with the bark hue (rgb 1 6 2), not pure black, so they
-     sit in the warm palette instead of greying it out. */
+  /* Shadows are tinted with the ink hue (rgb 1 6 2), not pure black, so they
+     sit slightly warm instead of greying everything out. */
   --shadow-soft: 0 1px 2px rgb(1 6 2 / 0.05), 0 8px 24px -8px rgb(1 6 2 / 0.1);
   --shadow-lift: 0 2px 4px rgb(1 6 2 / 0.06), 0 16px 40px -12px rgb(1 6 2 / 0.18);
 
@@ -50,24 +36,32 @@
 }
 
 /*
-  /home-test A/B variant tokens — namespaced `ht-*` so they're unmistakably
-  scoped to this experiment, never touched by the live site's components, and
-  trivial to grep-and-delete if the variant is retired. Hex values are the
-  client's supplied palette for the new comp, used exactly as given.
+  The site's brand palette and type scale — promoted from the /home-test A/B
+  variant once the client approved that look for the whole site. Kept
+  `ht-*` namespaced rather than renamed to `--color-primary` etc: the prefix
+  is now just a stable identifier, not an experiment marker, and renaming
+  would mean touching every component's Tailwind classes for no visual
+  change. Hex values are the client's supplied palette, used exactly as given.
 */
 @theme {
   --color-ht-pink: #fe9dd2; /* CTA band bg, card glow/border accent */
-  --color-ht-orange: #fe431a; /* primary action colour: marquee, section bg, buttons */
+  --color-ht-orange: #fe431a; /* primary action colour: section bg, buttons */
   --color-ht-crimson: #ac3026; /* depth/shadow under orange elements, hover states */
-  --color-ht-purple: #2e1848; /* ink: dark section bg, footer bg, headings on cream */
+  --color-ht-purple: #2e1848; /* dark section bg, footer bg, headings on cream */
   --color-ht-cream: #fbf7ec; /* base page background */
 
   --font-ht-display: var(--font-clash-display), ui-sans-serif, system-ui, sans-serif;
   --font-ht-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
+  /* Repointed to the same fonts so any component using the generic
+     font-heading/font-body tokens (inherited by h1-h4/body in the base
+     layer below) picks up Clash Display/Inter automatically. */
+  --font-heading: var(--font-clash-display), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
   /* Fluid type scale, ~1.333 ratio, matching the mockup's oversized headline
-     treatment. Named distinctly from the live site's own type sizing so the
-     two systems never collide. */
+     treatment. Named distinctly from font-size utilities so it never collides
+     with one-off clamp() values used directly in components. */
   --text-ht-display: clamp(2.5rem, 6vw, 5.5rem);
   --text-ht-h3: clamp(1.5rem, 2.5vw, 2rem);
   --text-ht-body-lg: clamp(1.1rem, 1.6vw, 1.4rem);
@@ -78,25 +72,26 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    background-color: var(--color-cream);
+    background-color: var(--color-ht-cream);
     /* Hard guard against any horizontal scroll from decorative overflow
-       (aurora, marquee, bleed images). `clip` (not `hidden`) doesn't create a
-       scroll container, so the sticky nav keeps working and vertical scroll is
-       untouched. */
+       (bleed images, full-bleed sections). `clip` (not `hidden`) doesn't
+       create a scroll container, so the sticky nav keeps working and
+       vertical scroll is untouched. */
     overflow-x: clip;
   }
 
   body {
-    background-color: var(--color-cream);
-    color: var(--color-bark);
+    background-color: var(--color-ht-cream);
+    color: var(--color-ht-purple);
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
 
-  /* Montserrat Bold for every heading, per the client. `text-wrap: balance`
-     evens out ragged headline line-lengths and kills single-word orphans on
-     the last line — a small thing that reads as deliberate typesetting. */
+  /* Clash Display Bold for every heading, per the client. `text-wrap:
+     balance` evens out ragged headline line-lengths and kills single-word
+     orphans on the last line — a small thing that reads as deliberate
+     typesetting. */
   h1,
   h2,
   h3,
@@ -114,166 +109,29 @@
   }
 
   /*
-    Two-tone focus ring that stays visible on EVERY surface in the palette,
-    fixing the old single-ember ring which was invisible on ember bands (~1:1)
-    and only 2.75:1 on bark/pine (under the 3:1 WCAG needs for focus). The ink
-    outline carries light surfaces (ink on cream ~15:1) and the peach halo
-    carries dark ones (peach on bark 13.4:1, peach on ember 5.4:1); on ember
-    both clear 3:1, so at least one ring is always visible. The real `outline`
-    (not box-shadow alone) keeps it working in forced-colors / high-contrast
-    mode too.
+    Two-tone focus ring that stays visible on every surface in the ht
+    palette: a dark purple outline carries light surfaces (purple on cream
+    ~11.7:1) and a cream halo carries dark ones (cream on purple ~11.7:1,
+    cream on orange ~1.9:1 — the outline itself, not the halo, is what stays
+    visible on orange). The real `outline` (not box-shadow alone) keeps it
+    working in forced-colors / high-contrast mode too.
   */
   :focus-visible {
-    outline: 2px solid var(--color-ink);
+    outline: 2px solid var(--color-ht-purple);
     outline-offset: 2px;
-    /* !important so the peach halo wins over a component's own decorative
-       shadow (buttons carry shadow-soft/lift, which would otherwise override
-       this base-layer box-shadow and wipe the halo on dark surfaces). The
-       decorative shadow returns on blur; focus visibility is the requirement
-       that must take precedence while focused. */
-    box-shadow: 0 0 0 4px var(--color-peach) !important;
+    /* !important so the halo wins over a component's own decorative shadow
+       (cards/buttons carry hard-edge offset shadows, which would otherwise
+       override this base-layer box-shadow and wipe the halo). The decorative
+       shadow returns on blur; focus visibility is the requirement that must
+       take precedence while focused. */
+    box-shadow: 0 0 0 4px var(--color-ht-cream) !important;
     border-radius: 5px;
-  }
-}
-
-@utility grain {
-  position: relative;
-  isolation: isolate;
-}
-
-/*
-  Film grain over the orange/dark blocks. The supplied noise.png is 1.7MB, which
-  would cost more than the hero image for a texture nobody consciously sees, so
-  it is generated as an inline SVG turbulence instead: same look, ~200 bytes, no
-  extra request.
-*/
-@utility grain {
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
-    border-radius: inherit;
-    opacity: 0.42;
-    mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
-  }
-}
-
-/*
-  Full-bleed forest backgrounds (content/images.forest), used twice on Home.
-  The <Image> lays at the back; these gradient overlays sit above it (z-[1]) to
-  fade the photo into a solid palette colour, so a coloured section can dissolve
-  into the forest and back out again with no hard seam. Grain (::after) sits on
-  the same layer for the "textured" look; content sits at z-[2].
-
-  forest-brown — Philosophy: forest legible up top (a soft scrim keeps the
-  heading readable over the misty canopy), dissolving down to solid bark #331816
-  so it flows straight into the dark "What we build" block below.
-*/
-@utility forest-brown {
-  background-image: linear-gradient(
-    to bottom,
-    rgba(20, 28, 21, 0.5) 0%,
-    rgba(51, 24, 22, 0.28) 34%,
-    rgba(51, 24, 22, 0.82) 72%,
-    var(--color-bark) 100%
-  );
-}
-
-/*
-  forest-green — the AboutPreview panel that continues out of WhyUs: solid pine
-  #1c261d at the very top (seamless with WhyUs's solid-green base, so the green
-  reads as "fading into the image"), the forest revealed through the middle, then
-  resolving to bark at the bottom for a clean hand-off into the FAQ block.
-*/
-@utility forest-green {
-  background-image: linear-gradient(
-    to bottom,
-    var(--color-pine) 0%,
-    var(--color-pine) 7%,
-    rgba(28, 38, 29, 0.22) 46%,
-    rgba(51, 24, 22, 0.5) 80%,
-    var(--color-bark) 100%
-  );
-}
-
-/*
-  forest-panel — the combined "We build foundations → Who we are" card: solid
-  pine at the top (behind the heading and the top of the three cards) that melts
-  down into the forest photo through the lower half, staying a dark canopy green
-  at the bottom (not brown) to match the comp. This is the smoother green→image
-  blend the panel calls for.
-*/
-@utility forest-panel {
-  /* Monotonic fade — opacity only ever decreases downward, so the forest is
-     revealed progressively with no bright mid-panel band (an earlier local
-     minimum here read as a hard green line running across the section). */
-  background-image: linear-gradient(
-    to bottom,
-    var(--color-pine) 0%,
-    var(--color-pine) 15%,
-    rgba(28, 38, 29, 0.72) 40%,
-    rgba(28, 38, 29, 0.46) 72%,
-    rgba(28, 38, 29, 0.32) 100%
-  );
-}
-
-/* A gentle warm grade on the forest photo so its cool, misty green sits closer
-   to the warm cream/ember palette instead of reading as a separate cool world.
-   Kept light — enough to take the blue edge off the fog, not enough to turn the
-   canopy olive. */
-@utility forest-warm {
-  filter: sepia(0.13) saturate(0.92) brightness(1.02);
-}
-
-/* A soft dark wash so body copy stays readable where it overlaps the brighter
-   canopy. Radial (not a hard-edged linear box) so it has no visible top edge —
-   it just glows out from the text column and fades to nothing on every side, so
-   the photo still breathes on the image side. */
-@utility forest-text-scrim {
-  background-image: radial-gradient(
-    120% 135% at 14% 58%,
-    rgba(16, 23, 17, 0.72) 0%,
-    rgba(16, 23, 17, 0.32) 42%,
-    transparent 72%
-  );
-}
-
-/* A slow ambient pulse for the hero's single CTA, so it draws the eye without
-   shouting: the ring breathes out and back, never disappearing entirely.
-   Paused on hover (the button's own hover state should read as the "response",
-   not compete with the idle loop); killed by reduced-motion below. */
-@keyframes cta-pulse {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgba(253, 229, 193, 0.45);
-  }
-  50% {
-    box-shadow: 0 0 0 10px rgba(253, 229, 193, 0);
-  }
-}
-
-@utility animate-cta-pulse {
-  animation: cta-pulse 2.4s ease-in-out infinite;
-}
-
-/* Continuous ticker. The track holds two identical rows and slides exactly one
-   row-width, so the loop is seamless. Paused on hover; killed by reduced-motion
-   through the global override below. */
-@keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
   }
 }
 
 /* Each step of the start-project wizard fades up as it mounts, so advancing
    through the flow feels like moving forward rather than the content snapping
-   in place. CSS (not Framer) so it runs off the main thread and can't
+   in place. CSS (not Framer/GSAP) so it runs off the main thread and can't
    interfere with the step's focus management. Neutralised by the global
    reduced-motion block below. */
 @keyframes step-in {

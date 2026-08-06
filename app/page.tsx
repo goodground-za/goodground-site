@@ -1,20 +1,21 @@
 import type { Metadata } from "next";
 import { HomeSchema } from "@/components/Schema";
-import { CTABanner } from "@/components/sections/CTABanner";
-import { FAQ } from "@/components/sections/FAQ";
+import { About } from "@/components/sections/About";
+import { CTABand } from "@/components/sections/CTABand";
+import { CreativeProcess } from "@/components/sections/CreativeProcess";
+import { FAQAccordion } from "@/components/sections/FAQAccordion";
 import { Hero } from "@/components/sections/Hero";
-import { Industries } from "@/components/sections/Industries";
-import { PaymentPlan } from "@/components/sections/PaymentPlan";
-import { Philosophy } from "@/components/sections/Philosophy";
-import { Process } from "@/components/sections/Process";
-import { Testimonials } from "@/components/sections/Testimonials";
+import { ServiceCarousel } from "@/components/sections/ServiceCarousel";
+import { SixReasons } from "@/components/sections/SixReasons";
 import { WhatWeBuild } from "@/components/sections/WhatWeBuild";
-import { WhyUs } from "@/components/sections/WhyUs";
+import { WhoWeBuildFor } from "@/components/sections/WhoWeBuildFor";
 
 /**
  * Title/description target "website development South Africa" (the primary
  * keyword), development-first, with George kept as the local anchor in the
- * hero trust line and schema address.
+ * hero trust line and schema address. Kept from the previous homepage's
+ * metadata (unchanged by the visual redesign) since it's tuned SEO copy,
+ * not part of the design language.
  */
 export const metadata: Metadata = {
   title: "Website Development in South Africa | Pay Monthly | GoodGround",
@@ -28,17 +29,14 @@ export default function HomePage() {
     <>
       <HomeSchema />
       <Hero />
-      <Philosophy />
+      <ServiceCarousel />
+      <CreativeProcess />
+      <WhoWeBuildFor />
       <WhatWeBuild />
-      <Industries />
-      <PaymentPlan />
-      <Process />
-      {/* WhyUs renders the "Who we are" (AboutPreview) block inside its own
-          forest panel, so AboutPreview is not placed separately here. */}
-      <WhyUs />
-      <Testimonials />
-      <FAQ limit={4} />
-      <CTABanner />
+      <About />
+      <SixReasons />
+      <FAQAccordion limit={4} />
+      <CTABand />
     </>
   );
 }

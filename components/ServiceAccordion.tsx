@@ -3,55 +3,34 @@
 import gsap from "gsap";
 import Link from "next/link";
 import { useLayoutEffect, useRef, useState } from "react";
-import { services, type Service } from "@/content/services";
-import { CloudDivider } from "@/components/home-test/CloudDivider";
+import { type Service } from "@/content/services";
 import { MagneticButton } from "@/components/motion-gsap/MagneticButton";
-import { RevealSection, RevealStagger } from "@/components/motion-gsap/RevealSection";
+import { RevealStagger } from "@/components/motion-gsap/RevealSection";
 
-export function WhatWeBuild() {
+/**
+ * The full-detail service row (title, flagship/included/growth badge,
+ * subheading, problem/approach/outcome, optional payment line + CTA) used
+ * by both the homepage's WhatWeBuild section (which wraps this in its own
+ * heading/CloudDivider chrome) and the /services page's deep-dive section
+ * (which wraps it in the page's own chrome instead). Each row carries
+ * `id={service.slug}` so PageHero's jump-index links on /services can
+ * deep-link straight to a row.
+ */
+export function ServiceAccordion({ services, className = "" }: { services: Service[]; className?: string }) {
   const [open, setOpen] = useState(0);
 
   return (
-    // z-30 continues the ascending overlap stack (ServiceCarousel z-1 <
-    // CreativeProcess z-10 < WhoWeBuildFor z-20) — needed so the scalloped
-    // divider below, which pokes up into WhoWeBuildFor's box, paints above
-    // that section's orange background instead of behind it.
-    // rounded-b only (no overflow-hidden): the top is already "rounded" by
-    // the CloudDivider's scallop shape, which pokes up above this section's
-    // own box via a negative translate — overflow-hidden here would clip
-    // that poke-up. Bottom corners just need the section's own background
-    // box rounded, which border-radius does on its own without needing
-    // overflow-hidden to clip anything.
-    <section className="bg-ht-purple relative z-30 rounded-b-[40px] px-6 pt-8 pb-20 sm:px-10 sm:pt-10 sm:rounded-b-[56px] md:pb-28">
-      <CloudDivider
-        fill="var(--color-ht-purple)"
-        className="pointer-events-none absolute inset-x-0 top-0 h-auto w-full -translate-y-[calc(100%-3px)]"
-      />
-
-      <RevealSection className="mx-auto max-w-[1600px]">
-        <p className="font-ht-display text-ht-pink text-center text-[13px] font-bold tracking-[0.15em] uppercase">
-          Our Web Design Services
-        </p>
-        <h2 className="font-ht-display mt-3 text-center text-[clamp(2rem,4.5vw,3.5rem)] font-bold text-white uppercase">
-          What We Build
-        </h2>
-        <p className="font-ht-body mx-auto mt-4 max-w-[46ch] text-center text-[15px] leading-[1.6] text-white/75">
-          One team, one connected process. Here&rsquo;s what&rsquo;s actually included.
-        </p>
-
-        <RevealStagger className="mt-10 space-y-8" y={16}>
-          {services.map((service, i) => (
-            <AccordionRow
-              key={service.slug}
-              service={service}
-              index={i}
-              isOpen={open === i}
-              onToggle={() => setOpen(open === i ? -1 : i)}
-            />
-          ))}
-        </RevealStagger>
-      </RevealSection>
-    </section>
+    <RevealStagger className={`space-y-8 ${className}`} y={16}>
+      {services.map((service, i) => (
+        <AccordionRow
+          key={service.slug}
+          service={service}
+          index={i}
+          isOpen={open === i}
+          onToggle={() => setOpen(open === i ? -1 : i)}
+        />
+      ))}
+    </RevealStagger>
   );
 }
 
@@ -68,7 +47,7 @@ function AccordionRow({
 }) {
   const panelRef = useRef<HTMLDivElement>(null);
   const iconRef = useRef<SVGSVGElement>(null);
-  const panelId = `ht-wwb-panel-${service.slug}`;
+  const panelId = `service-panel-${service.slug}`;
 
   useLayoutEffect(() => {
     const panel = panelRef.current;
@@ -95,7 +74,7 @@ function AccordionRow({
   }, [isOpen]);
 
   return (
-    <div className="bg-ht-cream ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] rounded-card overflow-hidden ring-2">
+    <div id={service.slug} className="bg-ht-cream ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] rounded-card scroll-mt-28 overflow-hidden ring-2">
       <h3>
         <button
           type="button"

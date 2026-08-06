@@ -17,17 +17,13 @@ export default function StartProjectPage() {
 
       <PageHero
         eyebrow="Start your project"
-        phrases={["Let's plant", "something that grows."]}
-        intro={
-          <>
-            A few quick questions, then your details. It takes about a minute, and there&rsquo;s no
-            obligation, just a starting point for the conversation.
-          </>
-        }
+        title="Let's plant something that grows."
+        intro="A few quick questions, then your details. It takes about a minute, and there's no obligation, just a starting point for the conversation."
       />
 
-      <section className="px-3 pb-16 sm:px-5 md:pb-24">
-        <div className="mx-auto max-w-[820px] px-3 sm:px-6 md:px-11">
+      {/* pb-[24vw]: last section before the footer's CloudDivider. */}
+      <section className="bg-ht-cream px-6 pt-16 pb-[24vw] sm:px-10 md:pt-24">
+        <div className="mx-auto max-w-[820px]">
           <StartProjectForm />
         </div>
       </section>

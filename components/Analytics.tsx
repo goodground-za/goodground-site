@@ -98,18 +98,18 @@ export function Analytics({ gaId }: { gaId?: string }) {
             aria-label="Cookie consent"
             className="fixed inset-x-0 bottom-0 z-90 p-4 sm:p-6"
           >
-            {/* rounded-block + grain matches every other bark surface on the
-                site; the peach hairline lifts it off the dark hero bands, which
+            {/* rounded-block matches every other dark purple surface on the
+                site; the white hairline lifts it off the dark hero bands, which
                 otherwise read as one continuous shape on mobile. Focus rings are
-                handled globally now (two-tone ink+peach ring in globals.css),
+                handled globally now (two-tone purple+cream ring in globals.css),
                 so no per-panel override is needed here. */}
-            <div className="bg-bark text-peach shadow-lift rounded-block grain border-peach/15 mx-auto flex max-w-4xl flex-col gap-5 border p-6 sm:flex-row sm:items-center sm:gap-8 sm:p-7">
+            <div className="bg-ht-purple shadow-lift rounded-block border-white/15 mx-auto flex max-w-4xl flex-col gap-5 border p-6 text-white sm:flex-row sm:items-center sm:gap-8 sm:p-7">
               <p className="text-[14px] leading-relaxed sm:flex-1">
                 We&rsquo;d like to use analytics cookies to see which pages people find useful.
                 Nothing loads until you agree, and we never sell your data.{" "}
                 <Link
                   href="/legal#sec-cookies"
-                  className="text-peach underline underline-offset-4 hover:no-underline"
+                  className="underline underline-offset-4 hover:no-underline"
                 >
                   Read our cookie policy
                 </Link>

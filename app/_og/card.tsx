@@ -9,9 +9,9 @@ import { join } from "node:path";
  * WhatsApp, LinkedIn and Facebook rendered as a bare text link. For a studio
  * selling web design that read as an unfinished site.
  *
- * Montserrat ships as a repo asset rather than being fetched from Google at
- * build time, so the build has no network dependency. Satori (behind
- * ImageResponse) needs TTF or WOFF — it cannot parse WOFF2.
+ * Clash Display ships as a repo asset rather than being fetched at build
+ * time, so the build has no network dependency. Satori (behind
+ * ImageResponse) needs TTF, OTF, or WOFF — it cannot parse WOFF2.
  */
 
 export const OG_SIZE = { width: 1200, height: 630 };
@@ -19,23 +19,23 @@ export const OG_CONTENT_TYPE = "image/png";
 
 // Literal hex, not var(--color-*): these render in Satori, not a browser, so
 // there is no stylesheet to resolve custom properties against.
-const BARK = "#331816";
-const PEACH = "#fde5c1";
-const EMBER = "#ac4119";
+const PURPLE = "#2e1848";
+const CREAM = "#fbf7ec";
+const ORANGE = "#fe431a";
 
 export async function renderOgCard({
   eyebrow,
   title,
 }: {
-  /** Small ember label above the headline, e.g. the section name. */
+  /** Small orange label above the headline, e.g. the section name. */
   eyebrow?: string;
   /** The headline. Keep it short; long strings shrink to fit awkwardly. */
   title: string;
 }) {
   const [font, logo] = await Promise.all([
-    readFile(join(process.cwd(), "app/_og/Montserrat-Bold.ttf")),
+    readFile(join(process.cwd(), "app/_og/ClashDisplay-Bold.otf")),
     // logo-footer, not logo-hero: the hero wordmark is the dark version drawn
-    // on cream, and it disappears against this bark background.
+    // on cream, and it disappears against this purple background.
     readFile(join(process.cwd(), "public/images/logo-footer.png")),
   ]);
 
@@ -50,9 +50,9 @@ export async function renderOgCard({
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: BARK,
+          background: PURPLE,
           padding: "72px 80px",
-          fontFamily: "Montserrat",
+          fontFamily: "ClashDisplay",
         }}
       >
         {/* Wordmark as an image so the logo is pixel-accurate rather than a
@@ -69,7 +69,7 @@ export async function renderOgCard({
                 display: "flex",
                 fontSize: 26,
                 letterSpacing: 1,
-                color: EMBER,
+                color: ORANGE,
                 marginBottom: 20,
               }}
             >
@@ -81,7 +81,7 @@ export async function renderOgCard({
               display: "flex",
               fontSize: title.length > 60 ? 54 : 66,
               lineHeight: 1.15,
-              color: PEACH,
+              color: CREAM,
               maxWidth: 980,
             }}
           >
@@ -90,8 +90,8 @@ export async function renderOgCard({
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-          <div style={{ display: "flex", width: 64, height: 6, background: EMBER }} />
-          <div style={{ display: "flex", fontSize: 24, color: PEACH, opacity: 0.75 }}>
+          <div style={{ display: "flex", width: 64, height: 6, background: ORANGE }} />
+          <div style={{ display: "flex", fontSize: 24, color: CREAM, opacity: 0.75 }}>
             goodground.co.za
           </div>
         </div>
@@ -99,7 +99,7 @@ export async function renderOgCard({
     ),
     {
       ...OG_SIZE,
-      fonts: [{ name: "Montserrat", data: font, style: "normal", weight: 700 }],
+      fonts: [{ name: "ClashDisplay", data: font, style: "normal", weight: 700 }],
     },
   );
 }

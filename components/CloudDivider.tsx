@@ -10,8 +10,10 @@
  * this makes the divider tall relative to section width by design, so
  * whatever sits above it needs enough reserved bottom space to accommodate.
  *
- * Shared between WhatWeBuild (tucking under WhoWeBuildFor) and
- * HomeTestFooter (tucking under CTABand) — same artwork, different fill.
+ * Shared scallop-transition primitive used anywhere one section needs to
+ * "grow" out of the top of another (e.g. WhatWeBuild tucking under
+ * WhoWeBuildFor, the footer tucking under CTABand) — pass a different
+ * `fill` per call site.
  */
 const CLOUD_CIRCLES = [
   { cx: 100, r: 180 },

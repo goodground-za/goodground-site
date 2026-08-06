@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BreadcrumbSchema } from "@/components/Breadcrumbs";
-import { ButtonLink } from "@/components/Button";
-import { Eyebrow } from "@/components/Eyebrow";
-import { Reveal } from "@/components/motion/KineticText";
+import { MagneticButton } from "@/components/motion-gsap/MagneticButton";
+import { RevealSection } from "@/components/motion-gsap/RevealSection";
+import { SplitWords } from "@/components/motion-gsap/SplitWords";
 import { articles, type Block, getArticle } from "@/content/articles";
 import { site } from "@/content/site";
 
@@ -66,41 +66,52 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
 
-      <article className="px-3 pt-10 pb-16 sm:px-5 sm:pt-16 md:pb-24">
-        <div className="mx-auto max-w-[760px] px-3 sm:px-6">
-          <Reveal>
-            <Link href="/insights" className="text-bark-muted hover:text-ember inline-flex items-center gap-1.5 text-[14px] font-medium transition-colors">
+      {/* Compact dark band (same nav-contrast role as PageHero) sized to the
+          article's own meta/title rather than a full generic hero, so the
+          long-form reading body below isn't preceded by a lot of purple. */}
+      <section className="bg-ht-purple relative z-10 rounded-b-[40px] px-6 pt-28 pb-14 sm:rounded-b-[56px] sm:px-10 sm:pt-32">
+        <div className="mx-auto max-w-[760px]">
+          <RevealSection>
+            <Link href="/insights" className="inline-flex items-center gap-1.5 text-[14px] font-medium text-white/70 transition-colors hover:text-white">
               <span aria-hidden="true">←</span> All insights
             </Link>
-          </Reveal>
+          </RevealSection>
 
-          <div className="text-bark-muted mt-8 flex flex-wrap items-center gap-3 text-[13px] font-medium">
-            <Eyebrow tone="ember">{article.category}</Eyebrow>
+          <div className="mt-8 flex flex-wrap items-center gap-3 text-[13px] font-medium text-white/70">
+            <span className="font-ht-display text-ht-pink text-[13px] font-bold tracking-[0.1em] uppercase">
+              {article.category}
+            </span>
             <span>{dateFmt.format(new Date(article.date))}</span>
             <span aria-hidden="true">·</span>
             <span>{article.readingMinutes} min read</span>
           </div>
 
-          <h1 className="font-heading text-pine mt-5 text-[clamp(2rem,4.6vw,3.25rem)] leading-[1.08] font-bold tracking-[-0.03em]">
-            {article.title}
-          </h1>
-          <p className="text-bark-muted mt-5 text-[14px]">
-            By {article.author}
-          </p>
+          <SplitWords
+            as="h1"
+            text={article.title}
+            trigger="mount"
+            className="font-ht-display mt-5 text-[clamp(2rem,4.6vw,3.25rem)] leading-[1.08] font-bold text-white uppercase"
+          />
+          <p className="mt-5 text-[14px] text-white/60">By {article.author}</p>
+        </div>
+      </section>
 
-          <div className="mt-10">
+      {/* pb-[24vw]: last section before the footer's CloudDivider. */}
+      <article className="bg-ht-cream px-6 pt-14 pb-[24vw] sm:px-10">
+        <div className="mx-auto max-w-[760px]">
+          <div>
             {article.body.map((block, i) => (
               <BlockView key={i} block={block} />
             ))}
           </div>
 
           {/* Soft CTA */}
-          <div className="bg-ember rounded-block grain text-peach mt-14 overflow-hidden">
-            <div className="relative z-[2] p-7 sm:p-10">
-              <h2 className="font-heading text-[clamp(1.35rem,3vw,2rem)] leading-tight font-bold tracking-[-0.02em]">
+          <div className="bg-ht-orange rounded-block shadow-[0_14px_0_0_var(--color-ht-purple)] mt-14 overflow-hidden">
+            <div className="p-7 sm:p-10">
+              <h2 className="font-ht-display text-[clamp(1.35rem,3vw,2rem)] leading-tight font-bold text-white uppercase">
                 Ready to be found online?
               </h2>
-              <p className="mt-3 max-w-[46ch] text-[15px] leading-[1.6] text-peach/90">
+              <p className="mt-3 max-w-[46ch] text-[15px] leading-[1.6] text-white/90">
                 We build fast, honest websites for South African small businesses, paid over 12 equal
                 monthly payments. Have a look at{" "}
                 <Link href="/services" className="underline underline-offset-4 hover:no-underline">
@@ -109,9 +120,14 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 , or tell us about yours.
               </p>
               <div className="mt-6">
-                <ButtonLink href="/start-project" variant="ink" size="lg">
-                  Start your project →
-                </ButtonLink>
+                <MagneticButton>
+                  <Link
+                    href="/start-project"
+                    className="font-ht-display bg-ht-purple rounded-pill inline-block px-7 py-3.5 text-[14px] font-bold tracking-wide text-white uppercase shadow-soft transition-transform duration-200 hover:scale-[1.03]"
+                  >
+                    Start your project →
+                  </Link>
+                </MagneticButton>
               </div>
             </div>
           </div>
@@ -146,7 +162,7 @@ function withLinks(text: string) {
         <Link
           key={`${href}-${at}`}
           href={href}
-          className="text-ember font-medium underline underline-offset-4 hover:no-underline"
+          className="text-ht-orange font-medium underline underline-offset-4 hover:no-underline"
         >
           {label}
         </Link>
@@ -155,7 +171,7 @@ function withLinks(text: string) {
           key={`${href}-${at}`}
           href={href}
           rel="noopener noreferrer"
-          className="text-ember font-medium underline underline-offset-4 hover:no-underline"
+          className="text-ht-orange font-medium underline underline-offset-4 hover:no-underline"
         >
           {label}
         </a>
@@ -170,7 +186,7 @@ function withLinks(text: string) {
 function BlockView({ block }: { block: Block }) {
   if (block.type === "h2") {
     return (
-      <h2 className="font-heading text-pine mt-10 mb-4 text-[clamp(1.4rem,2.6vw,1.9rem)] leading-tight font-bold tracking-[-0.02em]">
+      <h2 className="font-ht-display text-ht-purple mt-10 mb-4 text-[clamp(1.4rem,2.6vw,1.9rem)] leading-tight font-bold uppercase">
         {block.text}
       </h2>
     );
@@ -179,8 +195,8 @@ function BlockView({ block }: { block: Block }) {
     return (
       <ul className="my-5 space-y-3">
         {block.items.map((item) => (
-          <li key={item} className="text-bark flex items-start gap-3 text-[clamp(1rem,1.3vw,1.15rem)] leading-[1.7]">
-            <span aria-hidden="true" className="bg-ember mt-[11px] size-1.5 shrink-0 rounded-full" />
+          <li key={item} className="text-ht-purple flex items-start gap-3 text-[clamp(1rem,1.3vw,1.15rem)] leading-[1.7]">
+            <span aria-hidden="true" className="bg-ht-orange mt-[11px] size-1.5 shrink-0 rounded-full" />
             <span>{withLinks(item)}</span>
           </li>
         ))}
@@ -189,14 +205,14 @@ function BlockView({ block }: { block: Block }) {
   }
   if (block.type === "quote") {
     return (
-      <blockquote className="border-ember my-8 border-l-2 pl-5">
-        <p className="font-heading text-pine text-[clamp(1.15rem,2vw,1.4rem)] leading-[1.4] font-bold italic">
+      <blockquote className="border-ht-orange my-8 border-l-2 pl-5">
+        <p className="font-ht-display text-ht-purple text-[clamp(1.15rem,2vw,1.4rem)] leading-[1.4] font-bold italic">
           {block.text}
         </p>
       </blockquote>
     );
   }
   return (
-    <p className="text-bark mt-4 text-[clamp(1rem,1.3vw,1.15rem)] leading-[1.75]">{withLinks(block.text)}</p>
+    <p className="text-ht-purple/85 mt-4 text-[clamp(1rem,1.3vw,1.15rem)] leading-[1.75]">{withLinks(block.text)}</p>
   );
 }

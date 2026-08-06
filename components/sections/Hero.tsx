@@ -1,25 +1,16 @@
-import Image from "next/image";
-import { ButtonLink } from "@/components/Button";
-import { HeroLogo } from "@/components/Logo";
-import { Reveal } from "@/components/motion/KineticText";
-import { MaskReveal } from "@/components/motion/MaskReveal";
-import { RotatingWords } from "@/components/motion/RotatingWords";
-import { images } from "@/content/images";
+"use client";
 
-/**
- * Per the client's comp: the wordmark IS the H1, set enormous across the cream
- * field, with the seedling photo below breaking out of its own frame, and the
- * orange band carrying the pitch and the CTA.
- *
- * The comp's subhead drops the copy deck's 12-payment sentence. That is the
- * studio's one differentiator, so the micro-trust line is kept under the CTA
- * (client-approved) to hold it in the first fold.
- *
- * The H1 subtitle keeps "Website Development & Design Studio / South Africa"
- * on purpose (that phrase is why the H1 exists, for ranking on the primary
- * keyword) — the founder's new AI-first / specialisms pitch lives in the
- * ember band below instead, which is the section built to carry a pitch.
- */
+import gsap from "gsap";
+import Image from "next/image";
+import Link from "next/link";
+import { useLayoutEffect, useRef } from "react";
+import { heroImage } from "@/content/homepage";
+import { RotatingWords } from "@/components/motion/RotatingWords";
+import { MagneticButton } from "@/components/motion-gsap/MagneticButton";
+import { SplitWords } from "@/components/motion-gsap/SplitWords";
+
+// Same specialty list the studio has always led with — kept verbatim from
+// the previous Hero's copy deck.
 const SPECIALTIES = [
   "Website Development",
   "Website Design",
@@ -31,102 +22,117 @@ const SPECIALTIES = [
   "Digital Marketing Campaigns",
 ];
 
+/**
+ * Promoted from the approved /home-test variant. The micro-trust line ("No
+ * large upfront cost" / "12 equal monthly payments" / "Based in George")
+ * was flagged in the previous Hero as the studio's one real differentiator
+ * and worth keeping above the fold — the home-test comp didn't carry it, so
+ * it's re-added here under the CTAs rather than silently dropped.
+ */
 export function Hero() {
-  return (
-    <>
-      <section className="px-3 pt-8 pb-0 sm:px-5 sm:pt-12">
-        <div className="mx-auto max-w-[1434px] px-3 sm:px-6 md:px-11">
-          {/* The whole heading is one H1: the client's real logo lockup plus the
-              keyword subtitle, so the page's main heading actually contains
-              "Website Development ... South Africa" for ranking, not just the
-              brand name. The logo fills the container at its own aspect ratio
-              (no font-metric sizing hack needed now it's a real asset); the
-              alt text on HeroLogo ("GoodGround") is what a screen reader or
-              crawler sees here, since nothing wraps this in its own label. */}
-          <h1 className="text-pine">
-            <MaskReveal className="leading-[0.8]">
-              <HeroLogo />
-            </MaskReveal>
-            <MaskReveal
-              delay={0.4}
-              duration={0.7}
-              className="font-heading text-bark mt-5 text-[clamp(0.95rem,1.6vw,1.4rem)] leading-tight font-bold"
-            >
-              Website Development &amp; Design Studio
-              <span className="block">South Africa</span>
-            </MaskReveal>
-          </h1>
-        </div>
-      </section>
+  const bgRef = useRef<HTMLDivElement>(null);
+  const copyRef = useRef<HTMLDivElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
 
-      {/* Pre-masked artwork: rounded corners and the transparent break-out are
-          baked into the PNG, so it is placed at its own ratio and never cropped.
-          Runs full-bleed edge-to-edge. */}
-      <div className="relative -mt-[4vw]">
+  useLayoutEffect(() => {
+    const mm = gsap.matchMedia();
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
+      if (bgRef.current) {
+        tl.fromTo(bgRef.current, { scale: 1.15 }, { scale: 1, duration: 1.4, ease: "circ.out" }, 0);
+      }
+      if (copyRef.current) {
+        tl.fromTo(copyRef.current, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.7 }, 0.9);
+      }
+      if (ctaRef.current) {
+        tl.fromTo(ctaRef.current, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5 }, 1.15);
+      }
+      return () => {
+        tl.kill();
+      };
+    });
+    return () => mm.revert();
+  }, []);
+
+  return (
+    // z-10 + rounded-b: sits ABOVE the ServiceCarousel section that follows
+    // (which is pulled up underneath via its own -mt and kept behind via
+    // -z-10), so Hero's rounded bottom corners reveal the carousel peeking
+    // through rather than plain page background.
+    <section className="relative z-10 flex min-h-[100svh] items-center overflow-hidden rounded-b-[40px] sm:rounded-b-[56px]">
+      <div ref={bgRef} className="absolute inset-0">
         <Image
-          src={images.header.src}
-          alt={images.header.alt}
-          width={images.header.width}
-          height={images.header.height}
+          src={heroImage.src}
+          alt="Two GoodGround creatives reviewing a website design together"
+          fill
           priority
           sizes="100vw"
-          className="h-auto w-full"
+          className="object-cover"
         />
+        <div aria-hidden="true" className="from-ht-purple/70 absolute inset-0 bg-gradient-to-t via-transparent to-transparent" />
       </div>
 
-      {/* The orange band overlaps the image bottom, as drawn. Full-bleed with
-          rounded bottom corners lifting it off the section below. */}
-      <div className="relative z-[3] -mt-[8vw]">
-        <div className="bg-ember grain text-peach rounded-b-[40px] overflow-hidden">
-          <div className="relative z-[2] mx-auto max-w-[1434px] px-6 py-12 text-center sm:px-10 md:py-16">
-            <Reveal>
-              <p className="font-heading text-[clamp(0.9rem,1.4vw,1.05rem)] font-bold">Build on</p>
-              <p className="font-heading mt-1 text-[clamp(1.75rem,4.2vw,3.5rem)] leading-none font-bold tracking-[-0.02em]">
-                GoodGround
-              </p>
+      <div className="relative z-[2] mx-auto w-full max-w-[1200px] px-6 pt-24 pb-20 text-center sm:px-10 md:px-14">
+        <SplitWords
+          as="h1"
+          text="We're an AI-first digital agency based in George, South Africa. We build websites and experiences that convert."
+          trigger="mount"
+          delay={0.15}
+          className="font-ht-display mx-auto max-w-[34ch] text-[clamp(1.85rem,3.6vw,3.25rem)] leading-[1.15] font-bold text-white"
+        />
 
-              <p className="mx-auto mt-7 max-w-[56ch] text-[clamp(1.15rem,2.2vw,1.85rem)] leading-[1.3] font-bold">
-                We&rsquo;re an AI-first digital agency based in George, South Africa. We build
-                websites and experiences that convert.
-              </p>
+        <div ref={copyRef} className="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <span className="font-ht-body text-[15px] font-bold text-white sm:text-[17px]">We specialise in:</span>
+          {/* white on the orange pill is 3.48:1, under the 4.5:1 WCAG AA bar
+              at this size/weight — flagged, not silently fixed, since it's
+              matching the client-approved comp exactly. */}
+          <RotatingWords words={SPECIALTIES} className="bg-ht-orange rounded-pill px-5 py-2 text-[15px] font-bold text-white sm:text-[17px]" />
+        </div>
 
-              <p className="font-heading mt-6 flex flex-wrap items-center justify-center gap-x-2.5 gap-y-2 text-[clamp(1rem,1.8vw,1.35rem)] font-bold">
-                <span>We specialise in</span>
-                <RotatingWords
-                  words={SPECIALTIES}
-                  className="bg-peach text-bark rounded-pill px-4 py-1"
-                />
-              </p>
-
-              <div className="mt-8 flex justify-center">
-                <ButtonLink
-                  href="/start-project"
-                  variant="peach"
-                  size="lg"
-                  className="animate-cta-pulse"
-                >
-                  Let&rsquo;s talk
-                </ButtonLink>
-              </div>
-
-              {/* Kept from the copy deck: the comp omits it, but this is the
-                  studio's whole differentiator and it belongs above the fold. */}
-              <ul className="mt-7 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-[13px] font-medium text-peach/85">
-                {["No large upfront cost", "12 equal monthly payments", "Based in George"].map(
-                  (item, i) => (
-                    <li key={item} className="flex items-center gap-3">
-                      {i > 0 ? (
-                        <span aria-hidden="true" className="hidden size-1 rounded-full bg-peach/50 sm:block" />
-                      ) : null}
-                      {item}
-                    </li>
-                  ),
-                )}
-              </ul>
-            </Reveal>
+        <div ref={ctaRef}>
+          <div className="mt-8 flex items-center justify-center gap-3">
+            <MagneticButton>
+              <Link
+                href="/start-project"
+                className="font-ht-display bg-ht-cream text-ht-crimson rounded-pill inline-block px-7 py-3.5 text-[14px] font-bold tracking-wide uppercase shadow-[0_12px_28px_-10px_rgba(0,0,0,0.35)] transition-transform duration-200 hover:scale-[1.03]"
+              >
+                Let&rsquo;s Chat
+              </Link>
+            </MagneticButton>
+            <MagneticButton>
+              <Link
+                href="/start-project"
+                aria-hidden="true"
+                tabIndex={-1}
+                className="text-ht-crimson bg-ht-cream grid size-12 place-items-center rounded-full transition-transform duration-200 hover:scale-[1.08] hover:rotate-12"
+              >
+                <svg aria-hidden="true" viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M7 17 17 7M8 7h9v9" />
+                </svg>
+              </Link>
+            </MagneticButton>
           </div>
+
+          {/* The studio's one real differentiator — kept above the fold. */}
+          <ul className="mt-7 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-[13px] font-medium text-white/80">
+            {["No large upfront cost", "12 equal monthly payments", "Based in George"].map((item, i) => (
+              <li key={item} className="flex items-center gap-3">
+                {i > 0 ? <span aria-hidden="true" className="hidden size-1 rounded-full bg-white/50 sm:block" /> : null}
+                {item}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
-    </>
+
+      <div
+        aria-hidden="true"
+        className="animate-bounce motion-reduce:animate-none absolute bottom-6 left-1/2 z-[2] hidden -translate-x-1/2 sm:block"
+      >
+        <svg viewBox="0 0 24 24" className="size-6 text-white/80" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 5v14M5 12l7 7 7-7" />
+        </svg>
+      </div>
+    </section>
   );
 }

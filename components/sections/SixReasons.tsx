@@ -1,4 +1,4 @@
-import { sixReasons } from "@/content/home-test";
+import { sixReasons } from "@/content/homepage";
 import { HoverCard } from "@/components/motion-gsap/HoverCard";
 import { RevealSection, RevealStagger } from "@/components/motion-gsap/RevealSection";
 
