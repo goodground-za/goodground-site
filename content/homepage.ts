@@ -102,6 +102,14 @@ export const heroImage = {
   height: 1136,
 };
 
+/** Portrait crop of the same shoot, used only on mobile (see Hero.tsx) —
+ * the landscape heroImage above crops too tight on narrow screens. */
+export const heroImageMobile = {
+  src: "/images/hero-cover-mobile.jpg",
+  width: 1080,
+  height: 1352,
+};
+
 export const processBanner = {
   src: "/images/creative-process.png",
   width: 2160,

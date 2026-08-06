@@ -4,7 +4,7 @@ import gsap from "gsap";
 import Image from "next/image";
 import Link from "next/link";
 import { useLayoutEffect, useRef } from "react";
-import { heroImage } from "@/content/homepage";
+import { heroImage, heroImageMobile } from "@/content/homepage";
 import { RotatingWords } from "@/components/motion/RotatingWords";
 import { MagneticButton } from "@/components/motion-gsap/MagneticButton";
 import { SplitWords } from "@/components/motion-gsap/SplitWords";
@@ -61,13 +61,24 @@ export function Hero() {
     // through rather than plain page background.
     <section className="relative z-10 flex min-h-[100svh] items-center overflow-hidden rounded-b-[40px] sm:rounded-b-[56px]">
       <div ref={bgRef} className="absolute inset-0">
+        {/* Landscape crop reads well on wide screens but crops too tight on
+            mobile, so a portrait crop of the same shoot swaps in below the
+            sm breakpoint instead. */}
+        <Image
+          src={heroImageMobile.src}
+          alt="Two GoodGround creatives reviewing a website design together"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover sm:hidden"
+        />
         <Image
           src={heroImage.src}
           alt="Two GoodGround creatives reviewing a website design together"
           fill
           priority
           sizes="100vw"
-          className="object-cover"
+          className="hidden object-cover sm:block"
         />
         <div aria-hidden="true" className="from-ht-purple/70 absolute inset-0 bg-gradient-to-t via-transparent to-transparent" />
       </div>

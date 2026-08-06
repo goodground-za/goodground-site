@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { BreadcrumbSchema } from "@/components/Breadcrumbs";
 import { PageHero } from "@/components/PageHero";
-import { PlaceholderImage } from "@/components/PlaceholderImage";
 import { ParableLink } from "@/components/ParableModal";
 import { HoverCard } from "@/components/motion-gsap/HoverCard";
 import { MagneticButton } from "@/components/motion-gsap/MagneticButton";
@@ -72,7 +72,13 @@ export default function AboutPage() {
 
           <RevealSection delay={0.08} className="min-w-0 lg:col-span-5">
             <div className="rounded-card ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] relative aspect-[4/5] w-full overflow-hidden ring-2">
-              <PlaceholderImage alt="GoodGround's founder at work" label="Founder photo coming soon" fill />
+              <Image
+                src="/images/about-founder.png"
+                alt="Two GoodGround creatives reviewing work together"
+                fill
+                sizes="(max-width: 1024px) 90vw, 40vw"
+                className="object-cover"
+              />
             </div>
           </RevealSection>
         </div>
