@@ -98,13 +98,13 @@ export const carouselCards: CarouselCard[] = [
 ];
 
 export const heroImage = {
-  src: "/home-test/images/hero-cover-image.jpeg",
-  width: 1004,
-  height: 571,
+  src: "/home-test/images/hero-cover.png",
+  width: 2008,
+  height: 1136,
 };
 
 export const processBanner = {
-  src: "/home-test/images/creative-process-banner.webp",
+  src: "/home-test/images/creative-process.png",
   width: 2160,
   height: 1350,
 };

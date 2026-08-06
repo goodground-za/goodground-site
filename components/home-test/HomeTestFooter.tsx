@@ -25,9 +25,9 @@ export function HomeTestFooter() {
         className="pointer-events-none absolute inset-x-0 top-0 h-auto w-full -translate-y-[calc(100%-3px)]"
       />
 
-      <div className="relative z-[2] mx-auto max-w-[1600px] px-6 pt-20 pb-10 sm:px-10 md:px-14">
-        <RevealStagger className="grid gap-10 md:grid-cols-12" y={20}>
-          <div className="md:col-span-4">
+      <div className="relative z-[2] mx-auto max-w-[1600px] px-6 pt-20 pb-16 sm:px-10 sm:pb-10 md:px-14">
+        <RevealStagger className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-12" y={20}>
+          <div className="col-span-2 md:col-span-4">
             <Image
               src="/home-test/logos/gg-mark.svg"
               alt="GoodGround"
@@ -90,7 +90,7 @@ export function HomeTestFooter() {
             </ul>
           </nav>
 
-          <div className="md:col-span-4">
+          <div className="col-span-2 md:col-span-4">
             <h2 className="font-ht-display text-[14px] font-bold text-white">Get in touch</h2>
             <address className="font-ht-body mt-4 space-y-4 text-[14px] text-white/75 not-italic">
               <p>

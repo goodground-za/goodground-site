@@ -109,7 +109,7 @@ export function CreativeProcess() {
       <div className="relative min-h-[70vh] w-full">
         <Image
           src={processBanner.src}
-          alt="Three GoodGround team members, backlit against a clear sky"
+          alt="Four GoodGround team members, backlit against a clear sky"
           fill
           sizes="100vw"
           className="object-cover"
