@@ -21,8 +21,10 @@ const csp = [
   // data: covers the inline SVG grain utility and OG image data URIs.
   "img-src 'self' data: https://images.unsplash.com https://www.googletagmanager.com",
   "font-src 'self' data:",
-  // GA beacons post to these two.
-  "connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com",
+  // GA beacons post to the first two; ContactForm/StartProjectForm submit via
+  // fetch() (not a native form POST), so it's connect-src, not just
+  // form-action, that has to allow the Web3Forms API — see lib/enquiry.ts.
+  "connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com https://api.web3forms.com",
   "form-action 'self' https://api.web3forms.com",
   "frame-ancestors 'none'",
   "base-uri 'self'",
