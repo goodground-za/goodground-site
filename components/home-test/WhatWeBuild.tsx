@@ -16,7 +16,13 @@ export function WhatWeBuild() {
     // CreativeProcess z-10 < WhoWeBuildFor z-20) — needed so the scalloped
     // divider below, which pokes up into WhoWeBuildFor's box, paints above
     // that section's orange background instead of behind it.
-    <section className="bg-ht-purple relative z-30 px-6 pt-8 pb-20 sm:px-10 sm:pt-10 md:pb-28">
+    // rounded-b only (no overflow-hidden): the top is already "rounded" by
+    // the CloudDivider's scallop shape, which pokes up above this section's
+    // own box via a negative translate — overflow-hidden here would clip
+    // that poke-up. Bottom corners just need the section's own background
+    // box rounded, which border-radius does on its own without needing
+    // overflow-hidden to clip anything.
+    <section className="bg-ht-purple relative z-30 rounded-b-[40px] px-6 pt-8 pb-20 sm:px-10 sm:pt-10 sm:rounded-b-[56px] md:pb-28">
       <CloudDivider
         fill="var(--color-ht-purple)"
         className="pointer-events-none absolute inset-x-0 top-0 h-auto w-full -translate-y-[calc(100%-3px)]"

@@ -92,7 +92,7 @@ export function ServiceCarousel() {
     // those two (both z-10), within the shared stacking context they're
     // already siblings in. -mt-16 tucks the top under Hero; Creative Process
     // handles the bottom overlap on its own side.
-    <section className="bg-ht-cream relative z-[1] -mt-16 overflow-hidden rounded-[56px] py-20 md:py-28">
+    <section className="bg-ht-cream relative z-[1] -mt-16 overflow-hidden rounded-[40px] py-20 sm:rounded-[56px] md:py-28">
       <RevealSection className="mx-auto max-w-[1000px] px-6 sm:px-10">
         <h2 className="font-ht-display text-ht-purple mx-auto max-w-[20ch] text-center text-[clamp(1.75rem,3.6vw,3rem)] leading-[1.15] font-bold">
           We help you design and build better digital products. All in ONE place!

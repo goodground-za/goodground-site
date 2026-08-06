@@ -11,7 +11,7 @@ export function FAQAccordion() {
   const items = faq.slice(0, 4);
 
   return (
-    <section className="bg-ht-pink overflow-hidden rounded-[56px] px-6 py-20 sm:px-10 md:py-28">
+    <section className="bg-ht-pink overflow-hidden rounded-[40px] px-6 py-20 sm:rounded-[56px] sm:px-10 md:py-28">
       <RevealSection className="mx-auto max-w-[1600px]">
         <h2 className="font-ht-display text-ht-purple text-center text-[clamp(2rem,4.5vw,3.5rem)] font-bold uppercase">
           Everything you need to know before you start.

@@ -15,7 +15,7 @@ export function WhoWeBuildFor() {
     // this reserved bottom strip has to scale the same way — a fixed px
     // padding would leave enough room on mobile but let the bumps bury
     // this section's card grid on wide desktop screens.
-    <section className="bg-ht-orange relative z-20 -mt-16 overflow-hidden rounded-t-[56px] px-6 pt-20 pb-[24vw] sm:px-10 md:pt-28">
+    <section className="bg-ht-orange relative z-20 -mt-16 overflow-hidden rounded-t-[40px] px-6 pt-20 pb-[24vw] sm:rounded-t-[56px] sm:px-10 md:pt-28">
       <div className="mx-auto max-w-[1600px]">
         <RevealSection className="text-center">
           <h2 className="font-ht-display text-[clamp(2rem,4.5vw,3.5rem)] font-bold text-white uppercase">

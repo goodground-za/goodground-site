@@ -105,7 +105,7 @@ export function CreativeProcess() {
     // higher stacking means this section visually covers that overlap, so
     // the carousel reads as tucked in behind both this and Hero. rounded-t
     // reveals the carousel peeking through in the corners specifically.
-    <section className="relative z-10 -mt-16 overflow-hidden rounded-t-[56px]">
+    <section className="relative z-10 -mt-16 overflow-hidden rounded-t-[40px] sm:rounded-t-[56px]">
       <div className="relative min-h-[70vh] w-full">
         <Image
           src={processBanner.src}

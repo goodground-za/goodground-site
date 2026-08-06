@@ -53,7 +53,7 @@ export function Hero() {
     // (which is pulled up underneath via its own -mt and kept behind via
     // -z-10), so Hero's rounded bottom corners reveal the carousel peeking
     // through rather than plain page background.
-    <section className="relative z-10 flex min-h-[100svh] items-center overflow-hidden rounded-b-[56px]">
+    <section className="relative z-10 flex min-h-[100svh] items-center overflow-hidden rounded-b-[40px] sm:rounded-b-[56px]">
       <div ref={bgRef} className="absolute inset-0">
         <Image
           src={heroImage.src}
