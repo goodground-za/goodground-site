@@ -61,7 +61,16 @@ export function ServiceCarousel() {
         };
         const descTarget = { height: offset === 0 ? "auto" : 0, opacity: offset === 0 ? 1 : 0 };
         if (animate) {
-          gsap.to(el, { ...target, duration: 0.7, ease: "power4.out" });
+          // zIndex is snapped immediately, never tweened: GSAP interpolating
+          // it as a number (8 -> 8.3 -> 8.6 -> 9...) mid-transition let cards
+          // swap stacking order at some arbitrary point in the tween rather
+          // than at the start, so overlapping photo cards would flicker in
+          // front of/behind each other while sliding past. Setting the final
+          // stacking order up front and only tweening position/rotation/scale
+          // removes that glitch entirely.
+          const { zIndex, ...motionProps } = target;
+          gsap.set(el, { zIndex });
+          gsap.to(el, { ...motionProps, duration: 0.7, ease: "power4.out" });
           if (descEl) gsap.to(descEl, { ...descTarget, duration: 0.45, ease: "circ.out" });
         } else {
           gsap.set(el, target);

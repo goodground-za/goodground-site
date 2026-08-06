@@ -13,13 +13,13 @@ import { RevealSection, RevealStagger } from "@/components/motion-gsap/RevealSec
  * "All Questions" link only shows when the list has actually been
  * truncated, so /faq itself doesn't link to a shorter version of itself.
  */
-export function FAQAccordion({ limit }: { limit?: number } = {}) {
+export function FAQAccordion({ limit, className = "" }: { limit?: number; className?: string } = {}) {
   const [open, setOpen] = useState<number | null>(null);
   const items = limit ? faq.slice(0, limit) : faq;
   const truncated = limit ? faq.length > limit : false;
 
   return (
-    <section className="bg-ht-pink overflow-hidden rounded-[40px] px-6 py-20 sm:rounded-[56px] sm:px-10 md:py-28">
+    <section className={`bg-ht-pink overflow-hidden rounded-[40px] px-6 py-20 sm:rounded-[56px] sm:px-10 md:py-28 ${className}`}>
       <RevealSection className="mx-auto max-w-[1600px]">
         <h2 className="font-ht-display text-ht-purple text-center text-[clamp(2rem,4.5vw,3.5rem)] font-bold uppercase">
           Everything you need to know before you start.

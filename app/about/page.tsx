@@ -81,35 +81,40 @@ export default function AboutPage() {
       {/* Why the name. Typography-led rather than paired with a photo: the
           same theme opens the homepage's About panel, but this page's own
           telling goes further, so it earns its own section rather than
-          reusing that component verbatim. */}
-      <section className="bg-ht-purple relative z-10 px-6 py-16 sm:px-10 md:py-24">
-        <div className="mx-auto grid max-w-[1434px] gap-10 lg:grid-cols-12 lg:gap-14">
-          <div className="min-w-0 lg:col-span-4">
-            <RevealSection>
-              <p className="font-ht-display text-ht-pink text-[13px] font-bold tracking-[0.15em] uppercase">
-                Why the name
-              </p>
-            </RevealSection>
-          </div>
+          reusing that component verbatim. Inset as a rounded block (like
+          CTABand/GrowthBenefits) rather than a full-bleed section, so the
+          rounded corners are actually visible against the cream sections
+          above and below it. */}
+      <section className="bg-ht-cream relative z-10 px-6 py-8 sm:px-10">
+        <div className="bg-ht-purple rounded-block mx-auto max-w-[1434px] overflow-hidden">
+          <div className="grid gap-10 px-6 py-16 sm:px-10 md:py-24 lg:grid-cols-12 lg:gap-14">
+            <div className="min-w-0 lg:col-span-4">
+              <RevealSection>
+                <p className="font-ht-display text-ht-pink text-[13px] font-bold tracking-[0.15em] uppercase">
+                  Why the name
+                </p>
+              </RevealSection>
+            </div>
 
-          <div className="min-w-0 lg:col-span-8">
-            <SplitWords
-              as="p"
-              text="The name comes from the biblical Parable of the Sower: good ground is where seeds take root, grow, and produce a harvest. We didn't pick it because it sounded nice. It's how we think about building."
-              className="font-ht-display max-w-[52ch] text-[clamp(1.35rem,2.6vw,2rem)] leading-[1.3] font-bold text-white"
-            />
-            <RevealSection delay={0.1}>
-              <p className="mt-8 max-w-[52ch] text-[16px] leading-[1.7] text-white/70">
-                A logo without strategy has little value. A website without purpose rarely performs.
-                Marketing can&rsquo;t fix a poor customer experience. Growth is the result of a strong
-                foundation, not a substitute for one.
-              </p>
-              <p className="mt-5 text-[15px]">
-                <ParableLink className="text-ht-pink decoration-ht-pink/40 hover:decoration-ht-pink">
-                  Read the parable that inspired us →
-                </ParableLink>
-              </p>
-            </RevealSection>
+            <div className="min-w-0 lg:col-span-8">
+              <SplitWords
+                as="p"
+                text="The name comes from the biblical Parable of the Sower: good ground is where seeds take root, grow, and produce a harvest. We didn't pick it because it sounded nice. It's how we think about building."
+                className="font-ht-display max-w-[52ch] text-[clamp(1.35rem,2.6vw,2rem)] leading-[1.3] font-bold text-white"
+              />
+              <RevealSection delay={0.1}>
+                <p className="mt-8 max-w-[52ch] text-[16px] leading-[1.7] text-white/70">
+                  A logo without strategy has little value. A website without purpose rarely performs.
+                  Marketing can&rsquo;t fix a poor customer experience. Growth is the result of a strong
+                  foundation, not a substitute for one.
+                </p>
+                <p className="mt-5 text-[15px]">
+                  <ParableLink className="text-ht-pink decoration-ht-pink/40 hover:decoration-ht-pink">
+                    Read the parable that inspired us →
+                  </ParableLink>
+                </p>
+              </RevealSection>
+            </div>
           </div>
         </div>
       </section>
@@ -193,8 +198,8 @@ export default function AboutPage() {
       <section className="bg-ht-cream px-6 pt-16 pb-[24vw] sm:px-10 md:pt-20">
         <div className="mx-auto max-w-[1434px]">
           <div className="bg-ht-orange rounded-block shadow-[0_14px_0_0_var(--color-ht-purple)] overflow-hidden">
-            <RevealSection className="px-6 py-14 sm:px-10 md:px-14 md:py-16">
-              <div className="max-w-[44ch]">
+            <RevealSection className="px-6 py-14 text-center sm:px-10 md:px-14 md:py-16">
+              <div className="mx-auto max-w-[44ch]">
                 <SplitWords
                   as="p"
                   text="If you're building a business you plan to stick with for the long run, we'd like to hear about it."
