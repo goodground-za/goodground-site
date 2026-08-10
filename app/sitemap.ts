@@ -10,6 +10,7 @@ import { site } from "@/content/site";
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes: { path: string; priority: number }[] = [
     { path: "", priority: 1 },
+    { path: "/pricing", priority: 0.95 },
     { path: "/services", priority: 0.9 },
     { path: "/start-project", priority: 0.8 },
     { path: "/about", priority: 0.8 },

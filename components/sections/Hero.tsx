@@ -124,12 +124,20 @@ export function Hero() {
             </MagneticButton>
           </div>
 
-          {/* The studio's one real differentiator — kept above the fold. */}
+          {/* The studio's one real differentiator — kept above the fold.
+              The payment-plan item links to /pricing, where that promise is
+              actually broken down per package. */}
           <ul className="mt-7 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-[13px] font-medium text-white/80">
             {["No large upfront cost", "12 equal monthly payments", "Based in George"].map((item, i) => (
               <li key={item} className="flex items-center gap-3">
                 {i > 0 ? <span aria-hidden="true" className="hidden size-1 rounded-full bg-white/50 sm:block" /> : null}
-                {item}
+                {item === "12 equal monthly payments" ? (
+                  <Link href="/pricing" className="underline decoration-white/40 underline-offset-4 transition-colors duration-150 hover:text-white hover:decoration-white">
+                    {item}
+                  </Link>
+                ) : (
+                  item
+                )}
               </li>
             ))}
           </ul>

@@ -188,6 +188,10 @@ export default function AboutPage() {
               properly in your website doesn&rsquo;t mean disrupting your cash flow.{" "}
               <Link href="/#process" className="text-ht-orange font-bold underline underline-offset-4">
                 See the full process
+              </Link>{" "}
+              or{" "}
+              <Link href="/pricing" className="text-ht-orange font-bold underline underline-offset-4">
+                view pricing
               </Link>
               .
             </p>

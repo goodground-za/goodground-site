@@ -109,10 +109,10 @@ export default function ServicesPage() {
               <div className="min-w-0 md:col-span-4 md:justify-self-end">
                 <MagneticButton>
                   <Link
-                    href="/contact"
+                    href="/pricing"
                     className="font-ht-display bg-ht-cream text-ht-purple rounded-pill inline-block px-7 py-3.5 text-[14px] font-bold tracking-wide uppercase shadow-soft transition-transform duration-200 hover:scale-[1.03]"
                   >
-                    Get a Quote →
+                    See Pricing →
                   </Link>
                 </MagneticButton>
               </div>
