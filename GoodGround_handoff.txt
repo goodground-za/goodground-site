@@ -519,3 +519,44 @@ history (the pre-2026-08-11 version) and in `GoodGround_memory.md` if that
 file still exists in the repo.
 
 ===============================================================================
+
+§16 — Sitewide scroll-stuck-halfway bug fix (2026-08-11, commit fb5e268)
+
+Johandre reported he could only scroll about halfway down every page before
+it stopped. Confirmed live on production: document.documentElement.scrollHeight
+was 8900 but window.scrollTo(0, 8000) only settled around scrollY 5026.
+
+Root cause: components/motion-gsap/LenisProvider.tsx creates a Lenis
+instance with default autoResize: true, which watches
+document.documentElement via a ResizeObserver. That observer does not fire
+when page content grows the document's scrollHeight without the <html>
+element's own box size changing (confirmed by reading
+node_modules/lenis/dist/lenis.mjs directly). Lenis's cached scroll limit
+falls behind the page's real height as content loads/expands, so scrolling
+silently caps out partway down every page.
+
+Fix: resync Lenis to GSAP ScrollTrigger's own "refresh" event (reliable —
+re-measures on window load/resize and whenever any ScrollTrigger instance
+changes) instead of relying on Lenis's own ResizeObserver alone. Added a
+named handleResize function calling lenis.resize(), wired to
+ScrollTrigger.addEventListener("refresh", handleResize) and
+window.addEventListener("load", handleResize), with matching
+removeEventListener calls in the useEffect cleanup (named references
+required — inline arrows in both add/remove would silently fail to
+unregister).
+
+Verified via a local production build (npx next build && next start) using
+Chrome DevTools MCP: scrolled both / and /pricing to their computed max
+(scrollHeight - innerHeight) and confirmed scrollY settles at the target
+on both. Note for future verification: Lenis intercepts window.scrollTo()
+and animates toward the target over several rAF ticks rather than jumping
+instantly, so a short polling-stability window (a few hundred ms) can
+falsely report "stuck" while Lenis is still spinning up, especially on
+heavier pages. Use a stability window of at least 1-2 seconds when
+scripting this kind of check again.
+
+npx tsc --noEmit and npx next build both clean before commit. Pushed to
+main immediately after (fb5e268) — Vercel deploy should be live within a
+few minutes of the push.
+
+===============================================================================
