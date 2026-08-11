@@ -5,6 +5,7 @@ import { BreadcrumbSchema } from "@/components/Breadcrumbs";
 import { MagneticButton } from "@/components/motion-gsap/MagneticButton";
 import { RevealSection } from "@/components/motion-gsap/RevealSection";
 import { SplitWords } from "@/components/motion-gsap/SplitWords";
+import { ShareButtons } from "@/components/ShareButtons";
 import { articles, type Block, getArticle } from "@/content/articles";
 import { site } from "@/content/site";
 
@@ -40,6 +41,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   const { slug } = await params;
   const article = getArticle(slug);
   if (!article) notFound();
+
+  const articleUrl = `${site.url}/insights/${article.slug}`;
 
   const schema = {
     "@context": "https://schema.org",
@@ -92,7 +95,10 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             trigger="mount"
             className="font-ht-display mt-5 text-[clamp(2rem,4.6vw,3.25rem)] leading-[1.08] font-bold text-white uppercase"
           />
-          <p className="mt-5 text-[14px] text-white/60">By {article.author}</p>
+          <div className="mt-5 flex flex-wrap items-center justify-between gap-4">
+            <p className="text-[14px] text-white/60">By {article.author}</p>
+            <ShareButtons url={articleUrl} title={article.title} dark />
+          </div>
         </div>
       </section>
 
@@ -103,6 +109,10 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             {article.body.map((block, i) => (
               <BlockView key={i} block={block} />
             ))}
+          </div>
+
+          <div className="border-ht-purple/10 mt-10 flex justify-end border-t pt-6">
+            <ShareButtons url={articleUrl} title={article.title} />
           </div>
 
           {/* Soft CTA */}
