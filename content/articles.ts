@@ -29,6 +29,130 @@ export type Article = {
 
 export const articles: Article[] = [
   {
+    slug: "website-vs-facebook-page",
+    title: "Website vs Facebook page: which one actually grows your business?",
+    excerpt:
+      "A Facebook page took you an afternoon to build. That speed is exactly the problem. Here's what a website does that a Facebook page structurally cannot, and the order in which the smartest businesses actually use both.",
+    metaTitle: "Website vs Facebook Page: Which Grows Your Business?",
+    metaDescription:
+      "A Facebook page is fast and free. It still can't do half of what a website does for a South African small business. Here's the honest comparison.",
+    keyword: "website vs Facebook page South Africa",
+    author: "GoodGround",
+    date: "2026-08-11",
+    readingMinutes: 9,
+    category: "Growth",
+    body: [
+      {
+        type: "p",
+        text: "Ask ten small business owners why they haven't built a website yet, and most will give you some version of the same answer: I already have a Facebook page. It's a reasonable position. The page took an afternoon to set up, it cost nothing, and people actually comment on the posts. Why pay for a website when Facebook already does the job for free?",
+      },
+      {
+        type: "p",
+        text: "Here's the honest answer. A Facebook page and a website are not two versions of the same tool. They do different jobs, and one of those jobs, the one that decides whether a stranger finds you, trusts you, and can actually reach you, is a job a Facebook page cannot do no matter how well you run it. Not because Facebook built a worse product. Because a page inside someone else's platform was never designed to be a business's front door. It was designed to be a stall inside someone else's market.",
+      },
+
+      { type: "h2", text: "Give the Facebook page its due" },
+      {
+        type: "p",
+        text: "A Facebook page earns its keep in specific, narrow ways, and pretending otherwise doesn't help anyone make a good decision. It costs nothing to start. It puts you in front of an audience that already exists on the platform. Posting a photo of today's special or an event happening this weekend takes thirty seconds and reaches people who follow you right now. Comments happen in public, which builds a kind of visible social proof a static page can't fake. For fast, low-stakes updates, Facebook is genuinely good at what it does.",
+      },
+      {
+        type: "p",
+        text: "None of that is in dispute. The question isn't whether a Facebook page has value. It's whether that value is enough to carry the weight small business owners are quietly asking it to carry: being found by strangers, being trusted by them, and converting that trust into an actual enquiry. On all three, a Facebook page runs into walls it cannot get past, because those walls were built into the platform on purpose.",
+      },
+
+      { type: "h2", text: "Google barely knows your Facebook page exists" },
+      {
+        type: "p",
+        text: "Type a service and a suburb into Google, an electrician in Bellville, a caterer in Nelspruit, a physio near me, and look closely at what actually shows up. Real websites. Google Business Profiles. Directory listings. A Facebook page occasionally appears, usually buried well below the businesses that built an actual site, because Google's search results are built to reward sites it can properly read: clean pages, clear headings, content that matches what people are searching for, and a domain that belongs to you specifically.",
+      },
+      {
+        type: "p",
+        text: "A Facebook page hands none of that control to you. You cannot set your own page titles the way a website lets you. You cannot structure the page around the exact words a customer searches. You cannot build the ten or twenty pages a website can, each one written to answer a different question a different customer is typing into Google. Facebook decided what a business page looks like, and every business on the platform gets the same shape. We've written before about why [your customers are already searching for you before they ever see your marketing](/insights/why-small-businesses-in-south-africa-need-a-website), and a page that Google mostly can't parse means you're invisible at the exact moment someone typed in exactly what you offer.",
+      },
+      {
+        type: "quote",
+        text: "The customer didn't reject you. They never saw you, because Google never showed them a Facebook page instead of a website.",
+      },
+
+      { type: "h2", text: "A Facebook-only business reads as a smaller business" },
+      {
+        type: "p",
+        text: "Before anyone pays a deposit or books an appointment, they're running a quiet background check. Is this a real business? Will it still exist next month? Can I trust these people with my money? A website, even a modest one, answers that question in seconds: a clear description of what you do, real photos of real work, a proper way to contact you, maybe a page or two explaining how you operate. It reads as a business that took itself seriously enough to build something.",
+      },
+      {
+        type: "p",
+        text: "A Facebook page alone reads differently, whether that's fair or not. It looks like a side project. It looks like something anyone could set up in an afternoon, because that's exactly what it is. Customers comparing you to a competitor with an actual website, even a competitor who does slightly worse work, will often pick the one that looks like it's built to last. Legitimacy is not about spending a fortune on design. It's about having something that looks like yours, not something that looks like a stall inside somebody else's market.",
+      },
+
+      { type: "h2", text: "You don't own a Facebook page. You rent it." },
+      {
+        type: "p",
+        text: "This is the one that costs businesses the most, and it costs them quietly enough that most owners never connect the dots. Facebook can change how many of your followers actually see your posts, and it has, repeatedly, over the years, without asking anyone's permission. An account can get restricted or suspended over an automated flag with no human to call and no timeline for a fix. The platform's rules, its algorithm, its whole business model, none of it answers to you. You built an audience on ground you don't own, and the landlord can change the terms whenever the landlord wants.",
+      },
+      {
+        type: "p",
+        text: "A website doesn't have that problem, because there's no landlord. Your domain is registered in your name. Your content lives on hosting you control. Nobody can throttle how many people see your homepage this month because an algorithm shifted. We called this exact trade-off [rented ground versus land you actually own](/insights/why-small-businesses-in-south-africa-need-a-website) in an earlier piece, and it's worth repeating here in the specific context of Facebook: a page can vanish, get restricted, or simply stop reaching anyone, and you'd have no real recourse. A website is the one piece of your online presence that answers to you and nobody else.",
+      },
+      {
+        type: "ul",
+        items: [
+          "Your website's domain is registered in your business's name, not a platform account that can be suspended.",
+          "A website's reach isn't decided by an algorithm you don't control and can't see inside.",
+          "Customer enquiries land in your inbox directly, not inside a platform's messaging system you have to check separately.",
+          "Nothing about how your website looks, loads, or is structured depends on decisions Meta makes for reasons that have nothing to do with you.",
+        ],
+      },
+
+      { type: "h2", text: "A page can't structure a real decision the way a website can" },
+      {
+        type: "p",
+        text: "Most real purchases involve more than one question. What do you actually offer? What does it cost, or roughly what should someone expect to pay? How long does it take? What happens after they get in touch? A Facebook page is built around a feed of posts in chronological order, which is a poor tool for answering a structured set of questions in the order a customer actually needs them answered. Somebody trying to understand your pricing has to scroll backwards through months of unrelated updates hoping you once posted about it.",
+      },
+      {
+        type: "p",
+        text: "A website doesn't have that constraint. A dedicated pricing page lays out exactly what something costs and what's included, the way [our own pricing page](/pricing) breaks down fixed packages and a build-your-own option so a visitor never has to guess. A services page explains what you do in the order that makes sense for a stranger, not in the order you happened to post about it. Structure is not a nice-to-have. It's the difference between a visitor finding an answer in ten seconds and a visitor giving up and moving to the next search result.",
+      },
+
+      { type: "h2", text: "The right order: website first, Facebook page as the megaphone" },
+      {
+        type: "p",
+        text: "None of this is an argument to delete your Facebook page. It's an argument about which one does the foundational work and which one amplifies it. A website is the destination: the place that actually explains what you do, proves you're legitimate, and gives a visitor a clear way to act. A Facebook page is a megaphone: a way to tell your existing audience about a new post, a promotion, or an update, and point them somewhere that can actually close the sale.",
+      },
+      {
+        type: "p",
+        text: "Run it the other way round, all your effort poured into the page and nothing behind it, and you're building an audience you don't own on a platform that answers a question nobody asked. Build the website first, and every Facebook post becomes a lot more valuable, because it's now sending people somewhere built to convert them rather than somewhere built to keep them scrolling.",
+      },
+
+      { type: "h2", text: "What this looks like in practice" },
+      {
+        type: "ul",
+        items: [
+          "Build the website first. It's the one asset in this list you'll actually own in five years.",
+          "Keep the Facebook page. Use it for what it's good at: quick updates, events, and staying visible to people who already know you.",
+          "Every post should point somewhere. Link back to the relevant page on your website instead of assuming the post itself has to do all the convincing.",
+          "Put your website address in your Facebook bio, not just a phone number. Make the path from platform to owned ground obvious.",
+          "Claim your Google Business Profile and link it to your website, not your Facebook page. It's free, and it's often the first thing a local search shows.",
+        ],
+      },
+
+      { type: "h2", text: "The short version" },
+      {
+        type: "ul",
+        items: [
+          "A Facebook page is fast, free, and good at quick updates to an audience that already follows you.",
+          "It's structurally weak at the three things that actually grow a business: being found by strangers on Google, reading as a legitimate business to someone who's never heard of you, and answering a structured decision in the order a customer needs it answered.",
+          "You rent a Facebook page. You own a website. One of those can be restricted or throttled by rules you never agreed to.",
+          "The right setup uses both, in order: a website as the foundation, a Facebook page as the megaphone that points people back to it.",
+        ],
+      },
+      {
+        type: "p",
+        text: "If your business is currently running on a Facebook page and nothing else, that's not a failure. It's a starting point most businesses pass through. The only mistake is staying there longer than you need to. [Tell us about your business](/start-project) and we'll come back with next steps, or have a look at [what a proper build costs](/pricing) before you decide anything.",
+      },
+    ],
+  },
+  {
     slug: "website-that-converts-and-grows-with-your-business",
     title: "How to build a website that converts customers and grows with your business",
     excerpt:
