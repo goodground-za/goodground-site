@@ -6,7 +6,8 @@ from top nav, footer-only + contextual links. Same day: replaced the old
 single "12 equal monthly payments" promise sitewide with two real payment
 options (50% deposit, or 12-month plan); added quantity steppers + price
 updates to the Build Your Own menu; added share buttons to every blog
-article. See section 2 and section 3b below for full detail. EVERYTHING IN
+article; published a new blog article, "Website vs Facebook page" (see
+section 3c). See section 2, 3b and 3c below for full detail. EVERYTHING IN
 SECTION 8 (historical archive, pre-2026-08-06) IS SUPERSEDED for
 design-system specifics — palette, layout, component names all changed in
 the 2026-08-06 site-wide redesign. Business facts in section 8 may also be
@@ -317,6 +318,65 @@ git-credential-manager GUI-dialog hang documented in section 9's archive
 origin main`). A plain retry (`git push origin main` again, no special
 flags) succeeded immediately this time, so it isn't consistently
 reproducible — try a bare retry first before reaching for that workaround.
+UPDATE: the hang recurred a second time in this same session (pushing the
+handoff-doc update just above) and that time the credential-helper reset
+was actually needed to clear it. Treat this as genuinely recurring, not a
+fluke — always wrap `git push` in a shell `timeout` (20-30s) rather than
+letting it run un-timed, try a plain retry first, then the reset if that
+fails too.
+
+
+3c. NEW BLOG ARTICLE: "WEBSITE VS FACEBOOK PAGE" (commit 25c1f58)
+--------------------------------------------------------------------
+content/articles.ts — new entry prepended to the `articles` array (newest
+first; the first entry auto-becomes the featured post on /insights and the
+newest slug picked up by generateStaticParams, no other file needs
+touching to publish a new article). Slug website-vs-facebook-page, category
+Growth, ~1,680 words, 9 min read.
+
+Johandre asked for this one with a specific voice brief: write as a strict
+copy chief trained on David Ogilvy's principles, exclusively active voice,
+highly specific language over vague/generic wording, no filler words or
+weak adverbs, minimum 1,500 words, keep SEO and internal linking in mind.
+WORTH REUSING THIS BRIEF VERBATIM if he asks for another article without
+repeating the instructions — this is now the expected bar for blog content
+on this site, not a one-off request.
+
+Process followed, worth repeating for future articles:
+  - Read the full content/articles.ts file first to match the established
+    Block-array content model (p / h2 / ul / quote) and the site's own
+    already-Ogilvy-adjacent voice (short declarative sentences, no em
+    dashes, arguments made from mechanism rather than invented statistics
+    — this project's no-fabrication rule already pushed the existing
+    articles toward exactly the voice Johandre asked for).
+  - No fabricated stats, client anecdotes, or specific incidents — argued
+    every claim from mechanism (how Facebook's algorithm/ownership model
+    actually works) rather than invented numbers or a "a client of ours
+    once..." story.
+  - Internal links use the `[label](/path)` syntax inside any block's
+    `text` field, parsed by `withLinks()` in
+    app/insights/[slug]/page.tsx — the ONLY way to link from article prose,
+    since the content model is plain typed data, not JSX. This article
+    links twice to the existing "why small businesses in South Africa need
+    a website" piece (which already covers the "rented ground" argument,
+    extended here specifically for Facebook), plus /pricing and
+    /start-project.
+  - Ran the full draft through the `humanizer` skill's AI-writing-tell
+    checklist before shipping (CLAUDE.md step 13, mandatory before any
+    user-facing content is called final) — found and fixed one triple-
+    adjective stack ("quick, timely, low-stakes" -> "fast, low-stakes"),
+    otherwise the draft was already clean against every pattern on that
+    checklist (no em dashes, no significance inflation, no vague
+    attributions, no signposting, no fragmented headers, no generic
+    "the future looks bright" closer).
+  - Verified word count with a quick throwaway Node script parsing the
+    `text:`/`items:` fields directly out of the TS source (1,679 words) —
+    faster than trying to import a .ts file at runtime.
+
+VERIFIED: tsc clean, next build clean (new route generated correctly,
+including its own opengraph-image), visually confirmed on /insights
+(featured slot) and the article page itself (both share-button rows
+present, all 4 internal links resolve, heading/date/category correct).
 
 
 4. OPEN ITEMS
