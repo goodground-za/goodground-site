@@ -560,3 +560,80 @@ main immediately after (fb5e268) — Vercel deploy should be live within a
 few minutes of the push.
 
 ===============================================================================
+
+§17 — SEO/UX checklist audit (2026-08-11, no code changes)
+
+Johandre asked to check the site against a standard checklist: custom 404,
+above-the-fold CTA on home, internal links, robots.txt, unique page titles,
+meta descriptions, social share image, alt text, local schema. Full audit
+via a research subagent, result:
+
+  Custom 404            OK   app/not-found.tsx, fully on-brand, two CTAs
+  CTA above fold         OK   Hero.tsx, "Let's Chat" -> /start-project
+  Internal links          OK   articles.ts [label](/path) links + nav/footer
+  robots.txt              OK   app/robots.ts, allows all, points at sitemap
+  Unique page titles      OK   every route has its own, checked all of them
+  Meta descriptions       OK   every route has its own, none duplicated
+  Social share image      OK   dynamic per-route via opengraph-image.tsx
+  Alt text on images      OK   descriptive everywhere; empty alts are all
+                                genuinely decorative (watermark, OG internals)
+  Local schema        PARTIAL  components/Schema.tsx HomeSchema() has name,
+                                address (locality/region/country only),
+                                areaServed, email, sameAs. MISSING:
+                                streetAddress, postalCode, GeoCoordinates
+                                (no lat/long anywhere in the codebase), and
+                                phone is currently omitted since
+                                content/site.ts site.phone is still null
+                                pending Johandre confirming a number.
+
+Only real gap is local schema. Next step if Johandre wants it closed: get a
+phone number and a street address/postal code from him, then add a `geo`
+GeoCoordinates block (lat/long for George) to HomeSchema() in
+components/Schema.tsx. Not done yet — waiting on those two facts, per the
+codebase's existing "wrong structured data is worse than absent structured
+data" principle (see the TODO comment already in content/site.ts).
+
+===============================================================================
+
+§18 — Internal /brand-guide reference page (2026-08-11, commit c2fb128)
+
+Johandre asked for a full in-depth brand guide page covering colors, fonts,
+sizes, buttons, shadows, etc., as a no-index page. Built at
+app/brand-guide/page.tsx, reachable only at /brand-guide (not linked from
+nav or footer). metadata.robots: { index: false, follow: false, nocache:
+true }.
+
+Sections: brand overview (name/legal name/reg no/tagline, voice bullets),
+logo (all 3 marks with correct backgrounds + usage rules), color (all 6
+tokens with hex/CSS var/usage/contrast notes), typography (Clash Display +
+Inter, full fluid type scale rendered live), layout & spacing (radius
+scale, container widths, section padding rhythm), buttons (all 4 real
+variants x 2 sizes, rendered from the actual Button.tsx component, not
+mockups), shadow & elevation (soft/lift swatches), motion (easing curves +
+durations), voice & tone (the site's hard copy rules), accessibility
+(focus ring spec, contrast floor).
+
+Deliberately pulls real values from globals.css/Button.tsx into the page
+rather than hand-copying them a second time, so the guide can't quietly
+drift out of sync with the actual design tokens the way a separate Figma
+doc would.
+
+Two issues caught and fixed during the two-pass screenshot verification
+before shipping:
+  1. The footer's CloudDivider scallop overlapped the last section's cards.
+     Every page's last section before the footer needs pb-[24vw] reserved
+     for it (see WhoWeBuildFor.tsx/CTABand.tsx/PricingPageClient.tsx for
+     the established pattern) — missed this on the first pass since it's
+     an easy thing to forget when a page isn't built from an existing
+     section component.
+  2. The page's own copy used em dashes in a few places, which directly
+     contradicts the "no em dashes in user-facing copy" rule the page
+     itself states in its Voice & Tone section. Swept and replaced with
+     commas/periods/colons throughout before shipping.
+
+npx tsc --noEmit and npx next build both clean. Verified at 1440/820/390
+via Chrome DevTools MCP (full-page screenshots each breakpoint, no reflow
+issues, footer scallop clears correctly at all three). Pushed to main
+(c2fb128).
+
+===============================================================================
