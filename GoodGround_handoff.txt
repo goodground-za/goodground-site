@@ -2,11 +2,15 @@
 GOODGROUND — CONTEXT HANDOFF
 Last updated: 2026-08-11 (added /pricing page: 4 fixed packages + Build Your
 Own configurator, live on production. Nav restructured — Pricing removed
-from top nav, footer-only + contextual links. See section 2 below for full
-detail. EVERYTHING IN SECTION 8 (historical archive, pre-2026-08-06) IS
-SUPERSEDED for design-system specifics — palette, layout, component names
-all changed in the 2026-08-06 site-wide redesign. Business facts in section
-8 may also be stale; section 1/6 below are the corrected current facts.)
+from top nav, footer-only + contextual links. Same day: replaced the old
+single "12 equal monthly payments" promise sitewide with two real payment
+options (50% deposit, or 12-month plan); added quantity steppers + price
+updates to the Build Your Own menu; added share buttons to every blog
+article. See section 2 and section 3b below for full detail. EVERYTHING IN
+SECTION 8 (historical archive, pre-2026-08-06) IS SUPERSEDED for
+design-system specifics — palette, layout, component names all changed in
+the 2026-08-06 site-wide redesign. Business facts in section 8 may also be
+stale; section 1/6 below are the corrected current facts.)
 ===============================================================================
 
 0. READ FIRST
@@ -248,6 +252,73 @@ Requires a Claude Code restart/reload to take effect. If this ever
 disconnects again on this machine, check that file first.
 
 
+3b. LATEST WORK: TWO PAYMENT OPTIONS, À LA CARTE UPDATE, SHARE BUTTONS
+------------------------------------------------------------------------
+All shipped 2026-08-11, same day as the /pricing page above, in three
+separate commits.
+
+TWO PAYMENT OPTIONS (commit 8b8360d) — the sitewide "12 equal monthly
+payments, no large upfront cost" promise is RETIRED. Replaced everywhere
+(Hero trust line, /pricing, /services, /about, content/faq.ts,
+content/stats.ts, content/articles.ts, components/Schema.tsx JSON-LD,
+app/layout.tsx + per-page metadata, public/llms.txt — ~20 files) with two
+real options:
+  - 50% deposit to secure the project, 50% on completion, before handover.
+  - 12 equal monthly instalments — the first secures the booking, the
+    remaining 11 become payable once the project is COMPLETED (not spread
+    across the build — a real behavioural difference, not just new copy).
+  - Cancellation (confirmed with Johandre): same rule as before, applied
+    to both — outstanding balance of the agreed price becomes payable, not
+    a refund of what's paid. Do not invent a different cancellation policy.
+New helpers in content/pricing.ts: depositFor, balanceFor,
+monthlyInstalmentFor (replaced the old monthlyFor/MONTHS pair). Every price
+on /pricing now shows both breakdowns (e.g. "R11,500 deposit + R11,500 on
+completion" / "or R1,917/mo x 12").
+
+THE SAME CHANGE WAS ALSO BUILT INTO GROUNDOPS (the quoting/invoicing app,
+a separate repo) the same session — quotes get a payment_option field that
+carries through to invoices; converting a quote creates one correctly-
+computed first invoice (deposit, or instalment 1 of 12); staff create every
+subsequent payment manually (no auto-generation). CONFIRMED WORKING by
+Johandre after running the required migration — see that repo's own
+groundops_handoff.txt sections 14-15 for full detail, this is a two-repo
+feature.
+
+À LA CARTE MENU UPDATE (commit c9d778f) — Build Your Own menu
+(content/pricing.ts, components/sections/PricingConfigurator.tsx):
+  - "Additional standard page" (R2,500/ea) and "Additional blog post"
+    (R600/ea) changed from a single on/off toggle to a real +/- quantity
+    stepper (AlaCarteItem.quantifiable: true) — visitors can now add more
+    than one. Configurator state changed from a Set<string> of selected
+    ids to a Record<string, number> of quantities.
+  - Custom logo design R3,500 -> R7,500, Custom illustrations/graphics
+    R1,500 -> R2,500, Custom icon set R1,800 -> R2,500 — all flagged
+    startingAt: true, rendered as "from RX" (final price depends on
+    complexity, confirmed in the quote).
+  - REMOVED from the menu entirely: "Local SEO setup (Google Business
+    Profile optimisation)" and "Professional photo editing (per image, up
+    to 10)".
+
+BLOG SHARE BUTTONS (commit f7ae898) — new components/ShareButtons.tsx,
+shown twice on every article page (app/insights/[slug]/page.tsx): next to
+the byline on the purple hero band, and again above the closing CTA.
+WhatsApp, X, Facebook, LinkedIn (solid-glyph SVGs — stroke/outline icons
+were tried first and were unrecognizable at 16px, especially WhatsApp) plus
+Copy Link (clipboard API, 2s confirmation state). WhatsApp listed first
+deliberately — it's the dominant share channel for this South African
+small-business audience, and explicit icons are used rather than gating
+behind the Web Share API since navigator.share isn't supported on desktop
+Safari/Firefox.
+
+GIT PUSH GOTCHA RESURFACED: pushing the share-buttons commit hung with no
+output for the full 2-minute tool timeout — same symptom as the historical
+git-credential-manager GUI-dialog hang documented in section 9's archive
+(the fix there: `git -c credential.helper= -c credential.helper=store push
+origin main`). A plain retry (`git push origin main` again, no special
+flags) succeeded immediately this time, so it isn't consistently
+reproducible — try a bare retry first before reaching for that workaround.
+
+
 4. OPEN ITEMS
 ---------------
   1. **Pricing FAQ sign-off** — the 5 Q&As in `pricingFaq` (content/pricing.ts)
@@ -262,8 +333,16 @@ disconnects again on this machine, check that file first.
      those are still open OR still resolved; this file was not kept
      continuously updated between 2026-07-30 and 2026-08-06+, so there is a
      real gap in the record.
-  3. No further design/dev work is queued beyond the above as of
-     2026-08-11 — the pricing page shipped and was the active task.
+  3. **Favicon/app-icon refresh (optional, not urgent)** — app/icon.png,
+     apple-icon.png, public/favicon.ico are a neutral black-circle/grey "gg"
+     mark, not colored to either the old or the new palette. They don't
+     clash with anything. Only worth regenerating if Johandre wants the
+     browser tab to actively carry the brand orange/purple rather than stay
+     neutral. The site's actual logo files (public/logos/*.svg) needed no
+     changes for the redesign and need none now — no hardcoded color, always
+     forced white via CSS at every call site.
+  4. No further design/dev work is queued beyond the above as of
+     2026-08-11.
 
 
 5. STANDING RULES (violating these has caused real rework, repeatedly)
