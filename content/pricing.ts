@@ -117,26 +117,36 @@ export const baseBuildFee = {
     "Homepage, fully custom-coded & mobile-responsive, 1 contact form, basic on-page SEO, 1 round of revisions. Add pages and features below.",
 };
 
-export type AlaCarteItem = { id: string; label: string; price: number };
+export type AlaCarteItem = {
+  id: string;
+  label: string;
+  price: number;
+  /** Visitor picks a quantity (e.g. "how many extra pages") instead of a
+   * single on/off toggle — price is per unit. */
+  quantifiable?: boolean;
+  /** Price is a starting point, not a fixed figure — final cost depends on
+   * complexity and is confirmed in the quote. Rendered as "from RX". */
+  startingAt?: boolean;
+};
 export type AlaCarteCategory = { name: string; items: AlaCarteItem[] };
 
 export const alaCarteCategories: AlaCarteCategory[] = [
   {
     name: "Pages",
     items: [
-      { id: "pages-standard", label: "Additional standard page (About, Services, Contact, etc.)", price: 2500 },
+      { id: "pages-standard", label: "Additional standard page (About, Services, Contact, etc.)", price: 2500, quantifiable: true },
       { id: "pages-complex", label: "Complex/custom-layout page (interactive landing page, pricing page, etc.)", price: 4000 },
       { id: "pages-blog-setup", label: "Blog/News section setup (template + first post)", price: 4500 },
-      { id: "pages-blog-post", label: "Additional blog post (written & uploaded)", price: 600 },
+      { id: "pages-blog-post", label: "Additional blog post (written & uploaded)", price: 600, quantifiable: true },
     ],
   },
   {
     name: "Design",
     items: [
-      { id: "design-logo", label: "Custom logo design", price: 3500 },
+      { id: "design-logo", label: "Custom logo design", price: 7500, startingAt: true },
       { id: "design-style-guide", label: "Brand style guide (colours, fonts, usage)", price: 2000 },
-      { id: "design-illustrations", label: "Custom illustrations/graphics (per page)", price: 1500 },
-      { id: "design-icons", label: "Custom icon set (up to 10 icons)", price: 1800 },
+      { id: "design-illustrations", label: "Custom illustrations/graphics (per page)", price: 2500, startingAt: true },
+      { id: "design-icons", label: "Custom icon set (up to 10 icons)", price: 2500, startingAt: true },
     ],
   },
   {
@@ -168,7 +178,6 @@ export const alaCarteCategories: AlaCarteCategory[] = [
       { id: "seo-advanced", label: "Advanced SEO (keyword research, schema markup, meta strategy)", price: 3000 },
       { id: "seo-speed", label: "Site speed optimisation", price: 2500 },
       { id: "seo-analytics", label: "Google Analytics & Search Console setup", price: 1000 },
-      { id: "seo-local", label: "Local SEO setup (Google Business Profile optimisation)", price: 1500 },
     ],
   },
   {
@@ -177,7 +186,6 @@ export const alaCarteCategories: AlaCarteCategory[] = [
       { id: "content-copywriting", label: "Copywriting (per page)", price: 1200 },
       { id: "content-upload", label: "Content upload/data entry (per page, client-supplied content)", price: 500 },
       { id: "content-stock-imagery", label: "Stock imagery sourcing & licensing", price: 800 },
-      { id: "content-photo-editing", label: "Professional photo editing (per image, up to 10)", price: 150 },
     ],
   },
   {

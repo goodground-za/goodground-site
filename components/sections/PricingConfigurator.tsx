@@ -23,7 +23,7 @@ function findNudge(total: number): Nudge | null {
 }
 
 export function PricingConfigurator({ onQuoteRequest }: { onQuoteRequest: (config: SelectedConfig) => void }) {
-  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [quantities, setQuantities] = useState<Record<string, number>>({});
   const [openCategory, setOpenCategory] = useState<number | null>(0);
   const [mobileSummaryOpen, setMobileSummaryOpen] = useState(false);
   const [barVisible, setBarVisible] = useState(false);
@@ -44,25 +44,37 @@ export function PricingConfigurator({ onQuoteRequest }: { onQuoteRequest: (confi
 
   const allItems = useMemo(() => alaCarteCategories.flatMap((c) => c.items), []);
   const selectedItems = useMemo(
-    () => allItems.filter((item) => selectedIds.has(item.id)),
-    [allItems, selectedIds],
+    () =>
+      allItems
+        .map((item) => ({ item, quantity: quantities[item.id] ?? 0 }))
+        .filter(({ quantity }) => quantity > 0),
+    [allItems, quantities],
   );
-  const total = baseBuildFee.total + selectedItems.reduce((sum, item) => sum + item.price, 0);
+  const total = baseBuildFee.total + selectedItems.reduce((sum, { item, quantity }) => sum + item.price * quantity, 0);
   const nudge = findNudge(total);
 
+  // Plain toggle items go 0 -> 1 -> 0. Quantifiable items (extra pages, blog
+  // posts) get real +/- steppers instead, since "how many" is the point.
   const toggleItem = (id: string) => {
-    setSelectedIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
+    setQuantities((prev) => ({ ...prev, [id]: (prev[id] ?? 0) > 0 ? 0 : 1 }));
+  };
+  const incrementItem = (id: string) => {
+    setQuantities((prev) => ({ ...prev, [id]: (prev[id] ?? 0) + 1 }));
+  };
+  const decrementItem = (id: string) => {
+    setQuantities((prev) => ({ ...prev, [id]: Math.max(0, (prev[id] ?? 0) - 1) }));
   };
 
   const handleQuote = () => {
     onQuoteRequest({
       kind: "custom",
-      items: [{ label: baseBuildFee.label, price: baseBuildFee.total }, ...selectedItems.map((i) => ({ label: i.label, price: i.price }))],
+      items: [
+        { label: baseBuildFee.label, price: baseBuildFee.total },
+        ...selectedItems.map(({ item, quantity }) => ({
+          label: quantity > 1 ? `${item.label} × ${quantity}` : item.label,
+          price: item.price * quantity,
+        })),
+      ],
       total,
     });
   };
@@ -105,8 +117,10 @@ export function PricingConfigurator({ onQuoteRequest }: { onQuoteRequest: (confi
                   items={category.items}
                   isOpen={openCategory === i}
                   onToggle={() => setOpenCategory(openCategory === i ? null : i)}
-                  selectedIds={selectedIds}
+                  quantities={quantities}
                   onToggleItem={toggleItem}
+                  onIncrement={incrementItem}
+                  onDecrement={decrementItem}
                 />
               ))}
             </RevealStagger>
@@ -170,20 +184,24 @@ function CategoryAccordion({
   items,
   isOpen,
   onToggle,
-  selectedIds,
+  quantities,
   onToggleItem,
+  onIncrement,
+  onDecrement,
 }: {
   name: string;
   items: AlaCarteItem[];
   isOpen: boolean;
   onToggle: () => void;
-  selectedIds: Set<string>;
+  quantities: Record<string, number>;
   onToggleItem: (id: string) => void;
+  onIncrement: (id: string) => void;
+  onDecrement: (id: string) => void;
 }) {
   const panelRef = useRef<HTMLDivElement>(null);
   const iconRef = useRef<SVGSVGElement>(null);
   const panelId = `category-panel-${name.replace(/\W/g, "")}`;
-  const selectedCount = items.filter((item) => selectedIds.has(item.id)).length;
+  const addedCount = items.reduce((sum, item) => sum + (quantities[item.id] ?? 0), 0);
 
   useLayoutEffect(() => {
     const panel = panelRef.current;
@@ -216,9 +234,9 @@ function CategoryAccordion({
           className="text-ht-purple flex w-full cursor-pointer items-center gap-4 px-5 py-4 text-left transition-colors duration-150 hover:bg-black/[0.02] sm:px-6"
         >
           <span className="font-ht-display flex-1 text-[15px] font-bold sm:text-[16px]">{name}</span>
-          {selectedCount > 0 ? (
+          {addedCount > 0 ? (
             <span className="bg-ht-orange rounded-pill shrink-0 px-2.5 py-1 text-[11px] font-bold text-white">
-              {selectedCount} added
+              {addedCount} added
             </span>
           ) : null}
           <span aria-hidden="true" className="text-ht-purple border-ht-purple/30 grid size-7 shrink-0 place-items-center rounded-full border-2">
@@ -232,32 +250,64 @@ function CategoryAccordion({
       <div ref={panelRef} id={panelId} className="h-0 overflow-hidden">
         <ul className="divide-ht-purple/10 divide-y px-5 pb-2 sm:px-6">
           {items.map((item) => {
-            const checked = selectedIds.has(item.id);
+            const qty = quantities[item.id] ?? 0;
+            const priceLabel = `${item.startingAt ? "from " : ""}${formatRand(item.price)}`;
             return (
-              <li key={item.id} className="flex items-center gap-4 py-3">
-                <button
-                  type="button"
-                  onClick={() => onToggleItem(item.id)}
-                  aria-pressed={checked}
-                  className="flex flex-1 items-center gap-3 text-left"
-                >
-                  <span
-                    aria-hidden="true"
-                    className={`grid size-5 shrink-0 place-items-center rounded-md border-2 transition-colors duration-150 ${
-                      checked ? "bg-ht-orange border-ht-orange" : "border-ht-purple/25"
-                    }`}
+              <li key={item.id} className="flex items-center justify-between gap-3 py-3">
+                <span className="text-ht-purple/85 flex-1 text-[13.5px] leading-[1.4]">{item.label}</span>
+
+                {item.quantifiable ? (
+                  <div className="flex shrink-0 items-center gap-3">
+                    <span className="text-ht-purple/70 w-20 shrink-0 text-right text-[13.5px] font-medium tabular-nums">
+                      {priceLabel}
+                    </span>
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        type="button"
+                        onClick={() => onDecrement(item.id)}
+                        disabled={qty === 0}
+                        aria-label={`Remove one — ${item.label}`}
+                        className="text-ht-purple border-ht-purple/25 grid size-6 shrink-0 place-items-center rounded-full border-2 transition-opacity duration-150 disabled:opacity-30"
+                      >
+                        <svg viewBox="0 0 12 12" className="size-2.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+                          <path d="M2 6h8" />
+                        </svg>
+                      </button>
+                      <span className="text-ht-purple w-4 shrink-0 text-center text-[13px] font-bold tabular-nums">{qty}</span>
+                      <button
+                        type="button"
+                        onClick={() => onIncrement(item.id)}
+                        aria-label={`Add one — ${item.label}`}
+                        className="text-ht-purple border-ht-purple/25 grid size-6 shrink-0 place-items-center rounded-full border-2"
+                      >
+                        <svg viewBox="0 0 12 12" className="size-2.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+                          <path d="M6 2v8M2 6h8" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => onToggleItem(item.id)}
+                    aria-pressed={qty > 0}
+                    className="flex shrink-0 items-center gap-3"
                   >
-                    {checked ? (
-                      <svg viewBox="0 0 16 16" className="size-3 text-white" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="m3 8 3.5 3.5L13 5" />
-                      </svg>
-                    ) : null}
-                  </span>
-                  <span className="text-ht-purple/85 text-[13.5px] leading-[1.4]">{item.label}</span>
-                </button>
-                <span className="text-ht-purple/70 shrink-0 text-[13.5px] font-medium tabular-nums">
-                  {formatRand(item.price)}
-                </span>
+                    <span className="text-ht-purple/70 text-[13.5px] font-medium tabular-nums">{priceLabel}</span>
+                    <span
+                      aria-hidden="true"
+                      className={`grid size-5 shrink-0 place-items-center rounded-md border-2 transition-colors duration-150 ${
+                        qty > 0 ? "bg-ht-orange border-ht-orange" : "border-ht-purple/25"
+                      }`}
+                    >
+                      {qty > 0 ? (
+                        <svg viewBox="0 0 16 16" className="size-3 text-white" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="m3 8 3.5 3.5L13 5" />
+                        </svg>
+                      ) : null}
+                    </span>
+                  </button>
+                )}
               </li>
             );
           })}
@@ -274,7 +324,7 @@ function SummaryPanel({
   onQuote,
   compact = false,
 }: {
-  selectedItems: AlaCarteItem[];
+  selectedItems: { item: AlaCarteItem; quantity: number }[];
   total: number;
   nudge: Nudge | null;
   onQuote: () => void;
@@ -297,10 +347,13 @@ function SummaryPanel({
           </p>
         ) : (
           <ul className="mt-3 space-y-2">
-            {selectedItems.map((item) => (
+            {selectedItems.map(({ item, quantity }) => (
               <li key={item.id} className="text-ht-purple/70 flex justify-between gap-4 text-[13.5px]">
-                <span>{item.label}</span>
-                <span className="shrink-0 tabular-nums">{formatRand(item.price)}</span>
+                <span>
+                  {item.label}
+                  {quantity > 1 ? ` × ${quantity}` : ""}
+                </span>
+                <span className="shrink-0 tabular-nums">{formatRand(item.price * quantity)}</span>
               </li>
             ))}
           </ul>
