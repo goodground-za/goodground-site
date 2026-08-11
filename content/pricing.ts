@@ -4,14 +4,25 @@
  * do not invent or round anything here; a wrong figure on this page is worse
  * than a missing one.
  *
- * `monthlyFor` applies the same "12 equal monthly payments" promise used
- * everywhere else on the site (see Hero.tsx, /services) to these totals too —
- * confirmed with the client rather than assumed.
+ * Two payment options apply to every total on this page (confirmed
+ * 2026-08-11, replacing the site's earlier single "12 equal monthly
+ * payments" promise):
+ *   - deposit: 50% to secure the project, 50% on completion, before handover.
+ *   - instalments: 12 equal monthly instalments — the first is paid upfront
+ *     to secure the booking, the remaining 11 become payable once the
+ *     project is completed (not spread across the build).
+ * Cancelling partway through either option follows the site's existing rule:
+ * the outstanding balance of the agreed price becomes payable — this is not
+ * a refund policy, it's the same "fixed price, just spread out" logic as
+ * before.
  */
 
-export const MONTHS = 12;
+export const DEPOSIT_PERCENT = 0.5;
+export const depositFor = (total: number) => Math.round(total * DEPOSIT_PERCENT);
+export const balanceFor = (total: number) => total - depositFor(total);
 
-export const monthlyFor = (total: number) => Math.round(total / MONTHS);
+export const INSTALMENT_MONTHS = 12;
+export const monthlyInstalmentFor = (total: number) => Math.round(total / INSTALMENT_MONTHS);
 
 export type Package = {
   slug: string;
@@ -187,11 +198,10 @@ export const alaCarteFootnote =
 /**
  * DRAFT — first-pass Q&A for the pricing page, written to be answerable
  * strictly from what's already confirmed elsewhere on this page (revision
- * counts, the 12-month payment split, the "free quote before work begins"
- * line above, and the "1–2 business days" reply time already used in
+ * counts, the two payment options above, the "free quote before work
+ * begins" line, and the "1–2 business days" reply time already used in
  * ContactForm/PricingEnquiryForm). Sign-off needed before this is treated as
- * an official policy statement — especially the deposit answer, which
- * describes the process rather than confirming a specific figure.
+ * an official policy statement.
  */
 export type PricingFaqItem = { question: string; answer: string };
 
@@ -202,9 +212,9 @@ export const pricingFaq: PricingFaqItem[] = [
       "No — hosting, domain, and ongoing maintenance are arranged separately from the build price. We're happy to point you in the right direction when you enquire.",
   },
   {
-    question: "Is there a deposit before you start?",
+    question: "How do I pay — is there a deposit?",
     answer:
-      "Every enquiry gets a firm, itemised quote first. Payment terms — including anything due upfront — are agreed with you before any work begins, not assumed from this page.",
+      "You choose: pay 50% upfront to secure the project and the remaining 50% on completion, before handover, or split the total into 12 equal monthly instalments — the first instalment secures your booking, and the remaining 11 become payable once the project is completed. Either way, the price is fixed and agreed before work begins.",
   },
   {
     question: "What if my scope grows partway through?",

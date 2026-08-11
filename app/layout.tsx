@@ -28,11 +28,11 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "Website Development in South Africa | Pay Monthly | GoodGround",
+    default: "Website Development in South Africa | GoodGround",
     template: "%s | GoodGround",
   },
   description:
-    "GoodGround is a website development studio building custom, fast business websites across South Africa. Spread the cost over 12 equal monthly payments, with no large upfront bill.",
+    "GoodGround is a website development studio building custom, fast business websites across South Africa. Pay a 50% deposit and the rest on completion, or split it over 12 monthly instalments.",
   keywords: [
     "website development South Africa",
     "web development company South Africa",
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     siteName: "GoodGround",
     title: "Website Development in South Africa | GoodGround",
     description:
-      "A South African website development studio building custom business websites, paid over 12 equal monthly instalments.",
+      "A South African website development studio building custom business websites, with a choice of payment plans.",
   },
   // The generated opengraph-image is 1200x630, so it should render as a large
   // card rather than the default small thumbnail.
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Website Development in South Africa | GoodGround",
     description:
-      "A South African website development studio building custom business websites, paid over 12 equal monthly instalments.",
+      "A South African website development studio building custom business websites, with a choice of payment plans.",
   },
 };
 

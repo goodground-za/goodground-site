@@ -23,11 +23,13 @@ const SPECIALTIES = [
 ];
 
 /**
- * Promoted from the approved /home-test variant. The micro-trust line ("No
- * large upfront cost" / "12 equal monthly payments" / "Based in George")
- * was flagged in the previous Hero as the studio's one real differentiator
- * and worth keeping above the fold — the home-test comp didn't carry it, so
- * it's re-added here under the CTAs rather than silently dropped.
+ * Promoted from the approved /home-test variant. The micro-trust line was
+ * flagged in the previous Hero as the studio's one real differentiator and
+ * worth keeping above the fold. Updated 2026-08-11: the old single "12 equal
+ * monthly payments, no large upfront cost" claim no longer holds now that
+ * there are two payment options (one of which — the 50% deposit — is a
+ * large upfront cost by design), so this links straight to /pricing instead
+ * of asserting a specific plan.
  */
 export function Hero() {
   const bgRef = useRef<HTMLDivElement>(null);
@@ -125,13 +127,13 @@ export function Hero() {
           </div>
 
           {/* The studio's one real differentiator — kept above the fold.
-              The payment-plan item links to /pricing, where that promise is
+              "Two ways to pay" links to /pricing, where both options are
               actually broken down per package. */}
           <ul className="mt-7 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-[13px] font-medium text-white/80">
-            {["No large upfront cost", "12 equal monthly payments", "Based in George"].map((item, i) => (
+            {["Two ways to pay", "Based in George"].map((item, i) => (
               <li key={item} className="flex items-center gap-3">
                 {i > 0 ? <span aria-hidden="true" className="hidden size-1 rounded-full bg-white/50 sm:block" /> : null}
-                {item === "12 equal monthly payments" ? (
+                {item === "Two ways to pay" ? (
                   <Link href="/pricing" className="underline decoration-white/40 underline-offset-4 transition-colors duration-150 hover:text-white hover:decoration-white">
                     {item}
                   </Link>

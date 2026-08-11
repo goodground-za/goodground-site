@@ -40,7 +40,7 @@ export const services: Service[] = [
     outcome:
       "A website that loads quickly, looks credible on any device, and gives your business a digital front door worth walking through.",
     paymentLine:
-      "Spread across 12 equal monthly payments, with no large invoice before you've seen a page.",
+      "Pay a 50% deposit and the rest on completion, or spread it across 12 monthly instalments — your choice.",
     cta: { label: "Start Your Project", href: "/start-project" },
   },
   {

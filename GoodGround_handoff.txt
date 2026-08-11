@@ -1,623 +1,382 @@
 ===============================================================================
 GOODGROUND — CONTEXT HANDOFF
-Last updated: 2026-07-30 (follow-ups to the full-bleed redesign: hi-res +
-responsive forest images, real WhyUs card textures, full-bleed footer,
-mobile spacing, 12-payments band REINSTATED after an impeccable critique,
-all 3 FAQ answers written, footer Quick/Useful Links columns, and the
-studio RELOCATED Brackenfell/Cape Town -> George, Garden Route. See
-GoodGround_memory.md "Done 2026-07-30" and §2d below. The 07-29 notes on
-the forest asset, SVG card placeholders, removed payment section, and the
-Brackenfell/Cape Town location are all SUPERSEDED.)
+Last updated: 2026-08-11 (added /pricing page: 4 fixed packages + Build Your
+Own configurator, live on production. Nav restructured — Pricing removed
+from top nav, footer-only + contextual links. See section 2 below for full
+detail. EVERYTHING IN SECTION 8 (historical archive, pre-2026-08-06) IS
+SUPERSEDED for design-system specifics — palette, layout, component names
+all changed in the 2026-08-06 site-wide redesign. Business facts in section
+8 may also be stale; section 1/6 below are the corrected current facts.)
 ===============================================================================
 
-0. NEW COMPUTER / NEW CLAUDE SETUP (do this first if you're picking this
-   project up somewhere it hasn't run before)
-------------------------------------------------------------------------
-a) Clone the repo — it is PUBLIC, everything code-side lives here:
-     git clone https://github.com/goodground-za/goodground-site.git
-   This includes GoodGround_memory.md, this handoff, PRODUCT.md, seo-audit/,
-   all source, and full git history. Nothing code-related is missing from git.
+0. READ FIRST
+--------------
+This file is the living session-level handoff. Section 1 = what the site is
+today. Section 2 = the most recent work (this is what a fresh session should
+read first if picking up where this left off). Section 5 = rules that cause
+real rework if violated. Section 8 = compressed history of everything before
+the 2026-08-06 redesign — useful for archaeology, not for current facts.
 
-b) Get the `brief/` folder — this is the ONE thing that is NOT in git (it's a
-   sibling of `site/`, not inside the repo, and is 14MB of client-supplied
-   binaries so it was deliberately kept out of version control). It holds:
-     GoodGround-Development-Brief.md   — original dev brief
-     GoodGround-Website-Copy.md        — the copy deck (client-approved, verbatim)
-     GoodGround_Ads_Copy_Deck.docx     — Google/Meta ads copy (source for /services 05/06)
-     reference/Palette.png             — the source the design-token hex values were sampled from
-     reference/Good Ground - Webiste colour and layout.png — client's own comp
-     reference/goodground-index-page-images/*  — client's homepage reference images
-     GoodGround logos/*                — logo source files
-   Was zipped to hand over: see the .zip this session produced. Unzip it
-   alongside `site/` so the path is `clients/goodground/{brief,site}` (matches
-   what `GoodGround_memory.md` assumes). Not strictly required to run the site
-   day-to-day, but required before touching design/copy/brand decisions — the
-   memory file references it as source of truth repeatedly.
-
-c) `npm install` inside `site/`.
-
-d) `.env.local` (gitignored, not in the zip/repo — recreate if needed):
-     NEXT_PUBLIC_GA_ID=<GA4 measurement ID, optional — analytics only loads if set>
-   Everything else (the Web3Forms key) is hardcoded in lib/enquiry.ts on
-   purpose — Web3Forms keys are public by design. No other secrets exist.
-
-e) Accounts the human operator (Johandre) already holds and that a new Claude
-   cannot self-provision — flag if a task needs one of these and confirm access
-   first rather than assuming:
-     GitHub    — goodground-za org, repo is public so read access needs nothing,
-                 but pushing needs Johandre's collaborator credentials.
-     Vercel    — Hobby plan, deploys from `main` automatically.
-     Domain    — Afrihost (goodground.co.za), DNS points at Vercel.
-     Google Search Console / GA4 — see punch list below, GSC verification meta
-                 tag is already in the code either way.
-
-f) Read order for a fresh Claude: this file → GoodGround_memory.md → PRODUCT.md
-   → seo-audit/ACTION-PLAN.md if the task is SEO. Do not start editing before
-   reading GoodGround_memory.md — section 51-58 alone documents several bugs
-   that are easy to reintroduce blind.
-
-READ FIRST
------------
-`GoodGround_memory.md` in this repo root is the master living document: stack,
-design system, content model, conventions, numbered "traps already hit",
-business details, copy rules and the punch list. Read it before touching
-anything. This handoff is the session-level view and the immediate next steps.
-
-`seo-audit/ACTION-PLAN.md` is the working to-do for anything SEO. It is kept
-current with what has shipped.
-
-NOTE: `goodground-handoff.md` (lowercase, .md) is an OLDER handoff from a
-previous session. It is superseded by this file and its content has been folded
-in here. Its git-push advice is wrong, see section 9. Safe to delete.
+Companion memory files (persistent, cross-session, outside this repo) exist
+in Claude's own memory system under the key `project_goodground_website` and
+several `feedback_*`/`reference_*` files — a Claude session with memory
+access already has this context loaded automatically. This .txt file is for
+continuity in a session WITHOUT that memory (a fresh machine, a different
+tool, a human reading it directly).
 
 
-1. PROJECT
------------
-GoodGround is a website studio in George, on the Garden Route (Western Cape),
-founded 2026 (relocated from Brackenfell/Cape Town 2026-07-30). It is its own
-registered company (GoodGround (Pty) Ltd), not "under The Trail Tribe" anymore.
-This is their own marketing site. Founder: Johandre Saayman, who also runs Grow
-Brand Agency.
+1. PROJECT — CURRENT STATE
+----------------------------
+GoodGround is a website development studio in George, on the Garden Route
+(Western Cape), South Africa. Founded 2026. Its own registered company:
+  legalName: GoodGround (Pty) Ltd
+  registrationNumber: 2024/641034/07   (confirmed by founder 2026-07-23 —
+    NOT "no registration number, trades under The Trail Tribe" as an older
+    version of this file said; that was true once, is not true now)
+  Not VAT registered — all displayed prices are VAT inclusive.
+Founder: Johandre Saayman (never named on the site itself, by his explicit
+request — About page describes him by experience only). He also runs Grow
+Brand Agency and the separate "Ground Ops" app (different project, different
+repo — see Claude's `project_groundops_status` memory, do not confuse them).
 
-App location:
-  c:\Volumes\growbrand\growbrand-hub\GROW - CLAUDE\PROJECTS\GROW BRAND\
-  GROW-PROSPECT\clients\goodground\site
+Location on disk:
+  c:\Users\Johandre\Desktop\GoodGround\GroundOps-Work\website-and-ops\
+  goodground-sites\site\
+  (This is a DIFFERENT path than older notes in this file reference —
+  the `c:\Volumes\growbrand\...` path in section 8 is stale.)
 
-Stack: Next.js 16.2.10 (App Router, Turbopack) + TypeScript + Tailwind v4 +
-Framer Motion. npm. Vercel (Hobby). No CMS — content lives in typed files under
-`/content`. That is a hard client requirement.
-
-Repo:  https://github.com/goodground-za/goodground-site  (PUBLIC — see §9)
+Repo:  https://github.com/goodground-za/goodground-site  (PUBLIC)
 Live:  https://www.goodground.co.za   <- canonical, serves 200
        https://goodground.co.za       <- 308-redirects to www
+Deploy: push to `main` -> Vercel (Hobby plan) auto-deploys. Johandre says
+  "push to main" / "push to live" as the trigger phrase each time.
 
-REPO-LOCAL INSTRUCTION (AGENTS.md): "This is NOT the Next.js you know." Next 16
-has breaking changes vs training data. Read the relevant guide in
-`node_modules/next/dist/docs/` before writing code. Following this in session 2
-produced the correct `<GoogleAnalytics>` placement and the correct
-`opengraph-image` + `generateStaticParams` conventions.
+Stack: Next.js 16 (App Router, Turbopack) + TypeScript + Tailwind v4 (no
+config file — tokens live in `@theme` in app/globals.css) + GSAP/Lenis for
+motion (Framer Motion survives only in one small component, see below). npm.
+No CMS — content lives in typed files under `/content`, a hard client
+requirement carried through the whole project.
+
+REPO NOTE: this is Next 16, which has real breaking changes vs a model's
+training data on "Next.js." Check `node_modules/next/dist/docs/` for
+anything unfamiliar (App Router conventions, opengraph-image,
+generateStaticParams) before assuming older Next.js patterns apply.
 
 
-2. WHAT SESSION 2 DELIVERED (all live and verified on production)
+2. CURRENT DESIGN SYSTEM (since 2026-08-06 site-wide redesign)
 ------------------------------------------------------------------
-Commits, oldest first:
-  95affb3  Add GA4 with opt-in cookie consent
-  3219558  Correct the note on how GA pageviews are tracked
-  f901dd3  Add focus-ring contrast audit to the punch list
-  532569f  Add handoff doc
-  28a03fa  Point canonical URLs at www to match what Vercel serves
-  e52c070  Add social preview images, security headers and site cleanup
-  715d2db  Remove em dashes and fix awkward sentences sitewide
-  eeff7f4  Record the git-credential-manager push hang in traps
-  070a0bb  Update memory, punch list and handoff after the SEO and copy work
-  e48f384  Add article on the biggest website mistakes SA SMEs make
-  b992ccb  Give /insights a featured article above a three-across grid
-  2d31347  Update handoff for the second article and the new insights layout
-  78b532c  Add Google Search Console verification meta tag
-
-(a) GOOGLE ANALYTICS 4 — done, verified live
-    ID `G-T4JF7EJLW9`, env var `NEXT_PUBLIC_GA_ID`, set in Vercel as Production
-    only. Wired with `@next/third-parties`. `components/Analytics.tsx` owns both
-    the GA mount and the cookie banner.
-
-    Consent is enforced by NOT MOUNTING GA until the visitor accepts, rather
-    than via Google Consent Mode. No cookie is written and no request leaves the
-    browser pre-consent, which is far easier to defend under POPIA. Verified
-    both paths on production.
-
-    !! CORRECTION — DO NOT REPEAT THE ORIGINAL CLAIM !!
-    I first said @next/third-parties handles App Router route changes. It does
-    NOT. Reading node_modules/@next/third-parties/dist/google/ga.js, the
-    component only injects the gtag snippet; there is no router subscription.
-    SPA pageviews work because GA4 **Enhanced Measurement** ("page changes based
-    on browser history events") is ON BY DEFAULT. If anyone disables that in the
-    GA4 admin, every pageview after the first hard load stops silently.
-
-(b) FULL SEO AUDIT — ran at the founder's request (was previously deferred)
-    Score **85/100**. Reports in `seo-audit/`. Category scores: Technical 90,
-    Content 68, On-Page 90, Schema 92, Performance 97, AI Readiness 85,
-    Images 88. Content Quality is what holds the total down, and that is almost
-    entirely "new studio with no published work", not sloppy execution.
-
-(c) SEO FIXES SHIPPED
-    - Social preview images. The audit's one critical finding: the site had NO
-      og:image at all, so every WhatsApp/LinkedIn/Facebook share rendered as a
-      bare text link. Shared ImageResponse card in `app/_og/card.tsx`, used by
-      home, services, about, contact, insights and per-article routes.
-      twitter:card now summary_large_image.
-    - Security headers. Only HSTS was set. Added CSP + X-Content-Type-Options,
-      X-Frame-Options, Referrer-Policy, Permissions-Policy.
-    - Canonical host fix. `site.url` pointed at the apex while Vercel serves www,
-      so all 9 sitemap URLs and every canonical tag pointed at a redirect.
-    - Cleanup: real favicon.ico; deleted create-next-app boilerplate SVGs and
-      the unused **1.7MB noise.png** that was still being served despite having
-      been replaced by an inline SVG grain long ago.
-    - Five over-length meta descriptions trimmed, 76-char /insights title
-      shortened, contextual internal links added between /services and the
-      article (which previously had ONE inbound link).
-
-(d) COPY / HUMANIZER PASS
-    Founder asked for every em dash gone and the sentences to read properly.
-    **This reversed a standing project rule** that treated em-dash density as
-    house style. ~30 sentences rewritten across Home, Services, About, FAQ and
-    the shared sections. Verified ZERO em dashes in rendered HTML on all pages,
-    live.
-
-    The flagged sentence: About opened "We'd watched good businesses invest in
-    websites...", a past perfect with nothing anchoring it, left over from
-    dropping "both" from the copy deck's "We'd both watched". Now reads "We kept
-    seeing...", which works for one founder without inventing a co-founder.
-
-    Two bugs surfaced while reading the copy back:
-      - Home rendered "the biblical THE Parable of the Sower" because
-        ParableLink's default label already starts with "the".
-      - SEO Foundations had a near-duplicate description and subheading
-        ("look nice" / "look good").
-
-    Lighthouse held at 100/100/100/100, 0 failed, after all of the above.
-
-(e) SECOND BLOG ARTICLE + NEW /insights LAYOUT
-    "The biggest website mistakes South African SMEs make", 1658 words,
-    targeting "small business website mistakes South Africa". Eight numbered
-    mistakes, each with a fix. No invented statistics anywhere: claims that
-    would normally carry a percentage are argued from mechanism instead, per
-    the no-fabrication rule.
-
-    Added inline link support to the article renderer. The content model is
-    plain typed data with no JSX, so contextual internal links had nowhere to
-    live, which is why the audit found the first article had one inbound link
-    and zero outbound. `withLinks()` in `app/insights/[slug]/page.tsx` parses
-    `[label](/path)` in p and ul text. Use it when adding articles.
-
-    /insights now features the newest article in a full-width bark panel and
-    stacks the rest three across on desktop. The featured panel is ONE column
-    on purpose: an 8/4 split left the right third empty, which is the same
-    negative-space problem PageHero exists to fix, and there is no article
-    artwork to fill it. With two articles the grid looks sparse, which is
-    correct and resolves as articles are added.
-
-(f) GOOGLE SEARCH CONSOLE VERIFICATION TAG — shipped, see §6.
-
-
-2b. WHAT SESSION 3 DELIVERED (all live and verified on production)
---------------------------------------------------------------------
-Commits, oldest first:
-  64261fc  Add Google Ads & Meta Ads growth services to /services
-  317e774  Add dedicated /faq page and trim the homepage/services FAQ accordions
-
-(a) NEW "GROWTH" SERVICES: GOOGLE ADS + META ADS
-    Client sent `brief/GoodGround_Ads_Copy_Deck.docx` asking for a new ads
-    section. Founder chose to fold it into the existing /services page as
-    items 05/06 (the deck's alternative was a standalone /growth page) rather
-    than build new nav/routing.
-
-    `content/services.ts`: `Service` type gained `growth?: boolean`. Two new
-    entries, slugs `google-ads` / `meta-ads`. Because WhatWeBuild.tsx (the
-    homepage accordion) and the Services page deep-dives BOTH read from this
-    one array, the two new services appeared in both places, the jump index,
-    and the ItemList schema with zero extra wiring — that shared-data design
-    already existed, this just proved it works for a second content type.
-
-    New pill "Growth service" (bg-pine) alongside the existing Flagship
-    (ember) / Included (bark) tags — added in both `ServiceDeepDive`
-    (app/services/page.tsx) and `ServiceRow` (WhatWeBuild.tsx).
-
-    Six new components, each DELIBERATELY copying an existing homepage
-    section's pattern instead of inventing new visual language:
-      GrowthIntro.tsx        - section header + 2 CTAs
-      GrowthProblem.tsx       - Philosophy.tsx-style narrative prose, no image
-      GrowthBenefits.tsx      - Industries.tsx-style bark card grid, 7 items
-                                (content/growth-benefits.ts), checkmark badge
-      GrowthHowItWorks.tsx    - PaymentPlan.tsx-style numbered steps
-      GrowthWhyUs.tsx         - WhyUs.tsx's ember-card trio, verbatim pattern
-      GrowthCTA.tsx           - CTABanner.tsx pattern, closes the Growth block
-                                specifically (the page's original CTABanner
-                                still closes the whole page further down)
-
-    BUG CAUGHT BEFORE SHIPPING: GrowthHowItWorks.tsx's first draft put the
-    numbered steps in bg-cream cards. This page's body background IS
-    --color-cream, so the cards were invisible. Switched to bordered rows
-    (no fill) instead. LESSON: check the actual page background token before
-    picking a card fill color, don't assume a pairing that works elsewhere in
-    the design system will contrast here too.
-
-    content/faq.ts gained 5 new Q&A pairs (ad spend, need-a-new-site,
-    Google-vs-Meta, contract length, ad account ownership) — all answered, so
-    they flow straight into the existing FAQPage schema with no extra work.
-
-(b) DEDICATED /faq PAGE
-    The FAQ accordion had grown to 13 questions (8 original + 5 from (a)) and
-    read long inline on both Home and Services.
-
-    `components/sections/FAQ.tsx` now takes an optional `limit` prop:
-    `<FAQ limit={4} />` (Home, Services) shows the first 4 + a "See all FAQs"
-    pill button; `<FAQ />` (new /faq page) shows all of them, no button.
-
-    New `app/faq/page.tsx`: PageHero + full <FAQ /> + the existing CTABanner.
-    Gave the PageHero its own eyebrow ("FAQ") and headline distinct from the
-    FAQ block's own ("Have questions?" / "Everything you need to know...") —
-    a first draft repeated the exact same eyebrow+headline back-to-back,
-    caught in the screenshot pass before shipping.
-
-    `content/site.ts`: `legalLinks` gained `{ label: "FAQ", href: "/faq" }`,
-    first in the array (before Privacy Policy / Terms) — Footer.tsx already
-    renders that array as-is, so no Footer.tsx changes were needed.
-
-    Added /faq to app/sitemap.ts (priority 0.7).
-
-    VERIFIED BEFORE ASSUMING: HomeSchema's FAQPage JSON-LD (Schema.tsx)
-    already includes every answered FAQ item regardless of how many are
-    visually shown on any page. Trimming the visible list to 4 has NO
-    SEO/rich-result impact - checked the schema code, did not just assume it.
-
-Both verified live via a local dev server (this app is not the live prod
-instance during dev, but same code): eslint clean, checked at 1440x900 and
-390x844, homepage accordion + services page + new /faq page + footer link
-all confirmed rendering correctly before pushing.
-
-
-2c. WHAT SESSION 4 DELIVERED (2026-07-29, live on production)
---------------------------------------------------------------------
-Commits: b2f0cb0 (full-bleed redesign), 39867c9 (SVG placeholders,
-gradient seam fix, humanize copy). Full detail in GoodGround_memory.md
-"Done 2026-07-29" — this is the short version.
-
-Founder walked through a fresh full-page comp (brief/reference/
-reference-image.png + body-forest-image.png) and the HOME PAGE was
-rebuilt from inset rounded blocks to the comp's FULL-BLEED layout.
-
-MENTAL MODEL: most home sections now run full-bleed edge-to-edge (no
-side gutter, no gap), inner content still capped at max-w-[1434px]. The
-exceptions, drawn as inset rounded cards, are PROCESS and FAQ (plus the
-two ember CTA panels, Hero pitch + CTABanner).
-
-  - Block.tsx REVERTED to its original inset design (it had been made
-    full-bleed mid-session, which rippled to /about and /insights — the
-    only other Block consumers — reverting fixed those too). Home's
-    full-bleed sections don't use Block; they set their own bg + grain.
-  - New forest photo public/images/body-forest-image.png used TWICE as a
-    full-bleed background via 3 new globals.css utilities: forest-brown
-    (Philosophy fades to bark), forest-panel (WhyUs pine->forest,
-    MONOTONIC on purpose), forest-text-scrim (soft radial for legibility).
-  - WhyUs + AboutPreview MERGED into one rounded green->forest panel.
-    WhyUs.tsx now renders <AboutPreview /> inside itself, so AboutPreview
-    is NO LONGER in page.tsx. The 3 reason cards got image caps with a
-    numbered badge — currently SVG PLACEHOLDERS (CardImagePlaceholder in
-    WhyUs.tsx), awaiting real artwork.
-  - WhatWeBuild: flat bark, AuroraGlow removed (founder wanted no
-    animated bg here), rounded-b. Nav full-bleed. Footer rounded-t back.
-    Hero image + "Build on GoodGround" band full-bleed; band rounded-b,
-    with Philosophy pulled up (-mt-[64px]) so the forest shows behind the
-    band's rounded corners.
-  - MARQUEE and PAYMENTPLAN removed from the page (component files kept,
-    just unimported; nothing links to the old #payment-plan anchor).
-
-New home order: Hero -> Philosophy -> WhatWeBuild -> Industries ->
-Process -> WhyUs(+AboutPreview inside) -> Testimonials(hidden) -> FAQ ->
-CTABanner.
-
-Copy: humanizer pass touched only 2 spots (AboutPreview repetition +
-rule-of-three; Process "on time and on budget" cliche). Rest was clean.
-
-TRAPS HIT (new, also in memory):
-  - Full-page screenshots don't fire Framer scroll-reveals; below-fold
-    data-reveal elements stay opacity:0 and look "empty". Step-scroll the
-    page via evaluate_script before capturing, or shoot per-section.
-  - A gradient with a local opacity minimum reads as a hard line (the
-    "green line" the founder flagged). Keep panel gradients monotonic and
-    use a soft radial for any text scrim.
-
-NOTE: git push worked cleanly this session (no credential-manager hang;
-the §9 workaround was not needed this time, but keep it documented).
-
-NEW OPEN ITEM: real artwork for the 3 WhyUs reason cards (placeholders now).
-
-
-2d. WHAT SESSION 5 DELIVERED (2026-07-30, live on production)
---------------------------------------------------------------------
-Commits: 1356efa, 88bef6b, a0ec6ff, 16f6502, 43c13d4, 8caf048 (plus the
-memory/handoff commit). Full detail in GoodGround_memory.md "Done
-2026-07-30" — short version here. SUPERSEDES parts of §2c.
-
-  - FOREST IMAGE: now hi-res AND responsive. 2688x1504 landscape
-    (body-forest-image.webp) for sm+, 1520x2688 portrait
-    (body-forest-image-portrait.webp) for mobile (the landscape cropped to
-    a thin strip on narrow panels). Registered as forest / forestPortrait
-    in content/images.ts. Philosophy + WhyUs each render TWO <Image>s
-    toggled sm:hidden / hidden sm:block. LESSON: full-bleed bg blur = a
-    resolution problem (source too small for the upscale), not compression.
-  - WHYUS CARDS: real supplied textures now (foundation-strategy/
-    longterm/partner.webp, 1024px), NOT SVG placeholders. Mapped by title.
-  - PAYMENT BAND REINSTATED (reverses the 07-29 removal). The impeccable
-    critique flagged the removal as the #1 issue (PRODUCT.md wants the
-    12-payments model at hero level; top failure = reading it as a
-    subscription). PaymentPlan.tsx rebuilt as a compact full-bleed EMBER
-    band (oversize "12" + "then it's yours. It's not a subscription…" +
-    CTA), placed back AFTER Industries.
-  - Footer full-bleed; mobile vertical spacing tightened; forest-warm CSS
-    filter added to warm the cool green toward the palette.
-
-  CURRENT HOME ORDER: Hero -> Philosophy -> WhatWeBuild -> Industries ->
-  PaymentPlan -> Process -> WhyUs(+AboutPreview) -> Testimonials(hidden)
-  -> FAQ -> CTABanner.
-
-  VERIFIED ON PROD 2026-07-30: Lighthouse mobile 100/100/100/100;
-  perf trace LCP 744ms, CLS 0; impeccable detect 0/27; impeccable
-  critique 33 -> 34/40. Card textures accepted by user (logged in
-  .impeccable/critique/ignore.md).
-
-  ALSO SHIPPED 2026-07-30 (later same day):
-  - All 3 open FAQ answers written (cancellation = outstanding balance
-    payable per T&Cs/contract; timeline ~4-6 weeks; service area = all of
-    SA). content/faq.ts now has zero answer:null. FOLLOW-UP: /legal needs a
-    matching cancellation clause (still gated on gateway/NCA before billing).
-  - Footer: added "Quick Links" heading over the nav + a new "Useful Links"
-    column (FAQ/Privacy/Terms), 4/2/2/4 grid; removed the duplicate legal
-    pills from the bottom bar.
-  - RELOCATED Brackenfell/Cape Town -> George, Garden Route (Western Cape),
-    everywhere. content/site.ts address.city replaced by address.area;
-    schema addressLocality=George. This re-anchors local SEO from Cape Town
-    to George — any Google Business Profile must use George. The historical
-    seo-audit/FULL-AUDIT-REPORT.md still says Brackenfell (dated snapshot,
-    left as-is).
-
-
-3. STANDING RULES (violating these has caused real rework)
-------------------------------------------------------------
-- **NO EM DASHES in user-facing copy.** Use commas, full stops or a colon.
-  Code comments and aria-labels are exempt (not prose).
-- **"X, not just Y" is deliberate brand voice, NOT an AI tell.** The humanizer
-  flags it as negative parallelism. It recurs across client-approved positioning
-  lines ("We build foundations, not just front-ends"). LEAVE IT.
-- **THE FOUNDER IS NOT NAMED ANYWHERE ON THE SITE.** At his explicit request,
-  About describes him by experience only ("a web developer with more than 10
-  years' experience across UX and UI design, website design and graphic
-  design"). This is why the article byline is still the Organization
-  "GoodGround" rather than a person — see §5.
-- **No fabricated content, ever.** `testimonials.ts`, `caseStudies.ts`,
-  `stats.ts` are intentionally empty. FAQ entries with `answer: null` render an
-  honest "still working this one out" state. /work says "coming soon" instead of
-  inventing a portfolio. Never add aggregateRating/review schema until real
-  reviews exist — fabricated review markup is a manual-action risk.
-- **Do not invent** a phone number, registration number, or co-founder.
-- **Do not run a full SEO audit unprompted** — that deferral was lifted once, on
-  2026-07-20, by explicit request. It is not a standing licence.
-- `ui-ux-pro-max --design-system` returns nothing usable for this brief. The
-  client's own comp and brief override it.
-
-
-4. VERIFICATION ALREADY DONE (don't redo unless something changed)
---------------------------------------------------------------------
-On LIVE production, via Chrome DevTools MCP and curl:
-  - GA: pre-consent no googletagmanager request, window.gtag undefined, no _ga
-    cookie. After Accept: gtag/js?id=G-T4JF7EJLW9 loads, cookie set, persists.
-    After Decline: nothing loads, banner does not re-ask.
-  - Soft nav / -> /about -> /services produced three en=page_view beacons.
-  - All 9 sitemap URLs return 200 with no redirect.
-  - og:image + twitter:image present with absolute www URLs, 1200x630.
-    https://www.goodground.co.za/opengraph-image returns a valid PNG.
-  - All five security headers present on live responses.
-  - GA still fires under the CSP; zero CSP violations in console.
-  - favicon.ico 200; /next.svg and /images/noise.png now 404.
-  - Zero user-facing em dashes across all pages.
-  - Lighthouse mobile 100/100/100/100, 0 failed.
-
-TIMING GOTCHA: GA collect beacons take ~5s to land. Checking at 3s reads as a
-false negative — this caused a wrong conclusion mid-session.
-
-NOTE: the live verification accepted cookies and browsed three pages, so ONE
-REAL TEST SESSION APPEARS IN THE GA4 DATA. Filter it out when reading early
-numbers.
-
-Screenshots: `.screenshots/ga-consent-banner/` and
-`.screenshots/seo-and-copy-pass/`. That folder is gitignored and user-owned —
-never auto-delete it.
-
-
-5. OPEN DECISIONS — THESE ARE THE FOUNDER'S, NOT DEV WORK
-------------------------------------------------------------
-Everything a developer could do without a business decision is DONE. What
-remains at the top of the value list is all blocked on answers:
-
-  1. **Name a person as the article author?** `content/articles.ts` has
-     `author: "GoodGround"`, rendered as a byline and as `Organization` in
-     BlogPosting schema. A named Person is the strongest remaining E-E-A-T
-     signal. BUT §3 says the founder is deliberately unnamed sitewide, so the
-     likely answer is NO — in which case close this item rather than leaving it
-     open.
-     (Correction to the audit: it originally reported the article had NO author.
-     It has one. The real gap is Organization -> Person, smaller than stated.)
-
-  2. **Case study for /work, or drop it from the sitemap?** 154 words, currently
-     indexed as near-empty. Best: publish one real case study — this site itself,
-     written up as a build story, is legitimate and available now. Interim:
-     remove /work from `app/sitemap.ts` until it has content.
-
-  3. **Confirm the phone number.** NAP consistency is foundational for local SEO
-     and one third of it is missing. Goes in `content/site.ts`, flows to schema
-     automatically. Blocks the Google Business Profile.
-
-  4. **Google Business Profile.** Highest-value off-site action for a George
-     service business and the main lever on AI-search visibility, which is
-     limited by authority rather than structure. Blocked on (3).
-
-  5. Real photography to replace placeholder Unsplash images. Only 5 real client
-     images exist — a genuine content bottleneck, not fixable in code.
-
-  6. Facebook/Instagram URLs (`socials: []`).
-
-  7. The 3 outstanding FAQ answers (cancellation policy, project timeline,
-     service area outside George). [ANSWERED 2026-07-30 — this item is done.]
-
-CLOSED, so it stops being re-raised: the **company registration number** is NOT
-an open item, despite older notes listing it as "to be confirmed". GoodGround
-has no separate registration number; it trades under The Trail Tribe. /legal
-already states this correctly and carries no registration-number field.
-
-
-6. NEXT DEV TASK (unblocked, do this first)
----------------------------------------------
-**Google Search Console — PART DONE, 2026-07-20.**
-The HTML-tag verification is shipped from our side and confirmed live on
-production. `verification.google` in `app/layout.tsx` metadata emits
-<meta name="google-site-verification" content="RDMvId_yS37hPFjJbBuZg4A8c1pZ0IBobkOrX6l1Ih4">
-site-wide.
-
-  !! DO NOT REMOVE THAT TAG once verification passes. Search Console
-  re-validates periodically and will drop the property. It is in the ROOT
-  LAYOUT rather than only the homepage for the same reason: Google may
-  re-check a URL other than /.
-
-The founder was completing verification in the GSC UI. Remaining:
-  - Confirm verification succeeded.
-  - Submit `sitemap.xml` (10 URLs, all 200, no redirects, both articles in).
-  - Use a **URL prefix** property for `https://www.goodground.co.za/`. The apex
-    308-redirects to www, so an apex-only property reports almost nothing. A
-    Domain property via DNS TXT through Afrihost also works but needs a
-    different verification method than the tag above.
-
-**Then, queued for later: re-run the full SEO audit** once GSC has a few weeks
-of data. The 2026-07-20 audit scored 85/100 with NO indexation, query, CTR or
-CrUX field data available, and said so explicitly. Compare against
-`seo-audit/FULL-AUDIT-REPORT.md` rather than starting fresh. Expect movement in
-Performance (currently lab-only from one machine; real SA mobile field data may
-be materially worse), Content Quality (68, the score holding the total down),
-and AI Search Readiness once the Google Business Profile exists.
-
-Then, in rough order:
-  - **Focus-ring contrast audit on dark panels — DONE 2026-07-26.** Fixed
-    globally, not panel by panel: a two-tone `:focus-visible` ring (ink
-    outline for light surfaces + peach box-shadow halo `!important` for dark)
-    that stays visible on every surface sitewide. All the per-panel
-    `[&_:focus-visible]:outline-peach` overrides were removed. See trap #14 in
-    GoodGround_memory.md for the full rationale and the `!important` gotcha.
-    TRAP WHEN MEASURING (kept for any future contrast work): read alpha from a
-    TRANSPARENT canvas. Compositing over white first makes every colour read
-    opaque and produces false failures.
-  - External citations in the article (zero outbound links sitewide).
-  - `Service` schema per offering (/services currently uses ItemList).
-  - More blog articles. Two are live. /insights features whichever article is
-    first in the `articles` array and stacks the rest three across, so adding
-    one is purely a content edit in `content/articles.ts`. Article body text
-    supports `[label](/path)` inline links via `withLinks()`; use it to
-    cross-link new pieces to existing ones.
-  - Re-verify all 4 Afrihost nameservers have synced.
-  - Convert source PNGs to WebP (repo weight/build time only).
-
-
-7. FACTS AND SPECIFICS
-------------------------
-GA4 ID:            G-T4JF7EJLW9
-Env var:           NEXT_PUBLIC_GA_ID   (Vercel, Production only)
-localStorage key:  gg-cookie-consent   ("granted" | "denied")
-Custom event:      gg-cookie-consent-change
-Email:             hello@goodground.co.za  (real, from client artwork)
-Web3Forms key:     beae6de4-74ed-4868-a4eb-e479e0f43e6c  (hardcoded in
-                   lib/enquiry.ts; Web3Forms keys are public by design)
-                   DO NOT reuse Grow Brand's key — different inbox
-                   (info@growbrandagency.com)
-GitHub identity:   jsaayman94-design  (the account that pushes)
-Hosting:           Vercel, Hobby plan
-DNS:               Afrihost. Root A -> 216.198.79.1 (Vercel).
-                   www CNAME -> 8f461b901d171a7f.vercel-dns-017.com
-                   An old conflicting A record (197.242.159.147) was found and
-                   deleted.
-
-Palette:
-  --color-bark  #331816   dark sections/footer
-  --color-pine  #1c261d   nav
-  --color-ember #ac4119   CTA bands
-  --color-peach #fde5c1   text on dark
-  --color-cream #f1e8d7   light sections
-  --color-surface #fdfbf6 form cards/inputs
-  --color-stone #4f5450
-  --color-ink   #010602
+The whole site was re-skinned in one pass 2026-08-06, promoting an approved
+`/home-test` A/B variant to be the site's one design language (that route no
+longer exists — it was promoted, not kept as a separate page).
+
+Palette (Tailwind v4 @theme tokens, app/globals.css):
+  --color-ht-purple  #2e1848   dark sections, footer, PageHero band
+  --color-ht-orange  #fe431a   primary actions / CTAs
+  --color-ht-pink    #fe9dd2   accents, card rings
+  --color-ht-crimson #ac3026   shadow depth under orange
+  --color-ht-cream   #fbf7ec   base page background
 Radii: --radius-block 40px, --radius-card 24px, --radius-pill 999px
-Font: Montserrat only (Bold 700 all headings, per client)
-Tailwind v4: no config file, tokens live in @theme in app/globals.css
+Fonts: Clash Display Bold (`font-ht-display` — headings/buttons/labels only)
+  + Inter (`font-ht-body` — body copy). Loaded once in app/layout.tsx.
+
+Motion: GSAP + Lenis smooth-scroll is the primary system sitewide, in
+`components/motion-gsap/*`:
+  RevealSection / RevealStagger  — scroll-triggered fade+rise entrances
+  SplitWords                     — word-by-word headline reveal
+  MagneticButton                 — cursor-follow drift on buttons/links
+  HoverCard / HoverCardImage     — card lift + independent image drift
+All of these gate on `gsap.matchMedia("(prefers-reduced-motion: no-preference)")`
+— under reduced motion, elements simply render at their natural DOM state
+(no opacity:0 stuck on screen), by construction. Framer Motion
+(`framer-motion`) survives only for `components/motion/RotatingWords.tsx`
+(the Hero's specialty-word cycler) — deliberately kept small/self-contained.
+
+Recurring visual conventions worth knowing before touching any page:
+  - "Hard-shadow" card: `rounded-card ring-2 ring-ht-pink
+    shadow-[0_14px_0_0_var(--color-ht-pink)]` (colour varies by surface —
+    purple ring/shadow on light cards, pink on white cards, etc.)
+  - Every inner page opens on a dark ht-purple band
+    (`components/PageHero.tsx`) — load-bearing, because `Nav.tsx` is
+    `fixed` + transparent-until-scroll and needs a dark surface under it for
+    contrast. Do not build a new page that skips PageHero.
+  - CloudDivider scallop pattern for section transitions into the Footer;
+    whatever section sits directly above `<Footer>` needs `pb-[24vw]`
+    reserved so the divider's circles don't collide with card shadows.
+  - `min-w-0` is required on every `grid lg:grid-cols-N` column that holds
+    long-form/constrained-width text, or CSS Grid's default min-content
+    sizing silently breaks the layout at narrow widths. This bit multiple
+    pages during the redesign; check for it if a grid column looks wrong.
+  - Nav/Footer are global (`components/Nav.tsx`, `components/Footer.tsx`),
+    same on every route — no per-page nav/footer swapping.
+
+Hard rules carried over from before the redesign, still in force: no
+fabricated stats/quotes/logos/reviews; no em dashes in user-facing copy
+(code comments are exempt); founder never named on the site; "X, not just
+Y" is deliberate brand voice, not an AI tell — do not "fix" it.
 
 
-8. OG IMAGE GOTCHAS (for whoever edits the card next)
--------------------------------------------------------
-`app/_og/card.tsx` renders in Satori, not a browser:
-  - Use `logo-footer.png`, NOT `logo-hero.png`. The hero wordmark is the dark
-    variant for the cream hero and is invisible on bark. This was caught by
-    actually looking at the generated PNG.
-  - Satori CANNOT parse WOFF2. The font must stay TTF. Montserrat-Bold.ttf ships
-    as a repo asset so the build has no network dependency.
-  - CSS custom properties do not resolve. Use literal hex.
-  - `<img>` is required; next/image has no meaning there. The eslint rule is
-    suppressed with a comment explaining why.
-LinkedIn caches previews aggressively — re-check via their Post Inspector after
-any change.
+3. LATEST WORK: /pricing PAGE (2026-08-10 to 2026-08-11, LIVE)
+--------------------------------------------------------------------
+Commits (chronological):
+  82feeaf  Add /pricing page with fixed packages and Build Your Own
+           configurator (also: nav restructure, contextual links)
+(Earlier same arc, already landed before this handoff was last touched:
+  16c3ba1  Add real photos: mobile-only hero crop, About founder image
+  6bd32c3  Fix contact/start-project forms: CSP connect-src blocked
+           Web3Forms fetch
+  ac4d575  Fix carousel z-index glitch, round About's Why-the-name card,
+           center CTA, add FAQ spacing)
+
+WHAT SHIPPED: a brand-new pricing/packages page — real, client-confirmed
+numbers (not placeholder), likely the single most important conversion page
+on the site per the founder's brief.
+
+Content — `content/pricing.ts`, verbatim from the founder's own document,
+do not alter figures without him supplying new ones:
+  4 fixed packages: Micro R8,500 / Launch R15,000 / Grow R23,000 /
+    Scale R32,000 — each with pitch, feature list, "Best for", timeline.
+  Base Build Fee R6,000 + a 7-category a la carte menu (Pages, Design,
+    Functionality & Interactivity, Integrations, SEO & Performance,
+    Content, Extras) — see the file for every item/price.
+  `MONTHS = 12` and `monthlyFor(total)` helper — EVERY price on this page
+    shows both the one-time total and a /mo-over-12-months figure. This was
+    an explicit decision (Johandre chose "show monthly-equivalent too")
+    to keep the page consistent with the sitewide "12 equal monthly
+    payments, no large upfront cost" differentiator used everywhere else.
+  `pricingFaq` array — 5 Q&As, flagged DRAFT in a comment in the file.
+    Claude wrote these (grounded only in already-confirmed facts: revision
+    counts per package, the 12-month split, "free quote before work
+    begins", the "1-2 business days" reply time already used elsewhere).
+    **STILL NEEDS JOHANDRE'S SIGN-OFF** — this is the top open item.
+
+Components (all new):
+  app/pricing/page.tsx              — server component, has `metadata`,
+                                       PageHero, delegates interactivity
+  components/PricingPageClient.tsx  — client component, owns the single
+                                       `selectedConfig` state (whichever
+                                       package or a-la-carte build the
+                                       visitor last picked), scroll-to-form
+                                       logic, renders the purple bridge
+                                       section between Packages and the
+                                       configurator
+  components/sections/PricingPackages.tsx     — 4-card grid, "Grow" is
+    flagged "Most Popular" (Johandre's explicit editorial call, not
+    inferred from data — if this ever needs to move/change, ask him first)
+  components/sections/PricingConfigurator.tsx — a-la-carte category
+    accordions (same GSAP height-tween pattern as ServiceAccordion/
+    FAQAccordion) + live summary panel. Desktop: sticky sidebar. Mobile:
+    fixed bottom bar, gated by IntersectionObserver so it only shows while
+    the configurator section itself is in view (without that gate it stays
+    pinned over the footer for the rest of the scroll — a real bug caught
+    and fixed this session). Has a "proximity nudge" (within ~15% of a
+    package price -> suggests that package) AND an "exceeds nudge" (total
+    has passed even the biggest package -> different message) — both
+    computed live from the `packages` array, no extra data needed.
+  components/sections/PricingFAQ.tsx          — pricing-specific FAQ
+    accordion (DRAFT content, see above)
+  components/PricingEnquiryForm.tsx           — modeled on ContactForm.tsx,
+    same validation/sendEnquiry() path via lib/enquiry.ts. Message field is
+    OPTIONAL (was required in the first pass — Johandre's page copy says
+    "or nothing at all," so requiring a message contradicted the page's own
+    promise; caught and fixed same session). Renders a read-only "Your
+    configuration" summary above the fields when selectedConfig is set.
+  components/AnimatedNumber.tsx     — new reusable primitive: GSAP
+    count-up-price tween (proxy-object tween + textContent write per tick,
+    NOT a raw number tween on textContent, which would print fractional
+    rand mid-flight), gated by gsap.matchMedia the same way as everything
+    else. Used everywhere a price appears on this page.
+
+Nav change (Johandre's explicit instruction, 2026-08-11): "Pricing" was
+REMOVED from the top nav (`content/site.ts` navLinks) — it stays in
+footerLinks only. In its place, contextual links to /pricing were added
+where they make sense:
+  - Services page's purple "payment recap" section CTA now says "See
+    Pricing ->" and points to /pricing instead of /contact.
+  - Homepage Hero's micro-trust line — the "12 equal monthly payments" item
+    specifically — is now a link to /pricing.
+  - About page's closing "How we work" paragraph now also links to
+    "view pricing" alongside its existing "See the full process" link.
+SIGNAL FOR FUTURE PAGES: this establishes the site's IA preference as a
+lean top nav. Default new secondary pages to footer + contextual links, not
+automatic top-nav inclusion, unless told otherwise.
+
+Also touched: app/sitemap.ts (added /pricing, priority 0.95, just under the
+homepage).
+
+VERIFICATION DONE THIS SESSION (all via Chrome DevTools MCP + a local dev
+server on port 3210, plus `npx tsc --noEmit` / `npx next build` clean):
+  - Two-pass screenshots at 1440x900 / 820x1180 / 390x844.
+  - Clicked through the full configurator: item toggles update the running
+    total live with the count-up animation; proximity nudge fires exactly
+    at a package price threshold (verified at R8,500 = Micro); exceeds
+    nudge fires past R32,000 (verified at R32,600); mobile sticky bar
+    appears/disappears correctly tied to section visibility; both CTA paths
+    (a package card, and the configurator's "Get This Quote") correctly
+    scroll to and pre-fill the enquiry form.
+  - prefers-reduced-motion verified via `navigate_page`'s `initScript` to
+    override `window.matchMedia` (chrome-devtools MCP's `emulate` tool has
+    no direct reduced-motion flag) — content renders immediately and
+    correctly with no stuck/fading state.
+  - ONE real end-to-end enquiry submission ("Test User" / test@example.com)
+    to confirm the live Web3Forms POST succeeds with the new "Your
+    configuration" field. This is a REAL email in the studio inbox — ignore
+    or delete it, same pattern as the earlier contact-form-fix session.
+  - No console errors at any breakpoint.
+
+GOTCHA HIT AND ROOT-CAUSED THIS SESSION (worth knowing for any future
+visual-verification work on this site): `take_screenshot` with
+`fullPage: true` can render entire below-the-fold sections as blank/missing
+on this site, even though the content is real and correctly sized in the
+DOM. Cause: fullPage screenshots instantly resize the viewport to full
+document height instead of scrolling through it, and this site's GSAP
+ScrollTrigger reveals (RevealSection/RevealStagger) never receive the
+normal scroll events that would fire their reveal tween, so they stay stuck
+at their initial `gsap.set(el, {opacity: 0, ...})` state. FIX: scroll to a
+specific position via `evaluate_script` + `window.scrollTo`, then take a
+non-fullPage (viewport) screenshot at that position instead. Do not
+diagnose a "content vanished" fullPage screenshot as a real bug on this
+codebase before checking with a normal scroll first.
+
+ALSO FIXED THIS SESSION (unrelated to pricing, but same session): Chrome
+DevTools MCP was found completely deregistered on this machine
+(`~/.claude/.mcp.json` was `{"mcpServers": {}}`, empty) despite old
+permission grants for its tools still sitting in
+`~/.claude/settings.json`. Re-registered:
+  { "mcpServers": { "chrome-devtools": { "command": "npx",
+    "args": ["-y", "chrome-devtools-mcp@latest"] } } }
+Requires a Claude Code restart/reload to take effect. If this ever
+disconnects again on this machine, check that file first.
 
 
-9. ENVIRONMENT GOTCHAS
+4. OPEN ITEMS
+---------------
+  1. **Pricing FAQ sign-off** — the 5 Q&As in `pricingFaq` (content/pricing.ts)
+     are a first-pass DRAFT written by Claude, grounded in already-confirmed
+     facts but not yet reviewed/approved by Johandre. Follow up on this.
+  2. Everything in the OLD section 5 of this file (now folded into section 8
+     as history) listed several founder-level open decisions from earlier
+     sessions (named article author, /work case study, phone number, GBP,
+     real photography, social URLs). STATUS UNKNOWN as of this update — a
+     fresh session should re-check current state (content/site.ts,
+     content/articles.ts, app/work/page.tsx) rather than assume any of
+     those are still open OR still resolved; this file was not kept
+     continuously updated between 2026-07-30 and 2026-08-06+, so there is a
+     real gap in the record.
+  3. No further design/dev work is queued beyond the above as of
+     2026-08-11 — the pricing page shipped and was the active task.
+
+
+5. STANDING RULES (violating these has caused real rework, repeatedly)
+--------------------------------------------------------------------------
+  - NO EM DASHES in user-facing copy. Commas, full stops, or a colon
+    instead. Code comments/aria-labels are exempt.
+  - "X, not just Y" is deliberate brand voice, not an AI tell — leave it.
+  - THE FOUNDER IS NOT NAMED ANYWHERE ON THE SITE (his explicit request).
+  - No fabricated content, ever — no invented stats, quotes, logos,
+    reviews, prices, feature lists, or business policy specifics (e.g. a
+    deposit percentage). If real content is referenced but not supplied,
+    ASK how to get it (paste it, point to a file) rather than inventing a
+    placeholder and moving on — this has come up multiple times (pricing
+    content itself was sourced this way) and is the established norm here.
+  - Do not invent a phone number, registration number, or co-founder.
+  - Confirm before any risky/irreversible action (force-push, deleting
+    content) — routine "push to main" for reviewed, verified work is
+    already pre-authorized by the founder's own repeated instruction to do
+    so, but say what you're about to push before doing it if the change is
+    large.
+  - Two-pass screenshot verification (1440x900 / 820x1180 / 390x844) for
+    any visual change, saved to `.screenshots/<task-slug>/` — that folder
+    is gitignored and user-owned, never auto-delete it.
+
+
+6. FACTS AND SPECIFICS
+-------------------------
+Business:
+  legalName:          GoodGround (Pty) Ltd
+  registrationNumber: 2024/641034/07
+  VAT:                not registered; all prices VAT inclusive
+  Email:               hello@goodground.co.za
+  Location:            George, Garden Route, Western Cape, South Africa
+  Socials:             Facebook + Instagram, both live (see content/site.ts)
+  Phone:               still null/TODO as of last check — verify current
+                        state in content/site.ts before assuming
+
+Technical:
+  GA4 ID:            G-T4JF7EJLW9 (env var NEXT_PUBLIC_GA_ID, Vercel
+                      Production only) — consent-gated, does not mount
+                      until the visitor accepts the cookie banner.
+  Web3Forms key:      beae6de4-74ed-4868-a4eb-e479e0f43e6c (hardcoded
+                      fallback in lib/enquiry.ts; Web3Forms keys are public
+                      by design). Env var override still works if set.
+                      DO NOT reuse Grow Brand Agency's key — different
+                      inbox.
+  CSP note:           `connect-src` (not `form-action`) governs fetch()
+                      calls — this distinction caused a real bug (forms
+                      silently failing) earlier this project; both are set
+                      correctly now in next.config.ts, but if a new
+                      external API is ever called via fetch from a form,
+                      remember to add it to connect-src too.
+  DNS:                Afrihost. Root A -> Vercel. www CNAME -> Vercel.
+  GitHub push identity: has hung on credential-manager before (see section
+                      8 for the historical fix, `-c credential.helper=`
+                      reset) — not re-verified as still an issue on this
+                      machine/session, but keep in mind if `git push` seems
+                      to silently hang with no output.
+
+
+7. WORKING AGREEMENTS
 ------------------------
-**git push hangs silently (cost ~40 minutes this session).**
-Symptom: `git push` produces no output and times out, while `git ls-remote` and
-`git fetch` work instantly. That asymmetry is the tell — the repo is public, so
-reads need no auth and only the push touches the credential layer.
-`GIT_TRACE=1 GIT_CURL_VERBOSE=1` shows the stall inside `git credential-manager
-get`, blocking ~60s trying to raise a GUI dialog that cannot display in a
-non-interactive session. `GIT_TERMINAL_PROMPT=0` does NOT help — it suppresses
-terminal prompts, not GCM's GUI flow.
-
-  FIX:  git -c credential.helper= -c credential.helper=store push origin main
-
-The empty value is REQUIRED. `credential.helper` is multi-valued (manager,
-store), so `-c credential.helper=store` alone just appends and `manager` still
-runs first and still hangs.
-
-**The older handoff's advice on this is wrong.** It says to retry with
-`run_in_background: true`. Background push hangs too — it is the same blocked
-process, just not in the foreground. Use the credential-helper reset above.
-
-**Commit messages via the Bash tool: use a heredoc.** PowerShell here-string
-syntax (@'...'@) is NOT valid in Bash and silently produced a commit with "@" as
-the subject line this session.
-
-**Dev server:** `npm run dev`. It may already be running on a stale port from a
-previous session; Next refuses to start a second one and prints the PID to kill.
-Do not assume port 3000.
-
-**Vercel deploy-block history:** was caused by the pushing GitHub account not
-being an explicit collaborator on the then-private repo, which is what Vercel
-Hobby's check keys off. Fixed by making the repo PUBLIC. Not the co-author
-trailer, which was the first and wrong diagnosis. `.claude/settings.json` sets
-`includeCoAuthoredBy: false` regardless.
+  - Push straight to `main` — that is the deploy flow. Confirm first if a
+    change is large/risky; routine verified work does not need re-asking
+    each time, per repeated explicit instruction from Johandre across many
+    sessions.
+  - Two-pass screenshots for any visual change (see section 5).
+  - Keep this file updated after significant changes — it is meant to be
+    perpetually current, not a one-time snapshot. If a gap forms (like the
+    one between 2026-07-30 and 2026-08-06 that this update had to bridge),
+    say so explicitly in the next update rather than pretending continuity
+    that wasn't actually maintained.
+  - `humanizer` skill runs on newly written user-facing copy.
+  - Ask before fabricating any business fact, price, or content — see
+    section 5.
 
 
-10. WORKING AGREEMENTS
-------------------------
-- Copy edits ARE allowed (was "verbatim only" earlier in the project).
-- `humanizer` runs on newly written microcopy and now on the whole site for em
-  dashes; the client copy deck's voice otherwise stands.
-- Push straight to `main` — that is the deploy flow, Vercel builds from main.
-  Confirm first if the change is risky.
-- Keep `GoodGround_memory.md`, `seo-audit/ACTION-PLAN.md` and this file updated
-  after significant changes.
-- Two-pass screenshots into `.screenshots/<task-slug>/` at 1440x900 and 390x844
-  for any visual change.
+8. HISTORICAL ARCHIVE (pre-2026-08-06 redesign — compressed, superseded)
+------------------------------------------------------------------------
+Everything below is from before the 2026-08-06 site-wide redesign. Design
+system specifics (the old bark/pine/ember palette, Montserrat font, old
+component names like WhyUs.tsx/PaymentPlan.tsx/CTABanner.tsx) NO LONGER
+EXIST post-redesign — see section 2 for what replaced them. Kept only for
+project archaeology (why certain content decisions were made, e.g. the FAQ
+answers, the em-dash rule, the founder-unnamed rule, which all carried
+forward unchanged).
+
+Old sessions covered, in order: GA4 + consent banner setup; a full SEO
+audit (scored 85/100, reports in seo-audit/); social preview images and
+security headers; canonical-host fix (apex vs www); an em-dash removal pass
+across all copy; a second blog article + new /insights layout; Google
+Search Console verification tag; Google/Meta Ads "Growth" services added to
+/services; a dedicated /faq page split out from the inline accordion; a
+full-bleed homepage redesign around client-supplied forest photography
+(later itself superseded by the 2026-08-06 redesign); the studio's
+relocation from Brackenfell/Cape Town to George, Garden Route, in copy and
+schema; and a payment-band reinstatement after an internal design critique.
+
+Old environment gotchas that may still be relevant (not re-verified this
+session, but worth knowing):
+  - git push credential-manager hang: `GIT_TRACE=1 GIT_CURL_VERBOSE=1`
+    showed a stall inside `git credential-manager get`. Fix used then:
+    `git -c credential.helper= -c credential.helper=store push origin main`
+    (the empty value is required — credential.helper is multi-valued).
+  - Commit messages via a Bash tool: use a heredoc, not a PowerShell
+    here-string (@'...'@ is invalid in Bash and silently produced a
+    garbage commit subject once).
+  - Satori (the OG-image renderer, app/_og/card.tsx or similar) cannot
+    parse WOFF2 fonts — must stay TTF — and does not resolve CSS custom
+    properties, only literal hex.
+
+Full detail for all of the above, if ever needed, is in this file's git
+history (the pre-2026-08-11 version) and in `GoodGround_memory.md` if that
+file still exists in the repo.
 
 ===============================================================================

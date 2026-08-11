@@ -10,7 +10,7 @@ import { site } from "@/content/site";
 export const metadata: Metadata = {
   title: { absolute: "Contact GoodGround | Website Development, South Africa" },
   description:
-    "Tell us about your business and we'll come back with next steps and a monthly payment plan. A website development studio in South Africa.",
+    "Tell us about your business and we'll come back with next steps and how you'd like to pay. A website development studio in South Africa.",
   alternates: { canonical: "/contact" },
 };
 
@@ -37,7 +37,7 @@ export default function ContactPage() {
       <PageHero
         eyebrow="Get in touch"
         title="Let's build something that lasts."
-        intro="Tell us a bit about your business and what you're hoping to build. We'll come back to you with next steps, and what it would look like on a monthly payment plan."
+        intro="Tell us a bit about your business and what you're hoping to build. We'll come back to you with next steps and a fixed price, split however you'd like to pay it."
       />
 
       {/* pb-[24vw]: reserves room for the footer's CloudDivider, which scales

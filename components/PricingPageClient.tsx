@@ -46,7 +46,8 @@ export function PricingPageClient() {
               <RevealSection delay={0.08}>
                 <p className="mt-5 max-w-[56ch] text-[16px] leading-[1.65] text-white/85">
                   Start from scratch and add exactly what you need. The price is fixed before work
-                  begins, and it still splits into 12 equal monthly payments.
+                  begins, and you still get the same choice: 50% deposit and the rest on completion,
+                  or 12 monthly instalments.
                 </p>
               </RevealSection>
             </div>

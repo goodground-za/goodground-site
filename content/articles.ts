@@ -116,7 +116,7 @@ export const articles: Article[] = [
       },
       {
         type: "p",
-        text: "It's also why we split every project into 12 equal monthly payments instead of one invoice before you've seen a single page. A website that's actually built to grow keeps earning its cost well past launch day, and the way you pay for it should match that, not front-load all the risk into month one.",
+        text: "It's also why every project comes with a choice in how you pay for it: a 50% deposit and the rest on completion, or 12 monthly instalments. A website that's actually built to grow keeps earning its cost well past launch day, and the way you pay for it should match that.",
       },
 
       { type: "h2", text: "The short version" },
@@ -231,7 +231,7 @@ export const articles: Article[] = [
       },
       {
         type: "p",
-        text: "The difference is what you're left holding at the end. Keep paying a builder for four years and you own nothing you can walk away with. This is exactly why we split every GoodGround project into 12 equal monthly payments instead of one large invoice: you get the predictable monthly cost without the ongoing rent, because at the end of it the finished site is genuinely yours.",
+        text: "The difference is what you're left holding at the end. Keep paying a builder for four years and you own nothing you can walk away with. This is exactly why every GoodGround project can be paid off over 12 monthly instalments instead of one large invoice: you get a predictable monthly cost without the ongoing rent, because at the end of it the finished site is genuinely yours.",
       },
 
       { type: "h2", text: "What happens when the business actually grows" },
@@ -410,7 +410,7 @@ export const articles: Article[] = [
       },
       {
         type: "p",
-        text: "This is the whole reason we split every project into twelve equal monthly payments instead of asking for one large invoice before you have seen a page. It is not a payment gimmick. It changes what you can afford to do in the year after launch, which is the year that actually decides whether the site works.",
+        text: "This is the whole reason every project can be paid off over twelve monthly instalments instead of one large invoice before you have seen a page. It is not a payment gimmick. It changes what you can afford to do in the year after launch, which is the year that actually decides whether the site works.",
       },
 
       { type: "h2", text: "8. Flying blind" },
@@ -562,7 +562,7 @@ export const articles: Article[] = [
       },
       {
         type: "p",
-        text: "This is exactly why we split every GoodGround project into twelve equal monthly payments. A website should sit in your budget like any other monthly business expense, not force you to choose between growing online and covering next month's costs. When the barrier to starting drops, the only expensive option left is standing still while your competitors get found instead of you.",
+        text: "This is exactly why every GoodGround project offers a choice in how you pay: a 50% deposit and the rest on completion, or twelve equal monthly instalments. A website can sit in your budget like any other business expense, not force you to choose between growing online and covering next month's costs. When the barrier to starting drops, the only expensive option left is standing still while your competitors get found instead of you.",
       },
 
       { type: "h2", text: "Start with the ground, not the decoration" },

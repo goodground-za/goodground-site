@@ -4,7 +4,7 @@ import { AnimatedNumber, formatRand } from "@/components/AnimatedNumber";
 import { HoverCard } from "@/components/motion-gsap/HoverCard";
 import { RevealSection, RevealStagger } from "@/components/motion-gsap/RevealSection";
 import type { SelectedConfig } from "@/components/PricingEnquiryForm";
-import { monthlyFor, packages, packagesFootnote } from "@/content/pricing";
+import { balanceFor, depositFor, monthlyInstalmentFor, packages, packagesFootnote } from "@/content/pricing";
 
 /**
  * Section 1: the four fixed packages, side by side on desktop and stacked
@@ -26,9 +26,9 @@ export function PricingPackages({ onSelectPackage }: { onSelectPackage: (config:
             Four starting points. Pick the one closest to your brief.
           </h2>
           <p className="text-ht-purple/70 mx-auto mt-5 max-w-[56ch] text-[16px] leading-[1.65]">
-            Every package is a fixed, one-time price — no surprise line items — and can be split into
-            12 equal monthly payments. Need something in between? Add to any package from the à la
-            carte menu below.
+            Every package is a fixed, one-time price — no surprise line items. Pay a 50% deposit now
+            and the rest on completion, or split it into 12 monthly instalments. Need something in
+            between? Add to any package from the à la carte menu below.
           </p>
         </RevealSection>
 
@@ -56,9 +56,15 @@ export function PricingPackages({ onSelectPackage }: { onSelectPackage: (config:
 
                 <div className="border-ht-purple/10 mt-5 border-t pt-5">
                   <AnimatedNumber value={pkg.total} className="font-ht-display text-ht-purple text-[clamp(1.75rem,3vw,2.25rem)] font-bold tabular-nums" />
-                  <p className="text-ht-purple/60 mt-1 text-[13px] font-medium">
-                    or {formatRand(monthlyFor(pkg.total))}/mo over 12 months
-                  </p>
+                  <div className="text-ht-purple/60 mt-2 space-y-1 text-[12.5px] leading-[1.4] font-medium">
+                    <p>
+                      <span className="text-ht-purple/80 font-semibold">{formatRand(depositFor(pkg.total))}</span> deposit
+                      + <span className="text-ht-purple/80 font-semibold">{formatRand(balanceFor(pkg.total))}</span> on completion
+                    </p>
+                    <p>
+                      or <span className="text-ht-purple/80 font-semibold">{formatRand(monthlyInstalmentFor(pkg.total))}</span>/mo × 12
+                    </p>
+                  </div>
                 </div>
 
                 <ul className="mt-6 flex-1 space-y-2.5">

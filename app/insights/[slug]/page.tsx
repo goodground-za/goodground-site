@@ -112,8 +112,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 Ready to be found online?
               </h2>
               <p className="mt-3 max-w-[46ch] text-[15px] leading-[1.6] text-white/90">
-                We build fast, honest websites for South African small businesses, paid over 12 equal
-                monthly payments. Have a look at{" "}
+                We build fast, honest websites for South African small businesses, with a choice of
+                how you pay for them. Have a look at{" "}
                 <Link href="/services" className="underline underline-offset-4 hover:no-underline">
                   what we do
                 </Link>

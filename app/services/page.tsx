@@ -21,7 +21,7 @@ import { site } from "@/content/site";
 export const metadata: Metadata = {
   title: "Website Development Services in South Africa",
   description:
-    "Website development, UX and design, SEO foundations, care plans, and Google & Meta Ads management. Built in-house in South Africa, payable over 12 monthly instalments.",
+    "Website development, UX and design, SEO foundations, care plans, and Google & Meta Ads management. Built in-house in South Africa — pay a 50% deposit and the rest on completion, or spread it over 12 monthly instalments.",
   alternates: { canonical: "/services" },
 };
 
@@ -47,7 +47,7 @@ export default function ServicesPage() {
       <PageHero
         eyebrow="What we do"
         title="Websites built properly. Paid for sensibly."
-        intro="We're a website development and maintenance studio. Every project we take on is designed, built, optimised for search, and supported after launch, as one connected process, not four separate line items. And every project can be split into 12 equal monthly payments."
+        intro="We're a website development and maintenance studio. Every project we take on is designed, built, optimised for search, and supported after launch, as one connected process, not four separate line items. And every project offers a choice of how you pay for it."
       >
         {/* Jump index */}
         <RevealSection delay={0.14} className="mt-8 flex justify-center">
@@ -95,14 +95,14 @@ export default function ServicesPage() {
               <div className="min-w-0 md:col-span-8">
                 <SplitWords
                   as="h2"
-                  text="However you build with us, you pay the same way."
-                  className="font-ht-display max-w-[20ch] text-[clamp(1.75rem,4vw,3rem)] leading-[1.08] font-bold text-white uppercase"
+                  text="However you build with us, you choose how you pay."
+                  className="font-ht-display max-w-[22ch] text-[clamp(1.75rem,4vw,3rem)] leading-[1.08] font-bold text-white uppercase"
                 />
                 <RevealSection delay={0.08}>
                   <p className="mt-5 max-w-[56ch] text-[16px] leading-[1.65] text-white/85">
-                    Every website project, regardless of size or scope, is quoted as one fixed price
-                    and split into 12 equal monthly payments. No large deposit, no surprise final
-                    invoice.
+                    Every website project, regardless of size or scope, is quoted as one fixed price.
+                    Pay 50% upfront and the rest on completion, or split it into 12 monthly
+                    instalments. No surprise final invoice, either way.
                   </p>
                 </RevealSection>
               </div>

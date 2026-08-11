@@ -16,7 +16,7 @@ export function HomeSchema() {
     name: site.name,
     legalName: site.legalName,
     description:
-      "Website development studio building custom, fast business websites across South Africa. Every project is one fixed price split into 12 equal monthly payments.",
+      "Website development studio building custom, fast business websites across South Africa. Every project is one fixed price, payable as a 50% deposit and the rest on completion, or over 12 monthly instalments.",
     url: site.url,
     foundingDate: site.foundingDate,
     // Serves the country, based in George: South Africa first for reach, the

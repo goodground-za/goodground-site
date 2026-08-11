@@ -1,6 +1,6 @@
 # GoodGround
 
-> GoodGround is a website development studio in South Africa. We design and build custom, fast business websites, and split every project into 12 equal monthly payments instead of one large upfront invoice. Based in George, on the Garden Route, working with small and medium businesses across South Africa.
+> GoodGround is a website development studio in South Africa. We design and build custom, fast business websites, quoted as one fixed price with a choice of how to pay it: 50% upfront and 50% on completion, or 12 equal monthly instalments. Based in George, on the Garden Route, working with small and medium businesses across South Africa.
 
 ## What we do
 
@@ -11,12 +11,13 @@
 
 ## How we price
 
-Every project is one fixed price, split into 12 equal monthly payments. It is not a subscription: after 12 payments the website is fully paid off and owned by the client. No large deposit, no surprise final invoice.
+Every project is one fixed price. Clients choose how to pay it: a 50% deposit to secure the project and the remaining 50% on completion, before handover, or 12 equal monthly instalments (the first instalment secures the booking, the remaining 11 become payable once the project is completed). Either way, it is not a subscription: once paid off, the website is fully owned by the client.
 
 ## Pages
 
-- [Home](https://www.goodground.co.za/): Website development in South Africa, paid monthly.
+- [Home](https://www.goodground.co.za/): Website development in South Africa, with a choice of payment plans.
 - [Services](https://www.goodground.co.za/services): The four services in depth, and what is included in every build.
+- [Pricing](https://www.goodground.co.za/pricing): Fixed packages and a build-your-own configurator, with both payment options broken down per price.
 - [About](https://www.goodground.co.za/about): Who GoodGround is and why the studio was founded.
 - [Start a project](https://www.goodground.co.za/start-project): Project enquiry form.
 - [Contact](https://www.goodground.co.za/contact): Get in touch.
@@ -28,4 +29,4 @@ Every project is one fixed price, split into 12 equal monthly payments. It is no
 
 - GoodGround was founded in 2026 and is based in George, Garden Route, Western Cape, South Africa.
 - Contact: hello@goodground.co.za
-- The monthly payment figures shown in any calculator on the site are illustrative estimates, not binding quotes.
+- Package prices on /pricing are fixed; à la carte totals from the Build Your Own configurator are confirmed in a firm quote before work begins.

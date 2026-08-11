@@ -14,29 +14,29 @@ export type FAQItem = {
 
 export const faq: FAQItem[] = [
   {
-    question: "How does the 12-month payment plan actually work?",
+    question: "How do the two payment options work?",
     answer:
-      "We agree on one fixed price for your project up front. No hourly billing and no scope surprises. That price is then split into 12 equal monthly payments, starting once your project begins. You always know exactly what you're paying and when.",
+      "We agree on one fixed price for your project up front. No hourly billing and no scope surprises. From there, you choose how to pay it: a 50% deposit to secure the project and the remaining 50% on completion, before handover, or 12 equal monthly instalments, where the first instalment secures your booking and the remaining 11 become payable once the project is completed. Either way, you always know exactly what you're paying and when.",
   },
   {
-    question: "Is there a large deposit before you start?",
+    question: "Is there a deposit before you start?",
     answer:
-      "No. There's no large lump-sum payment to get started. Your first monthly instalment begins the project, and the remaining 11 follow monthly until it's paid off.",
+      "It depends which option you choose. With the deposit option, yes: 50% upfront secures the project, with the balance due on completion. With the 12-month plan, your first instalment secures the booking instead, a smaller amount than a full deposit, and the remaining 11 instalments only start once the project is completed.",
   },
   {
     question: "What happens if the project scope changes partway through?",
     answer:
-      "We'll always let you know before any change affects the price. If you add scope beyond what was originally agreed, we'll quote that separately rather than silently adjusting your monthly payment.",
+      "We'll always let you know before any change affects the price. If you add scope beyond what was originally agreed, we'll quote that separately rather than silently adjusting what you've already agreed to pay.",
   },
   {
-    question: "What if I need to pause or cancel partway through the 12 months?",
+    question: "What if I need to pause or cancel partway through the project?",
     answer:
-      "The project price is fixed, and the 12 monthly payments are simply how it's spread out. If you cancel partway through, the outstanding balance of that agreed price becomes payable. The full cancellation terms are set out in our Terms and Conditions and written into the contract you sign before we start, so nothing about it catches you out later.",
+      "The project price is fixed, however you choose to pay it. If you cancel partway through, the outstanding balance of that agreed price becomes payable, whichever payment option you chose. The full cancellation terms are set out in our Terms and Conditions and written into the contract you sign before we start, so nothing about it catches you out later.",
   },
   {
     question: "Do you only build websites, or do you handle design and SEO too?",
     answer:
-      "Every website we build includes the design, UX, and SEO foundations as part of one process, so you don't need to brief a separate designer or SEO specialist. One team, one project, one monthly payment.",
+      "Every website we build includes the design, UX, and SEO foundations as part of one process, so you don't need to brief a separate designer or SEO specialist. One team, one project, one price.",
   },
   {
     question: "How long does a typical project take?",
@@ -46,7 +46,7 @@ export const faq: FAQItem[] = [
   {
     question: "What happens after my website launches?",
     answer:
-      "Launch is the start of Cultivate Growth, not the finish line. We offer ongoing Website Care Plans for updates, monitoring, and small changes, so your site keeps performing after the 12 payments are complete.",
+      "Launch is the start of Cultivate Growth, not the finish line. We offer ongoing Website Care Plans for updates, monitoring, and small changes, so your site keeps performing well after it's paid off.",
   },
   {
     question: "Do you work with businesses outside George?",

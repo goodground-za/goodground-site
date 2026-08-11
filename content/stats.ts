@@ -13,8 +13,8 @@ export type Stat = {
 };
 
 export const stats: Stat[] = [
-  { value: "12", countTo: 12, label: "Equal monthly payments, no surprises" },
-  { value: "0", countTo: 0, label: "Large upfront invoices" },
+  { value: "1", countTo: 1, label: "Fixed price, agreed upfront" },
+  { value: "2", countTo: 2, label: "Ways to pay, your choice" },
   { value: "1:1", countTo: null, label: "Dedicated designer per project, not a queue" },
   { value: "100%", countTo: 100, suffix: "%", label: "George based, no outsourcing" },
 ];

@@ -18,9 +18,9 @@ import { WhoWeBuildFor } from "@/components/sections/WhoWeBuildFor";
  * not part of the design language.
  */
 export const metadata: Metadata = {
-  title: "Website Development in South Africa | Pay Monthly | GoodGround",
+  title: "Website Development in South Africa | GoodGround",
   description:
-    "A South African studio building custom, fast business websites. Spread the cost over 12 equal monthly payments, with no large upfront bill.",
+    "A South African studio building custom, fast business websites. Pay a 50% deposit and the rest on completion, or split it over 12 monthly instalments.",
   alternates: { canonical: "/" },
 };
 

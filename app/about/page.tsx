@@ -184,8 +184,9 @@ export default function AboutPage() {
 
           <RevealSection>
             <p className="text-ht-purple/70 mt-10 max-w-[58ch] text-[16px] leading-[1.7]">
-              And every project can be paid off over 12 equal monthly instalments, so investing
-              properly in your website doesn&rsquo;t mean disrupting your cash flow.{" "}
+              And every project gives you a choice in how you pay: a 50% deposit and the rest on
+              completion, or 12 monthly instalments, so investing properly in your website
+              doesn&rsquo;t mean disrupting your cash flow.{" "}
               <Link href="/#process" className="text-ht-orange font-bold underline underline-offset-4">
                 See the full process
               </Link>{" "}

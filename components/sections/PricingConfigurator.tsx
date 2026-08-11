@@ -7,7 +7,7 @@ import { AnimatedNumber, formatRand } from "@/components/AnimatedNumber";
 import { MagneticButton } from "@/components/motion-gsap/MagneticButton";
 import { RevealSection, RevealStagger } from "@/components/motion-gsap/RevealSection";
 import type { SelectedConfig } from "@/components/PricingEnquiryForm";
-import { alaCarteCategories, alaCarteFootnote, baseBuildFee, monthlyFor, packages, type AlaCarteItem } from "@/content/pricing";
+import { alaCarteCategories, alaCarteFootnote, balanceFor, baseBuildFee, depositFor, monthlyInstalmentFor, packages, type AlaCarteItem } from "@/content/pricing";
 
 type Nudge = { type: "near"; pkg: (typeof packages)[number] } | { type: "exceeds" };
 
@@ -312,9 +312,15 @@ function SummaryPanel({
           <span className="font-ht-display text-ht-purple text-[14px] font-bold uppercase">Total</span>
           <AnimatedNumber value={total} className="font-ht-display text-ht-purple text-[clamp(1.5rem,2.6vw,2rem)] font-bold tabular-nums" />
         </div>
-        <p className="text-ht-purple/60 mt-1 text-right text-[13px] font-medium">
-          or {formatRand(monthlyFor(total))}/mo over 12 months
-        </p>
+        <div className="text-ht-purple/60 mt-2 space-y-1 text-right text-[12.5px] leading-[1.4] font-medium">
+          <p>
+            <span className="text-ht-purple/80 font-semibold">{formatRand(depositFor(total))}</span> deposit
+            + <span className="text-ht-purple/80 font-semibold">{formatRand(balanceFor(total))}</span> on completion
+          </p>
+          <p>
+            or <span className="text-ht-purple/80 font-semibold">{formatRand(monthlyInstalmentFor(total))}</span>/mo × 12
+          </p>
+        </div>
       </div>
 
       {nudge?.type === "near" ? (

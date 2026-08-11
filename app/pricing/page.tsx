@@ -7,7 +7,7 @@ import { PricingPageClient } from "@/components/PricingPageClient";
 export const metadata: Metadata = {
   title: "Pricing | Website Design Packages, South Africa",
   description:
-    "Four fixed website design packages from R8,500, or build your own from an à la carte menu. Every price splits into 12 equal monthly payments.",
+    "Four fixed website design packages from R8,500, or build your own from an à la carte menu. Pay 50% upfront and 50% on completion, or spread it over 12 monthly instalments.",
   alternates: { canonical: "/pricing" },
 };
 
@@ -19,7 +19,7 @@ export default function PricingPage() {
       <PageHero
         eyebrow="Pricing"
         title="Simple pricing, built around what you actually need."
-        intro="Four fixed packages to start fast, or build your own from our full menu. Every price on this page splits into 12 equal monthly payments, so a proper website never means a big upfront hit."
+        intro="Four fixed packages to start fast, or build your own from our full menu. Pay 50% upfront and the rest on completion, or split the total into 12 monthly instalments — your call."
       >
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Link

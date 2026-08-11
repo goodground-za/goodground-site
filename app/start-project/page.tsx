@@ -6,7 +6,7 @@ import { StartProjectForm } from "@/components/StartProjectForm";
 export const metadata: Metadata = {
   title: { absolute: "Start Your Project | GoodGround Website Development" },
   description:
-    "Start your website project with GoodGround. Answer a few quick questions and we'll come back with next steps and a monthly payment plan.",
+    "Start your website project with GoodGround. Answer a few quick questions and we'll come back with next steps and a fixed price, split however you'd like to pay it.",
   alternates: { canonical: "/start-project" },
 };
 
