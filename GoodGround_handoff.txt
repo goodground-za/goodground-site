@@ -637,3 +637,53 @@ issues, footer scallop clears correctly at all three). Pushed to main
 (c2fb128).
 
 ===============================================================================
+
+§19 — Font swap: Syne (headings) + DM Sans (body) (2026-08-12, commit 2f77157)
+
+Johandre asked to replace the site fonts with two Google Fonts: Syne for
+headings, DM Sans for body (previously Clash Display Bold, a local .otf
+file, and Inter).
+
+app/layout.tsx: swapped the localFont(ClashDisplay) + Inter() calls for
+Syne({ weight: "700" }) + DM_Sans() from next/font/google. Renamed the
+underlying CSS variables from --font-clash-display/--font-inter to
+--font-syne/--font-dm-sans in both layout.tsx and app/globals.css so the
+token names stay accurate. Only 3 files referenced those raw variable
+names (layout.tsx, globals.css, app/brand-guide/page.tsx as descriptive
+text), so this was a clean rename. The semantic tokens every component
+actually uses (--font-ht-display, --font-ht-body,
+font-ht-display/font-ht-body Tailwind classes) were untouched — no
+component files needed changes.
+
+The one non-trivial part: app/_og/card.tsx (the Satori-based OG-image
+renderer used by every opengraph-image.tsx route) needs its own
+repo-local font FILE, separate from next/font/google's browser loading,
+because Satori can't parse WOFF2 (what Google Fonts serves by default).
+Downloaded a real Syne-Bold.ttf straight from Google's CDN: curl with a
+legacy User-Agent header forces the css2 endpoint to return TTF links
+instead of WOFF2 -
+
+  curl -A "Mozilla/5.0 (Windows NT 6.1)" \
+    "https://fonts.googleapis.com/css2?family=Syne:wght@700&display=swap"
+
+- which returns a fonts.gstatic.com/.../....ttf URL to curl -o directly.
+Saved as app/_og/Syne-Bold.ttf, replacing the old ClashDisplay-Bold.otf.
+Deleted both old font files (app/_og/ClashDisplay-Bold.otf and
+public/fonts/ClashDisplay-Bold.otf) since nothing references them anymore.
+Worth remembering: this curl-with-legacy-UA trick is the fastest way to
+pull a raw TTF/OTF straight from Google Fonts for any future Satori/OG
+font needs, no GitHub-mirror hunting required.
+
+Verified via local production build + Chrome DevTools MCP:
+getComputedStyle on <h1>/<body> confirmed Syne/"DM Sans" are actually
+applied (not silently falling back to a system font), checked the
+homepage hero, /pricing's uppercase PageHero treatment, the /brand-guide
+typography section, and the OG image route itself (/opengraph-image) to
+confirm Satori renders Syne correctly end to end. All clean at desktop
+and mobile. brand-guide/page.tsx's typography section copy also updated
+to say Syne/DM Sans instead of Clash Display/Inter.
+
+npx tsc --noEmit and npx next build both clean before commit. Pushed to
+main immediately after (2f77157).
+
+===============================================================================
