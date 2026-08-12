@@ -9,9 +9,10 @@ import { join } from "node:path";
  * WhatsApp, LinkedIn and Facebook rendered as a bare text link. For a studio
  * selling web design that read as an unfinished site.
  *
- * Clash Display ships as a repo asset rather than being fetched at build
- * time, so the build has no network dependency. Satori (behind
- * ImageResponse) needs TTF, OTF, or WOFF — it cannot parse WOFF2.
+ * Syne ships as a repo asset rather than being fetched at build time, so
+ * the build has no network dependency. Satori (behind ImageResponse) needs
+ * TTF, OTF, or WOFF — it cannot parse WOFF2, which is what Google Fonts
+ * serves by default to modern browsers.
  */
 
 export const OG_SIZE = { width: 1200, height: 630 };
@@ -33,7 +34,7 @@ export async function renderOgCard({
   title: string;
 }) {
   const [font, logo] = await Promise.all([
-    readFile(join(process.cwd(), "app/_og/ClashDisplay-Bold.otf")),
+    readFile(join(process.cwd(), "app/_og/Syne-Bold.ttf")),
     // logo-footer, not logo-hero: the hero wordmark is the dark version drawn
     // on cream, and it disappears against this purple background.
     readFile(join(process.cwd(), "public/images/logo-footer.png")),
@@ -52,7 +53,7 @@ export async function renderOgCard({
           justifyContent: "space-between",
           background: PURPLE,
           padding: "72px 80px",
-          fontFamily: "ClashDisplay",
+          fontFamily: "Syne",
         }}
       >
         {/* Wordmark as an image so the logo is pixel-accurate rather than a
@@ -99,7 +100,7 @@ export async function renderOgCard({
     ),
     {
       ...OG_SIZE,
-      fonts: [{ name: "ClashDisplay", data: font, style: "normal", weight: 700 }],
+      fonts: [{ name: "Syne", data: font, style: "normal", weight: 700 }],
     },
   );
 }

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import localFont from "next/font/local";
+import { DM_Sans, Syne } from "next/font/google";
 import { Analytics } from "@/components/Analytics";
 import { Footer } from "@/components/Footer";
 import { LenisProvider } from "@/components/motion-gsap/LenisProvider";
@@ -8,19 +7,19 @@ import { Nav } from "@/components/Nav";
 import { site } from "@/content/site";
 import "./globals.css";
 
-// The site's design language (promoted from the /home-test A/B variant, now
-// the one look): Clash Display Bold for every heading, Inter for body copy.
-// Bold-only — the brief specifies a single weight, no other Clash Display
-// cut is used anywhere on the site.
-const clashDisplay = localFont({
-  src: "../public/fonts/ClashDisplay-Bold.otf",
-  variable: "--font-clash-display",
+// The site's design language (2026-08-12 font update, client-supplied
+// choice): Syne Bold for every heading, DM Sans for body copy. Bold-only —
+// matches the previous Clash Display setup's "one weight" rule, no other
+// Syne cut is used anywhere on the site.
+const syne = Syne({
+  variable: "--font-syne",
+  subsets: ["latin"],
   weight: "700",
   display: "swap",
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin"],
   display: "swap",
 });
@@ -80,7 +79,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html
       lang="en-ZA"
       data-scroll-behavior="smooth"
-      className={`${clashDisplay.variable} ${inter.variable} h-full`}
+      className={`${syne.variable} ${dmSans.variable} h-full`}
     >
       <head>
         {/*

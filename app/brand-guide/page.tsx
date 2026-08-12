@@ -271,18 +271,18 @@ export default function BrandGuidePage() {
           <div className="rounded-card bg-ht-cream shadow-soft p-6">
             <p className="font-ht-display text-ht-purple text-[13px] font-bold uppercase">Display / Headings</p>
             <p className="font-ht-display text-ht-purple mt-3 text-[32px] leading-[1.05] font-bold uppercase">
-              Clash Display
+              Syne
             </p>
             <p className="font-ht-body text-ht-purple/60 mt-2 text-[13px]">
-              Bold (700) only, the one cut used sitewide. <code className="text-[12px]">--font-ht-display</code>,
-              local file <code className="text-[12px]">ClashDisplay-Bold.otf</code>. Applied to every h1–h4,
-              buttons, nav labels, eyebrows. Letter-spacing -0.02em, <code className="text-[12px]">text-wrap:
-              balance</code> on headings.
+              Bold (700) only, the one cut used sitewide. Google Font, loaded via{" "}
+              <code className="text-[12px]">next/font/google</code>. <code className="text-[12px]">--font-ht-display</code>.
+              Applied to every h1–h4, buttons, nav labels, eyebrows. Letter-spacing -0.02em,{" "}
+              <code className="text-[12px]">text-wrap: balance</code> on headings.
             </p>
           </div>
           <div className="rounded-card bg-ht-cream shadow-soft p-6">
             <p className="font-ht-display text-ht-purple text-[13px] font-bold uppercase">Body</p>
-            <p className="font-ht-body text-ht-purple mt-3 text-[22px] leading-[1.4]">Inter</p>
+            <p className="font-ht-body text-ht-purple mt-3 text-[22px] leading-[1.4]">DM Sans</p>
             <p className="font-ht-body text-ht-purple/60 mt-2 text-[13px]">
               Google Font, variable weight. <code className="text-[12px]">--font-ht-body</code>. Applied to all
               paragraph text, form fields, captions. <code className="text-[12px]">text-wrap: pretty</code> on

@@ -50,14 +50,14 @@
   --color-ht-purple: #2e1848; /* dark section bg, footer bg, headings on cream */
   --color-ht-cream: #fbf7ec; /* base page background */
 
-  --font-ht-display: var(--font-clash-display), ui-sans-serif, system-ui, sans-serif;
-  --font-ht-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-ht-display: var(--font-syne), ui-sans-serif, system-ui, sans-serif;
+  --font-ht-body: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
 
   /* Repointed to the same fonts so any component using the generic
      font-heading/font-body tokens (inherited by h1-h4/body in the base
-     layer below) picks up Clash Display/Inter automatically. */
-  --font-heading: var(--font-clash-display), ui-sans-serif, system-ui, sans-serif;
-  --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+     layer below) picks up Syne/DM Sans automatically. */
+  --font-heading: var(--font-syne), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
 
   /* Fluid type scale, ~1.333 ratio, matching the mockup's oversized headline
      treatment. Named distinctly from font-size utilities so it never collides
@@ -88,7 +88,7 @@
     text-rendering: optimizeLegibility;
   }
 
-  /* Clash Display Bold for every heading, per the client. `text-wrap:
+  /* Syne Bold for every heading, per the client. `text-wrap:
      balance` evens out ragged headline line-lengths and kills single-word
      orphans on the last line — a small thing that reads as deliberate
      typesetting. */
