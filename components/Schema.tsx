@@ -101,7 +101,12 @@ export function HomeSchema() {
       addressCountry: site.address.country,
     },
     ...(site.email ? { email: site.email } : {}),
-    ...(site.phone ? { telephone: site.phone } : {}),
+    // `site.phone` stays null by design (it would print digits sitewide via the
+    // footer). The WhatsApp number is the real, owner-confirmed contact number,
+    // so it's what belongs in `telephone` — this is the field Google matches
+    // against the Google Business Profile for NAP consistency. It's reachable
+    // from /contact as a click-to-chat button, so it isn't hidden markup.
+    telephone: site.whatsapp.e164,
     ...(site.socials.length ? { sameAs: site.socials.map((s) => s.href) } : {}),
   };
 

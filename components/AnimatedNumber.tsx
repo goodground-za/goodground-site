@@ -21,10 +21,19 @@ export function AnimatedNumber({
   value,
   className = "",
   duration = 0.6,
+  format = formatRand,
 }: {
   value: number;
   className?: string;
   duration?: number;
+  /** Defaults to rand, so every existing pricing call site is unchanged. The
+   *  /work page's live performance readout passes seconds/bytes formatters
+   *  instead of duplicating this tween.
+   *
+   *  Pass a stable reference (a module-scope function, as every current caller
+   *  does). An inline arrow would be a new identity each render and restart the
+   *  tween, since this sits in the effect's dependencies. */
+  format?: (value: number) => string;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
   const proxyRef = useRef({ value });
@@ -41,7 +50,7 @@ export function AnimatedNumber({
         duration,
         ease: "power2.out",
         onUpdate: () => {
-          el.textContent = formatRand(proxy.value);
+          el.textContent = format(proxy.value);
         },
       });
       return () => {
@@ -50,16 +59,16 @@ export function AnimatedNumber({
     });
     mm.add("(prefers-reduced-motion: reduce)", () => {
       proxy.value = value;
-      el.textContent = formatRand(value);
+      el.textContent = format(value);
       return () => {};
     });
 
     return () => mm.revert();
-  }, [value, duration]);
+  }, [value, duration, format]);
 
   return (
     <span ref={ref} className={className}>
-      {formatRand(value)}
+      {format(value)}
     </span>
   );
 }

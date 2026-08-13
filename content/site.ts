@@ -25,7 +25,26 @@ export const site = {
     country: "ZA",
   },
   areaServed: "George, Garden Route, Western Cape, South Africa",
-  phone: null as string | null, // TODO: client to confirm
+  /**
+   * Stays `null` ON PURPOSE, even though a number now exists (see `whatsapp`
+   * below). This field is the *displayable* phone number: `Footer.tsx` renders
+   * a `tel:` link whenever it's truthy. Setting it would print the digits as
+   * text on every page, which is exactly what the owner asked to avoid, and
+   * exactly what number-harvesting bots scrape. Leave it null.
+   */
+  phone: null as string | null,
+  /**
+   * Confirmed by the owner 2026-08-13. Deliberately reachable only as a
+   * click-to-chat link, never rendered as digits: `/contact` shows a
+   * "WhatsApp" button and nothing else, and `e164` feeds `telephone` in the
+   * LocalBusiness schema so Google can match the site against the Google
+   * Business Profile (NAP consistency is a real local-ranking factor).
+   * Email is, and should stay, the primary channel everywhere.
+   */
+  whatsapp: {
+    e164: "+27670104988",
+    link: "https://wa.me/27670104988",
+  },
   // Taken from the client's own footer artwork.
   email: "hello@goodground.co.za",
   // Confirmed by the founder 2026-07-25.
