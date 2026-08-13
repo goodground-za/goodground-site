@@ -154,8 +154,8 @@ function AccordionRow({
             </p>
           ) : null}
 
-          {service.cta ? (
-            <div className="mt-6">
+          <div className="mt-6 flex flex-wrap items-center gap-5">
+            {service.cta ? (
               <MagneticButton>
                 <Link
                   href={service.cta.href}
@@ -164,8 +164,16 @@ function AccordionRow({
                   {service.cta.label}
                 </Link>
               </MagneticButton>
-            </div>
-          ) : null}
+            ) : null}
+            {service.relatedLink ? (
+              <Link
+                href={service.relatedLink.href}
+                className="text-ht-orange text-[14px] font-bold underline underline-offset-4 hover:no-underline"
+              >
+                {service.relatedLink.label} →
+              </Link>
+            ) : null}
+          </div>
         </div>
       </div>
     </div>

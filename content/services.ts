@@ -24,6 +24,8 @@ export type Service = {
   /** UX & SEO are bundled into every build, not sold standalone. */
   includedInEveryBuild?: boolean;
   cta?: { label: string; href: string };
+  /** Points to a dedicated /services/<slug> landing page with more depth (content/servicePages.ts). */
+  relatedLink?: { label: string; href: string };
 };
 
 export const services: Service[] = [
@@ -42,6 +44,7 @@ export const services: Service[] = [
     paymentLine:
       "Pay a 50% deposit and the rest on completion, or spread it across 12 monthly instalments — your choice.",
     cta: { label: "Start Your Project", href: "/start-project" },
+    relatedLink: { label: "Redesigning an existing site instead? See our website redesign service", href: "/services/website-redesign" },
   },
   {
     slug: "ux-design",
@@ -55,6 +58,7 @@ export const services: Service[] = [
     outcome:
       "A site people can actually use. Visitors find what they need, and you get more enquiries as a result.",
     includedInEveryBuild: true,
+    relatedLink: { label: "Full UX & Design details", href: "/services/ux-design" },
   },
   {
     slug: "seo-foundations",
@@ -68,6 +72,7 @@ export const services: Service[] = [
     outcome:
       "A website that starts working in search results from launch, instead of needing a second project six months later to “fix the SEO”.",
     includedInEveryBuild: true,
+    relatedLink: { label: "Full SEO details", href: "/services/seo" },
   },
   {
     slug: "care-plans",
@@ -81,6 +86,7 @@ export const services: Service[] = [
     outcome:
       "A website that keeps performing months and years after launch, backed by a team that already knows exactly how it was built.",
     cta: { label: "Talk to Us About a Care Plan", href: "/contact" },
+    relatedLink: { label: "Full care plan details", href: "/services/website-care-plans" },
   },
   {
     slug: "google-ads",
@@ -95,6 +101,7 @@ export const services: Service[] = [
     outcome:
       "Qualified enquiries you can see and measure, a cost-per-lead you actually understand, and a tap you can turn up when you're quiet and down when you're full.",
     cta: { label: "Start Your Project", href: "/start-project" },
+    relatedLink: { label: "Full Google Ads details", href: "/services/google-ads" },
   },
   {
     slug: "meta-ads",
@@ -109,5 +116,6 @@ export const services: Service[] = [
     outcome:
       "A brand people recognise before they need you, a steady stream of interest from the right area, and warm leads that already know who you are by the time they get in touch.",
     cta: { label: "Start Your Project", href: "/start-project" },
+    relatedLink: { label: "Full Meta Ads details", href: "/services/meta-ads" },
   },
 ];

@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { articles } from "@/content/articles";
 import { industryPages } from "@/content/industryPages";
+import { servicePages } from "@/content/servicePages";
 import { site } from "@/content/site";
 
 /**
@@ -13,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "", priority: 1 },
     { path: "/pricing", priority: 0.95 },
     { path: "/services", priority: 0.9 },
+    ...servicePages.map(({ slug }) => ({ path: `/services/${slug}`, priority: 0.8 })),
     ...industryPages.map(({ slug }) => ({ path: `/services/${slug}`, priority: 0.75 })),
     { path: "/start-project", priority: 0.8 },
     { path: "/about", priority: 0.8 },
