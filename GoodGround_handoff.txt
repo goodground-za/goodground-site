@@ -1,17 +1,22 @@
 ===============================================================================
 GOODGROUND — CONTEXT HANDOFF
-Last updated: 2026-08-11 (added /pricing page: 4 fixed packages + Build Your
-Own configurator, live on production. Nav restructured — Pricing removed
-from top nav, footer-only + contextual links. Same day: replaced the old
-single "12 equal monthly payments" promise sitewide with two real payment
-options (50% deposit, or 12-month plan); added quantity steppers + price
-updates to the Build Your Own menu; added share buttons to every blog
-article; published a new blog article, "Website vs Facebook page" (see
-section 3c). See section 2, 3b and 3c below for full detail. EVERYTHING IN
-SECTION 8 (historical archive, pre-2026-08-06) IS SUPERSEDED for
-design-system specifics — palette, layout, component names all changed in
-the 2026-08-06 site-wide redesign. Business facts in section 8 may also be
-stale; section 1/6 below are the corrected current facts.)
+Last updated: 2026-08-13. Seven commits landed this day, all live:
+  4921a1b  positioning fix (hero H1) + FAQ/Service schema + 6 INDUSTRY pages
+  9dd9407  blog article: "How much does a website cost in South Africa?"
+  e133457  6 dedicated SERVICE pages
+  f7e1fe3  per-page OG/Twitter cards, FAQ de-dup, meta keywords + newsletter
+           removed
+  751f318  sitewide WCAG AA contrast fixes (accessibility 96 -> 100)
+  4864afc  category filtering on /insights
+  24bfd6c  /work rebuilt as a project list, led by the live self-measuring
+           panel; phone number added as WhatsApp-only
+See §20-§26 in section 8 for detail on each. Section 2 now carries the
+CONTRAST RULES, which are load-bearing and were failing in production until
+751f318 — read them before touching any colour.
+EVERYTHING IN SECTION 8 BELOW §16 (historical archive, pre-2026-08-06) IS
+SUPERSEDED for design-system specifics — palette, layout, component names
+all changed in the 2026-08-06 site-wide redesign. Business facts there may
+also be stale; sections 1/6 below are the corrected current facts.
 ===============================================================================
 
 0. READ FIRST
@@ -76,13 +81,33 @@ longer exists — it was promoted, not kept as a separate page).
 
 Palette (Tailwind v4 @theme tokens, app/globals.css):
   --color-ht-purple  #2e1848   dark sections, footer, PageHero band
-  --color-ht-orange  #fe431a   primary actions / CTAs
+  --color-ht-orange  #fe431a   primary action FILLS / CTAs
   --color-ht-pink    #fe9dd2   accents, card rings
-  --color-ht-crimson #ac3026   shadow depth under orange
+  --color-ht-crimson #ac3026   accent TEXT on light surfaces; hover depth
   --color-ht-cream   #fbf7ec   base page background
+  --color-ink        #010602   TEXT on orange fills
 Radii: --radius-block 40px, --radius-card 24px, --radius-pill 999px
-Fonts: Clash Display Bold (`font-ht-display` — headings/buttons/labels only)
-  + Inter (`font-ht-body` — body copy). Loaded once in app/layout.tsx.
+Fonts: Syne Bold (`font-ht-display` — headings/buttons/labels only) + DM Sans
+  (`font-ht-body` — body copy). Loaded once in app/layout.tsx via
+  next/font/google. (Superseded Clash Display + Inter on 2026-08-12, §19.)
+
+*** CONTRAST RULES — LOAD-BEARING, READ BEFORE TOUCHING ANY COLOUR ***
+ht-orange is a bright fill and fails WCAG AA easily. These four rules were
+all being violated in production until 2026-08-13 (§24), which held
+accessibility at 96. THE SURFACE DECIDES THE TOKEN:
+  text on an ORANGE fill        -> text-ink          (5.86:1)  NOT white (3.48)
+  accent text on CREAM/WHITE    -> text-ht-crimson   (6.08:1)  NOT orange (3.25)
+  accent text on PURPLE         -> text-ht-orange    (4.50:1)  NOT crimson (2.41)
+  muted body text bottoms out at text-ht-purple/70   (5.78:1)  NOT /60 (4.22)
+Two deliberate exceptions, do not "fix" them:
+  - Display text >= 18.66px bold MAY stay white on orange: WCAG's large-text
+    bar is 3:1 and 3.48 clears it. CTABand's headline and the article CTA h2
+    rely on this.
+  - Button.tsx `outline` variant keeps ORANGE text because it has a
+    transparent fill and only ships on the dark cookie banner. Crimson there
+    would be 2.41:1. This one bit during the sweep and Lighthouse caught it.
+If you bulk-change these colours: sed the tree, then RE-RUN LIGHTHOUSE, and
+expect one or two dark-surface exceptions to need reverting.
 
 Motion: GSAP + Lenis smooth-scroll is the primary system sitewide, in
 `components/motion-gsap/*`:
@@ -381,18 +406,34 @@ present, all 4 internal links resolve, heading/date/category correct).
 
 4. OPEN ITEMS
 ---------------
-  1. **Pricing FAQ sign-off** — the 5 Q&As in `pricingFaq` (content/pricing.ts)
-     are a first-pass DRAFT written by Claude, grounded in already-confirmed
-     facts but not yet reviewed/approved by Johandre. Follow up on this.
-  2. Everything in the OLD section 5 of this file (now folded into section 8
+  0. **CLIENT PROJECTS FOR /work** — Johandre said 2026-08-13 he'd be adding
+     a few real projects "in the next week". /work is now a project list
+     driven by `content/projects.ts`; adding one is a content change only,
+     no page code. First entry gets the big feature card, the rest fill the
+     grid. Fill in every field and only add a project once it is genuinely
+     live. THIS IS THE NEXT EXPECTED PIECE OF WORK.
+  1. ~~Pricing FAQ sign-off~~ RESOLVED 2026-08-13 (§24). The 5 `pricingFaq`
+     answers were rewritten, em dashes removed, and the DRAFT markers
+     cleared. Three other DRAFT-flagged items that were also live in
+     production (homepage "Creative Strategy" card, two ServiceCarousel
+     cards) were rewritten in the same pass. No DRAFT markers remain in
+     content/ — `grep -rn "DRAFT" content/` should stay empty.
+  2. **Google Business Profile / NAP check (needs Johandre)** — the phone
+     number now feeds `telephone` in LocalBusiness schema. That only helps
+     local ranking if GBP lists the IDENTICAL number in the same format
+     (+27 67 010 4988). Mismatched NAP between site and GBP actively hurts.
+     Also still outstanding: confirm the sitemap is submitted in Search
+     Console and check the Coverage report — needs his login, cannot be
+     done from a session.
+  3. Everything in the OLD section 5 of this file (now folded into section 8
      as history) listed several founder-level open decisions from earlier
      sessions (named article author, /work case study, phone number, GBP,
-     real photography, social URLs). STATUS UNKNOWN as of this update — a
+     real photography, social URLs). The phone number and /work case study
+     are now resolved (see above and §26). The rest: STATUS UNKNOWN — a
      fresh session should re-check current state (content/site.ts,
-     content/articles.ts, app/work/page.tsx) rather than assume any of
-     those are still open OR still resolved; this file was not kept
+     content/articles.ts) rather than assume. This file was not kept
      continuously updated between 2026-07-30 and 2026-08-06+, so there is a
-     real gap in the record.
+     real gap in the record there.
   3. **Favicon/app-icon refresh (optional, not urgent)** — app/icon.png,
      apple-icon.png, public/favicon.ico are a neutral black-circle/grey "gg"
      mark, not colored to either the old or the new palette. They don't
@@ -437,8 +478,26 @@ Business:
   Email:               hello@goodground.co.za
   Location:            George, Garden Route, Western Cape, South Africa
   Socials:             Facebook + Instagram, both live (see content/site.ts)
-  Phone:               still null/TODO as of last check — verify current
-                        state in content/site.ts before assuming
+  Phone:               067 010 4988 / +27670104988 (confirmed by Johandre
+                        2026-08-13, WhatsApp-capable).
+                        *** IT MUST NOT BE DISPLAYED. *** His explicit
+                        instruction: steer people to email, he does not want
+                        random calls/WhatsApps. Implementation:
+                          - `site.phone` STAYS null ON PURPOSE. Footer.tsx
+                            renders a tel: link from it, so setting it would
+                            print the digits on every page. Do not "fix" it.
+                          - the number lives in `site.whatsapp` instead
+                            ({ e164, link }) and is used in exactly two
+                            places: a click-to-chat button on /contact, and
+                            `telephone` in the LocalBusiness JSON-LD.
+                          - verified: zero visible digits and zero tel:
+                            links sitewide.
+                        HONEST CAVEAT: it IS present in the page source, in
+                        the JSON-LD block, and in content/site.ts in this
+                        PUBLIC repo. That is the unavoidable cost of the
+                        local-SEO benefit. The protection is against casual
+                        harvesting of visible text and against one-tap
+                        dialling, not against a determined scraper.
 
 Technical:
   GA4 ID:            G-T4JF7EJLW9 (env var NEXT_PUBLIC_GA_ID, Vercel
@@ -687,3 +746,244 @@ npx tsc --noEmit and npx next build both clean before commit. Pushed to
 main immediately after (2f77157).
 
 ===============================================================================
+
+
+§20 — Positioning fix + FAQ/Service schema + 6 INDUSTRY pages
+       (2026-08-13, commit 4921a1b)
+------------------------------------------------------------------------
+An SEO review flagged four gaps.
+
+  1. POSITIONING MISMATCH. Hero.tsx's H1 said "an AI-first digital agency"
+     while every meta title, schema block and other page said "website
+     development studio". Rewritten to lead with the studio wording and keep
+     "AI-accelerated" as a differentiator inside the sentence. Grepped the
+     whole app/ + components/ tree first: it was the only occurrence.
+     STILL OUTSTANDING FOR JOHANDRE: update the Google Business Profile
+     primary category and directory listings to match ("Website Designer" /
+     "Web Developer"), and keep "AI-first" as on-page copy only, never as
+     the GBP category.
+  2. FAQPage schema existed only on the homepage. Added a reusable
+     FAQSchema({items, id}) to components/Schema.tsx (the inline logic was
+     extracted into a shared faqPageNode() helper so HomeSchema reuses it)
+     and wired into /services, /faq and /pricing. /pricing uses its own
+     separate pricingFaq set. RULE: schema must match what is VISIBLY
+     rendered on that page, so /services marks up exactly the 4 questions it
+     shows, not the whole list.
+  3. Service schema: ServicesSchema({services}) maps content/services.ts
+     into six Service nodes (@id = ${url}/services#slug). The existing
+     ItemList now references those @ids instead of duplicating the data.
+  4. SIX INDUSTRY PAGES at /services/<slug>: trades-and-home-services,
+     hospitality-and-food, health-and-wellness, professional-and-consulting,
+     retail-and-small-brands, non-profits-and-community. These are AUDIENCE
+     segments (who we build for), distinct from the SERVICE pages in §22.
+     New content/industryPages.ts holds per-segment copy; one shared
+     components/sections/IndustryPageTemplate.tsx renders them; each route
+     file is just metadata + the template.
+     FAQAccordion.tsx was generalised to accept items/heading props
+     (defaults preserve the existing homepage, /services and /faq behaviour
+     exactly) so these reuse it rather than adding a third near-duplicate
+     accordion.
+     THE ACTUAL FIX for "named but never linked": WhoWeBuildFor.tsx's cards
+     are now wrapped in Link (an href was added to each Industry entry).
+     They were named on the homepage and linked nowhere.
+     No client names, results or track record invented anywhere.
+
+
+§21 — Blog article: "How much does a website cost in South Africa?"
+       (2026-08-13, commit 9dd9407)
+------------------------------------------------------------------------
+~1,650 words, prepended to content/articles.ts (newest-first, so it is also
+the featured post on /insights). Written to the Ogilvy-style brief Johandre
+gave for the previous article (strict active voice, ruthless specificity, no
+filler) and run through the humanizer checklist before shipping.
+Real numbers throughout: the four packages R8,500-R32,000, the R6,000 Base
+Build Fee, both payment options, and honest DIY-builder/freelancer/agency
+market ranges framed as GoodGround's own estimate rather than attributed to
+an invented source. Links into /pricing#packages and /pricing#build-your-own
+(the configurator) plus /services#care-plans.
+New category "Pricing" — categories are freeform strings in this codebase,
+and as of §25 they now drive the /insights filter automatically.
+NOTE: there is no ts-node here, so word count was verified with a throwaway
+node script parsing the text/items fields between this entry's slug and the
+next one's.
+
+
+§22 — 6 dedicated SERVICE pages (2026-08-13, commit e133457)
+------------------------------------------------------------------------
+Distinct from §20's industry pages: these target individual SERVICES by
+name. /services/website-care-plans, /google-ads, /meta-ads,
+/website-redesign, /seo, /ux-design.
+GOTCHA: the URL slugs do NOT all match content/services.ts slugs
+(website-care-plans vs care-plans, seo vs seo-foundations). New
+content/servicePages.ts has its own slug plus an optional serviceRef
+pointing back at the services.ts slug, used for a "see it alongside every
+other service" anchor into /services#<serviceRef>.
+Rendered by components/sections/ServicePageTemplate.tsx, same thin-page
+pattern as the industry template.
+WEBSITE REDESIGN has no content/services.ts entry on purpose — it is the
+website-development service applied to an existing site, not a separate
+package, so it is kept out of the /services accordion but still gets its own
+page, Service schema and sitemap entry.
+Cross-linking: an optional relatedLink field was added to the Service type
+in content/services.ts and populated for all six accordion rows;
+ServiceAccordion.tsx renders it next to the CTA. website-development's
+points at /services/website-redesign as the natural cross-sell.
+SCOPE CONFIRMED WITH JOHANDRE BEFORE WRITING: GoodGround only maintains
+sites it built, NOT other people's WordPress installs, even though
+"WordPress maintenance South Africa" is real search demand. The care plans
+page mentions WordPress as a contrast ("we build differently, no plugin
+ecosystem to patch") rather than claiming to service WP sites. If asked to
+write service or industry copy again, CHECK ACTUAL SCOPE before claiming a
+capability just because it targets a good keyword.
+
+
+§23 — Per-page OG/Twitter cards, FAQ de-dup, meta keywords + newsletter
+       (2026-08-13, commit f7e1fe3)
+------------------------------------------------------------------------
+  - EVERY inner page's social share preview was showing the HOMEPAGE's title
+    and description. Next.js does not derive openGraph/twitter from a page's
+    own title/description: a page without its own openGraph silently
+    inherits the root layout's static one. Confirmed live with curl before
+    fixing. Fixed with lib/metadata.ts (pageSocialMeta({title, description,
+    path}), which resolves the page's real effective title, unwrapping
+    {absolute} or appending the layout's "%s | GoodGround" template) applied
+    to all 21 page templates. The article template already had per-article
+    openGraph but was missing twitter, so X shares specifically still leaked
+    the homepage card.
+  - Caught in passing: /faq's title was a plain string with "| GoodGround"
+    hand-typed in, which the layout template would then append a SECOND time.
+    Converted to {absolute}. Same pre-emptively on /pricing and /services.
+  - FAQ DUPLICATE CONTENT: home and /services both rendered faq.slice(0,4),
+    the same 4 questions verbatim on two indexed URLs, producing overlapping
+    FAQPage schema. /services now shows a different, page-relevant slice
+    selected BY QUESTION TEXT rather than array index, so reordering
+    content/faq.ts cannot silently break it.
+  - Removed the meta keywords tag from app/layout.tsx (ignored by search
+    engines since the 2010s). NOTE the keywords field inside the article
+    BlogPosting JSON-LD is a legitimate schema.org property, not an HTML meta
+    tag — it was correctly left alone.
+  - Removed the footer newsletter form (components/NewsletterForm.tsx
+    deleted). It was intentionally disabled with no email list connected.
+    Johandre chose "remove" over "wire it up" when asked. Re-add once there
+    is an actual ESP.
+  - Confirmed /sitemap.xml is well-formed (correct declaration, correct
+    application/xml content-type, correct namespace, balanced tags). Next's
+    MetadataRoute.Sitemap generates this safely; this was a confirmation, not
+    a fix.
+
+
+§24 — SITEWIDE ACCESSIBILITY AUDIT: contrast 96 -> 100
+       (2026-08-13, commit 751f318)
+------------------------------------------------------------------------
+Johandre asked for a full pass "from a text, design, motion, transition and
+SEO perspective". Audited the RUNNING PRODUCTION BUILD with Lighthouse and
+performance traces rather than reading code, which is what surfaced the real
+issues.
+CONCLUSION UP FRONT: the site did not need a redesign. Baseline was already
+LCP 510ms, CLS 0.00, SEO 100, Best Practices 100, zero console errors. The
+changes were corrective.
+The one real problem was three systemic WCAG AA contrast failures. The rules
+that came out of it now live in SECTION 2 above — read them there, they are
+the durable output of this work.
+Also fixed an h1 -> h3 skip on /services (ServiceAccordion rows are h3 and
+that page had no section heading above them; the homepage never showed it
+because WhatWeBuild supplies its own h2). Added "Everything we build, in
+detail."
+Result: accessibility 100 on homepage, /services, /pricing, an article, an
+industry page and /start-project.
+Other fixes: replaced Tailwind's animate-bounce on the hero scroll cue with
+a custom scroll-cue keyframe (bounce easing is banned by the project's own
+design skill). NOTE Tailwind v4 puts -translate-x-1/2 on the standalone
+translate property, so a keyframe animating transform composes with it
+rather than clobbering the centring — verified, offset was -0.1px.
+
+*** ROUTE TRANSITIONS: BUILT, MEASURED, REVERTED. DO NOT RE-ADD BLINDLY. ***
+An app/template.tsx cross-page fade was built (opacity-only on purpose,
+because /pricing's mobile summary bar is position:fixed inside the page tree
+and a transform on the wrapper would make it a containing block). Then
+traced: homepage LCP went 640ms -> 1086-1200ms across repeated runs, because
+a wrapper animating from opacity 0 stops Chrome counting the hero as
+painted. Doubling the headline metric for a decorative fade is a bad trade
+on a site whose pitch is speed. Backed out; reasoning is recorded in
+globals.css.
+If revisited: the animation must be suppressed on FIRST LOAD, and note that
+template.tsx REMOUNTS on every navigation, so a useRef "is first render"
+guard inside it always reads true. The state has to live in layout.tsx.
+
+PRODUCT.md WAS BADLY STALE and has been rewritten. It was still describing
+the pre-2026-08-06 cream/forest-green palette, Sora + Inter typography and
+the retired single "12 monthly payments" pitch. Since /impeccable and every
+AI session load it as ground truth, auditing against it blindly would have
+flagged the entire live design as off-brand. CHECK PRODUCT.md AGAINST THE
+CODE BEFORE TRUSTING IT.
+
+
+§25 — Category filtering on /insights (2026-08-13, commit 4864afc)
+------------------------------------------------------------------------
+Filter pills (All / Websites / Growth / Pricing) with per-category counts,
+derived from the articles themselves so a new category appears
+automatically. New components/InsightsList.tsx (client) plus a thinned
+app/insights/page.tsx.
+SEO CONSTRAINT: filtering is client-side and the DEFAULT STATE RENDERS EVERY
+ARTICLE, so the HTML a crawler receives still contains the full list. No
+article sits behind an interaction. Verified by curling the server HTML.
+PAYLOAD: the page passes a trimmed ArticleSummary shape, not articles
+straight through — the full array would serialise every article's body
+blocks into the RSC payload for a listing that shows only titles and
+excerpts.
+The featured card shows only on the unfiltered list, where "newest" means
+something.
+BUG FOUND AND FIXED DURING BUILD: the scroll-reveal sets children to
+opacity 0 and only tweens them back when the container scrolls into view.
+Correct on first load, WRONG for filtering — clicking "All" pushed results
+below the fold where they sat invisible, so the click looked like it did
+nothing. Results now skip the reveal once the visitor has filtered
+(hasFiltered state swaps the wrapper). Verified across all five transitions
+including the round trip back to All: zero invisible cards, and the
+first-load animation still runs.
+44px tap targets, group labelled, aria-pressed, aria-live result count.
+
+
+§26 — /work rebuilt as a project list + the live self-measuring panel
+       (2026-08-13, commit 24bfd6c)
+------------------------------------------------------------------------
+/work was an apology sitting in the main nav ("case studies, coming soon"),
+which is the page a buyer opens to answer "can these people actually build?".
+Now a real project list driven by content/projects.ts — see OPEN ITEM 0,
+Johandre is adding real projects within the week and that is a content-only
+change.
+PROJECT 01 is the studio's own site, and instead of a screenshot it renders
+components/LiveMetrics.tsx: a readout taken from the VISITOR'S OWN BROWSER
+via the Performance APIs (LCP, CLS, TTFB, page weight), graded against
+Google's published thresholds. Nothing is hard-coded or fetched from us; a
+visitor can verify every number in their own devtools. The pitch is "we'd
+rather be tested than believed", which is the honest answer for a studio
+with no handed-over client work yet.
+
+THREE BUGS CAUGHT BY TESTING, ALL INSTRUCTIVE — do not reintroduce:
+  1. CLS IS NOT THE SUM OF EVERY SHIFT. That is the obvious-looking and
+     wrong implementation. Google scores the largest SESSION WINDOW (a run
+     of shifts each within 1s of the previous and 5s of the first). The
+     naive sum reported 0.47 on a page Chrome's own trace scored 0.00,
+     because a browser resize counted. The panel built to vouch for the site
+     was libelling it. Now implements the real session-window algorithm.
+  2. HYDRATION MISMATCH. Tiles were rendered conditionally on
+     PerformanceObserver support, which is false on the server and true in
+     Chrome: three tiles server-side, four after hydration. React error #418,
+     Best Practices dropped to 96, and a tile appearing from nowhere would
+     itself shift layout. Everything is now derived from result state (null
+     on both server and first client render) and NEVER from calling
+     supports() during render.
+  3. FALSE GOOGLE CLAIM. Where a browser does not report LCP (Safari,
+     Firefox, and any page Chrome loaded backgrounded) the panel falls back
+     to DOMContentLoaded — but was still captioned "Google rates under 2.5s
+     as good". That threshold is defined for LCP specifically. The fallback
+     now says the browser does not report it and drops the attribution.
+THE PANEL MUST NOT SHIFT THE PAGE IT GRADES: every value slot reserves its
+height and the tile count is fixed. Verified at 0 shift while populating.
+components/AnimatedNumber.tsx gained an optional format prop (defaults to
+rand, so all pricing call sites are untouched) rather than adding a second
+count-up. Pass a STABLE function reference — it is in the effect deps, so an
+inline arrow would restart the tween every render.
+Phone and WhatsApp work landed in this same commit — see section 6.
+Lighthouse on /work: 100 accessibility, best practices, SEO.
