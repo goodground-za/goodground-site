@@ -33,15 +33,14 @@ export function WhoWeBuildFor() {
 
         <RevealStagger className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {industries.map((industry) => (
-            <HoverCard
-              key={industry.title}
-              className="bg-ht-cream text-ht-purple rounded-card shadow-[0_14px_0_0_var(--color-ht-purple)] p-6"
-            >
-              <h3 className="font-ht-display text-[16px] font-bold uppercase">{industry.title}</h3>
-              <p className="font-ht-body mt-2.5 text-[14px] leading-[1.6] text-ht-purple/75">
-                {industry.description}
-              </p>
-            </HoverCard>
+            <Link key={industry.title} href={industry.href} className="block">
+              <HoverCard className="bg-ht-cream text-ht-purple rounded-card shadow-[0_14px_0_0_var(--color-ht-purple)] h-full p-6">
+                <h3 className="font-ht-display text-[16px] font-bold uppercase">{industry.title}</h3>
+                <p className="font-ht-body mt-2.5 text-[14px] leading-[1.6] text-ht-purple/75">
+                  {industry.description}
+                </p>
+              </HoverCard>
+            </Link>
           ))}
         </RevealStagger>
 

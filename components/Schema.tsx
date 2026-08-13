@@ -1,5 +1,67 @@
 import { faq } from "@/content/faq";
 import { site } from "@/content/site";
+import type { Service } from "@/content/services";
+
+/**
+ * Shared FAQPage emitter (dev brief §8) — one page can render several FAQ
+ * sections with different question sets (sitewide, pricing-specific,
+ * industry-specific), so this takes whatever list is actually visible on
+ * that page rather than being hard-wired to content/faq.ts. Only answered
+ * items enter the schema; unanswered ones would otherwise ship "coming
+ * soon" as a rich result. `id` keeps multiple FAQPage nodes on the same
+ * page (or across pages sharing a @graph) from colliding on @id.
+ */
+function faqPageNode(items: { question: string; answer: string | null }[], id: string) {
+  const answered = items.filter((item) => item.answer !== null);
+  if (!answered.length) return null;
+
+  return {
+    "@type": "FAQPage",
+    "@id": `${site.url}/#${id}`,
+    mainEntity: answered.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: { "@type": "Answer", text: item.answer },
+    })),
+  };
+}
+
+export function FAQSchema({ items, id }: { items: { question: string; answer: string | null }[]; id: string }) {
+  const node = faqPageNode(items, id);
+  if (!node) return null;
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", ...node }) }}
+    />
+  );
+}
+
+/**
+ * Service schema for content/services.ts (dev brief §8 follow-up: the six
+ * services were described in prose but never marked up). description
+ * composes subheading + outcome since Service has no dedicated field for
+ * either alone.
+ */
+export function ServicesSchema({ services }: { services: Service[] }) {
+  const graph = services.map((s) => ({
+    "@type": "Service",
+    "@id": `${site.url}/services#${s.slug}`,
+    name: s.title,
+    description: `${s.subheading} ${s.outcome}`,
+    provider: { "@id": `${site.url}/#organization` },
+    areaServed: { "@type": "Country", name: "South Africa" },
+    url: `${site.url}/services#${s.slug}`,
+  }));
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@graph": graph }) }}
+    />
+  );
+}
 
 /**
  * Dev brief §8. NAP fields that the client has not confirmed are omitted rather
@@ -34,7 +96,7 @@ export function HomeSchema() {
     ...(site.socials.length ? { sameAs: site.socials.map((s) => s.href) } : {}),
   };
 
-  const answered = faq.filter((item) => item.answer !== null);
+  const faqNode = faqPageNode(faq, "faq");
 
   const graph = [
     business,
@@ -45,19 +107,7 @@ export function HomeSchema() {
       name: site.name,
       publisher: { "@id": `${site.url}/#organization` },
     },
-    ...(answered.length
-      ? [
-          {
-            "@type": "FAQPage",
-            "@id": `${site.url}/#faq`,
-            mainEntity: answered.map((item) => ({
-              "@type": "Question",
-              name: item.question,
-              acceptedAnswer: { "@type": "Answer", text: item.answer },
-            })),
-          },
-        ]
-      : []),
+    ...(faqNode ? [faqNode] : []),
   ];
 
   return (

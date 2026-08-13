@@ -8,25 +8,43 @@ import { RevealSection, RevealStagger } from "@/components/motion-gsap/RevealSec
 
 /**
  * Promoted from the approved /home-test variant's FAQAccordion — now the
- * site's only FAQ component, used both as the homepage's abbreviated
- * preview (`limit={4}`) and as the full list on /faq (no limit). The
- * "All Questions" link only shows when the list has actually been
- * truncated, so /faq itself doesn't link to a shorter version of itself.
+ * site's shared FAQ component. Defaults to the sitewide content/faq.ts list
+ * (homepage's abbreviated `limit={4}` preview, /faq's full list), but also
+ * accepts its own `items`/`heading`/`moreHref` so industry pages can reuse
+ * the same accordion mechanics with segment-specific questions instead of a
+ * near-duplicate component. The "All Questions"-style link only shows when
+ * the list has actually been truncated, so a page never links to a shorter
+ * version of itself.
  */
-export function FAQAccordion({ limit, className = "" }: { limit?: number; className?: string } = {}) {
+export function FAQAccordion({
+  items,
+  limit,
+  heading = "Everything you need to know before you start.",
+  moreHref = "/faq",
+  moreLabel = "All Questions",
+  className = "",
+}: {
+  items?: FAQItem[];
+  limit?: number;
+  heading?: string;
+  moreHref?: string;
+  moreLabel?: string;
+  className?: string;
+} = {}) {
   const [open, setOpen] = useState<number | null>(null);
-  const items = limit ? faq.slice(0, limit) : faq;
-  const truncated = limit ? faq.length > limit : false;
+  const source = items ?? faq;
+  const visible = limit ? source.slice(0, limit) : source;
+  const truncated = limit ? source.length > limit : false;
 
   return (
     <section className={`bg-ht-pink overflow-hidden rounded-[40px] px-6 py-20 sm:rounded-[56px] sm:px-10 md:py-28 ${className}`}>
       <RevealSection className="mx-auto max-w-[1600px]">
         <h2 className="font-ht-display text-ht-purple text-center text-[clamp(2rem,4.5vw,3.5rem)] font-bold uppercase">
-          Everything you need to know before you start.
+          {heading}
         </h2>
 
         <RevealStagger className="mx-auto mt-12 max-w-[1000px] space-y-5" y={16}>
-          {items.map((item, i) => (
+          {visible.map((item, i) => (
             <FAQRow key={item.question} item={item} isOpen={open === i} onToggle={() => setOpen(open === i ? null : i)} />
           ))}
         </RevealStagger>
@@ -34,10 +52,10 @@ export function FAQAccordion({ limit, className = "" }: { limit?: number; classN
         {truncated ? (
           <div className="mt-10 flex justify-center">
             <Link
-              href="/faq"
+              href={moreHref}
               className="font-ht-display bg-white text-ht-purple rounded-pill inline-flex items-center gap-2 px-6 py-3 text-[13px] font-bold tracking-wide uppercase transition-transform duration-200 hover:scale-[1.03]"
             >
-              All Questions
+              {moreLabel}
               <svg viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M7 17 17 7M8 7h9v9" />
               </svg>

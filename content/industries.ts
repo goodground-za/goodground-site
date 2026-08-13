@@ -11,6 +11,8 @@ export type Industry = {
   title: string;
   description: string;
   icon: "trades" | "health" | "hospitality" | "retail" | "nonprofit" | "professional";
+  /** Links each card to its dedicated /services/<slug> page (content/industryPages.ts). */
+  href: string;
 };
 
 export const industries: Industry[] = [
@@ -19,31 +21,37 @@ export const industries: Industry[] = [
     description:
       "Electricians, builders, and tradespeople who need to be found locally and look credible before the quote.",
     icon: "trades",
+    href: "/services/trades-and-home-services",
   },
   {
     title: "Health & wellness",
     description: "Clinics and practices that need to feel trustworthy and make booking simple.",
     icon: "health",
+    href: "/services/health-and-wellness",
   },
   {
     title: "Hospitality & food",
     description:
       "Cafés and small venues that need to look as good online as they do in person, with menus, hours, and an easy way to get in touch.",
     icon: "hospitality",
+    href: "/services/hospitality-and-food",
   },
   {
     title: "Retail & small brands",
     description: "Makers and local shops that need an online shopfront that does the product justice.",
     icon: "retail",
+    href: "/services/retail-and-small-brands",
   },
   {
     title: "Professional & consulting services",
     description: "Accountants, consultants, and agencies whose site is often the first proof of credibility.",
     icon: "professional",
+    href: "/services/professional-and-consulting",
   },
   {
     title: "Non-profits & community",
     description: "Organisations doing real work that need to tell their story plainly and bring in support.",
     icon: "nonprofit",
+    href: "/services/non-profits-and-community",
   },
 ];

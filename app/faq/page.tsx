@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { BreadcrumbSchema } from "@/components/Breadcrumbs";
 import { PageHero } from "@/components/PageHero";
+import { FAQSchema } from "@/components/Schema";
 import { CTABand } from "@/components/sections/CTABand";
 import { FAQAccordion } from "@/components/sections/FAQAccordion";
+import { faq } from "@/content/faq";
 
 export const metadata: Metadata = {
   title: "Frequently Asked Questions | GoodGround",
@@ -15,6 +17,7 @@ export default function FAQPage() {
   return (
     <>
       <BreadcrumbSchema trail={[{ name: "FAQ", path: "/faq" }]} />
+      <FAQSchema items={faq} id="faq-page-faq" />
 
       <PageHero
         eyebrow="FAQ"

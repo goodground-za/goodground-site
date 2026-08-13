@@ -88,7 +88,7 @@ export function Hero() {
       <div className="relative z-[2] mx-auto w-full max-w-[1200px] px-6 pt-24 pb-20 text-center sm:px-10 md:px-14">
         <SplitWords
           as="h1"
-          text="We're an AI-first digital agency based in George, South Africa. We build websites and experiences that convert."
+          text="We're a website development studio based in George, South Africa, building AI-accelerated sites that convert."
           trigger="mount"
           delay={0.15}
           className="font-ht-display mx-auto max-w-[34ch] text-[clamp(1.85rem,3.6vw,3.25rem)] leading-[1.15] font-bold text-white"

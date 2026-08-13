@@ -5,6 +5,7 @@ import { MagneticButton } from "@/components/motion-gsap/MagneticButton";
 import { RevealSection } from "@/components/motion-gsap/RevealSection";
 import { SplitWords } from "@/components/motion-gsap/SplitWords";
 import { PageHero } from "@/components/PageHero";
+import { FAQSchema, ServicesSchema } from "@/components/Schema";
 import { ServiceAccordion } from "@/components/ServiceAccordion";
 import { CTABand } from "@/components/sections/CTABand";
 import { FAQAccordion } from "@/components/sections/FAQAccordion";
@@ -14,6 +15,7 @@ import { GrowthHowItWorks } from "@/components/sections/GrowthHowItWorks";
 import { GrowthIntro } from "@/components/sections/GrowthIntro";
 import { GrowthProblem } from "@/components/sections/GrowthProblem";
 import { GrowthWhyUs } from "@/components/sections/GrowthWhyUs";
+import { faq } from "@/content/faq";
 import { services } from "@/content/services";
 import { site } from "@/content/site";
 
@@ -26,7 +28,7 @@ export const metadata: Metadata = {
 };
 
 export default function ServicesPage() {
-  const serviceSchema = {
+  const serviceListSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
     "@id": `${site.url}/services#list`,
@@ -34,15 +36,16 @@ export default function ServicesPage() {
     itemListElement: services.map((s, i) => ({
       "@type": "ListItem",
       position: i + 1,
-      name: s.title,
-      url: `${site.url}/services#${s.slug}`,
+      item: { "@id": `${site.url}/services#${s.slug}` },
     })),
   };
 
   return (
     <>
       <BreadcrumbSchema trail={[{ name: "Services", path: "/services" }]} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
+      <ServicesSchema services={services} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceListSchema) }} />
+      <FAQSchema items={faq.slice(0, 4)} id="services-faq" />
 
       <PageHero
         eyebrow="What we do"

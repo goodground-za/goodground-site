@@ -3,6 +3,8 @@ import Link from "next/link";
 import { BreadcrumbSchema } from "@/components/Breadcrumbs";
 import { PageHero } from "@/components/PageHero";
 import { PricingPageClient } from "@/components/PricingPageClient";
+import { FAQSchema } from "@/components/Schema";
+import { pricingFaq } from "@/content/pricing";
 
 export const metadata: Metadata = {
   title: "Pricing | Website Design Packages, South Africa",
@@ -15,6 +17,7 @@ export default function PricingPage() {
   return (
     <>
       <BreadcrumbSchema trail={[{ name: "Pricing", path: "/pricing" }]} />
+      <FAQSchema items={pricingFaq} id="pricing-faq" />
 
       <PageHero
         eyebrow="Pricing"
