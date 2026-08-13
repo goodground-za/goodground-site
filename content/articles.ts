@@ -29,6 +29,167 @@ export type Article = {
 
 export const articles: Article[] = [
   {
+    slug: "how-much-does-a-website-cost-in-south-africa",
+    title: "How much does a website cost in South Africa? (2026 guide, with real numbers)",
+    excerpt:
+      "Most website pricing pages hide the number behind a quote form. This one doesn't. Real 2026 prices for DIY builders, freelancers, agencies, and GoodGround's own fixed packages, so you know what you're actually paying for before you enquire.",
+    metaTitle: "Website Cost in South Africa: 2026 Guide & Real Prices",
+    metaDescription:
+      "What does a website actually cost in South Africa? Real 2026 prices from R8,500, DIY builders vs freelancers vs agencies, and how GoodGround's pricing works.",
+    keyword: "website cost South Africa",
+    author: "GoodGround",
+    date: "2026-08-13",
+    readingMinutes: 10,
+    category: "Pricing",
+    body: [
+      {
+        type: "p",
+        text: "A custom-coded business website in South Africa costs between R8,500 and R32,000 for a complete, fixed-price build. Most small businesses land between R15,000 and R23,000. A drag-and-drop builder like Wix or Squarespace costs R150 to R500 a month, forever. A freelancer working alone typically charges R5,000 to R15,000, with wide quality variance. A full-service agency charges R30,000 to R150,000 or more, often with a monthly retainer on top.",
+      },
+      {
+        type: "p",
+        text: "That's the real range. Nobody else publishes it this plainly, because most studios want you on a call before they say a number. This guide breaks down exactly what decides the price, what GoodGround charges for each package in 2026, and how to avoid paying for the wrong thing.",
+      },
+
+      { type: "h2", text: "The short answer: real 2026 price ranges" },
+      {
+        type: "p",
+        text: "Four options exist, and each one trades cost against control. Know which trade you're actually making before you commit to one.",
+      },
+      {
+        type: "ul",
+        items: [
+          "DIY builder (Wix, Squarespace, GoDaddy): R150 to R500 a month. No upfront cost, but you rent the site for as long as you run it, and you build it yourself.",
+          "Freelancer: R5,000 to R15,000 for a basic build. Cheaper than a studio, but quality, reliability, and support after launch vary enormously from one freelancer to the next.",
+          "Small studio, fixed-price and custom-coded: R8,500 to R32,000 for a complete build. One quoted price, no monthly rental, built by a team you can actually hold to a contract.",
+          "Large agency or retainer model: R30,000 to R150,000+, frequently with an ongoing monthly fee layered on top of the build cost.",
+        ],
+      },
+      {
+        type: "p",
+        text: "Cheaper isn't automatically worse, and expensive isn't automatically better. A one-page landing site for a pop-up stall doesn't need R30,000 spent on it. A ten-page site meant to carry a growing business for the next five years shouldn't be built on a R200-a-month template. Match the spend to the job, not to a number that sounded reasonable. We wrote a longer comparison of [what you actually give up with a drag-and-drop builder](/insights/hand-coded-websites-vs-drag-and-drop-builders) if you want the full breakdown.",
+      },
+
+      { type: "h2", text: "What actually decides the price" },
+      {
+        type: "p",
+        text: "Every website quote, ours included, comes down to the same handful of variables. Understand these and you'll know exactly why one project costs R8,500 and another costs R32,000, instead of guessing.",
+      },
+      {
+        type: "ul",
+        items: [
+          "Number of pages. A single-page site costs a fraction of a fifteen-page site, because each page needs its own layout, content, and testing.",
+          "Custom code versus a template. A site built from scratch to match your brand costs more than a theme with your logo dropped in, and it looks like it too.",
+          "Functionality. A contact form is cheap. A multi-step quote calculator, a booking widget, or a filterable portfolio each add real development hours.",
+          "Design complexity. Custom animations, interactive elements, and bespoke illustrations cost more than static layouts, because someone has to build and test the motion, not just the picture.",
+          "SEO depth. Basic on-page SEO (titles, headings, meta descriptions) comes standard almost everywhere. Keyword research, schema markup, and site speed optimisation are separate, deeper work.",
+          "Copywriting and content. Writing the words that go on the site is a different skill from building it, and it's priced separately almost everywhere, GoodGround included.",
+          "Revision rounds and timeline. More rounds of changes cost more time. A rush job compresses everyone's schedule and usually carries a rush fee.",
+        ],
+      },
+      {
+        type: "p",
+        text: "Two businesses can ask for what sounds like the same thing, a five-page site, and land on very different quotes, because one wants a booking calendar, custom animations, and a blog, while the other wants five plain pages with text and a contact form. The page count was never the real variable. The functionality behind each page is.",
+      },
+
+      { type: "h2", text: "How to compare two quotes without getting confused" },
+      {
+        type: "p",
+        text: "A R12,000 quote and a R25,000 quote for what looks like the same project usually aren't quoting the same project at all. Before you compare numbers, compare what's actually inside them.",
+      },
+      {
+        type: "ul",
+        items: [
+          "Is the design template-based or built from scratch for your brand specifically? A template is cheaper because someone else already did most of the work, for someone else's business.",
+          "Is SEO basic (titles and headings) or does it include keyword research, schema markup, and speed optimisation? Those are two different products wearing the same label.",
+          "How many rounds of revisions are included, and what happens once you use them up? Extra rounds cost money almost everywhere, but not every quote tells you that upfront.",
+          "Does the price include copywriting, or are you expected to supply every word yourself? A quote that looks cheaper often just moved a real cost onto your plate instead of removing it.",
+          "Is the number fixed, or does it grow once the project starts? A fixed price agreed before work begins protects you from a final invoice that doesn't match the quote you accepted.",
+        ],
+      },
+      {
+        type: "p",
+        text: "Ask these five questions of any quote you receive, ours included, and the real comparison becomes obvious fast. Every GoodGround package answers all five on [the pricing page](/pricing#packages) itself, not in a follow-up email after you've already committed.",
+      },
+
+      { type: "h2", text: "GoodGround's actual 2026 pricing" },
+      {
+        type: "p",
+        text: "We publish real prices instead of hiding them behind a quote form. Every project is one fixed price, agreed before we start, with no surprise invoice at the end. Here's exactly what's on [our pricing page](/pricing#packages) right now.",
+      },
+      {
+        type: "ul",
+        items: [
+          "Micro, R8,500: a single-page site, fully custom-coded, with micro-interactions and a working contact form. Built in about a week. Suited to freelancers, pop-ups, and holding pages.",
+          "Launch, R15,000: up to 5 pages, custom-coded, with a contact form and basic on-page SEO. About 2 weeks. Suited to a new business that needs a credible presence without the extras.",
+          "Grow, R23,000: up to 10 pages including a blog, custom interactive elements, and SEO setup with Analytics and Search Console. 3 to 4 weeks. Suited to a business ready to market itself properly.",
+          "Scale, R32,000: 15+ pages, advanced custom functionality, advanced SEO and speed optimisation, plus a training session so you can manage updates yourself. 4 to 6 weeks. Suited to a business that needs the site to be a real sales tool.",
+        ],
+      },
+      {
+        type: "p",
+        text: "None of these fit your exact scope? Build your own from a R6,000 Base Build Fee (one homepage, one contact form, basic SEO) and add exactly what you need: R2,500 for an extra standard page, R4,000 for a complex custom-layout page, R4,500 to set up a blog, R3,000 for advanced SEO, R1,500 for a form with conditional logic, and dozens more line items, each with a real price attached before you commit to anything. Configure it yourself in the [build-your-own tool](/pricing#build-your-own) and watch the total update as you add or remove items.",
+      },
+
+      { type: "h2", text: "Two ways to pay for it" },
+      {
+        type: "p",
+        text: "The price is fixed either way. How you pay it is your choice.",
+      },
+      {
+        type: "ul",
+        items: [
+          "50% deposit: half upfront secures the project, the other half is due on completion, before handover.",
+          "12-month plan: the first instalment secures your booking, and the remaining 11 equal instalments become payable once the project is completed.",
+        ],
+      },
+      {
+        type: "p",
+        text: "Neither option changes the total. Both exist because a proper website shouldn't force a small business to choose between investing in itself and covering next month's expenses. See exactly how each package breaks down under both plans on [the pricing page](/pricing).",
+      },
+
+      { type: "h2", text: "The costs nobody mentions until after you've paid" },
+      {
+        type: "p",
+        text: "A website build price and a website's running cost are two different numbers, and any studio that blurs them is setting you up for a surprise. Hosting, a domain name, and ongoing maintenance sit outside the build price everywhere, GoodGround included. Budget roughly R150 to R300 a year for a .co.za domain and anywhere from R100 to R500 a month for hosting, depending on how much traffic and storage your site needs.",
+      },
+      {
+        type: "p",
+        text: "Then there's what happens after launch. Plugins go out of date. Content stops being accurate. Small issues turn into slow load times if nobody's watching. That's what a [Website Care Plan](/services#care-plans) covers: ongoing updates, monitoring, and small content changes, handled monthly instead of piling up until something breaks.",
+      },
+
+      { type: "h2", text: "Why the cheapest option often costs more" },
+      {
+        type: "p",
+        text: "A R200-a-month builder looks cheaper than a R23,000 fixed build on the day you sign up. Run the maths past year three and the comparison flips: three years of that subscription is R7,200, and you still don't own the site, still can't take it elsewhere, and still built it yourself with a template everyone else on the platform has access to. A fixed-price build costs more on day one and belongs to you outright from day one too.",
+      },
+      {
+        type: "quote",
+        text: "You're not comparing a cheap website to an expensive one. You're comparing rent to ownership.",
+      },
+      {
+        type: "p",
+        text: "A cheap freelancer carries a different risk: no company behind the contract, no guarantee they're still answering emails in a year, and support that depends entirely on one person's availability. That's not true of every freelancer, but it's true often enough to weigh against the lower price before you commit. Ask any freelancer quoting you a low number what happens if they're unavailable for a month, or stop freelancing altogether. A one-person operation with no answer to that question is a real risk sitting inside an attractive price.",
+      },
+
+      { type: "h2", text: "Quick answers" },
+      {
+        type: "ul",
+        items: [
+          "Does the price include hosting and a domain? No. Those are arranged separately from the build price, and we'll point you in the right direction when you enquire.",
+          "Is there a deposit? Yes, if you choose that option: 50% upfront, 50% on completion. Or spread the same total over 12 monthly instalments instead.",
+          "What if my project needs more than a package includes? Add exactly what you need from the à la carte menu, priced and confirmed before we build it.",
+          "How long does a build take? 1 week for Micro, up to 6 weeks for Scale, depending on scope.",
+          "How do I get an exact number for my project? Configure your own build in the [pricing configurator](/pricing#build-your-own), or [tell us about your project](/start-project) and we'll come back with a firm quote within 1 to 2 business days.",
+        ],
+      },
+      {
+        type: "p",
+        text: "A website is one of the few business expenses you can actually price before you commit to it. [See every package and build your own total](/pricing), or [start your project](/start-project) and get a firm number back within two business days.",
+      },
+    ],
+  },
+  {
     slug: "website-vs-facebook-page",
     title: "Website vs Facebook page: which one actually grows your business?",
     excerpt:
