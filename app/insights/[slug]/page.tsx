@@ -24,16 +24,22 @@ export async function generateMetadata({
   const { slug } = await params;
   const article = getArticle(slug);
   if (!article) return {};
+  const url = `${site.url}/insights/${article.slug}`;
   return {
     title: { absolute: `${article.metaTitle} | GoodGround` },
     description: article.metaDescription,
     alternates: { canonical: `/insights/${article.slug}` },
     openGraph: {
       type: "article",
+      url,
       title: article.metaTitle,
       description: article.metaDescription,
       publishedTime: article.date,
     },
+    // Without its own twitter block, this would inherit the root layout's
+    // static homepage title/description on X/Twitter shares specifically,
+    // same bug the openGraph override above fixes for every other platform.
+    twitter: { card: "summary_large_image", title: article.metaTitle, description: article.metaDescription },
   };
 }
 

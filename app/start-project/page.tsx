@@ -2,12 +2,18 @@ import type { Metadata } from "next";
 import { BreadcrumbSchema } from "@/components/Breadcrumbs";
 import { PageHero } from "@/components/PageHero";
 import { StartProjectForm } from "@/components/StartProjectForm";
+import { pageSocialMeta } from "@/lib/metadata";
+
+const title = { absolute: "Start Your Project | GoodGround Website Development" };
+const description =
+  "Start your website project with GoodGround. Answer a few quick questions and we'll come back with next steps and a fixed price, split however you'd like to pay it.";
+const path = "/start-project";
 
 export const metadata: Metadata = {
-  title: { absolute: "Start Your Project | GoodGround Website Development" },
-  description:
-    "Start your website project with GoodGround. Answer a few quick questions and we'll come back with next steps and a fixed price, split however you'd like to pay it.",
-  alternates: { canonical: "/start-project" },
+  title,
+  description,
+  alternates: { canonical: path },
+  ...pageSocialMeta({ title, description, path }),
 };
 
 export default function StartProjectPage() {

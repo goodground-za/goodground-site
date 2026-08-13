@@ -5,13 +5,19 @@ import { PageHero } from "@/components/PageHero";
 import { RevealSection } from "@/components/motion-gsap/RevealSection";
 import { SplitWords } from "@/components/motion-gsap/SplitWords";
 import { site } from "@/content/site";
+import { pageSocialMeta } from "@/lib/metadata";
 
 /** Copy deck §4, retargeted development-first / South Africa per the site positioning. */
+const title = { absolute: "Contact GoodGround | Website Development, South Africa" };
+const description =
+  "Tell us about your business and we'll come back with next steps and how you'd like to pay. A website development studio in South Africa.";
+const path = "/contact";
+
 export const metadata: Metadata = {
-  title: { absolute: "Contact GoodGround | Website Development, South Africa" },
-  description:
-    "Tell us about your business and we'll come back with next steps and how you'd like to pay. A website development studio in South Africa.",
-  alternates: { canonical: "/contact" },
+  title,
+  description,
+  alternates: { canonical: path },
+  ...pageSocialMeta({ title, description, path }),
 };
 
 export default function ContactPage() {

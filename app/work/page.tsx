@@ -4,12 +4,18 @@ import { BreadcrumbSchema } from "@/components/Breadcrumbs";
 import { PageHero } from "@/components/PageHero";
 import { MagneticButton } from "@/components/motion-gsap/MagneticButton";
 import { RevealSection } from "@/components/motion-gsap/RevealSection";
+import { pageSocialMeta } from "@/lib/metadata";
+
+const title = { absolute: "Our Work | GoodGround Website Development" };
+const description =
+  "GoodGround is a new website development studio in South Africa. Our first case studies are on the way. Start your project and become one of them.";
+const path = "/work";
 
 export const metadata: Metadata = {
-  title: { absolute: "Our Work | GoodGround Website Development" },
-  description:
-    "GoodGround is a new website development studio in South Africa. Our first case studies are on the way. Start your project and become one of them.",
-  alternates: { canonical: "/work" },
+  title,
+  description,
+  alternates: { canonical: path },
+  ...pageSocialMeta({ title, description, path }),
 };
 
 /**

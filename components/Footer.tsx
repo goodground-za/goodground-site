@@ -3,7 +3,6 @@ import Link from "next/link";
 import { CloudDivider } from "@/components/CloudDivider";
 import { footerLinks, legalLinks, site } from "@/content/site";
 import { RevealSection, RevealStagger } from "@/components/motion-gsap/RevealSection";
-import { NewsletterForm } from "./NewsletterForm";
 import { SocialIcon } from "./SocialIcon";
 
 /**
@@ -115,8 +114,6 @@ export function Footer() {
                 </p>
               ) : null}
             </address>
-
-            <NewsletterForm />
           </div>
         </RevealStagger>
 

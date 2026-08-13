@@ -5,12 +5,18 @@ import { FAQSchema } from "@/components/Schema";
 import { CTABand } from "@/components/sections/CTABand";
 import { FAQAccordion } from "@/components/sections/FAQAccordion";
 import { faq } from "@/content/faq";
+import { pageSocialMeta } from "@/lib/metadata";
+
+const title = { absolute: "Frequently Asked Questions | GoodGround" };
+const description =
+  "Everything you need to know about payment plans, project scope, timelines, and our Google & Meta Ads growth services, before you start with GoodGround.";
+const path = "/faq";
 
 export const metadata: Metadata = {
-  title: "Frequently Asked Questions | GoodGround",
-  description:
-    "Everything you need to know about payment plans, project scope, timelines, and our Google & Meta Ads growth services, before you start with GoodGround.",
-  alternates: { canonical: "/faq" },
+  title,
+  description,
+  alternates: { canonical: path },
+  ...pageSocialMeta({ title, description, path }),
 };
 
 export default function FAQPage() {

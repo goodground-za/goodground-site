@@ -32,14 +32,6 @@ export const metadata: Metadata = {
   },
   description:
     "GoodGround is a website development studio building custom, fast business websites across South Africa. Pay a 50% deposit and the rest on completion, or split it over 12 monthly instalments.",
-  keywords: [
-    "website development South Africa",
-    "web development company South Africa",
-    "website development George",
-    "website design South Africa",
-    "custom website development",
-    "monthly payment website development",
-  ],
   alternates: { canonical: "/" },
   // Google Search Console ownership check. Emitted as
   // <meta name="google-site-verification" ...>. It lives in the root layout so

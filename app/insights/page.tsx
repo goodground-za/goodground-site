@@ -4,16 +4,21 @@ import { BreadcrumbSchema } from "@/components/Breadcrumbs";
 import { PageHero } from "@/components/PageHero";
 import { RevealSection, RevealStagger } from "@/components/motion-gsap/RevealSection";
 import { articles } from "@/content/articles";
+import { pageSocialMeta } from "@/lib/metadata";
 
 const dateFmt = new Intl.DateTimeFormat("en-ZA", { day: "numeric", month: "long", year: "numeric" });
 
+// Kept under ~60 chars so it doesn't truncate in search results.
+const title = "Website Advice for South African Businesses";
+const description =
+  "Practical articles on website design, online presence and growth for South African small businesses. No jargon, no spam.";
+const path = "/insights";
+
 export const metadata: Metadata = {
-  // Kept under ~60 chars so it doesn't truncate in search results. The layout
-  // template appends " | GoodGround".
-  title: "Website Advice for South African Businesses",
-  description:
-    "Practical articles on website design, online presence and growth for South African small businesses. No jargon, no spam.",
-  alternates: { canonical: "/insights" },
+  title,
+  description,
+  alternates: { canonical: path },
+  ...pageSocialMeta({ title, description, path }),
 };
 
 export default function InsightsPage() {

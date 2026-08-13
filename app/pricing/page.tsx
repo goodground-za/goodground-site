@@ -5,12 +5,18 @@ import { PageHero } from "@/components/PageHero";
 import { PricingPageClient } from "@/components/PricingPageClient";
 import { FAQSchema } from "@/components/Schema";
 import { pricingFaq } from "@/content/pricing";
+import { pageSocialMeta } from "@/lib/metadata";
+
+const title = { absolute: "Pricing | Website Design Packages, South Africa | GoodGround" };
+const description =
+  "Four fixed website design packages from R8,500, or build your own from an à la carte menu. Pay 50% upfront and 50% on completion, or spread it over 12 monthly instalments.";
+const path = "/pricing";
 
 export const metadata: Metadata = {
-  title: "Pricing | Website Design Packages, South Africa",
-  description:
-    "Four fixed website design packages from R8,500, or build your own from an à la carte menu. Pay 50% upfront and 50% on completion, or spread it over 12 monthly instalments.",
-  alternates: { canonical: "/pricing" },
+  title,
+  description,
+  alternates: { canonical: path },
+  ...pageSocialMeta({ title, description, path }),
 };
 
 export default function PricingPage() {

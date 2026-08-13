@@ -15,17 +15,41 @@ import { GrowthHowItWorks } from "@/components/sections/GrowthHowItWorks";
 import { GrowthIntro } from "@/components/sections/GrowthIntro";
 import { GrowthProblem } from "@/components/sections/GrowthProblem";
 import { GrowthWhyUs } from "@/components/sections/GrowthWhyUs";
-import { faq } from "@/content/faq";
+import { faq, type FAQItem } from "@/content/faq";
 import { services } from "@/content/services";
 import { site } from "@/content/site";
+import { pageSocialMeta } from "@/lib/metadata";
 
 /** Copy deck §3, retargeted development-first / South Africa. */
+const title = { absolute: "Website Development Services in South Africa | GoodGround" };
+const description =
+  "Website development, UX and design, SEO foundations, care plans, and Google & Meta Ads management. Built in-house in South Africa — pay a 50% deposit and the rest on completion, or spread it over 12 monthly instalments.";
+const path = "/services";
+
 export const metadata: Metadata = {
-  title: "Website Development Services in South Africa",
-  description:
-    "Website development, UX and design, SEO foundations, care plans, and Google & Meta Ads management. Built in-house in South Africa — pay a 50% deposit and the rest on completion, or spread it over 12 monthly instalments.",
-  alternates: { canonical: "/services" },
+  title,
+  description,
+  alternates: { canonical: path },
+  ...pageSocialMeta({ title, description, path }),
 };
+
+/**
+ * A different slice from the homepage's `faq.slice(0, 4)` preview, on
+ * purpose: showing the exact same 4 Q&As verbatim on two indexed URLs read
+ * as duplicate content to search engines. This picks the questions most
+ * relevant to what this page is actually about (scope, timeline, and the
+ * ads services covered below) by question text rather than array index, so
+ * it doesn't silently break if content/faq.ts gets reordered.
+ */
+const servicesFaqQuestions = [
+  "Do you only build websites, or do you handle design and SEO too?",
+  "How long does a typical project take?",
+  "What happens after my website launches?",
+  "What's the difference between Google Ads and Meta Ads?",
+];
+const servicesFaqItems = servicesFaqQuestions
+  .map((q) => faq.find((item) => item.question === q))
+  .filter((item): item is FAQItem => Boolean(item));
 
 export default function ServicesPage() {
   const serviceListSchema = {
@@ -45,7 +69,7 @@ export default function ServicesPage() {
       <BreadcrumbSchema trail={[{ name: "Services", path: "/services" }]} />
       <ServicesSchema services={services} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceListSchema) }} />
-      <FAQSchema items={faq.slice(0, 4)} id="services-faq" />
+      <FAQSchema items={servicesFaqItems} id="services-faq" />
 
       <PageHero
         eyebrow="What we do"
@@ -141,7 +165,7 @@ export default function ServicesPage() {
           </div>
         </section>
 
-        <FAQAccordion limit={4} />
+        <FAQAccordion items={servicesFaqItems} heading="Questions about what we build." />
         <CTABand />
       </div>
     </>

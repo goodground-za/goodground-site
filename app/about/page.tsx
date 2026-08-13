@@ -9,17 +9,23 @@ import { MagneticButton } from "@/components/motion-gsap/MagneticButton";
 import { RevealSection, RevealStagger } from "@/components/motion-gsap/RevealSection";
 import { SplitWords } from "@/components/motion-gsap/SplitWords";
 import { process } from "@/content/process";
+import { pageSocialMeta } from "@/lib/metadata";
 
 /**
  * `absolute` bypasses the layout's "%s | GoodGround" template, which would
  * otherwise append a second "GoodGround" to this title. Development-first, with
  * South Africa as the primary geography to match the homepage positioning.
  */
+const title = { absolute: "About GoodGround | Website Development Studio, South Africa" };
+const description =
+  "A website development studio in South Africa, built on the idea that businesses grow best on strong foundations. Based in George, on the Garden Route.";
+const path = "/about";
+
 export const metadata: Metadata = {
-  title: { absolute: "About GoodGround | Website Development Studio, South Africa" },
-  description:
-    "A website development studio in South Africa, built on the idea that businesses grow best on strong foundations. Based in George, on the Garden Route.",
-  alternates: { canonical: "/about" },
+  title,
+  description,
+  alternates: { canonical: path },
+  ...pageSocialMeta({ title, description, path }),
 };
 
 /** Copy deck §2. Verbatim, with one exception noted at the founder story. */

@@ -4,13 +4,19 @@ import { BreadcrumbSchema } from "@/components/Breadcrumbs";
 import { ButtonLink } from "@/components/Button";
 import { PageHero } from "@/components/PageHero";
 import { site } from "@/content/site";
+import { pageSocialMeta } from "@/lib/metadata";
+
+const title = { absolute: "Legal Notice & Privacy Policy | GoodGround" };
+const description =
+  "GoodGround's legal notice and privacy policy, including how we handle personal information under South Africa's Protection of Personal Information Act (POPIA).";
+const path = "/legal";
 
 export const metadata: Metadata = {
-  title: { absolute: "Legal Notice & Privacy Policy | GoodGround" },
-  description:
-    "GoodGround's legal notice and privacy policy, including how we handle personal information under South Africa's Protection of Personal Information Act (POPIA).",
-  alternates: { canonical: "/legal" },
+  title,
+  description,
+  alternates: { canonical: path },
   robots: { index: true, follow: true },
+  ...pageSocialMeta({ title, description, path }),
 };
 
 const toc = [
