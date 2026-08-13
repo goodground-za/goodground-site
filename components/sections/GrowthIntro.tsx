@@ -32,12 +32,12 @@ export function GrowthIntro() {
           <MagneticButton>
             <Link
               href="/start-project"
-              className="font-ht-display bg-ht-orange rounded-pill inline-block px-7 py-3.5 text-[14px] font-bold tracking-wide text-white uppercase shadow-soft transition-transform duration-200 hover:scale-[1.03]"
+              className="font-ht-display bg-ht-orange text-ink rounded-pill inline-block px-7 py-3.5 text-[14px] font-bold tracking-wide uppercase shadow-soft transition-transform duration-200 hover:scale-[1.03]"
             >
               Start Your Project
             </Link>
           </MagneticButton>
-          <Link href="#growth-how-it-works" className="text-ht-orange font-bold underline underline-offset-4 hover:no-underline">
+          <Link href="#growth-how-it-works" className="text-ht-crimson font-bold underline underline-offset-4 hover:no-underline">
             See how it works →
           </Link>
         </div>

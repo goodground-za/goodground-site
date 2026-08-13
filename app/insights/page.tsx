@@ -54,7 +54,7 @@ export default function InsightsPage() {
                     phone, a trailing "·" was left dangling at the end of the
                     first line. The gap alone reads fine there. */}
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-                  <span className="bg-ht-orange font-ht-display rounded-pill px-3 py-1 text-[12px] font-bold tracking-[0.08em] text-white uppercase">
+                  <span className="bg-ht-orange text-ink font-ht-display rounded-pill px-3 py-1 text-[12px] font-bold tracking-[0.08em] uppercase">
                     Featured
                   </span>
                   <span className="text-[13px] font-medium text-white/70">{featured.category}</span>
@@ -101,8 +101,8 @@ export default function InsightsPage() {
                     href={`/insights/${article.slug}`}
                     className="rounded-card ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] group flex h-full flex-col bg-white p-7 ring-2 transition-transform duration-150 ease-out hover:-translate-y-1"
                   >
-                    <div className="text-ht-purple/60 flex items-center gap-3 text-[13px] font-medium">
-                      <span className="bg-ht-orange/10 text-ht-orange rounded-pill px-3 py-1 font-bold">
+                    <div className="text-ht-purple/70 flex items-center gap-3 text-[13px] font-medium">
+                      <span className="bg-ht-orange/10 text-ht-crimson rounded-pill px-3 py-1 font-bold">
                         {article.category}
                       </span>
                       <span>{article.readingMinutes} min read</span>
@@ -113,7 +113,7 @@ export default function InsightsPage() {
                     <p className="text-ht-purple/70 mt-3 flex-1 text-[15px] leading-[1.6]">
                       {article.excerpt}
                     </p>
-                    <span className="text-ht-orange mt-6 inline-flex items-center gap-2 text-[14px] font-bold">
+                    <span className="text-ht-crimson mt-6 inline-flex items-center gap-2 text-[14px] font-bold">
                       Read the article
                       <span aria-hidden="true" className="transition-transform duration-150 group-hover:translate-x-0.5">
                         →

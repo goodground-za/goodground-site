@@ -59,11 +59,11 @@ export function ShareButtons({
 
   const buttonClass = dark
     ? "text-white/70 border-white/25 hover:border-white hover:text-white"
-    : "text-ht-purple/70 border-ht-purple/20 hover:border-ht-orange hover:text-ht-orange";
+    : "text-ht-purple/70 border-ht-purple/20 hover:border-ht-orange hover:text-ht-crimson";
 
   return (
     <div className={`flex items-center gap-2 ${className}`}>
-      <span className={`text-[13px] font-medium ${dark ? "text-white/70" : "text-ht-purple/60"}`}>Share</span>
+      <span className={`text-[13px] font-medium ${dark ? "text-white/70" : "text-ht-purple/70"}`}>Share</span>
       {links.map((link) => (
         <a
           key={link.name}

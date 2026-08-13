@@ -7,9 +7,13 @@ import type { ComponentProps, ReactNode } from "react";
  * outline) even though the colors they map to have changed — every call
  * site across the app already picks the right variant by its conceptual
  * role (primary/dark-solid/light-pill/outline), so remapping colors here
- * needed no call-site changes. Contrast-checked against the surface each is
- * drawn on: white on ht-orange 3.48:1 (large/bold text only, per existing
- * flags elsewhere on the orange surfaces), ht-purple on ht-cream 11.7:1,
+ * needed no call-site changes.
+ *
+ * Contrast (2026-08-13 audit): `ember` previously used white on ht-orange,
+ * measured 3.48:1 by Lighthouse — below the 4.5:1 AA bar at this button's
+ * 14/15px bold size (the 3:1 large-text exemption needs 18.66px bold). Now
+ * uses `text-ink`, which clears it at 5.86:1 while keeping the client's
+ * orange exactly as supplied. Other variants: ht-purple on ht-cream 11.7:1,
  * white on ht-purple 11.7:1.
  */
 type Variant = "ember" | "ink" | "peach" | "outline";
@@ -24,9 +28,14 @@ const base =
   "motion-safe:hover:scale-[1.02] motion-safe:active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50";
 
 const variants: Record<Variant, string> = {
-  ember: "bg-ht-orange text-white shadow-soft hover:bg-ht-orange/90 hover:shadow-lift",
+  ember: "bg-ht-orange text-ink shadow-soft hover:bg-ht-orange/90 hover:shadow-lift",
   ink: "bg-ht-purple text-white shadow-soft hover:bg-ht-purple/90 hover:shadow-lift",
   peach: "bg-ht-cream text-ht-purple shadow-soft hover:bg-ht-cream/85 hover:shadow-lift",
+  // Orange text, NOT crimson: `outline` has a transparent fill, so its label
+  // sits on whatever surface it's dropped onto. Its only production use is the
+  // cookie banner (Analytics.tsx), which is bg-ht-purple — orange reads 4.50:1
+  // there, crimson would be 2.39:1. On a LIGHT surface this variant is the
+  // wrong choice; use a crimson-text button instead (About.tsx has that pattern).
   outline: "border-2 border-ht-orange text-ht-orange hover:bg-ht-orange hover:text-ink",
 };
 

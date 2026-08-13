@@ -83,14 +83,14 @@ function AccordionRow({
           aria-controls={panelId}
           className="text-ht-purple flex w-full cursor-pointer items-center gap-4 px-6 py-5 text-left transition-colors duration-150 hover:bg-black/[0.02] sm:px-8"
         >
-          <span className="font-ht-display text-ht-orange text-[13px] font-bold tabular-nums">
+          <span className="font-ht-display text-ht-crimson text-[13px] font-bold tabular-nums">
             {String(index + 1).padStart(2, "0")}
           </span>
           <span className="font-ht-display flex-1 text-[16px] font-bold sm:text-[18px]">
             {service.title}
           </span>
           {service.flagship ? (
-            <span className="bg-ht-orange rounded-pill hidden shrink-0 px-3 py-1 text-[12px] font-bold text-white sm:inline-block">
+            <span className="bg-ht-orange text-ink rounded-pill hidden shrink-0 px-3 py-1 text-[12px] font-bold sm:inline-block">
               Flagship
             </span>
           ) : service.includedInEveryBuild ? (
@@ -129,19 +129,19 @@ function AccordionRow({
 
           <div className="border-ht-purple/10 mt-6 grid gap-5 border-t pt-5 sm:grid-cols-3">
             <div>
-              <p className="text-ht-purple/60 text-[12px] font-bold tracking-[0.1em] uppercase">
+              <p className="text-ht-purple/70 text-[12px] font-bold tracking-[0.1em] uppercase">
                 The problem
               </p>
               <p className="text-ht-purple/70 mt-2 text-[14px] leading-[1.55]">{service.problem}</p>
             </div>
             <div>
-              <p className="text-ht-orange text-[12px] font-bold tracking-[0.1em] uppercase">
+              <p className="text-ht-crimson text-[12px] font-bold tracking-[0.1em] uppercase">
                 Our approach
               </p>
               <p className="text-ht-purple/70 mt-2 text-[14px] leading-[1.55]">{service.solution}</p>
             </div>
             <div>
-              <p className="text-ht-purple/60 text-[12px] font-bold tracking-[0.1em] uppercase">
+              <p className="text-ht-purple/70 text-[12px] font-bold tracking-[0.1em] uppercase">
                 The outcome
               </p>
               <p className="text-ht-purple/70 mt-2 text-[14px] leading-[1.55]">{service.outcome}</p>
@@ -149,7 +149,7 @@ function AccordionRow({
           </div>
 
           {service.paymentLine ? (
-            <p className="text-ht-purple/60 mt-5 text-[13px] leading-[1.55] italic">
+            <p className="text-ht-purple/70 mt-5 text-[13px] leading-[1.55] italic">
               {service.paymentLine}
             </p>
           ) : null}
@@ -159,7 +159,7 @@ function AccordionRow({
               <MagneticButton>
                 <Link
                   href={service.cta.href}
-                  className="font-ht-display bg-ht-orange rounded-pill inline-block px-6 py-3 text-[13px] font-bold tracking-wide text-white uppercase transition-transform duration-200 hover:scale-[1.03]"
+                  className="font-ht-display bg-ht-orange text-ink rounded-pill inline-block px-6 py-3 text-[13px] font-bold tracking-wide uppercase transition-transform duration-200 hover:scale-[1.03]"
                 >
                   {service.cta.label}
                 </Link>
@@ -168,7 +168,7 @@ function AccordionRow({
             {service.relatedLink ? (
               <Link
                 href={service.relatedLink.href}
-                className="text-ht-orange text-[14px] font-bold underline underline-offset-4 hover:no-underline"
+                className="text-ht-crimson text-[14px] font-bold underline underline-offset-4 hover:no-underline"
               >
                 {service.relatedLink.label} →
               </Link>

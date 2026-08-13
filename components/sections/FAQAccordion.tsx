@@ -107,7 +107,7 @@ function FAQRow({ item, isOpen, onToggle }: { item: FAQItem; isOpen: boolean; on
           </span>
           <span
             aria-hidden="true"
-            className="text-ht-orange border-ht-orange/40 grid size-7 shrink-0 place-items-center rounded-full border-2"
+            className="text-ht-crimson border-ht-orange/40 grid size-7 shrink-0 place-items-center rounded-full border-2"
           >
             <svg ref={iconRef} viewBox="0 0 16 16" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <path d="M8 2v12M2 8h12" />

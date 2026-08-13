@@ -46,7 +46,7 @@ export function PricingPackages({ onSelectPackage }: { onSelectPackage: (config:
                 }`}
               >
                 {recommended ? (
-                  <span className="bg-ht-orange rounded-pill absolute -top-3 left-6 px-3 py-1 text-[11px] font-bold tracking-wide text-white uppercase">
+                  <span className="bg-ht-orange text-ink rounded-pill absolute -top-3 left-6 px-3 py-1 text-[11px] font-bold tracking-wide uppercase">
                     Most popular
                   </span>
                 ) : null}
@@ -56,7 +56,7 @@ export function PricingPackages({ onSelectPackage }: { onSelectPackage: (config:
 
                 <div className="border-ht-purple/10 mt-5 border-t pt-5">
                   <AnimatedNumber value={pkg.total} className="font-ht-display text-ht-purple text-[clamp(1.75rem,3vw,2.25rem)] font-bold tabular-nums" />
-                  <div className="text-ht-purple/60 mt-2 space-y-1 text-[12.5px] leading-[1.4] font-medium">
+                  <div className="text-ht-purple/70 mt-2 space-y-1 text-[12.5px] leading-[1.4] font-medium">
                     <p>
                       <span className="text-ht-purple/80 font-semibold">{formatRand(depositFor(pkg.total))}</span> deposit
                       + <span className="text-ht-purple/80 font-semibold">{formatRand(balanceFor(pkg.total))}</span> on completion
@@ -70,7 +70,7 @@ export function PricingPackages({ onSelectPackage }: { onSelectPackage: (config:
                 <ul className="mt-6 flex-1 space-y-2.5">
                   {pkg.features.map((feature) => (
                     <li key={feature} className="text-ht-purple/80 flex gap-2.5 text-[13.5px] leading-[1.5]">
-                      <svg aria-hidden="true" viewBox="0 0 16 16" className="text-ht-orange mt-0.5 size-3.5 shrink-0" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <svg aria-hidden="true" viewBox="0 0 16 16" className="text-ht-crimson mt-0.5 size-3.5 shrink-0" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                         <path d="m3 8 3.5 3.5L13 5" />
                       </svg>
                       {feature}
@@ -78,7 +78,7 @@ export function PricingPackages({ onSelectPackage }: { onSelectPackage: (config:
                   ))}
                 </ul>
 
-                <p className="text-ht-purple/60 border-ht-purple/10 mt-6 border-t pt-4 text-[12.5px] leading-[1.5]">
+                <p className="text-ht-purple/70 border-ht-purple/10 mt-6 border-t pt-4 text-[12.5px] leading-[1.5]">
                   <span className="font-bold">Best for:</span> {pkg.bestFor}
                 </p>
                 <p className="text-ht-purple/50 mt-2 text-[12px]">Timeline: {pkg.timeline}</p>
@@ -89,7 +89,7 @@ export function PricingPackages({ onSelectPackage }: { onSelectPackage: (config:
                     onSelectPackage({ kind: "package", slug: pkg.slug, name: pkg.name, total: pkg.total })
                   }
                   className={`font-ht-display rounded-pill mt-6 inline-flex h-12 cursor-pointer items-center justify-center px-6 text-[13px] font-bold tracking-wide uppercase transition-transform duration-200 hover:scale-[1.02] ${
-                    recommended ? "bg-ht-orange text-white" : "bg-ht-purple text-white"
+                    recommended ? "bg-ht-orange text-ink" : "bg-ht-purple text-white"
                   }`}
                 >
                   Choose {pkg.name}
@@ -100,7 +100,7 @@ export function PricingPackages({ onSelectPackage }: { onSelectPackage: (config:
         </RevealStagger>
 
         <RevealSection delay={0.1}>
-          <p className="text-ht-purple/60 mx-auto mt-10 max-w-[70ch] text-center text-[13px] leading-[1.6]">
+          <p className="text-ht-purple/70 mx-auto mt-10 max-w-[70ch] text-center text-[13px] leading-[1.6]">
             {packagesFootnote}
           </p>
         </RevealSection>

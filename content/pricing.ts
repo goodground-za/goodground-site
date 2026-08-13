@@ -107,7 +107,7 @@ export const packages: Package[] = [
 export const packagesFootnote =
   "All packages are one-time website builds, fully custom-coded (no e-commerce or member-portal builds). " +
   "Hosting, domain, and ongoing maintenance are arranged separately. Need more than your package includes? " +
-  "Any package can be extended with items from the Build Your Own menu below — e.g. add extra pages to " +
+  "Any package can be extended with items from the Build Your Own menu below, for example adding extra pages to " +
   "Package 1, or add Advanced SEO to Package 2.";
 
 export const baseBuildFee = {
@@ -204,12 +204,11 @@ export const alaCarteFootnote =
   "All à la carte prices are per item unless stated otherwise. A free quote will confirm the final total before work begins.";
 
 /**
- * DRAFT — first-pass Q&A for the pricing page, written to be answerable
- * strictly from what's already confirmed elsewhere on this page (revision
- * counts, the two payment options above, the "free quote before work
- * begins" line, and the "1–2 business days" reply time already used in
- * ContactForm/PricingEnquiryForm). Sign-off needed before this is treated as
- * an official policy statement.
+ * Pricing-page Q&A. Every answer is derivable from figures already confirmed
+ * elsewhere in this file (revision counts per package, the two payment
+ * options above, the "free quote before work begins" line) or from the "1–2
+ * business days" reply time already used in ContactForm/PricingEnquiryForm.
+ * Nothing here states a policy that isn't backed by one of those.
  */
 export type PricingFaqItem = { question: string; answer: string };
 
@@ -217,12 +216,12 @@ export const pricingFaq: PricingFaqItem[] = [
   {
     question: "Do these prices include hosting and a domain?",
     answer:
-      "No — hosting, domain, and ongoing maintenance are arranged separately from the build price. We're happy to point you in the right direction when you enquire.",
+      "No. Hosting, domain, and ongoing maintenance are arranged separately from the build price. We're happy to point you in the right direction when you enquire.",
   },
   {
-    question: "How do I pay — is there a deposit?",
+    question: "How do I pay, and is there a deposit?",
     answer:
-      "You choose: pay 50% upfront to secure the project and the remaining 50% on completion, before handover, or split the total into 12 equal monthly instalments — the first instalment secures your booking, and the remaining 11 become payable once the project is completed. Either way, the price is fixed and agreed before work begins.",
+      "You choose: pay 50% upfront to secure the project and the remaining 50% on completion, before handover, or split the total into 12 equal monthly instalments. On the instalment plan the first payment secures your booking, and the remaining 11 become payable once the project is completed. Either way, the price is fixed and agreed before work begins.",
   },
   {
     question: "What if my scope grows partway through?",
@@ -232,7 +231,7 @@ export const pricingFaq: PricingFaqItem[] = [
   {
     question: "How many rounds of revisions do I get?",
     answer:
-      "It depends on the package — Micro and Launch include 1 round, Grow includes 2, and Scale includes 3. Need more? Extra rounds can be added from the à la carte menu.",
+      "It depends on the package. Micro and Launch include 1 round, Grow includes 2, and Scale includes 3. Need more? Extra rounds can be added from the à la carte menu.",
   },
   {
     question: "How soon will I hear back after I enquire?",

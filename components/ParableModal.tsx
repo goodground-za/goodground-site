@@ -55,7 +55,7 @@ export function ParableLink({
         ref={triggerRef}
         type="button"
         onClick={() => setOpen(true)}
-        className={`text-ht-orange decoration-ht-orange/40 hover:decoration-ht-orange cursor-pointer font-bold underline underline-offset-2 transition-colors ${className}`}
+        className={`text-ht-crimson decoration-ht-orange/40 hover:decoration-ht-orange cursor-pointer font-bold underline underline-offset-2 transition-colors ${className}`}
       >
         {children}
       </button>
@@ -167,7 +167,7 @@ function ParableDialog({
             transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="flex items-start justify-between gap-4">
-              <p className="bg-ht-orange text-white rounded-pill font-ht-display inline-block px-4 py-1.5 text-[13px] font-bold">
+              <p className="bg-ht-orange text-ink rounded-pill font-ht-display inline-block px-4 py-1.5 text-[13px] font-bold">
                 Why &ldquo;GoodGround&rdquo;
               </p>
               <button
@@ -202,13 +202,13 @@ function ParableDialog({
                 <li
                   key={soil.name}
                   className={`rounded-card p-5 ${
-                    soil.highlight ? "bg-ht-orange text-white" : "bg-white text-ht-purple"
+                    soil.highlight ? "bg-ht-orange text-ink" : "bg-white text-ht-purple"
                   }`}
                 >
                   <div className="flex items-baseline gap-3">
                     <span
                       className={`font-ht-display text-[13px] font-bold tabular-nums ${
-                        soil.highlight ? "text-white/70" : "text-ht-orange"
+                        soil.highlight ? "text-ink/70" : "text-ht-crimson"
                       }`}
                     >
                       {String(i + 1).padStart(2, "0")}

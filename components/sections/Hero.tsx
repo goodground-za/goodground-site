@@ -96,10 +96,10 @@ export function Hero() {
 
         <div ref={copyRef} className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <span className="font-ht-body text-[15px] font-bold text-white sm:text-[17px]">We specialise in:</span>
-          {/* white on the orange pill is 3.48:1, under the 4.5:1 WCAG AA bar
-              at this size/weight — flagged, not silently fixed, since it's
-              matching the client-approved comp exactly. */}
-          <RotatingWords words={SPECIALTIES} className="bg-ht-orange rounded-pill px-5 py-2 text-[15px] font-bold text-white sm:text-[17px]" />
+          {/* text-ink, not white: white on this orange is 3.48:1, under the
+              4.5:1 AA bar at 15/17px bold. ink clears it at 5.86:1 and keeps
+              the client's orange unchanged. */}
+          <RotatingWords words={SPECIALTIES} className="bg-ht-orange text-ink rounded-pill px-5 py-2 text-[15px] font-bold sm:text-[17px]" />
         </div>
 
         <div ref={ctaRef}>
@@ -148,7 +148,7 @@ export function Hero() {
 
       <div
         aria-hidden="true"
-        className="animate-bounce motion-reduce:animate-none absolute bottom-6 left-1/2 z-[2] hidden -translate-x-1/2 sm:block"
+        className="motion-safe:animate-[scroll-cue_2.4s_ease-in-out_infinite] absolute bottom-6 left-1/2 z-[2] hidden -translate-x-1/2 sm:block"
       >
         <svg viewBox="0 0 24 24" className="size-6 text-white/80" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M12 5v14M5 12l7 7 7-7" />

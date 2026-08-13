@@ -64,7 +64,7 @@ export default function LegalPage() {
         {/* TOC */}
         <aside className="min-w-0 lg:col-span-4">
           <nav aria-label="On this page" className="lg:sticky lg:top-28">
-            <p className="text-ht-purple/60 text-[13px] font-bold tracking-[0.12em] uppercase">
+            <p className="text-ht-purple/70 text-[13px] font-bold tracking-[0.12em] uppercase">
               Contents
             </p>
             <ul className="mt-4 space-y-1">
@@ -72,7 +72,7 @@ export default function LegalPage() {
                 <li key={item.id}>
                   <a
                     href={`#${item.id}`}
-                    className="text-ht-purple/60 hover:text-ht-orange block py-1 text-[14px] transition-colors"
+                    className="text-ht-purple/70 hover:text-ht-crimson block py-1 text-[14px] transition-colors"
                   >
                     {item.label}
                   </a>
@@ -86,7 +86,7 @@ export default function LegalPage() {
         <div className="min-w-0 lg:col-span-8">
           {/* Company details */}
           <div className="rounded-card ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] bg-white p-6 ring-2 sm:p-8">
-            <p className="text-ht-purple/60 text-[13px] font-bold tracking-[0.12em] uppercase">
+            <p className="text-ht-purple/70 text-[13px] font-bold tracking-[0.12em] uppercase">
               Company Details
             </p>
             <dl className="mt-5 grid gap-5 sm:grid-cols-2">
@@ -214,7 +214,7 @@ export default function LegalPage() {
               </P>
               <div className="rounded-card bg-ht-cream mt-4 flex flex-wrap items-center justify-between gap-2 p-4">
                 <span className="font-ht-display text-ht-purple font-bold">Google</span>
-                <span className="text-ht-purple/60 text-[14px]">Analytics and performance tracking</span>
+                <span className="text-ht-purple/70 text-[14px]">Analytics and performance tracking</span>
               </div>
               <P>
                 These providers are selected based on their compliance with data protection
@@ -332,7 +332,7 @@ export default function LegalPage() {
                 If you have any questions about this legal notice or how your data is handled, contact
                 GoodGround{site.email ? " at " : " through the website"}
                 {site.email ? (
-                  <a href={`mailto:${site.email}`} className="text-ht-orange font-bold underline underline-offset-2">
+                  <a href={`mailto:${site.email}`} className="text-ht-crimson font-bold underline underline-offset-2">
                     {site.email}
                   </a>
                 ) : null}
@@ -355,8 +355,8 @@ export default function LegalPage() {
 function CompanyItem({ label, value, muted }: { label: string; value: string; muted?: boolean }) {
   return (
     <div>
-      <dt className="text-ht-purple/60 text-[12px] font-medium tracking-[0.08em] uppercase">{label}</dt>
-      <dd className={`font-ht-display mt-1 text-[16px] font-bold ${muted ? "text-ht-purple/60 italic" : "text-ht-purple"}`}>
+      <dt className="text-ht-purple/70 text-[12px] font-medium tracking-[0.08em] uppercase">{label}</dt>
+      <dd className={`font-ht-display mt-1 text-[16px] font-bold ${muted ? "text-ht-purple/70 italic" : "text-ht-purple"}`}>
         {value}
       </dd>
     </div>
@@ -366,7 +366,7 @@ function CompanyItem({ label, value, muted }: { label: string; value: string; mu
 function Section({ num, id, title, children }: { num: string; id: string; title: string; children: ReactNode }) {
   return (
     <section id={id} className="scroll-mt-24">
-      <p className="font-ht-display text-ht-orange text-[13px] font-bold tabular-nums">{num}</p>
+      <p className="font-ht-display text-ht-crimson text-[13px] font-bold tabular-nums">{num}</p>
       <h2 className="font-ht-display text-ht-purple mt-2 text-[clamp(1.5rem,3vw,2.25rem)] leading-tight font-bold uppercase">
         {title}
       </h2>

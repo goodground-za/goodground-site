@@ -1,4 +1,5 @@
 import { faq } from "@/content/faq";
+import { packages } from "@/content/pricing";
 import { site } from "@/content/site";
 import type { Service } from "@/content/services";
 
@@ -81,6 +82,14 @@ export function HomeSchema() {
       "Website development studio building custom, fast business websites across South Africa. Every project is one fixed price, payable as a 50% deposit and the rest on completion, or over 12 monthly instalments.",
     url: site.url,
     foundingDate: site.foundingDate,
+    // Raster, not the SVG: Google's Organization.logo requires a raster format
+    // (PNG/JPG/GIF), and it's a prerequisite for knowledge-panel eligibility.
+    // /icon.png is Next's generated app icon, so it's guaranteed to exist.
+    logo: `${site.url}/icon.png`,
+    image: `${site.url}/icon.png`,
+    // Derived from the real packages array rather than hard-coded, so it can't
+    // drift when prices change.
+    priceRange: `R${Math.min(...packages.map((p) => p.total))}-R${Math.max(...packages.map((p) => p.total))}`,
     // Serves the country, based in George: South Africa first for reach, the
     // locality kept for the local pack.
     serviceType: "Website development and design",

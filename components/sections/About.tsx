@@ -14,8 +14,11 @@ export function About() {
   return (
     <section className="bg-ht-cream px-6 py-20 sm:px-10 md:py-28">
       <RevealSection className="mx-auto max-w-[1600px]">
+        {/* Was the bare word "About" — a category label that told the reader
+            nothing and restated the section below it. This says what the
+            section actually argues. */}
         <h2 className="font-ht-display text-ht-purple text-center text-[clamp(1.75rem,3.6vw,3rem)] font-bold uppercase">
-          About
+          Why We Start With The Foundation
         </h2>
 
         <div className="ring-ht-pink rounded-block bg-white/70 mt-10 p-8 ring-2 sm:p-12">
@@ -45,7 +48,7 @@ export function About() {
           <div className="mt-8 flex flex-col items-start gap-6 border-t border-black/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
             <p className="font-ht-body text-ht-purple/70 max-w-[48ch] text-[14px] leading-relaxed italic">
               The name comes from the biblical{" "}
-              <ParableLink className="text-ht-orange decoration-ht-orange/40 hover:decoration-ht-orange">
+              <ParableLink className="text-ht-crimson decoration-ht-orange/40 hover:decoration-ht-orange">
                 Parable of the Sower
               </ParableLink>
               . Good ground represents preparation, intention, and growth.
@@ -55,7 +58,7 @@ export function About() {
             <MagneticButton className="shrink-0">
               <Link
                 href="/about"
-                className="font-ht-display border-ht-orange text-ht-orange rounded-pill hover:text-ink inline-flex items-center gap-2 border-2 px-6 py-3 text-[13px] font-bold tracking-wide uppercase transition-colors duration-200 hover:bg-ht-orange"
+                className="font-ht-display border-ht-orange text-ht-crimson rounded-pill hover:text-ink inline-flex items-center gap-2 border-2 px-6 py-3 text-[13px] font-bold tracking-wide uppercase transition-colors duration-200 hover:bg-ht-orange"
               >
                 About Us
                 <svg viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

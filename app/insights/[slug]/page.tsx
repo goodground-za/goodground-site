@@ -61,6 +61,10 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
     author: { "@type": "Organization", name: article.author, url: site.url },
     publisher: { "@id": `${site.url}/#organization` },
     mainEntityOfPage: `${site.url}/insights/${article.slug}`,
+    // Article rich results need an image. This points at the per-article
+    // opengraph-image route Next already generates (1200x630), so it needs no
+    // new asset and can't go stale.
+    image: `${site.url}/insights/${article.slug}/opengraph-image`,
     keywords: article.keyword,
     inLanguage: "en-ZA",
   };
@@ -127,7 +131,11 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
               <h2 className="font-ht-display text-[clamp(1.35rem,3vw,2rem)] leading-tight font-bold text-white uppercase">
                 Ready to be found online?
               </h2>
-              <p className="mt-3 max-w-[46ch] text-[15px] leading-[1.6] text-white/90">
+              {/* text-ink/80, not white/90: white/90 on this orange measures
+                  3.05:1, under the 4.5:1 AA bar at 15px normal. ink/80 is
+                  4.88:1. The heading above stays white — at 21.6px+ bold it
+                  clears WCAG's 3:1 large-text bar. */}
+              <p className="text-ink/80 mt-3 max-w-[46ch] text-[15px] leading-[1.6]">
                 We build fast, honest websites for South African small businesses, with a choice of
                 how you pay for them. Have a look at{" "}
                 <Link href="/services" className="underline underline-offset-4 hover:no-underline">
@@ -178,7 +186,7 @@ function withLinks(text: string) {
         <Link
           key={`${href}-${at}`}
           href={href}
-          className="text-ht-orange font-medium underline underline-offset-4 hover:no-underline"
+          className="text-ht-crimson font-medium underline underline-offset-4 hover:no-underline"
         >
           {label}
         </Link>
@@ -187,7 +195,7 @@ function withLinks(text: string) {
           key={`${href}-${at}`}
           href={href}
           rel="noopener noreferrer"
-          className="text-ht-orange font-medium underline underline-offset-4 hover:no-underline"
+          className="text-ht-crimson font-medium underline underline-offset-4 hover:no-underline"
         >
           {label}
         </a>

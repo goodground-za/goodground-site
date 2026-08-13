@@ -53,7 +53,7 @@ export function GrowthHowItWorks() {
         <RevealStagger className="border-ht-purple/15 mt-10 grid gap-x-8 gap-y-6 border-t pt-8 sm:grid-cols-2 lg:grid-cols-4" y={16}>
           {steps.map((step) => (
             <div key={step.number}>
-              <span aria-hidden="true" className="font-ht-display bg-ht-orange grid size-8 place-items-center rounded-full text-[13px] font-bold text-white">
+              <span aria-hidden="true" className="font-ht-display bg-ht-orange text-ink grid size-8 place-items-center rounded-full text-[13px] font-bold">
                 {step.number}
               </span>
               <p className="text-ht-purple/85 mt-5 max-w-[26ch] text-[15px] leading-[1.6]">
@@ -65,7 +65,7 @@ export function GrowthHowItWorks() {
         </RevealStagger>
 
         <RevealSection delay={0.1}>
-          <p className="text-ht-purple/60 mt-8 text-[13px] leading-relaxed">
+          <p className="text-ht-purple/70 mt-8 text-[13px] leading-relaxed">
             Clear monthly fee. Budget you control. Cancel with 30 days&rsquo; notice.
           </p>
         </RevealSection>

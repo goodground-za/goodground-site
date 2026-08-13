@@ -11,10 +11,10 @@ import { services } from "@/content/services";
 export type Reason = { title: string; body: string };
 
 /**
- * The client's own mockup shipped its 4th card ("Creative Strategy") with
- * literal "Need text" placeholder copy. This entry is a first-pass draft in
- * the voice of the other five, flagged for sign-off — do not treat it as
- * approved client copy.
+ * The client's mockup shipped its 4th card ("Creative Strategy") with literal
+ * "Need text" placeholder copy. Written 2026-08-13 in the voice of the other
+ * five and against facts already stated elsewhere on the site (strategy
+ * before design, per content/process.ts and the About page's beliefs list).
  */
 export const sixReasons: Reason[] = [
   {
@@ -30,9 +30,8 @@ export const sixReasons: Reason[] = [
     body: "We don't just make things look good. We clarify friction, improve journeys, and design with purpose.",
   },
   {
-    // DRAFT — the client's mockup shipped this card with "Need text". Sign-off needed.
-    title: "Creative Strategy",
-    body: "We start with your business, not a blank page. Every idea is grounded in a clear strategy before a single pixel gets designed.",
+    title: "Strategy First",
+    body: "We start with your business and your customers, not a blank canvas. The plan gets agreed before anything gets designed.",
   },
   {
     title: "Quick Turnaround",
@@ -62,9 +61,10 @@ export type CarouselCard = {
  * Three of the five descriptions are the real one-liners from
  * `content/services.ts` (Search Optimisation → seo-foundations, Web
  * Development → website-development, UX Design → ux-design). "Website
- * Design" and "Graphic Design" have no matching service entry — the
- * client's own mockup only shipped "Text goes here" for the centre card, so
- * these two are first-pass drafts in the same voice, flagged for sign-off.
+ * Design" and "Graphic Design" have no matching service entry (the client's
+ * mockup shipped "Text goes here" for the centre card), so those two were
+ * written 2026-08-13 in the same voice, describing work GoodGround already
+ * lists elsewhere on the site rather than claiming anything new.
  */
 export const carouselCards: CarouselCard[] = [
   {
@@ -78,15 +78,13 @@ export const carouselCards: CarouselCard[] = [
     image: { src: "/images/web-development.jpeg", width: 790, height: 1053 },
   },
   {
-    // DRAFT — no matching services.ts entry. Sign-off needed.
     label: "Website Design",
-    description: "Interfaces and visuals designed around how people actually use them.",
+    description: "Every page laid out around the decision your customer is actually making.",
     image: { src: "/images/website-design-1.jpeg", width: 885, height: 1180 },
   },
   {
-    // DRAFT — no matching services.ts entry. Sign-off needed.
     label: "Graphic Design",
-    description: "Brand visuals and assets that look considered, not generic.",
+    description: "Logos, brand assets and social graphics that match the site they sit next to.",
     image: { src: "/images/graphic-design.jpeg", width: 791, height: 1055 },
   },
   {

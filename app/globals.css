@@ -145,6 +145,38 @@
   }
 }
 
+/*
+  NO route-change transition here, deliberately. A cross-page fade via
+  `app/template.tsx` was built and measured on 2026-08-13, then backed out:
+  wrapping the page in an element that animates from opacity 0 stops Chrome
+  counting the hero as painted, which pushed homepage LCP from 640ms to
+  1086-1200ms across repeated traces. That's a doubling of the site's headline
+  metric to buy a decorative fade. The per-page mount animations (SplitWords on
+  every PageHero h1, RevealSection on the sections below it) already make a
+  navigation read as a transition, so the fade added little.
+  If it's ever revisited: the animation must be suppressed on first load, which
+  needs state in layout.tsx (template.tsx remounts on every navigation, so a
+  ref inside it always reads as "first render").
+*/
+
+/*
+  Hero scroll cue. Replaces Tailwind's `animate-bounce`, whose cubic-bezier
+  bounce reads as playful in a way the rest of this site's motion never does
+  (everything else eases out, nothing overshoots). This is a slow symmetrical
+  drift instead: same "look down here" affordance, calmer register.
+*/
+@keyframes scroll-cue {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

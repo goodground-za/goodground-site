@@ -139,14 +139,14 @@ export function StartProjectForm() {
     <div className="rounded-block ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] bg-white p-6 ring-2 sm:p-8 md:p-10">
       {/* Progress */}
       <div className="flex items-center justify-between gap-4">
-        <p className="text-ht-purple/60 text-[13px] font-bold tracking-[0.1em] uppercase" aria-hidden="true">
+        <p className="text-ht-purple/70 text-[13px] font-bold tracking-[0.1em] uppercase" aria-hidden="true">
           Step {step + 1} of {TOTAL_STEPS}
         </p>
         {step > 0 ? (
           <button
             type="button"
             onClick={back}
-            className="text-ht-purple/60 hover:text-ht-orange inline-flex cursor-pointer items-center gap-1.5 text-[14px] font-medium transition-colors"
+            className="text-ht-purple/70 hover:text-ht-crimson inline-flex cursor-pointer items-center gap-1.5 text-[14px] font-medium transition-colors"
           >
             <svg aria-hidden="true" viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M19 12H5M11 6l-6 6 6 6" />
@@ -178,7 +178,7 @@ export function StartProjectForm() {
           aria-labelledby="step-heading"
           className="mt-8 motion-safe:animate-[step-in_260ms_var(--ease-out)_both]"
         >
-          <p className="text-ht-orange font-ht-display text-[13px] font-bold">{choiceSteps[step].eyebrow}</p>
+          <p className="text-ht-crimson font-ht-display text-[13px] font-bold">{choiceSteps[step].eyebrow}</p>
           <h2 id="step-heading" ref={headingRef} tabIndex={-1} className="font-ht-display text-ht-purple mt-2 text-[clamp(1.5rem,3.2vw,2.25rem)] leading-tight font-bold outline-none">
             {choiceSteps[step].heading}
           </h2>
@@ -207,7 +207,7 @@ export function StartProjectForm() {
       ) : (
         // Details step
         <form onSubmit={submit} noValidate className="mt-8 motion-safe:animate-[step-in_260ms_var(--ease-out)_both]">
-          <p className="text-ht-orange font-ht-display text-[13px] font-bold">Almost done</p>
+          <p className="text-ht-crimson font-ht-display text-[13px] font-bold">Almost done</p>
           <h2 id="step-heading" ref={headingRef} tabIndex={-1} className="font-ht-display text-ht-purple mt-2 text-[clamp(1.5rem,3.2vw,2.25rem)] leading-tight font-bold outline-none">
             How can we reach you?
           </h2>
@@ -224,7 +224,7 @@ export function StartProjectForm() {
 
           <div className="mt-5">
             <label htmlFor="message" className="font-ht-display text-ht-purple mb-2 block text-[14px] font-bold">
-              Anything else? <span className="text-ht-purple/60 font-medium">(optional)</span>
+              Anything else? <span className="text-ht-purple/70 font-medium">(optional)</span>
             </label>
             <textarea
               id="message"
@@ -237,7 +237,7 @@ export function StartProjectForm() {
           </div>
 
           {status === "error" ? (
-            <p className="text-ht-orange mt-6 text-[14px] font-medium" role="alert">
+            <p className="text-ht-crimson mt-6 text-[14px] font-medium" role="alert">
               Something went wrong sending that. Please email us directly at{" "}
               <a href={`mailto:${site.email}`} className="underline">
                 {site.email}
@@ -249,7 +249,7 @@ export function StartProjectForm() {
           <button
             type="submit"
             disabled={status === "submitting"}
-            className="rounded-pill bg-ht-orange font-ht-display text-white mt-8 inline-flex h-13 cursor-pointer items-center justify-center gap-2 px-7 text-[15px] font-bold uppercase tracking-wide shadow-soft transition-[transform,background-color] duration-150 hover:bg-ht-orange/90 motion-safe:hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-60"
+            className="rounded-pill bg-ht-orange font-ht-display text-ink mt-8 inline-flex h-13 cursor-pointer items-center justify-center gap-2 px-7 text-[15px] font-bold uppercase tracking-wide shadow-soft transition-[transform,background-color] duration-150 hover:bg-ht-orange/90 motion-safe:hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-60"
           >
             {status === "submitting" ? "Sending…" : "Send Your Enquiry"}
             {status === "submitting" ? null : <span aria-hidden="true">→</span>}
@@ -283,7 +283,7 @@ function DetailField({
     <div>
       <label htmlFor={name} className="font-ht-display text-ht-purple mb-2 block text-[14px] font-bold">
         {label}
-        {required ? <span className="text-ht-orange"> *</span> : <span className="text-ht-purple/60 font-medium"> (optional)</span>}
+        {required ? <span className="text-ht-crimson"> *</span> : <span className="text-ht-purple/70 font-medium"> (optional)</span>}
       </label>
       <input
         id={name}
@@ -298,7 +298,7 @@ function DetailField({
         className={`${inputBase} ${error ? "border-ht-orange" : "border-ht-purple/15"}`}
       />
       {error ? (
-        <p id={`${name}-error`} className="text-ht-orange mt-1.5 text-[13px] font-medium">
+        <p id={`${name}-error`} className="text-ht-crimson mt-1.5 text-[13px] font-medium">
           {error}
         </p>
       ) : null}

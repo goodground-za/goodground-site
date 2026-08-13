@@ -94,7 +94,7 @@ export function Nav() {
                   href={link.href}
                   aria-current={active ? "page" : undefined}
                   className={`font-ht-display rounded-pill inline-block px-4 py-2 text-[12px] font-bold tracking-wide uppercase transition-transform duration-200 hover:scale-[1.03] ${
-                    active ? "bg-ht-orange text-white" : "text-ht-crimson bg-white"
+                    active ? "bg-ht-orange text-ink" : "text-ht-crimson bg-white"
                   }`}
                 >
                   {link.label}
@@ -104,12 +104,12 @@ export function Nav() {
           })}
           <li>
             <MagneticButton>
-              {/* Matches the comp: white text on the orange fill. Flagged the
-                  same as the hero's specialise pill — 3.48:1, under the
-                  4.5:1 WCAG AA bar at this size/weight. */}
+              {/* text-ink, not white: white on this orange measures 3.48:1,
+                  under the 4.5:1 AA bar at 12px bold. ink clears it at
+                  5.86:1 without touching the client's orange. */}
               <Link
                 href="/start-project"
-                className="bg-ht-orange rounded-pill inline-block px-5 py-2 text-[12px] font-bold tracking-wide text-white uppercase shadow-[0_8px_20px_-6px_rgba(254,67,26,0.6)] transition-transform duration-200 hover:scale-[1.03]"
+                className="bg-ht-orange text-ink rounded-pill inline-block px-5 py-2 text-[12px] font-bold tracking-wide uppercase shadow-[0_8px_20px_-6px_rgba(254,67,26,0.6)] transition-transform duration-200 hover:scale-[1.03]"
               >
                 Start Your Project
               </Link>
@@ -154,6 +154,9 @@ export function Nav() {
           {navLinks.map((link) => {
             const active = pathname === link.href || pathname.startsWith(`${link.href}/`);
             return (
+              // Active link stays ht-orange, not crimson: this menu sits on the
+              // dark ht-purple panel, where orange is 4.50:1 (passes) and
+              // crimson would drop to 2.41:1.
               <li key={link.href}>
                 <Link
                   href={link.href}
@@ -170,7 +173,7 @@ export function Nav() {
           <li className="pt-2 pb-1">
             <Link
               href="/start-project"
-              className="bg-ht-orange rounded-pill block px-5 py-3 text-center text-[13px] font-bold tracking-wide text-white uppercase"
+              className="bg-ht-orange text-ink rounded-pill block px-5 py-3 text-center text-[13px] font-bold tracking-wide uppercase"
             >
               Start Your Project
             </Link>

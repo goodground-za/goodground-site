@@ -63,7 +63,7 @@ export function ServicePageTemplate({ slug }: { slug: string }) {
                 key={point.title}
                 className="bg-white ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] rounded-card p-6 ring-2"
               >
-                <p className="font-ht-display text-ht-orange text-[13px] font-bold tabular-nums">
+                <p className="font-ht-display text-ht-crimson text-[13px] font-bold tabular-nums">
                   {String(i + 1).padStart(2, "0")}
                 </p>
                 <h2 className="font-ht-display text-ht-purple mt-3 text-[16px] font-bold">{point.title}</h2>

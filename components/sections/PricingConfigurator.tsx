@@ -101,7 +101,7 @@ export function PricingConfigurator({ onQuoteRequest }: { onQuoteRequest: (confi
               <div className="flex items-center justify-between gap-4">
                 <div>
                   <p className="font-ht-display text-ht-purple text-[15px] font-bold">{baseBuildFee.label}</p>
-                  <p className="text-ht-purple/60 mt-1 text-[13px] leading-[1.5]">{baseBuildFee.includes}</p>
+                  <p className="text-ht-purple/70 mt-1 text-[13px] leading-[1.5]">{baseBuildFee.includes}</p>
                 </div>
                 <span className="font-ht-display text-ht-purple shrink-0 text-[16px] font-bold tabular-nums">
                   {formatRand(baseBuildFee.total)}
@@ -125,7 +125,7 @@ export function PricingConfigurator({ onQuoteRequest }: { onQuoteRequest: (confi
               ))}
             </RevealStagger>
 
-            <p className="text-ht-purple/60 mt-6 text-[13px] leading-[1.6]">{alaCarteFootnote}</p>
+            <p className="text-ht-purple/70 mt-6 text-[13px] leading-[1.6]">{alaCarteFootnote}</p>
           </div>
 
           {/* Desktop summary panel — sticky, offset below the fixed nav pill. */}
@@ -170,7 +170,7 @@ export function PricingConfigurator({ onQuoteRequest }: { onQuoteRequest: (confi
             </span>
             <AnimatedNumber value={total} className="font-ht-display block text-[20px] font-bold tabular-nums" />
           </span>
-          <span className="font-ht-display bg-ht-orange rounded-pill px-5 py-2.5 text-[13px] font-bold tracking-wide text-white uppercase">
+          <span className="font-ht-display bg-ht-orange text-ink rounded-pill px-5 py-2.5 text-[13px] font-bold tracking-wide uppercase">
             {mobileSummaryOpen ? "Close" : "View & Send"}
           </span>
         </button>
@@ -235,7 +235,7 @@ function CategoryAccordion({
         >
           <span className="font-ht-display flex-1 text-[15px] font-bold sm:text-[16px]">{name}</span>
           {addedCount > 0 ? (
-            <span className="bg-ht-orange rounded-pill shrink-0 px-2.5 py-1 text-[11px] font-bold text-white">
+            <span className="bg-ht-orange text-ink rounded-pill shrink-0 px-2.5 py-1 text-[11px] font-bold">
               {addedCount} added
             </span>
           ) : null}
@@ -365,7 +365,7 @@ function SummaryPanel({
           <span className="font-ht-display text-ht-purple text-[14px] font-bold uppercase">Total</span>
           <AnimatedNumber value={total} className="font-ht-display text-ht-purple text-[clamp(1.5rem,2.6vw,2rem)] font-bold tabular-nums" />
         </div>
-        <div className="text-ht-purple/60 mt-2 space-y-1 text-right text-[12.5px] leading-[1.4] font-medium">
+        <div className="text-ht-purple/70 mt-2 space-y-1 text-right text-[12.5px] leading-[1.4] font-medium">
           <p>
             <span className="text-ht-purple/80 font-semibold">{formatRand(depositFor(total))}</span> deposit
             + <span className="text-ht-purple/80 font-semibold">{formatRand(balanceFor(total))}</span> on completion
@@ -380,7 +380,7 @@ function SummaryPanel({
         <p className="bg-ht-cream text-ht-purple/80 rounded-card mt-5 p-3.5 text-[13px] leading-[1.5]">
           This is close to our <span className="font-bold">{nudge.pkg.name}</span> package (
           {formatRand(nudge.pkg.total)}) — might be simpler to start there and add on from here.{" "}
-          <Link href="#packages" className="text-ht-orange font-bold underline underline-offset-4">
+          <Link href="#packages" className="text-ht-crimson font-bold underline underline-offset-4">
             Compare packages
           </Link>
         </p>
@@ -398,7 +398,7 @@ function SummaryPanel({
           <button
             type="button"
             onClick={onQuote}
-            className="font-ht-display bg-ht-orange rounded-pill inline-flex h-13 w-full cursor-pointer items-center justify-center gap-2 px-7 text-[14px] font-bold tracking-wide text-white uppercase transition-transform duration-200 hover:scale-[1.01]"
+            className="font-ht-display bg-ht-orange text-ink rounded-pill inline-flex h-13 w-full cursor-pointer items-center justify-center gap-2 px-7 text-[14px] font-bold tracking-wide uppercase transition-transform duration-200 hover:scale-[1.01]"
           >
             Get This Quote →
           </button>

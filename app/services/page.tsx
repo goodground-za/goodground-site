@@ -97,9 +97,20 @@ export default function ServicesPage() {
       </PageHero>
 
       {/* Service deep-dives — same accordion used on the homepage's What We
-          Build, applied here to the full list. */}
+          Build, applied here to the full list. The h2 is load-bearing, not
+          decoration: ServiceAccordion's rows are h3, so without a section
+          heading this page jumped h1 → h3 and failed Lighthouse's
+          heading-order audit. On the homepage WhatWeBuild supplies its own h2,
+          which is why it only showed up here. */}
       <div className="bg-ht-cream mx-auto max-w-[1434px] px-6 pt-14 sm:px-10 md:pt-20">
-        <ServiceAccordion services={services} />
+        <RevealSection>
+          <h2 className="font-ht-display text-ht-purple max-w-[20ch] text-[clamp(1.75rem,4vw,3rem)] leading-[1.08] font-bold uppercase">
+            Everything we build, in detail.
+          </h2>
+        </RevealSection>
+        <div className="mt-10">
+          <ServiceAccordion services={services} />
+        </div>
       </div>
 
       <div className="bg-ht-cream">
@@ -156,7 +167,7 @@ export default function ServicesPage() {
               Not sure a website is the right spend right now?{" "}
               <Link
                 href="/insights/why-small-businesses-in-south-africa-need-a-website"
-                className="text-ht-orange underline underline-offset-4 hover:no-underline"
+                className="text-ht-crimson underline underline-offset-4 hover:no-underline"
               >
                 We wrote about why it matters for South African businesses
               </Link>

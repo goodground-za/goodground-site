@@ -71,7 +71,7 @@ function Swatch({
       </div>
       <div className="bg-white p-4">
         <p className="font-ht-display text-ht-purple text-[13px] font-bold uppercase">{hex}</p>
-        <p className="font-ht-body text-ht-purple/60 mt-1 text-[12px]">{token}</p>
+        <p className="font-ht-body text-ht-purple/70 mt-1 text-[12px]">{token}</p>
         <p className="font-ht-body text-ht-purple/70 mt-2 text-[13px] leading-[1.5]">{usage}</p>
       </div>
     </div>
@@ -81,7 +81,7 @@ function Swatch({
 function SpecRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-baseline justify-between gap-4 border-b border-ht-purple/10 py-3 last:border-b-0">
-      <span className="font-ht-body text-ht-purple/60 text-[13px]">{label}</span>
+      <span className="font-ht-body text-ht-purple/70 text-[13px]">{label}</span>
       <span className="font-ht-display text-ht-purple text-right text-[13px] font-bold">{value}</span>
     </div>
   );
@@ -147,7 +147,7 @@ export default function BrandGuidePage() {
                 "Confident, not salesy. No exclamation marks in body copy.",
               ].map((rule) => (
                 <li key={rule} className="font-ht-body text-ht-purple/70 flex gap-2 text-[14px] leading-[1.6]">
-                  <span aria-hidden="true" className="text-ht-orange mt-1 shrink-0">
+                  <span aria-hidden="true" className="text-ht-crimson mt-1 shrink-0">
                     &#9632;
                   </span>
                   {rule}
@@ -259,7 +259,7 @@ export default function BrandGuidePage() {
             usage="Near-black, reserved for text needing maximum contrast: outline button hover state only."
           />
         </div>
-        <p className="font-ht-body text-ht-purple/60 mt-6 text-[13px] leading-[1.6]">
+        <p className="font-ht-body text-ht-purple/70 mt-6 text-[13px] leading-[1.6]">
           Hex values are the client-supplied palette, used exactly as given. Do not adjust for
           "better" contrast without checking with Johandre first. Contrast ratios above are checked
           against WCAG AA (4.5:1 body text, 3:1 large/bold text ≥ 18px).
@@ -273,7 +273,7 @@ export default function BrandGuidePage() {
             <p className="font-ht-display text-ht-purple mt-3 text-[32px] leading-[1.05] font-bold uppercase">
               Syne
             </p>
-            <p className="font-ht-body text-ht-purple/60 mt-2 text-[13px]">
+            <p className="font-ht-body text-ht-purple/70 mt-2 text-[13px]">
               Bold (700) only, the one cut used sitewide. Google Font, loaded via{" "}
               <code className="text-[12px]">next/font/google</code>. <code className="text-[12px]">--font-ht-display</code>.
               Applied to every h1–h4, buttons, nav labels, eyebrows. Letter-spacing -0.02em,{" "}
@@ -283,7 +283,7 @@ export default function BrandGuidePage() {
           <div className="rounded-card bg-ht-cream shadow-soft p-6">
             <p className="font-ht-display text-ht-purple text-[13px] font-bold uppercase">Body</p>
             <p className="font-ht-body text-ht-purple mt-3 text-[22px] leading-[1.4]">DM Sans</p>
-            <p className="font-ht-body text-ht-purple/60 mt-2 text-[13px]">
+            <p className="font-ht-body text-ht-purple/70 mt-2 text-[13px]">
               Google Font, variable weight. <code className="text-[12px]">--font-ht-body</code>. Applied to all
               paragraph text, form fields, captions. <code className="text-[12px]">text-wrap: pretty</code> on
               paragraphs to prevent orphans.
@@ -296,7 +296,7 @@ export default function BrandGuidePage() {
             <p className="font-ht-display text-ht-purple text-[clamp(2.5rem,6vw,5.5rem)] leading-[1.05] font-bold uppercase">
               Display
             </p>
-            <p className="font-ht-body text-ht-purple/60 mt-2 text-[13px]">
+            <p className="font-ht-body text-ht-purple/70 mt-2 text-[13px]">
               <code className="text-[12px]">--text-ht-display</code>: clamp(2.5rem, 6vw, 5.5rem), page-level
               hero headlines
             </p>
@@ -305,7 +305,7 @@ export default function BrandGuidePage() {
             <p className="font-ht-display text-ht-purple text-[clamp(1.5rem,2.5vw,2rem)] leading-[1.15] font-bold uppercase">
               Heading 3
             </p>
-            <p className="font-ht-body text-ht-purple/60 mt-2 text-[13px]">
+            <p className="font-ht-body text-ht-purple/70 mt-2 text-[13px]">
               <code className="text-[12px]">--text-ht-h3</code>: clamp(1.5rem, 2.5vw, 2rem), section headings
             </p>
           </div>
@@ -313,7 +313,7 @@ export default function BrandGuidePage() {
             <p className="font-ht-body text-ht-purple text-[clamp(1.1rem,1.6vw,1.4rem)] leading-[1.6]">
               Body large: intros, lead paragraphs, pull quotes.
             </p>
-            <p className="font-ht-body text-ht-purple/60 mt-2 text-[13px]">
+            <p className="font-ht-body text-ht-purple/70 mt-2 text-[13px]">
               <code className="text-[12px]">--text-ht-body-lg</code>: clamp(1.1rem, 1.6vw, 1.4rem)
             </p>
           </div>
@@ -321,7 +321,7 @@ export default function BrandGuidePage() {
             <p className="font-ht-body text-ht-purple text-[1rem] leading-[1.6]">
               Body: the default paragraph size used everywhere else.
             </p>
-            <p className="font-ht-body text-ht-purple/60 mt-2 text-[13px]">
+            <p className="font-ht-body text-ht-purple/70 mt-2 text-[13px]">
               <code className="text-[12px]">--text-ht-body</code>: 1rem (16px)
             </p>
           </div>
@@ -329,7 +329,7 @@ export default function BrandGuidePage() {
             <p className="font-ht-display text-ht-purple text-[0.8125rem] font-bold tracking-[0.15em] uppercase">
               Label / eyebrow
             </p>
-            <p className="font-ht-body text-ht-purple/60 mt-2 text-[13px]">
+            <p className="font-ht-body text-ht-purple/70 mt-2 text-[13px]">
               <code className="text-[12px]">--text-ht-label</code>: 0.8125rem (13px), tracked wide, uppercase
             </p>
           </div>
@@ -345,21 +345,21 @@ export default function BrandGuidePage() {
                 <div className="rounded-[40px] bg-ht-orange size-16 shrink-0" />
                 <div>
                   <p className="font-ht-display text-ht-purple text-[13px] font-bold">--radius-block · 40px</p>
-                  <p className="font-ht-body text-ht-purple/60 text-[13px]">Section bands, page hero (56px on sm+)</p>
+                  <p className="font-ht-body text-ht-purple/70 text-[13px]">Section bands, page hero (56px on sm+)</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
                 <div className="rounded-card bg-ht-orange size-16 shrink-0" />
                 <div>
                   <p className="font-ht-display text-ht-purple text-[13px] font-bold">--radius-card · 24px</p>
-                  <p className="font-ht-body text-ht-purple/60 text-[13px]">Cards, swatches, form panels</p>
+                  <p className="font-ht-body text-ht-purple/70 text-[13px]">Cards, swatches, form panels</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
                 <div className="rounded-pill bg-ht-orange h-8 w-16 shrink-0" />
                 <div>
                   <p className="font-ht-display text-ht-purple text-[13px] font-bold">--radius-pill · 999px</p>
-                  <p className="font-ht-body text-ht-purple/60 text-[13px]">Buttons, nav pills, badges</p>
+                  <p className="font-ht-body text-ht-purple/70 text-[13px]">Buttons, nav pills, badges</p>
                 </div>
               </div>
             </div>
@@ -375,7 +375,7 @@ export default function BrandGuidePage() {
             </p>
             <SpecRow label="Mobile" value="py-14 to py-20" />
             <SpecRow label="Desktop (md+)" value="py-20 to py-28" />
-            <p className="font-ht-body text-ht-purple/60 mt-4 text-[13px] leading-[1.6]">
+            <p className="font-ht-body text-ht-purple/70 mt-4 text-[13px] leading-[1.6]">
               Horizontal padding is <code className="text-[12px]">px-6</code> mobile, <code className="text-[12px]">sm:px-10</code>{" "}
               on wider sections. Spacing follows Tailwind's default 4px scale, no arbitrary one-off
               values like <code className="text-[12px]">margin: 23px</code>.
@@ -394,7 +394,7 @@ export default function BrandGuidePage() {
               <Button variant="peach">Peach</Button>
               <Button variant="outline">Outline</Button>
             </div>
-            <p className="font-ht-body text-ht-purple/60 mt-3 text-[13px] leading-[1.6]">
+            <p className="font-ht-body text-ht-purple/70 mt-3 text-[13px] leading-[1.6]">
               Variant names are historical (kept from the previous bark/ember palette so no call site
               needed remapping): they now map to <strong>ember</strong> = orange fill,{" "}
               <strong>ink</strong> = purple fill, <strong>peach</strong> = cream fill,{" "}
@@ -434,7 +434,7 @@ export default function BrandGuidePage() {
         <div className="grid gap-6 sm:grid-cols-2">
           <div className="rounded-card bg-white p-6 shadow-soft">
             <p className="font-ht-display text-ht-purple text-[13px] font-bold uppercase">--shadow-soft</p>
-            <p className="font-ht-body text-ht-purple/60 mt-2 text-[13px] leading-[1.6]">
+            <p className="font-ht-body text-ht-purple/70 mt-2 text-[13px] leading-[1.6]">
               Resting state for cards, buttons. Ink-tinted (rgb 1 6 2), not pure black, so it reads
               warm rather than grey.
             </p>
@@ -444,7 +444,7 @@ export default function BrandGuidePage() {
           </div>
           <div className="rounded-card bg-white p-6 shadow-lift">
             <p className="font-ht-display text-ht-purple text-[13px] font-bold uppercase">--shadow-lift</p>
-            <p className="font-ht-body text-ht-purple/60 mt-2 text-[13px] leading-[1.6]">
+            <p className="font-ht-body text-ht-purple/70 mt-2 text-[13px] leading-[1.6]">
               Hover state. Button and card hover both transition from soft to this.
             </p>
             <code className="font-ht-body text-ht-purple/50 mt-3 block text-[11px] leading-[1.5]">
@@ -460,7 +460,7 @@ export default function BrandGuidePage() {
             <p className="font-ht-display text-ht-purple mb-3 text-[13px] font-bold uppercase">Easing curves</p>
             <SpecRow label="--ease-out" value="cubic-bezier(.23,1,.32,1)" />
             <SpecRow label="--ease-in-out" value="cubic-bezier(.77,0,.175,1)" />
-            <p className="font-ht-body text-ht-purple/60 mt-4 text-[13px] leading-[1.6]">
+            <p className="font-ht-body text-ht-purple/70 mt-4 text-[13px] leading-[1.6]">
               Default UI feedback uses ease-out; on-screen scroll movement uses ease-in-out. Standard
               CSS ease-outs read as too weak against this brand's confident type. These curves are
               intentionally stronger.
@@ -471,7 +471,7 @@ export default function BrandGuidePage() {
             <SpecRow label="Micro-interactions" value="150–200ms" />
             <SpecRow label="Nav / larger transitions" value="400–600ms" />
             <SpecRow label="Scroll reveals" value="800ms, power4.out" />
-            <p className="font-ht-body text-ht-purple/60 mt-4 text-[13px] leading-[1.6]">
+            <p className="font-ht-body text-ht-purple/70 mt-4 text-[13px] leading-[1.6]">
               Built on GSAP + Lenis smooth scroll, gated behind <code className="text-[12px]">gsap.matchMedia</code>{" "}
               for reduced motion. Reveals fade+rise once per element (never replay on re-scroll).
             </p>

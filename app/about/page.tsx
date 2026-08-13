@@ -150,7 +150,7 @@ export default function AboutPage() {
             <RevealStagger className="border-ht-purple/15 border-t" y={16}>
               {beliefs.map((belief, i) => (
                 <div key={belief} className="border-ht-purple/15 flex gap-6 border-b py-5">
-                  <span aria-hidden="true" className="font-ht-display text-ht-orange pt-1 text-[13px] font-bold tabular-nums">
+                  <span aria-hidden="true" className="font-ht-display text-ht-crimson pt-1 text-[13px] font-bold tabular-nums">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <p className="text-ht-purple/85 max-w-[52ch] text-[clamp(1rem,1.4vw,1.2rem)] leading-[1.5]">
@@ -181,7 +181,7 @@ export default function AboutPage() {
                 key={step.number}
                 className="bg-white ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] rounded-card p-6 ring-2"
               >
-                <p className="font-ht-display text-ht-orange text-[13px] font-bold">{step.number}</p>
+                <p className="font-ht-display text-ht-crimson text-[13px] font-bold">{step.number}</p>
                 <h3 className="font-ht-display text-ht-purple mt-2 text-[16px] font-bold">{step.title}</h3>
                 <p className="text-ht-purple/70 mt-2 text-[14px] leading-[1.6]">{step.description}</p>
               </HoverCard>
@@ -193,11 +193,11 @@ export default function AboutPage() {
               And every project gives you a choice in how you pay: a 50% deposit and the rest on
               completion, or 12 monthly instalments, so investing properly in your website
               doesn&rsquo;t mean disrupting your cash flow.{" "}
-              <Link href="/#process" className="text-ht-orange font-bold underline underline-offset-4">
+              <Link href="/#process" className="text-ht-crimson font-bold underline underline-offset-4">
                 See the full process
               </Link>{" "}
               or{" "}
-              <Link href="/pricing" className="text-ht-orange font-bold underline underline-offset-4">
+              <Link href="/pricing" className="text-ht-crimson font-bold underline underline-offset-4">
                 view pricing
               </Link>
               .

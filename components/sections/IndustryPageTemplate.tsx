@@ -66,7 +66,7 @@ export function IndustryPageTemplate({ slug }: { slug: string }) {
                 key={point.title}
                 className="bg-white ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] rounded-card p-6 ring-2"
               >
-                <p className="font-ht-display text-ht-orange text-[13px] font-bold tabular-nums">
+                <p className="font-ht-display text-ht-crimson text-[13px] font-bold tabular-nums">
                   {String(i + 1).padStart(2, "0")}
                 </p>
                 <h2 className="font-ht-display text-ht-purple mt-3 text-[16px] font-bold">{point.title}</h2>
@@ -104,11 +104,11 @@ export function IndustryPageTemplate({ slug }: { slug: string }) {
             <p className="text-ht-purple/70 mt-10 max-w-[58ch] text-[16px] leading-[1.7]">
               Every project is one fixed price. Pay a 50% deposit and the rest on completion, or spread it
               over 12 monthly instalments.{" "}
-              <Link href="/pricing" className="text-ht-orange font-bold underline underline-offset-4">
+              <Link href="/pricing" className="text-ht-crimson font-bold underline underline-offset-4">
                 See pricing
               </Link>{" "}
               or{" "}
-              <Link href="/services" className="text-ht-orange font-bold underline underline-offset-4">
+              <Link href="/services" className="text-ht-crimson font-bold underline underline-offset-4">
                 view every service
               </Link>
               .

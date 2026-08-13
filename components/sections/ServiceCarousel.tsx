@@ -103,8 +103,10 @@ export function ServiceCarousel() {
     // handles the bottom overlap on its own side.
     <section className="bg-ht-cream relative z-[1] -mt-16 overflow-hidden rounded-[40px] py-20 sm:rounded-[56px] md:py-28">
       <RevealSection className="mx-auto max-w-[1000px] px-6 sm:px-10">
+        {/* Was "…All in ONE place!" — shouty caps plus an exclamation mark,
+            off-register for a brand documented as plain and quietly confident. */}
         <h2 className="font-ht-display text-ht-purple mx-auto max-w-[20ch] text-center text-[clamp(1.75rem,3.6vw,3rem)] leading-[1.15] font-bold">
-          We help you design and build better digital products. All in ONE place!
+          Design, build, and everything after launch. One team.
         </h2>
       </RevealSection>
 
@@ -136,8 +138,11 @@ export function ServiceCarousel() {
                     className="object-cover"
                   />
                 </div>
+                {/* text-ink on the orange band: white measured 3.48:1 (label)
+                    and white/90 3.05:1 (description), both under the 4.5:1 AA
+                    bar at these sizes. ink clears at 5.86:1. */}
                 <div className="bg-ht-orange px-6 py-4">
-                  <p className="font-ht-display text-[15px] font-bold text-white uppercase sm:text-[17px]">
+                  <p className="font-ht-display text-ink text-[15px] font-bold uppercase sm:text-[17px]">
                     {card.label}
                   </p>
                   <div
@@ -146,7 +151,7 @@ export function ServiceCarousel() {
                     }}
                     className="h-0 overflow-hidden opacity-0"
                   >
-                    <p className="font-ht-body mt-2 text-[13px] leading-snug text-white/90 sm:text-[14px]">
+                    <p className="font-ht-body text-ink/80 mt-2 text-[13px] leading-snug sm:text-[14px]">
                       {card.description}
                     </p>
                   </div>

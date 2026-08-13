@@ -163,7 +163,7 @@ export function ContactForm() {
       </div>
 
       {status === "error" ? (
-        <p className="text-ht-orange mt-6 text-[14px] font-medium" role="alert">
+        <p className="text-ht-crimson mt-6 text-[14px] font-medium" role="alert">
           Something went wrong sending that. Please email us directly at{" "}
           <a href={`mailto:${site.email}`} className="underline">
             {site.email}
@@ -175,7 +175,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="rounded-pill bg-ht-orange font-ht-display text-white mt-8 inline-flex h-13 cursor-pointer items-center justify-center gap-2 px-7 text-[15px] font-bold uppercase tracking-wide shadow-soft transition-[transform,background-color] duration-150 hover:bg-ht-orange/90 motion-safe:hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-60"
+        className="rounded-pill bg-ht-orange font-ht-display text-ink mt-8 inline-flex h-13 cursor-pointer items-center justify-center gap-2 px-7 text-[15px] font-bold uppercase tracking-wide shadow-soft transition-[transform,background-color] duration-150 hover:bg-ht-orange/90 motion-safe:hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-60"
       >
         {status === "submitting" ? "Sending…" : "Send Your Enquiry"}
         {status === "submitting" ? null : <span aria-hidden="true">→</span>}
@@ -188,8 +188,8 @@ function FieldLabel({ htmlFor, label, required, optional }: { htmlFor: string; l
   return (
     <label htmlFor={htmlFor} className="font-ht-display text-ht-purple mb-2 block text-[14px] font-bold">
       {label}
-      {required ? <span className="text-ht-orange"> *</span> : null}
-      {optional ? <span className="text-ht-purple/60 font-medium"> (optional)</span> : null}
+      {required ? <span className="text-ht-crimson"> *</span> : null}
+      {optional ? <span className="text-ht-purple/70 font-medium"> (optional)</span> : null}
     </label>
   );
 }
@@ -197,7 +197,7 @@ function FieldLabel({ htmlFor, label, required, optional }: { htmlFor: string; l
 function FieldError({ id, message }: { id: string; message?: string }) {
   if (!message) return null;
   return (
-    <p id={id} className="text-ht-orange mt-1.5 text-[13px] font-medium">
+    <p id={id} className="text-ht-crimson mt-1.5 text-[13px] font-medium">
       {message}
     </p>
   );

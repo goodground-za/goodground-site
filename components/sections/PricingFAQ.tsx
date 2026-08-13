@@ -70,7 +70,7 @@ function PricingFAQRow({ item, isOpen, onToggle }: { item: PricingFaqItem; isOpe
           className="text-ht-purple flex w-full cursor-pointer items-center gap-6 px-6 py-5 text-left sm:px-8"
         >
           <span className="font-ht-display flex-1 text-[15px] font-bold sm:text-[16px]">{item.question}</span>
-          <span aria-hidden="true" className="text-ht-orange border-ht-orange/40 grid size-7 shrink-0 place-items-center rounded-full border-2">
+          <span aria-hidden="true" className="text-ht-crimson border-ht-orange/40 grid size-7 shrink-0 place-items-center rounded-full border-2">
             <svg ref={iconRef} viewBox="0 0 16 16" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <path d="M8 2v12M2 8h12" />
             </svg>
