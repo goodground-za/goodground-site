@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { BreadcrumbSchema } from "@/components/Breadcrumbs";
-import { LiveMetrics } from "@/components/LiveMetrics";
 import { PageHero } from "@/components/PageHero";
 import { MagneticButton } from "@/components/motion-gsap/MagneticButton";
 import { RevealSection, RevealStagger } from "@/components/motion-gsap/RevealSection";
 import { SplitWords } from "@/components/motion-gsap/SplitWords";
-import { featuredProject, otherProjects } from "@/content/projects";
+import { caseStudies } from "@/content/caseStudies";
 import { pageSocialMeta } from "@/lib/metadata";
 
 const title = { absolute: "Our Work | GoodGround Website Development" };
 const description =
-  "The websites we've built, starting with this one. Every project measured on real Core Web Vitals rather than described. A website development studio in George, South Africa.";
+  "Case studies from GoodGround, a website development studio in George, South Africa. Every project ends in numbers measured on the live site, with instructions for checking them yourself.";
 const path = "/work";
 
 export const metadata: Metadata = {
@@ -22,124 +22,163 @@ export const metadata: Metadata = {
 };
 
 /**
- * Project list. The first entry in content/projects.ts gets the feature card;
- * everything after it fills the grid below, so adding a project is a content
- * change with no work here.
+ * Case studies only. Add an entry to content/caseStudies.ts and it appears
+ * here: the first one gets the wide feature treatment, the rest fill the grid
+ * below, so ordering in that array is the ordering on this page.
  *
- * The feature card is currently the studio's own site, which renders the live
- * performance readout instead of a screenshot. That is deliberate: GoodGround
- * launched in 2026 with no handed-over client work, and the honest answer to
- * "can these people build?" is a measurement of the only site they have built,
- * taken in the visitor's own browser. Replacing invented proof with verifiable
- * proof, rather than with an apology.
+ * This page used to lead with a card for the studio's own site, rendering a
+ * live Core Web Vitals readout in place of a screenshot. That existed because
+ * there was no client work to show. Now that real case studies land here, the
+ * self-referential card has been removed rather than left sitting above them.
+ *
+ * The no-fabrication rule still governs everything below: a project only
+ * appears once it is genuinely live, concept builds are labelled as concept
+ * builds, and the only numbers quoted are ones a reader can verify.
  */
 export default function WorkPage() {
+  const [featured, ...rest] = caseStudies;
+
   return (
     <>
       <BreadcrumbSchema trail={[{ name: "Work", path: "/work" }]} />
 
       <PageHero
         eyebrow="Our Work"
-        title="We'd rather be tested than believed."
-        intro="Every studio says its websites are fast and well built. Below is ours, grading itself against Google's own benchmarks while you read this page."
+        title="Built, then measured."
+        intro="Every case study here ends in numbers taken from the live site, each one with instructions for checking it yourself. Where a project was a concept build rather than client work, it says so at the top."
       />
 
+      {/* pb-[24vw]: reserves room for the footer's CloudDivider, which scales
+          with viewport width. Same reservation every other page here makes. */}
       <section className="bg-ht-cream px-6 pt-16 pb-[24vw] sm:px-10 md:pt-24">
         <div className="mx-auto max-w-[1434px]">
-          {/* Feature card */}
-          <RevealSection>
-            <article className="bg-ht-purple rounded-block overflow-hidden">
-              <div className="p-8 sm:p-12 lg:p-14">
-                <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-                  <span className="bg-ht-orange text-ink font-ht-display rounded-pill px-3 py-1 text-[12px] font-bold tracking-[0.08em] uppercase">
-                    Project 01
-                  </span>
-                  <span className="text-[13px] font-medium text-white/70">{featuredProject.sector}</span>
-                  <span aria-hidden="true" className="hidden text-white/40 sm:inline">
-                    ·
-                  </span>
-                  <span className="text-[13px] font-medium text-white/70">{featuredProject.year}</span>
-                </div>
-
-                <h2 className="font-ht-display mt-7 text-[clamp(1.75rem,4vw,3rem)] leading-[1.06] font-bold text-white uppercase">
-                  {featuredProject.name}
-                </h2>
-                <SplitWords
-                  as="p"
-                  text={featuredProject.tagline}
-                  className="font-ht-display text-ht-pink mt-3 max-w-[34ch] text-[clamp(1.1rem,2vw,1.5rem)] leading-[1.25] font-bold"
-                />
-
-                <RevealSection delay={0.08}>
-                  <p className="mt-6 max-w-[62ch] text-[15px] leading-[1.7] text-white/80">
-                    {featuredProject.summary}
-                  </p>
-
-                  <ul className="mt-7 flex flex-wrap gap-2">
-                    {featuredProject.disciplines.map((d) => (
-                      <li
-                        key={d}
-                        className="font-ht-body rounded-pill border border-white/25 px-4 py-1.5 text-[13px] font-medium text-white"
-                      >
-                        {d}
-                      </li>
-                    ))}
-                  </ul>
-                </RevealSection>
-              </div>
-
-              {/* The readout sits on cream inside the dark card so the numbers
-                  read as a report attached to the project, not as decoration. */}
-              <div className="bg-ht-cream px-8 pt-2 pb-10 sm:px-12 lg:px-14">
-                <LiveMetrics />
-              </div>
-            </article>
-          </RevealSection>
-
-          {/* Remaining projects, or an honest placeholder until they land. */}
-          {otherProjects.length > 0 ? (
+          {featured ? (
             <>
-              <h2 className="font-ht-display text-ht-purple mt-16 text-[clamp(1.25rem,2vw,1.6rem)] font-bold uppercase">
-                More projects
-              </h2>
-              <RevealStagger className="mt-6 grid gap-5 md:grid-cols-2 lg:grid-cols-3" y={16}>
-                {otherProjects.map((project) => (
-                  <article
-                    key={project.slug}
-                    className="rounded-card ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] flex h-full flex-col bg-white p-7 ring-2"
-                  >
-                    <div className="text-ht-purple/70 flex items-center gap-3 text-[13px] font-medium">
-                      <span className="bg-ht-orange/10 text-ht-crimson rounded-pill px-3 py-1 font-bold">
-                        {project.sector}
-                      </span>
-                      <span>{project.year}</span>
+              {/* Feature: first case study, image and copy side by side. */}
+              <RevealSection>
+                <article className="rounded-block ring-ht-pink shadow-[0_18px_0_0_var(--color-ht-pink)] overflow-hidden bg-white ring-2">
+                  <div className="grid lg:grid-cols-2">
+                    {/* object-contain, not cover: this is a screenshot of a
+                        website, and cropping it slices the client's own logo off
+                        the edge. The shot is on white and so is the card, so the
+                        letterboxing is invisible. */}
+                    <Link
+                      href={`/work/${featured.slug}`}
+                      className="flex items-center justify-center bg-white p-6 lg:order-2 lg:p-8"
+                    >
+                      <Image
+                        src={featured.image}
+                        alt={featured.imageAlt}
+                        width={1440}
+                        height={900}
+                        priority
+                        sizes="(max-width: 1024px) 100vw, 700px"
+                        className="rounded-card h-auto w-full object-contain"
+                      />
+                    </Link>
+
+                    <div className="p-8 sm:p-12 lg:order-1 lg:p-14">
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+                        <span className="bg-ht-orange text-ink font-ht-display rounded-pill px-3 py-1 text-[12px] font-bold tracking-[0.08em] uppercase">
+                          {featured.client}
+                        </span>
+                        <span className="border-ht-purple/25 text-ht-purple/80 rounded-pill border px-3 py-1 text-[12px] font-medium">
+                          {featured.kind === "concept" ? "Concept build" : "Client project"}
+                        </span>
+                        <span className="text-ht-purple/70 text-[13px] font-medium">
+                          {featured.year}
+                        </span>
+                      </div>
+
+                      <h2 className="font-ht-display text-ht-purple mt-7 text-[clamp(1.6rem,3.4vw,2.5rem)] leading-[1.08] font-bold">
+                        {featured.title}
+                      </h2>
+                      <SplitWords
+                        as="p"
+                        text={featured.summary}
+                        className="text-ht-purple/75 mt-5 max-w-[54ch] text-[15px] leading-[1.7]"
+                      />
+
+                      <ul className="mt-7 flex flex-wrap gap-2">
+                        {featured.tags.map((t) => (
+                          <li
+                            key={t}
+                            className="font-ht-body border-ht-purple/20 text-ht-purple/80 rounded-pill border px-4 py-1.5 text-[13px] font-medium"
+                          >
+                            {t}
+                          </li>
+                        ))}
+                      </ul>
+
+                      <div className="mt-8">
+                        <MagneticButton>
+                          <Link
+                            href={`/work/${featured.slug}`}
+                            className="font-ht-display bg-ht-orange text-ink rounded-pill inline-block px-7 py-3.5 text-[14px] font-bold tracking-wide uppercase transition-transform duration-200 hover:scale-[1.03]"
+                          >
+                            Read the case study
+                          </Link>
+                        </MagneticButton>
+                      </div>
                     </div>
-                    <h3 className="font-ht-display text-ht-purple mt-5 text-[clamp(1.25rem,2vw,1.6rem)] leading-tight font-bold">
-                      {project.name}
-                    </h3>
-                    <p className="text-ht-purple/70 mt-3 flex-1 text-[15px] leading-[1.6]">
-                      {project.tagline}
-                    </p>
-                    {project.url ? (
-                      <a
-                        href={project.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-ht-crimson mt-6 inline-flex items-center gap-2 text-[14px] font-bold"
-                      >
-                        Visit the site
-                        <span aria-hidden="true">→</span>
-                      </a>
-                    ) : null}
-                  </article>
-                ))}
-              </RevealStagger>
+                  </div>
+                </article>
+              </RevealSection>
+
+              {/* Everything after the first one. */}
+              {rest.length > 0 ? (
+                <RevealStagger className="mt-5 grid gap-5 md:grid-cols-2 lg:grid-cols-3" y={16}>
+                  {rest.map((study) => (
+                    <article
+                      key={study.slug}
+                      className="rounded-card ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] flex h-full flex-col overflow-hidden bg-white ring-2"
+                    >
+                      <Link href={`/work/${study.slug}`} className="block">
+                        <Image
+                          src={study.image}
+                          alt={study.imageAlt}
+                          width={1440}
+                          height={900}
+                          loading="lazy"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 450px"
+                          className="h-auto w-full"
+                        />
+                      </Link>
+                      <div className="flex flex-1 flex-col p-7">
+                        <div className="flex flex-wrap items-center gap-2 text-[13px] font-medium">
+                          <span className="bg-ht-orange/10 text-ht-crimson rounded-pill px-3 py-1 font-bold">
+                            {study.client}
+                          </span>
+                          <span className="border-ht-purple/20 text-ht-purple/70 rounded-pill border px-3 py-1">
+                            {study.kind === "concept" ? "Concept build" : "Client project"}
+                          </span>
+                        </div>
+                        <h3 className="font-ht-display text-ht-purple mt-5 text-[clamp(1.15rem,2vw,1.45rem)] leading-tight font-bold">
+                          {study.title}
+                        </h3>
+                        <p className="text-ht-purple/70 mt-3 flex-1 text-[15px] leading-[1.6]">
+                          {study.summary}
+                        </p>
+                        <Link
+                          href={`/work/${study.slug}`}
+                          className="text-ht-crimson mt-6 inline-flex items-center gap-2 text-[14px] font-bold"
+                        >
+                          Read the case study
+                          <span aria-hidden="true">→</span>
+                        </Link>
+                      </div>
+                    </article>
+                  ))}
+                </RevealStagger>
+              ) : null}
             </>
           ) : (
+            /* Nothing published yet. Say so plainly rather than filling the
+               space with stock mock-ups or work that isn't ours. */
             <RevealSection>
-              <div className="border-ht-purple/15 rounded-block mt-10 border-2 border-dashed p-8 text-center sm:p-12">
+              <div className="border-ht-purple/15 rounded-block border-2 border-dashed p-8 text-center sm:p-12">
                 <p className="font-ht-display text-ht-purple text-[clamp(1.15rem,2.2vw,1.6rem)] leading-snug font-bold">
-                  Client projects are landing here shortly.
+                  Case studies are landing here shortly.
                 </p>
                 <p className="text-ht-purple/70 mx-auto mt-3 max-w-[52ch] text-[15px] leading-[1.7]">
                   We would rather show you the real thing once it is live than fill this space with

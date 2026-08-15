@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { articles } from "@/content/articles";
+import { caseStudies } from "@/content/caseStudies";
 import { industryPages } from "@/content/industryPages";
 import { servicePages } from "@/content/servicePages";
 import { site } from "@/content/site";
@@ -41,5 +42,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...pages, ...articlePages];
+  // Case study detail pages. /work only lists them, so without this the
+  // studies themselves were absent from the sitemap entirely.
+  const caseStudyPages: MetadataRoute.Sitemap = caseStudies.map((c) => ({
+    url: `${site.url}/work/${c.slug}`,
+    lastModified,
+    changeFrequency: "yearly",
+    priority: 0.7,
+  }));
+
+  return [...pages, ...articlePages, ...caseStudyPages];
 }

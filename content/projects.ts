@@ -1,10 +1,16 @@
 /**
- * Portfolio entries for /work. Typed, no CMS, same constraint as every other
- * content file here.
+ * DEPRECATED — NOT RENDERED ANYWHERE (2026-08-15).
  *
- * ADDING A PROJECT: prepend or append an entry with `kind: "standard"` and fill
- * in every field. `/work` renders the first entry as the large feature card and
- * the rest in a grid, so ordering in this array is the ordering on the page.
+ * /work now lists case studies from content/caseStudies.ts instead. The card
+ * this file fed (the studio's own site, with a live Core Web Vitals readout in
+ * place of a screenshot) was removed once real case studies existed to lead
+ * with. Nothing imports this file.
+ *
+ * ADD NEW WORK TO content/caseStudies.ts, not here.
+ *
+ * Kept rather than deleted so the LiveMetrics idea and this entry's copy are
+ * recoverable if the self-measuring card is ever wanted on another page. Safe
+ * to delete along with components/LiveMetrics.tsx if not.
  *
  * The rule that has held since launch still holds: no fabricated clients,
  * results, or logos. Only add a project once it is genuinely live, and only

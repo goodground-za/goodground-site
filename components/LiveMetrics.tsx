@@ -1,5 +1,14 @@
 "use client";
 
+/**
+ * CURRENTLY UNUSED (2026-08-15). This rendered the live Core Web Vitals
+ * readout on the old /work feature card, which was removed when real case
+ * studies replaced it. The component still works and suits any page that
+ * wants to be measured rather than described, so it is kept rather than
+ * deleted. Safe to remove along with content/projects.ts if not wanted.
+ */
+
+
 import { useEffect, useState } from "react";
 import { AnimatedNumber } from "@/components/AnimatedNumber";
 
