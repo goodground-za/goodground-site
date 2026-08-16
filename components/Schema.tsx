@@ -90,8 +90,9 @@ export function HomeSchema() {
     // Derived from the real packages array rather than hard-coded, so it can't
     // drift when prices change.
     priceRange: `R${Math.min(...packages.map((p) => p.total))}-R${Math.max(...packages.map((p) => p.total))}`,
-    // Serves the country, based in George: South Africa first for reach, the
-    // locality kept for the local pack.
+    // Positioned nationally. areaServed is the country; the postal address
+    // stays the real registered one so the local pack and the Google Business
+    // Profile keep matching NAP.
     serviceType: "Website development and design",
     areaServed: { "@type": "Country", name: "South Africa" },
     address: {

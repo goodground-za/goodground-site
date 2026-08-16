@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatedNumber, formatRand } from "@/components/AnimatedNumber";
+import { BorderTrail } from "@/components/motion/BorderTrail";
 import { HoverCard } from "@/components/motion-gsap/HoverCard";
 import { RevealSection, RevealStagger } from "@/components/motion-gsap/RevealSection";
 import type { SelectedConfig } from "@/components/PricingEnquiryForm";
@@ -45,8 +46,29 @@ export function PricingPackages({ onSelectPackage }: { onSelectPackage: (config:
                     : "ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)]"
                 }`}
               >
+                {/* Border trail on the recommended card only.
+                    It lives in its own clipping wrapper rather than on the card
+                    itself: the card would need overflow-hidden for the light to
+                    follow the rounded corners, and that would also clip the
+                    "Most popular" badge, which deliberately sits outside the
+                    top edge at -top-3. */}
                 {recommended ? (
-                  <span className="bg-ht-orange text-ink rounded-pill absolute -top-3 left-6 px-3 py-1 text-[11px] font-bold tracking-wide uppercase">
+                  <div className="rounded-card pointer-events-none absolute inset-0 overflow-hidden">
+                    {/* The core is a pale tint of the brand orange, not the
+                        orange itself. This card's ring is already solid
+                        #fe431a, so a trail in the same value is invisible
+                        against it. The lighter core reads as a glint moving
+                        along the brand-coloured edge. */}
+                    <BorderTrail
+                      className="bg-linear-to-l from-transparent via-[#ffc9b8] to-transparent"
+                      size={130}
+                      borderWidth={2}
+                    />
+                  </div>
+                ) : null}
+
+                {recommended ? (
+                  <span className="bg-ht-orange text-ink rounded-pill absolute -top-3 left-6 z-[1] px-3 py-1 text-[11px] font-bold tracking-wide uppercase">
                     Most popular
                   </span>
                 ) : null}

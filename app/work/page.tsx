@@ -11,7 +11,7 @@ import { pageSocialMeta } from "@/lib/metadata";
 
 const title = { absolute: "Our Work | GoodGround Website Development" };
 const description =
-  "Case studies from GoodGround, a website development studio in George, South Africa. Every project ends in numbers measured on the live site, with instructions for checking them yourself.";
+  "Case studies from GoodGround, a website development studio in South Africa. Every project ends in numbers measured on the live site, with instructions for checking them yourself.";
 const path = "/work";
 
 export const metadata: Metadata = {

@@ -31,25 +31,15 @@ export function CTABand() {
               className="font-ht-display mx-auto mt-4 max-w-[18ch] text-[clamp(2rem,5vw,4rem)] font-bold text-white"
             />
 
-            <div className="mt-9 flex items-center justify-center gap-3">
+            {/* Matches the hero CTA: sentence case (so `uppercase` has to come
+                off too) and no decorative arrow disc beside it. */}
+            <div className="mt-9 flex items-center justify-center">
               <MagneticButton>
                 <Link
                   href="/start-project"
-                  className="font-ht-display bg-ht-cream text-ht-purple rounded-pill inline-block px-7 py-3.5 text-[14px] font-bold tracking-wide uppercase shadow-[0_12px_28px_-10px_rgba(0,0,0,0.35)] transition-transform duration-200 hover:scale-[1.03]"
+                  className="font-ht-display bg-ht-cream text-ht-purple rounded-pill inline-block px-7 py-3.5 text-[15px] font-bold tracking-wide shadow-[0_12px_28px_-10px_rgba(0,0,0,0.35)] transition-transform duration-200 hover:scale-[1.03]"
                 >
-                  Let&rsquo;s Chat
-                </Link>
-              </MagneticButton>
-              <MagneticButton>
-                <Link
-                  href="/start-project"
-                  aria-hidden="true"
-                  tabIndex={-1}
-                  className="text-ht-purple bg-ht-cream grid size-12 place-items-center rounded-full transition-transform duration-200 hover:scale-[1.08] hover:rotate-12"
-                >
-                  <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M7 17 17 7M8 7h9v9" />
-                  </svg>
+                  Let&rsquo;s chat
                 </Link>
               </MagneticButton>
             </div>

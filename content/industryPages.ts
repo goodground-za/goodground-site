@@ -34,7 +34,7 @@ export const industryPages: IndustryPageData[] = [
     title: "Trades & Home Services",
     metaTitle: "Website Design for Electricians, Plumbers & Builders | South Africa",
     metaDescription:
-      "Websites for electricians, plumbers, builders, and contractors across South Africa. Fast, mobile-friendly sites that make you look credible before the quote. Based in George, built for tradespeople nationwide.",
+      "Websites for electricians, plumbers, builders, and contractors across South Africa. Fast, mobile-friendly sites that make you look credible before the quote.",
     h1: "Website design for electricians, plumbers, and builders.",
     heroIntro:
       "A homeowner comparing three quotes will look you up before they call. If what they find is a Facebook page that hasn't posted since last winter, you've already lost ground to whoever showed up looking established. We build websites for tradespeople that make the case for you before the phone rings.",
@@ -55,7 +55,7 @@ export const industryPages: IndustryPageData[] = [
     ],
     relevantServiceSlugs: ["website-development", "seo-foundations", "care-plans", "google-ads"],
     localProof:
-      "We're based in George on the Garden Route, and we build for tradespeople across South Africa, city electricians, coastal builders, rural contractors. Every site is built with local search in mind, so \"plumber in [your town]\" has something real to find.",
+      "We build for tradespeople across South Africa, city electricians, coastal builders, rural contractors. Every site is built with local search in mind, so \"plumber in [your town]\" has something real to find.",
     faq: [
       {
         question: "Can you show my service area instead of just one town?",
@@ -106,7 +106,7 @@ export const industryPages: IndustryPageData[] = [
     ],
     relevantServiceSlugs: ["website-development", "seo-foundations", "care-plans", "meta-ads"],
     localProof:
-      "We're based in George, in the heart of the Garden Route, and we know the accommodation and hospitality market here first-hand. We also build for restaurants, cafés, and guesthouses right across South Africa, wherever your guests are coming from.",
+      "We build for guesthouses, restaurants and cafés right across South Africa, from coastal tourist towns to city centres, wherever your guests are coming from.",
     faq: [
       {
         question: "Can you build a booking or enquiry system for my guesthouse?",
@@ -136,7 +136,7 @@ export const industryPages: IndustryPageData[] = [
     title: "Health & Wellness",
     metaTitle: "Website Design for Clinics, Dentists & Physiotherapists | South Africa",
     metaDescription:
-      "Websites for clinics, dentists, physiotherapists, and medical practices across South Africa. Clear, trustworthy sites that make booking an appointment simple. Based in George, built for practices nationwide.",
+      "Websites for clinics, dentists, physiotherapists, and medical practices across South Africa. Clear, trustworthy sites that make booking an appointment simple.",
     h1: "Website design for clinics, dentists, and physiotherapists.",
     heroIntro:
       "Someone searching for a new dentist or physio is already a little anxious. A confusing website, or one that doesn't say plainly what you treat and how to book, adds friction at exactly the wrong moment. We build sites for health and wellness practices that read as calm and credible as the practice itself.",
@@ -157,7 +157,7 @@ export const industryPages: IndustryPageData[] = [
     ],
     relevantServiceSlugs: ["website-development", "seo-foundations", "care-plans"],
     localProof:
-      "We're based in George on the Garden Route and build for health and wellness practices across South Africa, from single-practitioner clinics to multi-partner practices. Every site includes local SEO, so patients searching in your area can actually find you.",
+      "We build for health and wellness practices across South Africa, from single-practitioner clinics to multi-partner practices. Every site includes local SEO, so patients searching in your area can actually find you.",
     faq: [
       {
         question: "Can patients book or request an appointment directly on the site?",
@@ -187,7 +187,7 @@ export const industryPages: IndustryPageData[] = [
     title: "Professional & Consulting",
     metaTitle: "Website Design for Accountants, Law Firms & Consultants | South Africa",
     metaDescription:
-      "Websites for accountants, law firms, consultants, and financial advisors across South Africa. A site that reads as credible as the advice you give. Based in George, built for firms nationwide.",
+      "Websites for accountants, law firms, consultants, and financial advisors across South Africa. A site that reads as credible as the advice you give.",
     h1: "Website design for accountants, law firms, and consultants.",
     heroIntro:
       "For a professional services firm, the website is often the first proof of competence a client sees, before any meeting happens. A dated or generic site undercuts the credibility you've spent years building. We build sites for accountants, consultants, and firms that carry that credibility online.",
@@ -208,7 +208,7 @@ export const industryPages: IndustryPageData[] = [
     ],
     relevantServiceSlugs: ["website-development", "ux-design", "seo-foundations", "care-plans"],
     localProof:
-      "We're based in George on the Garden Route and build for professional and consulting firms across South Africa, from sole practitioners to multi-partner practices. Local SEO is built in from day one, so you show up for the searches that actually lead to enquiries.",
+      "We build for professional and consulting firms across South Africa, from sole practitioners to multi-partner practices. Local SEO is built in from day one, so you show up for the searches that actually lead to enquiries.",
     faq: [
       {
         question: "Can the site list multiple partners or team members separately?",
@@ -226,7 +226,7 @@ export const industryPages: IndustryPageData[] = [
           "Not necessarily. Our smaller fixed packages cover a clean, credible site for a sole practitioner or small firm without paying for features built for a larger practice. See /pricing for what's actually included.",
       },
       {
-        question: "Do you work with firms outside George?",
+        question: "Do you work with firms anywhere in South Africa?",
         answer:
           "Yes, we build for professional and consulting firms across South Africa. The whole process runs comfortably online, wherever your firm is based.",
       },
@@ -238,7 +238,7 @@ export const industryPages: IndustryPageData[] = [
     title: "Retail & Small Brands",
     metaTitle: "Ecommerce & Retail Website Design for Small Brands | South Africa",
     metaDescription:
-      "Ecommerce and retail website design for small brands and shops across South Africa. Online shops built to do the product justice and actually sell. Based in George, built for retailers nationwide.",
+      "Ecommerce and retail website design for small brands and shops across South Africa. Online shops built to do the product justice and actually sell.",
     h1: "Ecommerce website design for small brands and shops.",
     heroIntro:
       "A product worth making deserves an online shop that doesn't get in its own way. Slow pages, a clunky checkout, or photos that undersell it all cost you sales you never see happen. We build ecommerce and retail websites for small brands that make buying the product as easy as it should be.",
@@ -259,7 +259,7 @@ export const industryPages: IndustryPageData[] = [
     ],
     relevantServiceSlugs: ["website-development", "ux-design", "seo-foundations", "meta-ads"],
     localProof:
-      "We're based in George on the Garden Route and build ecommerce sites for makers, small shops, and retail brands across South Africa, shipping locally or nationwide. Every shop is built fast and structured for search, so it isn't reliant on social media alone.",
+      "We build ecommerce sites for makers, small shops, and retail brands across South Africa, shipping locally or nationwide. Every shop is built fast and structured for search, so it isn't reliant on social media alone.",
     faq: [
       {
         question: "What payment gateways can you set up for South African customers?",
@@ -289,7 +289,7 @@ export const industryPages: IndustryPageData[] = [
     title: "Non-Profits & Community",
     metaTitle: "Website Design for Non-Profits & NPOs | South Africa",
     metaDescription:
-      "Website design for non-profits, NPOs, and community organisations across South Africa. Sites that tell the story plainly and make it easy to donate, volunteer, or get in touch. Based in George.",
+      "Website design for non-profits, NPOs, and community organisations across South Africa. Sites that tell the story plainly and make it easy to donate, volunteer, or get in touch.",
     h1: "Website design for non-profits and community organisations.",
     heroIntro:
       "The work speaks for itself, but only if people can find it and understand it in the first thirty seconds. We build websites for non-profits and community organisations that tell the story plainly and make it simple for someone to donate, volunteer, or get involved.",
@@ -310,7 +310,7 @@ export const industryPages: IndustryPageData[] = [
     ],
     relevantServiceSlugs: ["website-development", "seo-foundations", "care-plans"],
     localProof:
-      "We're based in George on the Garden Route and build for non-profits and community organisations across South Africa. We understand that budgets are tighter here, and we'll always be upfront about what's realistic for yours.",
+      "We build for non-profits and community organisations across South Africa. We understand that budgets are tighter here, and we'll always be upfront about what's realistic for yours.",
     faq: [
       {
         question: "Do you offer reduced pricing for non-profits?",

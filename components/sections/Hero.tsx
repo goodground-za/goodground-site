@@ -88,7 +88,7 @@ export function Hero() {
       <div className="relative z-[2] mx-auto w-full max-w-[1200px] px-6 pt-24 pb-20 text-center sm:px-10 md:px-14">
         <SplitWords
           as="h1"
-          text="We're a website development studio based in George, South Africa, building AI-accelerated sites that convert."
+          text="We're a website development studio based in South Africa, building AI-accelerated sites that convert."
           trigger="mount"
           delay={0.15}
           className="font-ht-display mx-auto max-w-[34ch] text-[clamp(1.85rem,3.6vw,3.25rem)] leading-[1.15] font-bold text-white"
@@ -96,32 +96,23 @@ export function Hero() {
 
         <div ref={copyRef} className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <span className="font-ht-body text-[15px] font-bold text-white sm:text-[17px]">We specialise in:</span>
-          {/* text-ink, not white: white on this orange is 3.48:1, under the
-              4.5:1 AA bar at 15/17px bold. ink clears it at 5.86:1 and keeps
-              the client's orange unchanged. */}
-          <RotatingWords words={SPECIALTIES} className="bg-ht-orange text-ink rounded-pill px-5 py-2 text-[15px] font-bold sm:text-[17px]" />
+          {/* Purple pill, white text: 15.67:1. This used to be orange with ink
+              text, because white on that orange is only 3.48:1 and fails AA.
+              Purple sidesteps that entirely and holds the same contrast rule. */}
+          <RotatingWords words={SPECIALTIES} className="bg-ht-purple rounded-pill px-5 py-2 text-[15px] font-bold text-white sm:text-[17px]" />
         </div>
 
         <div ref={ctaRef}>
-          <div className="mt-8 flex items-center justify-center gap-3">
+          {/* Sentence case, so the `uppercase` class has to go too: leaving it
+              on would render "LET'S CHAT" no matter what the text says. The
+              decorative arrow disc that sat beside this was removed. */}
+          <div className="mt-8 flex items-center justify-center">
             <MagneticButton>
               <Link
                 href="/start-project"
-                className="font-ht-display bg-ht-cream text-ht-crimson rounded-pill inline-block px-7 py-3.5 text-[14px] font-bold tracking-wide uppercase shadow-[0_12px_28px_-10px_rgba(0,0,0,0.35)] transition-transform duration-200 hover:scale-[1.03]"
+                className="font-ht-display bg-ht-cream text-ht-crimson rounded-pill inline-block px-7 py-3.5 text-[15px] font-bold tracking-wide shadow-[0_12px_28px_-10px_rgba(0,0,0,0.35)] transition-transform duration-200 hover:scale-[1.03]"
               >
-                Let&rsquo;s Chat
-              </Link>
-            </MagneticButton>
-            <MagneticButton>
-              <Link
-                href="/start-project"
-                aria-hidden="true"
-                tabIndex={-1}
-                className="text-ht-crimson bg-ht-cream grid size-12 place-items-center rounded-full transition-transform duration-200 hover:scale-[1.08] hover:rotate-12"
-              >
-                <svg aria-hidden="true" viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M7 17 17 7M8 7h9v9" />
-                </svg>
+                Let&rsquo;s chat
               </Link>
             </MagneticButton>
           </div>
@@ -130,7 +121,7 @@ export function Hero() {
               "Two ways to pay" links to /pricing, where both options are
               actually broken down per package. */}
           <ul className="mt-7 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-[13px] font-medium text-white/80">
-            {["Two ways to pay", "Based in George"].map((item, i) => (
+            {["Two ways to pay", "Located in South Africa"].map((item, i) => (
               <li key={item} className="flex items-center gap-3">
                 {i > 0 ? <span aria-hidden="true" className="hidden size-1 rounded-full bg-white/50 sm:block" /> : null}
                 {item === "Two ways to pay" ? (

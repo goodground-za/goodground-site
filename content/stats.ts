@@ -16,5 +16,5 @@ export const stats: Stat[] = [
   { value: "1", countTo: 1, label: "Fixed price, agreed upfront" },
   { value: "2", countTo: 2, label: "Ways to pay, your choice" },
   { value: "1:1", countTo: null, label: "Dedicated designer per project, not a queue" },
-  { value: "100%", countTo: 100, suffix: "%", label: "George based, no outsourcing" },
+  { value: "100%", countTo: 100, suffix: "%", label: "South African built, no outsourcing" },
 ];

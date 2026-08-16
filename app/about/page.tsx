@@ -18,7 +18,7 @@ import { pageSocialMeta } from "@/lib/metadata";
  */
 const title = { absolute: "About GoodGround | Website Development Studio, South Africa" };
 const description =
-  "A website development studio in South Africa, built on the idea that businesses grow best on strong foundations. Based in George, on the Garden Route.";
+  "A website development studio working with businesses across South Africa, built on the idea that they grow best on strong foundations.";
 const path = "/about";
 
 export const metadata: Metadata = {
@@ -46,7 +46,7 @@ export default function AboutPage() {
       <PageHero eyebrow="About GoodGround" title="We believe every business deserves a strong foundation.">
         <div className="mt-4 flex justify-center">
           <span className="font-ht-body text-[13px] font-medium text-white/60">
-            Founded 2026 · George, Garden Route
+            Founded 2026 · South Africa
           </span>
         </div>
       </PageHero>
@@ -62,7 +62,7 @@ export default function AboutPage() {
                   a second founder we can't confirm, so this reads as "We kept
                   seeing", which works for one founder without inventing one. */}
               <p className="font-ht-display font-bold">
-                GoodGround was founded in 2026 in George, on the Garden Route, by a web developer
+                GoodGround was founded in 2026 by a web developer
                 with more than 10 years&rsquo; experience across UX and UI design, website design and
                 graphic design.
               </p>

@@ -24,7 +24,7 @@ export const site = {
     region: "Western Cape",
     country: "ZA",
   },
-  areaServed: "George, Garden Route, Western Cape, South Africa",
+  areaServed: "South Africa",
   /**
    * Stays `null` ON PURPOSE, even though a number now exists (see `whatsapp`
    * below). This field is the *displayable* phone number: `Footer.tsx` renders

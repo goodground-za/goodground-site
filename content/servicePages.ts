@@ -67,7 +67,7 @@ export const servicePages: ServicePageData[] = [
       "Direct line to the team that actually built your site, not a call centre reading from a script",
     ],
     localProof:
-      "We're based in George on the Garden Route and run care plans for businesses across South Africa. If your current site runs on WordPress, you already know the drill: plugin updates, security patches, and a dashboard that won't stop nagging you about both. We build differently. Every GoodGround site is custom-coded, with no plugin ecosystem to patch and no third-party theme to break on an update, and our care plans keep it running exactly that way.",
+      "We run care plans for businesses across South Africa. If your current site runs on WordPress, you already know the drill: plugin updates, security patches, and a dashboard that won't stop nagging you about both. We build differently. Every GoodGround site is custom-coded, with no plugin ecosystem to patch and no third-party theme to break on an update, and our care plans keep it running exactly that way.",
     faq: [
       {
         question: "Do I need a care plan, or can I maintain the site myself?",
@@ -127,7 +127,7 @@ export const servicePages: ServicePageData[] = [
       "No lock-in contract. Cancel with 30 days' notice",
     ],
     localProof:
-      "We're based in George on the Garden Route and manage Google Ads for businesses across South Africa, wherever your customers are searching from. Because we also build the websites those ads point to, your ads and your site tell one consistent story, which converts better than handing the two jobs to separate people who never talk to each other.",
+      "We manage Google Ads for businesses across South Africa, wherever your customers are searching from. Because we also build the websites those ads point to, your ads and your site tell one consistent story, which converts better than handing the two jobs to separate people who never talk to each other.",
     faq: [
       {
         question: "How much should I spend on Google Ads?",
@@ -187,7 +187,7 @@ export const servicePages: ServicePageData[] = [
       "No lock-in contract. Cancel with 30 days' notice",
     ],
     localProof:
-      "We're based in George on the Garden Route and run Meta Ads for businesses across South Africa, from local George campaigns to national reach. Because the same team builds your website, remarketing sends people who already know your brand to a site built to close the enquiry, not just a landing page bolted on for the campaign.",
+      "We run Meta Ads for businesses across South Africa, from single-town campaigns to national reach. Because the same team builds your website, remarketing sends people who already know your brand to a site built to close the enquiry, not just a landing page bolted on for the campaign.",
     faq: [
       {
         question: "What's the difference between Google Ads and Meta Ads?",
@@ -245,7 +245,7 @@ export const servicePages: ServicePageData[] = [
       "SEO foundations rebuilt properly, not just carried over broken",
     ],
     localProof:
-      "We're based in George on the Garden Route and redesign websites for businesses across South Africa, whether the current site was built by a freelancer, an old agency, or a DIY builder you've since outgrown.",
+      "We redesign websites for businesses across South Africa, whether the current site was built by a freelancer, an old agency, or a DIY builder you've since outgrown.",
     faq: [
       {
         question: "Will a redesign reset my Google rankings?",
@@ -281,7 +281,7 @@ export const servicePages: ServicePageData[] = [
     h1: "SEO services for small businesses across South Africa.",
     heroIntro:
       "A gorgeous website nobody can find on Google isn't an investment. It's a cost. Every GoodGround site is built on solid technical SEO from day one: fast load times, proper page structure, and content built around how your customers actually search.",
-    keywordChips: ["Local SEO", "SEO George", "Technical SEO", "SEO for small business"],
+    keywordChips: ["Local SEO", "Local SEO South Africa", "Technical SEO", "SEO for small business"],
     painPoints: [
       {
         title: "The site is invisible for the exact searches that matter",
@@ -299,12 +299,12 @@ export const servicePages: ServicePageData[] = [
     included: [
       "Fast load times, built in from the first line of code rather than optimised in afterward",
       "Proper page structure and headings that search engines can actually read",
-      "Local SEO for South African search, George included",
+      "Local SEO for South African search, town by town",
       "Content structured around how your customers actually search, not around how you'd describe the business internally",
       "Google Analytics and Search Console set up correctly from launch",
     ],
     localProof:
-      "We're based in George on the Garden Route and build SEO foundations into every website for businesses across South Africa. SEO isn't sold as a bolt-on service from a developer who doesn't understand your site, it's built into every GoodGround project from day one. If you already have a site and just need the deeper work, Advanced SEO (keyword research, schema markup, meta strategy) and site speed optimisation are available as standalone add-ons, from R3,000, confirmed in a quote.",
+      "We build SEO foundations into every website for businesses across South Africa. SEO isn't sold as a bolt-on service from a developer who doesn't understand your site, it's built into every GoodGround project from day one. If you already have a site and just need the deeper work, Advanced SEO (keyword research, schema markup, meta strategy) and site speed optimisation are available as standalone add-ons, from R3,000, confirmed in a quote.",
     faq: [
       {
         question: "Do you offer SEO as a standalone service, or only with a new website?",
@@ -317,7 +317,7 @@ export const servicePages: ServicePageData[] = [
           "Technical improvements can help within weeks. Ranking for competitive terms takes longer, usually months, and no honest agency will promise you a page-one spot on a specific date.",
       },
       {
-        question: "Do you do local SEO specifically for George?",
+        question: "Do you do local SEO for my town specifically?",
         answer:
           "Yes, and we build the same local SEO discipline into projects for businesses anywhere else in South Africa too.",
       },
@@ -363,7 +363,7 @@ export const servicePages: ServicePageData[] = [
       "Accessible design: readable contrast, visible focus states, and structure that works with a keyboard, not just a mouse",
     ],
     localProof:
-      "We're based in George on the Garden Route and design for businesses across South Africa. UX and UI design isn't sold as a separate service, it's included in every GoodGround website build, mapped around your specific customers rather than applied from a generic template.",
+      "We design for businesses across South Africa. UX and UI design isn't sold as a separate service, it's included in every GoodGround website build, mapped around your specific customers rather than applied from a generic template.",
     faq: [
       {
         question: "Is UX design sold separately, or only with a website build?",

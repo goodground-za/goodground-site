@@ -12,10 +12,19 @@ import { WhoWeBuildFor } from "@/components/sections/WhoWeBuildFor";
 
 /**
  * Title/description target "website development South Africa" (the primary
- * keyword), development-first, with George kept as the local anchor in the
- * hero trust line and schema address. Kept from the previous homepage's
- * metadata (unchanged by the visual redesign) since it's tuned SEO copy,
- * not part of the design language.
+ * keyword), development-first. Kept from the previous homepage's metadata
+ * (unchanged by the visual redesign) since it's tuned SEO copy, not part of
+ * the design language.
+ *
+ * 2026-08-16: GoodGround is positioned nationally across the whole site. The
+ * hero, every service and industry page, the FAQ, /about and /work all speak
+ * to South Africa rather than naming a town.
+ *
+ * The one deliberate exception is content/site.ts -> address.locality, which
+ * is still the real registered locality. It feeds the LocalBusiness postal
+ * address and the footer, and it has to keep matching the Google Business
+ * Profile. Changing it would be inaccurate and would break NAP consistency,
+ * which is what local search actually keys on.
  */
 export const metadata: Metadata = {
   title: "Website Development in South Africa | GoodGround",

@@ -46,14 +46,15 @@ export function WhoWeBuildFor() {
 
         <RevealSection y={16} className="mt-12 flex justify-center">
           <MagneticButton>
+            {/* Third CTA on the page; matched to the hero and CTABand so all
+                three read identically. Its arrow was inline rather than the
+                circular disc, but leaving it would have been the only
+                uppercase, arrowed CTA of the three. */}
             <Link
               href="/start-project"
-              className="font-ht-display bg-ht-cream text-ht-purple rounded-pill inline-flex items-center gap-2 px-7 py-3.5 text-[14px] font-bold tracking-wide uppercase transition-transform duration-200 hover:scale-[1.03]"
+              className="font-ht-display bg-ht-cream text-ht-purple rounded-pill inline-block px-7 py-3.5 text-[15px] font-bold tracking-wide transition-transform duration-200 hover:scale-[1.03]"
             >
-              Let&rsquo;s Chat
-              <svg viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M7 17 17 7M8 7h9v9" />
-              </svg>
+              Let&rsquo;s chat
             </Link>
           </MagneticButton>
         </RevealSection>
