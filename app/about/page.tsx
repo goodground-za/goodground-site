@@ -44,9 +44,12 @@ export default function AboutPage() {
       <BreadcrumbSchema trail={[{ name: "About", path: "/about" }]} />
 
       <PageHero eyebrow="About GoodGround" title="We believe every business deserves a strong foundation.">
+        {/* Names the real town rather than just "South Africa" (SEO audit
+            2026-08-16, item 19) — a genuine local anchor alongside the
+            national positioning the rest of this page argues for. */}
         <div className="mt-4 flex justify-center">
           <span className="font-ht-body text-[13px] font-medium text-white/60">
-            Founded 2026 · South Africa
+            Founded 2026 · George, South Africa
           </span>
         </div>
       </PageHero>

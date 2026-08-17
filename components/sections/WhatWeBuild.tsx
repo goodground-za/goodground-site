@@ -32,7 +32,11 @@ export function WhatWeBuild() {
           One team, one connected process. Here&rsquo;s what&rsquo;s actually included.
         </p>
 
-        <ServiceAccordion services={services} className="mt-10" />
+        {/* compact: the full problem/approach/outcome text lives on /services
+            (SEO audit 2026-08-16, item 5 — this section was byte-identical
+            to /services, making up a large share of the homepage's word
+            count). Home links out to the full detail instead of repeating it. */}
+        <ServiceAccordion services={services} className="mt-10" variant="compact" />
       </RevealSection>
     </section>
   );

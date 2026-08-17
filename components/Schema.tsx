@@ -1,4 +1,3 @@
-import { faq } from "@/content/faq";
 import { packages } from "@/content/pricing";
 import { site } from "@/content/site";
 import type { Service } from "@/content/services";
@@ -69,8 +68,10 @@ export function ServicesSchema({ services }: { services: Service[] }) {
  * than filled with placeholders — wrong structured data is worse than absent
  * structured data, and Google will happily index a fake phone number.
  *
- * Only answered FAQs enter FAQPage schema; unanswered ones would otherwise ship
- * "coming soon" as a rich result.
+ * No FAQPage node here (SEO audit 2026-08-16, item 15): /faq already emits
+ * the full, canonical FAQPage schema via <FAQSchema>. Repeating it here put
+ * the exact same FAQPage content on two indexed URLs, which reads as
+ * duplicate content — the same reasoning /services already applies.
  */
 export function HomeSchema() {
   const business = {
@@ -111,8 +112,6 @@ export function HomeSchema() {
     ...(site.socials.length ? { sameAs: site.socials.map((s) => s.href) } : {}),
   };
 
-  const faqNode = faqPageNode(faq, "faq");
-
   const graph = [
     business,
     {
@@ -122,7 +121,6 @@ export function HomeSchema() {
       name: site.name,
       publisher: { "@id": `${site.url}/#organization` },
     },
-    ...(faqNode ? [faqNode] : []),
   ];
 
   return (

@@ -7,6 +7,7 @@ import { RevealSection } from "@/components/motion-gsap/RevealSection";
 import { SplitWords } from "@/components/motion-gsap/SplitWords";
 import { ShareButtons } from "@/components/ShareButtons";
 import { articles, type Block, getArticle } from "@/content/articles";
+import { servicePages } from "@/content/servicePages";
 import { site } from "@/content/site";
 
 const dateFmt = new Intl.DateTimeFormat("en-ZA", { day: "numeric", month: "long", year: "numeric" });
@@ -49,6 +50,9 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   if (!article) notFound();
 
   const articleUrl = `${site.url}/insights/${article.slug}`;
+  const relatedServices = (article.relatedServiceSlugs ?? [])
+    .map((s) => servicePages.find((p) => p.slug === s))
+    .filter((p): p is NonNullable<typeof p> => Boolean(p));
 
   const schema = {
     "@context": "https://schema.org",
@@ -124,6 +128,29 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           <div className="border-ht-purple/10 mt-10 flex justify-end border-t pt-6">
             <ShareButtons url={articleUrl} title={article.title} />
           </div>
+
+          {/* Related services (SEO audit 2026-08-16, item 7): links this
+              article to the service page(s) it supports. The reciprocal
+              link lives on that service page's own "Related reading" block. */}
+          {relatedServices.length > 0 ? (
+            <div className="mt-10">
+              <p className="font-ht-display text-ht-purple text-[13px] font-bold tracking-[0.15em] uppercase">
+                Related services
+              </p>
+              <ul className="mt-4 flex flex-wrap gap-2">
+                {relatedServices.map((s) => (
+                  <li key={s.slug}>
+                    <Link
+                      href={`/services/${s.slug}`}
+                      className="font-ht-body border-ht-purple/20 text-ht-purple rounded-pill inline-flex items-center border px-4 py-2 text-[14px] font-medium transition-colors duration-150 hover:border-ht-purple"
+                    >
+                      {s.title} →
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
 
           {/* Soft CTA */}
           <div className="bg-ht-orange rounded-block shadow-[0_14px_0_0_var(--color-ht-purple)] mt-14 overflow-hidden">

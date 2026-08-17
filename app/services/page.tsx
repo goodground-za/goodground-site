@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbSchema } from "@/components/Breadcrumbs";
+import { HoverCard } from "@/components/motion-gsap/HoverCard";
 import { MagneticButton } from "@/components/motion-gsap/MagneticButton";
-import { RevealSection } from "@/components/motion-gsap/RevealSection";
+import { RevealSection, RevealStagger } from "@/components/motion-gsap/RevealSection";
 import { SplitWords } from "@/components/motion-gsap/SplitWords";
 import { PageHero } from "@/components/PageHero";
 import { FAQSchema, ServicesSchema } from "@/components/Schema";
@@ -16,14 +17,18 @@ import { GrowthIntro } from "@/components/sections/GrowthIntro";
 import { GrowthProblem } from "@/components/sections/GrowthProblem";
 import { GrowthWhyUs } from "@/components/sections/GrowthWhyUs";
 import { faq, type FAQItem } from "@/content/faq";
+import { industries } from "@/content/industries";
 import { services } from "@/content/services";
 import { site } from "@/content/site";
 import { pageSocialMeta } from "@/lib/metadata";
 
 /** Copy deck §3, retargeted development-first / South Africa. */
 const title = { absolute: "Website Development Services in South Africa | GoodGround" };
+// Kept under ~160 characters on purpose: this description regressed past
+// 200 once before (SEO audit 2026-08-16) after copy edits crept in. If you
+// touch this, re-measure the character count before committing.
 const description =
-  "Website development, UX and design, SEO foundations, care plans, and Google & Meta Ads management. Built in-house in South Africa — pay a 50% deposit and the rest on completion, or spread it over 12 monthly instalments.";
+  "Website development, UX design, SEO, care plans, and Google & Meta Ads. Built in South Africa — pay 50% upfront or spread it over 12 months.";
 const path = "/services";
 
 export const metadata: Metadata = {
@@ -74,7 +79,10 @@ export default function ServicesPage() {
       <PageHero
         eyebrow="What we do"
         title="Websites built properly. Paid for sensibly."
-        intro="We're a website development and maintenance studio. Every project we take on is designed, built, optimised for search, and supported after launch, as one connected process, not four separate line items. And every project offers a choice of how you pay for it."
+        // Names the real town rather than just "South Africa" (SEO audit
+        // 2026-08-16, item 19) — a genuine local anchor alongside the
+        // national positioning the rest of this page argues for.
+        intro="We're a website development and maintenance studio based in George, working with businesses across South Africa. Every project we take on is designed, built, optimised for search, and supported after launch, as one connected process, not four separate line items. And every project offers a choice of how you pay for it."
       >
         {/* Jump index */}
         <RevealSection delay={0.14} className="mt-8 flex justify-center">
@@ -111,6 +119,34 @@ export default function ServicesPage() {
         <div className="mt-10">
           <ServiceAccordion services={services} />
         </div>
+      </div>
+
+      {/* Industries we build for (SEO audit 2026-08-16, item 6): previously
+          only reachable from the homepage card grid, which split link
+          equity between two competing hub pages and left this page with no
+          path down to the six industry pages at all. */}
+      <div className="bg-ht-cream mx-auto max-w-[1434px] px-6 pt-16 sm:px-10 md:pt-24">
+        <RevealSection>
+          <p className="font-ht-display text-ht-purple text-[13px] font-bold tracking-[0.15em] uppercase">
+            Who we build for
+          </p>
+          <h2 className="font-ht-display text-ht-purple mt-6 max-w-[22ch] text-[clamp(1.75rem,4vw,3rem)] leading-[1.08] font-bold uppercase">
+            Industries we build for.
+          </h2>
+        </RevealSection>
+
+        <RevealStagger className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" y={16}>
+          {industries.map((industry) => (
+            <Link key={industry.title} href={industry.href} className="block">
+              <HoverCard className="bg-white ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] rounded-card h-full p-6 ring-2">
+                <h3 className="font-ht-display text-ht-purple text-[16px] font-bold uppercase">
+                  {industry.title}
+                </h3>
+                <p className="text-ht-purple/70 mt-2.5 text-[14px] leading-[1.6]">{industry.description}</p>
+              </HoverCard>
+            </Link>
+          ))}
+        </RevealStagger>
       </div>
 
       <div className="bg-ht-cream">

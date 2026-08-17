@@ -25,6 +25,9 @@ export type Article = {
   readingMinutes: number;
   category: string;
   body: Block[];
+  /** Slugs from content/servicePages.ts, rendered as a "Related services"
+   * block at the end of the article (SEO audit 2026-08-16, item 7). */
+  relatedServiceSlugs?: string[];
 };
 
 export const articles: Article[] = [
@@ -35,7 +38,7 @@ export const articles: Article[] = [
       "Most website pricing pages hide the number behind a quote form. This one doesn't. Real 2026 prices for DIY builders, freelancers, agencies, and GoodGround's own fixed packages, so you know what you're actually paying for before you enquire.",
     metaTitle: "Website Cost in South Africa: 2026 Guide & Real Prices",
     metaDescription:
-      "What does a website actually cost in South Africa? Real 2026 prices from R8,500, DIY builders vs freelancers vs agencies, and how GoodGround's pricing works.",
+      "What does a website actually cost in South Africa? Real 2026 prices from R8,500: DIY builders vs freelancers vs agencies.",
     keyword: "website cost South Africa",
     author: "GoodGround",
     date: "2026-08-13",
@@ -59,7 +62,7 @@ export const articles: Article[] = [
       {
         type: "ul",
         items: [
-          "DIY builder (Wix, Squarespace, GoDaddy): R150 to R500 a month. No upfront cost, but you rent the site for as long as you run it, and you build it yourself.",
+          "DIY builder ([Wix](https://www.wix.com/pricing), Squarespace, GoDaddy): R150 to R500 a month. No upfront cost, but you rent the site for as long as you run it, and you build it yourself. Check the provider's own pricing page before committing, plans and currency conversions shift.",
           "Freelancer: R5,000 to R15,000 for a basic build. Cheaper than a studio, but quality, reliability, and support after launch vary enormously from one freelancer to the next.",
           "Small studio, fixed-price and custom-coded: R8,500 to R32,000 for a complete build. One quoted price, no monthly rental, built by a team you can actually hold to a contract.",
           "Large agency or retainer model: R30,000 to R150,000+, frequently with an ongoing monthly fee layered on top of the build cost.",
@@ -249,7 +252,7 @@ export const articles: Article[] = [
       { type: "h2", text: "You don't own a Facebook page. You rent it." },
       {
         type: "p",
-        text: "This is the one that costs businesses the most, and it costs them quietly enough that most owners never connect the dots. Facebook can change how many of your followers actually see your posts, and it has, repeatedly, over the years, without asking anyone's permission. An account can get restricted or suspended over an automated flag with no human to call and no timeline for a fix. The platform's rules, its algorithm, its whole business model, none of it answers to you. You built an audience on ground you don't own, and the landlord can change the terms whenever the landlord wants.",
+        text: "This is the one that costs businesses the most, and it costs them quietly enough that most owners never connect the dots. Facebook can change how many of your followers actually see your posts, and it has, repeatedly, over the years, without asking anyone's permission: organic reach for business pages has fallen from roughly 16% when pages first launched to a low single-digit percentage today, according to [HubSpot's tracking of the decline](https://blog.hubspot.com/marketing/facebook-organic-reach-declining). An account can get restricted or suspended over an automated flag with no human to call and no timeline for a fix. The platform's rules, its algorithm, its whole business model, none of it answers to you. You built an audience on ground you don't own, and the landlord can change the terms whenever the landlord wants.",
       },
       {
         type: "p",
@@ -320,7 +323,7 @@ export const articles: Article[] = [
       "Most businesses treat conversion and growth as separate problems: marketing worries about one, the developer worries about the other. Build them into the same site from day one and neither costs you customers later.",
     metaTitle: "A Website That Converts Customers and Grows With Your Business",
     metaDescription:
-      "Two questions decide whether a website works: does it turn visitors into enquiries, and can it grow without a rebuild? Here's how to get both right from the start.",
+      "Two questions decide whether a website works: does it turn visitors into enquiries, and can it grow without a rebuild? How to get both right.",
     keyword: "website that converts South Africa",
     author: "GoodGround",
     date: "2026-08-03",
@@ -365,7 +368,7 @@ export const articles: Article[] = [
       { type: "h2", text: "Speed is the first impression, not a technical detail" },
       {
         type: "p",
-        text: "Before a visitor reads a word of your copy, the page has already made an argument for or against you: how fast it appeared. A page that loads instantly feels like a business that has its act together. A page that hangs for three seconds on mobile data feels like a warning sign, whether that's fair or not.",
+        text: "Before a visitor reads a word of your copy, the page has already made an argument for or against you: how fast it appeared. A page that loads instantly feels like a business that has its act together. A page that hangs for three seconds on mobile data feels like a warning sign, whether that's fair or not. Google's own [Core Web Vitals guidance](https://web.dev/articles/vitals) treats loading speed, responsiveness, and visual stability as ranking-relevant signals for exactly this reason: a slow page isn't just an annoyance, it's measurably worse at holding on to visitors.",
       },
       {
         type: "p",
@@ -419,6 +422,7 @@ export const articles: Article[] = [
         text: "A website that converts today and a website that scales tomorrow are built the same way: on a clear, deliberate foundation. If yours is fighting you on either front, [tell us about your business](/start-project) and we'll come back with next steps.",
       },
     ],
+    relatedServiceSlugs: ["ux-design"],
   },
   {
     slug: "hand-coded-websites-vs-drag-and-drop-builders",
@@ -427,7 +431,7 @@ export const articles: Article[] = [
       "Drag-and-drop builders win the first afternoon. Hand-coded websites win every day after that. Here's what you're actually trading away for the convenience, and when it does and doesn't matter.",
     metaTitle: "Hand-Coded Websites vs Drag-and-Drop Website Builders",
     metaDescription:
-      "Wix, Squarespace and GoDaddy get you online fast, but at a cost you only notice later. Here's what hand-coded websites actually get you that builders can't.",
+      "Wix, Squarespace and GoDaddy get you online fast, but at a cost you notice later. What hand-coded websites get you that builders can't.",
     keyword: "hand-coded website vs website builder",
     author: "GoodGround",
     date: "2026-07-27",
@@ -460,7 +464,7 @@ export const articles: Article[] = [
       { type: "h2", text: "Page weight, and who actually pays for it" },
       {
         type: "p",
-        text: "Because a builder has to support everyone's possible use case at once, it ships a lot of code your visitor never asked for. Widgets for features you've never touched, styling systems layered on top of styling systems, tracking scripts baked in by default. A hand-coded site ships exactly what that page needs and nothing else, because there was no library of extra features to drag in.",
+        text: "Because a builder has to support everyone's possible use case at once, it ships a lot of code your visitor never asked for. Widgets for features you've never touched, styling systems layered on top of styling systems, tracking scripts baked in by default. HTTP Archive's [Web Almanac page-weight report](https://almanac.httparchive.org/en/2025/page-weight) puts the median mobile page at over 2MB, most of it images and JavaScript the visitor never chose to load. A hand-coded site ships exactly what that page needs and nothing else, because there was no library of extra features to drag in.",
       },
       {
         type: "p",
@@ -559,6 +563,7 @@ export const articles: Article[] = [
         text: "If you've outgrown the template you started with, or you'd rather skip it altogether, [tell us about your business](/start-project) and we'll come back with next steps.",
       },
     ],
+    relatedServiceSlugs: ["website-redesign"],
   },
   {
     slug: "biggest-website-mistakes-south-african-smes-make",
@@ -618,7 +623,7 @@ export const articles: Article[] = [
       { type: "h2", text: "3. It is slow, on exactly the connection your customers are using" },
       {
         type: "p",
-        text: "Most South Africans will meet your website on a phone, often on mobile data, sometimes on a patchy signal, occasionally during load shedding on whatever the router is running off. A site that feels snappy on fibre in an office can be genuinely unusable in those conditions.",
+        text: "Most South Africans will meet your website on a phone, often on mobile data, sometimes on a patchy signal, occasionally during load shedding on whatever the router is running off. [DataReportal's Digital 2026 South Africa report](https://datareportal.com/reports/digital-2026-south-africa) counts 127 million active mobile connections in the country, nearly double the population, almost all of it on 3G, 4G or 5G rather than fixed lines. A site that feels snappy on fibre in an office can be genuinely unusable in those conditions.",
       },
       {
         type: "p",
@@ -739,6 +744,7 @@ export const articles: Article[] = [
         text: "If you would rather not work through it alone, [tell us about your business](/start-project) and we will come back with next steps.",
       },
     ],
+    relatedServiceSlugs: ["seo", "website-care-plans"],
   },
   {
     slug: "why-small-businesses-in-south-africa-need-a-website",
@@ -747,7 +753,7 @@ export const articles: Article[] = [
       "Word of mouth has a ceiling. Here's why an online presence, built on solid website design, has become the difference between being found and being forgotten for South African small businesses.",
     metaTitle: "Why Small Businesses in South Africa Need a Website",
     metaDescription:
-      "Most South African small businesses lose customers before they say a word. Here's why an online presence and good website design in South Africa is now a foundation, not a luxury.",
+      "Most South African small businesses lose customers before they say a word. Why a good website is now a foundation, not a luxury.",
     keyword: "website design in South Africa",
     author: "GoodGround",
     date: "2026-07-17",
@@ -782,7 +788,7 @@ export const articles: Article[] = [
       },
       {
         type: "p",
-        text: "There is a companion to this that no small business should skip: a Google Business Profile. It is free, it puts you on Google Maps, and it is often the first thing someone sees when they search your name or your trade in your area. But a profile works best pointing at something. When your listing links to a real website that backs up the claim, the two reinforce each other, and you start showing up for the local searches that actually turn into phone calls.",
+        text: "There is a companion to this that no small business should skip: a [Google Business Profile](https://support.google.com/business/answer/3038063). It is free, it puts you on Google Maps, and it is often the first thing someone sees when they search your name or your trade in your area. But a profile works best pointing at something. When your listing links to a real website that backs up the claim, the two reinforce each other, and you start showing up for the local searches that actually turn into phone calls.",
       },
       {
         type: "p",

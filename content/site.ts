@@ -54,10 +54,15 @@ export const site = {
   ] as { platform: "facebook" | "instagram"; name: string; href: string }[],
 } as const;
 
+// "Craft", not "Work": the destination is one honestly-labelled concept
+// build plus the studio's own site, not a portfolio of client projects.
+// "Work" in primary nav promises a portfolio it can't yet deliver — see the
+// /work page-type note for the full reasoning. Revisit once real client
+// case studies land here in volume.
 export const navLinks = [
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
-  { label: "Work", href: "/work" },
+  { label: "Craft", href: "/work" },
   { label: "Insights", href: "/insights" },
   { label: "Contact", href: "/contact" },
 ];
@@ -68,7 +73,7 @@ export const footerLinks = [
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
   { label: "Pricing", href: "/pricing" },
-  { label: "Our Work", href: "/work" },
+  { label: "Our Craft", href: "/work" },
   { label: "Insights", href: "/insights" },
   { label: "Contact", href: "/contact" },
 ];

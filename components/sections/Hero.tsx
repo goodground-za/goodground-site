@@ -119,9 +119,12 @@ export function Hero() {
 
           {/* The studio's one real differentiator — kept above the fold.
               "Two ways to pay" links to /pricing, where both options are
-              actually broken down per package. */}
+              actually broken down per package. The second item names the
+              real town rather than just "South Africa" (SEO audit
+              2026-08-16, item 19) — a genuine local anchor without giving
+              up the national positioning the rest of the page argues for. */}
           <ul className="mt-7 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-[13px] font-medium text-white/80">
-            {["Two ways to pay", "Located in South Africa"].map((item, i) => (
+            {["Two ways to pay", "Based in George, building nationwide"].map((item, i) => (
               <li key={item} className="flex items-center gap-3">
                 {i > 0 ? <span aria-hidden="true" className="hidden size-1 rounded-full bg-white/50 sm:block" /> : null}
                 {item === "Two ways to pay" ? (

@@ -5,12 +5,12 @@ import { BreadcrumbSchema } from "@/components/Breadcrumbs";
 import { PageHero } from "@/components/PageHero";
 import { MagneticButton } from "@/components/motion-gsap/MagneticButton";
 import { RevealSection, RevealStagger } from "@/components/motion-gsap/RevealSection";
-import { caseStudies } from "@/content/caseStudies";
+import { caseStudies, caseStudyKindLabel } from "@/content/caseStudies";
 import { pageSocialMeta } from "@/lib/metadata";
 
 const title = { absolute: "Our Work | GoodGround Website Development" };
 const description =
-  "Case studies from GoodGround, a website development studio in South Africa. Every project ends in numbers measured on the live site, with instructions for checking them yourself.";
+  "Case studies from GoodGround, a website studio in South Africa. Every project ends in numbers measured on the live site, with instructions to check them.";
 const path = "/work";
 
 export const metadata: Metadata = {
@@ -83,7 +83,7 @@ export default function WorkPage() {
                         {study.client}
                       </span>
                       <span className="border-ht-purple/20 text-ht-purple/70 rounded-pill border px-3 py-1">
-                        {study.kind === "concept" ? "Concept build" : "Client project"}
+                        {caseStudyKindLabel(study.kind)}
                       </span>
                     </div>
                     <h2 className="font-ht-display text-ht-purple mt-5 text-[clamp(1.15rem,2vw,1.45rem)] leading-tight font-bold">

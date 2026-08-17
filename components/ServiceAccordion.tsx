@@ -15,9 +15,34 @@ import { RevealStagger } from "@/components/motion-gsap/RevealSection";
  * (which wraps it in the page's own chrome instead). Each row carries
  * `id={service.slug}` so PageHero's jump-index links on /services can
  * deep-link straight to a row.
+ *
+ * `variant="compact"` (SEO audit 2026-08-16, item 5): the six industry pages
+ * were rendering this same problem/approach/outcome text in full, making it
+ * byte-identical to /services and 35-55% of each industry page's word count.
+ * Compact keeps each service's own `subheading` (unique per service, not
+ * duplicated) and links to the full row on /services instead of repeating
+ * it, so the deep copy lives in one canonical place.
  */
-export function ServiceAccordion({ services, className = "" }: { services: Service[]; className?: string }) {
+export function ServiceAccordion({
+  services,
+  className = "",
+  variant = "full",
+}: {
+  services: Service[];
+  className?: string;
+  variant?: "full" | "compact";
+}) {
   const [open, setOpen] = useState(0);
+
+  if (variant === "compact") {
+    return (
+      <RevealStagger className={`space-y-4 ${className}`} y={16}>
+        {services.map((service, i) => (
+          <CompactRow key={service.slug} service={service} index={i} />
+        ))}
+      </RevealStagger>
+    );
+  }
 
   return (
     <RevealStagger className={`space-y-8 ${className}`} y={16}>
@@ -31,6 +56,37 @@ export function ServiceAccordion({ services, className = "" }: { services: Servi
         />
       ))}
     </RevealStagger>
+  );
+}
+
+function CompactRow({ service, index }: { service: Service; index: number }) {
+  return (
+    <div className="bg-ht-cream ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] rounded-card flex flex-col gap-4 p-6 ring-2 sm:flex-row sm:items-center sm:justify-between sm:p-7">
+      <div className="flex items-start gap-4">
+        <span className="font-ht-display text-ht-crimson text-[13px] font-bold tabular-nums">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+        <div>
+          <div className="flex flex-wrap items-center gap-2">
+            <h3 className="font-ht-display text-ht-purple text-[16px] font-bold sm:text-[18px]">{service.title}</h3>
+            {service.flagship ? (
+              <span className="bg-ht-orange text-ink rounded-pill px-3 py-1 text-[11px] font-bold">Flagship</span>
+            ) : service.includedInEveryBuild ? (
+              <span className="bg-ht-purple rounded-pill px-3 py-1 text-[11px] font-bold text-white">Included</span>
+            ) : service.growth ? (
+              <span className="bg-ht-pink text-ht-purple rounded-pill px-3 py-1 text-[11px] font-bold">Growth</span>
+            ) : null}
+          </div>
+          <p className="text-ht-purple/70 mt-1.5 max-w-[48ch] text-[14px] leading-[1.5]">{service.subheading}</p>
+        </div>
+      </div>
+      <Link
+        href={`/services#${service.slug}`}
+        className="text-ht-crimson shrink-0 text-[14px] font-bold whitespace-nowrap underline underline-offset-4 hover:no-underline"
+      >
+        See full details →
+      </Link>
+    </div>
   );
 }
 

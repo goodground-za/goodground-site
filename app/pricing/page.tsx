@@ -9,7 +9,7 @@ import { pageSocialMeta } from "@/lib/metadata";
 
 const title = { absolute: "Pricing | Website Design Packages, South Africa | GoodGround" };
 const description =
-  "Four fixed website design packages from R8,500, or build your own from an à la carte menu. Pay 50% upfront and 50% on completion, or spread it over 12 monthly instalments.";
+  "Four fixed website design packages from R8,500, or build your own à la carte. Pay 50% upfront and the rest on completion, or spread it over 12 months.";
 const path = "/pricing";
 
 export const metadata: Metadata = {

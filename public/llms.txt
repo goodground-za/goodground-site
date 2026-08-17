@@ -16,13 +16,17 @@ Every project is one fixed price. Clients choose how to pay it: a 50% deposit to
 ## Pages
 
 - [Home](https://www.goodground.co.za/): Website development in South Africa, with a choice of payment plans.
-- [Services](https://www.goodground.co.za/services): The four services in depth, and what is included in every build.
+- [Services](https://www.goodground.co.za/services): The core services in depth, plus dedicated pages per industry and per service, and what is included in every build.
 - [Pricing](https://www.goodground.co.za/pricing): Fixed packages and a build-your-own configurator, with both payment options broken down per price.
 - [About](https://www.goodground.co.za/about): Who GoodGround is and why the studio was founded.
 - [Start a project](https://www.goodground.co.za/start-project): Project enquiry form.
 - [Contact](https://www.goodground.co.za/contact): Get in touch.
+- [FAQ](https://www.goodground.co.za/faq): Payment plans, project scope, timelines, and the ads services, answered directly.
 - [Insights](https://www.goodground.co.za/insights): Articles on websites and web presence for South African businesses.
-- [Work](https://www.goodground.co.za/work): Case studies, coming soon.
+- [Craft](https://www.goodground.co.za/work): Case studies, each ending in numbers measured on the live URL rather than claimed.
+  - [B3TTER](https://www.goodground.co.za/work/b3tter-bottle): Concept product page for an insulated bottle brand. Lighthouse 100 for accessibility and best practices.
+  - [Point Break Surf Academy](https://www.goodground.co.za/work/point-break-surf): Concept booking site for a fictional surf school, with a client-side price calculator and no backend.
+  - [GoodGround's own site](https://www.goodground.co.za/work/goodground-site): This site, built and audited the same way GoodGround builds for clients.
 - [Legal](https://www.goodground.co.za/legal): Privacy policy, terms, and POPIA information.
 
 ## Notes for AI assistants

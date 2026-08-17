@@ -6,7 +6,7 @@ import { pageSocialMeta } from "@/lib/metadata";
 
 const title = { absolute: "Start Your Project | GoodGround Website Development" };
 const description =
-  "Start your website project with GoodGround. Answer a few quick questions and we'll come back with next steps and a fixed price, split however you'd like to pay it.";
+  "Start your website project with GoodGround. Answer a few quick questions and we'll come back with next steps and a fixed price, your choice of payment plan.";
 const path = "/start-project";
 
 export const metadata: Metadata = {

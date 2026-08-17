@@ -15,9 +15,14 @@
  *
  * If a real client project lands later, add it with genuine outcome numbers and
  * set kind: "client". Do not retro-fit business metrics onto this one.
+ *
+ * kind: "studio" is the third case: goodground.co.za itself. It's real,
+ * live production work, not a fictional concept brand, but it's also not a
+ * paying client engagement — so it gets its own label rather than being
+ * folded into either of the other two kinds.
  */
 
-export type CaseStudyKind = "concept" | "client";
+export type CaseStudyKind = "concept" | "client" | "studio";
 
 export type Metric = {
   value: string;
@@ -39,6 +44,10 @@ export type CaseStudy = {
   summary: string;
   tags: string[];
   year: string;
+  /** ISO date this case study was published, for CreativeWork schema (SEO
+   * audit 2026-08-16, item 13). Taken from the commit that added it, not
+   * guessed. */
+  datePublished: string;
   liveUrl?: string;
   /** Hero screenshot. */
   image: string;
@@ -56,13 +65,14 @@ export const caseStudies: CaseStudy[] = [
     slug: "b3tter-bottle",
     kind: "concept",
     client: "B3TTER",
-    title: "A premium product page, built and measured in a day",
+    title: "A premium product page, built in a day",
     standfirst:
-      "B3TTER is our own concept build: a full product site for an insulated stainless steel bottle, scoring 100 for accessibility on the live URL with 56 MB of source photography shipped as 1.5 MB.",
+      "B3TTER is our own concept build: a full product site for an insulated bottle, scoring 100 for accessibility on the live URL with 56 MB of photography shipped as 1.5 MB.",
     summary:
       "A concept product site built to show what a premium single-product page looks like when every image is optimised and every interaction is accessible. Live, public, and testable.",
     tags: ["Design", "Development", "Accessibility", "Performance"],
     year: "2026",
+    datePublished: "2026-08-15",
     liveUrl: "https://preview.goodground.co.za/better-bottle/",
     image: "/images/case-b3tter-hero.webp",
     imageAlt:
@@ -156,6 +166,7 @@ export const caseStudies: CaseStudy[] = [
       "A concept booking site for a fictional surf academy, built to show how much of a real booking flow — tiered pricing, itineraries, coach credibility, a custom package builder — can live on a single page without a backend.",
     tags: ["Design", "Development", "Booking UX", "Performance"],
     year: "2026",
+    datePublished: "2026-08-17",
     liveUrl: "https://preview.goodground.co.za/point-break-surf/",
     image: "/images/case-point-break-hero.webp",
     imageAlt:
@@ -244,6 +255,110 @@ export const caseStudies: CaseStudy[] = [
     resultsCaveat:
       "Point Break Surf Academy is a fictional brand with no customers, so like B3TTER, there is no traffic, bookings or revenue to report, and the six testimonials on the page are invented and disclosed as such in the footer. The site also carries a deliberate noindex tag and a Disallow in robots.txt, which is why its own Lighthouse SEO score reads around 66 rather than 100: a made-up surf school has no business ranking in real search results. Every other SEO check on the page passes, and removing those two lines is a one-line change if this pattern is ever reused for a real client.",
   },
+  {
+    slug: "goodground-site",
+    kind: "studio",
+    client: "GoodGround",
+    title: "The studio holds itself to the same brief it gives clients",
+    standfirst:
+      "This site: Next.js 16, Tailwind v4, 48 statically generated pages, Lighthouse 100 across accessibility, best practices, SEO and agentic browsing, and a 772ms LCP, all measured on the live URL, not a staging build.",
+    summary:
+      "GoodGround's own site, built and audited the same way we build for clients. Includes the fixes from our own SEO audit: broader og:image coverage, de-duplicated service copy, and this page's layout, which used to feature one project over the others.",
+    tags: ["Design", "Development", "SEO", "Performance"],
+    year: "2026",
+    datePublished: "2026-08-17",
+    liveUrl: "https://www.goodground.co.za/",
+    image: "/images/case-goodground-hero.webp",
+    imageAlt: "The GoodGround homepage hero, showing the headline over a full-bleed lifestyle photograph",
+    snapshot: [
+      { label: "Client", value: "GoodGround (the studio itself)" },
+      { label: "Industry", value: "Website design and development studio, South Africa" },
+      { label: "Services", value: "Design, front-end build, SEO, ongoing iteration" },
+      { label: "Build", value: "Next.js 16, Tailwind v4, GSAP and Framer Motion, deployed on Vercel." },
+    ],
+    challenge: [
+      "A studio's own site is where every shortcut it would never let a client take becomes tempting, because there's no client waiting on a deadline and no one to notice if a claim about performance or accessibility quietly stops being true. The failure mode is well known: the agency that sells fast, accessible, well-structured websites while running one that fails its own pitch.",
+      "The brief here was to hold this site to the same bar as B3TTER and Point Break: real Lighthouse scores on the live URL, not a local build; a genuine SEO audit, not an assumed clean bill of health; and fixes applied and re-verified rather than marked done from memory. This case study exists because that audit found real issues, and this is the record of fixing them.",
+    ],
+    solution: [
+      {
+        heading: "An SEO audit run against ourselves, not just clients",
+        body: [
+          "The audit that produced this case study found sixteen pages missing their own og:image (services and industry subpages sharing the homepage's link-preview card), a stale llms.txt claiming /work was 'coming soon' when it wasn't, and a /work page that gave the first case study a wide featured treatment while the rest sat in a smaller grid below, quietly implying one project mattered more than another.",
+          "Every one of those got fixed in the same pass: sixteen new opengraph-image routes off the existing card template, llms.txt brought back in sync with the real sitemap, and /work rebuilt so every case study, including this one, renders at identical size and weight.",
+        ],
+        image: "/images/case-goodground-work.webp",
+        imageAlt: "The /work page after the fix, showing every case study as an equal-size grid card with no featured project",
+      },
+      {
+        heading: "An animation the audit flagged as broken, that wasn't",
+        body: [
+          "The same audit reported that the light animation on the recommended pricing card had stopped shipping, based on a screenshot showing a static ring. Sampling the card's computed offset-distance twice, 800ms apart, on the live URL told a different story: 72.55% moving to 89.55%, the animation running exactly as built.",
+          "The likely cause: a screenshot catches one frozen frame of a six-second, continuously looping animation, and a frozen frame of anything in motion looks static. It's a useful reminder that a visual check and a moving one aren't the same test, and this case study fixes what the audit actually found rather than what it happened to catch mid-frame.",
+        ],
+        image: "/images/case-goodground-pricing.webp",
+        imageAlt: "The four pricing package cards on the live site, with the recommended Grow card carrying an animated light along its edge",
+      },
+      {
+        heading: "Numbers that hold up on the real domain",
+        body: [
+          "The homepage scores 100 on Lighthouse Accessibility, Best Practices, SEO and Agentic Browsing, measured against www.goodground.co.za directly rather than a local or staging copy. Largest Contentful Paint lands at 772ms and Cumulative Layout Shift at 0.02, both from a live performance trace, not a lab estimate.",
+          "The build itself is unremarkable by design: Next.js's static generation produces 48 pages at build time, so most of the site serves as static HTML with no server round-trip per request.",
+        ],
+      },
+      {
+        heading: "Built mobile-first, same as every other project here",
+        body: [
+          "The same responsive discipline applied to B3TTER and Point Break applies here: no desktop-first layout scaled down after the fact, no horizontal overflow at any checked width, and the same reduced-motion handling across every animated element on the page.",
+          "The difference on this site is stakes. If a client's site had a bug like the grid-overflow issue caught on Point Break, it would be an embarrassing fix. On this one, it's the site making the exact promise it's failing to keep.",
+        ],
+        image: "/images/case-goodground-mobile.webp",
+        imageAlt: "The GoodGround homepage hero rendered on a 390px-wide phone screen",
+      },
+    ],
+    results: [
+      {
+        value: "100",
+        label: "Lighthouse Accessibility",
+        verify: "Run Lighthouse against www.goodground.co.za in Chrome DevTools.",
+      },
+      {
+        value: "100",
+        label: "Lighthouse Best Practices",
+        verify: "Same audit, same run.",
+      },
+      {
+        value: "100",
+        label: "Lighthouse SEO",
+        verify: "Same audit, same run.",
+      },
+      {
+        value: "772 ms",
+        label: "Largest Contentful Paint",
+        verify: "Record a performance trace against the live homepage in Chrome DevTools.",
+      },
+      {
+        value: "0.02",
+        label: "Cumulative Layout Shift",
+        verify: "Same trace, same run.",
+      },
+      {
+        value: "48 pages",
+        label: "Statically generated at build time",
+        verify: "Run a production build and read the route summary Next.js prints.",
+      },
+    ],
+    resultsCaveat:
+      "These numbers describe how the site is built, not how the business is performing: traffic, leads and client outcomes are real but aren't the subject of this page. Where they're relevant, they belong in a business update, not a build case study, and won't be invented here to fill the gap.",
+  },
 ];
 
 export const getCaseStudy = (slug: string) => caseStudies.find((c) => c.slug === slug);
+
+const KIND_LABELS: Record<CaseStudyKind, string> = {
+  concept: "Concept build",
+  client: "Client project",
+  studio: "Our own site",
+};
+
+export const caseStudyKindLabel = (kind: CaseStudyKind) => KIND_LABELS[kind];

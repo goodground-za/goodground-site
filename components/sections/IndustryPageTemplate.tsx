@@ -43,7 +43,14 @@ export function IndustryPageTemplate({ slug }: { slug: string }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
       <FAQSchema items={entry.faq} id={`${entry.slug}-faq`} />
 
-      <PageHero eyebrow="Who we build for" title={entry.h1} intro={entry.heroIntro}>
+      {/* Names the real town rather than just "South Africa" (SEO audit
+          2026-08-16, item 19) — a genuine local anchor alongside the
+          national positioning the rest of this page argues for. */}
+      <PageHero
+        eyebrow="Who we build for"
+        title={entry.h1}
+        intro={`${entry.heroIntro} We're based in George, on South Africa's Garden Route.`}
+      >
         <RevealSection delay={0.14} className="mt-8 flex flex-wrap justify-center gap-2">
           {entry.keywordChips.map((chip) => (
             <span
@@ -80,6 +87,26 @@ export function IndustryPageTemplate({ slug }: { slug: string }) {
               {entry.localProof}
             </p>
           </RevealSection>
+
+          {/* Honest placeholder (SEO audit 2026-08-16, item 18): this page
+              describes who we build for, not proof we've already shipped
+              for this specific segment — no case study on /work is a
+              {entry.title} project. Silence there reads as an oversight;
+              saying so plainly reads as momentum, same framing /work
+              already uses for "coming soon". Deliberately doesn't claim an
+              active project in this segment, since that isn't something we
+              can currently verify. */}
+          <RevealSection delay={0.14} className="mt-6">
+            <div className="border-ht-purple/15 rounded-block mx-auto max-w-[70ch] border-2 border-dashed p-6 text-center">
+              <p className="text-ht-purple/70 text-[14px] leading-[1.6]">
+                We haven&rsquo;t published a live {entry.title.toLowerCase()} project yet.{" "}
+                <Link href="/contact" className="text-ht-crimson font-bold underline underline-offset-4">
+                  Get in touch and we&rsquo;ll tell you honestly what we&rsquo;re currently working on
+                </Link>
+                .
+              </p>
+            </div>
+          </RevealSection>
         </div>
       </section>
 
@@ -97,7 +124,7 @@ export function IndustryPageTemplate({ slug }: { slug: string }) {
           </RevealSection>
 
           <div className="mt-10">
-            <ServiceAccordion services={relevantServices} />
+            <ServiceAccordion services={relevantServices} variant="compact" />
           </div>
 
           <RevealSection delay={0.1}>

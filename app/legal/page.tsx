@@ -8,7 +8,7 @@ import { pageSocialMeta } from "@/lib/metadata";
 
 const title = { absolute: "Legal Notice & Privacy Policy | GoodGround" };
 const description =
-  "GoodGround's legal notice and privacy policy, including how we handle personal information under South Africa's Protection of Personal Information Act (POPIA).";
+  "GoodGround's legal notice and privacy policy: how we handle personal information under South Africa's Protection of Personal Information Act (POPIA).";
 const path = "/legal";
 
 export const metadata: Metadata = {

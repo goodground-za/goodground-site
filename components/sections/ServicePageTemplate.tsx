@@ -7,6 +7,7 @@ import { PageHero } from "@/components/PageHero";
 import { FAQSchema } from "@/components/Schema";
 import { CTABand } from "@/components/sections/CTABand";
 import { FAQAccordion } from "@/components/sections/FAQAccordion";
+import { getArticle } from "@/content/articles";
 import { servicePages } from "@/content/servicePages";
 import { site } from "@/content/site";
 
@@ -20,6 +21,10 @@ import { site } from "@/content/site";
 export function ServicePageTemplate({ slug }: { slug: string }) {
   const entry = servicePages.find((p) => p.slug === slug);
   if (!entry) return null;
+
+  const relatedArticles = (entry.relatedArticleSlugs ?? [])
+    .map((s) => getArticle(s))
+    .filter((a): a is NonNullable<typeof a> => Boolean(a));
 
   const serviceSchema = {
     "@context": "https://schema.org",
@@ -128,6 +133,34 @@ export function ServicePageTemplate({ slug }: { slug: string }) {
           </div>
         </div>
       </section>
+
+      {/* Related reading (SEO audit 2026-08-16, item 7): links the blog and
+          this service together in both directions, where relatedArticleSlugs
+          is set. The article itself links back via its own related-services
+          block. */}
+      {relatedArticles.length > 0 ? (
+        <section className="bg-ht-cream px-6 pb-4 sm:px-10">
+          <div className="mx-auto max-w-[1434px]">
+            <RevealSection>
+              <p className="font-ht-display text-ht-purple text-[13px] font-bold tracking-[0.15em] uppercase">
+                Related reading
+              </p>
+            </RevealSection>
+            <RevealStagger className="mt-5 grid gap-5 sm:grid-cols-2" y={16}>
+              {relatedArticles.map((article) => (
+                <Link key={article.slug} href={`/insights/${article.slug}`} className="block">
+                  <HoverCard className="bg-white ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] rounded-card h-full p-6 ring-2">
+                    <h3 className="font-ht-display text-ht-purple text-[15px] font-bold leading-snug">
+                      {article.title}
+                    </h3>
+                    <p className="text-ht-purple/70 mt-2.5 text-[13.5px] leading-[1.6]">{article.excerpt}</p>
+                  </HoverCard>
+                </Link>
+              ))}
+            </RevealStagger>
+          </div>
+        </section>
+      ) : null}
 
       <div className="bg-ht-cream">
         <FAQAccordion items={entry.faq} heading={`Questions about ${entry.title.toLowerCase()}.`} />

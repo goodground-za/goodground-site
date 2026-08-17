@@ -6,7 +6,7 @@ import { BreadcrumbSchema } from "@/components/Breadcrumbs";
 import { MagneticButton } from "@/components/motion-gsap/MagneticButton";
 import { RevealSection, RevealStagger } from "@/components/motion-gsap/RevealSection";
 import { SplitWords } from "@/components/motion-gsap/SplitWords";
-import { caseStudies, getCaseStudy } from "@/content/caseStudies";
+import { caseStudies, caseStudyKindLabel, getCaseStudy } from "@/content/caseStudies";
 import { site } from "@/content/site";
 
 export function generateStaticParams() {
@@ -49,6 +49,25 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
   const study = getCaseStudy(slug);
   if (!study) notFound();
 
+  // CreativeWork, not Product: the subject is the website GoodGround built,
+  // not whatever the site sells (SEO audit 2026-08-16, item 13). Templated
+  // for every case study, not just the one the audit found missing it.
+  const caseStudySchema = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": `${site.url}/work/${study.slug}`,
+    name: `${study.client}: ${study.title}`,
+    headline: `${study.client}: ${study.title}`,
+    description: study.standfirst,
+    creator: { "@id": `${site.url}/#organization` },
+    datePublished: study.datePublished,
+    genre: "Case study",
+    keywords: study.tags.join(", "),
+    url: `${site.url}/work/${study.slug}`,
+    mainEntityOfPage: `${site.url}/work/${study.slug}`,
+    isPartOf: { "@id": `${site.url}/#website` },
+  };
+
   return (
     <>
       <BreadcrumbSchema
@@ -57,6 +76,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
           { name: study.client, path: `/work/${study.slug}` },
         ]}
       />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(caseStudySchema) }} />
 
       {/* ---------- Headline ---------- */}
       <section className="bg-ht-cream px-6 pt-16 pb-10 sm:px-10 md:pt-24">
@@ -69,7 +89,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
               {/* Says "concept build" up front rather than letting a reader
                   assume this was a paying client. */}
               <span className="border-ht-purple/25 text-ht-purple/80 rounded-pill border px-3 py-1 text-[12px] font-medium">
-                {study.kind === "concept" ? "Concept build" : "Client project"}
+                {caseStudyKindLabel(study.kind)}
               </span>
               <span className="text-ht-purple/70 text-[13px] font-medium">{study.year}</span>
             </div>
@@ -172,13 +192,22 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
           <div className="mt-12 space-y-16 md:space-y-24">
             {study.solution.map((block, i) => (
               <RevealSection key={block.heading}>
-                <div className="grid items-center gap-8 md:grid-cols-2 md:gap-14">
+                {/* No fixed 2-column grid when a block carries no image: that
+                    left an empty second column rather than letting the text
+                    take the full width. */}
+                <div
+                  className={
+                    block.image
+                      ? "grid items-center gap-8 md:grid-cols-2 md:gap-14"
+                      : "grid items-center gap-8"
+                  }
+                >
                   {/* alternate which side the image sits on */}
-                  <div className={i % 2 === 1 ? "md:order-2" : undefined}>
+                  <div className={block.image && i % 2 === 1 ? "md:order-2" : undefined}>
                     <h3 className="font-ht-display text-ht-purple max-w-[24ch] text-[clamp(1.25rem,2.2vw,1.75rem)] leading-tight font-bold">
                       {block.heading}
                     </h3>
-                    <div className="mt-5 space-y-4">
+                    <div className={`mt-5 space-y-4 ${block.image ? "" : "max-w-[68ch]"}`}>
                       {block.body.map((p) => (
                         <p key={p.slice(0, 40)} className="text-ht-purple/75 text-[15px] leading-[1.75]">
                           {p}

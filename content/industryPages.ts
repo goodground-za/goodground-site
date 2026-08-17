@@ -32,7 +32,7 @@ export const industryPages: IndustryPageData[] = [
     slug: "trades-and-home-services",
     icon: "trades",
     title: "Trades & Home Services",
-    metaTitle: "Website Design for Electricians, Plumbers & Builders | South Africa",
+    metaTitle: "Website Design for Electricians & Plumbers",
     metaDescription:
       "Websites for electricians, plumbers, builders, and contractors across South Africa. Fast, mobile-friendly sites that make you look credible before the quote.",
     h1: "Website design for electricians, plumbers, and builders.",
@@ -83,9 +83,9 @@ export const industryPages: IndustryPageData[] = [
     slug: "hospitality-and-food",
     icon: "hospitality",
     title: "Hospitality & Food",
-    metaTitle: "Website Design for Restaurants, Cafés & Guesthouses | Garden Route & SA",
+    metaTitle: "Website Design for Restaurants & Guesthouses",
     metaDescription:
-      "Accommodation and hospitality websites for guesthouses, B&Bs, restaurants, and cafés across the Garden Route and South Africa. Menus, booking, and a site that matches the experience you offer in person.",
+      "Websites for guesthouses, B&Bs, restaurants, and cafés across South Africa. Menus, booking, and a site that matches the experience you offer in person.",
     h1: "Websites for restaurants, cafés, guesthouses, and B&Bs.",
     heroIntro:
       "Most guests decide whether to book before they ever see the place in person. If your accommodation or restaurant website looks like it hasn't been touched since it launched, that's the last impression before they close the tab and try the next listing. We build hospitality sites that look as good as the experience you've actually built.",
@@ -134,7 +134,7 @@ export const industryPages: IndustryPageData[] = [
     slug: "health-and-wellness",
     icon: "health",
     title: "Health & Wellness",
-    metaTitle: "Website Design for Clinics, Dentists & Physiotherapists | South Africa",
+    metaTitle: "Website Design for Clinics & Dentists",
     metaDescription:
       "Websites for clinics, dentists, physiotherapists, and medical practices across South Africa. Clear, trustworthy sites that make booking an appointment simple.",
     h1: "Website design for clinics, dentists, and physiotherapists.",
@@ -185,7 +185,7 @@ export const industryPages: IndustryPageData[] = [
     slug: "professional-and-consulting",
     icon: "professional",
     title: "Professional & Consulting",
-    metaTitle: "Website Design for Accountants, Law Firms & Consultants | South Africa",
+    metaTitle: "Website Design for Accountants & Consultants",
     metaDescription:
       "Websites for accountants, law firms, consultants, and financial advisors across South Africa. A site that reads as credible as the advice you give.",
     h1: "Website design for accountants, law firms, and consultants.",
@@ -236,7 +236,7 @@ export const industryPages: IndustryPageData[] = [
     slug: "retail-and-small-brands",
     icon: "retail",
     title: "Retail & Small Brands",
-    metaTitle: "Ecommerce & Retail Website Design for Small Brands | South Africa",
+    metaTitle: "Ecommerce Website Design for Small Brands",
     metaDescription:
       "Ecommerce and retail website design for small brands and shops across South Africa. Online shops built to do the product justice and actually sell.",
     h1: "Ecommerce website design for small brands and shops.",
@@ -289,7 +289,7 @@ export const industryPages: IndustryPageData[] = [
     title: "Non-Profits & Community",
     metaTitle: "Website Design for Non-Profits & NPOs | South Africa",
     metaDescription:
-      "Website design for non-profits, NPOs, and community organisations across South Africa. Sites that tell the story plainly and make it easy to donate, volunteer, or get in touch.",
+      "Website design for non-profits and community organisations across South Africa. Sites that tell the story plainly and make it easy to donate or volunteer.",
     h1: "Website design for non-profits and community organisations.",
     heroIntro:
       "The work speaks for itself, but only if people can find it and understand it in the first thirty seconds. We build websites for non-profits and community organisations that tell the story plainly and make it simple for someone to donate, volunteer, or get involved.",
