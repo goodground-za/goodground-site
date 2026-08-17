@@ -62,6 +62,7 @@ export default function ServicesPage() {
     "@type": "ItemList",
     "@id": `${site.url}/services#list`,
     name: "GoodGround services",
+    numberOfItems: services.length,
     itemListElement: services.map((s, i) => ({
       "@type": "ListItem",
       position: i + 1,

@@ -15,7 +15,6 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: path },
-  robots: { index: true, follow: true },
   ...pageSocialMeta({ title, description, path }),
 };
 

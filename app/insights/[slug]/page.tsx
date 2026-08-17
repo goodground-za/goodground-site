@@ -6,7 +6,7 @@ import { MagneticButton } from "@/components/motion-gsap/MagneticButton";
 import { RevealSection } from "@/components/motion-gsap/RevealSection";
 import { SplitWords } from "@/components/motion-gsap/SplitWords";
 import { ShareButtons } from "@/components/ShareButtons";
-import { articles, type Block, getArticle } from "@/content/articles";
+import { articles, articleWordCount, type Block, getArticle } from "@/content/articles";
 import { servicePages } from "@/content/servicePages";
 import { site } from "@/content/site";
 
@@ -71,6 +71,10 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
     image: `${site.url}/insights/${article.slug}/opengraph-image`,
     keywords: article.keyword,
     inLanguage: "en-ZA",
+    // SEO audit 2026-08-16, item 21: both derived from real content rather
+    // than hand-entered, so neither can drift from what's actually on the page.
+    wordCount: articleWordCount(article),
+    articleSection: article.category,
   };
 
   return (
@@ -170,7 +174,13 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 </Link>
                 , or tell us about yours.
               </p>
-              <div className="mt-6">
+              {/* "Start your project" is a big ask straight off an article a
+                  reader may have opened out of curiosity, not intent (SEO
+                  audit 2026-08-16, item 25). "See pricing" sits a step
+                  earlier in that decision, still commercial, lower
+                  commitment, and answers the objection most readers at
+                  this stage actually have. */}
+              <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
                 <MagneticButton>
                   <Link
                     href="/start-project"
@@ -179,6 +189,12 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                     Start your project →
                   </Link>
                 </MagneticButton>
+                <Link
+                  href="/pricing"
+                  className="text-ink/80 text-[14px] font-bold underline underline-offset-4 hover:no-underline"
+                >
+                  Not ready yet? See how pricing works
+                </Link>
               </div>
             </div>
           </div>

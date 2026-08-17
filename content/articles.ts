@@ -884,3 +884,19 @@ export const articles: Article[] = [
 ];
 
 export const getArticle = (slug: string) => articles.find((a) => a.slug === slug);
+
+/**
+ * Word count from the actual body blocks, for BlogPosting schema (SEO audit
+ * 2026-08-16, item 21) — computed rather than hand-maintained so it can't
+ * drift from the real content the way a manually entered number would.
+ * Strips the [label](url) markdown link syntax `withLinks` renders in
+ * app/insights/[slug]/page.tsx so link URLs don't inflate the count.
+ */
+const LINK_RE = /\[([^\]]+)\]\([^)]+\)/g;
+const wordsIn = (text: string) => text.replace(LINK_RE, "$1").trim().split(/\s+/).filter(Boolean).length;
+
+export const articleWordCount = (article: Article) =>
+  article.body.reduce((total, block) => {
+    if (block.type === "ul") return total + block.items.reduce((sum, item) => sum + wordsIn(item), 0);
+    return total + wordsIn(block.text);
+  }, 0);
