@@ -175,7 +175,7 @@ export const caseStudies: CaseStudy[] = [
         heading: "One modal pattern doing four different jobs",
         body: [
           "Lesson details, camp itineraries, coach bios and the booking form all open in the same modal shell: an image header, a scrollable body, and identical close behaviour on the X, a click outside, or Escape. The content inside is entirely data-driven, so the shell was built once and every card on the page just feeds it different data.",
-          "The booking modal specifically can be opened from five different places on the page — the hero, the sticky nav, any lesson or camp card, or the package builder — and pre-fills itself with whatever package and price the visitor was already looking at.",
+          "The booking modal specifically can be opened from several places across the page — the hero, the sticky nav, the floating button, inside a lesson or camp's own detail modal, or the package builder — and pre-fills itself with whatever package and price the visitor was already looking at.",
         ],
         image: "/images/case-point-break-modal.webp",
         imageAlt: "The coach bio modal open on the live site, showing a founder's background and coaching philosophy",
@@ -193,7 +193,7 @@ export const caseStudies: CaseStudy[] = [
       {
         heading: "Pricing tiers that read like tiers, not a template",
         body: [
-          "The three lesson cards and three camp cards are the same shape by necessity, since they are directly comparable pricing tiers, but each one carries its own photograph, its own specific inclusions, and its own outcome list, rather than the generic icon-plus-heading treatment that makes most pricing sections look interchangeable.",
+          "The three lesson cards and three camp cards are the same shape by necessity, since they are directly comparable pricing tiers, but each one carries its own photograph, specific inclusions and a list of real outcomes, rather than the generic icon-plus-heading treatment that makes most pricing sections look interchangeable.",
           "The distinction matters most in the details a visitor actually compares before booking: group size, duration, and what happens in the lesson, not just the price.",
         ],
         image: "/images/case-point-break-lessons.webp",
