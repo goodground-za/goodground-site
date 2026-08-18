@@ -218,14 +218,26 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
 
                   {block.image ? (
                     <div className={i % 2 === 1 ? "md:order-1" : undefined}>
-                      <div className="rounded-card ring-ht-pink overflow-hidden bg-white ring-2">
+                      {/* Phone screenshots are portrait and much narrower
+                          than the desktop shots they sit beside. Rendered
+                          at the same full column width as those, a tall
+                          390px-wide capture stretches into a huge slab.
+                          Cap it to a small, centred, phone-proportioned
+                          box instead. */}
+                      <div
+                        className={
+                          block.imageFit === "phone"
+                            ? "rounded-card ring-ht-pink mx-auto w-full max-w-[220px] overflow-hidden bg-white ring-2 sm:max-w-[240px]"
+                            : "rounded-card ring-ht-pink overflow-hidden bg-white ring-2"
+                        }
+                      >
                         <Image
                           src={block.image}
                           alt={block.imageAlt ?? ""}
-                          width={1440}
-                          height={900}
+                          width={block.imageDimensions?.width ?? 1440}
+                          height={block.imageDimensions?.height ?? 900}
                           loading="lazy"
-                          sizes="(max-width: 768px) 100vw, 700px"
+                          sizes={block.imageFit === "phone" ? "240px" : "(max-width: 768px) 100vw, 700px"}
                           className="h-auto w-full"
                         />
                       </div>

@@ -54,7 +54,21 @@ export type CaseStudy = {
   imageAlt: string;
   snapshot: { label: string; value: string }[];
   challenge: string[];
-  solution: { heading: string; body: string[]; image?: string; imageAlt?: string }[];
+  solution: {
+    heading: string;
+    body: string[];
+    image?: string;
+    imageAlt?: string;
+    /** Real pixel dimensions of `image`, used so Next/Image doesn't stretch
+     * a portrait phone screenshot into a landscape box. Required whenever
+     * `image` is set. */
+    imageDimensions?: { width: number; height: number };
+    /** "phone" renders the image at a small, centred, phone-proportioned
+     * size instead of stretching it to the full column width — for mobile
+     * screenshots, which are portrait and much narrower than the desktop
+     * shots they sit alongside. */
+    imageFit?: "wide" | "phone";
+  }[];
   results: Metric[];
   /** Plain-language note on what the results do and do not prove. */
   resultsCaveat: string;
@@ -123,6 +137,8 @@ export const caseStudies: CaseStudy[] = [
         ],
         image: "/images/case-b3tter-mobile.webp",
         imageAlt: "The B3TTER site on a phone, showing the hero and the six-bottle lineup",
+        imageDimensions: { width: 780, height: 1688 },
+        imageFit: "phone",
       },
     ],
     results: [
@@ -218,6 +234,8 @@ export const caseStudies: CaseStudy[] = [
         ],
         image: "/images/case-point-break-mobile.webp",
         imageAlt: "The Point Break hero rendered on a 390px-wide phone screen with no layout overflow",
+        imageDimensions: { width: 390, height: 844 },
+        imageFit: "phone",
       },
     ],
     results: [
@@ -314,6 +332,8 @@ export const caseStudies: CaseStudy[] = [
         ],
         image: "/images/case-goodground-mobile.webp",
         imageAlt: "The GoodGround homepage hero rendered on a 390px-wide phone screen",
+        imageDimensions: { width: 390, height: 844 },
+        imageFit: "phone",
       },
     ],
     results: [
@@ -404,6 +424,8 @@ export const caseStudies: CaseStudy[] = [
         ],
         image: "/images/case-sunbird-mobile.webp",
         imageAlt: "The Sunbird hero rendered on a 390px-wide phone screen with no layout overflow",
+        imageDimensions: { width: 390, height: 844 },
+        imageFit: "phone",
       },
       {
         heading: "Two sections rebuilt after a second reference came in",
