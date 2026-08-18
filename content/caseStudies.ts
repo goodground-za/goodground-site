@@ -67,9 +67,9 @@ export const caseStudies: CaseStudy[] = [
     client: "B3TTER",
     title: "A premium product page, built in a day",
     standfirst:
-      "B3TTER is our own concept build: a full product site for an insulated bottle, scoring 100 for accessibility on the live URL with 56 MB of photography shipped as 1.5 MB.",
+      "B3TTER is our own concept build: a complete product website for an insulated bottle, designed to look expensive, work for every visitor, and still load fast with dozens of high-resolution photos on the page.",
     summary:
-      "A concept product site built to show what a premium single-product page looks like when every image is optimised and every interaction is accessible. Live, public, and testable.",
+      "A concept product site that shows what a premium single-product page can look like: beautiful photography that loads fast, and an experience that works whether you're using a mouse, a keyboard, or a screen reader.",
     tags: ["Design", "Development", "Accessibility", "Performance"],
     year: "2026",
     datePublished: "2026-08-15",
@@ -84,24 +84,24 @@ export const caseStudies: CaseStudy[] = [
       { label: "Build", value: "Hand-written HTML, CSS and JavaScript. No framework, no build step, no third-party requests." },
     ],
     challenge: [
-      "Most product pages for physical goods fail in the same two places. The photography is heavy enough to stall the page on a phone, and the interactive parts — colour pickers, review sliders, image galleries — are built with a mouse in mind and fall apart for anyone using a keyboard or a screen reader.",
-      "We wanted to prove both problems are solvable at the same time, on a page that still had to feel expensive. So we set the brief against ourselves: 56 MB of studio renders and lifestyle photography, a live colour switcher, a review carousel, an animated statistic grid, and a hard requirement that none of it drop a single accessibility point.",
+      "Most product pages for physical goods fail in the same two places. The photos are so heavy the page stalls on a phone, and the fun interactive bits — colour pickers, review sliders, photo galleries — are built assuming everyone uses a mouse, which leaves anyone relying on a keyboard or a screen reader stuck.",
+      "We wanted to prove both problems can be solved at once, without the page losing its premium feel. So we gave ourselves a tough brief: dozens of studio and lifestyle photos, a live colour switcher, a scrolling review carousel, and a rule that none of it could cost us a single point on accessibility.",
     ],
     solution: [
       {
         heading: "The product carries the colour, the interface stays silent",
         body: [
-          "The entire interface is monochrome. Every bit of colour on the page comes from the bottle itself, which is what makes a six-colourway range read as a range rather than as decoration.",
-          "The finish switcher crossfades six real photographs rather than recolouring one. Each shot is preloaded and stacked, so changing colour never flashes white while an image loads, and the swatches respond to arrow keys as well as clicks.",
+          "The entire interface is black and white. Every bit of colour on the page comes from the bottle itself, which is what makes a six-colourway range actually feel like a range, instead of decoration slapped on top.",
+          "Clicking a colour swatch smoothly fades between six real photographs of the bottle, rather than just tinting one image. Every photo is ready before you click, so there's never a flash of white while it loads, and you can flip through colours with your arrow keys, not just a mouse.",
         ],
         image: "/images/case-b3tter-finishes.webp",
         imageAlt: "The finish switcher showing six colour swatches beneath the selected bottle",
       },
       {
-        heading: "A bento grid that actually packs",
+        heading: "A specifications section that doesn't feel like a spec sheet",
         body: [
-          "The specification section is a bento grid of mixed tile sizes rather than a row of identical cards. Uniform card grids are the visual default of every template on the internet, and varying the spans gives the section a focal point instead of an even field.",
-          "It packs exactly: four columns by three rows at desktop, two by three at tablet, with no orphan tiles and no gaps at any width. We verified that by mapping every grid cell and checking coverage, not by looking at it.",
+          "The specifications section uses a mix of large and small tiles instead of a row of identical boxes. Most websites default to a wall of matching cards, and mixing the sizes gives the eye somewhere to land instead of a flat, even grid.",
+          "It was built to fit perfectly on every screen size, with no odd gaps or leftover tiles. We checked every layout by hand, at every width, rather than eyeballing it and hoping.",
         ],
         image: "/images/case-b3tter-bento.webp",
         imageAlt: "The bento grid showing mixed-size tiles for construction, temperature and mouth width",
@@ -109,8 +109,8 @@ export const caseStudies: CaseStudy[] = [
       {
         heading: "56 MB of photography, shipped as 1.5 MB",
         body: [
-          "Twenty-seven source images arrived as PNGs and JPEGs totalling 56 MB. Every one was converted to WebP, resized to the largest size it is actually displayed at, and trimmed to the product's real bounds so the layout is not fighting empty transparent space.",
-          "The finished page ships 1.5 MB across 28 files, with alpha preserved on every product cut-out. Nothing is loaded from a CDN, an analytics script or a font service, so there is no third-party request anywhere in the page.",
+          "Twenty-seven original photos came in at 56 MB combined, which is far too heavy for a fast-loading page. Every one was carefully compressed and resized to exactly the size it needed to be, with no wasted space around the product.",
+          "The finished page loads all of that photography in 1.5 MB total, with every cut-out product shot still perfectly transparent. Nothing on the page is fetched from anywhere else on the internet — no ad trackers, no font services, nothing slowing it down but the page itself.",
         ],
         image: "/images/case-b3tter-lifestyle.webp",
         imageAlt: "The lifestyle section pairing environment photography with macro detail shots",
@@ -118,8 +118,8 @@ export const caseStudies: CaseStudy[] = [
       {
         heading: "Accessible because it was checked, not because it was assumed",
         body: [
-          "Every interactive part is reachable and operable by keyboard: the colour switcher, the review slider, the mobile menu and the navigation. The slider exposes only the visible quote to screen readers, and the auto-advance stops the moment anyone hovers, focuses or clicks.",
-          "All motion — the hero settle, the scroll reveals, the counting statistics, the carousel — is switched off under prefers-reduced-motion rather than merely slowed down.",
+          "Every interactive part of the page — the colour switcher, the review carousel, the mobile menu — works just as well with a keyboard as it does with a mouse. Screen readers are only told about the review that's actually on screen, and the carousel stops moving the instant anyone interacts with it.",
+          "And for anyone whose device is set to reduce motion, every animation on the page — the settling hero image, the scroll effects, the counting numbers — turns off completely rather than just slowing down.",
         ],
         image: "/images/case-b3tter-mobile.webp",
         imageAlt: "The B3TTER site on a phone, showing the hero and the six-bottle lineup",
@@ -161,9 +161,9 @@ export const caseStudies: CaseStudy[] = [
     client: "Point Break Surf Academy",
     title: "A one-page booking site with a real pricing engine, no backend",
     standfirst:
-      "Point Break is our concept build for a surf school in Jeffreys Bay: lessons, camps, coaches and a live custom-quote calculator, all on one scrolling page, all running client-side with zero framework and a 331ms LCP on the live URL.",
+      "Point Break is our concept build for a surf school in Jeffreys Bay: lessons, camps, coaches, and an instant custom quote, all on one page that loads almost immediately.",
     summary:
-      "A concept booking site for a fictional surf academy, built to show how much of a real booking flow — tiered pricing, itineraries, coach credibility, a custom package builder — can live on a single page without a backend.",
+      "A concept booking site for a fictional surf academy, built to show how much of a real booking experience — pricing, itineraries, meet-the-coach bios, a custom package builder — can live on one page without a single visitor waiting for anything to load.",
     tags: ["Design", "Development", "Booking UX", "Performance"],
     year: "2026",
     datePublished: "2026-08-17",
@@ -178,15 +178,15 @@ export const caseStudies: CaseStudy[] = [
       { label: "Build", value: "Hand-written HTML, CSS and JavaScript. No framework, no build step, no backend." },
     ],
     challenge: [
-      "Most one-page booking sites pick one of two failure modes. Either they are a brochure page that funnels every enquiry through a single generic contact form, hiding the real detail — durations, group sizes, what's included, day-by-day itineraries — behind a phone call. Or they try to be a genuine booking engine and end up needing a backend, a database and a payment processor before the first lesson is ever listed.",
-      "We set the brief to prove a middle path. Four different kinds of bookable content — three lesson tiers, three camp packages, four coaches, and a fully custom package — needed to sit on one scrolling page, each with real depth behind a click, and a price calculator that had to feel like it was talking to a live pricing API when it was actually running entirely in the visitor's browser.",
+      "Most one-page booking sites fall into one of two traps. Either they're a brochure that funnels every enquiry through a single generic contact form, hiding the details people actually want to know — how long, how many people, what's included — behind a phone call. Or they try to become a real booking system and end up needing months of backend development before the first lesson is even listed.",
+      "We set out to prove there's a middle path. Four different things a visitor might want to book — lessons, camp packages, meeting a coach, or building their own custom trip — all needed to live on one scrolling page, each with real depth behind a click. And the price calculator had to feel instant and alive, as if it were checking with someone in real time, even though nothing was happening anywhere but in the visitor's own browser.",
     ],
     solution: [
       {
-        heading: "One modal pattern doing four different jobs",
+        heading: "One pop-up window, doing four different jobs",
         body: [
-          "Lesson details, camp itineraries, coach bios and the booking form all open in the same modal shell: an image header, a scrollable body, and identical close behaviour on the X, a click outside, or Escape. The content inside is entirely data-driven, so the shell was built once and every card on the page just feeds it different data.",
-          "The booking modal specifically can be opened from several places across the page — the hero, the sticky nav, the floating button, inside a lesson or camp's own detail modal, or the package builder — and pre-fills itself with whatever package and price the visitor was already looking at.",
+          "Lesson details, camp itineraries, coach bios and the booking form all open in the exact same style of pop-up window: a photo at the top, scrollable details below, and the same familiar way of closing it, whether that's the X, clicking outside, or hitting Escape. We built that one pop-up once, and every card on the page just fills it with different content.",
+          "The booking pop-up in particular can be opened from almost anywhere on the page, and it always remembers what the visitor was already looking at — so if you were checking the price for a family camp package, that's exactly what shows up when you go to book.",
         ],
         image: "/images/case-point-break-modal.webp",
         imageAlt: "The coach bio modal open on the live site, showing a founder's background and coaching philosophy",
@@ -194,8 +194,8 @@ export const caseStudies: CaseStudy[] = [
       {
         heading: "A price calculator with nothing to talk to",
         body: [
-          "The package builder recalculates a full ZAR quote — lesson tier, camp package, add-ons, guest count — the instant any selection changes, entirely with client-side JavaScript. There is no API call, no debounce waiting on a network response, because there is no network response to wait on.",
-          "Every line in the breakdown is generated from the same selection state that produces the total, so the two can never drift out of sync with each other, which is the failure mode that makes most DIY quote widgets untrustworthy.",
+          "The package builder updates a full quote — lesson type, camp package, extras, number of guests — the instant anyone changes a selection. There's no waiting, no spinner, no delay, because there's nothing anywhere else it needs to check with. Everything happens right there in the browser.",
+          "Every line in the price breakdown comes from exactly the same information that produces the total, so the two can never disagree with each other, which is the thing that makes most online quote tools feel untrustworthy.",
         ],
         image: "/images/case-point-break-builder.webp",
         imageAlt:
@@ -204,8 +204,8 @@ export const caseStudies: CaseStudy[] = [
       {
         heading: "Pricing tiers that read like tiers, not a template",
         body: [
-          "The three lesson cards and three camp cards are the same shape by necessity, since they are directly comparable pricing tiers, but each one carries its own photograph, specific inclusions and a list of real outcomes, rather than the generic icon-plus-heading treatment that makes most pricing sections look interchangeable.",
-          "The distinction matters most in the details a visitor actually compares before booking: group size, duration, and what happens in the lesson, not just the price.",
+          "The three lesson options and three camp packages are laid out the same way, because they need to be easy to compare side by side. But each one has its own photograph, its own specific inclusions, and a real description of what you'll actually get, not the generic icon-and-heading treatment that makes most pricing pages look interchangeable.",
+          "That distinction matters most in the details people actually weigh up before booking: how many people are in the group, how long it runs, and what actually happens in the lesson, not just the price tag.",
         ],
         image: "/images/case-point-break-lessons.webp",
         imageAlt: "The three lesson tier cards, Beginner through Advanced, each with its own photo, price and outcomes",
@@ -213,8 +213,8 @@ export const caseStudies: CaseStudy[] = [
       {
         heading: "Built mobile-first, because that is how it gets booked",
         body: [
-          "Most bookings for a trip like this happen from a phone, often while travelling, so the layout was designed at 390px first and worked up, not scaled down from a desktop comp. Every card grid, the package builder's two-column layout, and all four modals were checked at 320px, 768px and 1920px with zero horizontal overflow at any of them.",
-          "The one CSS bug worth naming: a `<select>` with long option text can force a grid track past its container's width unless the track is explicitly clamped with `minmax(0, …)`. It shipped, was caught in testing, and is now the reason every grid on the page that hosts a form control uses that pattern.",
+          "Most people booking a trip like this do it from their phone, often while they're already travelling. So the whole layout was designed for a phone screen first, then built up to fit a laptop, not the other way around. Every part of the page was checked on the smallest and largest screens we could think of, with nothing ever spilling off the edge.",
+          "One dropdown menu with long text once quietly pushed part of the layout wider than it should have been. A small bug, the kind that only shows up once you actually test on a real device instead of assuming a design will hold — caught before it ever reached a real visitor.",
         ],
         image: "/images/case-point-break-mobile.webp",
         imageAlt: "The Point Break hero rendered on a 390px-wide phone screen with no layout overflow",
@@ -261,9 +261,9 @@ export const caseStudies: CaseStudy[] = [
     client: "GoodGround",
     title: "The studio holds itself to the same brief it gives clients",
     standfirst:
-      "This site: Next.js 16, Tailwind v4, 48 statically generated pages, Lighthouse 100 across accessibility, best practices, SEO and agentic browsing, and a 772ms LCP, all measured on the live URL, not a staging build.",
+      "This is our own site, built and held to the same standard we hold every client site to: fast, accessible, and honestly checked against the live version anyone can visit, not a private staging copy.",
     summary:
-      "GoodGround's own site, built and audited the same way we build for clients. Includes the fixes from our own SEO audit: broader og:image coverage, de-duplicated service copy, and this page's layout, which used to feature one project over the others.",
+      "GoodGround's own site, built and checked the same way we check every client's. This case study covers what we found when we audited ourselves, and what we fixed: pages that weren't sharing properly on social media, repeated copy, and a work page that quietly favoured one project over the others.",
     tags: ["Design", "Development", "SEO", "Performance"],
     year: "2026",
     datePublished: "2026-08-17",
@@ -277,15 +277,15 @@ export const caseStudies: CaseStudy[] = [
       { label: "Build", value: "Next.js 16, Tailwind v4, GSAP and Framer Motion, deployed on Vercel." },
     ],
     challenge: [
-      "A studio's own site is where every shortcut it would never let a client take becomes tempting, because there's no client waiting on a deadline and no one to notice if a claim about performance or accessibility quietly stops being true. The failure mode is well known: the agency that sells fast, accessible, well-structured websites while running one that fails its own pitch.",
-      "The brief here was to hold this site to the same bar as B3TTER and Point Break: real Lighthouse scores on the live URL, not a local build; a genuine SEO audit, not an assumed clean bill of health; and fixes applied and re-verified rather than marked done from memory. This case study exists because that audit found real issues, and this is the record of fixing them.",
+      "A studio's own website is where every shortcut it would never let a client take suddenly becomes tempting. There's no client waiting on a deadline, and no one watching to notice if a claim about speed or accessibility quietly stops being true. It's a familiar trap: the agency that sells fast, accessible websites while running one that doesn't live up to its own pitch.",
+      "So we held this site to the exact same bar as our other work: real checks on the live version, not a private build; an honest audit rather than an assumed clean bill of health; and every fix checked again after it was made, rather than trusted from memory. This case study exists because that audit turned up real problems, and this is the record of fixing them.",
     ],
     solution: [
       {
-        heading: "An SEO audit run against ourselves, not just clients",
+        heading: "An audit run against ourselves, not just clients",
         body: [
-          "The audit that produced this case study found sixteen pages missing their own og:image (services and industry subpages sharing the homepage's link-preview card), a stale llms.txt claiming /work was 'coming soon' when it wasn't, and a /work page that gave the first case study a wide featured treatment while the rest sat in a smaller grid below, quietly implying one project mattered more than another.",
-          "Every one of those got fixed in the same pass: sixteen new opengraph-image routes off the existing card template, llms.txt brought back in sync with the real sitemap, and /work rebuilt so every case study, including this one, renders at identical size and weight.",
+          "The audit that produced this case study found sixteen pages that all shared the exact same social-media preview image instead of their own, a leftover note telling search engines our work page was 'coming soon' when it had been live for weeks, and a work page that gave one project a big featured spot while the rest sat smaller below it, quietly suggesting it mattered more than the others.",
+          "Every one of those got fixed in the same pass: all sixteen pages now generate their own proper preview image, the outdated note was corrected, and the work page was rebuilt so every case study, including this one, appears at exactly the same size and weight, with no favourites.",
         ],
         image: "/images/case-goodground-work.webp",
         imageAlt: "The /work page after the fix, showing every case study as an equal-size grid card with no featured project",
@@ -293,8 +293,8 @@ export const caseStudies: CaseStudy[] = [
       {
         heading: "An animation the audit flagged as broken, that wasn't",
         body: [
-          "The same audit reported that the light animation on the recommended pricing card had stopped shipping, based on a screenshot showing a static ring. Sampling the card's computed offset-distance twice, 800ms apart, on the live URL told a different story: 72.55% moving to 89.55%, the animation running exactly as built.",
-          "The likely cause: a screenshot catches one frozen frame of a six-second, continuously looping animation, and a frozen frame of anything in motion looks static. It's a useful reminder that a visual check and a moving one aren't the same test, and this case study fixes what the audit actually found rather than what it happened to catch mid-frame.",
+          "The same audit also reported that a small light animation on our recommended pricing card had stopped working, based on a screenshot that showed it sitting still. But checking the actual page over time told a different story: the light was moving exactly as it was supposed to.",
+          "The likely explanation: a screenshot only ever catches one single frozen instant of a slow, looping animation, and any frozen instant of something in motion looks like it's standing still. It's a useful reminder that looking at a picture of a page and watching the real thing aren't the same test, and this case study only fixes what was actually found, not what a screenshot happened to catch by accident.",
         ],
         image: "/images/case-goodground-pricing.webp",
         imageAlt: "The four pricing package cards on the live site, with the recommended Grow card carrying an animated light along its edge",
@@ -302,15 +302,15 @@ export const caseStudies: CaseStudy[] = [
       {
         heading: "Numbers that hold up on the real domain",
         body: [
-          "The homepage scores 100 on Lighthouse Accessibility, Best Practices, SEO and Agentic Browsing, measured against www.goodground.co.za directly rather than a local or staging copy. Largest Contentful Paint lands at 772ms and Cumulative Layout Shift at 0.02, both from a live performance trace, not a lab estimate.",
-          "The build itself is unremarkable by design: Next.js's static generation produces 48 pages at build time, so most of the site serves as static HTML with no server round-trip per request.",
+          "Every number in the results section below was measured against the real, live website, not a local copy on someone's laptop, and not a guess. If a claim about speed or accessibility is going to mean anything, it has to hold up on the site people actually visit.",
+          "The site itself is intentionally unglamorous under the hood: nearly every page is built in advance rather than assembled on the fly, so visitors are served a ready-made page rather than waiting on a server to build one just for them.",
         ],
       },
       {
         heading: "Built mobile-first, same as every other project here",
         body: [
-          "The same responsive discipline applied to B3TTER and Point Break applies here: no desktop-first layout scaled down after the fact, no horizontal overflow at any checked width, and the same reduced-motion handling across every animated element on the page.",
-          "The difference on this site is stakes. If a client's site had a bug like the grid-overflow issue caught on Point Break, it would be an embarrassing fix. On this one, it's the site making the exact promise it's failing to keep.",
+          "The same care that went into B3TTER and Point Break went into this site too: nothing was designed for a laptop screen and then awkwardly squeezed onto a phone afterwards, and every animated element respects a visitor's request for less motion.",
+          "The difference here is what's at stake. If a client's site had a small layout bug, it would just be an embarrassing fix. If this site has one, it's us failing to keep the exact promise we make to everyone else.",
         ],
         image: "/images/case-goodground-mobile.webp",
         imageAlt: "The GoodGround homepage hero rendered on a 390px-wide phone screen",
@@ -350,6 +350,103 @@ export const caseStudies: CaseStudy[] = [
     ],
     resultsCaveat:
       "These numbers describe how the site is built, not how the business is performing: traffic, leads and client outcomes are real but aren't the subject of this page. Where they're relevant, they belong in a business update, not a build case study, and won't be invented here to fill the gap.",
+  },
+  {
+    slug: "sunbird-early-learners",
+    kind: "concept",
+    client: "Sunbird Early Learners",
+    title: "A preschool site built from one reference photo, with a booking flow that needs no server at all",
+    standfirst:
+      "Sunbird is our concept build for a fictional Cape Town preschool: a full, animation-led website matched to a single reference image, with a working visit-booking and enrolment flow that runs entirely in the visitor's browser.",
+    summary:
+      "A concept preschool website built from one client-supplied reference photo, carrying its own brand, colours and voice throughout. Includes a fully working booking and enrolment flow, built and tested end to end without a single line of backend code.",
+    tags: ["Design", "Development", "Motion", "Booking UX"],
+    year: "2026",
+    datePublished: "2026-08-18",
+    liveUrl: "https://preview.goodground.co.za/sunbird-early-learners/",
+    image: "/images/case-sunbird-hero.webp",
+    imageAlt:
+      "The Sunbird Early Learners hero section, showing layered cutout photographs of children over a deep green background",
+    snapshot: [
+      { label: "Client", value: "Sunbird Early Learners — a GoodGround concept brand" },
+      { label: "Industry", value: "Early childhood education, direct to parents" },
+      { label: "Services", value: "Design, front-end build, booking UX, SEO setup" },
+      { label: "Build", value: "Hand-written HTML, CSS and JavaScript. No framework, no build step, no backend." },
+    ],
+    challenge: [
+      "A client sent us one reference photo of a website they liked and asked for something that felt the same, without copying it outright. That's a harder brief than it sounds: match the feeling and structure of someone else's design closely enough that it clearly did its job as a reference, while making sure the finished site has its own name, its own colours, its own voice, and never reads as a copy with the logo swapped out.",
+      "On top of that, every 'Book a Visit' and 'Apply Now' button on a typical preschool site is usually just a link to a contact form, or worse, a dead link that goes nowhere. We wanted to build the real thing: a working booking and enrolment flow a parent could actually use, without a server, a database, or anyone on the other end to make it feel genuine.",
+    ],
+    solution: [
+      {
+        heading: "One reference photo, turned into a whole site's worth of decisions",
+        body: [
+          "We started by describing the reference image back in detail — the deep green hero, the cut-out photo shapes, the stats sitting on the seam between two sections, the mascot doodles, the big oversized name in the footer — and rebuilt each of those ideas with Sunbird's own colours, its own mascot, and copy written specifically for a Cape Town audience.",
+          "The result reads as its own brand rather than a reskin: the same warm, playful feeling as the reference, the same structure, but nothing borrowed outright.",
+        ],
+        image: "/images/case-sunbird-trusted.webp",
+        imageAlt: "The Trusted by Families section, showing organic blob-shaped photo cards in Sunbird's teal and marigold palette",
+      },
+      {
+        heading: "A booking button that actually books something",
+        body: [
+          "Every 'Book a Visit' button on the site, and the 'Apply Now' button in the closing section, opens the same pop-up window with a real form: parent and child's names, contact details, the age group, and either a preferred visit date or a preferred starting term, depending on which button was clicked.",
+          "Fill it in and submit, and it behaves like a real booking system would: checking the form is filled in properly, showing a brief sending state, then confirming back with a message built from what was actually typed in — the child's name, the programme, and the date or term chosen. Nothing is sent anywhere, since there's no real preschool on the other end, but every part of the experience works exactly as it would if there were.",
+        ],
+        image: "/images/case-sunbird-modal.webp",
+        imageAlt: "The booking pop-up open on the live site, showing the visit-request form with parent, child and programme fields",
+      },
+      {
+        heading: "Caught by looking twice, not just once",
+        body: [
+          "Every part of this site was screenshotted, checked, fixed, and screenshotted again, on a full-size screen, a tablet, and a phone. That habit is what caught the real problems: navigation text that was invisible against the dark background, a mobile menu that left a faint stripe behind when it closed, and a photo that overlapped the heading text on small phones.",
+          "It also caught something smaller but just as real: a couple of photo captions that didn't actually match what was in the photo. Easy to miss on a quick glance, obvious the moment you look properly, which is the whole point of checking twice.",
+        ],
+        image: "/images/case-sunbird-mobile.webp",
+        imageAlt: "The Sunbird hero rendered on a 390px-wide phone screen with no layout overflow",
+      },
+      {
+        heading: "Two sections rebuilt after a second reference came in",
+        body: [
+          "Partway through, the client sent two more reference images and asked for the equivalent sections to be added. Rather than bolt them on as extra content and end up with two sections both explaining why the school could be trusted, we replaced the closest matching sections with the new approach, so the page still reads as one considered whole rather than a page that grew by accident.",
+          "The programmes section became a scrollable set of age-based cards with its own working previous and next controls, and each card's 'Learn More' link opens the booking pop-up with that exact age group already selected — a small detail, but one that saves a parent from re-explaining what they just clicked on.",
+        ],
+        image: "/images/case-sunbird-programmes.webp",
+        imageAlt: "The Programmes Designed for Every Stage carousel, showing four colour-coded age-group cards with prev/next arrows",
+      },
+    ],
+    results: [
+      {
+        value: "5 files",
+        label: "Entire site",
+        verify:
+          "View source on the live URL: index.html, styles.css, script.js, robots.txt and sitemap.xml. No bundler output, no framework.",
+      },
+      {
+        value: "0",
+        label: "Console errors",
+        verify: "Open the Console on the live URL.",
+      },
+      {
+        value: "0",
+        label: "Broken requests",
+        verify: "Open the Network panel on the live URL and reload — every request returns 200.",
+      },
+      {
+        value: "44px",
+        label: "Minimum touch target size",
+        verify:
+          "Inspect the mobile nav toggle or the gallery lightbox controls in DevTools — every tappable control measures at least 44×44px.",
+      },
+      {
+        value: "2 in 1",
+        label: "Booking flows, one pop-up",
+        verify:
+          "Click any 'Book a Visit' button, then 'Apply Now' in the closing section — same pop-up, two different forms.",
+      },
+    ],
+    resultsCaveat:
+      "Sunbird Early Learners is a fictional brand with no real families or enrolments, so like our other concept builds, there's no traffic or booking data to report, and we're not going to invent any. The site also carries a deliberate noindex tag and a Disallow in robots.txt, so a made-up preschool doesn't turn up in real search results. Every number above can be checked directly in your own browser.",
   },
 ];
 
