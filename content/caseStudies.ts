@@ -108,6 +108,9 @@ export type CaseStudy = {
   /** Right-hand meta column under the title, one line each. */
   service?: string;
   details?: string;
+  /** Short paragraph(s) under "The Brief" heading, above the video/live-site
+   * button. */
+  briefText?: string[];
   /** "The Brief" video loop. */
   video?: { src: string };
   /** Standalone image rows, rendered in this order relative to the text:
@@ -150,6 +153,10 @@ export const caseStudies: CaseStudy[] = [
     },
     service: "Design & Front-End Development",
     details: "Hand-written HTML, CSS and JavaScript. No framework, no build step, no third-party requests.",
+    briefText: [
+      "B3TTER needed a product page that could carry a premium single-item brand on its own: no supporting range, no category page to lean on, just one bottle that had to look and feel expensive from the first scroll.",
+      "The clip below is a straight walkthrough of the finished site, recorded end to end rather than cut together from separate takes, so what you're seeing is exactly what a visitor gets.",
+    ],
     video: { src: "/videos/case-b3tter-demo.mp4" },
     snapshot: [
       { label: "Client", value: "B3TTER — a GoodGround concept brand" },

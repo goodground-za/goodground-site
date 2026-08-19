@@ -82,24 +82,22 @@ function NewTemplateBody({ study }: { study: CaseStudy }) {
 
   return (
     <>
-      {/* ---------- Hero ---------- */}
-      <section className="bg-ht-cream px-6 pt-16 sm:px-10 md:pt-20">
-        <div className="mx-auto max-w-[1434px]">
-          <RevealSection>
-            <div className="rounded-block overflow-hidden bg-white">
-              <Image
-                src={hero.src}
-                alt={hero.alt}
-                width={hero.width}
-                height={hero.height}
-                priority
-                quality={90}
-                sizes="(max-width: 1434px) 100vw, 1434px"
-                className="h-auto w-full"
-              />
-            </div>
-          </RevealSection>
-        </div>
+      {/* ---------- Hero ----------
+          Full-bleed: no side padding, no top gap under the nav, no rounded
+          corners — the reference layout runs this photo edge-to-edge. */}
+      <section className="bg-ht-cream">
+        <RevealSection>
+          <Image
+            src={hero.src}
+            alt={hero.alt}
+            width={hero.width}
+            height={hero.height}
+            priority
+            quality={90}
+            sizes="100vw"
+            className="h-auto w-full"
+          />
+        </RevealSection>
       </section>
 
       {/* ---------- Meta header ---------- */}
@@ -149,6 +147,15 @@ function NewTemplateBody({ study }: { study: CaseStudy }) {
                 <h2 className="font-ht-display text-ht-purple text-[clamp(1.6rem,3vw,2.4rem)] leading-tight font-bold">
                   The brief
                 </h2>
+                {study.briefText && study.briefText.length > 0 ? (
+                  <div className="mt-6 max-w-[68ch] space-y-5">
+                    {study.briefText.map((p) => (
+                      <p key={p.slice(0, 40)} className="text-ht-purple/75 text-[16px] leading-[1.75]">
+                        {p}
+                      </p>
+                    ))}
+                  </div>
+                ) : null}
                 <div className="rounded-block ring-ht-pink mt-7 overflow-hidden bg-white ring-2">
                   {/* Muted autoplay loop: no controls, no sound (browsers block
                       autoplay-with-sound anyway), respects the page's own
@@ -211,39 +218,36 @@ function NewTemplateBody({ study }: { study: CaseStudy }) {
         </section>
       )}
 
-      {/* ---------- The Challenge ---------- */}
+      {/* ---------- The Challenge / The Solution (intro) ---------- */}
       <section className={`bg-ht-cream px-6 sm:px-10 ${galleries.pair ? "pb-16 md:pb-24" : "py-16 md:py-24"}`}>
         <div className="mx-auto max-w-[1434px]">
-          <RevealSection>
-            <h2 className="font-ht-display text-ht-purple text-[clamp(1.6rem,3vw,2.4rem)] leading-tight font-bold">
-              The challenge
-            </h2>
-            <div className="mt-6 max-w-[68ch] space-y-5">
-              {study.challenge.map((p) => (
-                <p key={p.slice(0, 40)} className="text-ht-purple/75 text-[16px] leading-[1.75]">
-                  {p}
-                </p>
-              ))}
-            </div>
-          </RevealSection>
-        </div>
-      </section>
+          <div className="grid gap-12 md:grid-cols-2 md:gap-14">
+            <RevealSection>
+              <h2 className="font-ht-display text-ht-purple text-[clamp(1.6rem,3vw,2.4rem)] leading-tight font-bold">
+                The challenge
+              </h2>
+              <div className="mt-6 max-w-[68ch] space-y-5">
+                {study.challenge.map((p) => (
+                  <p key={p.slice(0, 40)} className="text-ht-purple/75 text-[16px] leading-[1.75]">
+                    {p}
+                  </p>
+                ))}
+              </div>
+            </RevealSection>
 
-      {/* ---------- The Solution (intro) ---------- */}
-      <section className="bg-ht-cream px-6 pb-16 sm:px-10 md:pb-24">
-        <div className="mx-auto max-w-[1434px]">
-          <RevealSection>
-            <h2 className="font-ht-display text-ht-purple text-[clamp(1.6rem,3vw,2.4rem)] leading-tight font-bold">
-              The solution
-            </h2>
-            <div className="mt-6 max-w-[68ch] space-y-5">
-              {(study.solutionIntro ?? []).map((p) => (
-                <p key={p.slice(0, 40)} className="text-ht-purple/75 text-[16px] leading-[1.75]">
-                  {p}
-                </p>
-              ))}
-            </div>
-          </RevealSection>
+            <RevealSection>
+              <h2 className="font-ht-display text-ht-purple text-[clamp(1.6rem,3vw,2.4rem)] leading-tight font-bold">
+                The solution
+              </h2>
+              <div className="mt-6 max-w-[68ch] space-y-5">
+                {(study.solutionIntro ?? []).map((p) => (
+                  <p key={p.slice(0, 40)} className="text-ht-purple/75 text-[16px] leading-[1.75]">
+                    {p}
+                  </p>
+                ))}
+              </div>
+            </RevealSection>
+          </div>
         </div>
       </section>
 
@@ -280,7 +284,7 @@ function NewTemplateBody({ study }: { study: CaseStudy }) {
 
       {/* ---------- Solution detail blocks ---------- */}
       <section className="bg-white px-6 py-16 sm:px-10 md:py-24">
-        <div className="mx-auto max-w-[1434px] space-y-14 md:space-y-20">
+        <div className="mx-auto grid max-w-[1434px] gap-x-14 gap-y-14 md:grid-cols-2 md:gap-y-20">
           {study.solution.map((block) => (
             <RevealSection key={block.heading}>
               <h3 className="font-ht-display text-ht-purple max-w-[36ch] text-[clamp(1.25rem,2.2vw,1.75rem)] leading-tight font-bold">
