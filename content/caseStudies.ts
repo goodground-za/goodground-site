@@ -31,6 +31,16 @@ export type Metric = {
   verify: string;
 };
 
+export type GalleryImage = {
+  src: string;
+  alt: string;
+  /** Real pixel dimensions, so Next/Image renders every gallery image at its
+   * own natural aspect ratio instead of stretching a portrait shot into a
+   * landscape box (the bug fixed on 2026-08-18). */
+  width: number;
+  height: number;
+};
+
 export type CaseStudy = {
   slug: string;
   kind: CaseStudyKind;
@@ -38,7 +48,8 @@ export type CaseStudy = {
   client: string;
   /** Headline for the case study page. */
   title: string;
-  /** One line under the headline. */
+  /** One line under the headline. Shown on the old template; used only for
+   * metadata/OG description on the new one (see `galleries` below). */
   standfirst: string;
   /** Card summary on /work. */
   summary: string;
@@ -49,7 +60,9 @@ export type CaseStudy = {
    * guessed. */
   datePublished: string;
   liveUrl?: string;
-  /** Hero screenshot. */
+  /** Hero screenshot. Always required — used for the /work card thumbnail
+   * regardless of which page template a case study uses, and as the on-page
+   * hero for studies still on the old template. */
   image: string;
   imageAlt: string;
   snapshot: { label: string; value: string }[];
@@ -72,6 +85,44 @@ export type CaseStudy = {
   results: Metric[];
   /** Plain-language note on what the results do and do not prove. */
   resultsCaveat: string;
+
+  /**
+   * ---- New page template (2026-08-19) ----
+   * Client-supplied reference layout: full lifestyle hero photo, a Year /
+   * Service / Details meta row, an optional looping video under "The
+   * Brief", standalone image galleries between sections instead of one
+   * image per solution block, and a short "Solution" intro before the named
+   * sub-blocks.
+   *
+   * A case study renders on this template once `galleries` OR
+   * `solutionIntro` is present — until then it renders on the original
+   * template above using `image`/`solution[].image`. Migrate a case study
+   * by adding these fields once its own matching asset set (multi-shot
+   * lifestyle photography + a demo clip) is in hand; don't force it onto a
+   * study that only has the old single-hero-plus-per-block-screenshot set.
+   */
+  /** Full-bleed lifestyle hero photo (devices on a real surface), replacing
+   * `image` on the page itself — `image` above still supplies the /work
+   * card and is the fallback OG image. */
+  heroImage?: GalleryImage;
+  /** Right-hand meta column under the title, one line each. */
+  service?: string;
+  details?: string;
+  /** "The Brief" video loop. */
+  video?: { src: string };
+  /** Standalone image rows, rendered in this order relative to the text:
+   * pair → Challenge/Solution-intro text → wide + row → named solution
+   * sub-blocks → grid → Results. Every key is independently optional. */
+  galleries?: {
+    pair?: GalleryImage[];
+    wide?: GalleryImage;
+    row?: GalleryImage[];
+    grid?: GalleryImage[];
+  };
+  /** Short paragraph(s) under "The Solution" heading, before the named
+   * sub-blocks (which reuse the existing `solution` field above, minus its
+   * per-block images on this template). */
+  solutionIntro?: string[];
 };
 
 export const caseStudies: CaseStudy[] = [
@@ -91,15 +142,59 @@ export const caseStudies: CaseStudy[] = [
     image: "/images/case-b3tter-hero.webp",
     imageAlt:
       "The B3TTER product site hero, showing six colourways of an insulated bottle across the full width of the page",
+    heroImage: {
+      src: "/images/case-b3tter-v2-hero.webp",
+      alt: "A laptop and phone side by side on a stone table, both showing the B3TTER product page with six bottle colourways",
+      width: 2400,
+      height: 812,
+    },
+    service: "Design & Front-End Development",
+    details: "Hand-written HTML, CSS and JavaScript. No framework, no build step, no third-party requests.",
+    video: { src: "/videos/case-b3tter-demo.mp4" },
     snapshot: [
       { label: "Client", value: "B3TTER — a GoodGround concept brand" },
       { label: "Industry", value: "Outdoor gear, direct to consumer" },
       { label: "Services", value: "Design, front-end build, image optimisation, accessibility, SEO setup" },
-      { label: "Build", value: "Hand-written HTML, CSS and JavaScript. No framework, no build step, no third-party requests." },
     ],
+    galleries: {
+      pair: [
+        {
+          src: "/images/case-b3tter-v2-pair-1.webp",
+          alt: "The B3TTER site open on a laptop resting on a leather couch",
+          width: 1200,
+          height: 938,
+        },
+        {
+          src: "/images/case-b3tter-v2-pair-2.webp",
+          alt: "The B3TTER site open on a laptop, viewed from over someone's shoulder",
+          width: 1200,
+          height: 938,
+        },
+      ],
+      wide: {
+        src: "/images/case-b3tter-v2-wide.webp",
+        alt: "A hand reaching for the trackpad of a laptop showing the B3TTER site, camera and coffee cup nearby",
+        width: 2400,
+        height: 921,
+      },
+      row: [
+        { src: "/images/case-b3tter-v2-row-1.webp", alt: "The B3TTER site open on a phone, resting on grass outdoors", width: 900, height: 960 },
+        { src: "/images/case-b3tter-v2-row-2.webp", alt: "A hand holding a phone showing the B3TTER finish switcher", width: 900, height: 960 },
+        { src: "/images/case-b3tter-v2-row-3.webp", alt: "The B3TTER site open on a laptop at a work desk", width: 900, height: 960 },
+      ],
+      grid: [
+        { src: "/images/case-b3tter-v2-grid-1.webp", alt: "Close-up of a laptop trackpad and keyboard with the B3TTER site on screen", width: 700, height: 546 },
+        { src: "/images/case-b3tter-v2-grid-2.webp", alt: "Hands typing on a laptop keyboard with the B3TTER site open", width: 700, height: 546 },
+        { src: "/images/case-b3tter-v2-grid-3.webp", alt: "A phone showing the B3TTER site held in one hand", width: 700, height: 546 },
+        { src: "/images/case-b3tter-v2-grid-4.webp", alt: "Hands holding an insulated bottle next to a laptop showing the B3TTER site", width: 700, height: 546 },
+      ],
+    },
     challenge: [
       "Most product pages for physical goods fail in the same two places. The photos are so heavy the page stalls on a phone, and the fun interactive bits — colour pickers, review sliders, photo galleries — are built assuming everyone uses a mouse, which leaves anyone relying on a keyboard or a screen reader stuck.",
       "We wanted to prove both problems can be solved at once, without the page losing its premium feel. So we gave ourselves a tough brief: dozens of studio and lifestyle photos, a live colour switcher, a scrolling review carousel, and a rule that none of it could cost us a single point on accessibility.",
+    ],
+    solutionIntro: [
+      "We took each problem in turn: colour without clutter, a specifications section people actually read, photography that stays light, and accessibility that's checked rather than assumed. Here's how each one was built.",
     ],
     solution: [
       {
@@ -108,8 +203,6 @@ export const caseStudies: CaseStudy[] = [
           "The entire interface is black and white. Every bit of colour on the page comes from the bottle itself, which is what makes a six-colourway range actually feel like a range, instead of decoration slapped on top.",
           "Clicking a colour swatch smoothly fades between six real photographs of the bottle, rather than just tinting one image. Every photo is ready before you click, so there's never a flash of white while it loads, and you can flip through colours with your arrow keys, not just a mouse.",
         ],
-        image: "/images/case-b3tter-finishes.webp",
-        imageAlt: "The finish switcher showing six colour swatches beneath the selected bottle",
       },
       {
         heading: "A specifications section that doesn't feel like a spec sheet",
@@ -117,8 +210,6 @@ export const caseStudies: CaseStudy[] = [
           "The specifications section uses a mix of large and small tiles instead of a row of identical boxes. Most websites default to a wall of matching cards, and mixing the sizes gives the eye somewhere to land instead of a flat, even grid.",
           "It was built to fit perfectly on every screen size, with no odd gaps or leftover tiles. We checked every layout by hand, at every width, rather than eyeballing it and hoping.",
         ],
-        image: "/images/case-b3tter-bento.webp",
-        imageAlt: "The bento grid showing mixed-size tiles for construction, temperature and mouth width",
       },
       {
         heading: "56 MB of photography, shipped as 1.5 MB",
@@ -126,8 +217,6 @@ export const caseStudies: CaseStudy[] = [
           "Twenty-seven original photos came in at 56 MB combined, which is far too heavy for a fast-loading page. Every one was carefully compressed and resized to exactly the size it needed to be, with no wasted space around the product.",
           "The finished page loads all of that photography in 1.5 MB total, with every cut-out product shot still perfectly transparent. Nothing on the page is fetched from anywhere else on the internet — no ad trackers, no font services, nothing slowing it down but the page itself.",
         ],
-        image: "/images/case-b3tter-lifestyle.webp",
-        imageAlt: "The lifestyle section pairing environment photography with macro detail shots",
       },
       {
         heading: "Accessible because it was checked, not because it was assumed",
@@ -135,10 +224,6 @@ export const caseStudies: CaseStudy[] = [
           "Every interactive part of the page — the colour switcher, the review carousel, the mobile menu — works just as well with a keyboard as it does with a mouse. Screen readers are only told about the review that's actually on screen, and the carousel stops moving the instant anyone interacts with it.",
           "And for anyone whose device is set to reduce motion, every animation on the page — the settling hero image, the scroll effects, the counting numbers — turns off completely rather than just slowing down.",
         ],
-        image: "/images/case-b3tter-mobile.webp",
-        imageAlt: "The B3TTER site on a phone, showing the hero and the six-bottle lineup",
-        imageDimensions: { width: 780, height: 1688 },
-        imageFit: "phone",
       },
     ],
     results: [

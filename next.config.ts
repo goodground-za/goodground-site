@@ -52,6 +52,11 @@ const nextConfig: NextConfig = {
     // Placeholder photography only — every one of these is replaced by the
     // client's own shoot before launch. See content/images.ts.
     remotePatterns: [{ protocol: "https", hostname: "images.unsplash.com" }],
+    // Default is qualities: [75] — any other `quality` prop on <Image> is
+    // silently coerced back to 75. 90 is for case-study lifestyle photography
+    // (app/work/[slug]/page.tsx), which visibly double-compresses at 75 on
+    // top of an already-compressed WebP source.
+    qualities: [75, 90],
   },
   // A package-lock.json further up the GROW - CLAUDE tree makes Turbopack infer
   // the wrong workspace root; pin it to this app.
