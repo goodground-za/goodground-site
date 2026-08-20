@@ -73,7 +73,11 @@ South African English. Rand. Never "solutions", "leverage", "showcase", "elevate
 - On the dark purple panel the reverse holds: `ht-orange` passes at 4.50:1 and crimson would fail at 2.41:1. Surface decides the token.
 - Muted body text bottoms out at `text-ht-purple/70` (5.78:1). `/60` fails at 4.22:1.
 
-**Typography.** Syne Bold for every heading (`font-ht-display`), DM Sans for body (`font-ht-body`), both via `next/font/google` in `app/layout.tsx`. Headings are bold-only, one weight. The Satori OG-image renderer needs its own repo-local TTF at `app/_og/Syne-Bold.ttf`, separate from the browser font loading.
+**Typography** (2026-08-20, client-supplied choice, replacing the Syne/DM Sans pairing that shipped 2026-08-12). Parkinsans for every heading (`font-ht-display`), Instrument Sans for body (`font-ht-body`), both via `next/font/google` in `app/layout.tsx`. Headings use 600 and 700.
+
+The Satori OG-image renderer needs its own repo-local TTF, separate from the browser font loading, at `app/_og/Parkinsans-Bold.ttf`. That file is a **static instance pinned at wght 700**, generated from the variable font with fontTools. Google publishes Parkinsans only as a variable font whose default axis position is 300 (Light), and Satori renders a variable font at its default instance, so dropping the variable file in directly renders every social card in Light. Regenerate the same way if the font is ever updated.
+
+Parkinsans has no built-in Next metric overrides, so `adjustFontFallback` is off and an explicit fallback stack is declared instead; without one the swap falls back to the browser default and shifts layout more, not less.
 
 **Structure and motion.** GSAP plus Lenis smooth scroll (`components/motion-gsap/*`): `RevealSection`/`RevealStagger` for scroll reveals, `SplitWords` for headline word-reveals, `MagneticButton`, `HoverCard`. Framer Motion survives only in `components/motion/RotatingWords.tsx` and `ParableModal`. Sections overlap via an ascending z-index stack with rounded/scalloped edges (`CloudDivider`).
 

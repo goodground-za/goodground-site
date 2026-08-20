@@ -23,17 +23,17 @@ export function Nav() {
 
   /**
    * Light variant for pages that open on a cream band instead of the dark
-   * ht-purple one every other page starts with. The default treatment paints
-   * the logo white (brightness-0 invert) over a transparent bar, which is
-   * invisible on cream — so this is a correctness requirement on those pages,
-   * not a style preference.
+   * ht-purple one the rest of the site starts with. The default treatment
+   * paints the logo white (brightness-0 invert) over a transparent bar, which
+   * is invisible on cream, so this is a correctness requirement on those
+   * pages rather than a style preference.
    *
+   * Currently just the homepage, whose hero is the cream split layout.
    * Route-keyed rather than prop-driven because Nav is mounted once in the
-   * root layout and individual pages cannot pass it props. Fold this into a
-   * proper per-page setting if the light treatment is ever adopted more
-   * widely than this one draft.
+   * root layout and individual pages cannot pass it props; make it a proper
+   * per-page setting if a third page ever needs it.
    */
-  const light = pathname === "/home-test-2";
+  const light = pathname === "/";
 
   // Close the mobile menu when the route changes. Adjusted during render
   // (React's documented pattern for "reset state when a prop changes")

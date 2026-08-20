@@ -271,18 +271,19 @@ export default function BrandGuidePage() {
           <div className="rounded-card bg-ht-cream shadow-soft p-6">
             <p className="font-ht-display text-ht-purple text-[13px] font-bold uppercase">Display / Headings</p>
             <p className="font-ht-display text-ht-purple mt-3 text-[32px] leading-[1.05] font-bold uppercase">
-              Syne
+              Parkinsans
             </p>
             <p className="font-ht-body text-ht-purple/70 mt-2 text-[13px]">
-              Bold (700) only, the one cut used sitewide. Google Font, loaded via{" "}
+              SemiBold (600) and Bold (700). Google Font, loaded via{" "}
               <code className="text-[12px]">next/font/google</code>. <code className="text-[12px]">--font-ht-display</code>.
               Applied to every h1–h4, buttons, nav labels, eyebrows. Letter-spacing -0.02em,{" "}
-              <code className="text-[12px]">text-wrap: balance</code> on headings.
+              <code className="text-[12px]">text-wrap: balance</code> on headings. Social cards render from a
+              static Bold instance at <code className="text-[12px]">app/_og/Parkinsans-Bold.ttf</code>.
             </p>
           </div>
           <div className="rounded-card bg-ht-cream shadow-soft p-6">
             <p className="font-ht-display text-ht-purple text-[13px] font-bold uppercase">Body</p>
-            <p className="font-ht-body text-ht-purple mt-3 text-[22px] leading-[1.4]">DM Sans</p>
+            <p className="font-ht-body text-ht-purple mt-3 text-[22px] leading-[1.4]">Instrument Sans</p>
             <p className="font-ht-body text-ht-purple/70 mt-2 text-[13px]">
               Google Font, variable weight. <code className="text-[12px]">--font-ht-body</code>. Applied to all
               paragraph text, form fields, captions. <code className="text-[12px]">text-wrap: pretty</code> on

@@ -1,20 +1,28 @@
 import type { Metadata } from "next";
-import { HomeSchema } from "@/components/Schema";
-import { About } from "@/components/sections/About";
-import { CTABand } from "@/components/sections/CTABand";
-import { CreativeProcess } from "@/components/sections/CreativeProcess";
-import { FAQAccordion } from "@/components/sections/FAQAccordion";
-import { Hero } from "@/components/sections/Hero";
-import { ServiceCarousel } from "@/components/sections/ServiceCarousel";
-import { SixReasons } from "@/components/sections/SixReasons";
-import { WhatWeBuild } from "@/components/sections/WhatWeBuild";
-import { WhoWeBuildFor } from "@/components/sections/WhoWeBuildFor";
+import { FAQSchema, HomeSchema, ServicesSchema } from "@/components/Schema";
+import { MobileStickyBar } from "@/components/hometest2/MobileStickyBar";
+import { ScrollProgress } from "@/components/hometest2/ScrollProgress";
+import { FAQSection } from "@/components/hometest2/sections/FAQSection";
+import { HomeTest2Hero } from "@/components/hometest2/sections/Hero";
+import { OurProcess } from "@/components/hometest2/sections/OurProcess";
+import { OurStrategy } from "@/components/hometest2/sections/OurStrategy";
+import { ReasonsToWorkWithUs } from "@/components/hometest2/sections/ReasonsToWorkWithUs";
+import { ServicesLede } from "@/components/hometest2/sections/ServicesLede";
+import { WhatWeBuild } from "@/components/hometest2/sections/WhatWeBuild";
+import { WhoWeBuildFor } from "@/components/hometest2/sections/WhoWeBuildFor";
+import { Work } from "@/components/hometest2/sections/Work";
+import { faq } from "@/content/faq";
+import { services } from "@/content/services";
 
 /**
- * Title/description target "website development South Africa" (the primary
- * keyword), development-first. Kept from the previous homepage's metadata
- * (unchanged by the visual redesign) since it's tuned SEO copy, not part of
- * the design language.
+ * Homepage. Promoted from /home-test-2 on 2026-08-20 after client approval,
+ * replacing the previous section set (components/sections/*). Parkinsans and
+ * Instrument Sans moved site-wide at the same time, so this page no longer
+ * carries its own font-scoping layout.
+ *
+ * Title/description are carried over unchanged from the previous homepage:
+ * they target "website development South Africa" (the primary keyword) and
+ * are tuned SEO copy, not part of the visual design that changed.
  *
  * 2026-08-16: GoodGround is positioned nationally across the whole site. The
  * hero, every service and industry page, the FAQ, /about and /work all speak
@@ -33,19 +41,28 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
+const homepageFaq = faq.slice(0, 8).filter((item) => item.answer !== null);
+
 export default function HomePage() {
   return (
     <>
       <HomeSchema />
-      <Hero />
-      <ServiceCarousel />
-      <CreativeProcess />
+      <ServicesSchema services={services} />
+      <FAQSchema items={homepageFaq} id="homepage-faq" />
+
+      <ScrollProgress />
+
+      <HomeTest2Hero />
+      <ServicesLede />
+      <OurProcess />
+      <Work />
       <WhoWeBuildFor />
       <WhatWeBuild />
-      <About />
-      <SixReasons />
-      <FAQAccordion limit={4} />
-      <CTABand />
+      <ReasonsToWorkWithUs />
+      <OurStrategy />
+      <FAQSection />
+
+      <MobileStickyBar />
     </>
   );
 }

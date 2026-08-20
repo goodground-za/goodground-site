@@ -50,14 +50,14 @@
   --color-ht-purple: #2e1848; /* dark section bg, footer bg, headings on cream */
   --color-ht-cream: #fbf7ec; /* base page background */
 
-  --font-ht-display: var(--font-syne), ui-sans-serif, system-ui, sans-serif;
-  --font-ht-body: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-ht-display: var(--font-parkinsans), ui-sans-serif, system-ui, sans-serif;
+  --font-ht-body: var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif;
 
   /* Repointed to the same fonts so any component using the generic
      font-heading/font-body tokens (inherited by h1-h4/body in the base
-     layer below) picks up Syne/DM Sans automatically. */
-  --font-heading: var(--font-syne), ui-sans-serif, system-ui, sans-serif;
-  --font-body: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+     layer below) picks up Parkinsans/Instrument Sans automatically. */
+  --font-heading: var(--font-parkinsans), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif;
 
   /* Fluid type scale, ~1.333 ratio, matching the mockup's oversized headline
      treatment. Named distinctly from font-size utilities so it never collides

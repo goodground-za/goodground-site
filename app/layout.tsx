@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Sans, Syne } from "next/font/google";
+import { Instrument_Sans, Parkinsans } from "next/font/google";
 import { Analytics } from "@/components/Analytics";
 import { Footer } from "@/components/Footer";
 import { LenisProvider } from "@/components/motion-gsap/LenisProvider";
@@ -7,19 +7,27 @@ import { Nav } from "@/components/Nav";
 import { site } from "@/content/site";
 import "./globals.css";
 
-// The site's design language (2026-08-12 font update, client-supplied
-// choice): Syne Bold for every heading, DM Sans for body copy. Bold-only —
-// matches the previous Clash Display setup's "one weight" rule, no other
-// Syne cut is used anywhere on the site.
-const syne = Syne({
-  variable: "--font-syne",
+// The site's design language (2026-08-20 font update, client-supplied
+// choice): Parkinsans for every heading, Instrument Sans for body copy.
+// Replaces the Syne/DM Sans pairing that shipped 2026-08-12, promoted
+// site-wide alongside the new homepage.
+//
+// adjustFontFallback is off for Parkinsans because Next has no built-in
+// metric overrides for it and warns at build time, so it cannot synthesise a
+// size-matched fallback. An explicit stack is declared instead: without one
+// the swap falls back to the browser default and shifts layout more, not
+// less.
+const parkinsans = Parkinsans({
+  variable: "--font-parkinsans",
   subsets: ["latin"],
-  weight: "700",
+  weight: ["600", "700"],
   display: "swap",
+  fallback: ["ui-sans-serif", "system-ui", "Segoe UI", "sans-serif"],
+  adjustFontFallback: false,
 });
 
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
+const instrumentSans = Instrument_Sans({
+  variable: "--font-instrument-sans",
   subsets: ["latin"],
   display: "swap",
 });
@@ -71,7 +79,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html
       lang="en-ZA"
       data-scroll-behavior="smooth"
-      className={`${syne.variable} ${dmSans.variable} h-full`}
+      className={`${parkinsans.variable} ${instrumentSans.variable} h-full`}
     >
       <head>
         {/*
