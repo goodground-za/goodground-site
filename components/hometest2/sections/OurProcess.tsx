@@ -36,7 +36,26 @@ export function OurProcess() {
   useLayoutEffect(() => {
     const section = sectionRef.current;
     const track = trackRef.current;
-    if (!section || !track) return;
+    const scroller = scrollerRef.current;
+    if (!section || !track || !scroller) return;
+
+    /**
+     * How far the track has to travel for the last card's right edge to reach
+     * the right edge of the visible strip.
+     *
+     * Measured against the scroller's *content box*, not the section. The
+     * section spans the full viewport, but the track sits inside a padded
+     * panel that is a couple of hundred pixels narrower, so measuring the
+     * section under-counts the travel and the final card stops half cut off.
+     *
+     * A function, not a constant, so `invalidateOnRefresh` recomputes it when
+     * the window resizes instead of reusing a stale first-paint value.
+     */
+    const travel = () => {
+      const cs = getComputedStyle(scroller);
+      const visible = scroller.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+      return Math.max(0, track.scrollWidth - visible);
+    };
 
     const mm = gsap.matchMedia();
     // Desktop-only, same as WhatWeBuild's stacking effect: a pinned
@@ -45,16 +64,16 @@ export function OurProcess() {
     // already uses for normal page scrolling. Below md, this stays the
     // plain swipeable overflow-x-auto row it is before any JS runs.
     mm.add("(prefers-reduced-motion: no-preference) and (min-width: 768px)", () => {
-      const distance = track.scrollWidth - section.clientWidth;
-      if (distance <= 0) return;
+      if (travel() <= 0) return;
 
       const tween = gsap.to(track, {
-        x: -distance,
+        // Function-based so GSAP re-reads it on refresh alongside `end`.
+        x: () => -travel(),
         ease: "none",
         scrollTrigger: {
           trigger: section,
           start: "top top",
-          end: () => `+=${distance}`,
+          end: () => `+=${travel()}`,
           scrub: 0.6,
           pin: true,
           anticipatePin: 1,
