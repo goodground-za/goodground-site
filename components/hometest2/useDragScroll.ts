@@ -7,6 +7,7 @@ import {
   type MouseEvent as ReactMouseEvent,
   type PointerEvent as ReactPointerEvent,
   type RefObject,
+  type SyntheticEvent as ReactSyntheticEvent,
 } from "react";
 
 /** Past this much pointer travel, the gesture counts as a drag, not a click. */
@@ -33,7 +34,7 @@ export function useDragScroll(
   // pointerdown would still see `dragging === false` and be dropped. The
   // state exists purely to drive the cursor/select-none class.
   const [dragging, setDragging] = useState(false);
-  const state = useRef({ active: false, startX: 0, startScroll: 0, travelled: 0 });
+  const state = useRef({ active: false, captured: false, startX: 0, startScroll: 0, travelled: 0 });
 
   const onPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (event.pointerType === "touch" || event.button !== 0) return;
@@ -42,18 +43,20 @@ export function useDragScroll(
     const el = ref.current;
     if (!el || el.scrollWidth <= el.clientWidth) return;
 
-    state.current = { active: true, startX: event.clientX, startScroll: el.scrollLeft, travelled: 0 };
+    state.current = { active: true, captured: false, startX: event.clientX, startScroll: el.scrollLeft, travelled: 0 };
     setDragging(true);
 
-    // Without this the browser starts its own native link-drag the moment
-    // the pointer moves off an <a> (every card here is one), which cancels
-    // the pointermove stream and the pan silently never happens. It also
-    // stops the text selection a horizontal drag would otherwise sweep up.
-    // Links still focus and activate on click, which is what matters.
-    event.preventDefault();
-
-    // Capture so the pan keeps tracking if the pointer leaves the banner.
-    if (event.isTrusted) el.setPointerCapture(event.pointerId);
+    // Two things deliberately NOT done here:
+    //
+    // No preventDefault(). Per the Pointer Events spec that suppresses the
+    // compatibility mouse events for this pointer, and `click` is one of
+    // them, so every card in the banner would stop being clickable.
+    //
+    // No setPointerCapture() either. Capturing retargets the whole
+    // interaction, including the click, to the capturing element, so the
+    // anchor underneath never sees it and the card silently stops opening.
+    // Capture is taken in onPointerMove instead, once the pointer has
+    // actually travelled far enough to count as a drag rather than a click.
   };
 
   const onPointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
@@ -63,12 +66,22 @@ export function useDragScroll(
 
     const dx = event.clientX - state.current.startX;
     state.current.travelled = Math.max(state.current.travelled, Math.abs(dx));
+
+    // Only now is this a drag, so only now is it safe to capture: the pan
+    // keeps tracking if the pointer leaves the banner, and a plain click
+    // never went through this branch at all.
+    if (!state.current.captured && state.current.travelled > DRAG_THRESHOLD_PX) {
+      state.current.captured = true;
+      if (event.isTrusted) el.setPointerCapture(event.pointerId);
+    }
+
     el.scrollLeft = state.current.startScroll - dx;
   };
 
   const stop = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (!state.current.active) return;
     state.current.active = false;
+    state.current.captured = false;
     setDragging(false);
     const el = ref.current;
     if (el?.hasPointerCapture(event.pointerId)) el.releasePointerCapture(event.pointerId);
@@ -88,9 +101,18 @@ export function useDragScroll(
     event.stopPropagation();
   };
 
-  // Belt and braces alongside the preventDefault above: anything inside the
-  // banner that is natively draggable (links, images) is refused here too.
+  // Every card in these banners is an <a>, and links are natively draggable.
+  // Left alone, pressing on one and moving starts the browser's own
+  // drag-the-URL gesture, which cancels the pointermove stream and the pan
+  // silently never happens. Refusing dragstart keeps the stream alive without
+  // touching the click behaviour.
   const onDragStart = (event: ReactDragEvent<HTMLDivElement>) => event.preventDefault();
+
+  // Only while actually panning: a horizontal drag across cards would
+  // otherwise sweep up a text selection and leave it highlighted.
+  const onSelectStart = (event: ReactSyntheticEvent) => {
+    if (state.current.active) event.preventDefault();
+  };
 
   return {
     dragging,
@@ -101,6 +123,7 @@ export function useDragScroll(
       onPointerCancel: stop,
       onClickCapture,
       onDragStart,
+      onSelectStart,
     },
   };
 }
