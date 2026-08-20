@@ -64,7 +64,15 @@ export function SplitWords({
   return (
     <Tag ref={ref} className={className}>
       {words.map((word, i) => (
-        <span key={`${word}-${i}`} className="inline-block overflow-hidden align-bottom">
+        // pb/-mb pair: the mask is overflow-hidden, and at tight line-heights
+        // a descender ("g", "y") drops below the content box and gets sliced.
+        // The padding grows the mask downward far enough to clear one, and
+        // the equal negative margin takes that height back out of layout so
+        // line spacing is unchanged.
+        <span
+          key={`${word}-${i}`}
+          className="inline-block -mb-[0.2em] overflow-hidden pb-[0.2em] align-bottom"
+        >
           <span data-word className={`inline-block ${wordClassName}`}>
             {word}
             {i < words.length - 1 ? " " : ""}

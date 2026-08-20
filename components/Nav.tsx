@@ -21,6 +21,20 @@ export function Nav() {
   const pathname = usePathname();
   const navRef = useRef<HTMLElement>(null);
 
+  /**
+   * Light variant for pages that open on a cream band instead of the dark
+   * ht-purple one every other page starts with. The default treatment paints
+   * the logo white (brightness-0 invert) over a transparent bar, which is
+   * invisible on cream — so this is a correctness requirement on those pages,
+   * not a style preference.
+   *
+   * Route-keyed rather than prop-driven because Nav is mounted once in the
+   * root layout and individual pages cannot pass it props. Fold this into a
+   * proper per-page setting if the light treatment is ever adopted more
+   * widely than this one draft.
+   */
+  const light = pathname === "/home-test-2";
+
   // Close the mobile menu when the route changes. Adjusted during render
   // (React's documented pattern for "reset state when a prop changes")
   // rather than in an effect, which avoids an extra render pass.
@@ -66,9 +80,11 @@ export function Nav() {
       <nav
         aria-label="Main"
         className={`mx-auto flex max-w-[1600px] items-center justify-between rounded-full px-5 py-3 transition-[background-color,backdrop-filter,box-shadow,padding] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
-          scrolled
-            ? "bg-ht-purple/85 py-2.5 shadow-[0_12px_32px_-12px_rgba(46,24,72,0.5)] backdrop-blur-md"
-            : "bg-transparent"
+          light
+            ? `bg-white shadow-[0_10px_30px_-16px_rgba(46,24,72,0.45)] ${scrolled ? "py-2.5" : ""}`
+            : scrolled
+              ? "bg-ht-purple/85 py-2.5 shadow-[0_12px_32px_-12px_rgba(46,24,72,0.5)] backdrop-blur-md"
+              : "bg-transparent"
         }`}
       >
         <Link href="/" aria-label="GoodGround — home" className="shrink-0">
@@ -80,7 +96,7 @@ export function Nav() {
             alt="GoodGround"
             width={140}
             height={26}
-            className="h-6 w-auto brightness-0 invert sm:h-7"
+            className={`h-6 w-auto sm:h-7 ${light ? "" : "brightness-0 invert"}`}
             priority
           />
         </Link>
@@ -93,9 +109,15 @@ export function Nav() {
                 <Link
                   href={link.href}
                   aria-current={active ? "page" : undefined}
-                  className={`font-ht-display rounded-pill inline-block px-4 py-2 text-[12px] font-bold tracking-wide uppercase transition-transform duration-200 hover:scale-[1.03] ${
-                    active ? "bg-ht-orange text-ink" : "text-ht-crimson bg-white"
-                  }`}
+                  className={
+                    light
+                      ? `font-ht-display rounded-pill inline-block px-4 py-2 text-[15px] font-bold transition-colors duration-200 ${
+                          active ? "text-ht-orange" : "text-ht-crimson hover:text-ht-orange"
+                        }`
+                      : `font-ht-display rounded-pill inline-block px-4 py-2 text-[12px] font-bold tracking-wide uppercase transition-transform duration-200 hover:scale-[1.03] ${
+                          active ? "bg-ht-orange text-ink" : "text-ht-crimson bg-white"
+                        }`
+                  }
                 >
                   {link.label}
                 </Link>
@@ -109,9 +131,13 @@ export function Nav() {
                   5.86:1 without touching the client's orange. */}
               <Link
                 href="/start-project"
-                className="bg-ht-orange text-ink rounded-pill inline-block px-5 py-2 text-[12px] font-bold tracking-wide uppercase shadow-[0_8px_20px_-6px_rgba(254,67,26,0.6)] transition-transform duration-200 hover:scale-[1.03]"
+                className={
+                  light
+                    ? "font-ht-display bg-ht-orange text-ink rounded-pill inline-block px-6 py-3 text-[15px] font-bold transition-transform duration-200 hover:scale-[1.03]"
+                    : "bg-ht-orange text-ink rounded-pill inline-block px-5 py-2 text-[12px] font-bold tracking-wide uppercase shadow-[0_8px_20px_-6px_rgba(254,67,26,0.6)] transition-transform duration-200 hover:scale-[1.03]"
+                }
               >
-                Start Your Project
+                {light ? "Start your project" : "Start Your Project"}
               </Link>
             </MagneticButton>
           </li>
@@ -122,7 +148,9 @@ export function Nav() {
           onClick={() => setMenuOpen((open) => !open)}
           aria-expanded={menuOpen}
           aria-controls="mobile-menu"
-          className="-mr-1 grid size-11 cursor-pointer place-items-center rounded-full text-white lg:hidden"
+          className={`-mr-1 grid size-11 cursor-pointer place-items-center rounded-full lg:hidden ${
+            light ? "text-ht-purple" : "text-white"
+          }`}
         >
           <span className="sr-only">{menuOpen ? "Close menu" : "Open menu"}</span>
           <svg
