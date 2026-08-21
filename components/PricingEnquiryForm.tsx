@@ -176,7 +176,7 @@ export function PricingEnquiryForm({ selectedConfig }: { selectedConfig: Selecte
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="rounded-pill bg-ht-orange font-ht-display text-ink mt-8 inline-flex h-13 cursor-pointer items-center justify-center gap-2 px-7 text-[15px] font-bold uppercase tracking-wide shadow-soft transition-[transform,background-color] duration-150 hover:bg-ht-orange/90 motion-safe:hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-60"
+        className="rounded-pill bg-ht-orange font-ht-display text-ink mt-8 inline-flex h-13 cursor-pointer items-center justify-center gap-2 px-7 text-[15px] font-bold uppercase tracking-wide shadow-soft transition-[transform,background-color] duration-150 hover:bg-ht-orange/90 motion-safe:hover:scale-[1.02] active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-60"
       >
         {status === "submitting" ? "Sending…" : "Get This Quote"}
         {status === "submitting" ? null : <span aria-hidden="true">→</span>}

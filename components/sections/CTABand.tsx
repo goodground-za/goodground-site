@@ -37,7 +37,7 @@ export function CTABand() {
               <MagneticButton>
                 <Link
                   href="/start-project"
-                  className="font-ht-display bg-ht-cream text-ht-purple rounded-pill inline-block px-7 py-3.5 text-[15px] font-bold tracking-wide shadow-[0_12px_28px_-10px_rgba(0,0,0,0.35)] transition-transform duration-200 hover:scale-[1.03]"
+                  className="font-ht-display bg-ht-cream text-ht-purple rounded-pill inline-block px-7 py-3.5 text-[15px] font-bold tracking-wide shadow-[0_12px_28px_-10px_rgba(0,0,0,0.35)] transition-transform duration-200 hover:scale-[1.03] active:scale-[0.97]"
                 >
                   Let&rsquo;s chat
                 </Link>

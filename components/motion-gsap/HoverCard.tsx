@@ -24,7 +24,10 @@ export function HoverCard({
   return (
     <Tag
       data-hover-card
-      className={`group relative cursor-pointer transition-[transform,box-shadow] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5 hover:scale-[1.03] hover:shadow-[0_24px_48px_-16px_rgba(46,24,72,0.35)] active:scale-[1.01] ${className}`}
+      // 300ms, not 400: this is a hover state on the site's most-repeated card
+      // interaction, and hover wants to feel immediate rather than luxurious.
+      // active dips below rest so a press reads as a press, not a smaller hover.
+      className={`group relative cursor-pointer transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5 hover:scale-[1.03] hover:shadow-[0_24px_48px_-16px_rgba(46,24,72,0.35)] active:scale-[0.99] ${className}`}
     >
       {children}
     </Tag>

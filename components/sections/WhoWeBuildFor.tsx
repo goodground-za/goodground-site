@@ -52,7 +52,7 @@ export function WhoWeBuildFor() {
                 uppercase, arrowed CTA of the three. */}
             <Link
               href="/start-project"
-              className="font-ht-display bg-ht-cream text-ht-purple rounded-pill inline-block px-7 py-3.5 text-[15px] font-bold tracking-wide transition-transform duration-200 hover:scale-[1.03]"
+              className="font-ht-display bg-ht-cream text-ht-purple rounded-pill inline-block px-7 py-3.5 text-[15px] font-bold tracking-wide transition-transform duration-200 hover:scale-[1.03] active:scale-[0.97]"
             >
               Let&rsquo;s chat
             </Link>

@@ -398,7 +398,7 @@ function SummaryPanel({
           <button
             type="button"
             onClick={onQuote}
-            className="font-ht-display bg-ht-orange text-ink rounded-pill inline-flex h-13 w-full cursor-pointer items-center justify-center gap-2 px-7 text-[14px] font-bold tracking-wide uppercase transition-transform duration-200 hover:scale-[1.01]"
+            className="font-ht-display bg-ht-orange text-ink rounded-pill inline-flex h-13 w-full cursor-pointer items-center justify-center gap-2 px-7 text-[14px] font-bold tracking-wide uppercase transition-transform duration-200 hover:scale-[1.01] active:scale-[0.97]"
           >
             Get This Quote →
           </button>

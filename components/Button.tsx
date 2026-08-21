@@ -25,7 +25,7 @@ type Variant = "ember" | "ink" | "peach" | "outline";
 const base =
   "inline-flex items-center justify-center gap-2 rounded-pill font-ht-display font-bold uppercase tracking-wide cursor-pointer " +
   "transition-[transform,background-color,box-shadow,border-color] duration-150 ease-out " +
-  "motion-safe:hover:scale-[1.02] motion-safe:active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50";
+  "motion-safe:hover:scale-[1.02] active:scale-[0.97] motion-safe:active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50";
 
 const variants: Record<Variant, string> = {
   ember: "bg-ht-orange text-ink shadow-soft hover:bg-ht-orange/90 hover:shadow-lift",

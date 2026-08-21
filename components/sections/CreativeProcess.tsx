@@ -178,7 +178,7 @@ export function CreativeProcess() {
             <MagneticButton>
               <Link
                 href="/start-project"
-                className="font-ht-display bg-ht-orange text-ink rounded-pill mt-5 inline-block px-6 py-3 text-[13px] font-bold tracking-wide uppercase transition-transform duration-200 hover:scale-[1.03]"
+                className="font-ht-display bg-ht-orange text-ink rounded-pill mt-5 inline-block px-6 py-3 text-[13px] font-bold tracking-wide uppercase transition-transform duration-200 hover:scale-[1.03] active:scale-[0.97]"
               >
                 Start Your Project
               </Link>

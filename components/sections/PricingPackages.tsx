@@ -110,7 +110,7 @@ export function PricingPackages({ onSelectPackage }: { onSelectPackage: (config:
                   onClick={() =>
                     onSelectPackage({ kind: "package", slug: pkg.slug, name: pkg.name, total: pkg.total })
                   }
-                  className={`font-ht-display rounded-pill mt-6 inline-flex h-12 cursor-pointer items-center justify-center px-6 text-[13px] font-bold tracking-wide uppercase transition-transform duration-200 hover:scale-[1.02] ${
+                  className={`font-ht-display rounded-pill mt-6 inline-flex h-12 cursor-pointer items-center justify-center px-6 text-[13px] font-bold tracking-wide uppercase transition-transform duration-200 hover:scale-[1.02] active:scale-[0.97] ${
                     recommended ? "bg-ht-orange text-ink" : "bg-ht-purple text-white"
                   }`}
                 >

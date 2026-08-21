@@ -119,7 +119,7 @@ export default function WorkPage() {
                   <MagneticButton>
                     <Link
                       href="/start-project"
-                      className="font-ht-display bg-ht-orange text-ink rounded-pill inline-block px-7 py-3.5 text-[14px] font-bold tracking-wide uppercase transition-transform duration-200 hover:scale-[1.03]"
+                      className="font-ht-display bg-ht-orange text-ink rounded-pill inline-block px-7 py-3.5 text-[14px] font-bold tracking-wide uppercase transition-transform duration-200 hover:scale-[1.03] active:scale-[0.97]"
                     >
                       Start Your Project
                     </Link>

@@ -215,7 +215,7 @@ function AccordionRow({
               <MagneticButton>
                 <Link
                   href={service.cta.href}
-                  className="font-ht-display bg-ht-orange text-ink rounded-pill inline-block px-6 py-3 text-[13px] font-bold tracking-wide uppercase transition-transform duration-200 hover:scale-[1.03]"
+                  className="font-ht-display bg-ht-orange text-ink rounded-pill inline-block px-6 py-3 text-[13px] font-bold tracking-wide uppercase transition-transform duration-200 hover:scale-[1.03] active:scale-[0.97]"
                 >
                   {service.cta.label}
                 </Link>

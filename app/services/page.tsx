@@ -185,7 +185,7 @@ export default function ServicesPage() {
                 <MagneticButton>
                   <Link
                     href="/pricing"
-                    className="font-ht-display bg-ht-cream text-ht-purple rounded-pill inline-block px-7 py-3.5 text-[14px] font-bold tracking-wide uppercase shadow-soft transition-transform duration-200 hover:scale-[1.03]"
+                    className="font-ht-display bg-ht-cream text-ht-purple rounded-pill inline-block px-7 py-3.5 text-[14px] font-bold tracking-wide uppercase shadow-soft transition-transform duration-200 hover:scale-[1.03] active:scale-[0.97]"
                   >
                     See Pricing →
                   </Link>
