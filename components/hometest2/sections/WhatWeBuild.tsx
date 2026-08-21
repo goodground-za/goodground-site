@@ -146,7 +146,7 @@ export function WhatWeBuild() {
                 {s.relatedLink ? (
                   <Link
                     href={s.relatedLink.href}
-                    className="font-ht-display bg-ht-orange text-ink rounded-pill mt-7 inline-flex items-center gap-2 px-6 py-3 text-[13px] font-bold transition-transform duration-200 hover:scale-[1.03]"
+                    className="font-ht-display bg-ht-orange text-ink rounded-pill mt-7 inline-flex items-center gap-2 px-6 py-3 text-[13px] font-bold transition-transform duration-200 hover:scale-[1.03] active:scale-[0.97]"
                   >
                     See full details
                     <span aria-hidden="true">→</span>

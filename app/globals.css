@@ -88,7 +88,47 @@
     text-rendering: optimizeLegibility;
   }
 
-  /* Syne Bold for every heading, per the client. `text-wrap:
+  /*
+    Browser surfaces. Text selection, the caret, the scrollbar and native
+    control accents all ship with browser defaults that belong to no design
+    system: a blue highlight and a grey scrollbar on a cream-and-orange page
+    read as unfinished. Themed from the palette so the parts we did not draw
+    still carry the brand.
+  */
+  ::selection {
+    background-color: var(--color-ht-orange);
+    color: var(--color-ink);
+  }
+
+  html {
+    caret-color: var(--color-ht-orange);
+    accent-color: var(--color-ht-orange);
+    scrollbar-color: var(--color-ht-purple) var(--color-ht-cream);
+  }
+
+  /* Chrome/Safari ignore scrollbar-color; these give them the same treatment
+     without the "custom scrollbar that swallows the affordance" failure —
+     same width behaviour, brand colours only. */
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-ht-cream);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-ht-purple);
+    border: 3px solid var(--color-ht-cream);
+    border-radius: 999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-ht-crimson);
+  }
+
+  /* Parkinsans for every heading, per the client. `text-wrap:
      balance` evens out ragged headline line-lengths and kills single-word
      orphans on the last line — a small thing that reads as deliberate
      typesetting. */

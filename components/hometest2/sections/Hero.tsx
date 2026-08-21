@@ -39,7 +39,7 @@ export function HomeTest2Hero() {
           <MagneticButton className="mt-10 inline-block">
             <Link
               href="/start-project"
-              className="font-ht-display bg-ht-orange text-ink rounded-pill inline-block px-9 py-4 text-[16px] font-bold transition-transform duration-200 hover:scale-[1.03]"
+              className="font-ht-display bg-ht-orange text-ink rounded-pill inline-block px-9 py-4 text-[16px] font-bold transition-transform duration-200 hover:scale-[1.03] active:scale-[0.97]"
             >
               Start your project
             </Link>
@@ -91,7 +91,7 @@ export function HomeTest2Hero() {
               </p>
               <Link
                 href={`/work/${latest.slug}`}
-                className="font-ht-display bg-ht-orange text-ink rounded-pill mt-4 inline-block px-5 py-2 text-[13px] font-bold transition-transform duration-200 hover:scale-[1.03]"
+                className="font-ht-display bg-ht-orange text-ink rounded-pill mt-4 inline-block px-5 py-2 text-[13px] font-bold transition-transform duration-200 hover:scale-[1.03] active:scale-[0.97]"
               >
                 View Project
               </Link>

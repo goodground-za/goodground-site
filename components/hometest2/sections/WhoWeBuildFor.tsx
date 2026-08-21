@@ -71,7 +71,7 @@ export function WhoWeBuildFor() {
                     loading="lazy"
                     sizes="300px"
                     draggable={false}
-                    className="aspect-[4/5] w-full object-cover transition-transform duration-500 ease-[var(--ease-out)] group-hover:scale-[1.04]"
+                    className="aspect-[4/5] w-full object-cover transition-transform duration-300 ease-[var(--ease-out)] group-hover:scale-[1.04]"
                   />
                   <div className="from-ht-purple absolute inset-0 bg-gradient-to-t from-0% to-transparent to-62%" />
                   <div className="absolute right-4 bottom-4 left-4 flex items-end justify-between gap-3">

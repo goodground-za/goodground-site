@@ -38,7 +38,7 @@ export function FAQSection() {
           <MagneticButton className="inline-block">
             <Link
               href="/faq"
-              className="font-ht-display border-ht-purple/25 text-ht-purple rounded-pill hover:border-ht-purple/60 inline-block border-2 px-7 py-3 text-[15px] font-bold transition-colors duration-200"
+              className="font-ht-display border-ht-purple/25 text-ht-purple rounded-pill hover:border-ht-purple/60 inline-block border-2 px-7 py-3 text-[15px] font-bold transition-[color,border-color,transform] duration-200 active:scale-[0.97]"
             >
               Find all questions here
             </Link>

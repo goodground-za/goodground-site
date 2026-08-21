@@ -24,7 +24,7 @@ export function Work() {
             <MagneticButton className="shrink-0">
               <Link
                 href="/work"
-                className="font-ht-display bg-ht-orange text-ink rounded-pill inline-block px-8 py-3.5 text-[15px] font-bold transition-transform duration-200 hover:scale-[1.03]"
+                className="font-ht-display bg-ht-orange text-ink rounded-pill inline-block px-8 py-3.5 text-[15px] font-bold transition-transform duration-200 hover:scale-[1.03] active:scale-[0.97]"
               >
                 View all
               </Link>
@@ -50,7 +50,7 @@ export function Work() {
                       loading="lazy"
                       sizes="380px"
                       draggable={false}
-                      className="aspect-[5/6] w-full object-cover transition-transform duration-500 ease-[var(--ease-out)] group-hover:scale-[1.04]"
+                      className="aspect-[5/6] w-full object-cover transition-transform duration-300 ease-[var(--ease-out)] group-hover:scale-[1.04]"
                     />
                     <div className="from-ht-purple absolute inset-0 bg-gradient-to-t via-transparent to-transparent" />
 
@@ -98,7 +98,7 @@ export function Work() {
             <MagneticButton className="mt-7 inline-block">
               <Link
                 href="/start-project"
-                className="font-ht-display bg-ht-orange text-ink rounded-pill inline-block px-8 py-3.5 text-[15px] font-bold transition-transform duration-200 hover:scale-[1.03]"
+                className="font-ht-display bg-ht-orange text-ink rounded-pill inline-block px-8 py-3.5 text-[15px] font-bold transition-transform duration-200 hover:scale-[1.03] active:scale-[0.97]"
               >
                 Start your project
               </Link>

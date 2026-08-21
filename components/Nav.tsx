@@ -114,7 +114,7 @@ export function Nav() {
                       ? `font-ht-display rounded-pill inline-block px-4 py-2 text-[15px] font-bold transition-colors duration-200 ${
                           active ? "text-ht-orange" : "text-ht-crimson hover:text-ht-orange"
                         }`
-                      : `font-ht-display rounded-pill inline-block px-4 py-2 text-[12px] font-bold tracking-wide uppercase transition-transform duration-200 hover:scale-[1.03] ${
+                      : `font-ht-display rounded-pill inline-block px-4 py-2 text-[12px] font-bold tracking-wide uppercase transition-transform duration-200 hover:scale-[1.03] active:scale-[0.97] ${
                           active ? "bg-ht-orange text-ink" : "text-ht-crimson bg-white"
                         }`
                   }
@@ -133,8 +133,8 @@ export function Nav() {
                 href="/start-project"
                 className={
                   light
-                    ? "font-ht-display bg-ht-orange text-ink rounded-pill inline-block px-6 py-3 text-[15px] font-bold transition-transform duration-200 hover:scale-[1.03]"
-                    : "bg-ht-orange text-ink rounded-pill inline-block px-5 py-2 text-[12px] font-bold tracking-wide uppercase shadow-[0_8px_20px_-6px_rgba(254,67,26,0.6)] transition-transform duration-200 hover:scale-[1.03]"
+                    ? "font-ht-display bg-ht-orange text-ink rounded-pill inline-block px-6 py-3 text-[15px] font-bold transition-transform duration-200 hover:scale-[1.03] active:scale-[0.97]"
+                    : "bg-ht-orange text-ink rounded-pill inline-block px-5 py-2 text-[12px] font-bold tracking-wide uppercase shadow-[0_8px_20px_-6px_rgba(254,67,26,0.6)] transition-transform duration-200 hover:scale-[1.03] active:scale-[0.97]"
                 }
               >
                 {light ? "Start your project" : "Start Your Project"}

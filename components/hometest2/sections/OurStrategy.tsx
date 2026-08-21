@@ -51,7 +51,7 @@ export function OurStrategy() {
               <MagneticButton className="mt-8 hidden md:inline-block">
                 <Link
                   href="/contact"
-                  className="font-ht-display border-ht-pink rounded-pill hover:text-ink hover:bg-ht-pink inline-flex items-center gap-2 border-2 px-7 py-3.5 text-[15px] font-bold text-white transition-colors duration-200"
+                  className="font-ht-display border-ht-pink rounded-pill hover:text-ink hover:bg-ht-pink inline-flex items-center gap-2 border-2 px-7 py-3.5 text-[15px] font-bold text-white transition-[color,background-color,transform] duration-200 active:scale-[0.97]"
                 >
                   Let&rsquo;s chat
                 </Link>
