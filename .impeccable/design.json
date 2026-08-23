@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-23T00:00:00Z",
+  "title": "Design System: GoodGround",
+  "extensions": {
+    "colorMeta": {
+      "orange": {
+        "role": "primary",
+        "displayName": "Signal Orange",
+        "canonical": "#fe431a",
+        "tonalRamp": ["#41150c", "#792816", "#ad391f", "#da4e30", "#e47e68", "#eeaea0", "#f6d3cb", "#fbede9"]
+      },
+      "purple": {
+        "role": "neutral",
+        "displayName": "Workshop Purple",
+        "canonical": "#2e1848",
+        "tonalRamp": ["#251934", "#452e60", "#63428a", "#815aaf", "#a387c5", "#c5b3db", "#e0d6eb", "#f2eef7"]
+      },
+      "crimson": {
+        "role": "neutral",
+        "displayName": "Ember Crimson",
+        "canonical": "#ac3026",
+        "tonalRamp": ["#371815", "#672c28", "#943f38", "#bb564e", "#ce847e", "#e0b2ae", "#eed5d3", "#f8eded"]
+      },
+      "cream": {
+        "role": "neutral",
+        "displayName": "Studio Paper",
+        "canonical": "#fbf7ec",
+        "tonalRamp": ["#382e15", "#685727", "#957c37", "#bc9f4d", "#ceb97d", "#e1d3ad", "#eee7d2", "#f8f5ec"]
+      },
+      "pink": {
+        "role": "neutral",
+        "displayName": "Soft Pink",
+        "canonical": "#fe9dd2",
+        "tonalRamp": ["#400c29", "#78164c", "#ac206c", "#d9318c", "#e369ab", "#eda0ca", "#f5cbe2", "#fbeaf3"]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Near-Black Ink",
+        "canonical": "#010602",
+        "tonalRamp": ["#262626", "#474747", "#666666", "#858585", "#a6a6a6", "#c7c7c7", "#e0e0e0", "#f2f2f2"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero headlines only, the largest and rarest text on any page." },
+      "h3": { "displayName": "Heading 3", "purpose": "Section headings and card titles." },
+      "body-lg": { "displayName": "Body Large", "purpose": "Hero subheads and lede paragraphs." },
+      "body": { "displayName": "Body", "purpose": "Default paragraph text, fixed size, not fluid." },
+      "label": { "displayName": "Label", "purpose": "Eyebrows, badges, nav items, button labels. Bold, small, usually uppercase in practice." }
+    },
+    "shadows": [
+      { "name": "soft", "value": "0 1px 2px rgb(1 6 2 / 0.05), 0 8px 24px -8px rgb(1 6 2 / 0.1)", "purpose": "Resting elevation for buttons and small interactive elements." },
+      { "name": "lift", "value": "0 2px 4px rgb(1 6 2 / 0.06), 0 16px 40px -12px rgb(1 6 2 / 0.18)", "purpose": "Hover/active elevation for buttons; resting elevation for cards outside the offset-edge system." }
+    ],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.23, 1, 0.32, 1)", "purpose": "Default for UI feedback and entrances. The site's primary curve." },
+      { "name": "ease-in-out", "value": "cubic-bezier(0.77, 0, 0.175, 1)", "purpose": "On-screen movement, things that both start and end already visible." },
+      { "name": "press-scale", "value": "scale(0.97)", "purpose": "Universal active-state press feedback, paired with hover scale(1.02-1.03)." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one primary action treatment used sitewide, a full pill in Signal Orange with Near-Black Ink text.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Start your project</a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: #fe431a; color: #010602; border-radius: 999px; font-family: Parkinsans, ui-sans-serif, system-ui, sans-serif; font-weight: 700; font-size: 15px; padding: 16px 32px; cursor: pointer; transition: transform 150ms cubic-bezier(0.23,1,0.32,1), box-shadow 150ms cubic-bezier(0.23,1,0.32,1); box-shadow: 0 1px 2px rgb(1 6 2 / 0.05), 0 8px 24px -8px rgb(1 6 2 / 0.1); } .ds-btn-primary:hover { transform: scale(1.02); box-shadow: 0 2px 4px rgb(1 6 2 / 0.06), 0 16px 40px -12px rgb(1 6 2 / 0.18); } .ds-btn-primary:active { transform: scale(0.97); } .ds-btn-primary:focus-visible { outline: 2px solid #2e1848; outline-offset: 2px; box-shadow: 0 0 0 4px #fbf7ec; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Workshop Purple fill with white text, used where orange would be a second competing action on the same view.",
+      "html": "<a class=\"ds-btn-secondary\" href=\"#\">Let's chat</a>",
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: #2e1848; color: #ffffff; border-radius: 999px; font-family: Parkinsans, ui-sans-serif, system-ui, sans-serif; font-weight: 700; font-size: 15px; padding: 16px 32px; cursor: pointer; transition: transform 150ms cubic-bezier(0.23,1,0.32,1); } .ds-btn-secondary:hover { transform: scale(1.02); background: rgba(46,24,72,0.9); } .ds-btn-secondary:active { transform: scale(0.97); } .ds-btn-secondary:focus-visible { outline: 2px solid #2e1848; outline-offset: 2px; box-shadow: 0 0 0 4px #fbf7ec; }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Transparent fill with an orange border and orange text; fills solid orange with ink text on hover, inverting into the primary treatment rather than staying an outline.",
+      "html": "<a class=\"ds-btn-outline\" href=\"#\">See our work</a>",
+      "css": ".ds-btn-outline { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: transparent; color: #fe431a; border: 2px solid #fe431a; border-radius: 999px; font-family: Parkinsans, ui-sans-serif, system-ui, sans-serif; font-weight: 700; font-size: 15px; padding: 14px 30px; cursor: pointer; transition: background-color 150ms cubic-bezier(0.23,1,0.32,1), color 150ms cubic-bezier(0.23,1,0.32,1), transform 150ms cubic-bezier(0.23,1,0.32,1); } .ds-btn-outline:hover { background: #fe431a; color: #010602; transform: scale(1.02); } .ds-btn-outline:active { transform: scale(0.97); } .ds-btn-outline:focus-visible { outline: 2px solid #2e1848; outline-offset: 2px; }"
+    },
+    {
+      "name": "Offset-Edge Card",
+      "kind": "card",
+      "refersTo": "card-offset",
+      "description": "The site's signature depth device: a solid orange layer sits behind the card, offset down-and-left, standing in for a shadow. Used for the Work banner cards, FAQ rows on open, and Process steps.",
+      "html": "<div class=\"ds-card-offset-wrap\"><div class=\"ds-card-offset-back\"></div><div class=\"ds-card-offset-front\"><h3 class=\"ds-card-offset-title\">Case study title</h3><p class=\"ds-card-offset-body\">One line of supporting copy sits here, plain and short.</p></div></div>",
+      "css": ".ds-card-offset-wrap { position: relative; width: 280px; } .ds-card-offset-back { position: absolute; inset: 0; background: #fe431a; border-radius: 24px; transform: translate(-7px, 7px); } .ds-card-offset-front { position: relative; background: #ffffff; border-radius: 24px; padding: 28px; } .ds-card-offset-title { font-family: Parkinsans, ui-sans-serif, system-ui, sans-serif; font-weight: 700; font-size: clamp(1.5rem, 2.5vw, 2rem); letter-spacing: -0.02em; color: #2e1848; margin: 0 0 8px; } .ds-card-offset-body { font-family: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif; font-size: 1rem; color: #2e1848; margin: 0; }"
+    },
+    {
+      "name": "FAQ Row",
+      "kind": "custom",
+      "description": "Native details/summary accordion row. Closed: cream card, numbered index, outlined plus toggle. Open: lifts onto the offset-edge treatment, toggle fills solid orange and rotates to a cross.",
+      "html": "<details class=\"ds-faq-row\"><summary class=\"ds-faq-summary\"><span class=\"ds-faq-index\">01</span><span class=\"ds-faq-question\">How do the two payment options work?</span><span class=\"ds-faq-toggle\">+</span></summary><div class=\"ds-faq-answer\">Answer copy goes here, plain sentences, no jargon.</div></details>",
+      "css": ".ds-faq-row { background: #fbf7ec; border-radius: 18px; padding: 20px 24px; margin-bottom: 12px; transition: background-color 200ms cubic-bezier(0.23,1,0.32,1); } .ds-faq-row[open] { background: #ffffff; box-shadow: -7px 7px 0 0 #fe431a; } .ds-faq-summary { display: flex; align-items: center; gap: 16px; cursor: pointer; list-style: none; font-family: Parkinsans, ui-sans-serif, system-ui, sans-serif; } .ds-faq-summary::-webkit-details-marker { display: none; } .ds-faq-index { font-weight: 700; color: #ac3026; font-size: 0.875rem; } .ds-faq-question { flex: 1; font-weight: 700; color: #2e1848; } .ds-faq-toggle { display: grid; place-items: center; width: 28px; height: 28px; border: 2px solid #2e1848; border-radius: 999px; transition: transform 200ms cubic-bezier(0.23,1,0.32,1), background-color 200ms; } .ds-faq-row[open] .ds-faq-toggle { background: #fe431a; color: #010602; border-color: #fe431a; transform: rotate(45deg); } .ds-faq-answer { padding-top: 16px; font-family: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif; color: #2e1848; }"
+    },
+    {
+      "name": "Navigation (light variant)",
+      "kind": "nav",
+      "description": "Floating pill nav bar for the one page that opens on a cream hero (the homepage): white bar, Workshop-Purple logo, Ember-Crimson links, orange active/CTA pill.",
+      "html": "<nav class=\"ds-nav\"><span class=\"ds-nav-logo\">goodground</span><div class=\"ds-nav-links\"><a class=\"ds-nav-link\" href=\"#\">Services</a><a class=\"ds-nav-link ds-nav-link--active\" href=\"#\">Work</a><a class=\"ds-nav-link\" href=\"#\">Contact</a></div><a class=\"ds-nav-cta\" href=\"#\">Start your project</a></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; justify-content: space-between; gap: 24px; background: #ffffff; border-radius: 999px; padding: 12px 12px 12px 24px; box-shadow: 0 1px 2px rgb(1 6 2 / 0.05), 0 8px 24px -8px rgb(1 6 2 / 0.1); font-family: Parkinsans, ui-sans-serif, system-ui, sans-serif; } .ds-nav-logo { font-weight: 700; color: #2e1848; } .ds-nav-links { display: flex; gap: 20px; } .ds-nav-link { color: #ac3026; font-weight: 700; font-size: 14px; text-decoration: none; transition: color 200ms; } .ds-nav-link--active, .ds-nav-link:hover { color: #fe431a; } .ds-nav-cta { background: #fe431a; color: #010602; font-weight: 700; font-size: 14px; padding: 12px 24px; border-radius: 999px; text-decoration: none; transition: transform 150ms cubic-bezier(0.23,1,0.32,1); } .ds-nav-cta:hover { transform: scale(1.02); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Working Studio",
+    "overview": "GoodGround is a small team building real websites for real South African businesses, and the site is styled to look like exactly that: hands doing the work, not a stock-lifestyle mood board. The homepage hero is a photograph of the actual studio, not staged lifestyle photography, and every claim on the page is checkable (case studies link to live, testable URLs; unproven work says 'coming soon' rather than inventing a number). The palette is confident and unhedged rather than safe: a saturated signal orange against a warm paper cream, with a near-black purple for depth and gravity. There is no muted, corporate, 'trustworthy blue' register here, and no soft pastel wash either. Typography is Parkinsans for every heading paired with Instrument Sans for body copy, which stays plain and gets out of the way. Depth comes from one recurring device rather than shadows: a solid layer of orange sits offset behind a white or purple card, so the card appears to float slightly up and to the right of its own base.",
+    "keyCharacteristics": [
+      "Photography is real, not stock: the studio, the actual product builds, the actual team.",
+      "One accent colour (orange) carries every primary action, at full saturation, with no muted variant.",
+      "Depth is an offset solid layer, not a blurred shadow.",
+      "Motion always eases out, never bounces, and every tap gets a visible press response.",
+      "Nothing is invented: no placeholder stats, no fabricated client logos, no 'trusted by' bar with no names in it."
+    ],
+    "rules": [
+      { "name": "The Surface-Decides Rule", "body": "Orange text passes contrast on Workshop Purple (4.50:1) and fails on Studio Paper or white (3.25:1). Crimson is the reverse. Never pick the accent colour by habit; pick it by what's underneath it.", "section": "colors" },
+      { "name": "The One Voice Rule", "body": "There is one primary accent, not a family of accent shades picked per section. If a component needs 'a slightly different orange,' the real answer is almost always Ember Crimson, not a new hex value.", "section": "colors" },
+      { "name": "The Balance Rule", "body": "Every h1-h4 gets text-wrap: balance globally, and paragraphs get text-wrap: pretty. Ragged headline line-lengths and single-word orphans are a defect, fixed at the base-layer level.", "section": "typography" },
+      { "name": "The Tight-Tracking Rule", "body": "Headings carry -0.02em letter-spacing as a base-layer default. Parkinsans at display sizes reads slightly loose without it.", "section": "typography" },
+      { "name": "The Offset-Edge Rule", "body": "A card's depth comes from a second, solid-colour layer positioned directly behind it and offset down-and-left by 6-7px, rather than from a blurred box-shadow.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do pick the accent colour (orange vs. crimson vs. purple) by what surface it sits on, per the Surface-Decides Rule, every time.",
+      "Do use the offset-edge treatment as the default depth answer for a new card before reaching for a shadow.",
+      "Do add active:scale-[0.97] (or equivalent press feedback) to every new interactive element.",
+      "Do gate every animation on prefers-reduced-motion, both globally and per-component.",
+      "Do keep claims checkable: link to something real, or say 'coming soon.' Never invent a stat, a client count, or a testimonial."
+    ],
+    "donts": [
+      "Don't put white text on a Signal Orange background at normal text sizes; it fails WCAG AA.",
+      "Don't introduce a bounce or elastic easing curve anywhere.",
+      "Don't reach for a soft blurred shadow as a card's primary depth cue on the newer homepage sections.",
+      "Don't add a kicker/eyebrow label above a heading reflexively.",
+      "Don't ship a component that skips the prefers-reduced-motion gate, even for something that feels purely decorative."
+    ]
+  }
+}

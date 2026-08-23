@@ -199,24 +199,6 @@
   ref inside it always reads as "first render").
 */
 
-/*
-  Hero scroll cue. Replaces Tailwind's `animate-bounce`, whose cubic-bezier
-  bounce reads as playful in a way the rest of this site's motion never does
-  (everything else eases out, nothing overshoots). This is a slow symmetrical
-  drift instead: same "look down here" affordance, calmer register.
-*/
-@keyframes scroll-cue {
-  0%,
-  100% {
-    transform: translateY(0);
-    opacity: 0.8;
-  }
-  50% {
-    transform: translateY(6px);
-    opacity: 1;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

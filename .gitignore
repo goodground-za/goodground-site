@@ -45,5 +45,7 @@ next-env.d.ts
 # local design QA screenshots
 .screenshots/
 
-# local impeccable critique snapshots (QA state, like .screenshots)
-.impeccable/
+# local impeccable critique snapshots (QA state, like .screenshots) — but
+# .impeccable/design.json itself is tracked: it's the durable DESIGN.md
+# sidecar (tonal ramps, component snippets), not ephemeral QA output.
+.impeccable/critique/
