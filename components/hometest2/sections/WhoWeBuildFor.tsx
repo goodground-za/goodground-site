@@ -53,7 +53,12 @@ export function WhoWeBuildFor() {
           </ul>
         </RevealSection>
 
-        <RevealSection>
+        {/* min-w-0 is load-bearing. Grid items default to min-width:auto, so
+            this column refused to shrink below the banner's full track width
+            (1708px) instead of clamping to the grid column. The scroller then
+            matched its own content and never overflowed, which meant the
+            slider had nothing to scroll and sat dead on mobile. */}
+        <RevealSection className="min-w-0">
           <ScrollBanner label="industries" align="end">
             {industries.map((industry) => (
               <li key={industry.title} className="w-[260px] shrink-0 snap-start sm:w-[300px]">

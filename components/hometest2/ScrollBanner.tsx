@@ -27,6 +27,7 @@ export function ScrollBanner({
   align?: "center" | "end";
 }) {
   const scrollerRef = useRef<HTMLDivElement>(null);
+  const animRef = useRef(0);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
   const { dragging, handlers } = useDragScroll(scrollerRef);
@@ -38,14 +39,63 @@ export function ScrollBanner({
     setAtEnd(el.scrollLeft >= el.scrollWidth - el.clientWidth - 2);
   };
 
+  /**
+   * Scroll to the next card's actual snap position, rather than nudging by a
+   * guessed pixel distance.
+   *
+   * This matters: the track is `snap-mandatory`, and a smooth scroll that
+   * does not land exactly on a snap point gets re-snapped back to where it
+   * started, so the arrows silently did nothing. Measuring each card's real
+   * offset means the target is always a valid snap position and the browser
+   * lets the animation run.
+   */
   const step = (direction: 1 | -1) => {
     const el = scrollerRef.current;
     if (!el) return;
-    // Advance by one real card rather than a guessed pixel amount, so the
-    // snap points and the arrows agree at every breakpoint.
-    const card = el.querySelector("li");
-    const distance = card ? card.getBoundingClientRect().width + 28 : el.clientWidth * 0.8;
-    el.scrollBy({ left: direction * distance, behavior: "smooth" });
+
+    // `:scope > ul > li` and not `li`: the Work cards contain their own <ul>
+    // of tag pills, so a loose `li` selector picked up 16 elements instead of
+    // 4 and computed snap positions from the wrong boxes.
+    const items = Array.from(el.querySelectorAll<HTMLElement>(":scope > ul > li"));
+    if (!items.length) return;
+
+    const padLeft = parseFloat(getComputedStyle(el).scrollPaddingLeft) || 0;
+    const elLeft = el.getBoundingClientRect().left;
+    // Snap position of each card, in this scroller's own scroll coordinates.
+    const stops = items.map((li) => li.getBoundingClientRect().left - elLeft + el.scrollLeft - padLeft);
+
+    const current = el.scrollLeft;
+    const next =
+      direction > 0
+        ? stops.find((p) => p > current + 1)
+        : [...stops].reverse().find((p) => p < current - 1);
+
+    const max = el.scrollWidth - el.clientWidth;
+    const target = Math.max(0, Math.min(max, next ?? (direction > 0 ? max : 0)));
+
+    // Animated by hand rather than with `behavior: "smooth"`. On a
+    // snap-mandatory track the browser refuses a smooth programmatic scroll
+    // and re-snaps to the start, so the arrows silently did nothing on touch
+    // devices. Writing scrollLeft directly always lands, and driving it
+    // ourselves means a second click retargets mid-flight instead of
+    // queueing behind the first.
+    if (animRef.current) cancelAnimationFrame(animRef.current);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      el.scrollLeft = target;
+      return;
+    }
+
+    const start = el.scrollLeft;
+    const delta = target - start;
+    const duration = 380;
+    const t0 = performance.now();
+    const tick = (now: number) => {
+      const p = Math.min(1, (now - t0) / duration);
+      // ease-out-quart, the exponential curve the rest of the site uses
+      el.scrollLeft = start + delta * (1 - Math.pow(1 - p, 4));
+      animRef.current = p < 1 ? requestAnimationFrame(tick) : 0;
+    };
+    animRef.current = requestAnimationFrame(tick);
   };
 
   return (
