@@ -79,7 +79,7 @@ The Satori OG-image renderer needs its own repo-local TTF, separate from the bro
 
 Parkinsans has no built-in Next metric overrides, so `adjustFontFallback` is off and an explicit fallback stack is declared instead; without one the swap falls back to the browser default and shifts layout more, not less.
 
-**Structure and motion.** GSAP plus Lenis smooth scroll (`components/motion-gsap/*`): `RevealSection`/`RevealStagger` for scroll reveals, `SplitWords` for headline word-reveals, `MagneticButton`, `HoverCard`. Framer Motion survives only in `components/motion/RotatingWords.tsx` and `ParableModal`. Sections overlap via an ascending z-index stack with rounded/scalloped edges (`CloudDivider`).
+**Structure and motion.** GSAP plus Lenis smooth scroll (`components/motion-gsap/*`): `RevealSection`/`RevealStagger` for scroll reveals, `SplitWords` for headline word-reveals, `MagneticButton`, `HoverCard`. Framer Motion survives only in `ParableModal` and `components/motion/BorderTrail.tsx`. Sections overlap via an ascending z-index stack with rounded/scalloped edges (`CloudDivider`).
 
 Motion eases out and never overshoots. No bounce or elastic curves. Every animation is gated on `prefers-reduced-motion`, both globally in `globals.css` and per-component via `gsap.matchMedia`. Route changes fade via `app/template.tsx` (opacity only, deliberately no transform, see the `route-in` keyframe comment).
 
