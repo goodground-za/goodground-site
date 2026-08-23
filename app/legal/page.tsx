@@ -99,7 +99,7 @@ export default function LegalPage() {
               />
               <CompanyItem
                 label="VAT Status"
-                value={site.vatRegistered ? "VAT registered" : "Not VAT registered — all prices are VAT inclusive"}
+                value={site.vatRegistered ? "VAT registered" : "Not VAT registered, all prices are VAT inclusive"}
               />
             </dl>
           </div>

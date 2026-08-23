@@ -28,7 +28,7 @@ export default function PricingPage() {
       <PageHero
         eyebrow="Pricing"
         title="Simple pricing, built around what you actually need."
-        intro="Four fixed packages to start fast, or build your own from our full menu. Pay 50% upfront and the rest on completion, or split the total into 12 monthly instalments — your call."
+        intro="Four fixed packages to start fast, or build your own from our full menu. Pay 50% upfront and the rest on completion, or split the total into 12 monthly instalments: your call."
       >
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Link

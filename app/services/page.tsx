@@ -28,7 +28,7 @@ const title = { absolute: "Website Development Services in South Africa | GoodGr
 // 200 once before (SEO audit 2026-08-16) after copy edits crept in. If you
 // touch this, re-measure the character count before committing.
 const description =
-  "Website development, UX design, SEO, care plans, and Google & Meta Ads. Built in South Africa — pay 50% upfront or spread it over 12 months.";
+  "Website development, UX design, SEO, care plans, and Google & Meta Ads. Built in South Africa, pay 50% upfront or spread it over 12 months.";
 const path = "/services";
 
 export const metadata: Metadata = {
