@@ -22,7 +22,7 @@ export function MobileStickyBar() {
 
   return (
     <div
-      className={`bg-ht-purple/95 motion-reduce:transition-none fixed inset-x-0 bottom-0 z-50 flex gap-2 p-3 backdrop-blur-sm transition-transform duration-300 ease-[var(--ease-out)] md:hidden ${
+      className={`bg-ht-purple/95 motion-reduce:transition-none fixed inset-x-0 bottom-0 z-50 flex gap-2 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-sm transition-transform duration-300 ease-[var(--ease-out)] md:hidden ${
         visible ? "translate-y-0" : "translate-y-full"
       }`}
     >

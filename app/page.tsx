@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { FAQSchema, HomeSchema, ServicesSchema } from "@/components/Schema";
+import { HomeSchema, ServicesSchema } from "@/components/Schema";
 import { MobileStickyBar } from "@/components/hometest2/MobileStickyBar";
 import { ScrollProgress } from "@/components/hometest2/ScrollProgress";
 import { FAQSection } from "@/components/hometest2/sections/FAQSection";
@@ -11,7 +11,6 @@ import { ServicesLede } from "@/components/hometest2/sections/ServicesLede";
 import { WhatWeBuild } from "@/components/hometest2/sections/WhatWeBuild";
 import { WhoWeBuildFor } from "@/components/hometest2/sections/WhoWeBuildFor";
 import { Work } from "@/components/hometest2/sections/Work";
-import { faq } from "@/content/faq";
 import { services } from "@/content/services";
 
 /**
@@ -41,14 +40,15 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
-const homepageFaq = faq.slice(0, 8).filter((item) => item.answer !== null);
-
 export default function HomePage() {
   return (
     <>
       <HomeSchema />
       <ServicesSchema services={services} />
-      <FAQSchema items={homepageFaq} id="homepage-faq" />
+      {/* No FAQPage node here: /faq already emits the canonical FAQPage
+          schema for this same question set (see Schema.tsx's HomeSchema
+          comment). Repeating it put duplicate FAQPage content on two
+          indexed URLs. */}
 
       <ScrollProgress />
 

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BreadcrumbSchema } from "@/components/Breadcrumbs";
+import { LazyLoopVideo } from "@/components/LazyLoopVideo";
 import { MagneticButton } from "@/components/motion-gsap/MagneticButton";
 import { RevealSection, RevealStagger } from "@/components/motion-gsap/RevealSection";
 import { SplitWords } from "@/components/motion-gsap/SplitWords";
@@ -157,18 +158,7 @@ function NewTemplateBody({ study }: { study: CaseStudy }) {
                   </div>
                 ) : null}
                 <div className="rounded-block ring-ht-pink mt-7 overflow-hidden bg-white ring-2">
-                  {/* Muted autoplay loop: no controls, no sound (browsers block
-                      autoplay-with-sound anyway), respects the page's own
-                      layout rather than a third-party player's chrome. */}
-                  <video
-                    src={study.video.src}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    controls={false}
-                    className="h-auto w-full"
-                  />
+                  <LazyLoopVideo src={study.video.src} className="h-auto w-full" />
                 </div>
               </RevealSection>
             ) : null}

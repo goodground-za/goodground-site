@@ -81,16 +81,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       data-scroll-behavior="smooth"
       className={`${parkinsans.variable} ${instrumentSans.variable} h-full`}
     >
-      <head>
-        {/*
-          Framer's initial styles are server-rendered, so scroll-reveal content
-          ships as opacity:0 and stays there if JS never runs. This makes the page
-          readable without it; !important beats the inline styles.
-        */}
-        <noscript>
-          <style>{`[data-reveal]{opacity:1!important;transform:none!important;filter:none!important;}`}</style>
-        </noscript>
-      </head>
       <body className="flex min-h-full flex-col">
         <a
           href="#main"
