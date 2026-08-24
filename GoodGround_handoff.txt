@@ -1,22 +1,29 @@
 ===============================================================================
 GOODGROUND — CONTEXT HANDOFF
-Last updated: 2026-08-13. Seven commits landed this day, all live:
-  4921a1b  positioning fix (hero H1) + FAQ/Service schema + 6 INDUSTRY pages
-  9dd9407  blog article: "How much does a website cost in South Africa?"
-  e133457  6 dedicated SERVICE pages
-  f7e1fe3  per-page OG/Twitter cards, FAQ de-dup, meta keywords + newsletter
-           removed
-  751f318  sitewide WCAG AA contrast fixes (accessibility 96 -> 100)
-  4864afc  category filtering on /insights
-  24bfd6c  /work rebuilt as a project list, led by the live self-measuring
-           panel; phone number added as WhatsApp-only
-See §20-§26 in section 8 for detail on each. Section 2 now carries the
-CONTRAST RULES, which are load-bearing and were failing in production until
-751f318 — read them before touching any colour.
+Last updated: 2026-08-24. Since the 2026-08-13 entry below (§26), the site
+went through a second homepage promotion and a fresh SEO audit cycle:
+  2026-08-20  Homepage promoted from the /home-test-2 A/B variant, replacing
+              the section set §20-26 describe. Fonts also changed again:
+              Parkinsans (headings) + Instrument Sans (body), replacing Syne
+              + DM Sans from §19. See §27.
+  2026-08-23  Content/em-dash sweep, dead-code cleanup (old Hero.tsx and
+              friends deleted), first-ever DESIGN.md generated via
+              `/impeccable document`. See §28.
+  2026-08-24  Full SEO audit re-run; Google Business Profile confirmed real
+              and mostly healthy (was previously assumed not to exist);
+              four fixes shipped and pushed live: homepage FAQ schema
+              duplication, case-study video eager-load, cookie-banner
+              covering the mobile sticky CTA bar, framer-motion removed
+              from the root layout (was only supposed to be on /about and
+              /pricing). See §29-§30.
+See §20-§30 in section 8 for full detail on each entry. Section 2 below has
+been updated in place for the font change; the CONTRAST RULES from §24 are
+still current and load-bearing — read them before touching any colour.
 EVERYTHING IN SECTION 8 BELOW §16 (historical archive, pre-2026-08-06) IS
 SUPERSEDED for design-system specifics — palette, layout, component names
-all changed in the 2026-08-06 site-wide redesign. Business facts there may
-also be stale; sections 1/6 below are the corrected current facts.
+all changed in the 2026-08-06 site-wide redesign, and again in the
+2026-08-20 homepage promotion (§27). Business facts there may also be
+stale; sections 1/6 below are the corrected current facts.
 ===============================================================================
 
 0. READ FIRST
@@ -87,9 +94,13 @@ Palette (Tailwind v4 @theme tokens, app/globals.css):
   --color-ht-cream   #fbf7ec   base page background
   --color-ink        #010602   TEXT on orange fills
 Radii: --radius-block 40px, --radius-card 24px, --radius-pill 999px
-Fonts: Syne Bold (`font-ht-display` — headings/buttons/labels only) + DM Sans
-  (`font-ht-body` — body copy). Loaded once in app/layout.tsx via
-  next/font/google. (Superseded Clash Display + Inter on 2026-08-12, §19.)
+Fonts: Parkinsans (`font-ht-display` — headings/buttons/labels only) +
+  Instrument Sans (`font-ht-body` — body copy). Loaded once in app/layout.tsx
+  via next/font/google. (Superseded Syne + DM Sans on 2026-08-20, §27.) The
+  Satori OG-image renderer needs its own static-weight TTF pinned at wght 700
+  (app/_og/Parkinsans-Bold.ttf), since Google only ships this font as a
+  variable font and Satori renders a variable font at its default axis
+  position (300/Light) otherwise.
 
 *** CONTRAST RULES — LOAD-BEARING, READ BEFORE TOUCHING ANY COLOUR ***
 ht-orange is a bright fill and fails WCAG AA easily. These four rules were
@@ -118,8 +129,11 @@ Motion: GSAP + Lenis smooth-scroll is the primary system sitewide, in
 All of these gate on `gsap.matchMedia("(prefers-reduced-motion: no-preference)")`
 — under reduced motion, elements simply render at their natural DOM state
 (no opacity:0 stuck on screen), by construction. Framer Motion
-(`framer-motion`) survives only for `components/motion/RotatingWords.tsx`
-(the Hero's specialty-word cycler) — deliberately kept small/self-contained.
+(`framer-motion`) is now genuinely minimal: `components/sections/ParableModal`
+(used on /about) and `components/motion/BorderTrail.tsx` (used on /pricing)
+are the only two consumers, confirmed 2026-08-24 (§30) after finding and
+removing a third, undocumented one in the cookie-consent banner — CHECK
+IMPORTS BEFORE TRUSTING THIS LIST, it undercounted for a while.
 
 Recurring visual conventions worth knowing before touching any page:
   - "Hard-shadow" card: `rounded-card ring-2 ring-ht-pink
@@ -444,6 +458,21 @@ present, all 4 internal links resolve, heading/date/category correct).
      forced white via CSS at every call site.
   4. No further design/dev work is queued beyond the above as of
      2026-08-11.
+  5. **PRICING VISIBILITY ON HOMEPAGE (flagged by Johandre 2026-08-24 as the
+     top priority, not yet started)** — PRODUCT.md names public fixed
+     pricing as the site's core wedge/differentiator, but the current
+     (post-2026-08-20) homepage does not clearly surface it. This is the
+     next piece of work to pick up.
+  6. **GBP dashboard fixes (needs Johandre, not code)** — confirmed 2026-08-24
+     (§29): hours currently show "Open 24 hours" Mon-Fri / "Closed" Sat-Sun,
+     which looks like an unset default, not real hours. Also worth checking
+     whether a more precise GBP category than "Design agency" is available
+     (e.g. "Website designer") — category is reportedly the single
+     highest-weighted local ranking factor.
+  7. **Remaining SEO Medium/Low items** — see seo-audit/ACTION-PLAN.md, but
+     note that file is from the 2026-08-17 audit round and is stale relative
+     to the 2026-08-24 re-run (§30); treat it as historical reference, not a
+     current backlog, before acting on any item in it.
 
 
 5. STANDING RULES (violating these has caused real rework, repeatedly)
@@ -987,3 +1016,166 @@ count-up. Pass a STABLE function reference — it is in the effect deps, so an
 inline arrow would restart the tween every render.
 Phone and WhatsApp work landed in this same commit — see section 6.
 Lighthouse on /work: 100 accessibility, best practices, SEO.
+
+
+§27 — Homepage promoted from /home-test-2 + font swap to Parkinsans/
+      Instrument Sans (2026-08-20)
+------------------------------------------------------------------------
+The homepage was rebuilt as an A/B variant at /home-test-2, then promoted
+to be the live homepage on 2026-08-20 after client approval, replacing the
+section set §20-26 above describe (Hero.tsx, ServiceCarousel.tsx,
+CreativeProcess.tsx, SixReasons.tsx, WhatWeBuild.tsx, WhoWeBuildFor.tsx,
+About.tsx). The /home-test-2 route itself no longer exists — it was
+promoted, not kept as a separate page. Current homepage sections live under
+components/hometest2/ (app/page.tsx assembles them). Old components/sections/
+files with the same names as before were left in place until the
+2026-08-23 cleanup (§28) deleted them once confirmed dead.
+
+Same day: fonts changed from Syne + DM Sans (§19) to Parkinsans (headings)
++ Instrument Sans (body), client-supplied choice. Section 2 above has been
+updated in place to reflect this. The one non-trivial part, same shape as
+the Syne swap: Satori (the OG-image renderer) needs its own static-weight
+TTF file, separate from next/font/google's browser loading, because Google
+only serves Parkinsans as a variable font and Satori renders a variable
+font at its default axis position (300/Light) rather than the needed 700
+(Bold) unless given a pinned static instance. Generated via fontTools from
+the variable font and saved to app/_og/Parkinsans-Bold.ttf.
+
+
+§28 — Em-dash sweep, dead-code cleanup, first DESIGN.md (2026-08-23)
+------------------------------------------------------------------------
+Three-part cleanup pass, done in this order:
+
+1. CONTENT FIX: em dashes had crept back into user-facing copy (mainly
+   content/caseStudies.ts, 20 instances, plus one each in app/legal,
+   app/pricing, app/services) despite the standing "no em dashes" rule.
+   Each replaced with contextually appropriate punctuation (comma, colon,
+   parentheses, period) chosen per sentence, not a blind find-replace. Code
+   comments are exempt from this rule and were left alone.
+
+2. CLEANUP: deleted genuinely dead code left over from the pre-2026-08-20
+   homepage (§27) — components/sections/About.tsx, CreativeProcess.tsx,
+   Hero.tsx, ServiceCarousel.tsx, SixReasons.tsx, WhatWeBuild.tsx,
+   WhoWeBuildFor.tsx, components/motion/RotatingWords.tsx (the old Hero's
+   specialty-word cycler, no longer used anywhere), plus 8 now-orphaned
+   images. Verified dead via exact import-path grep, not just filename
+   matching, since components/hometest2/sections/ has files with the SAME
+   NAMES as the deleted ones in components/sections/ — a name-only check
+   would have wrongly flagged live files as dead. Also removed a dead
+   `@keyframes scroll-cue` block from globals.css (only the deleted Hero.tsx
+   used it) and fixed a stale PRODUCT.md line about which files still use
+   framer-motion.
+
+3. DESIGN.md CREATED for the first time (project root, plus a
+   .impeccable/design.json sidecar), via `/impeccable document` scan mode,
+   generated from the real implemented tokens/components rather than
+   invented. PRODUCT.md's old "No DESIGN.md" known-gap line is now stale
+   and should be removed next time that file is touched. Covers Colors,
+   Typography, Layout, Elevation & Depth (names "the Offset-Edge Rule" as
+   the signature depth device), Shapes, Components, Do's and Don'ts — all
+   grounded in real audit history from this file's own §24 contrast fixes.
+
+
+§29 — Google Business Profile confirmed real and mostly healthy (2026-08-24)
+------------------------------------------------------------------------
+Johandre supplied the real GBP Maps link this session. This overturns the
+SEO audit's long-standing assumption that no GBP existed yet (open item 2
+above, and item 12 in seo-audit/ACTION-PLAN.md, are now resolved/stale).
+Verified live via Chrome DevTools MCP navigating Google Maps directly and
+reading its accessibility tree (WebFetch cannot render Maps' JS content,
+returns only the bare page shell):
+
+  - Phone (067 010 4988) matches what's already in content/site.ts/schema —
+    no NAP mismatch on that front.
+  - Pin location initially looked wrong (near Gqeberha, Eastern Cape, at a
+    wide zoom — roughly 500km from George). CONFIRMED FALSE ALARM by
+    Johandre: he set the GBP service area to all of South Africa rather
+    than just George, so Google auto-assigned an arbitrary pin somewhere in
+    that area. Not a real NAP problem — do not re-flag this from a future
+    Maps screenshot without this context.
+  - Hours are WRONG: "Open 24 hours" Mon-Fri, "Closed" Sat/Sun — looks like
+    an unset dashboard default. OPEN ITEM, needs Johandre to fix in the GBP
+    dashboard directly (see open item 6 above).
+  - Category is "Design agency" — worth him checking for a more precise
+    option (open item 6).
+  - A local post is already live, linking to /work/point-break-surf.
+
+
+§30 — SEO audit re-run: FAQ dedup, video lazy-load, cookie-banner overlap,
+      framer-motion removed from root layout (2026-08-24, commit bf6e0ec,
+      pushed/live)
+------------------------------------------------------------------------
+Full-site SEO audit re-run (10 parallel subagents). Several subagents'
+first report was truncated mid-task (shared ~34-41M ms duration_ms across
+different agents, looked like a shared execution ceiling) — recovered every
+time by SendMessage to the bare agent ID telling it to finish and re-post
+the complete report. IF A FUTURE SEO SUBAGENT'S FIRST NOTIFICATION READS
+LIKE DEBUGGING NARRATION RATHER THAN A REPORT, IT'S TRUNCATED — RESUME IT,
+DON'T REPORT THE FRAGMENT AS A FINDING.
+
+Four fixes shipped from this round, all in commit bf6e0ec:
+
+  1. HOMEPAGE FAQPAGE SCHEMA DUPLICATION: app/page.tsx had re-grown a
+     direct <FAQSchema> call for an 8-question subset that /faq already
+     covers canonically with the full list — the exact same duplication
+     class fixed once before between HomeSchema and /faq (§23), still
+     correctly documented in Schema.tsx's own comment, but a DIFFERENT file
+     independently reintroduced the pattern. Removed the duplicate call and
+     its now-unused const/imports from app/page.tsx. LESSON: a "don't do
+     this again" code comment only prevents a repeat in the file it's
+     written in, not in a different file that reintroduces the same
+     mistake independently.
+  2. CASE-STUDY VIDEO EAGER-LOAD: app/work/[slug]/page.tsx's
+     <video autoPlay muted loop> had no `preload` attribute, defaulting to
+     preload="auto" and downloading eagerly on page load despite being
+     well below the fold. New components/LazyLoopVideo.tsx (client
+     component, IntersectionObserver + preload="none", only sets `src`/
+     `autoPlay` once within 200px of viewport) fixes it and is reusable if
+     another case study gets a video.
+  3. COOKIE BANNER COVERING THE MOBILE STICKY CTA BAR: both
+     components/Analytics.tsx's consent banner and
+     components/hometest2/MobileStickyBar.tsx (the "Start your project" /
+     WhatsApp bar) are `fixed bottom-0` on mobile. The banner's higher
+     z-index and greater height meant it fully hid the sticky bar
+     underneath whenever both were visible (confirmed visually via
+     screenshot — measured sticky-bar height 70.5px). Fixed by offsetting
+     the banner to bottom-[78px] on mobile, reverting to bottom-0 at md+
+     (where the sticky bar doesn't render, md:hidden). Also added
+     env(safe-area-inset-bottom) padding to both, for iOS home-indicator
+     clearance, since neither had it.
+  4. SITEWIDE FRAMER-MOTION COST: Analytics.tsx lives in the ROOT LAYOUT
+     (rendered on every page) and was importing framer-motion purely for
+     the cookie banner's enter/exit animation — meaning the library shipped
+     to every single page on the site, not just the two (/about, /pricing)
+     that actually need it per PRODUCT.md. Replaced with the site's
+     existing CSS `step-in` keyframe (already defined in globals.css,
+     already used elsewhere) via a plain conditional-render div. No exit
+     animation on dismiss (imperceptible trade for a lighter bundle
+     sitewide). Also removed a now-fully-dead `<noscript>` CSS rule in
+     app/layout.tsx that targeted the `data-reveal` attribute this
+     component used to carry (nothing else in the codebase uses that
+     attribute).
+
+LCP WAS INVESTIGATED, FOUND HEALTHY, NOT "FIXED": the audit's stale
+finding blamed a framer-motion hero animation for a CLS/TBT regression,
+but that hero (and its framer-motion usage) was replaced in the 2026-08-20
+promotion (§27) and no longer exists. Measured directly via Chrome
+DevTools MCP performance traces instead of trusting the report: unthrottled
+LCP 506ms (matches PRODUCT.md's ~510ms documented baseline almost exactly),
+4x-CPU + Fast-4G-throttled LCP 1226ms — both comfortably inside Google's
+"Good" threshold (<2.5s), CLS 0.00 both times. LESSON: verify a CWV claim
+against a real trace before "fixing" it — a static SEO audit report can
+describe an architecture that has since been replaced.
+
+Verification: npx tsc --noEmit clean, npx next build clean (66 routes),
+local production build (next start) tested via Chrome DevTools MCP —
+screenshot confirms the sticky bar is now visible below the cookie banner
+instead of hidden behind it, zero console errors on / and /pricing (the
+one other framer-motion consumer, to confirm removing it from Analytics.tsx
+didn't break the two pages that still need it). git push succeeded on the
+first plain retry, no credential hang this time.
+
+STILL OPEN from this audit round, not started: pricing-visibility-on-
+homepage (open item 5 above — the one item Johandre flagged as an actual
+business regression, not just a metric) and the GBP dashboard fixes
+(open item 6, §29).
