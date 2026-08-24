@@ -50,7 +50,7 @@ export function HomeTest2Hero() {
       <div className="relative lg:absolute lg:inset-y-0 lg:right-0 lg:w-[53%]">
         <Image
           src="/images/ht2/hero.webp"
-          alt="The GoodGround studio: a team working together around a shared table"
+          alt="A dual-monitor developer setup showing code on one screen and a website build in progress on the other"
           width={1600}
           height={1440}
           priority
