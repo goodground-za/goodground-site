@@ -73,6 +73,8 @@ function CompactRow({ service, index }: { service: Service; index: number }) {
               <span className="bg-ht-orange text-ink rounded-pill px-3 py-1 text-[11px] font-bold">Flagship</span>
             ) : service.includedInEveryBuild ? (
               <span className="bg-ht-purple rounded-pill px-3 py-1 text-[11px] font-bold text-white">Included</span>
+            ) : service.monthly ? (
+              <span className="bg-ht-crimson rounded-pill px-3 py-1 text-[11px] font-bold text-white">Monthly</span>
             ) : service.growth ? (
               <span className="bg-ht-pink text-ht-purple rounded-pill px-3 py-1 text-[11px] font-bold">Growth</span>
             ) : null}
@@ -152,6 +154,10 @@ function AccordionRow({
           ) : service.includedInEveryBuild ? (
             <span className="bg-ht-purple rounded-pill hidden shrink-0 px-3 py-1 text-[12px] font-bold text-white sm:inline-block">
               Included
+            </span>
+          ) : service.monthly ? (
+            <span className="bg-ht-crimson rounded-pill hidden shrink-0 px-3 py-1 text-[12px] font-bold text-white sm:inline-block">
+              Monthly
             </span>
           ) : service.growth ? (
             <span className="bg-ht-pink text-ht-purple rounded-pill hidden shrink-0 px-3 py-1 text-[12px] font-bold sm:inline-block">

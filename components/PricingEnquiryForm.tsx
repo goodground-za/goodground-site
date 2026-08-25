@@ -12,7 +12,8 @@ import { sendEnquiry } from "@/lib/enquiry";
  */
 export type SelectedConfig =
   | { kind: "package"; slug: string; name: string; total: number }
-  | { kind: "custom"; items: { label: string; price: number }[]; total: number };
+  | { kind: "custom"; items: { label: string; price: number }[]; total: number }
+  | { kind: "fullservice"; monthlyFrom: number };
 
 type Status = "idle" | "submitting" | "success" | "mail" | "error";
 type Errors = Partial<Record<"fullName" | "email", string>>;
@@ -23,6 +24,7 @@ const inputBase =
 
 function summaryText(config: SelectedConfig) {
   if (config.kind === "package") return `${config.name} package — ${formatRand(config.total)}`;
+  if (config.kind === "fullservice") return `Full Service — from ${formatRand(config.monthlyFrom)}/mo`;
   const lines = config.items.map((item) => `- ${item.label} (${formatRand(item.price)})`).join("\n");
   return `Build Your Own — ${formatRand(config.total)} total\n${lines}`;
 }
@@ -118,6 +120,10 @@ export function PricingEnquiryForm({ selectedConfig }: { selectedConfig: Selecte
           {selectedConfig.kind === "package" ? (
             <p className="text-ht-purple/80 mt-2 text-[14px]">
               {selectedConfig.name} package — {formatRand(selectedConfig.total)}
+            </p>
+          ) : selectedConfig.kind === "fullservice" ? (
+            <p className="text-ht-purple/80 mt-2 text-[14px]">
+              Full Service — from {formatRand(selectedConfig.monthlyFrom)}/mo
             </p>
           ) : (
             <>

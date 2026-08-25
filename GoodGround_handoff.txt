@@ -1,7 +1,8 @@
 ===============================================================================
 GOODGROUND — CONTEXT HANDOFF
-Last updated: 2026-08-24. Since the 2026-08-13 entry below (§26), the site
-went through a second homepage promotion and a fresh SEO audit cycle:
+Last updated: 2026-08-25. Since the 2026-08-13 entry below (§26), the site
+went through a second homepage promotion, a fresh SEO audit cycle, and a
+new pricing tier:
   2026-08-20  Homepage promoted from the /home-test-2 A/B variant, replacing
               the section set §20-26 describe. Fonts also changed again:
               Parkinsans (headings) + Instrument Sans (body), replacing Syne
@@ -16,7 +17,14 @@ went through a second homepage promotion and a fresh SEO audit cycle:
               covering the mobile sticky CTA bar, framer-motion removed
               from the root layout (was only supposed to be on /about and
               /pricing). See §29-§30.
-See §20-§30 in section 8 for full detail on each entry. Section 2 below has
+  2026-08-25  Hero image swapped for a new studio photo. A new "Full
+              Service" monthly package added to /pricing (build + hosting +
+              mailboxes + SEO + maintenance, from R1,500/mo) — the site's
+              first genuine subscription offer, distinct from the fixed
+              packages' payment plans. It entirely replaces the old
+              "Website Care Plans" service, which is now a 308 redirect.
+              See §31.
+See §20-§31 in section 8 for full detail on each entry. Section 2 below has
 been updated in place for the font change; the CONTRAST RULES from §24 are
 still current and load-bearing — read them before touching any colour.
 EVERYTHING IN SECTION 8 BELOW §16 (historical archive, pre-2026-08-06) IS
@@ -1179,3 +1187,84 @@ STILL OPEN from this audit round, not started: pricing-visibility-on-
 homepage (open item 5 above — the one item Johandre flagged as an actual
 business regression, not just a metric) and the GBP dashboard fixes
 (open item 6, §29).
+
+
+§31 — Hero image swap + Full Service monthly package added, Care Plans
+      retired (2026-08-25)
+------------------------------------------------------------------------
+HERO IMAGE SWAP: homepage hero photo (public/images/ht2/hero.webp) replaced
+with a new studio photo Johandre supplied (new-home-imageV2.png, converted
+to webp, flattened, resized to the existing 1600x1440 slot, quality 82).
+Alt text corrected to match the new image's actual content (dual-monitor
+dev setup, no people) since the old alt text described the previous photo.
+No code changes beyond that and the alt string.
+
+FULL SERVICE PACKAGE — a new, genuine monthly subscription offer, Johandre's
+explicit ask: "hosting, mailboxes, the website build, SEO work, and update
+and maintain the website, starting from R1,500/month depending on
+requirements." Two decisions confirmed with him before building anything:
+  1. Replaces the old "Website Care Plans" service ENTIRELY (not a parallel
+     offer) — Care Plans had no stated price and didn't cover hosting/
+     mailboxes, so it was already a subset of what Full Service now does.
+  2. Lives as a package tier on /pricing (not its own dedicated /services
+     detail page) — matches how the four fixed packages already work,
+     everything the visitor needs is on one page.
+  3. R1,500+/mo is ALL-INCLUSIVE (covers the build itself, no separate
+     upfront fee) and month-to-month with no minimum term, cancel any time.
+
+PRODUCT.md now documents this explicitly: it is the one deliberate
+subscription on the site, distinct from the four packages' "12 monthly
+instalments" payment option, which is NOT a subscription (pays off a fixed
+one-time price). Keep the two ideas visually and verbally separate — this
+is a load-bearing distinction, see PRODUCT.md's own "Full Service" section.
+
+New: content/pricing.ts's `fullServicePackage` export (name, monthlyFrom,
+pitch, billing, includes[], note) — kept structurally separate from the
+`packages` array so it can never corrupt Schema.tsx's `priceRange` calc
+(that still derives from the 4 one-time totals only). New
+components/sections/PricingFullService.tsx: deliberately a dark full-width
+band, not a fifth white ring-card in the same grid as the other four — it
+needs to read as a different kind of purchase at a glance. New
+`kind: "fullservice"` branch on PricingEnquiryForm's SelectedConfig so the
+enquiry form prefills "Full Service — from R1,500/mo" correctly.
+
+CARE PLANS RETIREMENT — kept the internal slug `care-plans` in
+content/services.ts UNCHANGED (only the visible title/copy/CTA changed) to
+avoid a wider, riskier rename across content/industryPages.ts (5 arrays)
+and content/articles.ts's relatedServiceSlugs cross-references, all of
+which key off that exact string. Deleted app/services/website-care-plans/
+(page.tsx + opengraph-image.tsx) and its content/servicePages.ts entry;
+added a 308 redirect /services/website-care-plans -> /pricing#full-service
+in next.config.ts so the old indexed/bookmarked URL still lands somewhere
+useful. Updated every other place that named "Website Care Plans" or "care
+plan": content/homeTest2.ts, content/faq.ts, content/articles.ts (2 prose
+mentions + 1 relatedServiceSlugs array), public/llms.txt,
+components/StartProjectForm.tsx and components/ContactForm.tsx's
+project-type dropdowns, and both /services and /pricing meta descriptions
+(re-measured both against the ~160-char budget after editing, per the
+existing code comment warning on app/services/page.tsx).
+
+BUG CAUGHT AND FIXED WHILE BUILDING THIS: components/hometest2/sections/
+WhatWeBuild.tsx's badge logic was `flagship ? "Flagship" : growth ?
+"Growth" : "Included"` — a fallback that would have mislabelled the new
+paid monthly service as "Included" (i.e. free, bundled into every build).
+Only didn't already misfire because every other non-flagship/non-growth
+service in the array happened to have includedInEveryBuild:true. Fixed to
+check a new explicit `monthly` flag first. Same fix applied to both
+variants in components/ServiceAccordion.tsx (compact + full), which were
+already checking includedInEveryBuild correctly but had no Monthly case at
+all, so Full Service's row on /services and every industry page's compact
+accordion silently showed no badge until this was added.
+
+Verified: npx tsc --noEmit clean (after `rm -rf .next`, which cleared a
+stale route-types error referencing the deleted website-care-plans page),
+npx next build clean, 64 routes. Local production server: clicked the
+"Get a Full Service Quote" CTA end to end, confirmed it scrolls to the
+enquiry form with the correct prefill; confirmed the redirect returns 308
+-> /pricing#full-service; confirmed the Monthly badge renders correctly on
+/services (both the full accordion and, on an industry page, the compact
+variant) and on the homepage's WhatWeBuild stacking-card section; checked
+mobile (390px) rendering of the new /pricing section, no overflow, clean
+reflow. Zero console errors on every page touched. No em dashes or banned
+marketing words (solutions/leverage/showcase/elevate/seamless) in any new
+copy, checked by grep before shipping.

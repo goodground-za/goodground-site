@@ -158,7 +158,7 @@ export const articles: Article[] = [
       },
       {
         type: "p",
-        text: "Then there's what happens after launch. Plugins go out of date. Content stops being accurate. Small issues turn into slow load times if nobody's watching. That's what a [Website Care Plan](/services#care-plans) covers: ongoing updates, monitoring, and small content changes, handled monthly instead of piling up until something breaks.",
+        text: "Then there's what happens after launch. Plugins go out of date. Content stops being accurate. Small issues turn into slow load times if nobody's watching. If you'd rather not manage hosting, mailboxes, and maintenance yourself, GoodGround's [Full Service package](/pricing#full-service) bundles all of it, plus ongoing SEO work, into one monthly price instead of piling up until something breaks.",
       },
 
       { type: "h2", text: "Why the cheapest option often costs more" },
@@ -686,7 +686,7 @@ export const articles: Article[] = [
       },
       {
         type: "p",
-        text: "You do not need to touch it weekly. But somebody should be checking that it still loads quickly, that the forms still deliver, and that what it says about your business is still true. If nobody in the business is going to do that, it is worth having someone do it for you. Our [website care plans](/services) exist for exactly this reason.",
+        text: "You do not need to touch it weekly. But somebody should be checking that it still loads quickly, that the forms still deliver, and that what it says about your business is still true. If nobody in the business is going to do that, it is worth having someone do it for you. Our [Full Service package](/pricing#full-service) exists for exactly this reason.",
       },
 
       { type: "h2", text: "7. Spending the entire budget on day one" },
@@ -744,7 +744,7 @@ export const articles: Article[] = [
         text: "If you would rather not work through it alone, [tell us about your business](/start-project) and we will come back with next steps.",
       },
     ],
-    relatedServiceSlugs: ["seo", "website-care-plans"],
+    relatedServiceSlugs: ["seo"],
   },
   {
     slug: "why-small-businesses-in-south-africa-need-a-website",

@@ -37,7 +37,7 @@ export const strategyPillars: StrategyPillar[] = [
   },
   {
     title: "Support past launch",
-    body: "Launch is the start, not the finish line. One month of support is included with every project, and ongoing Website Care Plans keep things performing well after that.",
+    body: "Launch is the start, not the finish line. One month of support is included with every project, and our Full Service package can take hosting, mailboxes, SEO, and maintenance off your hands after that.",
   },
 ];
 

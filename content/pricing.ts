@@ -106,9 +106,33 @@ export const packages: Package[] = [
 
 export const packagesFootnote =
   "All packages are one-time website builds, fully custom-coded (no e-commerce or member-portal builds). " +
-  "Hosting, domain, and ongoing maintenance are arranged separately. Need more than your package includes? " +
+  "Hosting, domain, and ongoing maintenance are arranged separately, unless you choose the Full Service " +
+  "monthly package below, which bundles all of that in. Need more than your package includes? " +
   "Any package can be extended with items from the Build Your Own menu below, for example adding extra pages to " +
   "Package 1, or add Advanced SEO to Package 2.";
+
+/**
+ * Full Service: a monthly, all-inclusive alternative to the four fixed
+ * one-time packages above (confirmed 2026-08-25). Covers the build itself,
+ * so there is no separate upfront project fee on top of the monthly price.
+ * Month-to-month, no minimum term. "From" because the final monthly figure
+ * depends on the website's own requirements and is confirmed in the quote,
+ * the same "starting at" logic already used for à la carte items below.
+ */
+export const fullServicePackage = {
+  name: "Full Service",
+  monthlyFrom: 1500,
+  pitch: "Everything handled, for one monthly price. We build the site, host it, run the mailboxes, and keep it working.",
+  billing: "Monthly. No minimum term, cancel any time.",
+  includes: [
+    "Website build, fully custom-coded",
+    "Hosting, set up and managed for you",
+    "Business email mailboxes, set up and managed for you",
+    "Ongoing SEO work",
+    "Ongoing updates and maintenance",
+  ],
+  note: "The exact monthly price depends on your website's requirements and is confirmed in your quote.",
+};
 
 export const baseBuildFee = {
   total: 6000,
@@ -216,7 +240,7 @@ export const pricingFaq: PricingFaqItem[] = [
   {
     question: "Do these prices include hosting and a domain?",
     answer:
-      "No. Hosting, domain, and ongoing maintenance are arranged separately from the build price. We're happy to point you in the right direction when you enquire.",
+      "Not on the four fixed packages above. Hosting, domain, and ongoing maintenance are arranged separately from the build price, and we're happy to point you in the right direction when you enquire. If you'd rather have all of that handled for you, the Full Service package below bundles hosting, mailboxes, the build, SEO, and maintenance into one monthly price.",
   },
   {
     question: "How do I pay, and is there a deposit?",

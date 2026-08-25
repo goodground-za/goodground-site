@@ -13,6 +13,10 @@ export type Service = {
   flagship?: boolean;
   /** Growth services (ads) are tagged distinctly from the build services. */
   growth?: boolean;
+  /** The Full Service package: a monthly, all-inclusive plan, distinct from
+   * every other service here which is either bundled free into a build
+   * (includedInEveryBuild) or a one-time paid add-on. */
+  monthly?: boolean;
 
   // Services-page detail.
   subheading: string;
@@ -76,17 +80,18 @@ export const services: Service[] = [
   },
   {
     slug: "care-plans",
-    title: "Website Care Plans",
-    description: "Ongoing updates, support, and performance after launch.",
-    subheading: "A website is a foundation, not a one-time job.",
+    title: "Full Service",
+    description: "Build, hosting, mailboxes, SEO, and maintenance, all for one monthly price.",
+    monthly: true,
+    subheading: "Everything handled, for one monthly price.",
     problem:
-      "Websites go stale. Plugins fall out of date, content stops being accurate, and small issues turn into slow load times or security risks that nobody notices until they become a problem.",
+      "A website is only the start. Someone still has to set up hosting, run the mailboxes, keep the software updated, watch for security issues, and stay on top of SEO, and most business owners don't have the time or the technical background for any of it.",
     solution:
-      "Ongoing updates, security monitoring, performance checks, and small content changes, handled monthly so you don't have to think about it.",
+      "We build the site, then keep running it: hosting and mailboxes set up and managed for you, ongoing SEO work, and ongoing updates and maintenance, all handled monthly so you don't have to think about it.",
     outcome:
-      "A website that keeps performing months and years after launch, backed by a team that already knows exactly how it was built.",
-    cta: { label: "Talk to Us About a Care Plan", href: "/contact" },
-    relatedLink: { label: "Full care plan details", href: "/services/website-care-plans" },
+      "A website that stays fast, secure, and found in search, without you needing to manage a single technical detail of it yourself.",
+    paymentLine: "Monthly, from R1,500, depending on your website's requirements. No minimum term, cancel any time.",
+    cta: { label: "See Full Service Pricing", href: "/pricing#full-service" },
   },
   {
     slug: "google-ads",

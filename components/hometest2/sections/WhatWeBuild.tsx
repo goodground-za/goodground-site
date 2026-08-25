@@ -135,7 +135,7 @@ export function WhatWeBuild() {
 
               <div className="relative">
                 <span className="font-ht-display bg-ht-purple rounded-pill inline-block px-4 py-1.5 text-[11px] font-bold tracking-wide text-white">
-                  {s.flagship ? "Flagship" : s.growth ? "Growth" : "Included"}
+                  {s.flagship ? "Flagship" : s.monthly ? "Monthly" : s.growth ? "Growth" : "Included"}
                 </span>
                 <h3 className="font-ht-display text-ht-orange mt-6 text-[clamp(1.75rem,3.4vw,2.75rem)] leading-[1.05] font-bold">
                   {s.title}

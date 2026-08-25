@@ -2,11 +2,11 @@
 
 register: brand
 
-> Last verified against the live codebase 2026-08-13. The palette, typography
-> and payment-model sections below were rewritten then: the previous version of
-> this file still described the pre-2026-08-06 cream/forest-green direction,
-> Sora + Inter typography, and a single "12 monthly payments" pitch, none of
-> which had been true for months. Keep this file in step with the code.
+> Last verified against the live codebase 2026-08-25. Typography updated
+> 2026-08-20 (Parkinsans/Instrument Sans, documented below). The Full Service
+> monthly package was added 2026-08-25 (see its own section below) — the
+> first genuine subscription offer on the site, distinct from the two
+> one-time-price payment options. Keep this file in step with the code.
 
 ## What this is
 
@@ -39,6 +39,14 @@ Every project is one fixed price, agreed before work starts. The client picks ho
 Cancelling under either option makes the outstanding balance of the agreed price payable. This is not a refund policy.
 
 The earlier single "12 equal monthly payments, not a subscription" promise is retired. Do not reintroduce it. Never describe either option as a subscription.
+
+## Full Service (added 2026-08-25) — the one genuine subscription on the site
+
+A fifth, structurally different offer on `/pricing`, alongside the four fixed one-time packages: a monthly, all-inclusive plan starting from R1,500/mo (final price depends on the site's requirements), covering the website build itself plus hosting, mailboxes, ongoing SEO work, and ongoing updates and maintenance. Month-to-month, no minimum term.
+
+This **is** a subscription, on purpose, unlike the two payment options above. Keep the two ideas visually and verbally distinct: the four packages' "12 monthly instalments" is a way to pay off a fixed one-time price, not a recurring service; Full Service is a recurring service. Full Service is styled as a dark full-width band (`components/sections/PricingFullService.tsx`), deliberately not a fifth white ring-card in the same grid as the other four, so it reads as a different kind of purchase at a glance.
+
+Full Service replaced the old "Website Care Plans" service (maintenance only, no stated price, no hosting/mailboxes) entirely on 2026-08-25. The internal slug `care-plans` in `content/services.ts` was kept unchanged to avoid a wider rename across `content/industryPages.ts` and `content/articles.ts`'s cross-reference arrays; only the visible content changed. `/services/website-care-plans` now 301-redirects to `/pricing#full-service` (`next.config.ts`).
 
 ## What the design must do
 

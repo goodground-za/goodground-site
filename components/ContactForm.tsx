@@ -19,7 +19,7 @@ import { sendEnquiry } from "@/lib/enquiry";
  * hidden from everyone including screen readers.
  */
 
-const projectTypes = ["New Website", "Website Redesign", "Website Care Plan", "Not Sure Yet"];
+const projectTypes = ["New Website", "Website Redesign", "Full Service", "Not Sure Yet"];
 
 type Status = "idle" | "submitting" | "success" | "mail" | "error";
 type Errors = Partial<Record<"fullName" | "email" | "projectType" | "message", string>>;

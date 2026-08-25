@@ -48,6 +48,19 @@ const nextConfig: NextConfig = {
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },
+  async redirects() {
+    return [
+      // Website Care Plans was retired 2026-08-25 and replaced by the Full
+      // Service monthly package, which lives on /pricing rather than its own
+      // service page — permanent redirect so the old indexed/bookmarked URL
+      // still lands somewhere useful instead of 404ing.
+      {
+        source: "/services/website-care-plans",
+        destination: "/pricing#full-service",
+        permanent: true,
+      },
+    ];
+  },
   images: {
     // Placeholder photography only — every one of these is replaced by the
     // client's own shoot before launch. See content/images.ts.

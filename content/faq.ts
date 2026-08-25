@@ -46,7 +46,7 @@ export const faq: FAQItem[] = [
   {
     question: "What happens after my website launches?",
     answer:
-      "Launch is the start of Cultivate Growth, not the finish line. We offer ongoing Website Care Plans for updates, monitoring, and small changes, so your site keeps performing well after it's paid off.",
+      "Launch is the start, not the finish line. If you'd rather have it all handled, our Full Service package bundles hosting, mailboxes, ongoing SEO work, and ongoing updates and maintenance into one monthly price.",
   },
   {
     question: "Do you work with businesses anywhere in South Africa?",

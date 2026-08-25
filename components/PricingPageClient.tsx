@@ -8,6 +8,7 @@ import { SplitWords } from "@/components/motion-gsap/SplitWords";
 import { PricingEnquiryForm, type SelectedConfig } from "@/components/PricingEnquiryForm";
 import { PricingConfigurator } from "@/components/sections/PricingConfigurator";
 import { PricingFAQ } from "@/components/sections/PricingFAQ";
+import { PricingFullService } from "@/components/sections/PricingFullService";
 import { PricingPackages } from "@/components/sections/PricingPackages";
 
 /**
@@ -29,6 +30,8 @@ export function PricingPageClient() {
   return (
     <>
       <PricingPackages onSelectPackage={handleSelect} />
+
+      <PricingFullService onSelect={handleSelect} />
 
       {/* Bridge between the two sections — every other inner page on the
           site alternates cream sections with a purple/pink block for

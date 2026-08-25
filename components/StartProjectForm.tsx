@@ -26,7 +26,7 @@ const choiceSteps: { key: string; eyebrow: string; heading: string; sub: string;
     choices: [
       { value: "New website", label: "New website", desc: "A brand-new site, built from scratch." },
       { value: "Website redesign", label: "Website redesign", desc: "Rebuild or refresh an existing site." },
-      { value: "Website care plan", label: "Website care plan", desc: "Ongoing support after launch." },
+      { value: "Full Service", label: "Full Service", desc: "Build, hosting, mailboxes, SEO, and maintenance, monthly." },
       { value: "Not sure yet", label: "Not sure yet", desc: "Help me work out what I need." },
     ],
   },
