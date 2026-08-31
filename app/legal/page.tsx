@@ -23,6 +23,7 @@ const toc = [
   { id: "privacy", label: "Privacy Policy" },
   { id: "sec-collection", label: "Data Collection" },
   { id: "sec-use", label: "How We Use Your Data" },
+  { id: "sec-ai", label: "Artificial Intelligence (AI)" },
   { id: "sec-nonpersonal", label: "Non-Personal Data" },
   { id: "sec-recruitment", label: "Recruitment" },
   { id: "sec-sharing", label: "Data Sharing" },
@@ -180,7 +181,46 @@ export default function LegalPage() {
               </P>
             </Section>
 
-            <Section num="05" id="sec-nonpersonal" title="Non-Personal Data Collection">
+            <Section num="05" id="sec-ai" title="Artificial Intelligence (AI)">
+              <P>
+                GoodGround uses Artificial Intelligence (AI) tools to support and improve the way we
+                deliver our services.
+              </P>
+              <H3>AI may assist with:</H3>
+              <UL
+                items={[
+                  "Content creation and copywriting",
+                  "Design concepts",
+                  "Website development",
+                  "Research and brainstorming",
+                  "Workflow automation",
+                  "Administrative support",
+                ]}
+              />
+              <P>
+                AI is used as a productivity tool, not as a replacement for human expertise or
+                decision-making. All AI-assisted work is reviewed, edited, and approved by a member
+                of the GoodGround team before it is delivered to a client or published.
+              </P>
+              <P>
+                When using AI, we are committed to protecting your privacy and complying with the{" "}
+                <strong className="text-ht-purple font-bold">
+                  Protection of Personal Information Act (POPIA)
+                </strong>
+                . We do not intentionally use confidential or sensitive client information to train
+                public AI models, and we take reasonable steps to ensure that any personal
+                information processed through AI tools is handled securely and only for the purpose
+                of providing our services.
+              </P>
+              <Banner>
+                By using our website or engaging our services, you acknowledge that GoodGround may
+                use AI-assisted technologies as part of our internal creative and operational
+                processes, while maintaining human oversight and accountability for the final
+                outcome.
+              </Banner>
+            </Section>
+
+            <Section num="06" id="sec-nonpersonal" title="Non-Personal Data Collection">
               <P>We may automatically collect non-identifiable data such as:</P>
               <UL items={["IP address", "Browser type and device", "Pages visited and time spent", "Referral sources"]} />
               <P>
@@ -189,7 +229,7 @@ export default function LegalPage() {
               </P>
             </Section>
 
-            <Section num="06" id="sec-recruitment" title="Recruitment and Candidate Data">
+            <Section num="07" id="sec-recruitment" title="Recruitment and Candidate Data">
               <P>If you apply for a role at GoodGround, we collect your data for recruitment purposes. This includes:</P>
               <UL
                 items={[
@@ -206,7 +246,7 @@ export default function LegalPage() {
               </P>
             </Section>
 
-            <Section num="07" id="sec-sharing" title="Data Sharing and Third Parties">
+            <Section num="08" id="sec-sharing" title="Data Sharing and Third Parties">
               <P>
                 We do not sell, rent, or trade your personal information. We may share data with
                 trusted third-party providers where necessary to operate our business.
@@ -222,7 +262,7 @@ export default function LegalPage() {
               </P>
             </Section>
 
-            <Section num="08" id="sec-international" title="International Data Transfers">
+            <Section num="09" id="sec-international" title="International Data Transfers">
               <P>
                 As we work with global clients and tools, your data may be processed outside South
                 Africa. In such cases, we ensure that appropriate safeguards are in place and that
@@ -230,7 +270,7 @@ export default function LegalPage() {
               </P>
             </Section>
 
-            <Section num="09" id="sec-rights" title="Your Rights Under POPIA">
+            <Section num="10" id="sec-rights" title="Your Rights Under POPIA">
               <P>You have the right to:</P>
               <ul className="mt-4 grid gap-3 sm:grid-cols-2">
                 {rights.map((r) => (
@@ -250,7 +290,7 @@ export default function LegalPage() {
               </P>
             </Section>
 
-            <Section num="10" id="sec-retention" title="Data Retention">
+            <Section num="11" id="sec-retention" title="Data Retention">
               <P>We only retain personal data for as long as necessary. Retention periods depend on:</P>
               <UL
                 items={[
@@ -262,7 +302,7 @@ export default function LegalPage() {
               <P>Once data is no longer required, it is securely deleted or anonymised.</P>
             </Section>
 
-            <Section num="11" id="sec-security" title="Data Security">
+            <Section num="12" id="sec-security" title="Data Security">
               <P>We take reasonable technical and organisational steps to protect your data. This includes:</P>
               <UL
                 items={[
@@ -278,7 +318,7 @@ export default function LegalPage() {
               </Banner>
             </Section>
 
-            <Section num="12" id="sec-cookies" title="Cookies and Tracking Technologies">
+            <Section num="13" id="sec-cookies" title="Cookies and Tracking Technologies">
               <P>
                 We use Google Analytics 4 to understand which pages visitors find useful. It sets
                 cookies that record things like the pages you view, roughly where in the world you
@@ -301,7 +341,7 @@ export default function LegalPage() {
               </P>
             </Section>
 
-            <Section num="13" id="sec-links" title="Third-Party Links">
+            <Section num="14" id="sec-links" title="Third-Party Links">
               <P>
                 Our website may include links to third-party websites. We do not control these
                 websites and are not responsible for their content, policies, or practices.
@@ -309,7 +349,7 @@ export default function LegalPage() {
               <P>You should review their privacy policies before providing any personal data.</P>
             </Section>
 
-            <Section num="14" id="sec-minors" title="Minors">
+            <Section num="15" id="sec-minors" title="Minors">
               <P>
                 Our services are not intended for individuals under the age of{" "}
                 <strong className="text-ht-purple font-bold">16</strong>. We do not knowingly collect personal data from
@@ -318,7 +358,7 @@ export default function LegalPage() {
               <P>If such data is identified, it will be removed promptly.</P>
             </Section>
 
-            <Section num="15" id="sec-updates" title="Updates to This Policy">
+            <Section num="16" id="sec-updates" title="Updates to This Policy">
               <P>
                 We may update this legal notice and privacy policy from time to time. Changes will be
                 published on this page.
@@ -326,7 +366,7 @@ export default function LegalPage() {
               <P>You are responsible for reviewing this page regularly to stay informed.</P>
             </Section>
 
-            <Section num="16" id="sec-contact" title="Contact">
+            <Section num="17" id="sec-contact" title="Contact">
               <P>
                 If you have any questions about this legal notice or how your data is handled, contact
                 GoodGround{site.email ? " at " : " through the website"}
