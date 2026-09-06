@@ -1,8 +1,23 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { MagneticButton } from "@/components/motion-gsap/MagneticButton";
 import { RevealSection } from "@/components/motion-gsap/RevealSection";
 import { SplitWords } from "@/components/motion-gsap/SplitWords";
 import { navLinks } from "@/content/site";
+
+/**
+ * Without its own metadata this page inherited the root layout's default title,
+ * so a 404 showed "Website Development in South Africa | GoodGround" in the tab
+ * — identical to the homepage.
+ *
+ * No canonical (a page that doesn't exist has no canonical URL) and no robots
+ * field: Next already emits noindex on not-found, and setting it here produced
+ * two competing <meta name="robots"> tags.
+ */
+export const metadata: Metadata = {
+  title: "Page not found",
+  description: "That page doesn't exist. Find GoodGround's website development services, work and contact details.",
+};
 
 /**
  * 404. Copy verbatim from the copy deck §5. Rendered inside the root layout, so
