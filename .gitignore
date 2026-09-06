@@ -49,3 +49,16 @@ next-env.d.ts
 # .impeccable/design.json itself is tracked: it's the durable DESIGN.md
 # sidecar (tonal ramps, component snippets), not ephemeral QA output.
 .impeccable/critique/
+
+# SEO audit artefacts. The written reports (*.md) ARE tracked — see
+# seo-audit/ACTION-PLAN.md and the run-*/ markdown. These are the generated
+# binaries behind them: ~25MB of screenshots and exported PDFs that can be
+# regenerated from a re-run and only bloat the repo.
+seo-audit/**/screenshots/
+seo-audit/*.pdf
+
+# Unreferenced leftover from the /home-test experiment that was promoted
+# sitewide (the route is gone). 16MB, nothing links to it, and it was never
+# committed — so it has never shipped to production. Kept on disk rather than
+# deleted, since this is the only copy.
+public/videos/home-test-2-hero.mp4
