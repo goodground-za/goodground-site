@@ -103,7 +103,7 @@ export function PricingPackages({ onSelectPackage }: { onSelectPackage: (config:
                 <p className="text-ht-purple/70 border-ht-purple/10 mt-6 border-t pt-4 text-[12.5px] leading-[1.5]">
                   <span className="font-bold">Best for:</span> {pkg.bestFor}
                 </p>
-                <p className="text-ht-purple/50 mt-2 text-[12px]">Timeline: {pkg.timeline}</p>
+                <p className="text-ht-purple/70 mt-2 text-[12px]">Timeline: {pkg.timeline}</p>
 
                 <button
                   type="button"

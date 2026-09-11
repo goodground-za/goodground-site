@@ -44,20 +44,33 @@
   change. Hex values are the client's supplied palette, used exactly as given.
 */
 @theme {
-  --color-ht-pink: #fe9dd2; /* CTA band bg, card glow/border accent */
-  --color-ht-orange: #fe431a; /* primary action colour: section bg, buttons */
-  --color-ht-crimson: #ac3026; /* depth/shadow under orange elements, hover states */
-  --color-ht-purple: #2e1848; /* dark section bg, footer bg, headings on cream */
-  --color-ht-cream: #fbf7ec; /* base page background */
+  /* 2026-09-11: repointed to the homepage redesign's palette so the whole site
+     shares one look. The ht-* names are kept — they are stable identifiers now,
+     not experiment markers, and renaming would touch every Tailwind class in
+     59 files for no visual change. What changed is what they point AT.
 
-  --font-ht-display: var(--font-parkinsans), ui-sans-serif, system-ui, sans-serif;
-  --font-ht-body: var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif;
+     The new design has no purple. ht-purple therefore becomes ink: it is still
+     "the dark surface" everywhere it is used (dark sections, footer, headings
+     on the light ground), it is just no longer #2e1848. Purple survives only
+     inside the logo artwork, which is not a UI colour. */
+  /* Repointed from #fe9dd2: the new design has no pink. Note the constraint
+     this creates — orange is 4.90:1 on ink (fine for text) but only 3.59:1
+     on paper, so it is borders/icons/large text there, never small body copy.
+     A contrast audit across every page follows this change. */
+  --color-ht-pink: #f13e1b; /* now the accent orange, not pink */
+  --color-ht-orange: #f13e1b; /* primary action colour: section bg, buttons */
+  --color-ht-crimson: #bc3116; /* depth/shadow under orange, hover states */
+  --color-ht-purple: #111111; /* THE DARK SURFACE — ink, not purple, since 2026-09-11 */
+  --color-ht-cream: #f7f7f4; /* base page background — "paper" in the new design */
 
-  /* Repointed to the same fonts so any component using the generic
-     font-heading/font-body tokens (inherited by h1-h4/body in the base
-     layer below) picks up Parkinsans/Instrument Sans automatically. */
-  --font-heading: var(--font-parkinsans), ui-sans-serif, system-ui, sans-serif;
-  --font-body: var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-ht-display: var(--font-oswald), "Arial Narrow", ui-sans-serif, system-ui, sans-serif;
+  --font-ht-body: var(--font-ibm-plex-sans), ui-sans-serif, system-ui, sans-serif;
+
+  /* The generic tokens point at the same pair, so anything using
+     font-heading/font-body (inherited by h1-h4/body in the base layer below)
+     picks up Oswald/IBM Plex Sans automatically. */
+  --font-heading: var(--font-oswald), "Arial Narrow", ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-ibm-plex-sans), ui-sans-serif, system-ui, sans-serif;
 
   /* Fluid type scale, ~1.333 ratio, matching the mockup's oversized headline
      treatment. Named distinctly from font-size utilities so it never collides

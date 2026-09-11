@@ -342,7 +342,7 @@ function SummaryPanel({
           <span className="tabular-nums">{formatRand(baseBuildFee.total)}</span>
         </p>
         {selectedItems.length === 0 ? (
-          <p className="text-ht-purple/50 mt-3 text-[13px] italic">
+          <p className="text-ht-purple/70 mt-3 text-[13px] italic">
             Add items from the menu to build your quote.
           </p>
         ) : (

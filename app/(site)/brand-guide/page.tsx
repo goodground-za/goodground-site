@@ -439,7 +439,7 @@ export default function BrandGuidePage() {
               Resting state for cards, buttons. Ink-tinted (rgb 1 6 2), not pure black, so it reads
               warm rather than grey.
             </p>
-            <code className="font-ht-body text-ht-purple/50 mt-3 block text-[11px] leading-[1.5]">
+            <code className="font-ht-body text-ht-purple/70 mt-3 block text-[11px] leading-[1.5]">
               0 1px 2px rgb(1 6 2 / 0.05), 0 8px 24px -8px rgb(1 6 2 / 0.1)
             </code>
           </div>
@@ -448,7 +448,7 @@ export default function BrandGuidePage() {
             <p className="font-ht-body text-ht-purple/70 mt-2 text-[13px] leading-[1.6]">
               Hover state. Button and card hover both transition from soft to this.
             </p>
-            <code className="font-ht-body text-ht-purple/50 mt-3 block text-[11px] leading-[1.5]">
+            <code className="font-ht-body text-ht-purple/70 mt-3 block text-[11px] leading-[1.5]">
               0 2px 4px rgb(1 6 2 / 0.06), 0 16px 40px -12px rgb(1 6 2 / 0.18)
             </code>
           </div>

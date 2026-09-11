@@ -117,17 +117,17 @@ function NewTemplateBody({ study }: { study: CaseStudy }) {
 
               <dl className="grid grid-cols-2 gap-x-10 gap-y-6 sm:grid-cols-3">
                 <div>
-                  <dt className="text-[12px] font-bold tracking-[0.1em] text-ht-purple/50 uppercase">Year</dt>
+                  <dt className="text-[12px] font-bold tracking-[0.1em] text-ht-purple/70 uppercase">Year</dt>
                   <dd className="text-ht-purple mt-1.5 text-[15px] leading-[1.6] font-medium">{study.year}</dd>
                 </div>
                 <div>
-                  <dt className="text-[12px] font-bold tracking-[0.1em] text-ht-purple/50 uppercase">Service</dt>
+                  <dt className="text-[12px] font-bold tracking-[0.1em] text-ht-purple/70 uppercase">Service</dt>
                   <dd className="text-ht-purple mt-1.5 max-w-[26ch] text-[15px] leading-[1.6] font-medium">
                     {study.service}
                   </dd>
                 </div>
                 <div className="col-span-2 sm:col-span-1">
-                  <dt className="text-[12px] font-bold tracking-[0.1em] text-ht-purple/50 uppercase">Details</dt>
+                  <dt className="text-[12px] font-bold tracking-[0.1em] text-ht-purple/70 uppercase">Details</dt>
                   <dd className="text-ht-purple mt-1.5 max-w-[32ch] text-[15px] leading-[1.6] font-medium">
                     {study.details}
                   </dd>
