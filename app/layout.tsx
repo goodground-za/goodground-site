@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Instrument_Sans, Parkinsans } from "next/font/google";
+import localFont from "next/font/local";
 import { Analytics } from "@/components/Analytics";
-import { Footer } from "@/components/Footer";
-import { LenisProvider } from "@/components/motion-gsap/LenisProvider";
-import { Nav } from "@/components/Nav";
 import { site } from "@/content/site";
 import "./globals.css";
 
@@ -24,6 +22,33 @@ const parkinsans = Parkinsans({
   display: "swap",
   fallback: ["ui-sans-serif", "system-ui", "Segoe UI", "sans-serif"],
   adjustFontFallback: false,
+});
+
+// The 2026-09 homepage redesign ships its own pairing: Oswald for display,
+// IBM Plex Sans for body. Self-hosted woff2 from the delivered package rather
+// than next/font/google, because the licences travel with the files
+// (public/fonts/font-licenses.txt) and the subsetting is already done.
+//
+// Declared here so <html> can carry the CSS variables, but NOT applied to
+// anything globally — only components under the homepage's own scope use
+// them. The rest of the site stays on Parkinsans/Instrument Sans.
+const oswald = localFont({
+  variable: "--font-oswald",
+  display: "swap",
+  fallback: ["Arial Narrow", "ui-sans-serif", "system-ui", "sans-serif"],
+  adjustFontFallback: false,
+  src: [
+    { path: "../public/fonts/oswald-500.woff2", weight: "500", style: "normal" },
+    { path: "../public/fonts/oswald-700.woff2", weight: "700", style: "normal" },
+  ],
+});
+
+const ibmPlexSans = localFont({
+  variable: "--font-ibm-plex-sans",
+  display: "swap",
+  fallback: ["ui-sans-serif", "system-ui", "Segoe UI", "sans-serif"],
+  adjustFontFallback: false,
+  src: [{ path: "../public/fonts/ibm-plex-sans-400.woff2", weight: "400", style: "normal" }],
 });
 
 const instrumentSans = Instrument_Sans({
@@ -79,22 +104,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html
       lang="en-ZA"
       data-scroll-behavior="smooth"
-      className={`${parkinsans.variable} ${instrumentSans.variable} h-full`}
+      className={`${parkinsans.variable} ${instrumentSans.variable} ${oswald.variable} ${ibmPlexSans.variable} h-full`}
     >
+      {/* No Nav/Footer/skip-link here: they moved to app/(site)/layout.tsx so
+          the homepage, which brings its own chrome, can opt out of them. */}
       <body className="flex min-h-full flex-col">
-        <a
-          href="#main"
-          className="bg-ht-purple text-white sr-only rounded-full px-5 py-3 focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-100"
-        >
-          Skip to content
-        </a>
-        <LenisProvider>
-          <Nav />
-          <main id="main" className="flex-1">
-            {children}
-          </main>
-          <Footer />
-        </LenisProvider>
+        {children}
         {/* Renders the consent banner, and GA only once consent is granted.
             Lives inside <body> because the banner is a positioned element. */}
         <Analytics gaId={gaId} />

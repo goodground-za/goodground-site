@@ -1,37 +1,42 @@
 import type { Metadata } from "next";
 import { HomeSchema, ServicesSchema } from "@/components/Schema";
-import { MobileStickyBar } from "@/components/hometest2/MobileStickyBar";
-import { ScrollProgress } from "@/components/hometest2/ScrollProgress";
-import { FAQSection } from "@/components/hometest2/sections/FAQSection";
-import { HomeTest2Hero } from "@/components/hometest2/sections/Hero";
-import { OurProcess } from "@/components/hometest2/sections/OurProcess";
-import { OurStrategy } from "@/components/hometest2/sections/OurStrategy";
-import { ReasonsToWorkWithUs } from "@/components/hometest2/sections/ReasonsToWorkWithUs";
-import { ServicesLede } from "@/components/hometest2/sections/ServicesLede";
-import { WhatWeBuild } from "@/components/hometest2/sections/WhatWeBuild";
-import { WhoWeBuildFor } from "@/components/hometest2/sections/WhoWeBuildFor";
-import { Work } from "@/components/hometest2/sections/Work";
+import { Contact } from "@/components/home2026/Contact";
+import { Faq } from "@/components/home2026/Faq";
+import { Hero } from "@/components/home2026/Hero";
+import { HomeChrome } from "@/components/home2026/HomeChrome";
+import { HomeFooter } from "@/components/home2026/HomeFooter";
+import { Industries } from "@/components/home2026/Industries";
+import { Intro } from "@/components/home2026/Intro";
+import { Process } from "@/components/home2026/Process";
+import { Reasons } from "@/components/home2026/Reasons";
+import { RevealObserver } from "@/components/home2026/RevealObserver";
+import { Services } from "@/components/home2026/Services";
+import { Strategy } from "@/components/home2026/Strategy";
+import { Work } from "@/components/home2026/Work";
 import { services } from "@/content/services";
+import "@/components/home2026/home2026.css";
 
 /**
- * Homepage. Promoted from /home-test-2 on 2026-08-20 after client approval,
- * replacing the previous section set (components/sections/*). Parkinsans and
- * Instrument Sans moved site-wide at the same time, so this page no longer
- * carries its own font-scoping layout.
+ * Homepage — 2026-09 redesign.
+ *
+ * Ported from the delivered static package in
+ * website-and-ops/GoodGround-Homepage-Live-Files/. Section components are
+ * verbatim markup; the interactive parts (hero video, menu dialog, reveals)
+ * were rebuilt as React while keeping the original behaviour.
+ *
+ * This page does NOT sit inside app/(site)/, because the design brings its own
+ * header, footer and <main>. The shared <Nav /> and <Footer /> live in
+ * app/(site)/layout.tsx so every other page still gets them.
+ *
+ * Styling is scoped under .home-2026 (see home2026.css). The rest of the site
+ * is still Parkinsans/Instrument Sans on the ht-* tokens, and nothing here
+ * reaches it.
  *
  * Title/description are carried over unchanged from the previous homepage:
- * they target "website development South Africa" (the primary keyword) and
- * are tuned SEO copy, not part of the visual design that changed.
- *
- * 2026-08-16: GoodGround is positioned nationally across the whole site. The
- * hero, every service and industry page, the FAQ, /about and /work all speak
- * to South Africa rather than naming a town.
- *
- * The one deliberate exception is content/site.ts -> address.locality, which
- * is still the real registered locality. It feeds the LocalBusiness postal
- * address and the footer, and it has to keep matching the Google Business
- * Profile. Changing it would be inaccurate and would break NAP consistency,
- * which is what local search actually keys on.
+ * they target "website development South Africa" (the primary keyword) and are
+ * tuned SEO copy, not part of the visual design that changed. Same for the
+ * schema below — the delivered package had no equivalent, and dropping it
+ * would lose the LocalBusiness and Service structured data.
  */
 export const metadata: Metadata = {
   title: "Website Development in South Africa | GoodGround",
@@ -42,27 +47,34 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <>
+    <div className="home-2026">
       <HomeSchema />
       <ServicesSchema services={services} />
-      {/* No FAQPage node here: /faq already emits the canonical FAQPage
-          schema for this same question set (see Schema.tsx's HomeSchema
-          comment). Repeating it put duplicate FAQPage content on two
-          indexed URLs. */}
+      {/* No FAQPage node here: /faq already emits the canonical FAQPage schema
+          for this same question set (see Schema.tsx's HomeSchema comment).
+          Repeating it put duplicate FAQPage content on two indexed URLs. */}
 
-      <ScrollProgress />
+      <a className="skip-link" href="#main">
+        Skip to content
+      </a>
 
-      <HomeTest2Hero />
-      <ServicesLede />
-      <OurProcess />
-      <Work />
-      <WhoWeBuildFor />
-      <WhatWeBuild />
-      <ReasonsToWorkWithUs />
-      <OurStrategy />
-      <FAQSection />
+      <HomeChrome />
 
-      <MobileStickyBar />
-    </>
+      <main id="main">
+        <Hero />
+        <Intro />
+        <Work />
+        <Services />
+        <Process />
+        <Reasons />
+        <Strategy />
+        <Industries />
+        <Faq />
+        <Contact />
+      </main>
+
+      <HomeFooter />
+      <RevealObserver />
+    </div>
   );
 }
