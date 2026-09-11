@@ -102,7 +102,7 @@ export function Hero() {
           <Link className="button button-white" href="/start-project">
             <span>Start your project</span>
             <span className="button-arrow" aria-hidden="true">
-              ↗
+              ↗︎
             </span>
           </Link>
         </div>
@@ -111,7 +111,7 @@ export function Hero() {
       <div className="hero-bottom wrap">
         <a className="scroll-link" href="#about">
           <span className="scroll-icon" aria-hidden="true">
-            ↓
+            ↓︎
           </span>
           Scroll to explore
         </a>
@@ -121,7 +121,7 @@ export function Hero() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Instagram ↗
+            Instagram ↗︎
           </a>
           <span aria-hidden="true">/</span>
           <a
@@ -129,7 +129,7 @@ export function Hero() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Facebook ↗
+            Facebook ↗︎
           </a>
         </div>
         <button
@@ -146,7 +146,7 @@ export function Hero() {
           }}
         >
           <span className="motion-icon" aria-hidden="true">
-            {paused ? "▷" : "Ⅱ"}
+            {paused ? "▷︎" : "Ⅱ"}
           </span>
           <span className="motion-label">{paused ? "Play motion" : "Pause motion"}</span>
         </button>

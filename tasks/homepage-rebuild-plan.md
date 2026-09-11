@@ -181,3 +181,33 @@ confirming the class was gone.
 Re-checked after the change: Lighthouse mobile still 100/100/100/100, zero
 failed audits.
 
+## 2026-09-11 — arrows were rendering as colour emoji on mobile
+
+Reported from a real phone: the arrows in "Who we build for" came out as emoji.
+
+Cause: the design uses U+2197 NORTH EAST ARROW (and U+2193, U+2191, U+25B7),
+all of which have an **emoji presentation variant**. IBM Plex Sans has no glyph
+for them, so the cascade falls through to the system font — and on iOS/Android
+the emoji font claims them and draws them in colour. On desktop it lands on a
+text font instead, which is why this only showed on mobile and why **it cannot
+be reproduced in Chrome's device emulation**: emulation changes the viewport,
+not the font stack.
+
+Fixed in two places, deliberately both:
+
+1. **U+FE0E after each glyph** — 35 in the source, 65 in the rendered page. This
+   is the universally-supported mechanism and is what actually fixes it.
+2. **`font-variant-emoji: text`** on the scope — the modern CSS property for the
+   same thing, harmless where unsupported, useful on the browsers that honour it.
+
+Neither should be tidied away on its own.
+
+Scope note: the report was about one section, but the same glyph appears in
+buttons, the menu, project cards, the footer and the hero. All 35 were fixed,
+not the six that were visible.
+
+**Verified locally:** every arrow in the served HTML carries the selector (0
+bare), the CSS rule ships in the bundle, `font-variant-emoji` computes as
+`text`, nothing moved visually. **Not verifiable here:** that it looks right on
+a real handset, for the font-stack reason above.
+

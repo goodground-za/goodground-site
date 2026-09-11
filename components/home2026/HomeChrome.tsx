@@ -136,7 +136,7 @@ export function HomeChrome() {
               <span>{item.n}</span>
               {item.label}
               <span className="menu-arrow" aria-hidden="true">
-                ↗
+                ↗︎
               </span>
             </Link>
           ))}

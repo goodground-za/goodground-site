@@ -17,6 +17,14 @@
  * globals.css rather than unscoping this file.
  */
 
+/* The design's arrows (U+2197, U+2193, U+2191, U+25B7) all have an emoji
+   presentation variant, and on mobile the system emoji font wins the cascade —
+   the flat arrows came out as colour emoji. Each glyph carries a U+FE0E text
+   selector in the markup, which is what actually fixes it everywhere; this
+   property is the modern belt-and-braces for the browsers that honour it, and
+   is harmless in those that do not. Do not "tidy" either one away on its own. */
+.home-2026, .home-2026 * { font-variant-emoji: text; }
+
 .home-2026{--paper:#f7f7f4;--ink:#111111;--orange:#f13e1b;--line:rgba(17,17,17,.2);--white-line:rgba(255,255,255,.22);--muted:#555650;--gutter:clamp(1.25rem,4.45vw,5.5rem);--ease:cubic-bezier(.2,.75,.25,1);color-scheme:light;font-family:var(--font-ibm-plex-sans),Arial,sans-serif;color:var(--ink);background:var(--ink);font-synthesis:none}
 .home-2026 *{box-sizing:border-box}
 .home-2026{scroll-behavior:smooth;scroll-padding-top:2rem}
