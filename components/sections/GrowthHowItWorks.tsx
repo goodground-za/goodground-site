@@ -31,7 +31,7 @@ const steps = [
  */
 export function GrowthHowItWorks() {
   return (
-    <section id="growth-how-it-works" className="scroll-mt-24 px-6 py-16 sm:px-10 md:py-24">
+    <section id="growth-how-it-works" className="scroll-mt-24 px-gutter py-16 md:py-24">
       <div className="mx-auto max-w-[1434px]">
         <RevealSection>
           <p className="font-ht-display text-ht-purple text-[13px] font-bold tracking-[0.15em] uppercase">How it works</p>

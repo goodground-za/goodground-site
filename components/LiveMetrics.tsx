@@ -257,7 +257,7 @@ function MetricTile({
   verdict: string;
 }) {
   return (
-    <div className="rounded-card ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] bg-white p-6 ring-2">
+    <div className="rounded-card ring-ht-purple/12 bg-white p-6 ring-1">
       <p className="font-ht-display text-ht-purple text-[13px] font-bold tracking-[0.1em] uppercase">
         {label}
       </p>

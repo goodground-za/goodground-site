@@ -199,7 +199,7 @@ export function InsightsList({ articles }: { articles: ArticleSummary[] }) {
               <Link
                 key={article.slug}
                 href={`/insights/${article.slug}`}
-                className="rounded-card ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] group flex h-full flex-col bg-white p-7 ring-2 transition-transform duration-150 ease-out hover:-translate-y-1"
+                className="rounded-card ring-ht-purple/12 group flex h-full flex-col bg-white p-7 ring-1 transition-transform duration-150 ease-out hover:-translate-y-1"
               >
                 <div className="text-ht-purple/70 flex items-center gap-3 text-[13px] font-medium">
                   <span className="bg-ht-orange/10 text-ht-crimson rounded-pill px-3 py-1 font-bold">

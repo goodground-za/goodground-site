@@ -115,7 +115,7 @@ export function StartProjectForm() {
 
   if (status === "success" || status === "mail") {
     return (
-      <div className="rounded-block ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] bg-white p-8 text-center ring-2 sm:p-12" role="status" aria-live="polite">
+      <div className="rounded-block ring-ht-purple/12 bg-white p-8 text-center ring-1 sm:p-12" role="status" aria-live="polite">
         <span className="bg-ht-orange mx-auto grid size-12 place-items-center rounded-full text-white">
           <svg aria-hidden="true" viewBox="0 0 24 24" className="size-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="m5 13 4 4L19 7" />
@@ -136,7 +136,7 @@ export function StartProjectForm() {
   const isDetails = step === choiceSteps.length;
 
   return (
-    <div className="rounded-block ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] bg-white p-6 ring-2 sm:p-8 md:p-10">
+    <div className="rounded-block ring-ht-purple/12 bg-white p-6 ring-1 sm:p-8 md:p-10">
       {/* Progress */}
       <div className="flex items-center justify-between gap-4">
         <p className="text-ht-purple/70 text-[13px] font-bold tracking-[0.1em] uppercase" aria-hidden="true">

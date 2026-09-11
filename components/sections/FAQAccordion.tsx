@@ -1,130 +1,82 @@
-"use client";
-
-import gsap from "gsap";
 import Link from "next/link";
-import { useLayoutEffect, useRef, useState } from "react";
 import { faq, type FAQItem } from "@/content/faq";
-import { RevealSection, RevealStagger } from "@/components/motion-gsap/RevealSection";
+
+const ARROW = "↗︎";
 
 /**
- * Promoted from the approved /home-test variant's FAQAccordion — now the
- * site's shared FAQ component. Defaults to the sitewide content/faq.ts list
- * (homepage's abbreviated `limit={4}` preview, /faq's full list), but also
- * accepts its own `items`/`heading`/`moreHref` so industry pages can reuse
- * the same accordion mechanics with segment-specific questions instead of a
- * near-duplicate component. The "All Questions"-style link only shows when
- * the list has actually been truncated, so a page never links to a shorter
- * version of itself.
+ * The site's shared FAQ block, rebuilt 2026-09-11 onto the homepage's design.
+ *
+ * Same structure as the homepage's section 08: eyebrow and heading on the
+ * left, a bordered list of native <details> on the right, numbered, with a
+ * plus that becomes a minus. Native disclosure means no JavaScript, so this
+ * went from a client component driving GSAP tweens to a server component.
+ *
+ * Defaults to the sitewide content/faq.ts list, and accepts its own
+ * `items`/`heading`/`moreHref` so service and industry pages reuse the
+ * mechanics with segment-specific questions rather than near-duplicating it.
+ * The "all questions" link only appears when the list was actually truncated,
+ * so a page never links to a shorter version of itself.
  */
 export function FAQAccordion({
   items,
   limit,
-  heading = "Everything you need to know before you start.",
+  heading = "Everything you need to know",
+  eyebrow = "FAQ",
   moreHref = "/faq",
-  moreLabel = "All Questions",
+  moreLabel = "Find all questions here",
   className = "",
 }: {
   items?: FAQItem[];
   limit?: number;
   heading?: string;
+  eyebrow?: string;
   moreHref?: string;
   moreLabel?: string;
   className?: string;
 } = {}) {
-  const [open, setOpen] = useState<number | null>(null);
   const source = items ?? faq;
   const visible = limit ? source.slice(0, limit) : source;
   const truncated = limit ? source.length > limit : false;
+  // The design closes headings with an orange full stop, so a heading written
+  // with its own trailing period gets it moved rather than doubled.
+  const stem = heading.replace(/\.+$/, "");
 
   return (
-    <section className={`bg-ht-pink overflow-hidden rounded-[40px] px-6 py-20 sm:rounded-[56px] sm:px-10 md:py-28 ${className}`}>
-      <RevealSection className="mx-auto max-w-[1600px]">
-        <h2 className="font-ht-display text-ht-purple text-center text-[clamp(2rem,4.5vw,3.5rem)] font-bold uppercase">
-          {heading}
-        </h2>
-
-        <RevealStagger className="mx-auto mt-12 max-w-[1000px] space-y-5" y={16}>
-          {visible.map((item, i) => (
-            <FAQRow key={item.question} item={item} isOpen={open === i} onToggle={() => setOpen(open === i ? null : i)} />
-          ))}
-        </RevealStagger>
-
-        {truncated ? (
-          <div className="mt-10 flex justify-center">
-            <Link
-              href={moreHref}
-              className="font-ht-display bg-white text-ht-purple rounded-pill inline-flex items-center gap-2 px-6 py-3 text-[13px] font-bold tracking-wide uppercase transition-transform duration-200 hover:scale-[1.03] active:scale-[0.97]"
-            >
-              {moreLabel}
-              <svg viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M7 17 17 7M8 7h9v9" />
-              </svg>
-            </Link>
+    <div className={className ? `home-2026 ${className}` : "home-2026"}>
+      <section className="faq section-light section-pad" aria-labelledby="faq-accordion-title">
+        <div className="wrap faq-layout">
+          <div className="faq-intro">
+            <p className="eyebrow">{eyebrow}</p>
+            <h2 className="display-heading" id="faq-accordion-title">
+              {stem}
+              <span className="accent-text">.</span>
+            </h2>
+            {truncated ? (
+              <Link className="text-link" href={moreHref}>
+                {moreLabel} <span aria-hidden="true">{ARROW}</span>
+              </Link>
+            ) : null}
           </div>
-        ) : null}
-      </RevealSection>
-    </section>
-  );
-}
 
-function FAQRow({ item, isOpen, onToggle }: { item: FAQItem; isOpen: boolean; onToggle: () => void }) {
-  const panelRef = useRef<HTMLDivElement>(null);
-  const iconRef = useRef<SVGSVGElement>(null);
-  const panelId = `faq-panel-${item.question.slice(0, 12).replace(/\W/g, "")}`;
-
-  useLayoutEffect(() => {
-    const panel = panelRef.current;
-    const icon = iconRef.current;
-    if (!panel) return;
-
-    const mm = gsap.matchMedia();
-    mm.add("(prefers-reduced-motion: no-preference)", () => {
-      gsap.to(panel, { height: isOpen ? "auto" : 0, duration: 0.4, ease: "circ.out" });
-      if (icon) gsap.to(icon, { rotate: isOpen ? 45 : 0, duration: 0.3, ease: "power2.out" });
-      return () => {};
-    });
-    mm.add("(prefers-reduced-motion: reduce)", () => {
-      gsap.set(panel, { height: isOpen ? "auto" : 0 });
-      if (icon) gsap.set(icon, { rotate: isOpen ? 45 : 0 });
-      return () => {};
-    });
-
-    return () => mm.revert();
-  }, [isOpen]);
-
-  return (
-    <div className="rounded-card shadow-[0_14px_0_0_var(--color-ht-purple)] overflow-hidden bg-white">
-      <h3>
-        <button
-          type="button"
-          onClick={onToggle}
-          aria-expanded={isOpen}
-          aria-controls={panelId}
-          className="text-ht-purple flex w-full cursor-pointer items-center gap-6 px-6 py-5 text-left sm:px-8"
-        >
-          <span className="font-ht-display flex-1 text-[15px] font-bold sm:text-[16px]">
-            {item.question}
-          </span>
-          <span
-            aria-hidden="true"
-            className="text-ht-crimson border-ht-orange/40 grid size-7 shrink-0 place-items-center rounded-full border-2"
-          >
-            <svg ref={iconRef} viewBox="0 0 16 16" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-              <path d="M8 2v12M2 8h12" />
-            </svg>
-          </span>
-        </button>
-      </h3>
-
-      <div ref={panelRef} id={panelId} className="h-0 overflow-hidden">
-        <p
-          className={`font-ht-body text-ht-purple/70 max-w-[80ch] px-6 pb-6 text-[15px] leading-[1.7] sm:px-8 ${
-            item.answer ? "" : "italic"
-          }`}
-        >
-          {item.answer ?? "We're still working this one out. Ask us directly and we'll tell you straight."}
-        </p>
-      </div>
+          <div className="faq-list">
+            {visible.map((item, i) => (
+              <details key={item.question}>
+                <summary>
+                  <span className="faq-number">{String(i + 1).padStart(2, "0")}</span>
+                  <h3>{item.question}</h3>
+                  <span className="faq-symbol" aria-hidden="true" />
+                </summary>
+                <div className="faq-answer">
+                  <p>
+                    {item.answer ??
+                      "We’re still working this one out. Ask us directly and we’ll tell you straight."}
+                  </p>
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

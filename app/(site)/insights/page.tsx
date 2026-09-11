@@ -42,9 +42,11 @@ export default function InsightsPage() {
         intro="Straight-talking articles on website design, online presence and growth for South African small businesses. No jargon, no filler."
       />
 
-      {/* pb-[24vw]: last section before the footer's CloudDivider (same
-          reasoning as CTABand). */}
-      <section className="bg-ht-cream px-6 pt-16 pb-[24vw] sm:px-10 md:pt-24">
+      {/* Closing padding before the footer. Was pb-[24vw], reserving room
+          for the old footer's CloudDivider scallop; that footer was replaced
+          by HomeFooter on 2026-09-11 and the reservation became 345px of dead
+          cream on every page. */}
+      <section className="bg-ht-cream px-gutter pt-16 pb-20 md:pb-28 md:pt-24">
         <div className="mx-auto max-w-[1434px]">
           <InsightsList articles={summaries} />
         </div>

@@ -30,7 +30,7 @@ export default function PricingPage() {
         title="Simple pricing, built around what you actually need."
         intro="Four fixed packages to start fast, or build your own from our full menu. Pay 50% upfront and the rest on completion, or split the total into 12 monthly instalments: your call. Prefer to have it all handled? Full Service bundles the build with hosting, mailboxes, SEO, and maintenance, monthly."
       >
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
+        <div className="mt-8 flex flex-wrap gap-3">
           <Link
             href="#packages"
             className="font-ht-body rounded-pill inline-flex items-center gap-2 border border-white/25 px-5 py-2.5 text-[14px] font-medium text-white transition-colors duration-150 hover:border-white"

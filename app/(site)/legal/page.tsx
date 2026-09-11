@@ -59,8 +59,8 @@ export default function LegalPage() {
         intro="GoodGround is committed to transparency, data protection, and responsible use of information. By using this website, you agree to the terms below."
       />
 
-      {/* pb-[24vw]: last section before the footer's CloudDivider. */}
-      <div className="bg-ht-cream mx-auto grid max-w-[1434px] gap-10 px-6 pt-16 pb-[24vw] sm:px-10 md:pt-24 lg:grid-cols-12 lg:gap-14">
+      {/* Closing padding before the footer (was a CloudDivider reservation). */}
+      <div className="bg-ht-cream mx-auto grid max-w-[1434px] gap-10 px-gutter pt-16 pb-20 md:pb-28 md:pt-24 lg:grid-cols-12 lg:gap-14">
         {/* TOC */}
         <aside className="min-w-0 lg:col-span-4">
           <nav aria-label="On this page" className="lg:sticky lg:top-28">
@@ -85,7 +85,7 @@ export default function LegalPage() {
         {/* Document */}
         <div className="min-w-0 lg:col-span-8">
           {/* Company details */}
-          <div className="rounded-card ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] bg-white p-6 ring-2 sm:p-8">
+          <div className="rounded-card ring-ht-purple/12 bg-white p-6 ring-1 sm:p-8">
             <p className="text-ht-purple/70 text-[13px] font-bold tracking-[0.12em] uppercase">
               Company Details
             </p>

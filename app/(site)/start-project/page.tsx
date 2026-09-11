@@ -22,13 +22,14 @@ export default function StartProjectPage() {
       <BreadcrumbSchema trail={[{ name: "Start your project", path: "/start-project" }]} />
 
       <PageHero
+        video
         eyebrow="Start your project"
         title="Let's plant something that grows."
         intro="A few quick questions, then your details. It takes about a minute, and there's no obligation, just a starting point for the conversation."
       />
 
-      {/* pb-[24vw]: last section before the footer's CloudDivider. */}
-      <section className="bg-ht-cream px-6 pt-16 pb-[24vw] sm:px-10 md:pt-24">
+      {/* Closing padding before the footer (was a CloudDivider reservation). */}
+      <section className="bg-ht-cream px-gutter pt-16 pb-20 md:pb-28 md:pt-24">
         <div className="mx-auto max-w-[820px]">
           <StartProjectForm />
         </div>

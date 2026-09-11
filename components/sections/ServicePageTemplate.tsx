@@ -47,7 +47,7 @@ export function ServicePageTemplate({ slug }: { slug: string }) {
       <FAQSchema items={entry.faq} id={`${entry.slug}-faq`} />
 
       <PageHero eyebrow="What we do" title={entry.h1} intro={entry.heroIntro}>
-        <RevealSection delay={0.14} className="mt-8 flex flex-wrap justify-center gap-2">
+        <RevealSection delay={0.14} className="mt-8 flex flex-wrap gap-2">
           {entry.keywordChips.map((chip) => (
             <span
               key={chip}
@@ -60,13 +60,13 @@ export function ServicePageTemplate({ slug }: { slug: string }) {
       </PageHero>
 
       {/* Pain points, same numbered-card language as the industry pages. */}
-      <section className="bg-ht-cream px-6 py-16 sm:px-10 md:py-24">
+      <section className="bg-ht-cream px-gutter py-16 md:py-24">
         <div className="mx-auto max-w-[1434px]">
           <RevealStagger className="grid gap-5 sm:grid-cols-3" y={16}>
             {entry.painPoints.map((point, i) => (
               <HoverCard
                 key={point.title}
-                className="bg-white ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] rounded-card p-6 ring-2"
+                className="bg-white ring-ht-purple/12 rounded-card p-6 ring-1"
               >
                 <p className="font-ht-display text-ht-crimson text-[13px] font-bold tabular-nums">
                   {String(i + 1).padStart(2, "0")}
@@ -81,9 +81,9 @@ export function ServicePageTemplate({ slug }: { slug: string }) {
 
       {/* What's included + local proof, in the purple band used across the
           rest of the site for a mid-page tonal break. */}
-      <section className="bg-ht-cream relative z-10 px-6 pb-8 sm:px-10">
+      <section className="bg-ht-cream relative z-10 px-gutter pb-8">
         <div className="bg-ht-purple rounded-block mx-auto max-w-[1434px] overflow-hidden">
-          <div className="grid gap-10 px-6 py-14 sm:px-10 md:py-20 lg:grid-cols-12 lg:gap-14">
+          <div className="grid gap-10 px-gutter py-14 md:py-20 lg:grid-cols-12 lg:gap-14">
             <div className="min-w-0 lg:col-span-5">
               <RevealSection>
                 <p className="font-ht-display text-ht-pink text-[13px] font-bold tracking-[0.15em] uppercase">
@@ -139,7 +139,7 @@ export function ServicePageTemplate({ slug }: { slug: string }) {
           is set. The article itself links back via its own related-services
           block. */}
       {relatedArticles.length > 0 ? (
-        <section className="bg-ht-cream px-6 pb-4 sm:px-10">
+        <section className="bg-ht-cream px-gutter pb-4">
           <div className="mx-auto max-w-[1434px]">
             <RevealSection>
               <p className="font-ht-display text-ht-purple text-[13px] font-bold tracking-[0.15em] uppercase">
@@ -149,7 +149,7 @@ export function ServicePageTemplate({ slug }: { slug: string }) {
             <RevealStagger className="mt-5 grid gap-5 sm:grid-cols-2" y={16}>
               {relatedArticles.map((article) => (
                 <Link key={article.slug} href={`/insights/${article.slug}`} className="block">
-                  <HoverCard className="bg-white ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] rounded-card h-full p-6 ring-2">
+                  <HoverCard className="bg-white ring-ht-purple/12 rounded-card h-full p-6 ring-1">
                     <h3 className="font-ht-display text-ht-purple text-[15px] font-bold leading-snug">
                       {article.title}
                     </h3>

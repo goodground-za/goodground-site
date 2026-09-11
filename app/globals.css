@@ -18,14 +18,29 @@
 @theme {
   --color-ink: #010602; /* near-black, for text needing max contrast on a bright surface */
 
-  --radius-block: 40px;
+  /* 2026-09-11, rolling the homepage design out site-wide.
+
+     The homepage has no rounded SECTIONS — it is edge to edge, and a 40px
+     scallop on an inner-page panel was the loudest remaining tell that you had
+     left it. So radius-block is 0. radius-card stays 24px because that is
+     exactly what the homepage gives its own images (.project-image and
+     .intro-visual are both 1.5rem), and radius-pill stays because its buttons
+     are pills (100px). */
+  --radius-block: 0px;
   --radius-card: 24px;
   --radius-pill: 999px;
 
-  /* Shadows are tinted with the ink hue (rgb 1 6 2), not pure black, so they
-     sit slightly warm instead of greying everything out. */
-  --shadow-soft: 0 1px 2px rgb(1 6 2 / 0.05), 0 8px 24px -8px rgb(1 6 2 / 0.1);
-  --shadow-lift: 0 2px 4px rgb(1 6 2 / 0.06), 0 16px 40px -12px rgb(1 6 2 / 0.18);
+  /* The homepage has no drop shadows at all: it separates things with hairline
+     rules (rgba(17,17,17,.2)). These two tokens are therefore rings, not
+     shadows — a 1px hairline drawn at the element's own radius, with no blur
+     and no layout cost, so every existing `shadow-soft` card picks up the new
+     language without touching 27 call sites. `shadow-lift` is the same rule,
+     darker, for hover.
+
+     On a dark surface a dark hairline is invisible, which is correct: the
+     homepage's dark sections separate with white-line borders or nothing. */
+  --shadow-soft: 0 0 0 1px rgb(17 17 17 / 0.12);
+  --shadow-lift: 0 0 0 1px rgb(17 17 17 / 0.3);
 
   /* Strong custom easing curves (Emil Kowalski's craft bar — the built-in CSS
      ease-outs are too weak to feel intentional). --ease-out is the default for
@@ -80,6 +95,18 @@
   --text-ht-body-lg: clamp(1.1rem, 1.6vw, 1.4rem);
   --text-ht-body: 1rem;
   --text-ht-label: 0.8125rem;
+}
+
+/*
+  One page gutter for the whole site.
+
+  The homepage's .wrap uses `clamp(1.25rem, 4.45vw, 5.5rem)` — 20px on a phone,
+  64px at 1440. Inner-page sections were on `px-6 sm:px-10` (24/40px), so a
+  hero's text started 24px further in than the section below it, on every page.
+  This is the same value, as a utility, so the two cannot drift.
+*/
+@utility px-gutter {
+  padding-inline: clamp(1.25rem, 4.45vw, 5.5rem);
 }
 
 @layer base {

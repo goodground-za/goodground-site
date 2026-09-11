@@ -4,7 +4,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BreadcrumbSchema } from "@/components/Breadcrumbs";
 import { LazyLoopVideo } from "@/components/LazyLoopVideo";
-import { MagneticButton } from "@/components/motion-gsap/MagneticButton";
 import { RevealSection, RevealStagger } from "@/components/motion-gsap/RevealSection";
 import { SplitWords } from "@/components/motion-gsap/SplitWords";
 import { caseStudies, caseStudyKindLabel, getCaseStudy, type CaseStudy, type GalleryImage } from "@/content/caseStudies";
@@ -51,7 +50,7 @@ function ImageRow({ images, cols }: { images: GalleryImage[]; cols: 2 | 3 | 4 })
     <RevealSection>
       <div className={`grid grid-cols-1 gap-6 ${gridCols}`}>
         {images.map((img) => (
-          <div key={img.src} className="rounded-card ring-ht-pink overflow-hidden bg-white ring-2">
+          <div key={img.src} className="rounded-card ring-ht-purple/12 overflow-hidden bg-white ring-1">
             <Image
               src={img.src}
               alt={img.alt}
@@ -102,7 +101,7 @@ function NewTemplateBody({ study }: { study: CaseStudy }) {
       </section>
 
       {/* ---------- Meta header ---------- */}
-      <section className="bg-ht-cream px-6 pt-10 pb-10 sm:px-10">
+      <section className="bg-ht-cream px-gutter pt-10 pb-10">
         <div className="mx-auto max-w-[1434px]">
           <RevealSection>
             <div className="flex flex-wrap items-start justify-between gap-x-10 gap-y-8">
@@ -141,7 +140,7 @@ function NewTemplateBody({ study }: { study: CaseStudy }) {
 
       {/* ---------- The Brief ---------- */}
       {(study.video || study.liveUrl) && (
-        <section className="bg-ht-cream px-6 pb-16 sm:px-10 md:pb-24">
+        <section className="bg-ht-cream px-gutter pb-16 md:pb-24">
           <div className="mx-auto max-w-[1434px]">
             {study.video ? (
               <RevealSection>
@@ -157,7 +156,7 @@ function NewTemplateBody({ study }: { study: CaseStudy }) {
                     ))}
                   </div>
                 ) : null}
-                <div className="rounded-block ring-ht-pink mt-7 overflow-hidden bg-white ring-2">
+                <div className="rounded-block ring-ht-purple/12 mt-7 overflow-hidden bg-white ring-1">
                   <LazyLoopVideo src={study.video.src} className="h-auto w-full" />
                 </div>
               </RevealSection>
@@ -179,7 +178,7 @@ function NewTemplateBody({ study }: { study: CaseStudy }) {
       )}
 
       {/* ---------- Snapshot ---------- */}
-      <section className="bg-ht-purple px-6 py-14 sm:px-10 md:py-20">
+      <section className="bg-ht-purple px-gutter py-14 md:py-20">
         <div className="mx-auto max-w-[1434px]">
           <h2 className="font-ht-display text-ht-pink text-[13px] font-bold tracking-[0.14em] uppercase">
             Snapshot
@@ -201,7 +200,7 @@ function NewTemplateBody({ study }: { study: CaseStudy }) {
 
       {/* ---------- Image pair ---------- */}
       {galleries.pair && galleries.pair.length > 0 && (
-        <section className="bg-ht-cream px-6 py-16 sm:px-10 md:py-24">
+        <section className="bg-ht-cream px-gutter py-16 md:py-24">
           <div className="mx-auto max-w-[1434px]">
             <ImageRow images={galleries.pair} cols={2} />
           </div>
@@ -209,7 +208,7 @@ function NewTemplateBody({ study }: { study: CaseStudy }) {
       )}
 
       {/* ---------- The Challenge / The Solution (intro) ---------- */}
-      <section className={`bg-ht-cream px-6 sm:px-10 ${galleries.pair ? "pb-16 md:pb-24" : "py-16 md:py-24"}`}>
+      <section className={`bg-ht-cream px-gutter ${galleries.pair ? "pb-16 md:pb-24" : "py-16 md:py-24"}`}>
         <div className="mx-auto max-w-[1434px]">
           <div className="grid gap-12 md:grid-cols-2 md:gap-14">
             <RevealSection>
@@ -243,10 +242,10 @@ function NewTemplateBody({ study }: { study: CaseStudy }) {
 
       {/* ---------- Wide image ---------- */}
       {galleries.wide && (
-        <section className="bg-ht-cream px-6 pb-16 sm:px-10 md:pb-24">
+        <section className="bg-ht-cream px-gutter pb-16 md:pb-24">
           <div className="mx-auto max-w-[1434px]">
             <RevealSection>
-              <div className="rounded-block ring-ht-pink overflow-hidden bg-white ring-2">
+              <div className="rounded-block ring-ht-purple/12 overflow-hidden bg-white ring-1">
                 <Image
                   src={galleries.wide.src}
                   alt={galleries.wide.alt}
@@ -265,7 +264,7 @@ function NewTemplateBody({ study }: { study: CaseStudy }) {
 
       {/* ---------- Image row ---------- */}
       {galleries.row && galleries.row.length > 0 && (
-        <section className="bg-ht-cream px-6 pb-16 sm:px-10 md:pb-24">
+        <section className="bg-ht-cream px-gutter pb-16 md:pb-24">
           <div className="mx-auto max-w-[1434px]">
             <ImageRow images={galleries.row} cols={3} />
           </div>
@@ -273,7 +272,7 @@ function NewTemplateBody({ study }: { study: CaseStudy }) {
       )}
 
       {/* ---------- Solution detail blocks ---------- */}
-      <section className="bg-white px-6 py-16 sm:px-10 md:py-24">
+      <section className="bg-white px-gutter py-16 md:py-24">
         <div className="mx-auto grid max-w-[1434px] gap-x-14 gap-y-14 md:grid-cols-2 md:gap-y-20">
           {study.solution.map((block) => (
             <RevealSection key={block.heading}>
@@ -294,7 +293,7 @@ function NewTemplateBody({ study }: { study: CaseStudy }) {
 
       {/* ---------- Image grid ---------- */}
       {galleries.grid && galleries.grid.length > 0 && (
-        <section className="bg-white px-6 pb-16 sm:px-10 md:pb-24">
+        <section className="bg-white px-gutter pb-16 md:pb-24">
           <div className="mx-auto max-w-[1434px]">
             <ImageRow images={galleries.grid} cols={4} />
           </div>
@@ -311,7 +310,7 @@ function OriginalTemplateBody({ study }: { study: CaseStudy }) {
   return (
     <>
       {/* ---------- Headline ---------- */}
-      <section className="bg-ht-cream px-6 pt-16 pb-10 sm:px-10 md:pt-24">
+      <section className="bg-ht-cream px-gutter pt-16 pb-10 md:pt-24">
         <div className="mx-auto max-w-[1434px]">
           <RevealSection>
             <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
@@ -339,10 +338,10 @@ function OriginalTemplateBody({ study }: { study: CaseStudy }) {
       </section>
 
       {/* ---------- Hero image ---------- */}
-      <section className="bg-ht-cream px-6 pb-14 sm:px-10">
+      <section className="bg-ht-cream px-gutter pb-14">
         <div className="mx-auto max-w-[1434px]">
           <RevealSection>
-            <div className="rounded-block ring-ht-pink overflow-hidden bg-white ring-2">
+            <div className="rounded-block ring-ht-purple/12 overflow-hidden bg-white ring-1">
               <Image
                 src={study.image}
                 alt={study.imageAlt}
@@ -371,7 +370,7 @@ function OriginalTemplateBody({ study }: { study: CaseStudy }) {
       </section>
 
       {/* ---------- Snapshot ---------- */}
-      <section className="bg-ht-purple px-6 py-14 sm:px-10 md:py-20">
+      <section className="bg-ht-purple px-gutter py-14 md:py-20">
         <div className="mx-auto max-w-[1434px]">
           <h2 className="font-ht-display text-ht-pink text-[13px] font-bold tracking-[0.14em] uppercase">
             Snapshot
@@ -395,7 +394,7 @@ function OriginalTemplateBody({ study }: { study: CaseStudy }) {
       </section>
 
       {/* ---------- The Challenge ---------- */}
-      <section className="bg-ht-cream px-6 py-16 sm:px-10 md:py-24">
+      <section className="bg-ht-cream px-gutter py-16 md:py-24">
         <div className="mx-auto max-w-[1434px]">
           <RevealSection>
             <h2 className="font-ht-display text-ht-purple text-[clamp(1.6rem,3vw,2.4rem)] leading-tight font-bold">
@@ -413,7 +412,7 @@ function OriginalTemplateBody({ study }: { study: CaseStudy }) {
       </section>
 
       {/* ---------- The Solution ---------- */}
-      <section className="bg-white px-6 py-16 sm:px-10 md:py-24">
+      <section className="bg-white px-gutter py-16 md:py-24">
         <div className="mx-auto max-w-[1434px]">
           <RevealSection>
             <h2 className="font-ht-display text-ht-purple text-[clamp(1.6rem,3vw,2.4rem)] leading-tight font-bold">
@@ -459,8 +458,8 @@ function OriginalTemplateBody({ study }: { study: CaseStudy }) {
                       <div
                         className={
                           block.imageFit === "phone"
-                            ? "rounded-card ring-ht-pink mx-auto w-full max-w-[220px] overflow-hidden bg-white ring-2 sm:max-w-[240px]"
-                            : "rounded-card ring-ht-pink overflow-hidden bg-white ring-2"
+                            ? "rounded-card ring-ht-purple/12 mx-auto w-full max-w-[220px] overflow-hidden bg-white ring-1 sm:max-w-[240px]"
+                            : "rounded-card ring-ht-purple/12 overflow-hidden bg-white ring-1"
                         }
                       >
                         <Image
@@ -527,7 +526,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
       {isNewTemplate ? <NewTemplateBody study={study} /> : <OriginalTemplateBody study={study} />}
 
       {/* ---------- The Results ---------- */}
-      <section className="bg-ht-purple px-6 py-16 sm:px-10 md:py-24">
+      <section className="bg-ht-purple px-gutter py-16 md:py-24">
         <div className="mx-auto max-w-[1434px]">
           <RevealSection>
             <h2 className="font-ht-display text-[clamp(1.6rem,3vw,2.4rem)] leading-tight font-bold text-white">
@@ -563,38 +562,34 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
       </section>
 
       {/* ---------- Call to action ----------
-          pb-[24vw]: last section before the footer's CloudDivider, which scales
-          with viewport width and will otherwise swallow this block. Same
-          reservation every other page here makes. */}
-      <section className="bg-ht-cream px-6 pt-16 pb-[24vw] sm:px-10 md:pt-24">
-        <div className="mx-auto max-w-[1434px] text-center">
-          <RevealSection>
-            <h2 className="font-ht-display text-ht-purple mx-auto max-w-[20ch] text-[clamp(1.7rem,3.4vw,2.6rem)] leading-tight font-bold">
-              Want a website like this?
-            </h2>
-            <p className="text-ht-purple/70 mx-auto mt-4 max-w-[52ch] text-[16px] leading-[1.7]">
-              Tell us what you sell and who you sell it to. We will tell you honestly whether a new
-              site is the thing that will move the needle.
-            </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <MagneticButton>
-                <Link
-                  href="/start-project"
-                  className="font-ht-display bg-ht-orange text-ink rounded-pill inline-block px-7 py-3.5 text-[14px] font-bold tracking-wide uppercase transition-transform duration-200 hover:scale-[1.03] active:scale-[0.97]"
-                >
-                  Start Your Project
+          Closing padding before the footer. Was pb-[24vw], reserving room
+          for the old footer's CloudDivider scallop; that footer was replaced
+          by HomeFooter on 2026-09-11 and the reservation became 345px of dead
+          cream on every page. */}
+      <div className="home-2026">
+        <section className="section-light section-pad">
+          <div className="wrap">
+            <div className="work-next work-next--bare">
+              <div>
+                <h2>Want a website like this?</h2>
+                <p>
+                  Tell us what you sell and who you sell it to. We will tell you honestly whether a
+                  new site is the thing that will move the needle.
+                </p>
+                <Link className="text-link" href="/work">
+                  See all work <span aria-hidden="true">{"\u2197\ufe0e"}</span>
                 </Link>
-              </MagneticButton>
-              <Link
-                href="/work"
-                className="font-ht-display text-ht-purple border-ht-purple/25 rounded-pill inline-block border-2 px-7 py-3.5 text-[14px] font-bold tracking-wide uppercase"
-              >
-                See all work
+              </div>
+              <Link className="button button-orange" href="/start-project">
+                <span>Start your project</span>
+                <span className="button-arrow" aria-hidden="true">
+                  {"\u2197\ufe0e"}
+                </span>
               </Link>
             </div>
-          </RevealSection>
-        </div>
-      </section>
+          </div>
+        </section>
+      </div>
     </>
   );
 }

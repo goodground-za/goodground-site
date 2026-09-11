@@ -46,11 +46,11 @@ export default function ContactPage() {
         intro="Tell us a bit about your business and what you're hoping to build. We'll come back to you with next steps and a fixed price, split however you'd like to pay it."
       />
 
-      {/* pb-[24vw]: reserves room for the footer's CloudDivider, which scales
-          with viewport width to keep its circles round — a fixed padding
-          would leave the bumps burying this section's content on wide
-          screens (same reasoning as CTABand). */}
-      <section className="bg-ht-cream px-6 pt-16 pb-[24vw] sm:px-10 md:pt-24">
+      {/* Closing padding before the footer. Was pb-[24vw], reserving room
+          for the old footer's CloudDivider scallop; that footer was replaced
+          by HomeFooter on 2026-09-11 and the reservation became 345px of dead
+          cream on every page. */}
+      <section className="bg-ht-cream px-gutter pt-16 pb-20 md:pb-28 md:pt-24">
         <div className="mx-auto grid max-w-[1434px] gap-6 lg:grid-cols-12 lg:gap-8">
           <div className="min-w-0 lg:col-span-7">
             <ContactForm />

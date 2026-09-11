@@ -17,16 +17,16 @@ import { balanceFor, depositFor, monthlyInstalmentFor, packages, packagesFootnot
  */
 export function PricingPackages({ onSelectPackage }: { onSelectPackage: (config: SelectedConfig) => void }) {
   return (
-    <section id="packages" className="bg-ht-cream scroll-mt-24 px-6 py-16 sm:px-10 md:py-24">
+    <section id="packages" className="bg-ht-cream scroll-mt-24 px-gutter py-16 md:py-24">
       <div className="mx-auto max-w-[1434px]">
-        <RevealSection className="text-center">
+        <RevealSection>
           <p className="font-ht-display text-ht-purple text-[13px] font-bold tracking-[0.15em] uppercase">
             Fixed packages
           </p>
-          <h2 className="font-ht-display text-ht-purple mx-auto mt-6 max-w-[22ch] text-[clamp(1.75rem,4vw,3rem)] leading-[1.08] font-bold uppercase">
+          <h2 className="font-ht-display text-ht-purple mt-6 max-w-[22ch] text-[clamp(1.75rem,4vw,3rem)] leading-[1.08] font-bold uppercase">
             Four starting points. Pick the one closest to your brief.
           </h2>
-          <p className="text-ht-purple/70 mx-auto mt-5 max-w-[56ch] text-[16px] leading-[1.65]">
+          <p className="text-ht-purple/70 mt-5 max-w-[56ch] text-[16px] leading-[1.65]">
             Every package is a fixed, one-time price — no surprise line items. Pay a 50% deposit now
             and the rest on completion, or split it into 12 monthly instalments. Need something in
             between? Add to any package from the à la carte menu below.
@@ -40,10 +40,10 @@ export function PricingPackages({ onSelectPackage }: { onSelectPackage: (config:
               <HoverCard
                 key={pkg.slug}
                 as="div"
-                className={`rounded-card relative flex h-full flex-col bg-white p-6 ring-2 sm:p-7 ${
+                className={`rounded-card relative flex h-full flex-col bg-white p-6 ring-1 sm:p-7 ${
                   recommended
-                    ? "ring-ht-orange shadow-[0_14px_0_0_var(--color-ht-orange)]"
-                    : "ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)]"
+                    ? "ring-ht-orange"
+                    : "ring-ht-purple/12"
                 }`}
               >
                 {/* Border trail on the recommended card only.
@@ -122,7 +122,7 @@ export function PricingPackages({ onSelectPackage }: { onSelectPackage: (config:
         </RevealStagger>
 
         <RevealSection delay={0.1}>
-          <p className="text-ht-purple/70 mx-auto mt-10 max-w-[70ch] text-center text-[13px] leading-[1.6]">
+          <p className="text-ht-purple/70 mt-10 max-w-[70ch] text-[13px] leading-[1.6]">
             {packagesFootnote}
           </p>
         </RevealSection>

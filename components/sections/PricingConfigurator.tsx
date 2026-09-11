@@ -80,24 +80,24 @@ export function PricingConfigurator({ onQuoteRequest }: { onQuoteRequest: (confi
   };
 
   return (
-    <section ref={sectionRef} id="build-your-own" className="bg-ht-cream scroll-mt-24 px-6 pt-16 pb-28 sm:px-10 md:pt-20 lg:pb-16">
+    <section ref={sectionRef} id="build-your-own" className="bg-ht-cream scroll-mt-24 px-gutter pt-16 pb-28 md:pt-20 lg:pb-16">
       <div className="mx-auto max-w-[1434px]">
-        <RevealSection className="text-center">
+        <RevealSection>
           <p className="font-ht-display text-ht-purple text-[13px] font-bold tracking-[0.15em] uppercase">
             Build your own
           </p>
-          <h2 className="font-ht-display text-ht-purple mx-auto mt-6 max-w-[24ch] text-[clamp(1.75rem,4vw,3rem)] leading-[1.08] font-bold uppercase">
+          <h2 className="font-ht-display text-ht-purple mt-6 max-w-[24ch] text-[clamp(1.75rem,4vw,3rem)] leading-[1.08] font-bold uppercase">
             Prefer full control? Pick a starting point and add exactly what you need.
           </h2>
-          <p className="text-ht-purple/70 mx-auto mt-5 max-w-[56ch] text-[16px] leading-[1.65]">
+          <p className="text-ht-purple/70 mt-5 max-w-[56ch] text-[16px] leading-[1.65]">
             Every build starts from the same base and grows from there. Add what your business needs,
-            watch the total update live, and send it through when you're ready.
+            watch the total update live, and send it through when you’re ready.
           </p>
         </RevealSection>
 
         <div className="mt-12 grid gap-8 lg:grid-cols-12 lg:items-start lg:gap-10">
           <div className="min-w-0 lg:col-span-7">
-            <div className="rounded-card ring-ht-purple/15 mb-5 bg-white p-5 ring-2 sm:p-6">
+            <div className="rounded-card ring-ht-purple/15 mb-5 bg-white p-5 ring-1 sm:p-6">
               <div className="flex items-center justify-between gap-4">
                 <div>
                   <p className="font-ht-display text-ht-purple text-[15px] font-bold">{baseBuildFee.label}</p>
@@ -224,7 +224,7 @@ function CategoryAccordion({
   }, [isOpen]);
 
   return (
-    <div className="rounded-card ring-ht-pink shadow-[0_10px_0_0_var(--color-ht-pink)] overflow-hidden bg-white ring-2">
+    <div className="rounded-card ring-ht-purple/12 overflow-hidden bg-white ring-1">
       <h3>
         <button
           type="button"
@@ -331,7 +331,7 @@ function SummaryPanel({
   compact?: boolean;
 }) {
   return (
-    <div className={`rounded-block ring-ht-purple shadow-[0_14px_0_0_var(--color-ht-purple)] bg-white p-6 ring-2 sm:p-7 ${compact ? "shadow-none ring-0 p-0" : ""}`}>
+    <div className={`rounded-block ring-ht-purple bg-white p-6 ring-1 sm:p-7 ${compact ? "shadow-none ring-0 p-0" : ""}`}>
       <p className="font-ht-display text-ht-purple text-[13px] font-bold tracking-[0.1em] uppercase">
         Your configuration
       </p>
@@ -388,7 +388,7 @@ function SummaryPanel({
 
       {nudge?.type === "exceeds" ? (
         <p className="bg-ht-cream text-ht-purple/80 rounded-card mt-5 p-3.5 text-[13px] leading-[1.5]">
-          This is now a bigger scope than our largest package. Send it through and we'll talk you
+          This is now a bigger scope than our largest package. Send it through and we’ll talk you
           through it directly.
         </p>
       ) : null}

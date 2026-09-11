@@ -31,7 +31,7 @@ export default function FAQPage() {
         intro="Answered plainly, below. No chatbot, no call centre, just a straight answer or an honest admission that we haven't settled something yet."
       />
 
-      <FAQAccordion className="mt-8 sm:mt-12" />
+      <FAQAccordion />
       <CTABand />
     </>
   );

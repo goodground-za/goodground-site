@@ -6,9 +6,9 @@ import { growthBenefits } from "@/content/growth-benefits";
 /** Ads copy deck §4 ("Why it works for small businesses"), as a dark card grid. */
 export function GrowthBenefits() {
   return (
-    <section className="px-6 py-8 sm:px-10">
+    <section className="px-gutter py-8">
       <div className="bg-ht-purple rounded-block mx-auto max-w-[1434px] overflow-hidden">
-        <div className="px-6 py-14 sm:px-10 md:px-14 md:py-20">
+        <div className="px-gutter py-14 md:px-14 md:py-20">
           <RevealSection>
             <p className="font-ht-display text-ht-pink text-[13px] font-bold tracking-[0.15em] uppercase">Why it works</p>
           </RevealSection>

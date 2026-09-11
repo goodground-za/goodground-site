@@ -5,7 +5,6 @@ import { BreadcrumbSchema } from "@/components/Breadcrumbs";
 import { PageHero } from "@/components/PageHero";
 import { ParableLink } from "@/components/ParableModal";
 import { HoverCard } from "@/components/motion-gsap/HoverCard";
-import { MagneticButton } from "@/components/motion-gsap/MagneticButton";
 import { RevealSection, RevealStagger } from "@/components/motion-gsap/RevealSection";
 import { SplitWords } from "@/components/motion-gsap/SplitWords";
 import { process } from "@/content/process";
@@ -43,11 +42,15 @@ export default function AboutPage() {
     <>
       <BreadcrumbSchema trail={[{ name: "About", path: "/about" }]} />
 
-      <PageHero eyebrow="About GoodGround" title="We believe every business deserves a strong foundation.">
+      <PageHero
+        video
+        eyebrow="About GoodGround"
+        title="We believe every business deserves a strong foundation."
+      >
         {/* Names the real town rather than just "South Africa" (SEO audit
             2026-08-16, item 19) — a genuine local anchor alongside the
             national positioning the rest of this page argues for. */}
-        <div className="mt-4 flex justify-center">
+        <div className="mt-6 flex">
           <span className="font-ht-body text-[13px] font-medium text-white/60">
             Founded 2026 · George, South Africa
           </span>
@@ -56,7 +59,7 @@ export default function AboutPage() {
 
       {/* Founder story, paired with a portrait card in the same hard-shadow
           language as every other card on the site. */}
-      <section className="bg-ht-cream px-6 py-16 sm:px-10 md:py-24">
+      <section className="bg-ht-cream px-gutter py-16 md:py-24">
         <div className="mx-auto grid max-w-[1434px] items-center gap-12 lg:grid-cols-12 lg:gap-16">
           <RevealSection className="min-w-0 lg:col-span-7">
             <div className="text-ht-purple max-w-[46ch] space-y-4 text-[clamp(1rem,1.3vw,1.15rem)] leading-[1.65]">
@@ -80,7 +83,7 @@ export default function AboutPage() {
           </RevealSection>
 
           <RevealSection delay={0.08} className="min-w-0 lg:col-span-5">
-            <div className="rounded-card ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] relative aspect-[4/5] w-full overflow-hidden ring-2">
+            <div className="rounded-card ring-ht-purple/12 relative aspect-[4/5] w-full overflow-hidden ring-1">
               <Image
                 src="/images/about-founder.png"
                 alt="Two GoodGround creatives reviewing work together"
@@ -100,9 +103,9 @@ export default function AboutPage() {
           CTABand/GrowthBenefits) rather than a full-bleed section, so the
           rounded corners are actually visible against the cream sections
           above and below it. */}
-      <section className="bg-ht-cream relative z-10 px-6 py-8 sm:px-10">
+      <section className="bg-ht-cream relative z-10 px-gutter py-8">
         <div className="bg-ht-purple rounded-block mx-auto max-w-[1434px] overflow-hidden">
-          <div className="grid gap-10 px-6 py-16 sm:px-10 md:py-24 lg:grid-cols-12 lg:gap-14">
+          <div className="grid gap-10 px-gutter py-16 md:py-24 lg:grid-cols-12 lg:gap-14">
             <div className="min-w-0 lg:col-span-4">
               <RevealSection>
                 <p className="font-ht-display text-ht-pink text-[13px] font-bold tracking-[0.15em] uppercase">
@@ -136,7 +139,7 @@ export default function AboutPage() {
 
       {/* What we believe — six one-line beliefs, kept as a numbered list
           (not a card grid, which would be six cards for the sake of it). */}
-      <section className="bg-ht-cream px-6 py-16 sm:px-10 md:py-24">
+      <section className="bg-ht-cream px-gutter py-16 md:py-24">
         <div className="mx-auto grid max-w-[1434px] gap-10 lg:grid-cols-12 lg:gap-14">
           <div className="min-w-0 lg:col-span-4">
             <div className="lg:sticky lg:top-28">
@@ -169,7 +172,7 @@ export default function AboutPage() {
       {/* How we work — same content/process.ts data as the homepage's
           Creative Process banner, recapped here as a compact grid rather
           than repeating the full-bleed photo treatment. */}
-      <section className="bg-ht-cream px-6 pb-16 sm:px-10 md:pb-24">
+      <section className="bg-ht-cream px-gutter pb-16 md:pb-24">
         <div className="mx-auto max-w-[1434px]">
           <RevealSection>
             <p className="font-ht-display text-ht-purple text-[13px] font-bold tracking-[0.15em] uppercase">How we work</p>
@@ -182,7 +185,7 @@ export default function AboutPage() {
             {process.map((step) => (
               <HoverCard
                 key={step.number}
-                className="bg-white ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] rounded-card p-6 ring-2"
+                className="bg-white ring-ht-purple/12 rounded-card p-6 ring-1"
               >
                 <p className="font-ht-display text-ht-crimson text-[13px] font-bold">{step.number}</p>
                 <h3 className="font-ht-display text-ht-purple mt-2 text-[16px] font-bold">{step.title}</h3>
@@ -209,40 +212,34 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Personal invitation. The copy deck gives this page its own closing,
-          so the shared CTA band would say the same thing twice. pb-[24vw]:
-          same reasoning as CTABand — reserves room for the footer's
-          CloudDivider, which scales with viewport width to keep its circles
-          round, so a fixed padding would leave the bumps burying this
-          card's shadow on wide screens. */}
-      <section className="bg-ht-cream px-6 pt-16 pb-[24vw] sm:px-10 md:pt-20">
-        <div className="mx-auto max-w-[1434px]">
-          <div className="bg-ht-orange rounded-block shadow-[0_14px_0_0_var(--color-ht-purple)] overflow-hidden">
-            <RevealSection className="px-6 py-14 text-center sm:px-10 md:px-14 md:py-16">
-              <div className="mx-auto max-w-[44ch]">
-                <SplitWords
-                  as="p"
-                  text="If you're building a business you plan to stick with for the long run, we'd like to hear about it."
-                  className="font-ht-display text-[clamp(1.5rem,3.2vw,2.5rem)] leading-[1.15] font-bold text-white"
-                />
-                <p className="text-ink mt-5 text-[16px] leading-relaxed">
-                  Get in touch, and let&rsquo;s talk about the ground you&rsquo;re building on.
-                </p>
-                <div className="mt-8">
-                  <MagneticButton>
-                    <Link
-                      href="/contact"
-                      className="font-ht-display bg-ht-cream text-ht-purple rounded-pill inline-block px-7 py-3.5 text-[14px] font-bold tracking-wide uppercase shadow-[0_12px_28px_-10px_rgba(0,0,0,0.35)] transition-transform duration-200 hover:scale-[1.03] active:scale-[0.97]"
-                    >
-                      Get in Touch
-                    </Link>
-                  </MagneticButton>
-                </div>
-              </div>
-            </RevealSection>
+      {/* Personal invitation. The copy deck gives this page its own closing, so
+          the shared CTA band would say the same thing twice.
+
+          Ink on orange, left-aligned, on the homepage's own .section-orange —
+          it was centred white-on-orange, which AGENTS.md rules out for text and
+          which was the last centred block on a page that is otherwise ranged
+          left throughout. */}
+      <div className="home-2026">
+        <section className="section-orange section-pad growth-cta" aria-labelledby="about-invite">
+          <div className="wrap">
+            <p className="eyebrow">An invitation</p>
+            <h2 className="display-heading reveal" id="about-invite">
+              If you’re building a business you plan to stick with, we’d like to hear about it
+            </h2>
+            <p className="growth-cta__lede reveal">
+              Get in touch, and let’s talk about the ground you’re building on.
+            </p>
+            <div className="growth-cta__actions">
+              <Link className="button button-white" href="/contact">
+                <span>Get in touch</span>
+                <span className="button-arrow" aria-hidden="true">
+                  {"↗︎"}
+                </span>
+              </Link>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </>
   );
 }

@@ -78,6 +78,7 @@ export default function ServicesPage() {
       <FAQSchema items={servicesFaqItems} id="services-faq" />
 
       <PageHero
+        video
         eyebrow="What we do"
         title="Websites built properly. Paid for sensibly."
         // Names the real town rather than just "South Africa" (SEO audit
@@ -86,8 +87,8 @@ export default function ServicesPage() {
         intro="We're a website development and maintenance studio based in George, working with businesses across South Africa. Every project we take on is designed, built, optimised for search, and supported after launch, as one connected process, not four separate line items. And every project offers a choice of how you pay for it."
       >
         {/* Jump index */}
-        <RevealSection delay={0.14} className="mt-8 flex justify-center">
-          <ul className="flex flex-wrap justify-center gap-2">
+        <RevealSection delay={0.14} className="mt-8 flex">
+          <ul className="flex flex-wrap gap-2">
             {services.map((s, i) => (
               <li key={s.slug}>
                 <Link
@@ -111,7 +112,7 @@ export default function ServicesPage() {
           heading this page jumped h1 → h3 and failed Lighthouse's
           heading-order audit. On the homepage WhatWeBuild supplies its own h2,
           which is why it only showed up here. */}
-      <div className="bg-ht-cream mx-auto max-w-[1434px] px-6 pt-14 sm:px-10 md:pt-20">
+      <div className="bg-ht-cream mx-auto max-w-[1434px] px-gutter pt-14 md:pt-20">
         <RevealSection>
           <h2 className="font-ht-display text-ht-purple max-w-[20ch] text-[clamp(1.75rem,4vw,3rem)] leading-[1.08] font-bold uppercase">
             Everything we build, in detail.
@@ -126,7 +127,7 @@ export default function ServicesPage() {
           only reachable from the homepage card grid, which split link
           equity between two competing hub pages and left this page with no
           path down to the six industry pages at all. */}
-      <div className="bg-ht-cream mx-auto max-w-[1434px] px-6 pt-16 sm:px-10 md:pt-24">
+      <div className="bg-ht-cream mx-auto max-w-[1434px] px-gutter pt-16 md:pt-24">
         <RevealSection>
           <p className="font-ht-display text-ht-purple text-[13px] font-bold tracking-[0.15em] uppercase">
             Who we build for
@@ -139,7 +140,7 @@ export default function ServicesPage() {
         <RevealStagger className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" y={16}>
           {industries.map((industry) => (
             <Link key={industry.title} href={industry.href} className="block">
-              <HoverCard className="bg-white ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] rounded-card h-full p-6 ring-2">
+              <HoverCard className="bg-white ring-ht-purple/12 rounded-card h-full p-6 ring-1">
                 <h3 className="font-ht-display text-ht-purple text-[16px] font-bold uppercase">
                   {industry.title}
                 </h3>
@@ -152,7 +153,7 @@ export default function ServicesPage() {
 
       <div className="bg-ht-cream">
         {services.some((s) => s.growth) ? (
-          <div className="mx-auto max-w-[1434px] px-6 sm:px-10">
+          <div className="mx-auto max-w-[1434px] px-gutter">
             <GrowthIntro />
             <GrowthProblem />
           </div>
@@ -164,9 +165,9 @@ export default function ServicesPage() {
         <GrowthCTA />
 
         {/* Payment recap */}
-        <section className="px-6 py-8 sm:px-10">
+        <section className="px-gutter py-8">
           <div className="bg-ht-purple rounded-block mx-auto max-w-[1434px] overflow-hidden">
-            <div className="grid gap-8 px-6 py-14 sm:px-10 md:grid-cols-12 md:items-center md:px-14 md:py-16">
+            <div className="grid gap-8 px-gutter py-14 md:grid-cols-12 md:items-center md:px-14 md:py-16">
               <div className="min-w-0 md:col-span-8">
                 <SplitWords
                   as="h2"
@@ -198,7 +199,7 @@ export default function ServicesPage() {
         {/* Contextual link into the blog. Before this the article had exactly one
             inbound link (the /insights listing), so nothing passed relevance to it
             from the commercial pages. */}
-        <section className="px-6 pb-4 sm:px-10">
+        <section className="px-gutter pb-4">
           <div className="mx-auto max-w-[1434px]">
             <p className="text-ht-purple/70 text-[15px] leading-[1.7]">
               Not sure a website is the right spend right now?{" "}
@@ -213,7 +214,7 @@ export default function ServicesPage() {
           </div>
         </section>
 
-        <FAQAccordion items={servicesFaqItems} heading="Questions about what we build." />
+        <FAQAccordion items={servicesFaqItems} eyebrow="FAQ" heading="Questions about what we build." />
         <CTABand />
       </div>
     </>

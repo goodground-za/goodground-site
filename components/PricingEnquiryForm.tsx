@@ -85,7 +85,7 @@ export function PricingEnquiryForm({ selectedConfig }: { selectedConfig: Selecte
   if (status === "success" || status === "mail") {
     return (
       <div
-        className="rounded-block ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] bg-white p-8 ring-2 sm:p-10"
+        className="rounded-block ring-ht-purple/12 bg-white p-8 ring-1 sm:p-10"
         role="status"
         aria-live="polite"
       >
@@ -110,7 +110,7 @@ export function PricingEnquiryForm({ selectedConfig }: { selectedConfig: Selecte
     <form
       onSubmit={onSubmit}
       noValidate
-      className="rounded-block ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] bg-white p-6 ring-2 sm:p-8 md:p-10"
+      className="rounded-block ring-ht-purple/12 bg-white p-6 ring-1 sm:p-8 md:p-10"
     >
       {selectedConfig ? (
         <div className="bg-ht-cream rounded-card mb-6 p-5">

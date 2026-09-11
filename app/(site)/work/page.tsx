@@ -3,8 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { BreadcrumbSchema } from "@/components/Breadcrumbs";
 import { PageHero } from "@/components/PageHero";
-import { MagneticButton } from "@/components/motion-gsap/MagneticButton";
-import { RevealSection, RevealStagger } from "@/components/motion-gsap/RevealSection";
 import { caseStudies, caseStudyKindLabel } from "@/content/caseStudies";
 import { pageSocialMeta } from "@/lib/metadata";
 
@@ -51,85 +49,109 @@ export default function WorkPage() {
         intro="Every case study here ends in numbers taken from the live site, each one with instructions for checking it yourself. Where a project was a concept build rather than client work, it says so at the top."
       />
 
-      {/* pb-[24vw]: reserves room for the footer's CloudDivider, which scales
-          with viewport width. Same reservation every other page here makes. */}
-      <section className="bg-ht-cream px-6 pt-16 pb-[24vw] sm:px-10 md:pt-24">
-        <div className="mx-auto max-w-[1434px]">
-          {caseStudies.length > 0 ? (
-            <RevealStagger className="grid gap-5 md:grid-cols-2 lg:grid-cols-3" y={16}>
-              {caseStudies.map((study, i) => (
-                <article
-                  key={study.slug}
-                  className="rounded-card ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] flex h-full flex-col overflow-hidden bg-white ring-2"
-                >
-                  <Link href={`/work/${study.slug}`} className="block">
-                    <Image
-                      src={study.image}
-                      alt={study.imageAlt}
-                      width={1440}
-                      height={900}
-                      // Only the first card in DOM order gets a loading hint;
-                      // this is a performance signal, not a visual ranking.
-                      // Every card below renders at identical size and weight.
-                      priority={i === 0}
-                      loading={i === 0 ? undefined : "lazy"}
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 450px"
-                      className="h-auto w-full"
-                    />
-                  </Link>
-                  <div className="flex flex-1 flex-col p-7">
-                    <div className="flex flex-wrap items-center gap-2 text-[13px] font-medium">
-                      <span className="bg-ht-orange/10 text-ht-crimson rounded-pill px-3 py-1 font-bold">
-                        {study.client}
-                      </span>
-                      <span className="border-ht-purple/20 text-ht-purple/70 rounded-pill border px-3 py-1">
-                        {caseStudyKindLabel(study.kind)}
-                      </span>
-                    </div>
-                    <h2 className="font-ht-display text-ht-purple mt-5 text-[clamp(1.15rem,2vw,1.45rem)] leading-tight font-bold">
-                      {study.title}
-                    </h2>
-                    <p className="text-ht-purple/70 mt-3 flex-1 text-[15px] leading-[1.6]">
-                      {study.summary}
-                    </p>
-                    <Link
-                      href={`/work/${study.slug}`}
-                      className="text-ht-crimson mt-6 inline-flex items-center gap-2 text-[14px] font-bold"
+      {/* The homepage's own project grid, driven by content/caseStudies.ts
+          rather than hand-written markup — same classes, same dark ground,
+          same staggered offset column, so the "View all" link on the homepage
+          lands somewhere that looks like where it came from. It used to be
+          three white cards in a row on cream. */}
+      <div className="home-2026">
+        <section className="work section-dark section-pad">
+          <div className="wrap">
+            {caseStudies.length > 0 ? (
+              <>
+                <div className="project-grid">
+                  {caseStudies.map((study, i) => (
+                    <article
+                      key={study.slug}
+                      /* Every other card drops down a column. It is the
+                         homepage's rhythm and it is purely visual — DOM order
+                         is still the order in caseStudies.ts, so nothing here
+                         ranks one project above another. */
+                      className={i % 2 === 1 ? "project project-offset reveal" : "project reveal"}
                     >
-                      Read the case study
-                      <span aria-hidden="true">→</span>
-                    </Link>
-                  </div>
-                </article>
-              ))}
-            </RevealStagger>
-          ) : (
-            /* Nothing published yet. Say so plainly rather than filling the
-               space with stock mock-ups or work that isn't ours. */
-            <RevealSection>
-              <div className="border-ht-purple/15 rounded-block border-2 border-dashed p-8 text-center sm:p-12">
-                <p className="font-ht-display text-ht-purple text-[clamp(1.15rem,2.2vw,1.6rem)] leading-snug font-bold">
-                  Case studies are landing here shortly.
-                </p>
-                <p className="text-ht-purple/70 mx-auto mt-3 max-w-[52ch] text-[15px] leading-[1.7]">
-                  We would rather show you the real thing once it is live than fill this space with
-                  stock mock-ups or work that isn&rsquo;t ours. Want to be one of the first?
-                </p>
-                <div className="mt-7">
-                  <MagneticButton>
-                    <Link
-                      href="/start-project"
-                      className="font-ht-display bg-ht-orange text-ink rounded-pill inline-block px-7 py-3.5 text-[14px] font-bold tracking-wide uppercase transition-transform duration-200 hover:scale-[1.03] active:scale-[0.97]"
-                    >
-                      Start Your Project
-                    </Link>
-                  </MagneticButton>
+                      <Link
+                        className="project-image project-image-wide"
+                        href={`/work/${study.slug}`}
+                        aria-label={`View the ${study.client} case study`}
+                      >
+                        <Image
+                          src={study.image}
+                          alt={study.imageAlt}
+                          width={1440}
+                          height={900}
+                          // A loading hint for the first card in DOM order.
+                          // This is a performance signal, not a ranking: every
+                          // card renders at the same size and weight.
+                          priority={i === 0}
+                          loading={i === 0 ? undefined : "lazy"}
+                          sizes="(max-width: 900px) 100vw, 46vw"
+                        />
+                        {/* The glyph comes from CSS, not a text node. As a
+                            text node it is the link's ONLY visible text, and
+                            WCAG 2.5.3 then wants the accessible name to
+                            contain it — Lighthouse flagged exactly that. A
+                            generated glyph is not visible text, so the
+                            aria-label stands on its own. Same arrow, same
+                            U+FE0E text selector, drawn in the stylesheet. */}
+                        <span className="project-open project-open--glyph" aria-hidden="true" />
+                      </Link>
+
+                      <div className="project-info">
+                        <h2>
+                          <Link href={`/work/${study.slug}`}>{study.client}</Link>
+                        </h2>
+                        <span className="project-kind">{caseStudyKindLabel(study.kind)}</span>
+                      </div>
+
+                      <div className="tags">
+                        {study.tags.map((tag) => (
+                          <span key={tag}>{tag}</span>
+                        ))}
+                      </div>
+
+                      <p className="project-description">{study.summary}</p>
+                    </article>
+                  ))}
                 </div>
+
+                <div className="work-next reveal">
+                  <div>
+                    <h2>Your project could be next</h2>
+                    <p>
+                      We’re a young studio and we’d rather show you real, testable work than pad
+                      this out with stock mock-ups.
+                    </p>
+                  </div>
+                  <Link className="button button-white" href="/start-project">
+                    <span>Start your project</span>
+                    <span className="button-arrow" aria-hidden="true">
+                      {"↗︎"}
+                    </span>
+                  </Link>
+                </div>
+              </>
+            ) : (
+              /* Nothing published yet. Say so plainly rather than filling the
+                 space with stock mock-ups or work that isn't ours. */
+              <div className="work-next">
+                <div>
+                  <h2>Case studies are landing here shortly</h2>
+                  <p>
+                    We would rather show you the real thing once it is live than fill this space
+                    with stock mock-ups or work that isn’t ours. Want to be one of the first?
+                  </p>
+                </div>
+                <Link className="button button-orange" href="/start-project">
+                  <span>Start your project</span>
+                  <span className="button-arrow" aria-hidden="true">
+                    {"↗︎"}
+                  </span>
+                </Link>
               </div>
-            </RevealSection>
-          )}
-        </div>
-      </section>
+            )}
+          </div>
+        </section>
+      </div>
     </>
   );
 }

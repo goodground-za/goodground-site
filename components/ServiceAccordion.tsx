@@ -61,7 +61,7 @@ export function ServiceAccordion({
 
 function CompactRow({ service, index }: { service: Service; index: number }) {
   return (
-    <div className="bg-ht-cream ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] rounded-card flex flex-col gap-4 p-6 ring-2 sm:flex-row sm:items-center sm:justify-between sm:p-7">
+    <div className="bg-ht-cream ring-ht-purple/12 rounded-card flex flex-col gap-4 p-6 ring-1 sm:flex-row sm:items-center sm:justify-between sm:p-7">
       <div className="flex items-start gap-4">
         <span className="font-ht-display text-ht-crimson text-[13px] font-bold tabular-nums">
           {String(index + 1).padStart(2, "0")}
@@ -132,7 +132,7 @@ function AccordionRow({
   }, [isOpen]);
 
   return (
-    <div id={service.slug} className="bg-ht-cream ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] rounded-card scroll-mt-28 overflow-hidden ring-2">
+    <div id={service.slug} className="bg-ht-cream ring-ht-purple/12 rounded-card scroll-mt-28 overflow-hidden ring-1">
       <h3>
         <button
           type="button"

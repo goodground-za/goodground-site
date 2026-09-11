@@ -87,10 +87,12 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
 
-      {/* Compact dark band (same nav-contrast role as PageHero) sized to the
-          article's own meta/title rather than a full generic hero, so the
-          long-form reading body below isn't preceded by a lot of purple. */}
-      <section className="bg-ht-purple relative z-10 rounded-b-[40px] px-6 pt-28 pb-14 sm:rounded-b-[56px] sm:px-10 sm:pt-32">
+      {/* Compact dark band, doing PageHero's job (clearing the header and giving
+          it something dark to sit on) but sized to the article's own meta and
+          title rather than a full generic hero, so a long read isn't preceded
+          by a screen of ink. Square, not scalloped, since 2026-09-11: nothing
+          on the homepage has a rounded section edge. */}
+      <section className="bg-ht-purple relative z-10 px-gutter pt-28 pb-14 sm:pt-32">
         <div className="mx-auto max-w-[760px]">
           <RevealSection>
             <Link href="/insights" className="inline-flex items-center gap-1.5 text-[14px] font-medium text-white/70 transition-colors hover:text-white">
@@ -120,8 +122,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
         </div>
       </section>
 
-      {/* pb-[24vw]: last section before the footer's CloudDivider. */}
-      <article className="bg-ht-cream px-6 pt-14 pb-[24vw] sm:px-10">
+      {/* Closing padding before the footer (was a CloudDivider reservation). */}
+      <article className="bg-ht-cream px-gutter pt-14 pb-20 md:pb-28">
         <div className="mx-auto max-w-[760px]">
           <div>
             {article.body.map((block, i) => (
@@ -157,16 +159,20 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           ) : null}
 
           {/* Soft CTA */}
-          <div className="bg-ht-orange rounded-block shadow-[0_14px_0_0_var(--color-ht-purple)] mt-14 overflow-hidden">
+          <div className="bg-ht-orange rounded-block mt-14 overflow-hidden">
             <div className="p-7 sm:p-10">
-              <h2 className="font-ht-display text-[clamp(1.35rem,3vw,2rem)] leading-tight font-bold text-white uppercase">
+              {/* Ink, not white. White on this orange is 3.86:1 — it would pass
+                  the 3:1 large-text bar on the heading alone, but AGENTS.md
+                  rules white TEXT off this orange entirely, and the homepage's
+                  own orange section is ink throughout.
+
+                  Full ink, not ink/80: /80 measured 4.88:1 against the old
+                  #fe431a and 4.48:1 against #f13e1b, which is under the bar.
+                  Full ink is 4.90:1. */}
+              <h2 className="font-ht-display text-ink text-[clamp(1.35rem,3vw,2rem)] leading-tight font-bold uppercase">
                 Ready to be found online?
               </h2>
-              {/* text-ink/80, not white/90: white/90 on this orange measures
-                  3.05:1, under the 4.5:1 AA bar at 15px normal. ink/80 is
-                  4.88:1. The heading above stays white — at 21.6px+ bold it
-                  clears WCAG's 3:1 large-text bar. */}
-              <p className="text-ink/80 mt-3 max-w-[46ch] text-[15px] leading-[1.6]">
+              <p className="text-ink mt-3 max-w-[46ch] text-[15px] leading-[1.6]">
                 We build fast, honest websites for South African small businesses, with a choice of
                 how you pay for them. Have a look at{" "}
                 <Link href="/services" className="underline underline-offset-4 hover:no-underline">
@@ -191,7 +197,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 </MagneticButton>
                 <Link
                   href="/pricing"
-                  className="text-ink/80 text-[14px] font-bold underline underline-offset-4 hover:no-underline"
+                  className="text-ink text-[14px] font-bold underline underline-offset-4 hover:no-underline"
                 >
                   Not ready yet? See how pricing works
                 </Link>

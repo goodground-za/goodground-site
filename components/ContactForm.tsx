@@ -76,7 +76,7 @@ export function ContactForm() {
   if (status === "success" || status === "mail") {
     return (
       <div
-        className="rounded-block ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] bg-white p-8 ring-2 sm:p-10"
+        className="rounded-block ring-ht-purple/12 bg-white p-8 ring-1 sm:p-10"
         role="status"
         aria-live="polite"
       >
@@ -101,7 +101,7 @@ export function ContactForm() {
     <form
       onSubmit={onSubmit}
       noValidate
-      className="rounded-block ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] bg-white p-6 ring-2 sm:p-8 md:p-10"
+      className="rounded-block ring-ht-purple/12 bg-white p-6 ring-1 sm:p-8 md:p-10"
     >
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label="Full Name" name="fullName" required error={errors.fullName} autoComplete="name" />

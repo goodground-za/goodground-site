@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { MagneticButton } from "@/components/motion-gsap/MagneticButton";
-import { RevealSection } from "@/components/motion-gsap/RevealSection";
-import { SplitWords } from "@/components/motion-gsap/SplitWords";
+import { PageHero } from "@/components/PageHero";
+import { SiteShell } from "@/components/home2026/SiteShell";
 import { navLinks } from "@/content/site";
 
 /**
@@ -20,72 +19,62 @@ export const metadata: Metadata = {
 };
 
 /**
- * 404. Copy verbatim from the copy deck §5. Rendered inside the root layout, so
- * nav and footer are already present; this is just the panel. Given a warm
- * branded treatment rather than a cold error, with links out so it's useful.
- * pb-[24vw] reserves room for the footer's CloudDivider (same reasoning as
- * CTABand), since this is the only section on the page.
+ * 404. Copy verbatim from the copy deck §5, given a branded treatment rather
+ * than a cold error, with links out so it is actually useful.
+ *
+ * It renders SiteShell itself. app/not-found.tsx sits at the app root, outside
+ * the (site) route group, so it gets the root layout and NO group layout —
+ * which is how it quietly lost its header and footer when the route group was
+ * introduced. Rendering the shell here is what keeps them.
  */
 export default function NotFound() {
   return (
-    <div className="bg-ht-cream pb-[24vw]">
-      <section className="bg-ht-purple relative z-10 rounded-b-[40px] px-6 pt-28 pb-16 text-center sm:rounded-b-[56px] sm:px-10 sm:pt-32 sm:pb-20">
-        <div className="mx-auto max-w-[900px]">
-          <RevealSection>
-            <p className="font-ht-display text-ht-pink text-[13px] font-bold tracking-[0.15em] uppercase">404</p>
-          </RevealSection>
-
-          <SplitWords
-            as="h1"
-            text="This page hasn't taken root."
-            trigger="mount"
-            className="font-ht-display mx-auto mt-4 max-w-[20ch] text-[clamp(2.25rem,5.5vw,4rem)] leading-[1.05] font-bold text-white uppercase"
-          />
-
-          <RevealSection delay={0.1} className="mt-6">
-            <p className="mx-auto max-w-[46ch] text-[clamp(1rem,1.4vw,1.2rem)] leading-[1.6] text-white/75">
-              The page you&rsquo;re looking for doesn&rsquo;t exist &mdash; but the rest of GoodGround does.
-            </p>
-
-            <div className="mt-10 flex flex-wrap justify-center gap-3">
-              <MagneticButton>
-                <Link
-                  href="/"
-                  className="font-ht-display bg-ht-cream text-ht-purple rounded-pill inline-block px-7 py-3.5 text-[14px] font-bold tracking-wide uppercase shadow-[0_12px_28px_-10px_rgba(0,0,0,0.35)] transition-transform duration-200 hover:scale-[1.03] active:scale-[0.97]"
-                >
-                  Back to Home →
-                </Link>
-              </MagneticButton>
-              <MagneticButton>
-                <Link
-                  href="/start-project"
-                  className="font-ht-display rounded-pill inline-block border-2 border-white px-7 py-3.5 text-[14px] font-bold tracking-wide text-white uppercase transition-transform duration-200 hover:scale-[1.03] active:scale-[0.97]"
-                >
-                  Start Your Project
-                </Link>
-              </MagneticButton>
-            </div>
-
-            <nav aria-label="Popular pages" className="border-white/15 mt-12 border-t pt-6">
-              <p className="text-[13px] font-medium tracking-[0.12em] text-white/50 uppercase">
-                Or head somewhere useful
-              </p>
-              <ul className="mt-4 flex flex-wrap justify-center gap-2">
-                {navLinks.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="rounded-pill border-white/20 hover:border-white/50 inline-block border px-4 py-2 text-[14px] font-medium text-white/85 transition-colors duration-150 hover:text-white"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          </RevealSection>
+    <SiteShell>
+      <PageHero
+        eyebrow="Error 404"
+        title="This page hasn't taken root"
+        intro={
+          <>
+            The page you&rsquo;re looking for doesn&rsquo;t exist &mdash; but the rest of
+            GoodGround does.
+          </>
+        }
+      >
+        {/* PageHero already renders its children inside .home-2026, so the
+            homepage’s own .button classes resolve here. */}
+        <div className="mt-10 flex flex-wrap gap-3">
+          <Link className="button button-orange" href="/">
+            <span>Back to home</span>
+            <span className="button-arrow" aria-hidden="true">
+              {"↗︎"}
+            </span>
+          </Link>
+          <Link className="button button-white" href="/start-project">
+            <span>Start your project</span>
+            <span className="button-arrow" aria-hidden="true">
+              {"↗︎"}
+            </span>
+          </Link>
         </div>
-      </section>
-    </div>
+
+        <nav aria-label="Popular pages" className="mt-12 border-t border-white/15 pt-6">
+          <p className="font-ht-body text-[13px] font-medium tracking-[0.12em] text-white/60 uppercase">
+            Or head somewhere useful
+          </p>
+          <ul className="mt-4 flex flex-wrap gap-2">
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className="font-ht-body rounded-pill inline-block border border-white/25 px-4 py-2 text-[14px] font-medium text-white/85 transition-colors duration-150 hover:border-white hover:text-white"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </PageHero>
+    </SiteShell>
   );
 }

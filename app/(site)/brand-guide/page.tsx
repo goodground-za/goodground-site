@@ -27,15 +27,15 @@ function Section({
   title: string;
   eyebrow: string;
   children: React.ReactNode;
-  /** Reserves room for the footer's CloudDivider scallop (see Footer.tsx). */
+  /** Closing padding on the final section, before the footer. */
   last?: boolean;
 }) {
   return (
     <section
       id={id}
-      className={`scroll-mt-28 border-t border-ht-purple/10 pt-16 md:pt-20 ${last ? "pb-[24vw]" : "py-16 md:py-20"}`}
+      className={`scroll-mt-28 border-t border-ht-purple/10 pt-16 md:pt-20 ${last ? "pb-20 md:pb-28" : "py-16 md:py-20"}`}
     >
-      <div className="mx-auto max-w-[1200px] px-6 sm:px-10">
+      <div className="mx-auto max-w-[1200px] px-gutter">
         <RevealSection>
           <Eyebrow>{eyebrow}</Eyebrow>
           <h2 className="font-ht-display text-ht-purple mt-3 max-w-[24ch] text-[clamp(1.75rem,3.5vw,2.75rem)] leading-[1.1] font-bold uppercase">
@@ -94,7 +94,7 @@ const jumpLinks = [
   { href: "#type", label: "Typography" },
   { href: "#layout", label: "Layout & Spacing" },
   { href: "#buttons", label: "Buttons" },
-  { href: "#shadow", label: "Shadow & Elevation" },
+  { href: "#shadow", label: "Edges" },
   { href: "#motion", label: "Motion" },
   { href: "#voice", label: "Voice & Tone" },
   { href: "#a11y", label: "Accessibility" },
@@ -108,7 +108,7 @@ export default function BrandGuidePage() {
         title="GoodGround Brand Guide"
         intro="The single source of truth for GoodGround's visual identity: color, type, spacing, components, motion, and voice, as actually implemented on this site, not an aspirational moodboard."
       >
-        <nav aria-label="Brand guide sections" className="mt-8 flex flex-wrap justify-center gap-2">
+        <nav aria-label="Brand guide sections" className="mt-8 flex flex-wrap gap-2">
           {jumpLinks.map((link) => (
             <a
               key={link.href}
@@ -223,33 +223,34 @@ export default function BrandGuidePage() {
           <Swatch
             name="ht-orange"
             token="--color-ht-orange"
-            hex="#fe431a"
-            usage="Primary action color: buttons, active nav pill, key section backgrounds. White text on it is 3.48:1, large/bold text only."
+            hex="#f13e1b"
+            usage="Primary action colour: buttons and key section backgrounds. Text on it is ALWAYS ink, 4.90:1. White on it is 3.86:1 and is never used for text, only for icons."
+            textClassName="text-ink"
           />
           <Swatch
             name="ht-purple"
             token="--color-ht-purple"
-            hex="#2e1848"
-            usage="Dark section backgrounds, footer, headings on cream. White on it is 11.7:1, safe for body copy."
+            hex="#111111"
+            usage="Ink, despite the name. Dark sections, the footer, and headings on paper. White on it is 18.9:1. The name is a stable identifier kept from the previous palette, not a description of the colour."
           />
           <Swatch
             name="ht-pink"
             token="--color-ht-pink"
-            hex="#fe9dd2"
-            usage="CTA band backgrounds, card glow/border accents, eyebrow text on dark surfaces."
-            textClassName="text-ht-purple"
+            hex="#f13e1b"
+            usage="An alias of ht-orange. This design has no pink. The token survives because around twenty call sites name it, and repointing it was one edit where renaming it was twenty."
+            textClassName="text-ink"
           />
           <Swatch
             name="ht-crimson"
             token="--color-ht-crimson"
-            hex="#ac3026"
-            usage="Depth/shadow under orange elements, hover states, inactive nav-pill text on white."
+            hex="#bc3116"
+            usage="A darker orange for prose links and hover states on paper, where ht-orange itself is 3.59:1 and cannot carry body text."
           />
           <Swatch
             name="ht-cream"
             token="--color-ht-cream"
-            hex="#fbf7ec"
-            usage="Base page background. Purple on it is 11.7:1."
+            hex="#f7f7f4"
+            usage="Paper. The base page background. Ink on it is 17.6:1."
             textClassName="text-ht-purple"
           />
           <Swatch
@@ -261,7 +262,7 @@ export default function BrandGuidePage() {
         </div>
         <p className="font-ht-body text-ht-purple/70 mt-6 text-[13px] leading-[1.6]">
           Hex values are the client-supplied palette, used exactly as given. Do not adjust for
-          "better" contrast without checking with Johandre first. Contrast ratios above are checked
+          “better” contrast without checking with Johandre first. Contrast ratios above are checked
           against WCAG AA (4.5:1 body text, 3:1 large/bold text ≥ 18px).
         </p>
       </Section>
@@ -271,23 +272,27 @@ export default function BrandGuidePage() {
           <div className="rounded-card bg-ht-cream shadow-soft p-6">
             <p className="font-ht-display text-ht-purple text-[13px] font-bold uppercase">Display / Headings</p>
             <p className="font-ht-display text-ht-purple mt-3 text-[32px] leading-[1.05] font-bold uppercase">
-              Parkinsans
+              Oswald
             </p>
             <p className="font-ht-body text-ht-purple/70 mt-2 text-[13px]">
-              SemiBold (600) and Bold (700). Google Font, loaded via{" "}
-              <code className="text-[12px]">next/font/google</code>. <code className="text-[12px]">--font-ht-display</code>.
-              Applied to every h1–h4, buttons, nav labels, eyebrows. Letter-spacing -0.02em,{" "}
-              <code className="text-[12px]">text-wrap: balance</code> on headings. Social cards render from a
-              static Bold instance at <code className="text-[12px]">app/_og/Parkinsans-Bold.ttf</code>.
+              Medium (500) and Bold (700). Self-hosted woff2 via{" "}
+              <code className="text-[12px]">next/font/local</code> rather than Google Fonts, so the
+              licence travels with the files (
+              <code className="text-[12px]">public/fonts/font-licenses.txt</code>).{" "}
+              <code className="text-[12px]">--font-ht-display</code>. Every h1–h4, button, nav label and
+              eyebrow, set uppercase with tight negative tracking. Social cards render from{" "}
+              <code className="text-[12px]">app/_og/Oswald-500.ttf</code>, the same file re-flavoured
+              to TTF because Satori cannot parse woff2.
             </p>
           </div>
           <div className="rounded-card bg-ht-cream shadow-soft p-6">
             <p className="font-ht-display text-ht-purple text-[13px] font-bold uppercase">Body</p>
-            <p className="font-ht-body text-ht-purple mt-3 text-[22px] leading-[1.4]">Instrument Sans</p>
+            <p className="font-ht-body text-ht-purple mt-3 text-[22px] leading-[1.4]">IBM Plex Sans</p>
             <p className="font-ht-body text-ht-purple/70 mt-2 text-[13px]">
-              Google Font, variable weight. <code className="text-[12px]">--font-ht-body</code>. Applied to all
-              paragraph text, form fields, captions. <code className="text-[12px]">text-wrap: pretty</code> on
-              paragraphs to prevent orphans.
+              Regular (400), self-hosted woff2.{" "}
+              <code className="text-[12px]">--font-ht-body</code>. All paragraph text, form fields and
+              captions. <code className="text-[12px]">text-wrap: pretty</code> on paragraphs to prevent
+              orphans.
             </p>
           </div>
         </div>
@@ -343,17 +348,23 @@ export default function BrandGuidePage() {
             <p className="font-ht-display text-ht-purple text-[13px] font-bold uppercase">Corner radius scale</p>
             <div className="mt-4 space-y-4">
               <div className="flex items-center gap-4">
-                <div className="rounded-[40px] bg-ht-orange size-16 shrink-0" />
+                <div className="rounded-block bg-ht-orange ring-ht-purple/12 size-16 shrink-0 ring-1" />
                 <div>
-                  <p className="font-ht-display text-ht-purple text-[13px] font-bold">--radius-block · 40px</p>
-                  <p className="font-ht-body text-ht-purple/70 text-[13px]">Section bands, page hero (56px on sm+)</p>
+                  <p className="font-ht-display text-ht-purple text-[13px] font-bold">--radius-block · 0px</p>
+                  <p className="font-ht-body text-ht-purple/70 text-[13px]">
+                    Section bands and form panels. Square since 2026-09-11: nothing on the homepage
+                    has a rounded section edge.
+                  </p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
                 <div className="rounded-card bg-ht-orange size-16 shrink-0" />
                 <div>
                   <p className="font-ht-display text-ht-purple text-[13px] font-bold">--radius-card · 24px</p>
-                  <p className="font-ht-body text-ht-purple/70 text-[13px]">Cards, swatches, form panels</p>
+                  <p className="font-ht-body text-ht-purple/70 text-[13px]">
+                    Cards, swatches and images. It matches the 1.5rem the homepage gives its own
+                    project and intro images.
+                  </p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
@@ -368,7 +379,7 @@ export default function BrandGuidePage() {
           <div className="rounded-card bg-ht-cream shadow-soft space-y-1 p-6">
             <p className="font-ht-display text-ht-purple mb-3 text-[13px] font-bold uppercase">Container widths</p>
             <SpecRow label="Wide sections" value="max-w-[1600px]" />
-            <SpecRow label="Rounded purple bands" value="max-w-[1434px]" />
+            <SpecRow label="Dark and orange bands" value="max-w-[1434px]" />
             <SpecRow label="Copy-heavy sections" value="max-w-[900-1000px]" />
             <SpecRow label="Page hero copy" value="max-w-[900px]" />
             <p className="font-ht-display text-ht-purple mt-5 mb-3 text-[13px] font-bold uppercase">
@@ -377,9 +388,13 @@ export default function BrandGuidePage() {
             <SpecRow label="Mobile" value="py-14 to py-20" />
             <SpecRow label="Desktop (md+)" value="py-20 to py-28" />
             <p className="font-ht-body text-ht-purple/70 mt-4 text-[13px] leading-[1.6]">
-              Horizontal padding is <code className="text-[12px]">px-6</code> mobile, <code className="text-[12px]">sm:px-10</code>{" "}
-              on wider sections. Spacing follows Tailwind's default 4px scale, no arbitrary one-off
-              values like <code className="text-[12px]">margin: 23px</code>.
+              Horizontal padding is one utility everywhere:{" "}
+              <code className="text-[12px]">px-gutter</code>, which resolves to{" "}
+              <code className="text-[12px]">clamp(1.25rem, 4.45vw, 5.5rem)</code>: 20px on a phone,
+              64px at 1440. It is the same value the homepage&rsquo;s{" "}
+              <code className="text-[12px]">.wrap</code> uses, so a hero and the section beneath it
+              start on the same line. Vertical spacing follows Tailwind&rsquo;s 4px scale, with no
+              one-off values like <code className="text-[12px]">margin: 23px</code>.
             </p>
           </div>
         </div>
@@ -393,12 +408,19 @@ export default function BrandGuidePage() {
               <Button variant="ember">Ember</Button>
               <Button variant="ink">Ink</Button>
               <Button variant="peach">Peach</Button>
+            </div>
+            <div className="rounded-card bg-ht-purple mt-4 flex flex-wrap items-center gap-4 p-6">
               <Button variant="outline">Outline</Button>
+              <p className="font-ht-body text-[13px] leading-[1.6] text-white/75">
+                On ink, where its only production use is (the cookie banner). Orange text is 4.90:1
+                here and 3.59:1 on paper, so this variant must never be dropped onto a light
+                surface.
+              </p>
             </div>
             <p className="font-ht-body text-ht-purple/70 mt-3 text-[13px] leading-[1.6]">
               Variant names are historical (kept from the previous bark/ember palette so no call site
               needed remapping): they now map to <strong>ember</strong> = orange fill,{" "}
-              <strong>ink</strong> = purple fill, <strong>peach</strong> = cream fill,{" "}
+              <strong>ink</strong> = ink fill, <strong>peach</strong> = paper fill,{" "}
               <strong>outline</strong> = orange border.
             </p>
           </div>
@@ -416,7 +438,7 @@ export default function BrandGuidePage() {
           <div>
             <p className="font-ht-display text-ht-purple text-[13px] font-bold uppercase">States & motion</p>
             <ul className="font-ht-body text-ht-purple/70 mt-3 space-y-1 text-[14px] leading-[1.6]">
-              <li>Hover: scale to 1.02, shadow lifts from soft to lift.</li>
+              <li>Hover: scale to 1.02, and the hairline ring darkens from soft to lift.</li>
               <li>Press: scale to 0.97, enough to feel the tap register.</li>
               <li>Disabled: 50% opacity, pointer-events removed.</li>
               <li>Transition: 150ms on transform/background/shadow/border, custom ease-out curve.</li>
@@ -431,28 +453,38 @@ export default function BrandGuidePage() {
         </div>
       </Section>
 
-      <Section id="shadow" eyebrow="Elevation" title="Shadow & elevation">
-        <div className="grid gap-6 sm:grid-cols-2">
+      <Section id="shadow" eyebrow="Elevation" title="Edges, not shadows">
+        <p className="font-ht-body text-ht-purple/80 max-w-[62ch] text-[15px] leading-[1.7]">
+          There is no elevation system any more. The homepage separates things with hairline rules,
+          never with a drop shadow, so the two shadow tokens were redefined as rings: a 1px hairline
+          drawn at the element&rsquo;s own radius, no blur, no layout cost. Every card that already
+          said <code className="text-[12px]">shadow-soft</code> picked up the new language without a
+          call-site change.
+        </p>
+        <div className="mt-8 grid gap-6 sm:grid-cols-2">
           <div className="rounded-card bg-white p-6 shadow-soft">
             <p className="font-ht-display text-ht-purple text-[13px] font-bold uppercase">--shadow-soft</p>
             <p className="font-ht-body text-ht-purple/70 mt-2 text-[13px] leading-[1.6]">
-              Resting state for cards, buttons. Ink-tinted (rgb 1 6 2), not pure black, so it reads
-              warm rather than grey.
+              Resting state for cards and panels on paper.
             </p>
             <code className="font-ht-body text-ht-purple/70 mt-3 block text-[11px] leading-[1.5]">
-              0 1px 2px rgb(1 6 2 / 0.05), 0 8px 24px -8px rgb(1 6 2 / 0.1)
+              0 0 0 1px rgb(17 17 17 / 0.12)
             </code>
           </div>
           <div className="rounded-card bg-white p-6 shadow-lift">
             <p className="font-ht-display text-ht-purple text-[13px] font-bold uppercase">--shadow-lift</p>
             <p className="font-ht-body text-ht-purple/70 mt-2 text-[13px] leading-[1.6]">
-              Hover state. Button and card hover both transition from soft to this.
+              Hover. The same rule, darker.
             </p>
             <code className="font-ht-body text-ht-purple/70 mt-3 block text-[11px] leading-[1.5]">
-              0 2px 4px rgb(1 6 2 / 0.06), 0 16px 40px -12px rgb(1 6 2 / 0.18)
+              0 0 0 1px rgb(17 17 17 / 0.3)
             </code>
           </div>
         </div>
+        <p className="font-ht-body text-ht-purple/70 mt-6 max-w-[62ch] text-[13px] leading-[1.6]">
+          On a dark surface a dark hairline is invisible, which is correct: the homepage&rsquo;s dark
+          sections separate with a white-line border or with nothing at all.
+        </p>
       </Section>
 
       <Section id="motion" eyebrow="Interaction" title="Motion">
@@ -463,7 +495,7 @@ export default function BrandGuidePage() {
             <SpecRow label="--ease-in-out" value="cubic-bezier(.77,0,.175,1)" />
             <p className="font-ht-body text-ht-purple/70 mt-4 text-[13px] leading-[1.6]">
               Default UI feedback uses ease-out; on-screen scroll movement uses ease-in-out. Standard
-              CSS ease-outs read as too weak against this brand's confident type. These curves are
+              CSS ease-outs read as too weak against this brand’s confident type. These curves are
               intentionally stronger.
             </p>
           </div>
@@ -489,15 +521,15 @@ export default function BrandGuidePage() {
               <li>No em dashes in user-facing copy.</li>
               <li>The founder is never named on the site.</li>
               <li>Active voice throughout; cut filler words and weak adverbs.</li>
-              <li>Every blog article runs through the humanizer skill's AI-writing-tell audit before publishing.</li>
+              <li>Every blog article runs through the humanizer skill’s AI-writing-tell audit before publishing.</li>
             </ul>
           </div>
           <div>
             <p className="font-ht-display text-ht-purple text-[13px] font-bold uppercase">Tone reference</p>
             <p className="font-ht-body text-ht-purple/70 mt-3 text-[14px] leading-[1.6]">
               Write like a specific, credible person who has actually built the thing being described,
-              not a brochure. Prefer a concrete number or outcome over an adjective. "X, not just
-              Y" is a deliberate, recurring brand construction, not an AI tell to avoid.
+              not a brochure. Prefer a concrete number or outcome over an adjective. “X, not just
+              Y” is a deliberate, recurring brand construction, not an AI tell to avoid.
             </p>
           </div>
         </div>

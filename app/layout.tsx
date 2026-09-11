@@ -1,37 +1,19 @@
 import type { Metadata } from "next";
-import { Instrument_Sans, Parkinsans } from "next/font/google";
 import localFont from "next/font/local";
 import { Analytics } from "@/components/Analytics";
 import { site } from "@/content/site";
 import "./globals.css";
 
-// The site's design language (2026-08-20 font update, client-supplied
-// choice): Parkinsans for every heading, Instrument Sans for body copy.
-// Replaces the Syne/DM Sans pairing that shipped 2026-08-12, promoted
-// site-wide alongside the new homepage.
+// The site's typefaces: Oswald for display, IBM Plex Sans for body.
 //
-// adjustFontFallback is off for Parkinsans because Next has no built-in
-// metric overrides for it and warns at build time, so it cannot synthesise a
-// size-matched fallback. An explicit stack is declared instead: without one
-// the swap falls back to the browser default and shifts layout more, not
-// less.
-const parkinsans = Parkinsans({
-  variable: "--font-parkinsans",
-  subsets: ["latin"],
-  weight: ["600", "700"],
-  display: "swap",
-  fallback: ["ui-sans-serif", "system-ui", "Segoe UI", "sans-serif"],
-  adjustFontFallback: false,
-});
-
-// The 2026-09 homepage redesign ships its own pairing: Oswald for display,
-// IBM Plex Sans for body. Self-hosted woff2 from the delivered package rather
-// than next/font/google, because the licences travel with the files
+// Self-hosted woff2 from the delivered homepage package rather than
+// next/font/google, because the licences travel with the files
 // (public/fonts/font-licenses.txt) and the subsetting is already done.
 //
-// Declared here so <html> can carry the CSS variables, but NOT applied to
-// anything globally — only components under the homepage's own scope use
-// them. The rest of the site stays on Parkinsans/Instrument Sans.
+// These replaced Parkinsans/Instrument Sans on 2026-09-11 when the homepage
+// design went site-wide. Both of those were removed the same day: the @theme
+// block in globals.css no longer references their variables, so they were two
+// Google Font families downloaded on every page for nothing.
 const oswald = localFont({
   variable: "--font-oswald",
   display: "swap",
@@ -49,12 +31,6 @@ const ibmPlexSans = localFont({
   fallback: ["ui-sans-serif", "system-ui", "Segoe UI", "sans-serif"],
   adjustFontFallback: false,
   src: [{ path: "../public/fonts/ibm-plex-sans-400.woff2", weight: "400", style: "normal" }],
-});
-
-const instrumentSans = Instrument_Sans({
-  variable: "--font-instrument-sans",
-  subsets: ["latin"],
-  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -104,7 +80,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html
       lang="en-ZA"
       data-scroll-behavior="smooth"
-      className={`${parkinsans.variable} ${instrumentSans.variable} ${oswald.variable} ${ibmPlexSans.variable} h-full`}
+      className={`${oswald.variable} ${ibmPlexSans.variable} h-full`}
     >
       {/* No Nav/Footer/skip-link here: they moved to app/(site)/layout.tsx so
           the homepage, which brings its own chrome, can opt out of them. */}

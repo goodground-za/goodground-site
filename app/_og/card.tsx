@@ -9,26 +9,28 @@ import { join } from "node:path";
  * WhatsApp, LinkedIn and Facebook rendered as a bare text link. For a studio
  * selling web design that read as an unfinished site.
  *
+ * Updated 2026-09-11 with the rest of the site: Oswald in place of Parkinsans,
+ * ink in place of purple, and the wordmark drawn from the homepage's own SVG.
+ * A share card is the site's face in a feed, so leaving it on the retired
+ * palette would have been the most public place the old design survived.
+ *
  * The heading font ships as a repo asset rather than being fetched at build
  * time, so the build has no network dependency. Satori (behind ImageResponse)
- * needs TTF, OTF, or WOFF — it cannot parse WOFF2, which is what Google Fonts
- * serves by default to modern browsers.
- *
- * Parkinsans-Bold.ttf is a static instance pinned at wght 700, generated from
- * the variable font with fontTools. Google publishes Parkinsans only as a
- * variable font whose default axis position is 300 (Light), and Satori
- * renders a variable font at its default instance — dropping the variable
- * file in directly would have quietly rendered every social card in Light.
+ * needs TTF, OTF, or WOFF — it cannot parse WOFF2, which is what the site
+ * itself serves. Oswald-500.ttf is the site's own public/fonts/oswald-500.woff2
+ * re-flavoured to TTF with fontTools; 500 because that is the weight every
+ * heading on the site is set in.
  */
 
 export const OG_SIZE = { width: 1200, height: 630 };
 export const OG_CONTENT_TYPE = "image/png";
 
 // Literal hex, not var(--color-*): these render in Satori, not a browser, so
-// there is no stylesheet to resolve custom properties against.
-const PURPLE = "#2e1848";
-const CREAM = "#fbf7ec";
-const ORANGE = "#fe431a";
+// there is no stylesheet to resolve custom properties against. Kept in step
+// with the @theme block in app/globals.css by hand.
+const INK = "#111111";
+const PAPER = "#f7f7f4";
+const ORANGE = "#f13e1b";
 
 export async function renderOgCard({
   eyebrow,
@@ -40,13 +42,16 @@ export async function renderOgCard({
   title: string;
 }) {
   const [font, logo] = await Promise.all([
-    readFile(join(process.cwd(), "app/_og/Parkinsans-Bold.ttf")),
-    // logo-footer, not logo-hero: the hero wordmark is the dark version drawn
-    // on cream, and it disappears against this purple background.
-    readFile(join(process.cwd(), "public/images/logo-footer.png")),
+    readFile(join(process.cwd(), "app/_og/Oswald-500.ttf")),
+    readFile(join(process.cwd(), "public/home2026/goodground-logo.svg"), "utf8"),
   ]);
 
-  const logoSrc = `data:image/png;base64,${logo.toString("base64")}`;
+  // The wordmark's paths carry no fill, so they default to black — the site
+  // inverts it with a CSS filter, which Satori does not implement. Setting the
+  // fill on the root element is the equivalent that survives into the render.
+  const logoSrc = `data:image/svg+xml;base64,${Buffer.from(
+    logo.replace("<svg ", '<svg fill="#ffffff" '),
+  ).toString("base64")}`;
 
   return new ImageResponse(
     (
@@ -57,27 +62,28 @@ export async function renderOgCard({
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: PURPLE,
+          background: INK,
           padding: "72px 80px",
-          fontFamily: "Parkinsans",
+          fontFamily: "Oswald",
         }}
       >
         {/* Wordmark as an image so the logo is pixel-accurate rather than a
-            font approximation of it.
+            font approximation of it. Width is set explicitly because Satori
+            does not infer it from the SVG's viewBox (2090 x 392.44).
             eslint-disable-next-line: this renders in Satori, not a browser.
             next/image has no meaning here and would break the render. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={logoSrc} height={96} alt="" />
+        <img src={logoSrc} width={352} height={66} alt="" />
 
         <div style={{ display: "flex", flexDirection: "column" }}>
           {eyebrow ? (
             <div
               style={{
                 display: "flex",
-                fontSize: 26,
-                letterSpacing: 1,
+                fontSize: 24,
+                letterSpacing: 2,
                 color: ORANGE,
-                marginBottom: 20,
+                marginBottom: 24,
               }}
             >
               {eyebrow.toUpperCase()}
@@ -86,10 +92,12 @@ export async function renderOgCard({
           <div
             style={{
               display: "flex",
-              fontSize: title.length > 60 ? 54 : 66,
-              lineHeight: 1.15,
-              color: CREAM,
-              maxWidth: 980,
+              fontSize: title.length > 60 ? 62 : 78,
+              lineHeight: 1.08,
+              letterSpacing: -1.5,
+              textTransform: "uppercase",
+              color: "#ffffff",
+              maxWidth: 1000,
             }}
           >
             {title}
@@ -97,8 +105,8 @@ export async function renderOgCard({
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-          <div style={{ display: "flex", width: 64, height: 6, background: ORANGE }} />
-          <div style={{ display: "flex", fontSize: 24, color: CREAM, opacity: 0.75 }}>
+          <div style={{ display: "flex", width: 64, height: 4, background: ORANGE }} />
+          <div style={{ display: "flex", fontSize: 24, color: PAPER, opacity: 0.75 }}>
             goodground.co.za
           </div>
         </div>
@@ -106,7 +114,7 @@ export async function renderOgCard({
     ),
     {
       ...OG_SIZE,
-      fonts: [{ name: "Parkinsans", data: font, style: "normal", weight: 700 }],
+      fonts: [{ name: "Oswald", data: font, style: "normal", weight: 500 }],
     },
   );
 }

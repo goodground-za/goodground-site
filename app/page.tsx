@@ -3,18 +3,15 @@ import { HomeSchema, ServicesSchema } from "@/components/Schema";
 import { Contact } from "@/components/home2026/Contact";
 import { Faq } from "@/components/home2026/Faq";
 import { Hero } from "@/components/home2026/Hero";
-import { HomeChrome } from "@/components/home2026/HomeChrome";
-import { HomeFooter } from "@/components/home2026/HomeFooter";
 import { Industries } from "@/components/home2026/Industries";
 import { Intro } from "@/components/home2026/Intro";
 import { Process } from "@/components/home2026/Process";
 import { Reasons } from "@/components/home2026/Reasons";
-import { RevealObserver } from "@/components/home2026/RevealObserver";
 import { Services } from "@/components/home2026/Services";
+import { SiteShell } from "@/components/home2026/SiteShell";
 import { Strategy } from "@/components/home2026/Strategy";
 import { Work } from "@/components/home2026/Work";
 import { services } from "@/content/services";
-import "@/components/home2026/home2026.css";
 
 /**
  * Homepage — 2026-09 redesign.
@@ -24,13 +21,13 @@ import "@/components/home2026/home2026.css";
  * verbatim markup; the interactive parts (hero video, menu dialog, reveals)
  * were rebuilt as React while keeping the original behaviour.
  *
- * This page does NOT sit inside app/(site)/, because the design brings its own
- * header, footer and <main>. The shared <Nav /> and <Footer /> live in
- * app/(site)/layout.tsx so every other page still gets them.
+ * This page sits outside app/(site)/ for historical reasons — it was ported
+ * before the rest of the site adopted this design — and now gets the same
+ * chrome through SiteShell, which is what app/(site)/layout.tsx renders too.
  *
- * Styling is scoped under .home-2026 (see home2026.css). The rest of the site
- * is still Parkinsans/Instrument Sans on the ht-* tokens, and nothing here
- * reaches it.
+ * It passes `scopeBody` because every section here is built on home2026.css's
+ * own classes. Inner pages must not: their bodies are still Tailwind, and the
+ * scope's bare-element rules out-specify those utilities. See SiteShell.
  *
  * Title/description are carried over unchanged from the previous homepage:
  * they target "website development South Africa" (the primary keyword) and are
@@ -47,34 +44,23 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <div className="home-2026">
+    <SiteShell scopeBody>
       <HomeSchema />
       <ServicesSchema services={services} />
       {/* No FAQPage node here: /faq already emits the canonical FAQPage schema
           for this same question set (see Schema.tsx's HomeSchema comment).
           Repeating it put duplicate FAQPage content on two indexed URLs. */}
 
-      <a className="skip-link" href="#main">
-        Skip to content
-      </a>
-
-      <HomeChrome />
-
-      <main id="main">
-        <Hero />
-        <Intro />
-        <Work />
-        <Services />
-        <Process />
-        <Reasons />
-        <Strategy />
-        <Industries />
-        <Faq />
-        <Contact />
-      </main>
-
-      <HomeFooter />
-      <RevealObserver />
-    </div>
+      <Hero />
+      <Intro />
+      <Work />
+      <Services />
+      <Process />
+      <Reasons />
+      <Strategy />
+      <Industries />
+      <Faq />
+      <Contact />
+    </SiteShell>
   );
 }

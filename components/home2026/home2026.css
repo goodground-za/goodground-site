@@ -142,16 +142,28 @@
 .home-2026 .project-badge{position:absolute;top:1.2rem;left:1.2rem;border-radius:100px;background:white;color:#111;padding:.5rem .9rem;font-size:.875rem}
 .home-2026 .project-open{position:absolute;right:1.2rem;bottom:1.2rem;display:grid;place-items:center;background:white;color:#111;border-radius:50%;height:3.5rem;width:3.5rem;font-size:2rem;transition:background .3s,transform .3s}
 .home-2026 .project-image:hover .project-open{background:var(--orange);transform:rotate(45deg)}
+/* /work draws the arrow from CSS instead of a text node — see the comment
+   at the call site. \FE0E is the text-presentation selector, the same one
+   the markup carries everywhere else. */
+.home-2026 .project-open--glyph:before{content:'↗︎'}
 .home-2026 .project-info{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin:1.5rem 0 1rem}
-.home-2026 .project-info h3{font-size:clamp(1.7rem,2.3vw,2.4rem);line-height:1.2}
+/* h3 on the homepage (it sits under a section h2); h2 on /work, where the
+   page h1 is the hero and these are the page's top-level headings. Styled
+   by both tags rather than one, so the heading LEVEL stays free to follow
+   the document outline. */
+.home-2026 .project-info h3, .home-2026 .project-info h2{font-size:clamp(1.7rem,2.3vw,2.4rem);line-height:1.2}
 .home-2026 .project-kind{font-size:.875rem;color:#aaa;flex-shrink:0}
 .home-2026 .tags{display:flex;flex-wrap:wrap;gap:.5rem}
 .home-2026 .tags>span{padding:.35rem .8rem;border:1px solid #ffffff38;border-radius:100px;font-size:.875rem;color:#d5d5d5}
 .home-2026 .project-description{margin-top:1.5rem;color:#bfbfbf;max-width:36rem}
 .home-2026 .work-next{display:flex;align-items:center;justify-content:space-between;gap:3rem;padding-top:3.5rem;margin-top:5rem;border-top:1px solid var(--white-line)}
-.home-2026 .work-next h3{font-size:2rem;margin-bottom:.7rem}
+.home-2026 .work-next h3, .home-2026 .work-next h2{font-size:2rem;margin-bottom:.7rem}
 .home-2026 .work-next p{color:#aaa;max-width:37rem}
 .home-2026 .work-next .button{flex-shrink:0}
+/* The same block opening a section rather than closing one (a case study's
+   closer, where there is no grid above it to be ruled off from). */
+.home-2026 .work-next--bare{margin-top:0;padding-top:0;border-top:0}
+.home-2026 .work-next--bare .text-link{margin-top:1.5rem}
 .home-2026 /* Large service rows instead of added routes or speculative features. */
 .service-list{border-top:1px solid var(--line)}
 .home-2026 .service-row{display:grid;grid-template-columns:3.5rem 1.3fr 1fr 3.5rem;gap:2rem;align-items:center;padding:2.1rem 0;border-bottom:1px solid var(--line);transition:color .25s,padding .3s,background .3s}
@@ -182,6 +194,18 @@
 .home-2026 .reason-number{display:block;font-size:.875rem;margin-bottom:2.5rem}
 .home-2026 .reason-grid h3{font-size:clamp(1.7rem,2.3vw,2.5rem);text-transform:uppercase;line-height:1.2;margin-bottom:1rem}
 .home-2026 .reason-grid p{max-width:25rem}
+/* .reason-grid is the homepage's orange section, where ink body copy is the
+   right weight. Reused on paper (the Growth block on /services), body copy
+   drops to --muted, matching every other light section. */
+.home-2026 .section-light .reason-grid p{color:var(--muted)}
+/* Growth block's closing CTA: an orange band, ink throughout. */
+.home-2026 .growth-cta .eyebrow{margin-bottom:2.5rem}
+.home-2026 .growth-cta .display-heading{max-width:20ch}
+.home-2026 .growth-cta__lede{margin-top:1.75rem;max-width:44rem;font-size:1.0625rem}
+.home-2026 .growth-cta__actions{display:flex;flex-wrap:wrap;align-items:center;gap:1.5rem 2.5rem;margin-top:2.75rem}
+/* button-white hovers to orange on the homepage; on an orange ground that
+   would erase it, so it hovers to ink here instead. */
+.home-2026 .growth-cta .button-white:hover{background:var(--ink);color:white}
 .home-2026 .strategy-layout{display:grid;grid-template-columns:1fr 1.2fr;gap:6.5rem}
 .home-2026 .origin-note{margin-top:3rem;max-width:29rem}
 .home-2026 .origin-note h3{font-family:var(--font-ibm-plex-sans),sans-serif;font-size:1rem;margin-bottom:1rem}
@@ -200,6 +224,10 @@
 .home-2026 .faq-layout{display:grid;grid-template-columns:1fr 1.4fr;gap:5rem;align-items:start}
 .home-2026 .faq-intro .eyebrow{margin-bottom:2.5rem}
 .home-2026 .faq-intro .section-title{font-size:clamp(3.75rem,6vw,7rem)}
+/* The shared FAQ (components/sections/FAQAccordion.tsx) takes headings of
+   very different lengths, so it uses .display-heading rather than the
+   homepage's one-word .section-title, nudged up to hold the column. */
+.home-2026 .faq-intro .display-heading{font-size:clamp(2.5rem,3.7vw,4.5rem)}
 .home-2026 .faq-intro .text-link{margin-top:2.5rem}
 .home-2026 .faq-list{border-top:1px solid var(--line)}
 .home-2026 .faq-list details{border-bottom:1px solid var(--line)}
@@ -234,6 +262,32 @@
 .home-2026 .footer-wordmark{border-top:1px solid var(--white-line);padding-top:3rem;padding-bottom:2rem}
 .home-2026 .footer-wordmark>img{width:100%;height:auto;filter:brightness(0) invert(1)}
 .home-2026 .footer-bottom{display:flex;justify-content:space-between;gap:1.5rem;padding-block:1.8rem 2rem;font-size:.875rem;color:#999}
+/* ---------------------------------------------------------------------------
+ * Inner-page hero — components/PageHero.tsx, used by 17 pages.
+ *
+ * Not part of the delivered homepage; added when the design rolled out
+ * site-wide. It is built from the homepage's own primitives (.eyebrow,
+ * .display-heading, .accent-text, .wrap) so the type ramp and the gutter track
+ * the homepage automatically, and only the hero's own spacing lives here.
+ *
+ * Top padding clears the header, which is position:absolute over the page:
+ * 2rem + a 4rem pill = 6rem at desktop, 1.25rem + 3.5rem = 4.75rem at phone.
+ * ------------------------------------------------------------------------- */
+.home-2026 .page-hero{position:relative;isolation:isolate;overflow:hidden;padding-block:clamp(9.5rem,13vw,13rem) clamp(3.75rem,6vw,6rem)}
+.home-2026 .page-hero--video{background:var(--ink);color:white;min-height:min(38rem,78svh);display:flex;align-items:flex-end}
+.home-2026 .page-hero__inner{position:relative;z-index:1;width:100%}
+.home-2026 .page-hero__eyebrow{margin-bottom:1.6rem;color:rgba(255,255,255,.72)}
+.home-2026 .page-hero--video .page-hero__eyebrow{color:white}
+.home-2026 .page-hero h1{max-width:20ch}
+.home-2026 .page-hero__intro{margin-top:1.85rem;max-width:44rem;font-size:clamp(1rem,1.25vw,1.1875rem);line-height:1.6;color:rgba(255,255,255,.78)}
+.home-2026 .page-hero--video .page-hero__intro{color:rgba(255,255,255,.9)}
+/* The toggle sits in the hero's bottom-right instead of the homepage's bottom
+   bar, which does not exist here. Still 44px and still in the tab order. */
+.home-2026 .page-hero__motion{position:absolute;right:var(--gutter);bottom:.75rem;z-index:2}
+/* The same entrance the homepage hero uses, so the two openings move alike.
+   The reduced-motion block at the foot of this file cancels it. */
+.home-2026 .page-hero__eyebrow, .home-2026 .page-hero h1{animation:hero-in 1s var(--ease) both}
+.home-2026 .page-hero__intro{animation:hero-in 1s .12s var(--ease) both}
 @media(prefers-reduced-motion:no-preference){
 .home-2026 .reveal.is-pending{opacity:0;transform:translateY(28px)}
 .home-2026 .reveal{transition:opacity .8s var(--ease),transform .8s var(--ease)}
@@ -297,6 +351,9 @@
 }
 @media(max-width:640px){
 .home-2026{--gutter:1.25rem}
+.home-2026 .page-hero{padding-block:8rem 3rem}
+.home-2026 .page-hero h1{max-width:none}
+.home-2026 .page-hero--video{min-height:0;display:block}
 .home-2026 .site-header{padding-top:1.25rem}
 .home-2026 .brand-pill{padding:.9rem 1.15rem;min-height:3.5rem}
 .home-2026 .brand-pill img{width:8.75rem}
@@ -335,12 +392,12 @@
 .home-2026 .project-offset{margin-top:0}
 .home-2026 .project-image>img, .home-2026 .project-image-wide>img{aspect-ratio:1.07}
 .home-2026 .project-info{margin-top:1.2rem;flex-direction:row;align-items:center}
-.home-2026 .project-info h3{font-size:1.85rem}
+.home-2026 .project-info h3, .home-2026 .project-info h2{font-size:1.85rem}
 .home-2026 .project-kind{font-size:.8125rem}
 .home-2026 .project-description{margin-top:1.2rem;font-size:1rem}
 .home-2026 .project-image{border-radius:1rem}
 .home-2026 .work-next{flex-direction:column;gap:1.5rem;margin-top:3rem;padding-top:2.5rem}
-.home-2026 .work-next h3{font-size:1.85rem}
+.home-2026 .work-next h3, .home-2026 .work-next h2{font-size:1.85rem}
 .home-2026 .service-row{grid-template-columns:1.5rem 1fr 2.75rem;gap:1rem;padding:1.5rem 0}
 .home-2026 .service-row>p{grid-column:2;grid-row:2;font-size:1rem;margin-top:-.2rem;max-width:27rem}
 .home-2026 .service-row .round-arrow{grid-column:3;grid-row:1;width:2.6rem;height:2.6rem;font-size:1.6rem}

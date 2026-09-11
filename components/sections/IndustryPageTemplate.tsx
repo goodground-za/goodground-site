@@ -51,7 +51,7 @@ export function IndustryPageTemplate({ slug }: { slug: string }) {
         title={entry.h1}
         intro={`${entry.heroIntro} We're based in George, on South Africa's Garden Route.`}
       >
-        <RevealSection delay={0.14} className="mt-8 flex flex-wrap justify-center gap-2">
+        <RevealSection delay={0.14} className="mt-8 flex flex-wrap gap-2">
           {entry.keywordChips.map((chip) => (
             <span
               key={chip}
@@ -65,13 +65,13 @@ export function IndustryPageTemplate({ slug }: { slug: string }) {
 
       {/* Pain points — same numbered-card language as SixReasons/WhoWeBuildFor,
           kept to three so it reads as specific rather than padded. */}
-      <section className="bg-ht-cream px-6 py-16 sm:px-10 md:py-24">
+      <section className="bg-ht-cream px-gutter py-16 md:py-24">
         <div className="mx-auto max-w-[1434px]">
           <RevealStagger className="grid gap-5 sm:grid-cols-3" y={16}>
             {entry.painPoints.map((point, i) => (
               <HoverCard
                 key={point.title}
-                className="bg-white ring-ht-pink shadow-[0_14px_0_0_var(--color-ht-pink)] rounded-card p-6 ring-2"
+                className="bg-white ring-ht-purple/12 rounded-card p-6 ring-1"
               >
                 <p className="font-ht-display text-ht-crimson text-[13px] font-bold tabular-nums">
                   {String(i + 1).padStart(2, "0")}
@@ -83,7 +83,7 @@ export function IndustryPageTemplate({ slug }: { slug: string }) {
           </RevealStagger>
 
           <RevealSection delay={0.1} className="mt-10">
-            <p className="text-ht-purple/70 mx-auto max-w-[70ch] text-center text-[16px] leading-[1.7]">
+            <p className="text-ht-purple/70 max-w-[70ch] text-[16px] leading-[1.7]">
               {entry.localProof}
             </p>
           </RevealSection>
@@ -97,7 +97,7 @@ export function IndustryPageTemplate({ slug }: { slug: string }) {
               active project in this segment, since that isn't something we
               can currently verify. */}
           <RevealSection delay={0.14} className="mt-6">
-            <div className="border-ht-purple/15 rounded-block mx-auto max-w-[70ch] border-2 border-dashed p-6 text-center">
+            <div className="border-ht-orange max-w-[70ch] border-l-2 py-1 pl-5">
               <p className="text-ht-purple/70 text-[14px] leading-[1.6]">
                 We haven&rsquo;t published a live {entry.title.toLowerCase()} project yet.{" "}
                 <Link href="/contact" className="text-ht-crimson font-bold underline underline-offset-4">
@@ -112,7 +112,7 @@ export function IndustryPageTemplate({ slug }: { slug: string }) {
 
       {/* What's included — same accordion used on /services, filtered to
           what this segment actually needs. */}
-      <section className="bg-ht-cream px-6 pb-16 sm:px-10 md:pb-24">
+      <section className="bg-ht-cream px-gutter pb-16 md:pb-24">
         <div className="mx-auto max-w-[1434px]">
           <RevealSection>
             <p className="font-ht-display text-ht-purple text-[13px] font-bold tracking-[0.15em] uppercase">

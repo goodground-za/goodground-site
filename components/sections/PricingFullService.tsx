@@ -18,11 +18,11 @@ import { fullServicePackage } from "@/content/pricing";
  */
 export function PricingFullService({ onSelect }: { onSelect: (config: SelectedConfig) => void }) {
   return (
-    <section id="full-service" className="bg-ht-cream scroll-mt-24 px-6 pb-16 sm:px-10 md:pb-24">
+    <section id="full-service" className="bg-ht-cream scroll-mt-24 px-gutter pb-16 md:pb-24">
       <div className="mx-auto max-w-[1434px]">
         <RevealSection>
           <div className="bg-ht-purple rounded-block relative overflow-hidden">
-            <div className="grid gap-10 px-6 py-12 sm:px-10 md:grid-cols-12 md:items-center md:px-14 md:py-16">
+            <div className="grid gap-10 px-gutter py-12 md:grid-cols-12 md:items-center md:px-14 md:py-16">
               <div className="min-w-0 md:col-span-7">
                 <span className="bg-ht-pink text-ht-purple rounded-pill inline-block px-4 py-1.5 text-[11px] font-bold tracking-wide uppercase">
                   Monthly · Cancel any time
