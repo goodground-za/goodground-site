@@ -148,3 +148,36 @@ usage elsewhere ("Let’s chat") and clearing react/no-unescaped-entities.
   `WhoWeBuildFor`, `WhatWeBuild` and `MobileStickyBar` are still used elsewhere.
 - **Not pushed.** AGENTS.md: pushing `main` deploys straight to production with
   no staging step.
+
+## 2026-09-11, after launch — menu points at the real pages
+
+The delivered menu sent four of its six items to sections of the homepage
+(`#about`, `#work`, `#services`, `#contact`) rather than to the pages that
+actually exist. Now all six go to their own page, matching `navLinks` in
+`content/site.ts` so the menu and the shared `<Nav />` cannot drift:
+
+| | was | now |
+|---|---|---|
+| About | `#about` | `/about` |
+| Our craft | `#work` | `/work` |
+| Services | `#services` | `/services` |
+| Pricing | `/pricing` | unchanged |
+| Insights | `/insights` | unchanged |
+| Let’s chat | `#contact` | `/contact` |
+
+Rendered with `<Link>`, so a menu click is a client-side navigation rather than
+a full reload.
+
+That made the in-page-anchor focus management dead — no menu item is an anchor
+any more — so it was removed rather than left unreachable. `handleClose` now
+just returns focus to the button that opened the menu.
+
+**The thing that could have broken and didn't:** navigating away while the modal
+is open. The `menu-is-open` body class locks scrolling, and if it survived the
+route change the destination page would have been unscrollable. The cleanup
+effect on unmount handles it — verified by clicking through to `/work` and
+confirming the class was gone.
+
+Re-checked after the change: Lighthouse mobile still 100/100/100/100, zero
+failed audits.
+

@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { useCallback, useEffect, useRef, useState } from "react";
 
 /**
@@ -13,20 +15,13 @@ import { useCallback, useEffect, useRef, useState } from "react";
  * hand-rolled overlay would have to reimplement all three and would get at
  * least one of them wrong.
  *
- * The close behaviour is the fiddly part and is ported deliberately:
- *  - closing by any route returns focus to the button that opened it
- *  - EXCEPT when a menu link was followed, where focus moves to the section
- *    instead, so a keyboard user lands where they asked to go rather than back
- *    at the top
- *  - that target gets a temporary tabindex, removed on blur, so the page is not
- *    left with a permanently focusable <section>
+ * Closing by any route — Escape, the backdrop, the Close button — returns
+ * focus to the control that opened it.
  */
 export function HomeChrome() {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const openButtonRef = useRef<HTMLButtonElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
-  // Set when a link inside the menu was followed, read once the dialog closes.
-  const destination = useRef<string | null>(null);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -36,29 +31,11 @@ export function HomeChrome() {
 
   const handleClose = useCallback(() => {
     setOpen(false);
-
-    const hash = destination.current;
-    destination.current = null;
-    if (!hash) {
-      openButtonRef.current?.focus({ preventScroll: true });
-      return;
-    }
-
-    const target = document.querySelector<HTMLElement>(hash);
-    if (!target) {
-      openButtonRef.current?.focus({ preventScroll: true });
-      return;
-    }
-
-    target.setAttribute("tabindex", "-1");
-    target.focus({ preventScroll: true });
-    // Read the flag the hero writes, so a visitor who paused the motion also
-    // gets an instant jump rather than a long smooth scroll.
-    const paused = document.documentElement.dataset.motion === "paused";
-    target.scrollIntoView({ behavior: paused ? "instant" : "smooth" });
-    target.addEventListener("blur", () => target.removeAttribute("tabindex"), {
-      once: true,
-    });
+    // Focus goes back to the control that opened the menu, so closing by
+    // Escape, backdrop or the Close button all leave the keyboard where it
+    // started. On a menu click the component is unmounting into the next page
+    // anyway, and that page takes focus from the top.
+    openButtonRef.current?.focus({ preventScroll: true });
   }, []);
 
   const openMenu = () => {
@@ -67,25 +44,29 @@ export function HomeChrome() {
     closeButtonRef.current?.focus();
   };
 
-  const onMenuLinkClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    const link = event.currentTarget;
-    const isSamePageAnchor =
-      link.hash && link.origin === location.origin && link.pathname === location.pathname;
-    if (isSamePageAnchor) {
-      event.preventDefault();
-      destination.current = link.hash;
-      history.replaceState(null, "", link.hash);
-    }
-    dialogRef.current?.close();
-  };
+  // Every menu item is a page link now, so this only has to shut the dialog
+  // and let <Link> navigate. (The delivered version also moved focus to an
+  // in-page section when a menu anchor was followed; nothing in the menu is an
+  // anchor any more, so that path was removed rather than left unreachable.)
+  const onMenuLinkClick = () => dialogRef.current?.close();
 
+  /**
+   * Every item goes to its own page, not to a section of this one. The labels
+   * are the delivered design's; the destinations match content/site.ts's
+   * navLinks, so the menu and the shared <Nav /> on every other page cannot
+   * drift apart.
+   *
+   * "Our craft" -> /work is deliberate and matches the note in site.ts: the
+   * destination is one concept build plus the studio's own site, and calling
+   * it "Work" in a nav promises a client portfolio that isn't there yet.
+   */
   const MENU = [
-    { n: "01", label: "About", href: "#about" },
-    { n: "02", label: "Our craft", href: "#work" },
-    { n: "03", label: "Services", href: "#services" },
+    { n: "01", label: "About", href: "/about" },
+    { n: "02", label: "Our craft", href: "/work" },
+    { n: "03", label: "Services", href: "/services" },
     { n: "04", label: "Pricing", href: "/pricing" },
     { n: "05", label: "Insights", href: "/insights" },
-    { n: "06", label: "Let’s chat", href: "#contact" },
+    { n: "06", label: "Let’s chat", href: "/contact" },
   ];
 
   return (
@@ -151,13 +132,13 @@ export function HomeChrome() {
 
         <nav className="menu-nav" aria-label="Main navigation">
           {MENU.map((item) => (
-            <a key={item.n} href={item.href} onClick={onMenuLinkClick}>
+            <Link key={item.n} href={item.href} onClick={onMenuLinkClick}>
               <span>{item.n}</span>
               {item.label}
               <span className="menu-arrow" aria-hidden="true">
                 ↗
               </span>
-            </a>
+            </Link>
           ))}
         </nav>
 
