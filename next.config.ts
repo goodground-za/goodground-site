@@ -46,7 +46,31 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   async headers() {
-    return [{ source: "/:path*", headers: securityHeaders }];
+    return [
+      { source: "/:path*", headers: securityHeaders },
+      /*
+       * The ambient hero clip and its poster, cached properly.
+       *
+       * Files in public/ are served `max-age=0, must-revalidate` by default.
+       * That was tolerable while the clip appeared on one page; since
+       * 2026-09-12 it is behind every hero, so without this every navigation
+       * revalidates 2.6MB over the network before the video can start.
+       *
+       * A day fresh, then a week of serving the cached copy while a new one is
+       * fetched in the background. Deliberately NOT `immutable`: the filename
+       * is stable, so an immutable year would mean a replaced clip never
+       * reaching anyone who had already visited.
+       */
+      {
+        source: "/home2026/:file(goodground-motion\.mp4|goodground-motion-poster\.jpg)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=86400, stale-while-revalidate=604800",
+          },
+        ],
+      },
+    ];
   },
   async redirects() {
     return [

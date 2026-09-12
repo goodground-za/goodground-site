@@ -22,7 +22,6 @@ export default function StartProjectPage() {
       <BreadcrumbSchema trail={[{ name: "Start your project", path: "/start-project" }]} />
 
       <PageHero
-        video
         eyebrow="Start your project"
         title="Let's plant something that grows."
         intro="A few quick questions, then your details. It takes about a minute, and there's no obligation, just a starting point for the conversation."

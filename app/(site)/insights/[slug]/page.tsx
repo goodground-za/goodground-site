@@ -6,6 +6,7 @@ import { MagneticButton } from "@/components/motion-gsap/MagneticButton";
 import { RevealSection } from "@/components/motion-gsap/RevealSection";
 import { SplitWords } from "@/components/motion-gsap/SplitWords";
 import { ShareButtons } from "@/components/ShareButtons";
+import { AmbientVideo } from "@/components/home2026/AmbientVideo";
 import { articles, articleWordCount, type Block, getArticle } from "@/content/articles";
 import { servicePages } from "@/content/servicePages";
 import { site } from "@/content/site";
@@ -92,16 +93,28 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           title rather than a full generic hero, so a long read isn't preceded
           by a screen of ink. Square, not scalloped, since 2026-09-11: nothing
           on the homepage has a rounded section edge. */}
-      <section className="bg-ht-purple relative z-10 px-gutter pt-28 pb-14 sm:pt-32">
-        <div className="mx-auto max-w-[760px]">
+      <section className="bg-ht-purple relative z-10 overflow-hidden px-gutter pt-28 pb-14 sm:pt-32">
+        {/* The clip as a background layer. This band is not a PageHero — it is
+            sized to the article's own meta rather than being a full hero — so
+            it gets the video without the rest of that component. The scope
+            wraps ONLY this layer, never the copy below it: home2026.css styles
+            bare elements and would out-specify the utilities this header is
+            built from. */}
+        <div className="home-2026 ambient-layer">
+          <AmbientVideo />
+        </div>
+        <div className="relative mx-auto max-w-[760px]">
           <RevealSection>
-            <Link href="/insights" className="inline-flex items-center gap-1.5 text-[14px] font-medium text-white/70 transition-colors hover:text-white">
+            <Link href="/insights" className="inline-flex items-center gap-1.5 text-[14px] font-medium text-white transition-colors hover:text-ht-orange">
               <span aria-hidden="true">←</span> All insights
             </Link>
           </RevealSection>
 
-          <div className="mt-8 flex flex-wrap items-center gap-3 text-[13px] font-medium text-white/70">
-            <span className="font-ht-display text-ht-pink text-[13px] font-bold tracking-[0.1em] uppercase">
+          <div className="mt-8 flex flex-wrap items-center gap-3 text-[13px] font-medium text-white/90">
+            {/* White, not ht-pink: the accent orange measured 1.30:1 against
+                the clip behind this band, which is its own colour. White
+                uppercase is the eyebrow treatment every other hero uses. */}
+            <span className="font-ht-display text-[13px] font-bold tracking-[0.1em] text-white uppercase">
               {article.category}
             </span>
             <span>{dateFmt.format(new Date(article.date))}</span>
@@ -116,7 +129,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             className="font-ht-display mt-5 text-[clamp(2rem,4.6vw,3.25rem)] leading-[1.08] font-bold text-white uppercase"
           />
           <div className="mt-5 flex flex-wrap items-center justify-between gap-4">
-            <p className="text-[14px] text-white/60">By {article.author}</p>
+            <p className="text-[14px] text-white/90">By {article.author}</p>
             <ShareButtons url={articleUrl} title={article.title} dark />
           </div>
         </div>

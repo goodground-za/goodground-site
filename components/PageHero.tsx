@@ -30,7 +30,7 @@ export function PageHero({
   title,
   intro,
   children,
-  video = false,
+  video = true,
 }: {
   eyebrow: string;
   title: string;
@@ -38,13 +38,18 @@ export function PageHero({
   /** Anything below the intro: jump-index chips, etc. */
   children?: ReactNode;
   /**
-   * Run the homepage's ambient clip behind this hero.
+   * Run the homepage's ambient clip behind this hero. On by default since
+   * 2026-09-12 — Johandre's call, every hero banner carries it.
    *
-   * Deliberately opt-in and off by default. The file is 2.6MB, and a signature
-   * that appears on every page stops being a signature — so it is reserved for
-   * the few openings where a full-bleed moving background actually earns its
-   * weight. Everything else opens on flat ink, which is the same surface the
-   * clip sits on anyway.
+   * It was opt-in on three pages before that, on the argument that a signature
+   * appearing everywhere stops being one. Recorded because the reasoning is
+   * still worth knowing, not because it is still the decision.
+   *
+   * The prop stays so a hero can still opt out where a moving background would
+   * fight the content. Nothing does today. The clip's weight is handled by a
+   * cache header in next.config.ts rather than by rationing the pages it
+   * appears on: it was being served `max-age=0, must-revalidate`, so every
+   * navigation revalidated 2.6MB before it could play.
    */
   video?: boolean;
 }) {

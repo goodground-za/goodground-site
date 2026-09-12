@@ -283,6 +283,13 @@
  * ------------------------------------------------------------------------- */
 .home-2026 .page-hero{position:relative;isolation:isolate;overflow:hidden;padding-block:clamp(9.5rem,13vw,13rem) clamp(3.75rem,6vw,6rem)}
 .home-2026 .page-hero--video{background:var(--ink);color:white;min-height:min(38rem,78svh);display:flex;align-items:flex-end}
+/* A stronger scrim than the homepage hero's.
+   That one runs 8% to 48% because the only small text over it sits at the
+   very bottom. An inner-page hero puts an eyebrow and an intro paragraph
+   over the clip much higher up, and measured against the moving footage
+   they came out at 3.43:1 and 4.44:1. Do not "simplify" this back to the
+   hero gradient. */
+.home-2026 .page-hero--video .hero-media:after{background:linear-gradient(180deg,rgba(16,3,13,.45),rgba(16,3,13,.58) 55%,rgba(16,3,13,.72))}
 .home-2026 .page-hero__inner{position:relative;z-index:1;width:100%}
 .home-2026 .page-hero__eyebrow{margin-bottom:1.6rem;color:rgba(255,255,255,.72)}
 .home-2026 .page-hero--video .page-hero__eyebrow{color:white}
@@ -292,6 +299,21 @@
 /* The toggle sits in the hero's bottom-right instead of the homepage's bottom
    bar, which does not exist here. Still 44px and still in the tab order. */
 .home-2026 .page-hero__motion{position:absolute;right:var(--gutter);bottom:.75rem;z-index:2}
+/* The clip as a background layer inside a band that is NOT a .page-hero
+   (the article header on /insights/[slug]).
+
+   Two things it has to do. Paint no background of its own, or it would
+   cover the video it exists to show — .home-2026 sets one, so this has to
+   out-specify it, which (0,2,0) does. And establish a stacking context,
+   so .hero-media's z-index:-2 resolves inside this layer instead of
+   dropping behind the band's own background and disappearing. */
+.home-2026.ambient-layer{position:absolute;inset:0;background:transparent;isolation:isolate}
+/* A stronger, flatter scrim than the homepage hero's.
+   That gradient runs 8% at the top to 48% at the bottom because its content
+   sits at the very bottom. This band's content spans its whole height, and
+   measured against the clip the back link came out at 3.44:1 and the
+   category label at 1.30:1. Even coverage, dark enough for 14px text. */
+.home-2026.ambient-layer .hero-media:after{background:linear-gradient(180deg,rgba(16,3,13,.62),rgba(16,3,13,.72))}
 /* The same entrance the homepage hero uses, so the two openings move alike.
    The reduced-motion block at the foot of this file cancels it. */
 .home-2026 .page-hero__eyebrow, .home-2026 .page-hero h1{animation:hero-in 1s var(--ease) both}

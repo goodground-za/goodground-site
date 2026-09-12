@@ -43,7 +43,6 @@ export default function AboutPage() {
       <BreadcrumbSchema trail={[{ name: "About", path: "/about" }]} />
 
       <PageHero
-        video
         eyebrow="About GoodGround"
         title="We believe every business deserves a strong foundation."
       >

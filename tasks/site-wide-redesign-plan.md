@@ -272,3 +272,51 @@ both `/legal` anchors exist. Every painted inset container on `/services` is
 24px or a pill; what remains at 0 is full-bleed bands and hairline-ruled rows,
 which is the homepage's own idiom. `/` and `/contact` are Lighthouse mobile
 100/100/100/100, zero failed audits. No horizontal scroll at 390px.
+
+## 2026-09-12 — the clip goes on every hero
+
+Johandre's call, overriding the reservation above. `PageHero`'s `video` prop
+defaults to `true`, the three explicit opt-ins came off, and the article header
+on `/insights/[slug]` — which is a hero banner but not a `PageHero` — gets the
+clip as a background layer behind its own markup.
+
+The prop stays, so a hero can still opt out. Nothing does.
+
+### It could not just be switched on
+
+**Caching.** Files in `public/` are served `max-age=0, must-revalidate`. That was
+survivable on one page; on seventeen it means every navigation revalidates 2.6MB
+before the video can start. `next.config.ts` now sends
+`max-age=86400, stale-while-revalidate=604800` for the clip and its poster. Not
+`immutable`: the filename is stable, so an immutable year would mean a replaced
+clip never reaching anyone who had already visited.
+
+**Contrast.** The delivered hero's scrim runs 8% at the top to 48% at the bottom,
+which works because the only small text over it sits at the very bottom. An
+inner-page hero puts an eyebrow and an intro much higher up. Measured against the
+moving footage — sampling the decoded frames at five points through the clip and
+compositing the CSS gradient by hand, rather than eyeballing one screenshot —
+the eyebrow came out at **3.43:1** and the intro at **4.44:1**, both under the
+bar. The article header was worse: its category label was the accent orange over
+the clip's own reddish orange at **1.30:1**, and the back link at 3.44:1.
+
+Two new scrims, one per variant, and the article's category label is now white
+like every other eyebrow on the site. Re-measured: nothing under 7.8:1 on a
+`PageHero`, and all 24 text nodes in the article header clear the bar.
+
+**Do not "simplify" either scrim back to the hero gradient.**
+
+### The measurement bug worth remembering
+
+The first article-header run reported three elements at ~1.1:1. They were fine.
+`text-white/90` computes to `oklab()`, and the inline sampler only parsed
+`rgb()` — so it read the lightness as a red channel and called white black. The
+same trap as the step-2 audit, in a different script. Any colour read out of
+`getComputedStyle` in this codebase needs an oklab path.
+
+### Still not on /work/[slug]
+
+A case study's hero is the project's own full-bleed screenshot. That is the
+thing the page is about, so putting the GoodGround clip there would replace the
+content with branding. Left alone deliberately — say the word if it should
+change.

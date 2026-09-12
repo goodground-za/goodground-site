@@ -78,7 +78,6 @@ export default function ServicesPage() {
       <FAQSchema items={servicesFaqItems} id="services-faq" />
 
       <PageHero
-        video
         eyebrow="What we do"
         title="Websites built properly. Paid for sensibly."
         // Names the real town rather than just "South Africa" (SEO audit
