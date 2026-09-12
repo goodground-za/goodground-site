@@ -137,9 +137,9 @@ text started 24px further in than the section directly below it, on every page.
 A new `px-gutter` utility carries the homepage's exact value; 56 class strings
 across 21 files now use it.
 
-**Flattening, at the token level.** `--radius-block` 40px → 0 (the homepage has
-no rounded section edges), `--radius-card` stays 24px (it is exactly what the
-homepage gives its own images), `--radius-pill` stays. `--shadow-soft` and
+**Flattening, at the token level.** `--radius-card` stays 24px (it is exactly
+what the homepage gives its own images), `--radius-pill` stays.
+`--radius-block` went 40px → 0 → **24px** — see the correction below. `--shadow-soft` and
 `--shadow-lift` were redefined from blurs into **hairline rings** — the
 homepage's real idiom — so 27 existing `shadow-soft` call sites picked up the
 new language untouched. Separately, 26 hard offset shadows
@@ -227,3 +227,48 @@ actual glyph, or check the bytes (`grep | cat -A`) after any escape round-trip.
   expand/collapse has no counterpart on the homepage to copy.
 - **`components/hometest2/`** is untouched. It is the rollback path.
 
+## 2026-09-12 — three corrections from Johandre
+
+### The logos and the footer were still pointing at a single page
+
+The delivered design was one page, so its logo lockups and five of its footer
+links were in-page anchors. The menu was fixed on 2026-09-11; the footer and the
+two logos were missed, and once the design went site-wide they were simply dead:
+there is no `#services` on `/about`, and the logo scrolled you to the top of the
+page you were already on.
+
+Now every footer link goes to a real page, matching `navLinks` in
+`content/site.ts` and the menu in `HomeChrome`, and all three logo lockups
+(header, menu, footer wordmark) go to `/`. `#top` survives in one place only, the
+back-to-top control, where it is correct — `#top` is the header's id and every
+page renders it.
+
+**The one thing that broke doing it:** wrapping the footer's `gg` mark in a link
+collapsed it to 0×0. `goodground-mark.svg` carries only a `viewBox`, so it has no
+intrinsic width; that was fine while the `<img>` was a block-level child of a
+full-width column, and degenerate the moment its parent was shrink-to-fit. Fixed
+with an explicit `width` on the mark rather than by removing the link.
+
+### `--radius-block: 0` was wrong
+
+Reported as "some of the containers on the inner pages have 90 degree corners".
+The reasoning behind 0 was right about the homepage and wrong about what the
+token controls. The homepage genuinely has no rounded **section** edges — still
+true, and its sections carry no radius token at all. But **every** `rounded-block`
+call site is an inset **panel**: a form, a dark bento block, a case-study figure.
+Squaring those did not match the homepage; it left hard corners on a page whose
+cards were still 24px.
+
+The site now has one container radius. `--radius-block` and `--radius-card` are
+both 24px, deliberately identical: a panel and a card side by side with different
+corners is the inconsistency the token exists to prevent. Sections stay square by
+having no radius, not by this being 0.
+
+### Verified after
+
+Header, menu and footer logos all navigate to `/`; the menu logo also closes the
+dialog and releases the scroll lock. Every footer destination returns 200 and
+both `/legal` anchors exist. Every painted inset container on `/services` is
+24px or a pill; what remains at 0 is full-bleed bands and hairline-ruled rows,
+which is the homepage's own idiom. `/` and `/contact` are Lighthouse mobile
+100/100/100/100, zero failed audits. No horizontal scroll at 390px.

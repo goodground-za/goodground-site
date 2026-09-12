@@ -72,10 +72,13 @@ export function HomeChrome() {
   return (
     <>
       <header className="site-header" id="top">
-        <a className="brand-pill" href="#top" aria-label="GoodGround home">
+        {/* The logo goes home, not to #top. It was an in-page anchor from the
+            delivered single-page design; on an inner page that scrolled you to
+            the top of the page you were already on. */}
+        <Link className="brand-pill" href="/" aria-label="GoodGround home">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/home2026/goodground-logo.svg" width={182} height={30} alt="GoodGround" />
-        </a>
+        </Link>
         <span className="header-caption">
           Web development studio
           <br />
@@ -103,7 +106,7 @@ export function HomeChrome() {
         onClose={handleClose}
       >
         <div className="menu-top">
-          <a className="brand-pill" href="#top">
+          <Link className="brand-pill" href="/" onClick={onMenuLinkClick}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/home2026/goodground-logo.svg"
@@ -111,7 +114,7 @@ export function HomeChrome() {
               height={30}
               alt="GoodGround home"
             />
-          </a>
+          </Link>
           <button
             type="button"
             ref={closeButtonRef}

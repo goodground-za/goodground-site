@@ -251,7 +251,11 @@
 .home-2026 .contact-email span{margin-left:1rem}
 .home-2026 .footer{padding-top:4.5rem}
 .home-2026 .footer-top{display:grid;grid-template-columns:1.6fr 1fr 1fr auto;gap:3rem;padding-bottom:4rem}
-.home-2026 .footer-mark{filter:brightness(0) invert(1);margin-bottom:1.75rem;max-height:4rem;width:auto}
+/* Explicit width, not auto. goodground-mark.svg carries only a viewBox, so
+   it has no intrinsic width — fine while this img was a block-level child
+   of a full-width column, but it collapsed to 0x0 once it was wrapped in a
+   shrink-to-fit link. 4rem matches the width it always rendered at. */
+.home-2026 .footer-mark{filter:brightness(0) invert(1);margin-bottom:1.75rem;max-height:4rem;width:4rem}
 .home-2026 .footer-contact p{color:#a8a8a8;margin-bottom:1rem}
 .home-2026 .footer-contact>a{font-size:1rem}
 .home-2026 .footer-links{display:flex;flex-direction:column;align-items:flex-start;gap:.55rem}
@@ -259,8 +263,12 @@
 .home-2026 .footer-links>a:hover{text-decoration:underline;text-underline-offset:4px}
 .home-2026 .back-top{display:grid;place-items:center;border:1px solid var(--white-line);border-radius:50%;height:3.5rem;width:3.5rem;font-size:2rem;transition:background .3s}
 .home-2026 .back-top:hover{background:var(--orange);color:#111}
-.home-2026 .footer-wordmark{border-top:1px solid var(--white-line);padding-top:3rem;padding-bottom:2rem}
-.home-2026 .footer-wordmark>img{width:100%;height:auto;filter:brightness(0) invert(1)}
+/* .footer-wordmark is a <a> to the homepage now, not a <div>, so it needs
+   display:block to keep its padding. The img selector is descendant, not
+   child, for the same reason. */
+.home-2026 .footer-wordmark{display:block;border-top:1px solid var(--white-line);padding-top:3rem;padding-bottom:2rem}
+.home-2026 .footer-wordmark img{width:100%;height:auto;filter:brightness(0) invert(1)}
+.home-2026 .footer-mark-link{display:inline-block}
 .home-2026 .footer-bottom{display:flex;justify-content:space-between;gap:1.5rem;padding-block:1.8rem 2rem;font-size:.875rem;color:#999}
 /* ---------------------------------------------------------------------------
  * Inner-page hero — components/PageHero.tsx, used by 17 pages.

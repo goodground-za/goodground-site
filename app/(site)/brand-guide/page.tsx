@@ -350,10 +350,11 @@ export default function BrandGuidePage() {
               <div className="flex items-center gap-4">
                 <div className="rounded-block bg-ht-orange ring-ht-purple/12 size-16 shrink-0 ring-1" />
                 <div>
-                  <p className="font-ht-display text-ht-purple text-[13px] font-bold">--radius-block · 0px</p>
+                  <p className="font-ht-display text-ht-purple text-[13px] font-bold">--radius-block · 24px</p>
                   <p className="font-ht-body text-ht-purple/70 text-[13px]">
-                    Section bands and form panels. Square since 2026-09-11: nothing on the homepage
-                    has a rounded section edge.
+                    Inset panels: forms, dark bento blocks, case-study figures. The same 24px as
+                    --radius-card on purpose — the site has one container radius. Full-bleed
+                    sections stay square by carrying no radius at all, not by this token being 0.
                   </p>
                 </div>
               </div>

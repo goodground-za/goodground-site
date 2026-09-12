@@ -18,15 +18,25 @@
 @theme {
   --color-ink: #010602; /* near-black, for text needing max contrast on a bright surface */
 
-  /* 2026-09-11, rolling the homepage design out site-wide.
+  /* 2026-09-11, rolling the homepage design out site-wide; 2026-09-12, the
+     correction below.
 
-     The homepage has no rounded SECTIONS — it is edge to edge, and a 40px
-     scallop on an inner-page panel was the loudest remaining tell that you had
-     left it. So radius-block is 0. radius-card stays 24px because that is
-     exactly what the homepage gives its own images (.project-image and
-     .intro-visual are both 1.5rem), and radius-pill stays because its buttons
-     are pills (100px). */
-  --radius-block: 0px;
+     The site has ONE container radius. 24px, because that is exactly what the
+     homepage gives its own images (.project-image and .intro-visual are both
+     1.5rem). radius-block and radius-card are deliberately the same value: a
+     panel and a card sitting next to each other with different corners is the
+     inconsistency this is here to prevent. radius-pill stays, because the
+     buttons are pills.
+
+     The first pass set radius-block to 0. That was wrong, and it is worth
+     saying why so it isn't "fixed" back. The homepage has no rounded SECTION
+     edges — true, and still true: its sections run edge to edge and none of
+     them carries this token. But every `rounded-block` call site is an INSET
+     PANEL (a form, a dark bento block, a case-study figure), and squaring those
+     did not match the homepage, it just left hard corners floating on a page
+     whose cards were still round. Sections stay square by having no radius at
+     all; containers are round. */
+  --radius-block: 24px;
   --radius-card: 24px;
   --radius-pill: 999px;
 
