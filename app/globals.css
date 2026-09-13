@@ -88,6 +88,19 @@
   --color-ht-purple: #111111; /* THE DARK SURFACE — ink, not purple, since 2026-09-11 */
   --color-ht-cream: #f7f7f4; /* base page background — "paper" in the new design */
 
+  /* The retired 2026 brand purple, brought back 2026-09-13 as the surface for
+     PROMOTIONAL BLOCKS ONLY: the homepage offer band, Reasons, the Growth
+     closer, the About invitation, the article CTA and the capacity band.
+
+     It is deliberately a separate token rather than a repoint of ht-purple,
+     which means ink #111111 and carries every dark section, the footer and
+     the headings on paper. Repointing that would turn the whole site purple.
+
+     Constraint that does NOT apply on ink: orange is 4.08:1 here, so it is
+     large text and icons only on this surface, never small text. White is
+     15.7:1. */
+  --color-ht-deep-purple: #2e1848;
+
   --font-ht-display: var(--font-oswald), "Arial Narrow", ui-sans-serif, system-ui, sans-serif;
   --font-ht-body: var(--font-ibm-plex-sans), ui-sans-serif, system-ui, sans-serif;
 

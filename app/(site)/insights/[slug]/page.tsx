@@ -172,7 +172,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           ) : null}
 
           {/* Soft CTA */}
-          <div className="bg-ht-orange rounded-block mt-14 overflow-hidden">
+          <div className="bg-ht-deep-purple rounded-block mt-14 overflow-hidden">
             <div className="p-7 sm:p-10">
               {/* Ink, not white. White on this orange is 3.86:1 — it would pass
                   the 3:1 large-text bar on the heading alone, but AGENTS.md
@@ -182,13 +182,13 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                   Full ink, not ink/80: /80 measured 4.88:1 against the old
                   #fe431a and 4.48:1 against #f13e1b, which is under the bar.
                   Full ink is 4.90:1. */}
-              <h2 className="font-ht-display text-ink text-[clamp(1.35rem,3vw,2rem)] leading-tight font-bold uppercase">
+              <h2 className="font-ht-display text-[clamp(1.35rem,3vw,2rem)] leading-tight font-bold text-white uppercase">
                 Ready to be found online?
               </h2>
-              <p className="text-ink mt-3 max-w-[46ch] text-[15px] leading-[1.6]">
+              <p className="mt-3 max-w-[46ch] text-[15px] leading-[1.6] text-white/85">
                 We build fast, honest websites for South African small businesses, with a choice of
                 how you pay for them. Have a look at{" "}
-                <Link href="/services" className="underline underline-offset-4 hover:no-underline">
+                <Link href="/services" className="text-white underline underline-offset-4 hover:no-underline">
                   what we do
                 </Link>
                 , or tell us about yours.
@@ -203,14 +203,14 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 <MagneticButton>
                   <Link
                     href="/start-project"
-                    className="font-ht-display bg-ht-purple rounded-pill inline-block px-7 py-3.5 text-[14px] font-bold tracking-wide text-white uppercase shadow-soft transition-transform duration-200 hover:scale-[1.03] active:scale-[0.97]"
+                    className="font-ht-display bg-ht-orange text-ink rounded-pill inline-block px-7 py-3.5 text-[14px] font-bold tracking-wide uppercase transition-transform duration-200 hover:scale-[1.03] active:scale-[0.97]"
                   >
                     Start your project →
                   </Link>
                 </MagneticButton>
                 <Link
                   href="/pricing"
-                  className="text-ink text-[14px] font-bold underline underline-offset-4 hover:no-underline"
+                  className="text-[14px] font-bold text-white underline underline-offset-4 hover:no-underline"
                 >
                   Not ready yet? See how pricing works
                 </Link>

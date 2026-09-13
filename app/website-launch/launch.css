@@ -130,9 +130,24 @@
   color: #fff;
 }
 
+/*
+ * Unused since 2026-09-13. The capacity band was a solid orange ground with
+ * ink type and read as too harsh, so it moved to .gg-launch__dark. Kept because
+ * the rule is correct if a smaller orange block ever wants it.
+ */
 .gg-launch__accent {
   background: var(--gl-accent);
   color: var(--gl-ink);
+}
+
+/*
+ * The promotional surface, shared with the homepage's offer band. See the token
+ * comment in globals.css. Orange is 4.08:1 here rather than 4.90:1 on ink, so
+ * nothing small and orange goes on it.
+ */
+.gg-launch__purple {
+  background: var(--color-ht-deep-purple);
+  color: #fff;
 }
 
 .gg-launch__eyebrow {

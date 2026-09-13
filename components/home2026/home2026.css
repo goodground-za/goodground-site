@@ -49,6 +49,17 @@
 .home-2026 .section-pad{padding-block:clamp(5rem,8.3vw,9rem)}
 .home-2026 .section-light{background:var(--paper);color:var(--ink)}
 .home-2026 .section-dark{background:var(--ink);color:white}
+/* The promotional surface. See the token comment in globals.css for why this
+   is a colour of its own and not a repointed ht-purple. */
+.home-2026 .section-purple{background:var(--color-ht-deep-purple);color:white}
+/* Guard for any two dark sections that end up adjacent: without it they read
+   as one long block. Nothing matches it today — the purple promotional
+   surface separates Process from Reasons — but the next reorder might. */
+.home-2026 .section-dark + .section-dark{border-top:1px solid var(--white-line)}
+/* No section uses this any more. The solid orange grounds moved to the purple
+   promotional surface on 2026-09-13: full-bleed orange with black type read as
+   too harsh. Kept because it is part of the delivered design system and the
+   rule is correct if a smaller block ever wants it. */
 .home-2026 .section-orange{background:var(--orange);color:var(--ink)}
 .home-2026 .eyebrow{font-size:.875rem;line-height:1.4;text-transform:uppercase;letter-spacing:.08em}
 .home-2026 .section-meta{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;margin-bottom:4rem}
@@ -187,10 +198,17 @@
 .home-2026 .process-list h3{font-size:2.3rem;text-transform:uppercase;line-height:1.1;margin-bottom:.9rem}
 .home-2026 .process-list p{color:#bbb;max-width:28rem}
 .home-2026 .process-list li:last-child{border-bottom:1px solid var(--white-line)}
-.home-2026 .small-brand-mark{filter:brightness(0)}
+/* Inverted, not blackened: this sits on the dark surface since 2026-09-13. */
+.home-2026 .small-brand-mark{filter:brightness(0) invert(1)}
 .home-2026 .reasons .section-title{font-size:clamp(3.5rem,7.3vw,8.5rem)}
 .home-2026 .reason-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3.2rem 3.5rem}
-.home-2026 .reason-grid article{border-top:1px solid #1115;padding-top:1.2rem}
+.home-2026 .reason-grid article{border-top:1px solid var(--line);padding-top:1.2rem}
+/* On the dark surface the ink hairline disappears, so the rule and the body
+   copy both switch. Paper keeps the ink versions. */
+.home-2026 .section-dark .reason-grid article,
+.home-2026 .section-purple .reason-grid article{border-top-color:var(--white-line)}
+.home-2026 .section-dark .reason-grid p,
+.home-2026 .section-purple .reason-grid p{color:#c9c6d2}
 .home-2026 .reason-number{display:block;font-size:.875rem;margin-bottom:2.5rem}
 .home-2026 .reason-grid h3{font-size:clamp(1.7rem,2.3vw,2.5rem);text-transform:uppercase;line-height:1.2;margin-bottom:1rem}
 .home-2026 .reason-grid p{max-width:25rem}
@@ -203,24 +221,20 @@
 .home-2026 .growth-cta .display-heading{max-width:20ch}
 .home-2026 .growth-cta__lede{margin-top:1.75rem;max-width:44rem;font-size:1.0625rem}
 .home-2026 .growth-cta__actions{display:flex;flex-wrap:wrap;align-items:center;gap:1.5rem 2.5rem;margin-top:2.75rem}
-/* button-white hovers to orange on the homepage; on an orange ground that
-   would erase it, so it hovers to ink here instead. */
-.home-2026 .growth-cta .button-white:hover{background:var(--ink);color:white}
+/* .growth-cta and .launch-promo sit on the dark surface, so button-white’s
+   normal hover to orange reads correctly and needs no override. */
 /* ---- Website Launch promotion, announced on the homepage --------------
    The orange band under the hero. Ink throughout: white on this orange is
    3.86:1 and AGENTS.md rules it out for text. The full stop after the
    heading is ink too, because .accent-text is the orange itself and would
    disappear here. */
 .home-2026 .launch-promo .display-heading{max-width:16ch}
-.home-2026 .launch-promo__stop{color:var(--ink)}
 .home-2026 .launch-promo .section-description{align-self:end}
 .home-2026 .launch-promo__flag{font-weight:700;margin-bottom:.65rem}
-.home-2026 .launch-promo__foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem 3rem;margin-top:3rem;padding-top:2.25rem;border-top:1px solid rgba(17,17,17,.25)}
-.home-2026 .launch-promo__detail{max-width:46rem;font-size:1.0625rem}
+.home-2026 .launch-promo__foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem 3rem;margin-top:3rem;padding-top:2.25rem;border-top:1px solid var(--white-line)}
+.home-2026 .launch-promo__detail{max-width:46rem;font-size:1.0625rem;color:#bfbfbf}
 .home-2026 .launch-promo .button{flex-shrink:0}
-/* button-white hovers to orange on the homepage, which would erase it on an
-   orange ground, so it hovers to ink here. Same fix as .growth-cta. */
-.home-2026 .launch-promo .button-white:hover{background:var(--ink);color:white}
+
 .home-2026 .strategy-layout{display:grid;grid-template-columns:1fr 1.2fr;gap:6.5rem}
 .home-2026 .origin-note{margin-top:3rem;max-width:29rem}
 .home-2026 .origin-note h3{font-family:var(--font-ibm-plex-sans),sans-serif;font-size:1rem;margin-bottom:1rem}

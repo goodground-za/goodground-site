@@ -254,6 +254,12 @@ export default function BrandGuidePage() {
             textClassName="text-ht-purple"
           />
           <Swatch
+            name="ht-deep-purple"
+            token="--color-ht-deep-purple"
+            hex="#2e1848"
+            usage="The retired 2026 brand purple, brought back 2026-09-13 as the surface for promotional blocks only: the homepage offer band, Reasons, the Growth closer, the About invitation, the article CTA and the launch page's capacity band. White on it is 15.7:1. Orange is 4.08:1 here rather than 4.90:1 on ink, so it is large text and icons only on this surface, never small text."
+          />
+          <Swatch
             name="ink"
             token="--color-ink"
             hex="#010602"

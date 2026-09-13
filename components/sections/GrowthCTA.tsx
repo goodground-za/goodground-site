@@ -14,7 +14,7 @@ const ARROW = "↗︎";
 export function GrowthCTA() {
   return (
     <div className="home-2026">
-      <section className="section-orange section-pad growth-cta" aria-labelledby="growth-cta-title">
+      <section className="section-purple section-pad growth-cta" aria-labelledby="growth-cta-title">
         <div className="wrap">
           <p className="eyebrow">Growth starts here</p>
           <h2 className="display-heading reveal" id="growth-cta-title">

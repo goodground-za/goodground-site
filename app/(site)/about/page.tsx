@@ -219,7 +219,7 @@ export default function AboutPage() {
           which was the last centred block on a page that is otherwise ranged
           left throughout. */}
       <div className="home-2026">
-        <section className="section-orange section-pad growth-cta" aria-labelledby="about-invite">
+        <section className="section-purple section-pad growth-cta" aria-labelledby="about-invite">
           <div className="wrap">
             <p className="eyebrow">An invitation</p>
             <h2 className="display-heading reveal" id="about-invite">

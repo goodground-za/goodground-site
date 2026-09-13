@@ -30,7 +30,7 @@ const ARROW = "↗︎";
 export function LaunchPromo() {
   return (
     <section
-      className="launch-promo section-orange section-pad"
+      className="launch-promo section-purple section-pad"
       aria-labelledby="launch-promo-title"
     >
       <div className="wrap">
@@ -41,8 +41,12 @@ export function LaunchPromo() {
 
         <div className="section-heading-row">
           <h2 className="display-heading reveal" id="launch-promo-title">
-            Launch your first website for {launchOffer.priceInline}
-            <span className="launch-promo__stop">.</span>
+            {/* The accent points at the price, which is what the offer turns on.
+                Orange on ink is 4.90:1. The rendered text is unchanged:
+                "Launch your first website for R845 per month." */}
+            Launch your first website for{" "}
+            <span className="accent-text">{launchOffer.price}</span> {launchOffer.pricePeriod}
+            <span className="accent-text">.</span>
           </h2>
 
           <div className="section-description reveal">

@@ -352,7 +352,7 @@ export default function WebsiteLaunchPage() {
 
         {/* -------------------------------------------------------- capacity */}
         <section
-          className="gg-launch__section gg-launch__accent"
+          className="gg-launch__section gg-launch__purple"
           aria-labelledby="gl-capacity-title"
         >
           <div className="gg-launch__wrap">
