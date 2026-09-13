@@ -11,6 +11,7 @@ import { caseStudies, caseStudyKindLabel } from "@/content/caseStudies";
 import { site } from "@/content/site";
 import {
   launchCapacity,
+  launchFacts,
   launchEnquiry,
   launchFaqs,
   launchHero,
@@ -183,11 +184,15 @@ export default function WebsiteLaunchPage() {
                     next. The supporting detail follows. This is a DOM reorder,
                     not a CSS one, so the reading order a screen reader gets is
                     the same order everyone sees. */}
-                <p className="gg-launch__price">
-                  <span className="gg-launch__price-amount">{launchOffer.price}</span>
-                  <span className="gg-launch__price-period">{launchOffer.pricePeriod}</span>
-                </p>
-                <p className="gg-launch__price-fees">{launchOffer.includedFees}</p>
+                {/* The price as an object rather than a sentence. It was a line
+                    of running text and the eye slid straight past it. */}
+                <div className="gg-launch__price-card">
+                  <p className="gg-launch__price">
+                    <span className="gg-launch__price-amount">{launchOffer.price}</span>
+                    <span className="gg-launch__price-period">{launchOffer.pricePeriod}</span>
+                  </p>
+                  <p className="gg-launch__price-fees">{launchOffer.includedFees}</p>
+                </div>
 
                 <div className="gg-launch__hero-actions">
                   <LaunchCta placement="hero" className="gg-launch__btn gg-launch__btn--lg" />
@@ -232,24 +237,53 @@ export default function WebsiteLaunchPage() {
           </div>
         </section>
 
+        {/* ----------------------------------------------------------- facts */}
+        {/* The offer in two seconds. Four confirmed facts, each restating
+            something the page covers in full below. */}
+        <section className="gg-launch__facts" aria-label="What the package includes at a glance">
+          <div className="gg-launch__wrap">
+            <div className="gg-launch__facts-grid">
+              {launchFacts.map((fact) => (
+                <div className="gg-launch__fact" key={fact.label}>
+                  <LaunchIcon name={fact.icon} />
+                  <div>
+                    <strong>{fact.label}</strong>
+                    <span>{fact.detail}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* ----------------------------------------------------------- value */}
+        {/* The gap the offer closes. Three beats rather than a block of
+            paragraphs: this section's job is tension, and a paragraph does not
+            create any. The words are the supplied copy, regrouped. */}
         <section className="gg-launch__section" aria-labelledby="gl-value-title">
           <div className="gg-launch__wrap">
-            <div className="gg-launch__value-grid">
-              <div data-reveal>
-                <p className="gg-launch__eyebrow" style={{ color: "var(--gl-accent-deep)" }}>
-                  Why it matters
-                </p>
-                <h2 className="gg-launch__section-title" id="gl-value-title">
-                  {launchValue.heading}
-                </h2>
-              </div>
-              <div className="gg-launch__value-copy" data-reveal data-reveal-index="1">
-                {launchValue.body.map((line) => (
-                  <p key={line}>{line}</p>
-                ))}
-              </div>
+            <div data-reveal>
+              <p className="gg-launch__eyebrow" style={{ color: "var(--gl-accent-deep)" }}>
+                Why it matters
+              </p>
+              <h2 className="gg-launch__problem-lead" id="gl-value-title">
+                {launchValue.heading}
+              </h2>
+              <p className="gg-launch__lede">{launchValue.lead}</p>
             </div>
+
+            <div className="gg-launch__moments">
+              {launchValue.moments.map((moment, i) => (
+                <div className="gg-launch__moment" key={moment.title} data-reveal data-reveal-index={i}>
+                  <h3>{moment.title}</h3>
+                  <p>{moment.body}</p>
+                </div>
+              ))}
+            </div>
+
+            <p className="gg-launch__problem-close" data-reveal>
+              {launchValue.close}
+            </p>
           </div>
         </section>
 
@@ -275,17 +309,24 @@ export default function WebsiteLaunchPage() {
               </p>
             </div>
 
-            <div style={{ marginTop: "3rem" }}>
-              {groups.map((group) => (
-                <div className="gg-launch__group" key={group.title}>
-                  <h3 className="gg-launch__group-title">{group.title}</h3>
-                  <ul className="gg-launch__incl">
-                    {group.items.map((item, i) => (
-                      <li key={item.title} data-reveal data-reveal-index={i}>
-                        <span className="gg-launch__incl-icon">
-                          <LaunchIcon name={item.icon} />
-                        </span>
-                        <h3>{item.title}</h3>
+            {/* Three pillars, not ten identical rows. Same ten inclusions and
+                the same descriptions, grouped so the value accumulates and the
+                shape of the offer reads in one pass. The flat list ran to
+                2000px and gave every item the same weight. */}
+            <div className="gg-launch__pillars">
+              {groups.map((group, gi) => (
+                <div className="gg-launch__pillar" key={group.title} data-reveal data-reveal-index={gi}>
+                  <div className="gg-launch__pillar-head">
+                    <span className="gg-launch__pillar-num" aria-hidden="true">
+                      {String(gi + 1).padStart(2, "0")}
+                    </span>
+                    <h3>{group.title}</h3>
+                  </div>
+                  <ul className="gg-launch__pillar-items">
+                    {group.items.map((item) => (
+                      <li className="gg-launch__pillar-item" key={item.title}>
+                        <LaunchIcon name={item.icon} />
+                        <h4>{item.title}</h4>
                         <p>{item.body}</p>
                       </li>
                     ))}
@@ -294,7 +335,10 @@ export default function WebsiteLaunchPage() {
               ))}
             </div>
 
-            <div style={{ marginTop: "2.75rem" }} data-reveal>
+            {/* A CTA break, so the page never runs two screens without offering
+                the next step. */}
+            <div className="gg-launch__prompt" data-reveal>
+              <p>That is your whole first website, planned, built, launched and submitted to Google.</p>
               <LaunchCta placement="inclusions" className="gg-launch__btn gg-launch__btn--lg" />
             </div>
           </div>
@@ -355,7 +399,63 @@ export default function WebsiteLaunchPage() {
           </div>
         </section>
 
+        {/* ----------------------------------------------------- the offer */}
+        {/* The peak of the page. Price, the whole stack, eligibility and the
+            monthly capacity in one block, so the decision can be made without
+            scrolling back for anything.
+
+            Capacity used to be its own band ABOVE this, which argued scarcity
+            before naming the thing that was scarce. */}
+        <section className="gg-launch__section" id="the-offer" aria-labelledby="gl-summary-title">
+          <div className="gg-launch__wrap">
+            <div data-reveal>
+              <p className="gg-launch__eyebrow" style={{ color: "var(--gl-accent-deep)" }}>
+                The offer
+              </p>
+              <h2 className="gg-launch__section-title" id="gl-summary-title">
+                {launchSummary.heading}
+              </h2>
+            </div>
+
+            <div className="gg-launch__offer" data-reveal>
+              <div className="gg-launch__offer-price">
+                <p className="gg-launch__price" style={{ marginTop: 0 }}>
+                  <span className="gg-launch__price-amount">{launchOffer.price}</span>
+                  <span className="gg-launch__price-period">{launchOffer.pricePeriod}</span>
+                </p>
+                <p className="gg-launch__offer-fees">{launchOffer.includedFees}</p>
+
+                <p className="gg-launch__offer-flag">{launchOffer.eligibility}</p>
+                {/* Monthly capacity, stated flat. Not a count of what is free
+                    today, and never rendered as one. */}
+                <p className="gg-launch__offer-capacity">{launchOffer.capacityLine}</p>
+              </div>
+
+              <div className="gg-launch__offer-body">
+                <ul className="gg-launch__offer-list">
+                  {launchSummary.points.map((point) => (
+                    <li key={point}>
+                      <LaunchTick />
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="gg-launch__offer-actions">
+                  <LaunchCta placement="offer" className="gg-launch__btn gg-launch__btn--lg" />
+                  <p className="gg-launch__offer-reassure">
+                    No obligation to book. We&rsquo;ll confirm availability and whether this package
+                    fits.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* -------------------------------------------------------- capacity */}
+        {/* Why there are only two, which is the reassurance behind the number
+            rather than a pressure tactic. */}
         <section
           className="gg-launch__section gg-launch__purple"
           aria-labelledby="gl-capacity-title"
@@ -369,43 +469,6 @@ export default function WebsiteLaunchPage() {
                 {launchCapacity.body.map((line) => (
                   <p key={line}>{line}</p>
                 ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* --------------------------------------------------------- summary */}
-        <section className="gg-launch__section" aria-labelledby="gl-summary-title">
-          <div className="gg-launch__wrap">
-            <div data-reveal>
-              <p className="gg-launch__eyebrow" style={{ color: "var(--gl-accent-deep)" }}>
-                The offer
-              </p>
-              <h2 className="gg-launch__section-title" id="gl-summary-title">
-                {launchSummary.heading}
-              </h2>
-            </div>
-
-            <div className="gg-launch__panel" data-reveal>
-              <div className="gg-launch__panel-top">
-                <p className="gg-launch__price" style={{ marginTop: 0 }}>
-                  <span className="gg-launch__price-amount">{launchOffer.price}</span>
-                  <span className="gg-launch__price-period">{launchOffer.pricePeriod}</span>
-                </p>
-                <p style={{ color: "#e8e8e6" }}>{launchOffer.includedFees}</p>
-              </div>
-
-              <ul className="gg-launch__panel-list">
-                {launchSummary.points.map((point) => (
-                  <li key={point}>
-                    <LaunchTick />
-                    <span>{point}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="gg-launch__panel-actions">
-                <LaunchCta placement="offer-summary" className="gg-launch__btn gg-launch__btn--lg" />
               </div>
             </div>
           </div>

@@ -76,14 +76,47 @@ export const launchHero = {
   ],
 } as const;
 
+/**
+ * Four confirmed facts, for the strip under the hero.
+ *
+ * Every one restates something the page says in full further down. Nothing here
+ * is a new claim: it exists so a visitor can see the shape of the offer in a
+ * couple of seconds and decide whether to keep reading.
+ */
+export const launchFacts = [
+  { icon: "pages", label: "Five pages", detail: "Custom, designed around your business" },
+  { icon: "domain", label: "Domain and email", detail: "Registered and set up for you" },
+  { icon: "search", label: "SEO and Google", detail: "Prepared, submitted for indexing" },
+  { icon: "calendar", label: "12 months", detail: "Domain, hosting and email fees included" },
+] as const;
+
+/**
+ * The value section, as three beats rather than one block of paragraphs.
+ *
+ * This is the SUPPLIED copy regrouped, not rewritten. The four original lines
+ * map onto the lead, the three moments and the closing line. The brief allows
+ * line breaks and grouping to suit the layout; it does not allow new claims,
+ * and there are none here.
+ */
 export const launchValue = {
   heading: "Give people a clear next step when they hear about your business.",
-  body: [
-    "You introduce your business. Share your services. Hand someone your details.",
-    "Now give them a website where they can learn more and contact you.",
-    "A place that explains what you offer, who you help and how to make an enquiry.",
-    "We plan your first website around those questions, so potential customers can understand your business and take the next step with confidence.",
+  lead: "You introduce your business. Share your services. Hand someone your details.",
+  moments: [
+    {
+      title: "Someone hears about you.",
+      body: "You have shared what you do and handed over your details. That is where their interest starts.",
+    },
+    {
+      title: "They want to know more.",
+      body: "Now give them a website where they can learn more and contact you.",
+    },
+    {
+      title: "They decide whether to ask.",
+      body: "A place that explains what you offer, who you help and how to make an enquiry.",
+    },
   ],
+  close:
+    "We plan your first website around those questions, so potential customers can understand your business and take the next step with confidence.",
 } as const;
 
 export const launchInclusionsIntro = {

@@ -1238,6 +1238,441 @@
   border: 0;
 }
 
+/* ================================================================= FUNNEL ==
+ * Conversion layout, added 2026-09-13. See the note at the top of this file's
+ * git history: the page read as a spec sheet, so value now stacks visually.
+ * ========================================================================= */
+
+/* ---------------------------------------------------- hero price card ---- */
+/*
+ * The price is an object, not a sentence. It sits in a bordered card with the
+ * accent on the number, the period beside it and the included-fees line under
+ * a rule, so the eye lands on it once and gets the whole commercial picture.
+ */
+.gg-launch__price-card {
+  margin-top: 1.75rem;
+  max-width: 25rem;
+  padding: 1.35rem 1.5rem;
+  border: 1px solid rgb(255 255 255 / 0.22);
+  border-left: 3px solid var(--gl-accent);
+  border-radius: 0 var(--radius-card) var(--radius-card) 0;
+  background: rgb(255 255 255 / 0.04);
+}
+
+.gg-launch__price-card .gg-launch__price {
+  margin: 0;
+}
+
+.gg-launch__price-card .gg-launch__price-fees {
+  margin-top: 0.85rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgb(255 255 255 / 0.16);
+}
+
+/* ------------------------------------------------------- the facts strip -- */
+/*
+ * Four confirmed facts, scannable in about two seconds. Every one of them is a
+ * value the page states in full further down; this is the summary a visitor
+ * reads before deciding whether to keep reading at all.
+ */
+.gg-launch__facts {
+  background: var(--gl-ink);
+  color: #fff;
+  border-top: 1px solid rgb(255 255 255 / 0.14);
+  padding-block: 0;
+}
+
+/*
+ * One column on a narrow phone. Two columns squeezed the detail line into four
+ * wrapped words per fact, which was both taller and harder to read than simply
+ * stacking them.
+ */
+.gg-launch__facts-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 34rem) {
+  .gg-launch__facts-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 54rem) {
+  .gg-launch__facts-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.gg-launch__fact {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1rem 0;
+  border-top: 1px solid rgb(255 255 255 / 0.14);
+}
+
+.gg-launch__fact:first-child {
+  border-top: 0;
+}
+
+@media (min-width: 34rem) {
+  .gg-launch__fact {
+    align-items: flex-start;
+    padding: 1.35rem 1.25rem 1.35rem 0;
+  }
+
+  .gg-launch__fact:first-child {
+    border-top: 1px solid rgb(255 255 255 / 0.14);
+  }
+}
+
+@media (min-width: 54rem) {
+  .gg-launch__fact {
+    border-top: 0;
+    border-left: 1px solid rgb(255 255 255 / 0.14);
+    padding: 1.75rem 1.5rem;
+  }
+
+  .gg-launch__fact:first-child {
+    border-left: 0;
+    padding-left: 0;
+  }
+}
+
+.gg-launch__fact svg {
+  width: 1.35rem;
+  height: 1.35rem;
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+  color: var(--gl-accent);
+}
+
+.gg-launch__fact strong {
+  display: block;
+  font-family: var(--font-ht-display);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.gg-launch__fact span {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.875rem;
+  color: var(--gl-muted-dark);
+}
+
+/* ------------------------------------------------------------- problem ---- */
+/*
+ * The gap the offer closes. Short lines, big type, and three beats rather than
+ * a paragraph, because this section's job is tension and a paragraph does not
+ * create any.
+ */
+.gg-launch__problem-lead {
+  max-width: 24ch;
+  font-family: var(--font-ht-display);
+  font-size: clamp(1.9rem, 4.2vw, 3.4rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.gg-launch__moments {
+  display: grid;
+  gap: 0;
+  margin-top: 3rem;
+  counter-reset: gl-moment;
+}
+
+@media (min-width: 54rem) {
+  .gg-launch__moments {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2.5rem;
+  }
+}
+
+.gg-launch__moment {
+  counter-increment: gl-moment;
+  padding-block: 1.5rem;
+  border-top: 1px solid var(--gl-line);
+}
+
+.gg-launch__moment::before {
+  content: counter(gl-moment);
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  margin-bottom: 1.1rem;
+  border: 1px solid var(--gl-accent);
+  border-radius: 50%;
+  font-family: var(--font-ht-display);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--gl-accent-deep);
+}
+
+.gg-launch__moment h3 {
+  font-size: clamp(1.15rem, 1.8vw, 1.4rem);
+  text-transform: none;
+  letter-spacing: -0.01em;
+}
+
+.gg-launch__moment p {
+  margin-top: 0.65rem;
+  font-size: 1rem;
+  color: var(--gl-muted);
+}
+
+.gg-launch__problem-close {
+  margin-top: 3rem;
+  padding: 1.5rem 0 0;
+  border-top: 3px solid var(--gl-accent);
+  max-width: 54ch;
+  font-family: var(--font-ht-display);
+  font-size: clamp(1.15rem, 2vw, 1.6rem);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+/* --------------------------------------------------------- value stack ---- */
+/*
+ * The ten inclusions as three pillars instead of ten identical rows. Same copy,
+ * every word of it, but grouped so the value accumulates and the eye can take
+ * the shape of the offer in one pass.
+ */
+.gg-launch__pillars {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 3rem;
+  align-items: stretch;
+}
+
+@media (min-width: 60rem) {
+  .gg-launch__pillars {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.gg-launch__pillar {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.5rem, 2.5vw, 2rem);
+  border-radius: var(--radius-card);
+  background: #fff;
+  box-shadow: 0 0 0 1px rgb(17 17 17 / 0.1);
+}
+
+.gg-launch__pillar-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-bottom: 1.1rem;
+  margin-bottom: 1.35rem;
+  border-bottom: 1px solid var(--gl-line);
+}
+
+.gg-launch__pillar-num {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--gl-accent);
+  color: var(--gl-ink);
+  font-family: var(--font-ht-display);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.gg-launch__pillar-head h3 {
+  font-size: 1.0625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.gg-launch__pillar-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.gg-launch__pillar-item {
+  display: grid;
+  grid-template-columns: 1.5rem 1fr;
+  gap: 0.35rem 0.85rem;
+}
+
+.gg-launch__pillar-item svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--gl-accent-deep);
+  margin-top: 0.1rem;
+}
+
+.gg-launch__pillar-item h4 {
+  margin: 0;
+  font-family: var(--font-ht-display);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.gg-launch__pillar-item p {
+  grid-column: 2;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--gl-muted);
+}
+
+/* ------------------------------------------------------------- the offer -- */
+/*
+ * The visual peak of the page. Price, the whole stack ticked off, eligibility
+ * and the monthly capacity all in one block, so the decision can be made
+ * without scrolling back for anything.
+ */
+.gg-launch__offer {
+  display: grid;
+  gap: 0;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background: var(--color-ht-deep-purple);
+  color: #fff;
+  margin-top: 2.75rem;
+}
+
+@media (min-width: 60rem) {
+  .gg-launch__offer {
+    grid-template-columns: 0.85fr 1.15fr;
+  }
+}
+
+.gg-launch__offer-price {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(1.75rem, 3.5vw, 2.75rem);
+  border-bottom: 1px solid rgb(255 255 255 / 0.16);
+}
+
+@media (min-width: 60rem) {
+  .gg-launch__offer-price {
+    border-bottom: 0;
+    border-right: 1px solid rgb(255 255 255 / 0.16);
+  }
+}
+
+.gg-launch__offer-price .gg-launch__price-amount {
+  font-size: clamp(3.25rem, 7vw, 5rem);
+}
+
+.gg-launch__offer-fees {
+  margin-top: 1rem;
+  font-size: 0.9375rem;
+  color: #ddd8e6;
+}
+
+.gg-launch__offer-flag {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgb(255 255 255 / 0.16);
+  font-family: var(--font-ht-display);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.gg-launch__offer-capacity {
+  margin-top: 0.65rem;
+  font-size: 0.9375rem;
+  color: #ddd8e6;
+}
+
+.gg-launch__offer-body {
+  padding: clamp(1.75rem, 3.5vw, 2.75rem);
+}
+
+.gg-launch__offer-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.85rem;
+}
+
+@media (min-width: 48rem) {
+  .gg-launch__offer-list {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.95rem 2rem;
+  }
+}
+
+.gg-launch__offer-list li {
+  display: grid;
+  grid-template-columns: 1.35rem 1fr;
+  gap: 0.75rem;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.gg-launch__offer-list svg {
+  width: 1.35rem;
+  height: 1.35rem;
+  margin-top: 0.1rem;
+  color: var(--gl-accent);
+}
+
+.gg-launch__offer-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.75rem;
+  margin-top: 2rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid rgb(255 255 255 / 0.16);
+}
+
+.gg-launch__offer-reassure {
+  font-size: 0.875rem;
+  color: #ddd8e6;
+  max-width: 30ch;
+}
+
+/* ------------------------------------------------------- closing prompt --- */
+/* A short CTA break between long sections, so the page never runs more than a
+   couple of screens without offering the next step. */
+.gg-launch__prompt {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem 2.5rem;
+  margin-top: 3rem;
+  padding: 1.75rem;
+  border-radius: var(--radius-card);
+  background: var(--gl-ink);
+  color: #fff;
+}
+
+.gg-launch__prompt p {
+  font-family: var(--font-ht-display);
+  font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+  font-weight: 500;
+  max-width: 40ch;
+}
+
+.gg-launch__prompt .gg-launch__btn {
+  flex-shrink: 0;
+}
+
 /* ------------------------------------------------------------------ footer */
 
 .gg-launch__footer {
