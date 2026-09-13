@@ -206,6 +206,21 @@
 /* button-white hovers to orange on the homepage; on an orange ground that
    would erase it, so it hovers to ink here instead. */
 .home-2026 .growth-cta .button-white:hover{background:var(--ink);color:white}
+/* ---- Website Launch promotion, announced on the homepage --------------
+   The orange band under the hero. Ink throughout: white on this orange is
+   3.86:1 and AGENTS.md rules it out for text. The full stop after the
+   heading is ink too, because .accent-text is the orange itself and would
+   disappear here. */
+.home-2026 .launch-promo .display-heading{max-width:16ch}
+.home-2026 .launch-promo__stop{color:var(--ink)}
+.home-2026 .launch-promo .section-description{align-self:end}
+.home-2026 .launch-promo__flag{font-weight:700;margin-bottom:.65rem}
+.home-2026 .launch-promo__foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem 3rem;margin-top:3rem;padding-top:2.25rem;border-top:1px solid rgba(17,17,17,.25)}
+.home-2026 .launch-promo__detail{max-width:46rem;font-size:1.0625rem}
+.home-2026 .launch-promo .button{flex-shrink:0}
+/* button-white hovers to orange on the homepage, which would erase it on an
+   orange ground, so it hovers to ink here. Same fix as .growth-cta. */
+.home-2026 .launch-promo .button-white:hover{background:var(--ink);color:white}
 .home-2026 .strategy-layout{display:grid;grid-template-columns:1fr 1.2fr;gap:6.5rem}
 .home-2026 .origin-note{margin-top:3rem;max-width:29rem}
 .home-2026 .origin-note h3{font-family:var(--font-ibm-plex-sans),sans-serif;font-size:1rem;margin-bottom:1rem}
@@ -402,6 +417,8 @@
 .home-2026 .section-pad{padding-block:4.5rem}
 .home-2026 .section-meta{margin-bottom:2.5rem}
 .home-2026 .section-meta>.eyebrow:last-child:not(:first-child){max-width:10rem;text-align:right}
+.home-2026 .launch-promo__foot{margin-top:2.25rem;padding-top:1.75rem}
+.home-2026 .launch-promo__detail{font-size:1rem}
 .home-2026 .eyebrow{font-size:.8125rem}
 .home-2026 .section-title{font-size:3.75rem}
 .home-2026 .display-heading{font-size:2.55rem;line-height:1.13}

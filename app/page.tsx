@@ -5,6 +5,7 @@ import { Faq } from "@/components/home2026/Faq";
 import { Hero } from "@/components/home2026/Hero";
 import { Industries } from "@/components/home2026/Industries";
 import { Intro } from "@/components/home2026/Intro";
+import { LaunchPromo } from "@/components/home2026/LaunchPromo";
 import { Process } from "@/components/home2026/Process";
 import { Reasons } from "@/components/home2026/Reasons";
 import { Services } from "@/components/home2026/Services";
@@ -52,6 +53,10 @@ export default function HomePage() {
           Repeating it put duplicate FAQPage content on two indexed URLs. */}
 
       <Hero />
+      {/* The promotion sits directly under the hero: it is an offer, and an
+          offer is meant to interrupt. Everything it states comes from
+          content/websiteLaunch.ts, so it cannot drift from /website-launch. */}
+      <LaunchPromo />
       <Intro />
       <Work />
       <Services />
