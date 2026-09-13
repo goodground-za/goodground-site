@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { launchMarquee } from "@/content/websiteLaunch";
+import { launchAvailability } from "@/content/websiteLaunch";
 
 /**
  * The availability banner across the top of /website-launch.
@@ -25,7 +25,7 @@ import { launchMarquee } from "@/content/websiteLaunch";
 export function LaunchMarquee() {
   const [paused, setPaused] = useState(false);
 
-  if (!launchMarquee.enabled) return null;
+  if (!launchAvailability.enabled) return null;
 
   // Enough repeats to cover a wide viewport twice over, which is what makes the
   // loop seamless: the track scrolls exactly half its own width.
@@ -33,13 +33,13 @@ export function LaunchMarquee() {
 
   return (
     <div className="gg-launch__marquee" data-paused={paused ? "true" : "false"}>
-      <p className="gg-launch__hp">{launchMarquee.message}</p>
+      <p className="gg-launch__hp">{launchAvailability.message}</p>
 
       <div className="gg-launch__marquee-viewport">
         <div className="gg-launch__marquee-track" aria-hidden="true">
           {repeats.map((_, i) => (
             <span className="gg-launch__marquee-item" key={i}>
-              {launchMarquee.message}
+              {launchAvailability.message}
               <span className="gg-launch__marquee-dot" />
             </span>
           ))}

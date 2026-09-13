@@ -49,22 +49,49 @@ export const launchOffer = {
 } as const;
 
 /**
- * The availability banner that scrolls across the top of /website-launch.
+ * Current availability. Confirmed by Johandre 2026-09-13.
  *
  * THIS IS A DATED CLAIM AND IT GOES STALE. "1 slot left for September" is true
  * until it is not, and a page still saying it in October is telling visitors
- * something false. Nothing here updates it: there is no counter, no date
- * arithmetic and no automatic month, precisely so it cannot quietly keep making
- * a claim nobody checked.
+ * something false. Nothing updates it: no counter, no date arithmetic, no
+ * automatic month, precisely so it cannot quietly keep making a claim nobody
+ * checked.
  *
- * To change it, edit `message`. To take it down, set `enabled` to false and the
- * banner stops rendering.
+ * It now appears in FOUR places, all reading this one string: the marquee, the
+ * hero flag, the offer block and above the enquiry form. That is deliberate.
+ * Stated once at the top of a long page, it has been forgotten by the time
+ * anyone reaches the price, which is the moment it matters.
  *
- * Confirmed by Johandre 2026-09-13.
+ * To change it, edit `message`. To take it down, set `enabled` to false: the
+ * marquee stops rendering and every callout falls back to `launchOffer
+ * .capacityLine`, which is the standing monthly-capacity statement and is true
+ * whatever the current month looks like.
  */
-export const launchMarquee = {
+export const launchAvailability = {
   enabled: true,
   message: "1 slot left for September",
+  /**
+   * What to do about the number, not why the number exists. The "why" is the
+   * capacity section directly below the offer block, and having both say it
+   * was simply repetition.
+   */
+  note: "Tell us about your business and we’ll confirm whether it is still open.",
+} as const;
+
+/**
+ * The qualifier. A sales device and a screen in the same block: it tells the
+ * right reader this is for them and the wrong one to stop reading.
+ *
+ * Every line restates a confirmed eligibility rule. Nothing here is new.
+ */
+export const launchQualifier = {
+  heading: "Is this you?",
+  yes: [
+    "You are starting a new business, or you have recently started trading.",
+    "You do not have a website yet. A social page or a domain you already own is fine.",
+    "You want customers to find you, understand what you offer and get in touch.",
+  ],
+  no: "This offer does not cover website redesigns or replacing a website you already have.",
 } as const;
 
 export const launchHero = {
@@ -311,8 +338,15 @@ export const launchEnquiry = {
   body: [
     "Launch with a website that explains your services, presents your business professionally and makes contacting you straightforward.",
     "R845 per month, with domain, hosting and email fees included for the first 12 months.",
-    "Two promotional spaces each month. Exclusively for new businesses without a website.",
+    "Exclusively for new businesses without a website.",
   ],
+  /**
+   * Sits directly above the form. Deliberately does NOT reopen with "tell us
+   * about your business": the availability callout immediately above it already
+   * says that, and the two stacked read as a stutter. This adds the two things
+   * that actually lower the barrier to sending it.
+   */
+  prompt: "It takes about a minute, and it commits you to nothing.",
   /** WCAG-relevant: this exact string is also asserted server-side. */
   eligibilityLabel:
     "I confirm that this is a new business and the business does not have a website.",

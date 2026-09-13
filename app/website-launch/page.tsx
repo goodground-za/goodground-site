@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { LaunchAvailability } from "@/components/launch/LaunchAvailability";
 import { LaunchCta } from "@/components/launch/LaunchCta";
 import { LaunchForm } from "@/components/launch/LaunchForm";
 import { LaunchIcon, LaunchTick } from "@/components/launch/LaunchIcon";
@@ -10,6 +11,7 @@ import { LaunchOfferBar } from "@/components/launch/LaunchOfferBar";
 import { caseStudies, caseStudyKindLabel } from "@/content/caseStudies";
 import { site } from "@/content/site";
 import {
+  launchAvailability,
   launchCapacity,
   launchFacts,
   launchEnquiry,
@@ -19,6 +21,7 @@ import {
   launchInclusionsIntro,
   launchOffer,
   launchProcess,
+  launchQualifier,
   launchRoute,
   launchSummary,
   launchValue,
@@ -170,8 +173,14 @@ export default function WebsiteLaunchPage() {
                     page is for the reader at all. */}
                 <div className="gg-launch__hero-flag">
                   <span className="gg-launch__flag">{launchOffer.eligibility}</span>
-                  <span className="gg-launch__flag gg-launch__flag--quiet">
-                    {launchOffer.capacityLine}
+                  {/* The live availability, not the abstract capacity line.
+                      "Two spaces each month" asks for nothing; what is open
+                      right now is the thing that moves someone. Falls back to
+                      the capacity line when the dated claim is switched off. */}
+                  <span className="gg-launch__flag gg-launch__flag--live">
+                    {launchAvailability.enabled
+                      ? launchAvailability.message
+                      : launchOffer.capacityLine}
                   </span>
                 </div>
 
@@ -284,6 +293,32 @@ export default function WebsiteLaunchPage() {
             <p className="gg-launch__problem-close" data-reveal>
               {launchValue.close}
             </p>
+          </div>
+        </section>
+
+        {/* ------------------------------------------------------- qualifier */}
+        {/* Tells the right reader this is for them and the wrong one to stop.
+            Every line restates a confirmed eligibility rule, so it screens and
+            sells at the same time. */}
+        <section
+          className="gg-launch__section gg-launch__section--continues"
+          aria-labelledby="gl-qualifier-title"
+        >
+          <div className="gg-launch__wrap">
+            <div className="gg-launch__qualifier" data-reveal>
+              <h2 className="gg-launch__qualifier-title" id="gl-qualifier-title">
+                {launchQualifier.heading}
+              </h2>
+              <ul className="gg-launch__qualifier-list">
+                {launchQualifier.yes.map((line) => (
+                  <li key={line}>
+                    <LaunchTick />
+                    <span>{line}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="gg-launch__qualifier-no">{launchQualifier.no}</p>
+            </div>
           </div>
         </section>
 
@@ -425,9 +460,9 @@ export default function WebsiteLaunchPage() {
                 <p className="gg-launch__offer-fees">{launchOffer.includedFees}</p>
 
                 <p className="gg-launch__offer-flag">{launchOffer.eligibility}</p>
-                {/* Monthly capacity, stated flat. Not a count of what is free
-                    today, and never rendered as one. */}
-                <p className="gg-launch__offer-capacity">{launchOffer.capacityLine}</p>
+                {/* The availability, here at the price rather than only at the
+                    top of the page. This is where it does its work. */}
+                <LaunchAvailability />
               </div>
 
               <div className="gg-launch__offer-body">
@@ -538,6 +573,8 @@ export default function WebsiteLaunchPage() {
                     {line}
                   </p>
                 ))}
+                <LaunchAvailability />
+                <p className="gg-launch__enquiry-prompt">{launchEnquiry.prompt}</p>
               </div>
               <LaunchForm />
             </div>

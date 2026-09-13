@@ -1702,6 +1702,166 @@
   flex-shrink: 0;
 }
 
+/* ------------------------------------------------------- availability ---- */
+/*
+ * Shown wherever a decision gets made: the offer block and above the form. The
+ * dot is the only "live" signal, and it is decorative: nothing here animates,
+ * counts down or recalculates. The number is a string a person wrote.
+ */
+.gg-launch__avail {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding: 0.9rem 1.1rem;
+  border-radius: 12px;
+  border-left: 3px solid var(--gl-accent);
+}
+
+/*
+ * The colour is set on the paragraph, not left to inherit. In the enquiry
+ * column `.gg-launch__enquiry-copy p` is (0,1,1) and was painting this callout's
+ * text muted grey, which the <strong> then inherited: the one line on the page
+ * that is meant to read brightest came out dimmer than the copy above it.
+ * These rules sit after that one and match its specificity, so they win.
+ */
+.gg-launch__avail--dark,
+.gg-launch__avail--dark p {
+  color: #fff;
+}
+
+.gg-launch__avail--dark {
+  background: rgb(255 255 255 / 0.07);
+}
+
+.gg-launch__avail--light,
+.gg-launch__avail--light p {
+  color: var(--gl-ink);
+}
+
+.gg-launch__avail--light {
+  background: #fff;
+  box-shadow: 0 0 0 1px rgb(17 17 17 / 0.1);
+}
+
+.gg-launch__avail-dot {
+  width: 0.6rem;
+  height: 0.6rem;
+  flex-shrink: 0;
+  margin-top: 0.45rem;
+  border-radius: 50%;
+  background: var(--gl-accent);
+}
+
+.gg-launch__avail p {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.gg-launch__avail strong {
+  font-family: var(--font-ht-display);
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.gg-launch__avail--dark span {
+  color: #ddd8e6;
+}
+
+.gg-launch__avail--light span {
+  color: var(--gl-muted);
+}
+
+/* The hero flag carrying the same line. Filled rather than outlined, so the
+   thing that is scarce is the one that reads first. */
+.gg-launch__flag--live {
+  background: var(--gl-accent);
+  border-color: var(--gl-accent);
+  color: var(--gl-ink);
+}
+
+/* --------------------------------------------------------- qualifier ----- */
+
+.gg-launch__qualifier {
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border-radius: var(--radius-card);
+  background: #fff;
+  box-shadow: 0 0 0 1px rgb(17 17 17 / 0.1);
+}
+
+@media (min-width: 54rem) {
+  .gg-launch__qualifier {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    gap: 2.5rem;
+  }
+}
+
+.gg-launch__qualifier-title {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  white-space: nowrap;
+}
+
+.gg-launch__qualifier-list {
+  list-style: none;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.85rem;
+}
+
+@media (min-width: 54rem) {
+  .gg-launch__qualifier-list {
+    margin-top: 0;
+  }
+}
+
+.gg-launch__qualifier-list li {
+  display: grid;
+  grid-template-columns: 1.4rem 1fr;
+  gap: 0.75rem;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+}
+
+.gg-launch__qualifier-list svg {
+  width: 1.4rem;
+  height: 1.4rem;
+  margin-top: 0.15rem;
+  color: var(--gl-accent-deep);
+}
+
+.gg-launch__qualifier-no {
+  grid-column: 2;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--gl-line);
+  font-size: 0.9375rem;
+  color: var(--gl-muted);
+}
+
+/*
+ * The last line before the form. Written with the parent in the selector on
+ * purpose: `.gg-launch__enquiry-copy p` is (0,1,1) and was quietly overriding a
+ * bare (0,1,0) class here, so this rule's colour and size never applied and the
+ * line rendered as muted body copy that happened to be in the display face.
+ *
+ * It stays at body scale. The availability callout directly above it is the
+ * emphatic element in this column, and two emphatic blocks stacked cancel each
+ * other out. This one just has to be legible and reassuring.
+ */
+.gg-launch__enquiry-copy .gg-launch__enquiry-prompt {
+  margin-top: 1.25rem;
+  font-family: var(--font-ht-body);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #fff;
+}
+
 /* ------------------------------------------------------------------ footer */
 
 .gg-launch__footer {
