@@ -289,10 +289,9 @@ export default function WebsiteLaunchPage() {
 
         {/* ------------------------------------------------------ inclusions */}
         <section
-          className="gg-launch__section"
+          className="gg-launch__section gg-launch__section--continues"
           id="whats-included"
           aria-labelledby="gl-incl-title"
-          style={{ paddingTop: 0 }}
         >
           <div className="gg-launch__wrap">
             <div data-reveal>
@@ -475,7 +474,7 @@ export default function WebsiteLaunchPage() {
         </section>
 
         {/* --------------------------------------------------------- process */}
-        <section className="gg-launch__section" aria-labelledby="gl-process-title" style={{ paddingTop: 0 }}>
+        <section className="gg-launch__section" aria-labelledby="gl-process-title">
           <div className="gg-launch__wrap">
             <div data-reveal>
               <p className="gg-launch__eyebrow" style={{ color: "var(--gl-accent-deep)" }}>
@@ -497,7 +496,11 @@ export default function WebsiteLaunchPage() {
         </section>
 
         {/* ------------------------------------------------------------ faqs */}
-        <section className="gg-launch__section" id="faqs" aria-labelledby="gl-faq-title" style={{ paddingTop: 0 }}>
+        <section
+          className="gg-launch__section gg-launch__section--continues"
+          id="faqs"
+          aria-labelledby="gl-faq-title"
+        >
           <div className="gg-launch__wrap">
             <h2 className="gg-launch__section-title" id="gl-faq-title" data-reveal>
               {launchFaqs.heading}

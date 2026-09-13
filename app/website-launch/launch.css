@@ -30,10 +30,19 @@
   --gl-muted: #55565a;
   --gl-muted-dark: #b4b4b0;
 
-  /* One content width for the whole page, inside the brief's 1160-1240 band. */
+  /* The CONTENT width, not the outer box. See .gg-launch__wrap: the gutter is
+     added outside this, so 1200px is what the column actually measures. */
   --gl-max: 1200px;
   --gl-gutter: clamp(1.25rem, 4.45vw, 4rem);
-  --gl-section: clamp(3.75rem, 7vw, 6.5rem);
+  --gl-section: clamp(3.5rem, 6vw, 5.75rem);
+
+  /* The inset from the viewport edge that .gg-launch__wrap resolves to. Full
+     bleed bands that need to line up with the content column use this rather
+     than the raw gutter, which is what the marquee was doing wrong. */
+  --gl-inset: max(
+    var(--gl-gutter),
+    calc((100% - var(--gl-max) - var(--gl-gutter) * 2) / 2 + var(--gl-gutter))
+  );
   --gl-ease: cubic-bezier(0.2, 0.75, 0.25, 1);
 
   background: var(--gl-paper);
@@ -94,14 +103,31 @@
   border-radius: 4px;
 }
 
+/*
+ * max-width covers the content PLUS the gutter, so --gl-max describes the
+ * column itself. Written as `width: min(100%, ...)` it did the opposite: the
+ * padding came out of the 1200px and left a 1072px column behind a 176px
+ * margin, which is why the page read as pinched.
+ */
 .gg-launch__wrap {
-  width: min(100%, var(--gl-max));
+  width: 100%;
+  max-width: calc(var(--gl-max) + var(--gl-gutter) * 2);
   margin-inline: auto;
   padding-inline: var(--gl-gutter);
 }
 
 .gg-launch__section {
   padding-block: var(--gl-section);
+}
+
+/*
+ * A section that continues the one above it on the same ground. It drops its
+ * top padding so the two read as one block rather than as two with a stray gap
+ * between them. Where the ground CHANGES, both sections keep their padding and
+ * the colour does the separating.
+ */
+.gg-launch__section--continues {
+  padding-top: 0;
 }
 
 /*
@@ -374,7 +400,10 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding-inline: var(--gl-gutter);
+  /* Matches the content column, not the raw gutter. The track still bleeds
+     because the viewport clips it; this aligns the pause button and the point
+     the text starts from with everything else on the page. */
+  padding-inline: var(--gl-inset);
   background: var(--color-ht-deep-purple);
   color: #fff;
   border-bottom: 1px solid rgb(255 255 255 / 0.14);
