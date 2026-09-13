@@ -360,6 +360,133 @@
   top: 0.75rem;
 }
 
+/* --------------------------------------------------------------- marquee  */
+/*
+ * The availability banner. Brand purple, so it reads as an announcement rather
+ * than as part of the header above it or the hero below it.
+ *
+ * The track holds several copies of the message and translates by exactly half
+ * its own width, which is what makes the loop seamless. Duration scales with
+ * nothing: it is a fixed, unhurried speed, because a fast marquee is harder to
+ * read and reads as pressure.
+ */
+.gg-launch__marquee {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-inline: var(--gl-gutter);
+  background: var(--color-ht-deep-purple);
+  color: #fff;
+  border-bottom: 1px solid rgb(255 255 255 / 0.14);
+  overflow: hidden;
+}
+
+.gg-launch__marquee-viewport {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.gg-launch__marquee-track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  animation: gg-launch-marquee 38s linear infinite;
+}
+
+/*
+ * Paused by the button, or by hovering the TEXT.
+ *
+ * Deliberately not :focus-within, and deliberately not :hover on the whole
+ * banner. The only focusable thing in here is the pause button itself, so both
+ * of those matched the button and left the banner stuck after someone clicked
+ * Play: the control appeared to do nothing until the pointer moved away.
+ */
+.gg-launch__marquee[data-paused="true"] .gg-launch__marquee-track,
+.gg-launch__marquee-viewport:hover .gg-launch__marquee-track {
+  animation-play-state: paused;
+}
+
+.gg-launch__marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding-block: 0.7rem;
+  padding-right: 1.5rem;
+  font-family: var(--font-ht-display);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* The separator between repeats. Orange is 4.08:1 on this purple, which is
+   under the text bar but well over the 3:1 non-text bar this dot answers to. */
+.gg-launch__marquee-dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: var(--gl-accent);
+}
+
+.gg-launch__marquee-toggle {
+  flex-shrink: 0;
+  min-height: 44px;
+  padding-inline: 0.5rem;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font: inherit;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: color 180ms var(--gl-ease);
+}
+
+.gg-launch__marquee-toggle:hover {
+  color: var(--gl-accent);
+}
+
+@keyframes gg-launch-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/*
+ * Reduced motion: the banner does not move at all. Not a slower scroll, no
+ * animation. The message still reads, centred, and the pause control is hidden
+ * because there is nothing left to pause.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .gg-launch__marquee-track {
+    animation: none;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .gg-launch__marquee-item:not(:first-child) {
+    display: none;
+  }
+
+  .gg-launch__marquee-item {
+    padding-right: 0;
+  }
+
+  .gg-launch__marquee-dot {
+    display: none;
+  }
+
+  .gg-launch__marquee-toggle {
+    display: none;
+  }
+}
+
 /* ------------------------------------------------------------------- hero  */
 /* Content decides the height. No min-height, no viewport units. */
 
@@ -792,20 +919,6 @@
   color: var(--gl-accent);
 }
 
-/* The commercial qualification. Same size as the list above it on purpose:
-   this is the wording that stands in for the deposit, the commitment and the
-   total payable, and it must not read as fine print. */
-.gg-launch__terms {
-  margin-top: 2rem;
-  padding: 1.25rem 1.5rem;
-  border-left: 3px solid var(--gl-accent);
-  background: rgb(255 255 255 / 0.05);
-  border-radius: 0 12px 12px 0;
-  font-size: 1rem;
-  color: #e8e8e6;
-  max-width: 68ch;
-}
-
 .gg-launch__panel-actions {
   margin-top: 2rem;
 }
@@ -1098,6 +1211,19 @@
   background: #fdf0ec;
   border: 2px solid var(--gl-accent-deep);
   color: #6d1c0c;
+}
+
+.gg-launch__marquee .sr-only,
+.gg-launch .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }
 
 .gg-launch__hp {

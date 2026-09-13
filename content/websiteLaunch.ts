@@ -19,10 +19,10 @@
  *  - "Two promotional spaces each month" describes monthly capacity. It is NOT
  *    a live count of what is free today, and must never be rendered as one.
  *  - The 12 months of included fees is NOT the payment contract length. The
- *    deposit, minimum commitment, schedule, total payable, renewal fees,
- *    ownership terms, mailbox allowance and support scope are NOT specified.
- *    `proposalTerms` below is the agreed wording for all of that. Do not
- *    replace it with a number, a contract length, or "cancel anytime".
+ *    deposit, minimum commitment, schedule and total payable are still NOT
+ *    specified anywhere on this page. Do not invent any of them, and do not
+ *    add "cancel anytime" or "no deposit". What happens at the END of the term
+ *    IS stated, in the "What happens after the first 12 months?" answer.
  */
 
 export const launchOffer = {
@@ -42,19 +42,29 @@ export const launchOffer = {
 
   pageCount: "Up to five custom website pages",
 
-  /**
-   * The confirmed wording for every commercial term that has NOT been
-   * specified. It stands in for the deposit, commitment, schedule, total
-   * payable, renewals, ownership, mailbox allowance and support scope. It is
-   * deliberately prominent, not fine print.
-   */
-  proposalTerms:
-    "Your proposal confirms what’s included, your payment commitment and the total payable. Domain and email allowances, revision rounds, support, ownership and continuation costs are agreed before you book.",
-
   cta: "Check availability",
   ctaTarget: "#check-availability",
   ctaSupport:
     "Starting a new business and need your first website? Tell us about your plans. We’ll confirm availability and whether this package fits your needs. No obligation to book.",
+} as const;
+
+/**
+ * The availability banner that scrolls across the top of /website-launch.
+ *
+ * THIS IS A DATED CLAIM AND IT GOES STALE. "1 slot left for September" is true
+ * until it is not, and a page still saying it in October is telling visitors
+ * something false. Nothing here updates it: there is no counter, no date
+ * arithmetic and no automatic month, precisely so it cannot quietly keep making
+ * a claim nobody checked.
+ *
+ * To change it, edit `message`. To take it down, set `enabled` to false and the
+ * banner stops rendering.
+ *
+ * Confirmed by Johandre 2026-09-13.
+ */
+export const launchMarquee = {
+  enabled: true,
+  message: "1 slot left for September",
 } as const;
 
 export const launchHero = {
@@ -249,8 +259,11 @@ export const launchFaqs = {
     },
     {
       question: "What happens after the first 12 months?",
+      // Replaced 2026-09-13 on Johandre's instruction. This is now the page's
+      // only statement about what happens at the end of the term, since the
+      // proposal-terms paragraph came off the offer panel at the same time.
       answer:
-        "The included domain, hosting and email period ends after 12 months. Your proposal explains the continuation fees, renewal terms and available support options before you book.",
+        "When the contract comes to an end, we give you the option to have your domain and website transferred to you, or to move to our maintenance package, where we continue to handle the maintenance, hosting and domain fees.",
     },
     {
       question: "Can I add more pages or extra features?",

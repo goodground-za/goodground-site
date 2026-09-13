@@ -4,6 +4,7 @@ import Link from "next/link";
 import { LaunchCta } from "@/components/launch/LaunchCta";
 import { LaunchForm } from "@/components/launch/LaunchForm";
 import { LaunchIcon, LaunchTick } from "@/components/launch/LaunchIcon";
+import { LaunchMarquee } from "@/components/launch/LaunchMarquee";
 import { LaunchMotion } from "@/components/launch/LaunchMotion";
 import { LaunchOfferBar } from "@/components/launch/LaunchOfferBar";
 import { caseStudies, caseStudyKindLabel } from "@/content/caseStudies";
@@ -143,6 +144,8 @@ export default function WebsiteLaunchPage() {
         </div>
       </header>
 
+      <LaunchMarquee />
+
       <main id="main">
         {/* ------------------------------------------------------------ hero */}
         {/* gg-launch__dark as well as __hero: the hero paints its own ink
@@ -157,9 +160,11 @@ export default function WebsiteLaunchPage() {
           <div className="gg-launch__wrap">
             <div className="gg-launch__hero-grid">
               <div>
-                <p className="gg-launch__eyebrow">{launchOffer.name}</p>
+                {/* No offer-name eyebrow: removed 2026-09-13. The name is still
+                    the Service schema's `name` and still titles the no-JS
+                    confirmation pages, it just no longer opens the hero.
 
-                {/* The eligibility rule sits with the headline, not in a
+                    The eligibility rule sits with the headline, not in a
                     footnote. It is the first thing that decides whether this
                     page is for the reader at all. */}
                 <div className="gg-launch__hero-flag">
@@ -398,10 +403,6 @@ export default function WebsiteLaunchPage() {
                   </li>
                 ))}
               </ul>
-
-              {/* The confirmed wording for every commercial term that has not
-                  been specified. Full size, above the CTA, not fine print. */}
-              <p className="gg-launch__terms">{launchOffer.proposalTerms}</p>
 
               <div className="gg-launch__panel-actions">
                 <LaunchCta placement="offer-summary" className="gg-launch__btn gg-launch__btn--lg" />

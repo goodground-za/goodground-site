@@ -198,4 +198,26 @@ No DNS change, no payment service and no new hosting is required.
   as a whole. Publishing a number nobody has agreed to, in a format aggregators
   read literally, would be worse than omitting it.
 - **No current-website field** in the form, and no redesign eligibility anywhere.
-- **No availability counter**, countdown or "spaces left".
+- **No availability counter or countdown.** The banner across the top states an
+  availability figure, but it is a fixed string a person wrote, not a count
+  derived from anything. See below.
+
+## The availability banner
+
+`launchMarquee` in `content/websiteLaunch.ts` drives the scrolling banner at the
+top of the page. It currently reads **"1 slot left for September"**, confirmed by
+Johandre on 2026-09-13.
+
+**It is a dated claim and it goes stale.** Nothing updates it: no counter, no
+date arithmetic, no automatic month, deliberately, so the page cannot keep
+making a claim nobody has checked. A page still saying "September" in October is
+telling visitors something false.
+
+- To change the wording, edit `message`.
+- To take it down, set `enabled` to `false`.
+
+It scrolls, so it carries a pause button (WCAG 2.2.2 requires a way to stop
+content that moves on its own for more than five seconds). It also pauses when
+you hover the text, and it renders completely static, with no button, under
+`prefers-reduced-motion`. The message is announced once to a screen reader; the
+repeated copies that fill the width are `aria-hidden`.
