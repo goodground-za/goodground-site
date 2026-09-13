@@ -1,0 +1,1232 @@
+/*
+ * Styles for the Website Launch promotion page (/website-launch).
+ *
+ * EVERY rule is prefixed .gg-launch on purpose. This page brings its own
+ * compact header and footer instead of the site chrome, so it sits outside the
+ * (site) route group and needs styling that cannot reach any other route. The
+ * same discipline as components/home2026/home2026.css, for the same reason.
+ *
+ * Colour, type and radius come from the @theme block in app/globals.css, so the
+ * page inherits the brand rather than restating it. Nothing here defines a new
+ * brand value.
+ *
+ * Contrast rules carried over from AGENTS.md and the redesign audit, because
+ * they constrain this palette in ways that are not obvious:
+ *   white on ink        18.9:1   anything
+ *   ink on orange        4.90:1  anything, and it is the ONLY text on orange
+ *   orange on ink        4.90:1  anything
+ *   orange on paper      3.59:1  large text, rules and icons only, never body
+ *   crimson on paper     ~7:1    small accent text on the light ground
+ *   white on orange      3.86:1  NEVER used for text
+ */
+
+.gg-launch {
+  --gl-ink: var(--color-ht-purple);
+  --gl-paper: var(--color-ht-cream);
+  --gl-accent: var(--color-ht-orange);
+  --gl-accent-deep: var(--color-ht-crimson);
+  --gl-line: rgb(17 17 17 / 0.14);
+  --gl-line-dark: rgb(255 255 255 / 0.2);
+  --gl-muted: #55565a;
+  --gl-muted-dark: #b4b4b0;
+
+  /* One content width for the whole page, inside the brief's 1160-1240 band. */
+  --gl-max: 1200px;
+  --gl-gutter: clamp(1.25rem, 4.45vw, 4rem);
+  --gl-section: clamp(3.75rem, 7vw, 6.5rem);
+  --gl-ease: cubic-bezier(0.2, 0.75, 0.25, 1);
+
+  background: var(--gl-paper);
+  color: var(--gl-ink);
+  font-family: var(--font-ht-body);
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+.gg-launch *,
+.gg-launch *::before,
+.gg-launch *::after {
+  box-sizing: border-box;
+}
+
+/* The design's arrows have emoji presentation variants and the system emoji
+   font claims them on mobile. Markup carries U+FE0E; this is the belt and
+   braces for browsers that honour it. Same pairing as the homepage. */
+.gg-launch,
+.gg-launch * {
+  font-variant-emoji: text;
+}
+
+.gg-launch h1,
+.gg-launch h2,
+.gg-launch h3 {
+  font-family: var(--font-ht-display);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  text-transform: uppercase;
+  text-wrap: balance;
+  margin: 0;
+}
+
+.gg-launch p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+/*
+ * Unclassed anchors only.
+ *
+ * `.gg-launch a` on its own is (0,1,1) and silently beats every single-class
+ * colour rule on a link — .gg-launch__btn, .gg-launch__textlink and the header
+ * links are all (0,1,0). It rendered the header nav ink-on-ink. Scoping it to
+ * anchors with no class of their own removes the whole category of bug rather
+ * than patching each victim with extra specificity.
+ */
+.gg-launch a:not([class]) {
+  color: inherit;
+}
+
+.gg-launch :focus-visible {
+  outline: 3px solid var(--gl-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.gg-launch__wrap {
+  width: min(100%, var(--gl-max));
+  margin-inline: auto;
+  padding-inline: var(--gl-gutter);
+}
+
+.gg-launch__section {
+  padding-block: var(--gl-section);
+}
+
+/*
+ * Clearance for the sticky header, doing two jobs.
+ *
+ * On an in-page CTA the browser applies scroll-margin-top to the fragment jump,
+ * so there is no offset maths, no scrollIntoView and nothing to break if the
+ * page has not hydrated. On a focusable element it applies to the scroll the
+ * browser performs when focus moves there by keyboard, which is what stops the
+ * header sitting on top of a focused control (WCAG 2.4.11).
+ *
+ * The value is the header's own height plus breathing room. Smooth scrolling
+ * comes from globals.css, which already disables it under reduced motion.
+ */
+.gg-launch [id],
+.gg-launch a,
+.gg-launch button,
+.gg-launch summary,
+.gg-launch input,
+.gg-launch textarea {
+  scroll-margin-top: 6rem;
+}
+
+.gg-launch__dark {
+  background: var(--gl-ink);
+  color: #fff;
+}
+
+.gg-launch__accent {
+  background: var(--gl-accent);
+  color: var(--gl-ink);
+}
+
+.gg-launch__eyebrow {
+  font-family: var(--font-ht-display);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 0 0 1.25rem;
+}
+
+.gg-launch__dark .gg-launch__eyebrow {
+  color: var(--gl-accent);
+}
+
+.gg-launch__section-title {
+  font-size: clamp(1.9rem, 4vw, 3.1rem);
+  max-width: 20ch;
+}
+
+.gg-launch__lede {
+  margin-top: 1.5rem;
+  max-width: 62ch;
+  font-size: clamp(1.0625rem, 1.25vw, 1.1875rem);
+}
+
+.gg-launch__dark .gg-launch__lede {
+  color: var(--gl-muted-dark);
+}
+
+.gg-launch__section:not(.gg-launch__dark):not(.gg-launch__accent) .gg-launch__lede {
+  color: var(--gl-muted);
+}
+
+/* ---------------------------------------------------------------- buttons  */
+/* One primary button on the page. Ink text on the brand orange, which is the
+   only text colour this orange carries. */
+
+.gg-launch__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 3.25rem;
+  padding: 0.75rem 1.75rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  background: var(--gl-accent);
+  color: var(--gl-ink);
+  font-family: var(--font-ht-display);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 180ms var(--gl-ease),
+    background-color 180ms var(--gl-ease),
+    color 180ms var(--gl-ease);
+}
+
+.gg-launch__btn:hover {
+  background: var(--gl-accent-deep);
+  color: #fff;
+}
+
+.gg-launch__btn--lg {
+  min-height: 3.75rem;
+  padding-inline: 2.25rem;
+  font-size: 1.0625rem;
+}
+
+/* The secondary route to the portfolio. Deliberately quieter than the enquiry
+   action, per the brief: a ruled text link, not a competing button. */
+.gg-launch__textlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 44px;
+  padding-block: 0.35rem;
+  border-bottom: 1px solid currentColor;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 180ms var(--gl-ease), gap 180ms var(--gl-ease);
+}
+
+.gg-launch__textlink:hover {
+  gap: 1.15rem;
+}
+
+.gg-launch__section:not(.gg-launch__dark) .gg-launch__textlink {
+  color: var(--gl-accent-deep);
+}
+
+.gg-launch__note {
+  margin-top: 1.25rem;
+  max-width: 56ch;
+  font-size: 0.9375rem;
+  color: var(--gl-muted);
+}
+
+.gg-launch__dark .gg-launch__note {
+  color: var(--gl-muted-dark);
+}
+
+/* ----------------------------------------------------------------- header  */
+
+.gg-launch__header {
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--gl-ink);
+  border-bottom: 1px solid var(--gl-line-dark);
+}
+
+.gg-launch__header-inner {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  min-height: 4.5rem;
+  padding-block: 0.75rem;
+}
+
+.gg-launch__brand {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  min-height: 44px;
+}
+
+.gg-launch__brand img {
+  display: block;
+  width: 9.5rem;
+  height: auto;
+  /* The wordmark SVG has no fill of its own, so it renders black by default. */
+  filter: brightness(0) invert(1);
+}
+
+.gg-launch__header-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  margin-left: auto;
+}
+
+.gg-launch__header-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-inline: 0.35rem;
+  color: #fff;
+  font-size: 0.9375rem;
+  text-decoration: none;
+  transition: color 180ms var(--gl-ease);
+}
+
+.gg-launch__header-link:hover {
+  color: var(--gl-accent);
+}
+
+.gg-launch__header .gg-launch__btn {
+  min-height: 2.875rem;
+  padding-inline: 1.35rem;
+  font-size: 0.9375rem;
+}
+
+/*
+ * The two in-page links are optional extras. Below 46rem the logo, both links
+ * and the CTA no longer fit on one line and the header pushed the page into
+ * horizontal scroll at 360px. The CTA is the one that matters, so the links
+ * step aside and the offer keeps its primary action in the header at every
+ * width. Both destinations are still reachable: they are sections of this page.
+ */
+@media (max-width: 45.99rem) {
+  .gg-launch__header-link {
+    display: none;
+  }
+
+  .gg-launch__header-inner {
+    gap: 0.75rem;
+  }
+
+  .gg-launch__brand img {
+    width: 8rem;
+  }
+
+  .gg-launch__header .gg-launch__btn {
+    padding-inline: 1rem;
+    font-size: 0.875rem;
+  }
+}
+
+.gg-launch__skip {
+  position: absolute;
+  left: 1rem;
+  top: -6rem;
+  z-index: 60;
+  padding: 0.85rem 1.25rem;
+  background: #fff;
+  color: var(--gl-ink);
+  border-radius: 6px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.gg-launch__skip:focus {
+  top: 0.75rem;
+}
+
+/* ------------------------------------------------------------------- hero  */
+/* Content decides the height. No min-height, no viewport units. */
+
+.gg-launch__hero {
+  background: var(--gl-ink);
+  color: #fff;
+  padding-block: clamp(2.25rem, 4vw, 3.25rem) clamp(3rem, 5vw, 4.5rem);
+}
+
+.gg-launch__hero-grid {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4rem);
+  align-items: center;
+}
+
+@media (min-width: 62rem) {
+  .gg-launch__hero-grid {
+    /* Copy takes slightly more room than the visual. */
+    grid-template-columns: 1.12fr 0.88fr;
+  }
+}
+
+.gg-launch__hero-flag {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.65rem;
+  margin-bottom: 1.35rem;
+}
+
+.gg-launch__flag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--gl-accent);
+  border-radius: var(--radius-pill);
+  color: var(--gl-accent);
+  font-family: var(--font-ht-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.gg-launch__flag--quiet {
+  border-color: var(--gl-line-dark);
+  color: var(--gl-muted-dark);
+}
+
+.gg-launch__hero h1 {
+  font-size: clamp(2.15rem, 4.6vw, 3.5rem);
+  max-width: 18ch;
+}
+
+.gg-launch__hero-lead {
+  margin-top: 1.35rem;
+  max-width: 52ch;
+  font-size: clamp(1.0625rem, 1.35vw, 1.1875rem);
+  color: #e8e8e6;
+}
+
+.gg-launch__hero-body {
+  margin-top: 0;
+  max-width: 54ch;
+  color: var(--gl-muted-dark);
+  font-size: 1rem;
+}
+
+.gg-launch__hero-body + .gg-launch__hero-body {
+  margin-top: 0.85rem;
+}
+
+.gg-launch__price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.gg-launch__price-amount {
+  font-family: var(--font-ht-display);
+  font-size: clamp(2.75rem, 6vw, 4rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--gl-accent);
+}
+
+.gg-launch__price-period {
+  font-family: var(--font-ht-display);
+  font-size: 1.125rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.gg-launch__price-fees {
+  margin-top: 0.75rem;
+  max-width: 44ch;
+  font-size: 0.9375rem;
+  color: #e8e8e6;
+}
+
+.gg-launch__hero-actions {
+  margin-top: 1.75rem;
+}
+
+/* Supporting detail, below the CTA. Ruled off so it reads as elaboration
+   rather than as more of the same paragraph. */
+.gg-launch__hero-detail {
+  margin-top: 2.25rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--gl-line-dark);
+}
+
+/* -------------------------------------------------------- browser preview  */
+
+.gg-launch__preview {
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  border: 1px solid var(--gl-line-dark);
+  background: #1b1b1b;
+  box-shadow: 0 24px 60px -30px rgb(0 0 0 / 0.85);
+}
+
+.gg-launch__preview-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.7rem 0.9rem;
+  background: #232323;
+  border-bottom: 1px solid var(--gl-line-dark);
+}
+
+.gg-launch__preview-dot {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: #4a4a4a;
+}
+
+.gg-launch__preview-url {
+  margin-left: 0.6rem;
+  padding: 0.2rem 0.7rem;
+  border-radius: var(--radius-pill);
+  background: #161616;
+  color: var(--gl-muted-dark);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gg-launch__preview img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.gg-launch__preview-caption {
+  margin-top: 0.85rem;
+  font-size: 0.8125rem;
+  color: var(--gl-muted-dark);
+}
+
+/* ------------------------------------------------------------ value block  */
+
+.gg-launch__value-grid {
+  display: grid;
+  gap: clamp(2rem, 4vw, 3.5rem);
+}
+
+@media (min-width: 54rem) {
+  .gg-launch__value-grid {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+.gg-launch__value-copy > p + p {
+  margin-top: 1.1rem;
+}
+
+.gg-launch__value-copy p {
+  color: var(--gl-muted);
+  font-size: 1.0625rem;
+}
+
+.gg-launch__value-copy p:first-child {
+  color: var(--gl-ink);
+  font-family: var(--font-ht-display);
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  font-weight: 500;
+  line-height: 1.3;
+  text-transform: none;
+}
+
+/* ------------------------------------------------------------- inclusions  */
+
+.gg-launch__group + .gg-launch__group {
+  margin-top: clamp(2.5rem, 4vw, 3.5rem);
+}
+
+.gg-launch__group-title {
+  font-size: 0.8125rem;
+  font-family: var(--font-ht-display);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gl-accent-deep);
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--gl-line);
+  margin: 0;
+}
+
+.gg-launch__incl {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.gg-launch__incl li {
+  display: grid;
+  grid-template-columns: 2.75rem 1fr;
+  gap: 0.35rem 1.25rem;
+  padding-block: 1.65rem;
+  border-bottom: 1px solid var(--gl-line);
+}
+
+@media (min-width: 54rem) {
+  .gg-launch__incl li {
+    grid-template-columns: 2.75rem minmax(14rem, 20rem) 1fr;
+    align-items: start;
+    gap: 1.75rem;
+  }
+}
+
+.gg-launch__incl-icon {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--gl-accent);
+  border-radius: 50%;
+  color: var(--gl-accent-deep);
+}
+
+.gg-launch__incl-icon svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.gg-launch__incl h3 {
+  font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+  text-transform: none;
+  letter-spacing: -0.01em;
+}
+
+.gg-launch__incl p {
+  color: var(--gl-muted);
+  font-size: 1rem;
+  max-width: 58ch;
+}
+
+/* ------------------------------------------------------------------- work  */
+
+.gg-launch__work-grid {
+  display: grid;
+  gap: 1.75rem;
+  margin-top: 3rem;
+}
+
+@media (min-width: 48rem) {
+  .gg-launch__work-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.gg-launch__work-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+}
+
+.gg-launch__work-shot {
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background: #252525;
+  border: 1px solid var(--gl-line-dark);
+}
+
+.gg-launch__work-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 400ms var(--gl-ease);
+}
+
+.gg-launch__work-card:hover .gg-launch__work-shot img {
+  transform: scale(1.04);
+}
+
+.gg-launch__work-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.1rem;
+}
+
+.gg-launch__work-meta h3 {
+  font-size: 1.25rem;
+  text-transform: none;
+}
+
+.gg-launch__work-kind {
+  flex-shrink: 0;
+  font-size: 0.8125rem;
+  color: var(--gl-muted-dark);
+}
+
+.gg-launch__work-card p {
+  margin-top: 0.6rem;
+  font-size: 0.9375rem;
+  color: var(--gl-muted-dark);
+}
+
+.gg-launch__work-foot {
+  margin-top: 2.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 2rem;
+}
+
+.gg-launch__dark .gg-launch__textlink:hover {
+  color: var(--gl-accent);
+}
+
+/* --------------------------------------------------------------- capacity  */
+
+.gg-launch__capacity-grid {
+  display: grid;
+  gap: clamp(1.75rem, 4vw, 3.5rem);
+}
+
+@media (min-width: 54rem) {
+  .gg-launch__capacity-grid {
+    grid-template-columns: 0.9fr 1.1fr;
+    align-items: center;
+  }
+}
+
+.gg-launch__capacity-grid h2 {
+  font-size: clamp(1.9rem, 4vw, 3rem);
+}
+
+.gg-launch__capacity-grid p {
+  font-size: 1.0625rem;
+  max-width: 58ch;
+}
+
+.gg-launch__capacity-grid p + p {
+  margin-top: 1rem;
+}
+
+/* ---------------------------------------------------------------- summary  */
+
+.gg-launch__panel {
+  margin-top: 2.75rem;
+  border-radius: var(--radius-card);
+  background: var(--gl-ink);
+  color: #fff;
+  padding: clamp(1.75rem, 4vw, 3rem);
+}
+
+.gg-launch__panel-top {
+  display: grid;
+  gap: 1.5rem;
+  padding-bottom: 1.75rem;
+  border-bottom: 1px solid var(--gl-line-dark);
+}
+
+@media (min-width: 48rem) {
+  .gg-launch__panel-top {
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 2.5rem;
+  }
+}
+
+.gg-launch__panel h2 {
+  font-size: clamp(1.6rem, 3vw, 2.25rem);
+  max-width: 18ch;
+}
+
+.gg-launch__panel-list {
+  list-style: none;
+  margin: 1.75rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.85rem;
+}
+
+@media (min-width: 48rem) {
+  .gg-launch__panel-list {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.95rem 2.5rem;
+  }
+}
+
+.gg-launch__panel-list li {
+  display: grid;
+  grid-template-columns: 1.35rem 1fr;
+  gap: 0.75rem;
+  font-size: 1rem;
+  color: #e8e8e6;
+}
+
+.gg-launch__panel-list svg {
+  width: 1.35rem;
+  height: 1.35rem;
+  margin-top: 0.2rem;
+  color: var(--gl-accent);
+}
+
+/* The commercial qualification. Same size as the list above it on purpose:
+   this is the wording that stands in for the deposit, the commitment and the
+   total payable, and it must not read as fine print. */
+.gg-launch__terms {
+  margin-top: 2rem;
+  padding: 1.25rem 1.5rem;
+  border-left: 3px solid var(--gl-accent);
+  background: rgb(255 255 255 / 0.05);
+  border-radius: 0 12px 12px 0;
+  font-size: 1rem;
+  color: #e8e8e6;
+  max-width: 68ch;
+}
+
+.gg-launch__panel-actions {
+  margin-top: 2rem;
+}
+
+/* ---------------------------------------------------------------- process  */
+
+.gg-launch__steps {
+  list-style: none;
+  counter-reset: gl-step;
+  margin: 3rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0;
+}
+
+@media (min-width: 60rem) {
+  .gg-launch__steps {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2rem;
+  }
+}
+
+.gg-launch__steps li {
+  counter-increment: gl-step;
+  padding-block: 1.75rem;
+  border-top: 1px solid var(--gl-line);
+}
+
+@media (min-width: 60rem) {
+  .gg-launch__steps li {
+    padding-block: 1.5rem 0;
+  }
+}
+
+.gg-launch__steps li::before {
+  content: "0" counter(gl-step);
+  display: block;
+  margin-bottom: 1.5rem;
+  font-family: var(--font-ht-display);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--gl-accent-deep);
+}
+
+.gg-launch__steps h3 {
+  font-size: clamp(1.15rem, 1.8vw, 1.4rem);
+  text-transform: none;
+}
+
+.gg-launch__steps p {
+  margin-top: 0.75rem;
+  font-size: 1rem;
+  color: var(--gl-muted);
+}
+
+/* ------------------------------------------------------------------- faqs  */
+
+.gg-launch__faqs {
+  margin-top: 2.75rem;
+  border-top: 1px solid var(--gl-line);
+}
+
+.gg-launch__faq {
+  border-bottom: 1px solid var(--gl-line);
+}
+
+.gg-launch__faq summary {
+  display: grid;
+  grid-template-columns: 1fr 1.5rem;
+  align-items: center;
+  gap: 1.5rem;
+  padding-block: 1.5rem;
+  min-height: 44px;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--font-ht-display);
+  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  font-weight: 500;
+  transition: color 180ms var(--gl-ease);
+}
+
+.gg-launch__faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.gg-launch__faq summary:hover {
+  color: var(--gl-accent-deep);
+}
+
+.gg-launch__faq-sign {
+  position: relative;
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.gg-launch__faq-sign::before,
+.gg-launch__faq-sign::after {
+  content: "";
+  position: absolute;
+  inset: calc(50% - 1px) 0 auto;
+  height: 2px;
+  background: currentColor;
+  transition: transform 200ms var(--gl-ease);
+}
+
+.gg-launch__faq-sign::after {
+  transform: rotate(90deg);
+}
+
+.gg-launch__faq[open] .gg-launch__faq-sign::after {
+  transform: rotate(0deg);
+}
+
+.gg-launch__faq-answer {
+  padding: 0 2.5rem 1.6rem 0;
+  max-width: 74ch;
+  color: var(--gl-muted);
+  font-size: 1rem;
+}
+
+/* ----------------------------------------------------------------- enquiry */
+
+.gg-launch__enquiry-grid {
+  display: grid;
+  gap: clamp(2.25rem, 4vw, 3.5rem);
+  align-items: start;
+}
+
+@media (min-width: 60rem) {
+  .gg-launch__enquiry-grid {
+    grid-template-columns: 0.85fr 1.15fr;
+  }
+}
+
+.gg-launch__enquiry-copy p {
+  color: var(--gl-muted-dark);
+  font-size: 1.0625rem;
+}
+
+.gg-launch__enquiry-copy p + p {
+  margin-top: 1rem;
+}
+
+.gg-launch__form {
+  border-radius: var(--radius-card);
+  background: #fff;
+  color: var(--gl-ink);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.gg-launch__fields {
+  display: grid;
+  gap: 1.25rem;
+}
+
+@media (min-width: 34rem) {
+  .gg-launch__fields--two {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.gg-launch__field label {
+  display: block;
+  margin-bottom: 0.45rem;
+  font-family: var(--font-ht-display);
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+
+.gg-launch__req {
+  color: var(--gl-accent-deep);
+}
+
+.gg-launch__optional {
+  font-weight: 500;
+  color: var(--gl-muted);
+}
+
+.gg-launch__field input,
+.gg-launch__field textarea {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--gl-line);
+  border-radius: 14px;
+  background: var(--gl-paper);
+  color: var(--gl-ink);
+  font: inherit;
+  font-size: 1rem;
+  transition: border-color 180ms var(--gl-ease);
+}
+
+.gg-launch__field textarea {
+  min-height: 7.5rem;
+  resize: vertical;
+}
+
+.gg-launch__field input:focus,
+.gg-launch__field textarea:focus {
+  border-color: var(--gl-accent);
+}
+
+.gg-launch__field input[aria-invalid="true"],
+.gg-launch__field textarea[aria-invalid="true"] {
+  border-color: var(--gl-accent-deep);
+  border-width: 2px;
+}
+
+.gg-launch__error {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--gl-accent-deep);
+}
+
+.gg-launch__check {
+  display: grid;
+  grid-template-columns: 1.75rem 1fr;
+  gap: 0.85rem;
+  align-items: start;
+  padding: 1rem;
+  border: 1px solid var(--gl-line);
+  border-radius: 14px;
+  background: var(--gl-paper);
+}
+
+.gg-launch__check input {
+  width: 1.75rem;
+  height: 1.75rem;
+  margin: 0;
+  accent-color: var(--gl-accent);
+}
+
+.gg-launch__check label {
+  margin: 0;
+  font-family: var(--font-ht-body);
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.gg-launch__check[data-invalid="true"] {
+  border-color: var(--gl-accent-deep);
+  border-width: 2px;
+}
+
+.gg-launch__privacy {
+  margin-top: 1.25rem;
+  font-size: 0.9375rem;
+  color: var(--gl-muted);
+}
+
+.gg-launch__privacy a {
+  color: var(--gl-accent-deep);
+  text-underline-offset: 3px;
+}
+
+.gg-launch__submit {
+  margin-top: 1.5rem;
+  width: 100%;
+}
+
+.gg-launch__submit[disabled] {
+  opacity: 0.65;
+  cursor: progress;
+}
+
+.gg-launch__form-support {
+  margin-top: 1rem;
+  font-size: 0.9375rem;
+  color: var(--gl-muted);
+}
+
+.gg-launch__status {
+  margin-top: 1.5rem;
+  padding: 1.1rem 1.25rem;
+  border-radius: 14px;
+  font-size: 1rem;
+}
+
+.gg-launch__status--ok {
+  background: var(--gl-paper);
+  border: 1px solid var(--gl-line);
+  color: var(--gl-ink);
+}
+
+.gg-launch__status--bad {
+  background: #fdf0ec;
+  border: 2px solid var(--gl-accent-deep);
+  color: #6d1c0c;
+}
+
+.gg-launch__hp {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ------------------------------------------------------------------ footer */
+
+.gg-launch__footer {
+  background: var(--gl-ink);
+  color: #fff;
+  padding-block: clamp(2.5rem, 5vw, 3.5rem);
+  border-top: 1px solid var(--gl-line-dark);
+}
+
+.gg-launch__footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem 2.5rem;
+}
+
+.gg-launch__footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-left: auto;
+}
+
+.gg-launch__footer a {
+  color: #fff;
+  font-size: 0.9375rem;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  transition: color 180ms var(--gl-ease);
+}
+
+.gg-launch__footer a:hover {
+  color: var(--gl-accent);
+}
+
+.gg-launch__footer-legal {
+  width: 100%;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--gl-muted-dark);
+}
+
+/* ------------------------------------------------------- mobile offer bar  */
+
+.gg-launch__bar {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem var(--gl-gutter);
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+  background: var(--gl-ink);
+  border-top: 1px solid var(--gl-line-dark);
+  color: #fff;
+  transform: translateY(110%);
+  transition: transform 260ms var(--gl-ease);
+}
+
+.gg-launch__bar[data-shown="true"] {
+  transform: translateY(0);
+}
+
+.gg-launch__bar-price {
+  font-family: var(--font-ht-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--gl-accent);
+}
+
+.gg-launch__bar .gg-launch__btn {
+  margin-left: auto;
+  min-height: 2.875rem;
+  padding-inline: 1.25rem;
+  font-size: 0.9375rem;
+}
+
+@media (min-width: 48rem) {
+  .gg-launch__bar {
+    display: none;
+  }
+}
+
+/*
+ * Space for the bar so it can never sit over the footer, a form error or a
+ * control. Reserved at every width below the bar's own breakpoint, whether or
+ * not the bar happens to be showing.
+ */
+@media (max-width: 47.99rem) {
+  .gg-launch__footer {
+    padding-bottom: calc(clamp(2.5rem, 5vw, 3.5rem) + 5.5rem);
+  }
+}
+
+/* ------------------------------------------------------------------ motion */
+/*
+ * Reveals are added by JS, never by CSS: an element is visible by default and
+ * only becomes hidden once the observer is running. If the script fails or the
+ * browser has no IntersectionObserver, the page simply renders.
+ *
+ * Hero copy and the primary CTA are never given data-reveal, so the offer is
+ * readable the instant the HTML arrives.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .gg-launch [data-reveal][data-reveal-pending="true"] {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  .gg-launch [data-reveal] {
+    transition:
+      opacity 520ms var(--gl-ease),
+      transform 520ms var(--gl-ease);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gg-launch *,
+  .gg-launch *::before,
+  .gg-launch *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .gg-launch [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

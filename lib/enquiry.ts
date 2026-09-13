@@ -15,8 +15,9 @@ import { site } from "@/content/site";
 // the client bundle and Web3Forms handles spam/routing), so the hardcoded
 // fallback is safe and lets forms work on any deploy with zero env config. An
 // env var still overrides it if set.
-const WEB3FORMS_KEY =
-  process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "beae6de4-74ed-4868-a4eb-e479e0f43e6c";
+export const WEB3FORMS_PUBLIC_KEY = "beae6de4-74ed-4868-a4eb-e479e0f43e6c";
+
+const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || WEB3FORMS_PUBLIC_KEY;
 
 export type SendResult = "success" | "mail" | "error";
 

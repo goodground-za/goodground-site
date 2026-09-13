@@ -33,17 +33,20 @@ function lastModifiedFor(relativeFile: string): Date {
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes: { path: string; priority: number; file: string }[] = [
     { path: "", priority: 1, file: "app/page.tsx" },
-    { path: "/pricing", priority: 0.95, file: "app/pricing/page.tsx" },
-    { path: "/services", priority: 0.9, file: "app/services/page.tsx" },
+    { path: "/pricing", priority: 0.95, file: "app/(site)/pricing/page.tsx" },
+    // The Website Launch promotion. Its two confirmation routes are
+    // deliberately absent: both are noindex transactional endpoints.
+    { path: "/website-launch", priority: 0.9, file: "content/websiteLaunch.ts" },
+    { path: "/services", priority: 0.9, file: "app/(site)/services/page.tsx" },
     ...servicePages.map(({ slug }) => ({ path: `/services/${slug}`, priority: 0.8, file: "content/servicePages.ts" })),
     ...industryPages.map(({ slug }) => ({ path: `/services/${slug}`, priority: 0.75, file: "content/industryPages.ts" })),
-    { path: "/start-project", priority: 0.8, file: "app/start-project/page.tsx" },
-    { path: "/about", priority: 0.8, file: "app/about/page.tsx" },
-    { path: "/contact", priority: 0.8, file: "app/contact/page.tsx" },
-    { path: "/faq", priority: 0.7, file: "app/faq/page.tsx" },
-    { path: "/insights", priority: 0.7, file: "app/insights/page.tsx" },
-    { path: "/work", priority: 0.6, file: "app/work/page.tsx" },
-    { path: "/legal", priority: 0.3, file: "app/legal/page.tsx" },
+    { path: "/start-project", priority: 0.8, file: "app/(site)/start-project/page.tsx" },
+    { path: "/about", priority: 0.8, file: "app/(site)/about/page.tsx" },
+    { path: "/contact", priority: 0.8, file: "app/(site)/contact/page.tsx" },
+    { path: "/faq", priority: 0.7, file: "app/(site)/faq/page.tsx" },
+    { path: "/insights", priority: 0.7, file: "app/(site)/insights/page.tsx" },
+    { path: "/work", priority: 0.6, file: "app/(site)/work/page.tsx" },
+    { path: "/legal", priority: 0.3, file: "app/(site)/legal/page.tsx" },
   ];
 
   const pages: MetadataRoute.Sitemap = routes.map(({ path, priority, file }) => ({
