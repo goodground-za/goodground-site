@@ -62,10 +62,14 @@ Changing the price means editing one line. Do not hard-code it into the page.
   of what is free today. There is no counter, no countdown and no date reset,
   and none should be added.
 - The 12 months of included fees is **not** a contract length. The deposit,
-  commitment, schedule, total payable, renewal fees, ownership, mailbox
-  allowance and support scope are all unspecified, and `launchOffer.proposalTerms`
-  is the agreed wording that stands in for them. Do not replace it with a number,
-  a contract length, "cancel anytime", "no deposit" or a package total.
+  commitment, schedule and total payable are not stated anywhere on the page.
+  Do not invent any of them, and do not add "cancel anytime", "no deposit" or a
+  package total.
+  - The paragraph that used to stand in for those terms was removed on
+    2026-09-13 on Johandre's instruction. What happens at the **end** of the term
+    is now stated instead, in the "What happens after the first 12 months?"
+    answer: the domain and website are transferred across, or the client moves to
+    the maintenance package.
 - Redesigns and replacements are out of scope, as are ongoing SEO campaigns and
   extra features.
 
