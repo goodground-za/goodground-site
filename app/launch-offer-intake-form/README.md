@@ -65,6 +65,19 @@ A Markdown brief, section by section, in the form's own order, with unanswered
 optional questions marked `_Not answered._` rather than dropped, so a gap is
 visible. It is meant to be saved straight into the project folder.
 
+## Delivery
+
+Over GoodGround's own SMTP (`lib/mailer.ts`), as `hello@goodground.co.za`, with
+`Reply-To` set to the person who filled the form in. The recipient comes from
+the environment and never from the request, so the route cannot be turned into
+an open relay.
+
+It does **not** use Web3Forms. That was the original design and it never worked:
+the free plan refuses server-side calls, so both this route and
+`/api/website-launch` failed at delivery until 2026-09-14. Requires `SMTP_HOST`,
+`SMTP_USER` and `SMTP_PASS`; with any unset the route fails honestly instead of
+reporting a success.
+
 ## Guards
 
 Same shape as `/api/website-launch`:
@@ -89,9 +102,11 @@ the production upgrade.
   detail is simply not captured and has to be asked for separately.
 - **The draft is per browser.** It lives in `localStorage`, so a different
   device or cleared history starts a blank form. The page says so.
-- **Live delivery has never been exercised.** The mock transport proved the path
-  end to end; no real email has been sent from this route. Submit the live form
-  once and confirm it arrives before sending the link to a client.
+- **Live delivery has not been exercised against the real mailbox.** The send
+  path is proven end to end against a local SMTP server — envelope, Reply-To,
+  subject and the full brief all verified — but no message has yet gone through
+  `mail.goodground.co.za` with the real credentials. Submit the live form once
+  and confirm it arrives before sending the link to a client.
 
 ## Still to configure
 
@@ -101,3 +116,5 @@ the production upgrade.
   otherwise leave it empty rather than publishing a link that is wrong for most
   clients.
 - Confirm `LAUNCH_ENQUIRY_TRANSPORT` is **unset** in Vercel.
+- Set `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER` and `SMTP_PASS` in Vercel. Without
+  them both forms fail on every submission. See `.env.example`.

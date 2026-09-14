@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { intakeCopy, intakeRoute } from "@/content/launchIntake";
 import { buildBrief } from "@/lib/intakeBrief";
 import { validateIntake, type IntakeErrors } from "@/lib/intakeValidate";
-import { WEB3FORMS_PUBLIC_KEY } from "@/lib/enquiry";
+import { sendMail } from "@/lib/mailer";
 
 /**
  * Intake endpoint for /launch-offer-intake-form.
@@ -61,10 +61,6 @@ function rateLimited(key: string, now: number): boolean {
   hit.count += 1;
   return hit.count > RATE_LIMIT.max;
 }
-
-/** Values that end up in a mail header lose their line breaks. */
-const headerSafe = (value: string) =>
-  value.replace(/[\r\n\t\v\f\u0085\u2028\u2029]+/g, " ").trim();
 
 /** Body text keeps its line breaks and loses its control characters. */
 const bodySafe = (value: string) =>
@@ -204,47 +200,28 @@ export async function POST(request: Request) {
   }
 
   /*
-   * Delivery. The recipient is fixed by the Web3Forms account the key belongs
-   * to, never by anything in the request, so this cannot be turned into an open
-   * relay. Server-side env wins; the public key is the zero-config fallback the
-   * rest of the site already uses.
+   * Delivery, over the studio's own SMTP. The recipient comes from the
+   * environment and never from the request, so this cannot be turned into an
+   * open relay. Reply-To is the enquirer, so replying in the mail client
+   * reaches them directly.
    */
-  const accessKey = process.env.WEB3FORMS_ACCESS_KEY || WEB3FORMS_PUBLIC_KEY;
-  if (!accessKey) {
-    console.error("[launch-intake] No Web3Forms access key configured.");
-    return fail(request, 500, { ok: false, message: intakeCopy.failure });
-  }
+  const sent = await sendMail({
+    subject: `Project form — ${businessName}`,
+    replyTo: email,
+    text: [
+      `Business: ${bodySafe(businessName)}`,
+      `Contact: ${bodySafe(contactName)}`,
+      `Email: ${bodySafe(email)}`,
+      `Phone: ${bodySafe(read("phone").trim()) || "Not given"}`,
+      `Source: ${intakeRoute.path} (launch offer intake)`,
+      "",
+      "----------------------------------------------------------------",
+      "",
+      brief,
+    ].join("\n"),
+  });
 
-  let accepted = false;
-  try {
-    const res = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
-      body: JSON.stringify({
-        access_key: accessKey,
-        subject: headerSafe(`Project form — ${businessName}`),
-        from_name: "GoodGround website",
-        replyto: headerSafe(email),
-        Business: bodySafe(businessName),
-        Contact: bodySafe(contactName),
-        Email: bodySafe(email),
-        Phone: bodySafe(read("phone").trim()),
-        Source: `${intakeRoute.path} (launch offer intake)`,
-        "Project brief": brief,
-      }),
-    });
-    const json = (await res.json()) as { success?: boolean };
-    accepted = res.ok && json.success === true;
-    if (!accepted) {
-      // Status only. The provider's message can carry account detail and must
-      // not reach the browser or a shared deployment log.
-      console.error("[launch-intake] Delivery rejected, status", res.status);
-    }
-  } catch (error) {
-    console.error("[launch-intake] Delivery threw:", (error as Error).name);
-  }
-
-  if (!accepted) {
+  if (!sent.ok) {
     return fail(request, 502, { ok: false, message: intakeCopy.failure });
   }
 

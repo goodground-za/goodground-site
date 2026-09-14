@@ -100,7 +100,8 @@ app/sitemap.ts        adds /website-launch; also repoints the existing static
                       move had left pointing at paths that no longer exist, so
                       every static route was silently falling back to build time
                       for its lastModified date
-lib/enquiry.ts        exports WEB3FORMS_PUBLIC_KEY so the server route and the
+lib/mailer.ts         SMTP transport shared by both server-side form routes
+lib/enquiry.ts        client-side Web3Forms path, used by the site's other forms; the
                       existing client forms share one value. No behaviour change
 .env.example          documents the two new optional variables
 ```
@@ -114,9 +115,17 @@ The site has no PHP and no cPanel. It runs on Vercel, so the handler is a
 **Next.js Route Handler**, which is this project's native server environment.
 
 The browser posts to `/api/website-launch`. That route re-checks everything and
-then hands the message to **Web3Forms**, the same delivery the site's existing
-contact and start-project forms already use (`lib/enquiry.ts`). The recipient is
-fixed by the Web3Forms account the key belongs to, not by anything in the
+then sends the message over **GoodGround's own SMTP** (`lib/mailer.ts`).
+
+> **2026-09-14 — this used to be Web3Forms and it never worked.**
+> Web3Forms refuses server-side calls on the free plan ("Use our API in
+> client side or contact support with server IP address"), so every enquiry
+> from this page failed at delivery from launch until the switch to SMTP.
+> It went unnoticed because the route was only ever exercised with the mock
+> transport, which returns success without contacting the provider at all.
+> The browser-side forms in `lib/enquiry.ts` were never affected.
+
+The recipient comes from the environment, not from anything in the
 request, so the endpoint cannot be used as an open relay.
 
 Why a server route at all, when the other forms post direct from the browser:
@@ -147,7 +156,12 @@ Copy from `.env.example`. **Both new variables are optional.**
 
 | Variable | Needed? | What it does |
 |---|---|---|
-| `WEB3FORMS_ACCESS_KEY` | No | Server-side key for this route. Unset, it falls back to the same public key the site's other forms use, so the page works on any deploy with zero config. Set it to route promotion enquiries to a different inbox. Not exposed to the browser. |
+| `SMTP_HOST` | **Yes** | `mail.goodground.co.za`. Unset, the route fails honestly rather than pretending a message was sent. |
+| `SMTP_PORT` | No | Defaults to `465` (implicit TLS). `587` also works and uses STARTTLS. Port 25 is blocked. |
+| `SMTP_USER` | **Yes** | `hello@goodground.co.za` |
+| `SMTP_PASS` | **Yes** | That mailbox's password. Vercel only — never in the repo. |
+| `MAIL_TO` | No | Defaults to `SMTP_USER`. |
+| `MAIL_FROM` | No | Defaults to `SMTP_USER`. Must be a mailbox on the domain or the server refuses to relay. |
 | `LAUNCH_ENQUIRY_TRANSPORT` | No | `mock` accepts and logs without delivering. **Development only.** Never set in production. |
 | `NEXT_PUBLIC_GA_ID` | Existing | Already configured. The promotion's events use it. |
 

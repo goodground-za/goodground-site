@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 import { NextResponse } from "next/server";
 import { launchEnquiry, launchFieldLimits, launchRoute } from "@/content/websiteLaunch";
-import { WEB3FORMS_PUBLIC_KEY } from "@/lib/enquiry";
+import { sendMail } from "@/lib/mailer";
 
 /**
  * Enquiry endpoint for the /website-launch promotion.
@@ -53,14 +53,6 @@ function rateLimited(key: string, now: number): boolean {
   hit.count += 1;
   return hit.count > RATE_LIMIT.max;
 }
-
-/**
- * Anything that ends up in a mail header (subject, display name, Reply-To) gets
- * its CR/LF stripped. Web3Forms takes JSON over HTTPS so nothing can be injected
- * at our boundary, but these values do become headers downstream, and a newline
- * in a header value is how header injection works.
- */
-const headerSafe = (value: string) => value.replace(/[\r\n\t\v\f\u0085\u2028\u2029]+/g, " ").trim();
 
 /** Body text is escaped for the same reason a template would escape it. */
 const bodySafe = (value: string) =>
@@ -226,48 +218,35 @@ export async function POST(request: Request) {
   }
 
   /*
-   * Delivery. Recipient is fixed by the Web3Forms account this key belongs to,
-   * not by anything in the request, so the endpoint cannot be turned into an
-   * open relay. Server-side env wins; the public key is the zero-config
-   * fallback the rest of the site already uses.
+   * Delivery, over the studio's own SMTP.
+   *
+   * This used to hand the enquiry to Web3Forms. That silently never worked from
+   * a server: the free plan refuses server-side calls, so every enquiry from
+   * this page failed at delivery and the visitor saw an error. It went
+   * unnoticed because the route was only ever exercised with the mock
+   * transport, which returns success without calling the provider at all.
+   *
+   * The recipient comes from the environment, never from the request, so this
+   * cannot be turned into an open relay. Reply-To is the enquirer.
    */
-  const accessKey = process.env.WEB3FORMS_ACCESS_KEY || WEB3FORMS_PUBLIC_KEY;
-  if (!accessKey) {
-    console.error("[website-launch] No Web3Forms access key configured.");
-    return fail(request, 500, { ok: false, message: launchEnquiry.failure });
-  }
+  const sent = await sendMail({
+    subject: `Website Launch enquiry \u2014 ${clean.businessName}`,
+    replyTo: clean.email,
+    text: [
+      `Name: ${bodySafe(clean.name)}`,
+      `Business: ${bodySafe(clean.businessName)}`,
+      `Email: ${bodySafe(clean.email)}`,
+      "",
+      "About the business:",
+      bodySafe(clean.about),
+      "",
+      `Preferred launch timing: ${bodySafe(clean.timeline) || "Not given"}`,
+      `Eligibility: ${launchEnquiry.eligibilityLabel}`,
+      `Source: ${launchRoute.path} (Website Launch promotion)`,
+    ].join("\n"),
+  });
 
-  let accepted = false;
-  try {
-    const res = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
-      body: JSON.stringify({
-        access_key: accessKey,
-        subject: headerSafe(`Website Launch enquiry — ${clean.businessName}`),
-        from_name: "GoodGround website",
-        replyto: headerSafe(clean.email),
-        Name: bodySafe(clean.name),
-        Business: bodySafe(clean.businessName),
-        Email: bodySafe(clean.email),
-        "About the business": bodySafe(clean.about),
-        "Preferred launch timing": bodySafe(clean.timeline) || "Not given",
-        Eligibility: launchEnquiry.eligibilityLabel,
-        Source: `${launchRoute.path} (Website Launch promotion)`,
-      }),
-    });
-    const json = (await res.json()) as { success?: boolean };
-    accepted = res.ok && json.success === true;
-    if (!accepted) {
-      // Status only. The provider's message can carry account details, and it
-      // must not reach the browser or the logs of a shared deployment.
-      console.error("[website-launch] Delivery rejected, status", res.status);
-    }
-  } catch (error) {
-    console.error("[website-launch] Delivery threw:", (error as Error).name);
-  }
-
-  if (!accepted) {
+  if (!sent.ok) {
     return fail(request, 502, { ok: false, message: launchEnquiry.failure });
   }
 
