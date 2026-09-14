@@ -158,10 +158,10 @@ Copy from `.env.example`. **Both new variables are optional.**
 |---|---|---|
 | `SMTP_HOST` | **Yes** | `mail.goodground.co.za`. Unset, the route fails honestly rather than pretending a message was sent. |
 | `SMTP_PORT` | No | Defaults to `465` (implicit TLS). `587` also works and uses STARTTLS. Port 25 is blocked. |
-| `SMTP_USER` | **Yes** | `hello@goodground.co.za` |
+| `SMTP_USER` | **Yes** | `webinquiry@goodground.co.za` — the dedicated web-form mailbox, so automated traffic stays out of `hello@`. |
 | `SMTP_PASS` | **Yes** | That mailbox's password. Vercel only — never in the repo. |
-| `MAIL_TO` | No | Defaults to `SMTP_USER`. |
-| `MAIL_FROM` | No | Defaults to `SMTP_USER`. Must be a mailbox on the domain or the server refuses to relay. |
+| `MAIL_TO` | No | Defaults to `SMTP_USER`, which is what we want. Set it only to deliver somewhere other than the sending mailbox. |
+| `MAIL_FROM` | No | Defaults to `SMTP_USER`. Keep it equal to `SMTP_USER`: Exim will relay a different address on the same domain in most configurations, but authenticating and sending as the same mailbox is the case that always works. |
 | `LAUNCH_ENQUIRY_TRANSPORT` | No | `mock` accepts and logs without delivering. **Development only.** Never set in production. |
 | `NEXT_PUBLIC_GA_ID` | Existing | Already configured. The promotion's events use it. |
 

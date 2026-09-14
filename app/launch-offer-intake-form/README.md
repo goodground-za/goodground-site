@@ -67,7 +67,7 @@ visible. It is meant to be saved straight into the project folder.
 
 ## Delivery
 
-Over GoodGround's own SMTP (`lib/mailer.ts`), as `hello@goodground.co.za`, with
+Over GoodGround's own SMTP (`lib/mailer.ts`), as `webinquiry@goodground.co.za`, with
 `Reply-To` set to the person who filled the form in. The recipient comes from
 the environment and never from the request, so the route cannot be turned into
 an open relay.
