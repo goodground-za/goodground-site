@@ -102,19 +102,17 @@ the production upgrade.
   detail is simply not captured and has to be asked for separately.
 - **The draft is per browser.** It lives in `localStorage`, so a different
   device or cleared history starts a blank form. The page says so.
-- **Live delivery has not been exercised against the real mailbox.** The send
-  path is proven end to end against a local SMTP server — envelope, Reply-To,
-  subject and the full brief all verified — but no message has yet gone through
-  `mail.goodground.co.za` with the real credentials. Submit the live form once
-  and confirm it arrives before sending the link to a client.
+- **Live delivery confirmed 2026-09-14.** A real submission through the
+  production route was delivered to `webinquiry@goodground.co.za` and received.
+  Re-check this after any change to the SMTP settings or the mailbox password.
 
-## Still to configure
+## Configuration status
 
 - `intakeAssets.driveUrl` in `content/launchIntake.ts` is empty. While it is,
   the page says we email a private Google Drive folder, which is what happens.
   Set it only if a single standing upload folder is ever used for everyone —
   otherwise leave it empty rather than publishing a link that is wrong for most
   clients.
-- Confirm `LAUNCH_ENQUIRY_TRANSPORT` is **unset** in Vercel.
-- Set `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER` and `SMTP_PASS` in Vercel. Without
-  them both forms fail on every submission. See `.env.example`.
+Nothing. `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER` and `SMTP_PASS` are set in
+Vercel and delivery is confirmed working. `LAUNCH_ENQUIRY_TRANSPORT` is unset in
+production, which is correct — set it only for local testing.

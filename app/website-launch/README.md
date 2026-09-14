@@ -124,6 +124,9 @@ then sends the message over **GoodGround's own SMTP** (`lib/mailer.ts`).
 > It went unnoticed because the route was only ever exercised with the mock
 > transport, which returns success without contacting the provider at all.
 > The browser-side forms in `lib/enquiry.ts` were never affected.
+>
+> Fixed and confirmed delivering on 2026-09-14. Enquiries submitted between
+> 13 and 14 September were never delivered anywhere and are unrecoverable.
 
 The recipient comes from the environment, not from anything in the
 request, so the endpoint cannot be used as an open relay.
