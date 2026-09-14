@@ -1,0 +1,913 @@
+/*
+ * Styles for the launch-offer project form (/launch-offer-intake-form).
+ *
+ * EVERY rule is prefixed .gg-intake on purpose. Like /website-launch, this page
+ * brings its own header and footer rather than the site chrome, so it sits
+ * outside the (site) route group and needs styling that cannot reach any other
+ * route.
+ *
+ * Colour, type and radius come from the @theme block in app/globals.css. This
+ * file defines no new brand value.
+ *
+ * Contrast constraints carried from AGENTS.md, because they are not obvious:
+ *   white on ink        18.9:1   anything
+ *   ink on orange        4.90:1  anything, and the ONLY text allowed on orange
+ *   orange on ink        4.90:1  anything
+ *   orange on paper      3.59:1  large text, rules and icons only, never body
+ *   crimson on paper     ~7:1    small accent text on the light ground
+ *   white on orange      3.86:1  NEVER used for text
+ *
+ * The form is long by necessity, so the type here runs slightly larger and the
+ * measure slightly narrower than the marketing pages. Someone is reading and
+ * answering fifty-three questions, not skimming.
+ */
+
+.gg-intake {
+  --gi-ink: var(--color-ht-purple);
+  --gi-paper: var(--color-ht-cream);
+  --gi-accent: var(--color-ht-orange);
+  --gi-accent-deep: var(--color-ht-crimson);
+  --gi-deep: var(--color-ht-deep-purple);
+  --gi-surface: #ffffff;
+  --gi-line: rgb(17 17 17 / 0.14);
+  --gi-line-soft: rgb(17 17 17 / 0.08);
+  /*
+   * The boundary of an actual control, as opposed to a decorative card edge.
+   * WCAG 1.4.11 wants 3:1 for the visual boundary of a form control, and the
+   * card edge above measures 1.35:1 against white — fine for a panel, a real
+   * failure for an input someone has to find and fill in. This composites to
+   * about 3.5:1 on the white card.
+   */
+  --gi-field-line: rgb(17 17 17 / 0.5);
+  --gi-muted: #55565a;
+  --gi-muted-dark: #b4b4b0;
+  --gi-bad: #b3261e;
+
+  --gi-max: 1180px;
+  --gi-gutter: clamp(1.25rem, 4.45vw, 4rem);
+  --gi-section: clamp(2.75rem, 5vw, 4.25rem);
+  --gi-ease: cubic-bezier(0.2, 0.75, 0.25, 1);
+
+  background: var(--gi-paper);
+  color: var(--gi-ink);
+  font-family: var(--font-ht-body);
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+.gg-intake__wrap {
+  width: 100%;
+  max-width: calc(var(--gi-max) + var(--gi-gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gi-gutter);
+}
+
+/* Anchored questions must clear the sticky header when jumped to, whether by a
+   fragment link or by focus moving to the first error. */
+.gg-intake [id],
+.gg-intake a,
+.gg-intake button,
+.gg-intake input,
+.gg-intake textarea,
+.gg-intake legend {
+  scroll-margin-top: 6rem;
+}
+
+/* Only UNCLASSED links inherit. Written as a bare `.gg-intake a` this is
+   (0,1,1) and silently beats every single-class link colour in the file — the
+   bug that rendered the launch page's header nav ink-on-ink twice. */
+.gg-intake a:not([class]) {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+
+.gg-intake .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Off-screen rather than display:none, so a bot still sees a fillable field. */
+.gg-intake__hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.gg-intake__skip {
+  position: absolute;
+  left: -9999px;
+  z-index: 60;
+}
+
+.gg-intake__skip:focus {
+  left: 1rem;
+  top: 1rem;
+  padding: 0.75rem 1.25rem;
+  background: var(--gi-ink);
+  color: #fff;
+  border-radius: 999px;
+}
+
+.gg-intake :focus-visible {
+  outline: 3px solid var(--gi-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ------------------------------------------------------------------ header */
+
+.gg-intake__header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--gi-ink);
+  color: #fff;
+}
+
+.gg-intake__header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 4.5rem;
+}
+
+.gg-intake__brand {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  min-height: 44px;
+}
+
+.gg-intake__brand img {
+  display: block;
+  width: clamp(8rem, 18vw, 11.375rem);
+  height: auto;
+  /* The wordmark SVG carries no fill of its own, so it renders black by
+     default — invisible on both the ink header and the ink footer. */
+  filter: brightness(0) invert(1);
+}
+
+.gg-intake__header-tag {
+  font-family: var(--font-ht-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gi-accent);
+}
+
+/* -------------------------------------------------------------------- hero */
+
+.gg-intake__hero {
+  background: var(--gi-ink);
+  color: #fff;
+  padding-block: clamp(2.75rem, 6vw, 4.5rem) var(--gi-section);
+}
+
+.gg-intake__eyebrow {
+  font-family: var(--font-ht-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gi-accent);
+}
+
+.gg-intake__title {
+  margin-top: 0.75rem;
+  font-family: var(--font-ht-display);
+  font-size: clamp(2.25rem, 6vw, 4rem);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  max-width: 16ch;
+}
+
+.gg-intake__standfirst {
+  margin-top: 1.25rem;
+  font-size: clamp(1.0625rem, 1.7vw, 1.3125rem);
+  line-height: 1.5;
+  max-width: 54ch;
+  color: #e6e6e2;
+}
+
+.gg-intake__points {
+  margin-top: 2rem;
+  display: grid;
+  gap: 0.75rem;
+  max-width: 62ch;
+  list-style: none;
+  padding: 0;
+}
+
+.gg-intake__points li {
+  position: relative;
+  padding-left: 1.75rem;
+  color: #ddd8e6;
+  font-size: 1rem;
+}
+
+.gg-intake__points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: var(--gi-accent);
+}
+
+/* Contents list. Seeing the whole shape up front is what stops a long form
+   reading as endless, so this is a feature rather than decoration. */
+.gg-intake__toc {
+  margin-top: 2.5rem;
+  padding: 1.5rem 1.75rem;
+  /* No background wash. A 5% white lift takes the ground from #111 to #1d1d1d,
+     which drops the orange title from 4.90:1 to 4.38:1 and fails AA at 13px.
+     The border alone gives the card its edge, and the eyebrow keeps the same
+     contrast as every other orange eyebrow on the page. */
+  border: 1px solid rgb(255 255 255 / 0.28);
+  border-radius: var(--radius-block);
+  max-width: 46rem;
+}
+
+.gg-intake__toc-title {
+  font-family: var(--font-ht-display);
+  font-size: 0.8125rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gi-accent);
+}
+
+.gg-intake__toc ol {
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 0.4rem 1.5rem;
+  counter-reset: toc;
+}
+
+.gg-intake__toc li {
+  counter-increment: toc;
+}
+
+.gg-intake__toc a {
+  display: block;
+  padding: 0.3rem 0;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.9375rem;
+}
+
+.gg-intake__toc a::before {
+  content: counter(toc) ". ";
+  color: var(--gi-muted-dark);
+}
+
+.gg-intake__toc a:hover,
+.gg-intake__toc a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ------------------------------------------------------------------ assets */
+
+.gg-intake__assets {
+  padding-block: var(--gi-section) 0;
+}
+
+.gg-intake__assets-card {
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border-radius: var(--radius-block);
+  background: var(--gi-deep);
+  color: #fff;
+}
+
+.gg-intake__assets-title {
+  font-family: var(--font-ht-display);
+  font-size: clamp(1.25rem, 2.4vw, 1.625rem);
+  line-height: 1.15;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+
+.gg-intake__assets-card p {
+  margin-top: 0.85rem;
+  max-width: 68ch;
+  color: #ddd8e6;
+}
+
+.gg-intake__assets-card ul {
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.6rem;
+  max-width: 68ch;
+}
+
+.gg-intake__assets-card li {
+  position: relative;
+  padding-left: 1.6rem;
+  color: #ddd8e6;
+  font-size: 0.9375rem;
+}
+
+.gg-intake__assets-card li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--gi-accent);
+}
+
+/* -------------------------------------------------------------------- body */
+
+.gg-intake__body {
+  padding-block: var(--gi-section);
+}
+
+.gg-intake__layout {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 3rem);
+}
+
+@media (min-width: 60rem) {
+  .gg-intake__layout {
+    grid-template-columns: 17rem minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+/* ------------------------------------------------------------------- aside */
+
+.gg-intake__aside-inner {
+  padding: 1.1rem 1.15rem;
+  border: 1px solid var(--gi-line);
+  border-radius: var(--radius-block);
+  background: var(--gi-surface);
+}
+
+@media (min-width: 60rem) {
+  .gg-intake__aside {
+    position: sticky;
+    /* Header height plus breathing room. */
+    top: 5.5rem;
+    /* Never taller than the space under the header, or the end of a long list
+       becomes unreachable on a short laptop screen. */
+    max-height: calc(100vh - 7rem);
+    overflow-y: auto;
+  }
+}
+
+.gg-intake__aside-title {
+  font-family: var(--font-ht-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gi-muted);
+}
+
+.gg-intake__bar {
+  margin-top: 0.75rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: rgb(17 17 17 / 0.1);
+  overflow: hidden;
+}
+
+.gg-intake__bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--gi-accent);
+  transition: width 300ms var(--gi-ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gg-intake__bar span {
+    transition: none;
+  }
+}
+
+.gg-intake__bar-text {
+  margin-top: 0.5rem;
+  font-size: 0.8125rem;
+  color: var(--gi-muted);
+}
+
+.gg-intake__steps {
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.15rem;
+}
+
+.gg-intake__steps a {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  /* Still clears the 24px target-size floor with room to spare, and tight
+     enough that all eleven sections fit a 900px laptop without the rail
+     growing a scrollbar of its own inside the sticky column. */
+  padding: 0.4rem 0.45rem;
+  border-radius: 10px;
+  color: var(--gi-ink);
+  text-decoration: none;
+  font-size: 0.875rem;
+  line-height: 1.3;
+}
+
+.gg-intake__steps a:hover {
+  background: rgb(17 17 17 / 0.05);
+}
+
+.gg-intake__step-mark {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 1.45rem;
+  height: 1.45rem;
+  border-radius: 50%;
+  border: 1px solid var(--gi-line);
+  font-family: var(--font-ht-display);
+  font-size: 0.75rem;
+  color: var(--gi-muted);
+}
+
+.gg-intake__steps li[data-complete] .gg-intake__step-mark {
+  background: var(--gi-accent);
+  border-color: var(--gi-accent);
+  /* Ink on orange, 4.90:1. White on orange is 3.86:1 and is never used for
+     text anywhere on this site. */
+  color: var(--gi-ink);
+}
+
+.gg-intake__steps li[data-complete] .gg-intake__step-name {
+  color: var(--gi-muted);
+}
+
+.gg-intake__steps li[data-bad] .gg-intake__step-mark {
+  border-color: var(--gi-bad);
+  color: var(--gi-bad);
+}
+
+.gg-intake__steps li[data-bad] .gg-intake__step-name {
+  color: var(--gi-bad);
+  font-weight: 600;
+}
+
+.gg-intake__saved {
+  margin-top: 0.85rem;
+  min-height: 1.25rem;
+  font-size: 0.8125rem;
+  color: var(--gi-muted);
+}
+
+.gg-intake__saved[data-state="saved"] {
+  /* Crimson on white, ~7:1. The green a "saved" tick wants is not in this
+     palette, and inventing one for a single label is not worth a new token. */
+  color: var(--gi-accent-deep);
+  font-weight: 600;
+}
+
+.gg-intake__draft-note {
+  margin-top: 0.35rem;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: var(--gi-muted);
+}
+
+.gg-intake__clear {
+  margin-top: 0.85rem;
+  padding: 0.5rem 0.75rem;
+  min-height: 2.25rem;
+  border: 1px solid var(--gi-field-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--gi-muted);
+  font: inherit;
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+
+.gg-intake__clear:hover {
+  border-color: var(--gi-bad);
+  color: var(--gi-bad);
+}
+
+/* ---------------------------------------------------------------- sections */
+
+.gg-intake__form {
+  display: grid;
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+  min-width: 0;
+}
+
+.gg-intake__section {
+  padding: clamp(1.5rem, 3.2vw, 2.5rem);
+  border: 1px solid var(--gi-line);
+  border-radius: var(--radius-block);
+  background: var(--gi-surface);
+}
+
+.gg-intake__section-num {
+  font-family: var(--font-ht-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gi-accent-deep);
+}
+
+.gg-intake__section-title {
+  margin-top: 0.5rem;
+  font-family: var(--font-ht-display);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+}
+
+.gg-intake__section-intro {
+  margin-top: 0.75rem;
+  max-width: 62ch;
+  color: var(--gi-muted);
+  font-size: 1rem;
+}
+
+.gg-intake__fields {
+  margin-top: 2rem;
+  display: grid;
+  gap: 1.75rem;
+}
+
+@media (min-width: 48rem) {
+  .gg-intake__fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .gg-intake__cell {
+    grid-column: 1 / -1;
+  }
+
+  .gg-intake__cell--half {
+    grid-column: span 1;
+  }
+}
+
+/* ------------------------------------------------------------------ fields */
+
+/* A fieldset carries browser defaults that have to be cleared before it can be
+   laid out like anything else. */
+.gg-intake__field--group {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.gg-intake__label {
+  display: block;
+  padding: 0;
+  font-family: var(--font-ht-display);
+  font-size: 1.0625rem;
+  line-height: 1.3;
+  font-weight: 600;
+}
+
+.gg-intake__req {
+  color: var(--gi-accent-deep);
+}
+
+.gg-intake__opt {
+  font-family: var(--font-ht-body);
+  font-weight: 400;
+  font-size: 0.8125rem;
+  color: var(--gi-muted);
+}
+
+/* A real element referenced by aria-describedby, not a placeholder. Placeholder
+   text vanishes the moment someone starts typing, which is exactly when a
+   person filling in an unfamiliar form wants to re-read it. */
+.gg-intake__help {
+  margin-top: 0.4rem;
+  max-width: 68ch;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--gi-muted);
+}
+
+.gg-intake__error {
+  margin-top: 0.4rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--gi-bad);
+}
+
+.gg-intake__field input[type="text"],
+.gg-intake__field input[type="email"],
+.gg-intake__field input[type="tel"],
+.gg-intake__field textarea {
+  display: block;
+  width: 100%;
+  margin-top: 0.6rem;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--gi-field-line);
+  border-radius: 12px;
+  background: var(--gi-paper);
+  color: var(--gi-ink);
+  font: inherit;
+  font-size: 1rem;
+  /* Under 16px, iOS Safari zooms the viewport on focus and does not zoom back.
+     On a form this long that is a genuine usability failure, not a nicety. */
+  line-height: 1.55;
+}
+
+.gg-intake__field textarea {
+  resize: vertical;
+  min-height: 5.5rem;
+}
+
+.gg-intake__field input:focus,
+.gg-intake__field textarea:focus {
+  border-color: var(--gi-ink);
+  background: var(--gi-surface);
+}
+
+.gg-intake__field.is-invalid input,
+.gg-intake__field.is-invalid textarea {
+  border-color: var(--gi-bad);
+}
+
+/* ----------------------------------------------------------------- options */
+
+.gg-intake__options {
+  margin-top: 0.75rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.gg-intake__options--swatch {
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+}
+
+.gg-intake__options--grid {
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+}
+
+.gg-intake__option {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  /* Comfortably past the 24px minimum target size, and the whole row is the
+     label so the hit area is the row rather than the control. */
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--gi-field-line);
+  border-radius: 12px;
+  background: var(--gi-paper);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.gg-intake__option:hover {
+  border-color: var(--gi-ink);
+}
+
+.gg-intake__option input {
+  flex: none;
+  width: 1.15rem;
+  height: 1.15rem;
+  margin: 0.1rem 0 0;
+  accent-color: var(--gi-accent-deep);
+  cursor: pointer;
+}
+
+/* :has is the only way to style the row from the input's own checked state.
+   Where it is unsupported the row simply stays unhighlighted — the native
+   checkbox still shows the state, so nothing is lost that matters. */
+.gg-intake__option:has(input:checked) {
+  border-color: var(--gi-ink);
+  background: var(--gi-surface);
+  box-shadow: inset 0 0 0 1px var(--gi-ink);
+}
+
+.gg-intake__swatch {
+  flex: none;
+  width: 1.15rem;
+  height: 1.15rem;
+  border-radius: 4px;
+  /* A hairline ring so a pale swatch still has an edge on the light ground. */
+  box-shadow: inset 0 0 0 1px rgb(17 17 17 / 0.25);
+}
+
+/* ------------------------------------------------------------------ submit */
+
+.gg-intake__section--send {
+  background: var(--gi-ink);
+  color: #fff;
+  border-color: var(--gi-ink);
+}
+
+.gg-intake__check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding: 1rem 1.15rem;
+  border: 1px solid rgb(255 255 255 / 0.25);
+  border-radius: 12px;
+}
+
+.gg-intake__check.is-invalid {
+  border-color: #ff8a80;
+}
+
+.gg-intake__check input {
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 0.15rem;
+  accent-color: var(--gi-accent);
+}
+
+.gg-intake__check label {
+  cursor: pointer;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+/* #ff8a80 on ink, not the light-ground crimson which would fail here. */
+.gg-intake__check .gg-intake__error {
+  color: #ff8a80;
+}
+
+.gg-intake__privacy {
+  margin-top: 1.25rem;
+  font-size: 0.875rem;
+  color: #ddd8e6;
+}
+
+.gg-intake__privacy a {
+  color: var(--gi-accent);
+}
+
+.gg-intake__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3.25rem;
+  padding: 0.9rem 1.75rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--gi-accent);
+  /* Ink on orange, 4.90:1. */
+  color: var(--gi-ink);
+  font-family: var(--font-ht-display);
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 180ms var(--gi-ease);
+}
+
+.gg-intake__btn:hover {
+  background: var(--gi-accent-deep);
+  color: #fff;
+}
+
+.gg-intake__btn:disabled {
+  opacity: 0.65;
+  cursor: progress;
+}
+
+.gg-intake__btn--quiet {
+  margin-top: 1.5rem;
+  background: transparent;
+  border: 1px solid var(--gi-accent);
+  color: var(--gi-accent);
+}
+
+.gg-intake__submit {
+  margin-top: 1.5rem;
+  width: 100%;
+}
+
+@media (min-width: 30rem) {
+  .gg-intake__submit {
+    width: auto;
+    min-width: 18rem;
+  }
+}
+
+.gg-intake__support {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: #ddd8e6;
+}
+
+.gg-intake__status {
+  margin-top: 1.25rem;
+  padding: 0.9rem 1.1rem;
+  border-radius: 12px;
+  font-size: 0.9375rem;
+}
+
+.gg-intake__status--bad {
+  background: rgb(255 138 128 / 0.14);
+  border-left: 3px solid #ff8a80;
+  color: #ffd9d5;
+}
+
+/* ----------------------------------------------------------------- outcome */
+
+.gg-intake--outcome {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  padding-block: var(--gi-section);
+}
+
+.gg-intake__done {
+  max-width: 46rem;
+  padding: clamp(1.75rem, 4vw, 3rem);
+  border-radius: var(--radius-block);
+  background: var(--gi-ink);
+  color: #fff;
+}
+
+.gg-intake__done h1,
+.gg-intake__done h2 {
+  font-family: var(--font-ht-display);
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  line-height: 1.08;
+  text-transform: uppercase;
+  letter-spacing: -0.015em;
+}
+
+.gg-intake__done p {
+  margin-top: 1rem;
+  color: #ddd8e6;
+  max-width: 60ch;
+}
+
+.gg-intake__done a:not([class]) {
+  color: var(--gi-accent);
+}
+
+.gg-intake__done .gg-intake__btn {
+  margin-top: 1.75rem;
+}
+
+.gg-intake__done--bad {
+  border-left: 4px solid #ff8a80;
+}
+
+/* ------------------------------------------------------------------ footer */
+
+.gg-intake__footer {
+  background: var(--gi-ink);
+  color: #fff;
+  padding-block: clamp(2rem, 4vw, 3rem);
+}
+
+.gg-intake__footer-inner {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.gg-intake__footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.75rem;
+}
+
+.gg-intake__footer-links a {
+  color: #fff;
+  font-size: 0.9375rem;
+  text-underline-offset: 3px;
+}
+
+.gg-intake__footer-legal {
+  font-size: 0.8125rem;
+  color: var(--gi-muted-dark);
+}
