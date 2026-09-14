@@ -159,9 +159,9 @@ Copy from `.env.example`. **Both new variables are optional.**
 
 | Variable | Needed? | What it does |
 |---|---|---|
-| `SMTP_HOST` | **Yes** | `mail.goodground.co.za`. Unset, the route fails honestly rather than pretending a message was sent. |
+| `SMTP_HOST` | **Yes** | The cPanel SMTP host. Unset, the route fails honestly rather than pretending a message was sent. Real values are in the Vercel project settings — this repo is public. |
 | `SMTP_PORT` | No | Defaults to `465` (implicit TLS). `587` also works and uses STARTTLS. Port 25 is blocked. |
-| `SMTP_USER` | **Yes** | `webinquiry@goodground.co.za` — the dedicated web-form mailbox, so automated traffic stays out of `hello@`. |
+| `SMTP_USER` | **Yes** | The dedicated web-form mailbox, so automated traffic stays out of the inbox a person reads. |
 | `SMTP_PASS` | **Yes** | That mailbox's password. Vercel only — never in the repo. |
 | `MAIL_TO` | No | Defaults to `SMTP_USER`, which is what we want. Set it only to deliver somewhere other than the sending mailbox. |
 | `MAIL_FROM` | No | Defaults to `SMTP_USER`. Keep it equal to `SMTP_USER`: Exim will relay a different address on the same domain in most configurations, but authenticating and sending as the same mailbox is the case that always works. |

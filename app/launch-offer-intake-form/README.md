@@ -67,7 +67,7 @@ visible. It is meant to be saved straight into the project folder.
 
 ## Delivery
 
-Over GoodGround's own SMTP (`lib/mailer.ts`), as `webinquiry@goodground.co.za`, with
+Over GoodGround's own SMTP (`lib/mailer.ts`), as the web-form mailbox, with
 `Reply-To` set to the person who filled the form in. The recipient comes from
 the environment and never from the request, so the route cannot be turned into
 an open relay.
@@ -103,7 +103,7 @@ the production upgrade.
 - **The draft is per browser.** It lives in `localStorage`, so a different
   device or cleared history starts a blank form. The page says so.
 - **Live delivery confirmed 2026-09-14.** A real submission through the
-  production route was delivered to `webinquiry@goodground.co.za` and received.
+  production route was delivered to the web-form mailbox and received.
   Re-check this after any change to the SMTP settings or the mailbox password.
 
 ## Configuration status

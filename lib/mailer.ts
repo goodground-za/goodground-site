@@ -12,9 +12,10 @@ import nodemailer, { type Transporter } from "nodemailer";
  * never affected, which is why it went unnoticed.
  *
  * The fix is to send through GoodGround's own mail server rather than a relay
- * that will not accept us. mail.goodground.co.za is the studio's existing cPanel
- * SMTP host, so mail leaves from hello@goodground.co.za, under the domain's own
- * SPF record, with no third-party service and no monthly send limit.
+ * that will not accept us. The studio's existing cPanel SMTP host is used
+ * instead, so mail leaves from its own domain under that domain's own SPF
+ * record, with no third-party service and no monthly send limit. The host and
+ * the mailbox come from the environment: this repo is public.
  *
  * CREDENTIALS LIVE IN THE ENVIRONMENT, NEVER IN THE REPO. Nothing here has a
  * default password and nothing is hardcoded. With the environment unset this
