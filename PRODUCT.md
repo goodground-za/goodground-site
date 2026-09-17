@@ -16,7 +16,7 @@ Two things make it unusual to build:
 
 **1. The studio has no track record yet.** No clients, no case studies, no testimonials, no logos. Everything a normal agency site leans on for credibility does not exist. The site has to be persuasive without a single borrowed proof point. `/work` says "case studies, coming soon" rather than inventing any.
 
-**2. Pricing is public and fixed.** Four packages from R8,500 to R32,000, plus a build-your-own configurator off a R6,000 base fee. Real numbers, published, no "contact us for a quote". Most competitors hide this, so it is a genuine wedge.
+**2. Pricing is public.** Four packages from R12,000 to R45,000 (starting prices, quoted per project), plus a build-your-own configurator off a R6,000 base fee. Real numbers, published, no "contact us for a quote" before you see any figure at all. Most competitors hide this, so it is a genuine wedge. The quote itself is still one fixed price agreed before work starts.
 
 The site itself is also the portfolio. A studio selling custom-coded websites cannot have its own site look templated. If it looks like a template, the pitch dies.
 

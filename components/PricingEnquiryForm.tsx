@@ -23,7 +23,7 @@ const inputBase =
   "transition-colors duration-150 focus:border-ht-orange focus:outline-none";
 
 function summaryText(config: SelectedConfig) {
-  if (config.kind === "package") return `${config.name} package — ${formatRand(config.total)}`;
+  if (config.kind === "package") return `${config.name} package — from ${formatRand(config.total)}`;
   if (config.kind === "fullservice") return `Full Service — from ${formatRand(config.monthlyFrom)}/mo`;
   const lines = config.items.map((item) => `- ${item.label} (${formatRand(item.price)})`).join("\n");
   return `Build Your Own — ${formatRand(config.total)} total\n${lines}`;
@@ -119,7 +119,7 @@ export function PricingEnquiryForm({ selectedConfig }: { selectedConfig: Selecte
           </p>
           {selectedConfig.kind === "package" ? (
             <p className="text-ht-purple/80 mt-2 text-[14px]">
-              {selectedConfig.name} package — {formatRand(selectedConfig.total)}
+              {selectedConfig.name} package — from {formatRand(selectedConfig.total)}
             </p>
           ) : selectedConfig.kind === "fullservice" ? (
             <p className="text-ht-purple/80 mt-2 text-[14px]">

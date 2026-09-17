@@ -5,7 +5,14 @@ import { BorderTrail } from "@/components/motion/BorderTrail";
 import { HoverCard } from "@/components/motion-gsap/HoverCard";
 import { RevealSection, RevealStagger } from "@/components/motion-gsap/RevealSection";
 import type { SelectedConfig } from "@/components/PricingEnquiryForm";
-import { balanceFor, depositFor, monthlyInstalmentFor, packages, packagesFootnote } from "@/content/pricing";
+import {
+  balanceFor,
+  depositFor,
+  monthlyInstalmentFor,
+  packages,
+  packagesFootnote,
+  projectScopeNote,
+} from "@/content/pricing";
 
 /**
  * Section 1: the four fixed packages, side by side on desktop and stacked
@@ -21,15 +28,16 @@ export function PricingPackages({ onSelectPackage }: { onSelectPackage: (config:
       <div className="mx-auto max-w-[1434px]">
         <RevealSection>
           <p className="font-ht-display text-ht-purple text-[13px] font-bold tracking-[0.15em] uppercase">
-            Fixed packages
+            The packages
           </p>
           <h2 className="font-ht-display text-ht-purple mt-6 max-w-[22ch] text-[clamp(1.75rem,4vw,3rem)] leading-[1.08] font-bold uppercase">
             Four starting points. Pick the one closest to your brief.
           </h2>
           <p className="text-ht-purple/70 mt-5 max-w-[56ch] text-[16px] leading-[1.65]">
-            Every package is a fixed, one-time price — no surprise line items. Pay a 50% deposit now
-            and the rest on completion, or split it into 12 monthly instalments. Need something in
-            between? Add to any package from the à la carte menu below.
+            Each one is a one-time build, priced from the figure shown, with the final number
+            confirmed in your quote. Pay a 50% deposit then the rest on completion, or split it
+            into 12 monthly instalments. Need something in between? Add to any package from the
+            à la carte menu below.
           </p>
         </RevealSection>
 
@@ -74,9 +82,22 @@ export function PricingPackages({ onSelectPackage }: { onSelectPackage: (config:
                 ) : null}
 
                 <h3 className="font-ht-display text-ht-purple text-[20px] font-bold uppercase">{pkg.name}</h3>
-                <p className="text-ht-purple/70 mt-2 min-h-[3.3em] text-[14px] leading-[1.55]">{pkg.pitch}</p>
+                {/* Reserved height so every card's price sits on the same line: two
+                    lines of pitch in the two-up layout, three in the four-up,
+                    where Grow's pitch wraps one line longer than its neighbours'. */}
+                <p className="text-ht-purple/70 mt-2 min-h-[3.3em] text-[14px] leading-[1.55] lg:min-h-[4.85em]">
+                  {pkg.pitch}
+                </p>
 
                 <div className="border-ht-purple/10 mt-5 border-t pt-5">
+                  {/* "From", not a flat total: the card figure is the package's
+                      starting price and the real number comes from the quote
+                      (see projectScopeNote directly below the grid). Same label
+                      treatment as the Full Service card, which has always been
+                      priced this way. */}
+                  <p className="font-ht-display text-ht-purple/70 text-[12px] font-bold tracking-[0.1em] uppercase">
+                    From
+                  </p>
                   <AnimatedNumber value={pkg.total} className="font-ht-display text-ht-purple text-[clamp(1.75rem,3vw,2.25rem)] font-bold tabular-nums" />
                   <div className="text-ht-purple/70 mt-2 space-y-1 text-[12.5px] leading-[1.4] font-medium">
                     <p>
@@ -121,8 +142,28 @@ export function PricingPackages({ onSelectPackage }: { onSelectPackage: (config:
           })}
         </RevealStagger>
 
+        <RevealSection delay={0.06}>
+          <div className="rounded-block ring-ht-purple/12 mt-10 bg-white p-7 ring-1 sm:p-9 md:flex md:items-start md:gap-12">
+            <div className="md:w-[40%] md:shrink-0">
+              <p className="font-ht-display text-ht-purple text-[13px] font-bold tracking-[0.15em] uppercase">
+                {projectScopeNote.eyebrow}
+              </p>
+              <h3 className="font-ht-display text-ht-purple mt-4 max-w-[18ch] text-[clamp(1.375rem,2.4vw,1.875rem)] leading-[1.12] font-bold uppercase">
+                {projectScopeNote.heading}
+              </h3>
+            </div>
+            <div className="mt-6 space-y-4 md:mt-0 md:flex-1">
+              {projectScopeNote.body.map((paragraph) => (
+                <p key={paragraph} className="text-ht-purple/75 max-w-[62ch] text-[15.5px] leading-[1.65]">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          </div>
+        </RevealSection>
+
         <RevealSection delay={0.1}>
-          <p className="text-ht-purple/70 mt-10 max-w-[70ch] text-[13px] leading-[1.6]">
+          <p className="text-ht-purple/70 mt-8 max-w-[70ch] text-[13px] leading-[1.6]">
             {packagesFootnote}
           </p>
         </RevealSection>

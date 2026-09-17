@@ -38,7 +38,7 @@ export const articles: Article[] = [
       "Most website pricing pages hide the number behind a quote form. This one doesn't. Real 2026 prices for DIY builders, freelancers, agencies, and GoodGround's own fixed packages, so you know what you're actually paying for before you enquire.",
     metaTitle: "Website Cost in South Africa: 2026 Guide & Real Prices",
     metaDescription:
-      "What does a website actually cost in South Africa? Real 2026 prices from R8,500: DIY builders vs freelancers vs agencies.",
+      "What does a website actually cost in South Africa? Real 2026 prices from R12,000: DIY builders vs freelancers vs agencies.",
     keyword: "website cost South Africa",
     author: "GoodGround",
     date: "2026-08-13",
@@ -47,7 +47,7 @@ export const articles: Article[] = [
     body: [
       {
         type: "p",
-        text: "A custom-coded business website in South Africa costs between R8,500 and R32,000 for a complete, fixed-price build. Most small businesses land between R15,000 and R23,000. A drag-and-drop builder like Wix or Squarespace costs R150 to R500 a month, forever. A freelancer working alone typically charges R5,000 to R15,000, with wide quality variance. A full-service agency charges R30,000 to R150,000 or more, often with a monthly retainer on top.",
+        text: "A custom-coded business website in South Africa costs between R12,000 and R45,000 for a complete build, quoted as one fixed price before work starts. Most small businesses land between R21,000 and R32,000. A drag-and-drop builder like Wix or Squarespace costs R150 to R500 a month, forever. A freelancer working alone typically charges R5,000 to R15,000, with wide quality variance. A full-service agency charges R30,000 to R150,000 or more, often with a monthly retainer on top.",
       },
       {
         type: "p",
@@ -64,7 +64,7 @@ export const articles: Article[] = [
         items: [
           "DIY builder ([Wix](https://www.wix.com/pricing), Squarespace, GoDaddy): R150 to R500 a month. No upfront cost, but you rent the site for as long as you run it, and you build it yourself. Check the provider's own pricing page before committing, plans and currency conversions shift.",
           "Freelancer: R5,000 to R15,000 for a basic build. Cheaper than a studio, but quality, reliability, and support after launch vary enormously from one freelancer to the next.",
-          "Small studio, fixed-price and custom-coded: R8,500 to R32,000 for a complete build. One quoted price, no monthly rental, built by a team you can actually hold to a contract.",
+          "Small studio, fixed-price and custom-coded: R12,000 to R45,000 for a complete build. One quoted price, no monthly rental, built by a team you can actually hold to a contract.",
           "Large agency or retainer model: R30,000 to R150,000+, frequently with an ongoing monthly fee layered on top of the build cost.",
         ],
       },
@@ -76,7 +76,7 @@ export const articles: Article[] = [
       { type: "h2", text: "What actually decides the price" },
       {
         type: "p",
-        text: "Every website quote, ours included, comes down to the same handful of variables. Understand these and you'll know exactly why one project costs R8,500 and another costs R32,000, instead of guessing.",
+        text: "Every website quote, ours included, comes down to the same handful of variables. Understand these and you'll know exactly why one project costs R12,000 and another costs R45,000, instead of guessing.",
       },
       {
         type: "ul",
@@ -118,15 +118,15 @@ export const articles: Article[] = [
       { type: "h2", text: "GoodGround's actual 2026 pricing" },
       {
         type: "p",
-        text: "We publish real prices instead of hiding them behind a quote form. Every project is one fixed price, agreed before we start, with no surprise invoice at the end. Here's exactly what's on [our pricing page](/pricing#packages) right now.",
+        text: "We publish real prices instead of hiding them behind a quote form. Each package price below is where that package starts; your own number is confirmed in the quote, and it is fixed before we start, with no surprise invoice at the end. Here's exactly what's on [our pricing page](/pricing#packages) right now.",
       },
       {
         type: "ul",
         items: [
-          "Micro, R8,500: a single-page site, fully custom-coded, with micro-interactions and a working contact form. Built in about a week. Suited to freelancers, pop-ups, and holding pages.",
-          "Launch, R15,000: up to 5 pages, custom-coded, with a contact form and basic on-page SEO. About 2 weeks. Suited to a new business that needs a credible presence without the extras.",
-          "Grow, R23,000: up to 10 pages including a blog, custom interactive elements, and SEO setup with Analytics and Search Console. 3 to 4 weeks. Suited to a business ready to market itself properly.",
-          "Scale, R32,000: 15+ pages, advanced custom functionality, advanced SEO and speed optimisation, plus a training session so you can manage updates yourself. 4 to 6 weeks. Suited to a business that needs the site to be a real sales tool.",
+          "Micro, from R12,000: a single-page site, fully custom-coded, with micro-interactions and a working contact form. Built in about a week. Suited to freelancers, pop-ups, and holding pages.",
+          "Launch, from R21,000: up to 5 pages, custom-coded, with a contact form and basic on-page SEO. About 2 weeks. Suited to a new business that needs a credible presence without the extras.",
+          "Grow, from R32,000: up to 10 pages including a blog, custom interactive elements, and SEO setup with Analytics and Search Console. 3 to 4 weeks. Suited to a business ready to market itself properly.",
+          "Scale, from R45,000: 15+ pages, advanced custom functionality, advanced SEO and speed optimisation, plus a training session so you can manage updates yourself. 4 to 6 weeks. Suited to a business that needs the site to be a real sales tool.",
         ],
       },
       {
@@ -164,7 +164,7 @@ export const articles: Article[] = [
       { type: "h2", text: "Why the cheapest option often costs more" },
       {
         type: "p",
-        text: "A R200-a-month builder looks cheaper than a R23,000 fixed build on the day you sign up. Run the maths past year three and the comparison flips: three years of that subscription is R7,200, and you still don't own the site, still can't take it elsewhere, and still built it yourself with a template everyone else on the platform has access to. A fixed-price build costs more on day one and belongs to you outright from day one too.",
+        text: "A R200-a-month builder looks cheaper than a R32,000 fixed build on the day you sign up. Run the maths past year three and the comparison flips: three years of that subscription is R7,200, and you still don't own the site, still can't take it elsewhere, and still built it yourself with a template everyone else on the platform has access to. A fixed-price build costs more on day one and belongs to you outright from day one too.",
       },
       {
         type: "quote",

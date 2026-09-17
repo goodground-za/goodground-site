@@ -1,8 +1,15 @@
 /**
- * Real, client-confirmed pricing (2026-08-10). Every number and feature line
- * below is verbatim from the "GoodGround Website Design Packages" document —
- * do not invent or round anything here; a wrong figure on this page is worse
- * than a missing one.
+ * Real, client-confirmed pricing. Feature lines are verbatim from the
+ * "GoodGround Website Design Packages" document — do not invent or round
+ * anything here; a wrong figure on this page is worse than a missing one.
+ *
+ * Package prices increased 2026-09-17 (Micro 8500 -> 12000, Launch 15000 ->
+ * 21000, Grow 23000 -> 32000, Scale 32000 -> 45000) and at the same time
+ * became *starting* prices rather than fixed totals: every card now reads
+ * "From R...", and projectScopeNote below states plainly that the real
+ * number comes from the quote. The price is still fixed once quoted and
+ * accepted — that promise is unchanged, it just gets made in the quote
+ * rather than on the card.
  *
  * Two payment options apply to every total on this page (confirmed
  * 2026-08-11, replacing the site's earlier single "12 equal monthly
@@ -38,7 +45,7 @@ export const packages: Package[] = [
   {
     slug: "micro",
     name: "Micro",
-    total: 8500,
+    total: 12000,
     pitch: "A sharp, single-page site for when you just need a strong first impression.",
     features: [
       "1 page (single-page/landing site with distinct scroll sections)",
@@ -54,7 +61,7 @@ export const packages: Package[] = [
   {
     slug: "launch",
     name: "Launch",
-    total: 15000,
+    total: 21000,
     pitch: "A clean, professional website to get you online fast.",
     features: [
       "Up to 5 pages (e.g. Home, About, Services, Contact, one extra)",
@@ -70,7 +77,7 @@ export const packages: Package[] = [
   {
     slug: "grow",
     name: "Grow",
-    total: 23000,
+    total: 32000,
     pitch: "A fully custom-coded site with the interactive touches that make you stand out.",
     features: [
       "Up to 10 pages, including a Blog/News section",
@@ -87,7 +94,7 @@ export const packages: Package[] = [
   {
     slug: "scale",
     name: "Scale",
-    total: 32000,
+    total: 45000,
     pitch: "A fully custom platform built to be the hub of your business online.",
     features: [
       "Up to 15+ pages, fully custom-coded design and layout",
@@ -104,8 +111,24 @@ export const packages: Package[] = [
   },
 ];
 
+/**
+ * Sits directly under the four package cards, so the "From R..." figures are
+ * qualified in the same eyeful rather than three sections later. Deliberately
+ * does not repeat the payment-options copy already above and below it — its
+ * one job is: these numbers are a starting point, the quote is the real
+ * number, and the quote is still fixed.
+ */
+export const projectScopeNote = {
+  eyebrow: "Every project is different",
+  heading: "These are starting prices, not quotes.",
+  body: [
+    "The four prices above are where each package starts. A five-page site for a plumber and a five-page site for a law firm rarely take the same amount of work, so we look at what your project actually involves before we put a number on it.",
+    "Tell us what you need and we'll come back with a price, usually within a day or two. Once you accept it, that's the price. Nothing gets added to the invoice at the end.",
+  ],
+};
+
 export const packagesFootnote =
-  "All packages are one-time website builds, fully custom-coded (no e-commerce or member-portal builds). " +
+  "All packages are one-time website builds, fully custom-coded (no e-commerce or member-portal builds), priced from the figure shown. " +
   "Hosting, domain, and ongoing maintenance are arranged separately, unless you choose the Full Service " +
   "monthly package below, which bundles all of that in. Need more than your package includes? " +
   "Any package can be extended with items from the Build Your Own menu below, for example adding extra pages to " +
@@ -240,12 +263,17 @@ export const pricingFaq: PricingFaqItem[] = [
   {
     question: "Do these prices include hosting and a domain?",
     answer:
-      "Not on the four fixed packages above. Hosting, domain, and ongoing maintenance are arranged separately from the build price, and we're happy to point you in the right direction when you enquire. If you'd rather have all of that handled for you, the Full Service package below bundles hosting, mailboxes, the build, SEO, and maintenance into one monthly price.",
+      "Not on the four packages above. Hosting, domain, and ongoing maintenance are arranged separately from the build price, and we're happy to point you in the right direction when you enquire. If you'd rather have all of that handled for you, the Full Service package below bundles hosting, mailboxes, the build, SEO, and maintenance into one monthly price.",
   },
   {
     question: "How do I pay, and is there a deposit?",
     answer:
       "You choose: pay 50% upfront to secure the project and the remaining 50% on completion, before handover, or split the total into 12 equal monthly instalments. On the instalment plan the first payment secures your booking, and the remaining 11 become payable once the project is completed. Either way, the price is fixed and agreed before work begins.",
+  },
+  {
+    question: "Why does every package say “from”?",
+    answer:
+      "Because no two projects need the same amount of work. The figure on each card is what that package starts at; what you actually pay depends on your content, your page count, and what the site has to do. We work that out from your brief and put it in writing before anything gets built.",
   },
   {
     question: "What if my scope grows partway through?",
