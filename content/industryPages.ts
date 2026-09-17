@@ -53,7 +53,7 @@ export const industryPages: IndustryPageData[] = [
         body: "A buried contact form or a phone number nobody bothered to make tappable costs you jobs you never even hear about.",
       },
     ],
-    relevantServiceSlugs: ["website-development", "seo-foundations", "care-plans", "google-ads"],
+    relevantServiceSlugs: ["website-development", "seo-foundations", "full-service", "google-ads"],
     localProof:
       "We build for tradespeople across South Africa, city electricians, coastal builders, rural contractors. Every site is built with local search in mind, so \"plumber in [your town]\" has something real to find.",
     faq: [
@@ -104,7 +104,7 @@ export const industryPages: IndustryPageData[] = [
         body: "A beautiful guesthouse or plated dish deserves a site that shows it properly, not a cramped gallery squeezed into a generic template.",
       },
     ],
-    relevantServiceSlugs: ["website-development", "seo-foundations", "care-plans", "meta-ads"],
+    relevantServiceSlugs: ["website-development", "seo-foundations", "full-service", "meta-ads"],
     localProof:
       "We build for guesthouses, restaurants and cafés right across South Africa, from coastal tourist towns to city centres, wherever your guests are coming from.",
     faq: [
@@ -155,7 +155,7 @@ export const industryPages: IndustryPageData[] = [
         body: "Practitioner bios, qualifications, and a professional look all do quiet work convincing a new patient you're the right choice, if they're actually on the site.",
       },
     ],
-    relevantServiceSlugs: ["website-development", "seo-foundations", "care-plans"],
+    relevantServiceSlugs: ["website-development", "seo-foundations", "full-service"],
     localProof:
       "We build for health and wellness practices across South Africa, from single-practitioner clinics to multi-partner practices. Every site includes local SEO, so patients searching in your area can actually find you.",
     faq: [
@@ -206,7 +206,7 @@ export const industryPages: IndustryPageData[] = [
         body: "Qualifications, professional bodies, and years of practice all matter to a client vetting a firm, but only if the site actually shows them.",
       },
     ],
-    relevantServiceSlugs: ["website-development", "ux-design", "seo-foundations", "care-plans"],
+    relevantServiceSlugs: ["website-development", "ux-design", "seo-foundations", "full-service"],
     localProof:
       "We build for professional and consulting firms across South Africa, from sole practitioners to multi-partner practices. Local SEO is built in from day one, so you show up for the searches that actually lead to enquiries.",
     faq: [
@@ -308,7 +308,7 @@ export const industryPages: IndustryPageData[] = [
         body: "Non-profits often need a genuinely working site, one that's credible to funders and easy to update, without a budget to match a commercial brand.",
       },
     ],
-    relevantServiceSlugs: ["website-development", "seo-foundations", "care-plans"],
+    relevantServiceSlugs: ["website-development", "seo-foundations", "full-service"],
     localProof:
       "We build for non-profits and community organisations across South Africa. We understand that budgets are tighter here, and we'll always be upfront about what's realistic for yours.",
     faq: [

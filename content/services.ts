@@ -13,9 +13,11 @@ export type Service = {
   flagship?: boolean;
   /** Growth services (ads) are tagged distinctly from the build services. */
   growth?: boolean;
-  /** The Full Service package: a monthly, all-inclusive plan, distinct from
-   * every other service here which is either bundled free into a build
-   * (includedInEveryBuild) or a one-time paid add-on. */
+  /** Billed monthly rather than as part of a build: Full Service (the
+   * all-inclusive plan, which covers the build itself) and Care Plans (which
+   * start once a one-time build is paid off). Every other service here is
+   * either bundled free into a build (includedInEveryBuild) or a one-time
+   * paid add-on. */
   monthly?: boolean;
 
   // Services-page detail.
@@ -79,7 +81,7 @@ export const services: Service[] = [
     relatedLink: { label: "Full SEO details", href: "/services/seo" },
   },
   {
-    slug: "care-plans",
+    slug: "full-service",
     title: "Full Service",
     description: "Build, hosting, mailboxes, SEO, and maintenance, all for one monthly price.",
     monthly: true,
@@ -92,6 +94,22 @@ export const services: Service[] = [
       "A website that stays fast, secure, and found in search, without you needing to manage a single technical detail of it yourself.",
     paymentLine: "Monthly, from R1,500, depending on your website's requirements. No minimum term, cancel any time.",
     cta: { label: "See Full Service Pricing", href: "/pricing#full-service" },
+  },
+  {
+    slug: "care-plans",
+    title: "Website Care Plans",
+    description: "Ongoing care for your site once the build is paid off.",
+    monthly: true,
+    subheading: "Someone looking after the site every month, so you don't have to.",
+    problem:
+      "Websites rarely fail loudly. A contact form quietly stops delivering, a page gets slower every month, a certificate lapses, a backup nobody has ever tested turns out to be empty. By the time anyone notices, it has usually been costing you enquiries for a while.",
+    solution:
+      "On the 12-month plan, basic maintenance, basic health checks, and site monitoring are included while you're paying the build off. A Care Plan picks up from there, or from launch if you settle the build in full, and goes deeper: in-depth uptime and security monitoring, software updates, off-site backups with restores tested, monthly SEO and page speed checks, broken link and form checks, and content updates as agreed.",
+    outcome:
+      "A site that is still fast, still secure, and still saying the right thing about your business a year after launch. Each month you get a short note on what was checked and what changed, and someone who already knows the site to call when something looks wrong.",
+    paymentLine:
+      "Monthly, priced per project, because a five-page site and a fifteen-page site don't need the same amount of looking after. No lock-in: either side can cancel on 30 days' notice.",
+    cta: { label: "Ask About a Care Plan", href: "/contact" },
   },
   {
     slug: "google-ads",

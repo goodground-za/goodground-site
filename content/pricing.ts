@@ -281,6 +281,11 @@ export const pricingFaq: PricingFaqItem[] = [
       "Any package can be extended with items from the à la carte menu at the listed price. We'll always confirm additions and cost with you before building them.",
   },
   {
+    question: "What looks after the site once it's live?",
+    answer:
+      "While you're paying the build off over 12 months, basic maintenance, basic health checks, and site monitoring are included. A monthly Care Plan picks up from there with deeper monitoring, off-site backups, SEO and page speed checks, and content updates as agreed. If you settle the build in full instead, a Care Plan can start from launch. Care Plans are priced per project and run month to month, with 30 days' notice either way.",
+  },
+  {
     question: "How many rounds of revisions do I get?",
     answer:
       "It depends on the package. Micro and Launch include 1 round, Grow includes 2, and Scale includes 3. Need more? Extra rounds can be added from the à la carte menu.",
