@@ -102,11 +102,11 @@ export const services: Service[] = [
     monthly: true,
     subheading: "Someone looking after the site every month, so you don't have to.",
     problem:
-      "Websites rarely fail loudly. A contact form quietly stops delivering, a page gets slower every month, a certificate lapses, a backup nobody has ever tested turns out to be empty. By the time anyone notices, it has usually been costing you enquiries for a while.",
+      "Websites rarely fail loudly. A page gets slower every month, a certificate quietly lapses, a server falls over on a Saturday night. By the time anyone notices, it has usually been costing you enquiries for a while.",
     solution:
-      "On the 12-month plan, basic maintenance, basic health checks, and site monitoring are included while you're paying the build off. A Care Plan picks up from there, or from launch if you settle the build in full, and goes deeper: in-depth uptime and security monitoring, software updates, off-site backups with restores tested, monthly SEO and page speed checks, broken link and form checks, and content updates as agreed.",
+      "On the 12-month plan, basic maintenance, basic health checks, and site monitoring are included while you're paying the build off. A Care Plan picks up from there, or from launch if you settle the build in full, and goes deeper: your site is checked around the clock, so if it goes down or slows to a crawl we know within minutes instead of when a customer mentions it. We track your security certificate before it lapses, keep the software behind the site up to date, and handle content updates as agreed.",
     outcome:
-      "A site that is still fast, still secure, and still saying the right thing about your business a year after launch. Each month you get a short note on what was checked and what changed, and someone who already knows the site to call when something looks wrong.",
+      "A site that is still fast, still up, and still saying the right thing about your business a year after launch. Each month you get a short note on what was checked and what changed, and someone who already knows the site to call when something looks wrong.",
     paymentLine:
       "Monthly, priced per project, because a five-page site and a fifteen-page site don't need the same amount of looking after. No lock-in: either side can cancel on 30 days' notice.",
     cta: { label: "Ask About a Care Plan", href: "/contact" },

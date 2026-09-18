@@ -46,7 +46,7 @@ export const faq: FAQItem[] = [
   {
     question: "What happens after my website launches?",
     answer:
-      "Launch is the start, not the finish line. If you're paying the build off over 12 months, basic maintenance, basic health checks, and site monitoring are included for that period. After that, or from launch if you settle the build in full, a monthly Care Plan takes over with deeper monitoring, backups, SEO and page speed checks. Prefer to have everything handled from the beginning instead? Our Full Service package bundles hosting, mailboxes, ongoing SEO work, and ongoing updates and maintenance into one monthly price.",
+      "Launch is the start, not the finish line. If you're paying the build off over 12 months, basic maintenance, basic health checks, and site monitoring are included for that period. After that, or from launch if you settle the build in full, a monthly Care Plan takes over with round-the-clock checks on whether the site is up and fast, certificate tracking, and software and content updates. Prefer to have everything handled from the beginning instead? Our Full Service package bundles hosting, mailboxes, ongoing SEO work, and ongoing updates and maintenance into one monthly price.",
   },
   {
     question: "Do you work with businesses anywhere in South Africa?",
