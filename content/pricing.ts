@@ -283,7 +283,7 @@ export const pricingFaq: PricingFaqItem[] = [
   {
     question: "What looks after the site once it's live?",
     answer:
-      "While you're paying the build off over 12 months, basic maintenance, basic health checks, and site monitoring are included. A monthly Care Plan picks up from there: the site is checked around the clock, the security certificate is tracked before it lapses, and software and content updates are handled as agreed. If you settle the build in full instead, a Care Plan can start from launch. Care Plans are priced per project and run month to month, with 30 days' notice either way.",
+      "While you're paying the build off over 12 months, basic maintenance, basic health checks, and site monitoring are included. A monthly Care Plan picks up from there: the site is checked around the clock, the security certificate is tracked before it lapses, software and content updates are handled as agreed, and your latest Google reviews are added to the site once a month. If you settle the build in full instead, a Care Plan can start from launch. Care Plans are priced per project and run month to month, with 30 days' notice either way.",
   },
   {
     question: "How many rounds of revisions do I get?",
