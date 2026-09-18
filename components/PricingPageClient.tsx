@@ -11,6 +11,7 @@ import { FAQAccordion } from "@/components/sections/FAQAccordion";
 import { pricingFaq } from "@/content/pricing";
 import { PricingFullService } from "@/components/sections/PricingFullService";
 import { PricingPackages } from "@/components/sections/PricingPackages";
+import { ReviewQuote } from "@/components/sections/ReviewQuote";
 
 /**
  * Owns the single piece of state the brief calls for — whichever package or
@@ -70,6 +71,10 @@ export function PricingPageClient() {
       </section>
 
       <PricingConfigurator onQuoteRequest={handleSelect} />
+
+      {/* A customer answering the hesitation this page creates, placed between
+          the numbers and the questions about them. */}
+      <ReviewQuote />
       {/* The shared FAQ block with the pricing question set. It used to be a
           near-duplicate component (PricingFAQ) because FAQAccordion was
           hard-wired to content/faq.ts; it takes its own items now. */}

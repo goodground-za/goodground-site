@@ -509,3 +509,33 @@
 .home-2026 *, .home-2026 *:before, .home-2026 *:after{animation:none!important;transition:none!important}
 .home-2026 .reveal{opacity:1!important;transform:none!important}
 }
+
+/* ── 09 / In their words ──────────────────────────────────────────
+   One real review, set large. A single quote in a small box reads as
+   decoration; at this size it reads as evidence, which is the point of
+   the only third-party proof on the page. */
+.home-2026 .testimonial-quote{margin:3.5rem 0 0;max-width:54rem}
+.home-2026 .testimonial-quote blockquote{margin:0}
+.home-2026 .testimonial-quote blockquote p{
+  margin:0;
+  font-size:clamp(1.35rem,3.2vw,2.25rem);
+  line-height:1.3;
+  letter-spacing:-0.01em;
+  text-wrap:balance;
+}
+.home-2026 .testimonial-quote figcaption{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:.5rem 1.25rem;
+  margin-top:2rem;
+}
+.home-2026 .testimonial-author{font-weight:700;font-size:1.0625rem}
+.home-2026 .testimonial-source{
+  font-size:.9375rem;
+  color:#bbb;
+  text-decoration:underline;
+  text-underline-offset:.25em;
+  transition:color .15s ease;
+}
+.home-2026 .testimonial-source:hover{color:#fff}
+/* The quote is already the loudest thing in the section, so the heading row
+   does not need to compete for width the way the grid sections do. */
+.home-2026 .testimonial .section-description{align-self:end}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { HomeSchema, ServicesSchema } from "@/components/Schema";
 import { Contact } from "@/components/home2026/Contact";
+import { Testimonial } from "@/components/home2026/Testimonial";
 import { Faq } from "@/components/home2026/Faq";
 import { Hero } from "@/components/home2026/Hero";
 import { Industries } from "@/components/home2026/Industries";
@@ -65,6 +66,7 @@ export default function HomePage() {
       <Strategy />
       <Industries />
       <Faq />
+      <Testimonial />
       <Contact />
     </SiteShell>
   );
