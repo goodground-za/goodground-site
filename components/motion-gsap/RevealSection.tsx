@@ -1,7 +1,14 @@
 "use client";
 
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLayoutEffect, useRef } from "react";
+
+// Registered here, where it's used. It was only ever registered by
+// LenisProvider, which nothing on the site mounts any more, so every
+// `scrollTrigger` below was being dropped ("Missing plugin?") and the reveals
+// all fired at page load. Registering twice is a no-op.
+gsap.registerPlugin(ScrollTrigger);
 
 /**
  * Scroll-triggered fade+rise entrance for a whole block. Uses

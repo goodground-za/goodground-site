@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { MagneticButton } from "@/components/motion-gsap/MagneticButton";
 import { RevealSection } from "@/components/motion-gsap/RevealSection";
 import { SplitWords } from "@/components/motion-gsap/SplitWords";
@@ -11,6 +11,7 @@ import { FAQAccordion } from "@/components/sections/FAQAccordion";
 import { pricingFaq } from "@/content/pricing";
 import { PricingFullService } from "@/components/sections/PricingFullService";
 import { PricingPackages } from "@/components/sections/PricingPackages";
+import { PricingWaysToPay } from "@/components/sections/PricingWaysToPay";
 import { ReviewQuote } from "@/components/sections/ReviewQuote";
 
 /**
@@ -29,8 +30,20 @@ export function PricingPageClient() {
     formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  // The Build Your Own menu reports every change, not just the "Get This
+  // Quote" tap. Before 2026-09-23 a visitor who built a configuration and then
+  // scrolled down to the form (whose copy says "send us what you picked") sent
+  // it without the configuration. Whatever the visitor touched last wins: a
+  // non-empty menu replaces a package pick, and emptying the menu clears only
+  // a configuration it put there, never a package chosen since.
+  const handleLiveConfig = useCallback((config: SelectedConfig | null) => {
+    setSelectedConfig((prev) => (config ? config : prev?.kind === "custom" ? null : prev));
+  }, []);
+
   return (
     <>
+      <PricingWaysToPay />
+
       <PricingPackages onSelectPackage={handleSelect} />
 
       <PricingFullService onSelect={handleSelect} />
@@ -70,7 +83,7 @@ export function PricingPageClient() {
         </div>
       </section>
 
-      <PricingConfigurator onQuoteRequest={handleSelect} />
+      <PricingConfigurator onQuoteRequest={handleSelect} onConfigChange={handleLiveConfig} />
 
       {/* A customer answering the hesitation this page creates, placed between
           the numbers and the questions about them. */}
@@ -98,8 +111,8 @@ export function PricingPageClient() {
               Let’s turn this into a firm quote.
             </h2>
             <p className="text-ht-purple/70 mt-5 max-w-[52ch] text-[16px] leading-[1.65]">
-              Send us what you picked (or nothing at all — we’re happy to talk it through from
-              scratch) and we’ll come back with a firm quote and timeline.
+              Send us what you picked, or nothing at all and we’ll talk it through from scratch.
+              Either way, we’ll come back with a firm quote and timeline.
             </p>
           </div>
           <PricingEnquiryForm selectedConfig={selectedConfig} />

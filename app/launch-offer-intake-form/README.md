@@ -7,8 +7,8 @@ enquire about the R845 website launch offer.
 
 The 34-page `GoodGround Website Project Brief.docx` is the right instrument for
 a full custom build and the wrong one for this offer: someone starting their
-first business will not complete 34 pages, and the package only covers five
-pages. This is the short form for that funnel. Fifty-three questions across
+first business will not complete 34 pages, and the package only covers one
+page (five until 2026-09-23). This is the short form for that funnel. Fifty-three questions across
 eleven sections, all in plain language.
 
 It is **not a landing page**. It carries no price, no availability claim and no

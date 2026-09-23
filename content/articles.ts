@@ -154,7 +154,7 @@ export const articles: Article[] = [
       { type: "h2", text: "The costs nobody mentions until after you've paid" },
       {
         type: "p",
-        text: "A website build price and a website's running cost are two different numbers, and any studio that blurs them is setting you up for a surprise. Hosting, a domain name, and ongoing maintenance sit outside the build price everywhere, GoodGround included. Budget roughly R150 to R300 a year for a .co.za domain and anywhere from R100 to R500 a month for hosting, depending on how much traffic and storage your site needs.",
+        text: "A website build price and a website's running cost are two different numbers, and any studio that blurs them is setting you up for a surprise. Hosting, a domain name, and ongoing maintenance sit outside the build price almost everywhere, and on GoodGround's four packages too. Our two monthly options are the exception: Full Service and the Website Launch Offer both include hosting in the monthly price. Budget roughly R150 to R300 a year for a .co.za domain and anywhere from R100 to R500 a month for hosting, depending on how much traffic and storage your site needs.",
       },
       {
         type: "p",

@@ -18,8 +18,10 @@
  * answer and is treated as one.
  *
  * This is deliberately NOT the 34-page Website Project Brief. That document is
- * right for a full custom build. This covers what is needed to build the five
- * page launch-offer site and nothing beyond it.
+ * right for a full custom build. This covers what is needed to build the
+ * one-page launch-offer site and nothing beyond it. (It was five pages until
+ * 2026-09-23. The "pages" step now asks which sections the page carries, and
+ * keeps its field ids so stored briefs and the API don't change shape.)
  */
 
 export type IntakeFieldType = "text" | "email" | "tel" | "textarea" | "radio" | "checkboxes";
@@ -191,7 +193,7 @@ export const intakeSections: readonly IntakeSection[] = [
     id: "offer",
     number: "3",
     title: "What you sell",
-    intro: "One of your five pages is usually a services page. This is what fills it.",
+    intro: "Your services are usually the biggest section of your page. This is what fills it.",
     fields: [
       { id: "services", label: "List everything you offer", type: "textarea", required: true, max: 2500, rows: 8,
         help: "One per line. For each one, a few words on what it is and who it is for. Rough prices if you have them — you can decide later whether those go on the site." },
@@ -340,17 +342,17 @@ export const intakeSections: readonly IntakeSection[] = [
   {
     id: "pages",
     number: "8",
-    title: "Your pages",
-    intro: "Your package includes up to five pages. Tick the ones you want. If you tick more than five we will talk it through and help you choose.",
+    title: "Your page",
+    intro: "Your website is one page, built from sections that follow each other as a visitor scrolls. Tick the sections you want. If you tick a lot, we will talk it through and help you choose.",
     fields: [
-      { id: "pages_wanted", label: "Which pages do you want?", type: "checkboxes", required: true, max: 9,
+      { id: "pages_wanted", label: "Which sections do you want?", type: "checkboxes", required: true, max: 9,
         options: [
-          "Home", "About", "Services", "Gallery of work", "Recent projects",
+          "Introduction", "About", "Services", "Gallery of work", "Recent projects",
           "Pricing", "Frequently asked questions", "Testimonials", "Contact",
         ],
-        help: "Home and Contact are on nearly every site. Beyond that it depends on what you sell." },
-      { id: "pages_note", label: "Anything that must appear on a particular page?", type: "textarea", max: 1200, rows: 4,
-        help: "For example a price list on the services page, or a map on the contact page." },
+        help: "An introduction and a contact section are on nearly every site. Beyond that it depends on what you sell." },
+      { id: "pages_note", label: "Anything that must appear in a particular section?", type: "textarea", max: 1200, rows: 4,
+        help: "For example a price list in the services section, or a map beside the contact details." },
     ],
   },
 

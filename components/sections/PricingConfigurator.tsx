@@ -22,7 +22,16 @@ function findNudge(total: number): Nudge | null {
   return null;
 }
 
-export function PricingConfigurator({ onQuoteRequest }: { onQuoteRequest: (config: SelectedConfig) => void }) {
+export function PricingConfigurator({
+  onQuoteRequest,
+  onConfigChange,
+}: {
+  onQuoteRequest: (config: SelectedConfig) => void;
+  /** Called on every change, with null once nothing is added, so the quote
+   * form below carries the configuration without the visitor having to tap
+   * "Get This Quote" first. */
+  onConfigChange?: (config: SelectedConfig | null) => void;
+}) {
   const [quantities, setQuantities] = useState<Record<string, number>>({});
   const [openCategory, setOpenCategory] = useState<number | null>(0);
   const [mobileSummaryOpen, setMobileSummaryOpen] = useState(false);
@@ -65,8 +74,8 @@ export function PricingConfigurator({ onQuoteRequest }: { onQuoteRequest: (confi
     setQuantities((prev) => ({ ...prev, [id]: Math.max(0, (prev[id] ?? 0) - 1) }));
   };
 
-  const handleQuote = () => {
-    onQuoteRequest({
+  const config = useMemo<SelectedConfig>(
+    () => ({
       kind: "custom",
       items: [
         { label: baseBuildFee.label, price: baseBuildFee.total },
@@ -76,7 +85,24 @@ export function PricingConfigurator({ onQuoteRequest }: { onQuoteRequest: (confi
         })),
       ],
       total,
-    });
+    }),
+    [selectedItems, total],
+  );
+
+  // Skip the first run: on mount nothing has been added yet. After that,
+  // report every change, and null once the menu is empty again.
+  const reported = useRef(false);
+  useEffect(() => {
+    if (!onConfigChange) return;
+    if (!reported.current) {
+      reported.current = true;
+      return;
+    }
+    onConfigChange(selectedItems.length > 0 ? config : null);
+  }, [config, selectedItems.length, onConfigChange]);
+
+  const handleQuote = () => {
+    onQuoteRequest(config);
   };
 
   return (
@@ -211,12 +237,12 @@ function CategoryAccordion({
     const mm = gsap.matchMedia();
     mm.add("(prefers-reduced-motion: no-preference)", () => {
       gsap.to(panel, { height: isOpen ? "auto" : 0, duration: 0.4, ease: "circ.out" });
-      if (icon) gsap.to(icon, { rotate: isOpen ? 45 : 0, duration: 0.3, ease: "power2.out" });
+      if (icon) gsap.to(icon, { rotate: isOpen ? 180 : 0, duration: 0.3, ease: "power2.out" });
       return () => {};
     });
     mm.add("(prefers-reduced-motion: reduce)", () => {
       gsap.set(panel, { height: isOpen ? "auto" : 0 });
-      if (icon) gsap.set(icon, { rotate: isOpen ? 45 : 0 });
+      if (icon) gsap.set(icon, { rotate: isOpen ? 180 : 0 });
       return () => {};
     });
 
@@ -240,8 +266,10 @@ function CategoryAccordion({
             </span>
           ) : null}
           <span aria-hidden="true" className="text-ht-purple border-ht-purple/30 grid size-7 shrink-0 place-items-center rounded-full border-2">
-            <svg ref={iconRef} viewBox="0 0 16 16" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-              <path d="M8 2v12M2 8h12" />
+            {/* A chevron, not a "+" turning into an "x": beside the "3 added"
+                badge, an x read as "remove what I added". */}
+            <svg ref={iconRef} viewBox="0 0 16 16" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="m3.5 6 4.5 4.5L12.5 6" />
             </svg>
           </span>
         </button>
@@ -253,58 +281,77 @@ function CategoryAccordion({
             const qty = quantities[item.id] ?? 0;
             const priceLabel = `${item.startingAt ? "from " : ""}${formatRand(item.price)}`;
             return (
-              <li key={item.id} className="flex items-center justify-between gap-3 py-3">
-                <span className="text-ht-purple/85 flex-1 text-[13.5px] leading-[1.4]">{item.label}</span>
-
+              <li key={item.id}>
                 {item.quantifiable ? (
-                  <div className="flex shrink-0 items-center gap-3">
-                    <span className="text-ht-purple/70 w-20 shrink-0 text-right text-[13.5px] font-medium tabular-nums">
-                      {priceLabel}
-                    </span>
-                    <div className="flex items-center gap-1.5">
-                      <button
-                        type="button"
-                        onClick={() => onDecrement(item.id)}
-                        disabled={qty === 0}
-                        aria-label={`Remove one — ${item.label}`}
-                        className="text-ht-purple border-ht-purple/25 grid size-6 shrink-0 place-items-center rounded-full border-2 transition-opacity duration-150 disabled:opacity-30"
-                      >
-                        <svg viewBox="0 0 12 12" className="size-2.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-                          <path d="M2 6h8" />
-                        </svg>
-                      </button>
-                      <span className="text-ht-purple w-4 shrink-0 text-center text-[13px] font-bold tabular-nums">{qty}</span>
-                      <button
-                        type="button"
-                        onClick={() => onIncrement(item.id)}
-                        aria-label={`Add one — ${item.label}`}
-                        className="text-ht-purple border-ht-purple/25 grid size-6 shrink-0 place-items-center rounded-full border-2"
-                      >
-                        <svg viewBox="0 0 12 12" className="size-2.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-                          <path d="M6 2v8M2 6h8" />
-                        </svg>
-                      </button>
+                  <div className="flex min-h-14 items-center justify-between gap-3 py-2">
+                    <span className="text-ht-purple/85 flex-1 text-[13.5px] leading-[1.4]">{item.label}</span>
+                    <div className="flex shrink-0 items-center gap-2">
+                      <span className="text-ht-purple/70 w-16 shrink-0 text-right text-[13.5px] font-medium tabular-nums">
+                        {priceLabel}
+                      </span>
+                      {/* 44px hit areas around a 32px drawn circle. The old
+                          24px steppers were the smallest targets on the site. */}
+                      <div className="flex items-center">
+                        <button
+                          type="button"
+                          onClick={() => onDecrement(item.id)}
+                          disabled={qty === 0}
+                          aria-label={`Remove one: ${item.label}`}
+                          className="group text-ht-purple grid size-11 shrink-0 cursor-pointer place-items-center disabled:cursor-default"
+                        >
+                          <span className="border-ht-purple/25 group-hover:group-enabled:border-ht-purple grid size-8 place-items-center rounded-full border-2 transition-[border-color,opacity] duration-150 group-disabled:opacity-30">
+                            <svg viewBox="0 0 12 12" className="size-2.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+                              <path d="M2 6h8" />
+                            </svg>
+                          </span>
+                        </button>
+                        <span
+                          aria-live="polite"
+                          className="text-ht-purple w-5 shrink-0 text-center text-[14px] font-bold tabular-nums"
+                        >
+                          <span className="sr-only">{item.label}: </span>
+                          {qty}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => onIncrement(item.id)}
+                          aria-label={`Add one: ${item.label}`}
+                          className="group text-ht-purple grid size-11 shrink-0 cursor-pointer place-items-center"
+                        >
+                          <span className="border-ht-purple/25 group-hover:border-ht-purple grid size-8 place-items-center rounded-full border-2 transition-colors duration-150">
+                            <svg viewBox="0 0 12 12" className="size-2.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+                              <path d="M6 2v8M2 6h8" />
+                            </svg>
+                          </span>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ) : (
+                  /* The whole row is the toggle. It used to be only the price
+                     and the tick box (about 76 x 20px), and its accessible name
+                     was just the price, with no item in it. */
                   <button
                     type="button"
                     onClick={() => onToggleItem(item.id)}
                     aria-pressed={qty > 0}
-                    className="flex shrink-0 items-center gap-3"
+                    className="-mx-2 flex min-h-14 w-[calc(100%+1rem)] cursor-pointer items-center justify-between gap-3 rounded-xl px-2 py-2 text-left transition-colors duration-150 hover:bg-black/[0.03]"
                   >
-                    <span className="text-ht-purple/70 text-[13.5px] font-medium tabular-nums">{priceLabel}</span>
-                    <span
-                      aria-hidden="true"
-                      className={`grid size-5 shrink-0 place-items-center rounded-md border-2 transition-colors duration-150 ${
-                        qty > 0 ? "bg-ht-orange border-ht-orange" : "border-ht-purple/25"
-                      }`}
-                    >
-                      {qty > 0 ? (
-                        <svg viewBox="0 0 16 16" className="size-3 text-white" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="m3 8 3.5 3.5L13 5" />
-                        </svg>
-                      ) : null}
+                    <span className="text-ht-purple/85 flex-1 text-[13.5px] leading-[1.4]">{item.label}</span>
+                    <span className="flex shrink-0 items-center gap-3">
+                      <span className="text-ht-purple/70 text-[13.5px] font-medium tabular-nums">{priceLabel}</span>
+                      <span
+                        aria-hidden="true"
+                        className={`grid size-6 shrink-0 place-items-center rounded-md border-2 transition-colors duration-150 ${
+                          qty > 0 ? "bg-ht-orange border-ht-orange" : "border-ht-purple/25"
+                        }`}
+                      >
+                        {qty > 0 ? (
+                          <svg viewBox="0 0 16 16" className="text-ink size-3.5" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="m3 8 3.5 3.5L13 5" />
+                          </svg>
+                        ) : null}
+                      </span>
                     </span>
                   </button>
                 )}
@@ -378,8 +425,8 @@ function SummaryPanel({
 
       {nudge?.type === "near" ? (
         <p className="bg-ht-cream text-ht-purple/80 rounded-card mt-5 p-3.5 text-[13px] leading-[1.5]">
-          This is close to our <span className="font-bold">{nudge.pkg.name}</span> package (
-          {formatRand(nudge.pkg.total)}) — might be simpler to start there and add on from here.{" "}
+          This is close to our <span className="font-bold">{nudge.pkg.name}</span> package, from{" "}
+          {formatRand(nudge.pkg.total)}. It might be simpler to start there and add on.{" "}
           <Link href="#packages" className="text-ht-crimson font-bold underline underline-offset-4">
             Compare packages
           </Link>

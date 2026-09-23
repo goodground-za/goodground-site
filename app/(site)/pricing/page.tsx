@@ -28,9 +28,15 @@ export default function PricingPage() {
       <PageHero
         eyebrow="Pricing"
         title="Simple pricing, built around what you actually need."
-        intro="Four packages to start from, or build your own off our full menu. Prices are starting points; your quote is based on what your project needs. Pay 50% upfront and the rest on completion, or split the total into 12 monthly instalments: your call. Prefer to have it all handled? Full Service bundles the build with hosting, mailboxes, SEO, and maintenance, monthly."
+        intro="Pick a package, build your own from the menu, or have everything handled for one monthly price. The table below compares every way to pay."
       >
         <div className="mt-8 flex flex-wrap gap-3">
+          <Link
+            href="#ways-to-pay"
+            className="font-ht-body rounded-pill inline-flex items-center gap-2 border border-white/25 px-5 py-2.5 text-[14px] font-medium text-white transition-colors duration-150 hover:border-white"
+          >
+            Compare ways to pay
+          </Link>
           <Link
             href="#packages"
             className="font-ht-body rounded-pill inline-flex items-center gap-2 border border-white/25 px-5 py-2.5 text-[14px] font-medium text-white transition-colors duration-150 hover:border-white"

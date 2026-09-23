@@ -18,15 +18,19 @@ export type SelectedConfig =
 type Status = "idle" | "submitting" | "success" | "mail" | "error";
 type Errors = Partial<Record<"fullName" | "email", string>>;
 
+// Focus and error used to look identical (a 1px orange border), and the
+// outline was switched off, which left only the global cream halo: invisible
+// on this white card. Focus now keeps the site's global :focus-visible ring
+// and darkens the border; an error is a crimson border (6.1:1 on cream).
 const inputBase =
   "w-full rounded-2xl border bg-ht-cream px-4 py-3 text-[15px] text-ht-purple placeholder:text-ht-purple/40 " +
-  "transition-colors duration-150 focus:border-ht-orange focus:outline-none";
+  "transition-colors duration-150 focus:border-ht-purple";
 
 function summaryText(config: SelectedConfig) {
-  if (config.kind === "package") return `${config.name} package — from ${formatRand(config.total)}`;
-  if (config.kind === "fullservice") return `Full Service — from ${formatRand(config.monthlyFrom)}/mo`;
+  if (config.kind === "package") return `${config.name} package, from ${formatRand(config.total)}`;
+  if (config.kind === "fullservice") return `Full Service, from ${formatRand(config.monthlyFrom)}/mo`;
   const lines = config.items.map((item) => `- ${item.label} (${formatRand(item.price)})`).join("\n");
-  return `Build Your Own — ${formatRand(config.total)} total\n${lines}`;
+  return `Build Your Own: ${formatRand(config.total)} total\n${lines}`;
 }
 
 /**
@@ -119,11 +123,11 @@ export function PricingEnquiryForm({ selectedConfig }: { selectedConfig: Selecte
           </p>
           {selectedConfig.kind === "package" ? (
             <p className="text-ht-purple/80 mt-2 text-[14px]">
-              {selectedConfig.name} package — from {formatRand(selectedConfig.total)}
+              {selectedConfig.name} package, from {formatRand(selectedConfig.total)}
             </p>
           ) : selectedConfig.kind === "fullservice" ? (
             <p className="text-ht-purple/80 mt-2 text-[14px]">
-              Full Service — from {formatRand(selectedConfig.monthlyFrom)}/mo
+              Full Service, from {formatRand(selectedConfig.monthlyFrom)}/mo
             </p>
           ) : (
             <>
@@ -140,6 +144,9 @@ export function PricingEnquiryForm({ selectedConfig }: { selectedConfig: Selecte
               </p>
             </>
           )}
+          <p className="text-ht-purple/70 mt-3 text-[13px] leading-[1.5]">
+            This goes through with your enquiry. To change it, go back up and pick again.
+          </p>
         </div>
       ) : null}
 
@@ -247,7 +254,7 @@ function Field({
         aria-required={required || undefined}
         aria-invalid={!!error}
         aria-describedby={error ? `${name}-error` : undefined}
-        className={`${inputBase} ${error ? "border-ht-orange" : "border-ht-purple/15"}`}
+        className={`${inputBase} ${error ? "border-ht-crimson" : "border-ht-purple/15"}`}
       />
       <FieldError id={`${name}-error`} message={error} />
     </div>

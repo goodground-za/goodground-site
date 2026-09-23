@@ -57,7 +57,7 @@ export function LaunchPromo() {
 
         <div className="launch-promo__foot reveal">
           <p className="launch-promo__detail">
-            Up to five custom pages, domain registration, business email, detailed SEO setup
+            A custom one-page website, domain registration, business email, detailed SEO setup
             and submission to Google for indexing.
           </p>
           <Link className="button button-white" href={launchRoute.path}>

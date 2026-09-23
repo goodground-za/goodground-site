@@ -20,7 +20,10 @@ import {
  * every other card on the site (ServiceAccordion, "How we work" on /about).
  * "Grow" is flagged as the recommended middle tier — a common comparison
  * anchor, and the package the brief's own worked example ("add extra pages
- * to Package 1") implies most visitors land on.
+ * to Package 1") implies most visitors land on. The badge says "Recommended",
+ * not "Most popular" (changed 2026-09-23): a young studio can't honestly
+ * claim popularity, but it can say which package it would point most
+ * businesses to.
  */
 export function PricingPackages({ onSelectPackage }: { onSelectPackage: (config: SelectedConfig) => void }) {
   return (
@@ -77,7 +80,7 @@ export function PricingPackages({ onSelectPackage }: { onSelectPackage: (config:
 
                 {recommended ? (
                   <span className="bg-ht-orange text-ink rounded-pill absolute -top-3 left-6 z-[1] px-3 py-1 text-[11px] font-bold tracking-wide uppercase">
-                    Most popular
+                    Recommended
                   </span>
                 ) : null}
 

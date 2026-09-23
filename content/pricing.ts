@@ -132,7 +132,7 @@ export const packagesFootnote =
   "Hosting, domain, and ongoing maintenance are arranged separately, unless you choose the Full Service " +
   "monthly package below, which bundles all of that in. Need more than your package includes? " +
   "Any package can be extended with items from the Build Your Own menu below, for example adding extra pages to " +
-  "Package 1, or add Advanced SEO to Package 2.";
+  "Micro, or Advanced SEO to Launch.";
 
 /**
  * Full Service: a monthly, all-inclusive alternative to the four fixed
@@ -251,11 +251,120 @@ export const alaCarteFootnote =
   "All à la carte prices are per item unless stated otherwise. A free quote will confirm the final total before work begins.";
 
 /**
+ * The "Ways to pay" comparison at the top of /pricing (added 2026-09-23 after
+ * the UX critique: four monthly figures lived on the site with nothing lining
+ * them up, and the cheapest-looking one said the least about itself).
+ *
+ * Every cell restates something confirmed elsewhere: the two payment options
+ * and Full Service in this file, the Launch Offer in content/websiteLaunch.ts
+ * (its terms confirmed by Johandre 2026-09-23). The package rows quote Micro,
+ * the lowest starting price, because every figure is a "from".
+ *
+ * Full Service deliberately makes no claim about what happens to the site if
+ * the plan is cancelled. That is not settled yet (it waits on the attorney
+ * review of the contract), so the row says only what is true today.
+ *
+ * A function rather than a constant so the rand formatting stays in one place
+ * (formatRand, a client module this file can't import).
+ */
+export type WayToPay = {
+  id: string;
+  name: string;
+  /** Who it is for, or the one condition that matters. */
+  note: string;
+  href: string;
+  linkLabel: string;
+  upfront: string;
+  monthly: string;
+  term: string;
+  total: string;
+  includes: string;
+  end: string;
+};
+
+export const waysToPayColumns = [
+  { key: "upfront", label: "Upfront" },
+  { key: "monthly", label: "Monthly" },
+  { key: "term", label: "How long" },
+  { key: "total", label: "Total over 12 months" },
+  { key: "includes", label: "What you get" },
+  { key: "end", label: "At the end" },
+] as const;
+
+export function waysToPay(
+  rand: (value: number) => string,
+  launch: { monthlyAmount: number; termMonths: number },
+): WayToPay[] {
+  const from = packages[0].total;
+  return [
+    {
+      id: "deposit",
+      name: "A package, paid by deposit",
+      note: "Micro, Launch, Grow or Scale",
+      href: "#packages",
+      linkLabel: "See the packages",
+      upfront: `Half the price, from ${rand(depositFor(from))}`,
+      monthly: "Nothing",
+      term: "The other half on completion, before handover",
+      total: `Your quoted price, from ${rand(from)}`,
+      includes: "The build. Hosting, domain and upkeep are arranged separately.",
+      end: "Paid off. The site is yours.",
+    },
+    {
+      id: "instalments",
+      name: "A package, paid in 12 instalments",
+      note: "Micro, Launch, Grow or Scale",
+      href: "#packages",
+      linkLabel: "See the packages",
+      upfront: `The first instalment, from ${rand(monthlyInstalmentFor(from))}`,
+      monthly: `From ${rand(monthlyInstalmentFor(from))}`,
+      term: "12 payments. The first books your slot, and the other 11 start once your site is finished.",
+      total: `The same quoted price, from ${rand(from)}`,
+      includes: "The build, with basic maintenance and monitoring while you pay it off. Hosting and domain are arranged separately.",
+      end: "Paid off. The site is yours.",
+    },
+    {
+      id: "full-service",
+      name: "Full Service",
+      note: "One monthly price, everything handled",
+      href: "#full-service",
+      linkLabel: "See Full Service",
+      upfront: "No separate build fee",
+      monthly: `From ${rand(fullServicePackage.monthlyFrom)}`,
+      term: "Month to month. Cancel any time.",
+      total: `From ${rand(fullServicePackage.monthlyFrom * 12)}`,
+      includes: "The build, hosting, mailboxes, ongoing SEO, updates and maintenance.",
+      end: "No end date. It runs for as long as you stay on it.",
+    },
+    {
+      id: "launch-offer",
+      name: "Website Launch Offer",
+      note: "Only for new businesses without a website. One page.",
+      href: "/website-launch",
+      linkLabel: "See the Launch Offer",
+      upfront: "No deposit",
+      monthly: rand(launch.monthlyAmount),
+      term: `${launch.termMonths} months`,
+      total: rand(launch.monthlyAmount * launch.termMonths),
+      includes: "A one-page site, SEO setup, and domain, hosting and email for 12 months.",
+      end: "Yours. We transfer the domain and site to you, or you move to a Care Plan.",
+    },
+  ];
+}
+
+/**
  * Pricing-page Q&A. Every answer is derivable from figures already confirmed
  * elsewhere in this file (revision counts per package, the two payment
  * options above, the "free quote before work begins" line) or from the "1–2
  * business days" reply time already used in ContactForm/PricingEnquiryForm.
  * Nothing here states a policy that isn't backed by one of those.
+ *
+ * The two questions added 2026-09-23 ("Full Service or instalments", "Do I
+ * own my website?") answer what the critique found buyers left guessing.
+ * Ownership rests on what the site already publishes: a build that is paid
+ * off is the client's outright (see the cost article), and the Launch Offer's
+ * end-of-term transfer. Full Service ownership on cancellation is not settled,
+ * so it is described, not promised.
  */
 export type PricingFaqItem = { question: string; answer: string };
 
@@ -284,6 +393,16 @@ export const pricingFaq: PricingFaqItem[] = [
     question: "What looks after the site once it's live?",
     answer:
       "While you're paying the build off over 12 months, basic maintenance, basic health checks, and site monitoring are included. A monthly Care Plan picks up from there: the site is checked around the clock, the security certificate is tracked before it lapses, software and content updates are handled as agreed, and your latest Google reviews are added to the site once a month. If you settle the build in full instead, a Care Plan can start from launch. Care Plans are priced per project and run month to month, with 30 days' notice either way.",
+  },
+  {
+    question: "Full Service or instalments: which should I choose?",
+    answer:
+      "Instalments pay off one fixed price. After 12 payments you're done and the site is yours, but hosting, your domain and upkeep are yours to arrange. Full Service is an ongoing monthly service: the build, hosting, mailboxes, SEO and upkeep all sit in one price, and you can cancel any time. If you want to own the site outright, pay it off. If you'd rather not think about your website at all, Full Service is built for that.",
+  },
+  {
+    question: "Do I own my website?",
+    answer:
+      "Yes, once it's paid for. On a package, paid by deposit or instalments, the site is yours outright once the last payment clears. On the Website Launch Offer it's yours after the 12 months: we transfer the domain and site to you, or you move to a Care Plan. Full Service works differently. It's a monthly service, and we host and run the site for you while you're on it.",
   },
   {
     question: "How many rounds of revisions do I get?",
