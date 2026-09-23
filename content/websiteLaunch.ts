@@ -55,9 +55,10 @@ export const launchOffer = {
 } as const;
 
 /**
- * Current availability. Confirmed by Johandre 2026-09-13.
+ * Current availability. Confirmed by Johandre 2026-09-13, moved to October on
+ * his instruction 2026-09-23.
  *
- * THIS IS A DATED CLAIM AND IT GOES STALE. "1 slot left for September" is true
+ * THIS IS A DATED CLAIM AND IT GOES STALE. "1 slot left for October" is true
  * until it is not, and a page still saying it in October is telling visitors
  * something false. Nothing updates it: no counter, no date arithmetic, no
  * automatic month, precisely so it cannot quietly keep making a claim nobody
@@ -75,7 +76,7 @@ export const launchOffer = {
  */
 export const launchAvailability = {
   enabled: true,
-  message: "1 slot left for September",
+  message: "1 slot left for October",
   /**
    * What to do about the number, not why the number exists. The "why" is the
    * capacity section directly below the offer block, and having both say it

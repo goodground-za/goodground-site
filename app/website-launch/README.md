@@ -226,8 +226,8 @@ No DNS change, no payment service and no new hosting is required.
 ## The availability banner
 
 `launchMarquee` in `content/websiteLaunch.ts` drives the scrolling banner at the
-top of the page. It currently reads **"1 slot left for September"**, confirmed by
-Johandre on 2026-09-13.
+top of the page. It currently reads **"1 slot left for October"**, set by Johandre
+on 2026-09-23. From 2026-09-13 it said September.
 
 **It is a dated claim and it goes stale.** Nothing updates it: no counter, no
 date arithmetic, no automatic month, deliberately, so the page cannot keep
