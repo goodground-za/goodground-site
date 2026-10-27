@@ -5,7 +5,7 @@ Each is something I could not decide from the Figma file, the live site, or the 
 Answer in any order; the numbers are for reference.
 
 ## Answered by the owner on 27 Oct 2026 (applied)
-- Q1: November is 2 of 2 spots taken (sold-out state, December waitlist). Q18: the Launch Offer is now R950 a month for 12 months, R11,400 in total (was R845 and R10,140).
+- Q1: November has 2 of 2 spaces open (corrected later the same day: "2/2" was first read as fully booked). Q18: the Launch Offer is now R950 a month for 12 months, R11,400 in total (was R845 and R10,140).
 - Q50: Information Officer is Xander Saayman, xander@goodground.co.za. Q51: hosting provider is Afrihost (the email/form provider row is still "to add").
 - Q57 (storage and retention) and Q27 (SMTP, SPF, DKIM, DMARC): the owner will build and set these up.
 - All wording approved (Q8, Q13, Q14, Q36, Q38, Q45): FAQ answer 06 now says "1 to 6 weeks depending on the package".
