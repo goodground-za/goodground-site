@@ -24,6 +24,14 @@
  * before.
  */
 
+/**
+ * When the figures on this page were last confirmed. Shown as "Prices correct as
+ * of {date}" under the plan cards in Insights articles, which read the prices
+ * from this file and so can never show an old number; this is the date to update
+ * with them.
+ */
+export const pricesAsOf = "17 September 2026";
+
 export const DEPOSIT_PERCENT = 0.5;
 export const depositFor = (total: number) => Math.round(total * DEPOSIT_PERCENT);
 export const balanceFor = (total: number) => total - depositFor(total);

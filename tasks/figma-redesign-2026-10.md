@@ -84,3 +84,4 @@ the intended noindex on the styleguide.
 - Questions are collected in tasks/figma-redesign-questions.md.
 - Step 6: Start project (4 steps, URL parameters, sessionStorage, no-JS form), Contact (routes, form, channels, quick answers), /thanks, 404, and the shared /api/enquiry route (validation, spam rules, auto-reply, redirect to /thanks). Lighthouse mobile: /contact 100 across; /start-project 100/96/100 (the 96 is the menu prefetching /process, which step 7 builds).
 - Step 7: About and the new Process page. Lighthouse mobile: /process 100 across; /about 92 a11y before two fixes (dots target size, last step dot contrast), re-run pending.
+- Step 8: Insights listing and the Article template (reading progress, TOC with scroll-spy and phone sheet, TL;DR range chart, rich blocks). Lighthouse mobile article 92 a11y before two fixes (share button name, range bar role), re-run pending.

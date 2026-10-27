@@ -6,9 +6,38 @@
 
 export type Block =
   | { type: "p"; text: string }
+  /** The lead paragraph: larger, opens the article body. */
+  | { type: "lead"; text: string }
   | { type: "h2"; text: string }
+  | { type: "h3"; text: string }
   | { type: "ul"; items: string[] }
-  | { type: "quote"; text: string };
+  | { type: "quote"; text: string }
+  /** Rich blocks from the redesigned article template (Figma 44:150). */
+  | { type: "options"; items: { label: string; sub: string; text: string; value: string; shortValue?: string; highlight?: boolean }[] }
+  | { type: "factors"; items: { icon: string; title: string; text: string }[] }
+  | { type: "checklist"; id: string; title: string; items: string[]; shortItems?: string[] }
+  | { type: "callout"; tone: "tip" | "warning" | "note"; text: string }
+  | { type: "table"; head: string[]; rows: string[][] }
+  | { type: "bars"; title: string; sub: string; unit: string; bars: { label: string; value: number }[]; note: string }
+  /** Plan cards and add-on chips are pulled from content/pricing.ts, never typed here. */
+  | { type: "plans" }
+  | { type: "addons"; ids: string[]; intro: string }
+  /** The shared 50/50 vs 12-month component. */
+  | { type: "payment" }
+  | { type: "faq"; items: { question: string; answer: string }[] };
+
+/** The optional TL;DR card at the top of an article: one sentence and a range chart. */
+export type ShortAnswer = {
+  label: string;
+  sentence: string;
+  /** Chart scale: 0 to max (rand). Axis labels are evenly spread. */
+  max: number;
+  axis: string[];
+  ranges: { label: string; range: string; shortRange: string; from: number; to: number; typical?: [number, number]; highlight?: boolean }[];
+  legend: string;
+  note: string;
+  shortNote: string;
+};
 
 export type Article = {
   slug: string;
@@ -25,6 +54,9 @@ export type Article = {
   readingMinutes: number;
   category: string;
   body: Block[];
+  /** Exactly one article is featured on /insights; with none flagged, the newest is. */
+  featured?: boolean;
+  shortAnswer?: ShortAnswer;
   /** Slugs from content/servicePages.ts, rendered as a "Related services"
    * block at the end of the article (SEO audit 2026-08-16, item 7). */
   relatedServiceSlugs?: string[];
@@ -44,127 +76,181 @@ export const articles: Article[] = [
     date: "2026-08-13",
     readingMinutes: 10,
     category: "Pricing",
+    featured: true,
+    shortAnswer: {
+      label: "One-off build prices, 2026",
+      sentence:
+        "A custom-coded business website costs R12,000 to R45,000 as one fixed price. Most small businesses land between R21,000 and R32,000.",
+      max: 150000,
+      axis: ["R0", "R30k", "R60k", "R90k", "R120k", "R150k+"],
+      ranges: [
+        { label: "Freelancer", range: "R5,000 – R15,000", shortRange: "R5k – R15k", from: 5000, to: 15000 },
+        {
+          label: "Small studio",
+          range: "R12,000 – R45,000",
+          shortRange: "R12k – R45k",
+          from: 12000,
+          to: 45000,
+          typical: [21000, 32000],
+          highlight: true,
+        },
+        { label: "Large agency", range: "R30,000 – R150,000+", shortRange: "R30k – R150k+", from: 30000, to: 150000 },
+      ],
+      legend: "Where most small businesses land: R21,000 – R32,000",
+      note: "DIY builders aren’t on this chart: they’re rented, at R150 – R500 a month, for as long as you run the site.",
+      shortNote: "DIY builders: R150 – R500 a month, rented.",
+    },
     body: [
       {
-        type: "p",
-        text: "A custom-coded business website in South Africa costs between R12,000 and R45,000 for a complete build, quoted as one fixed price before work starts. Most small businesses land between R21,000 and R32,000. A drag-and-drop builder like Wix or Squarespace costs R150 to R500 a month, forever. A freelancer working alone typically charges R5,000 to R15,000, with wide quality variance. A full-service agency charges R30,000 to R150,000 or more, often with a monthly retainer on top.",
-      },
-      {
-        type: "p",
-        text: "That's the real range. Nobody else publishes it this plainly, because most studios want you on a call before they say a number. This guide breaks down exactly what decides the price, what GoodGround charges for each package in 2026, and how to avoid paying for the wrong thing.",
+        type: "lead",
+        text: "That's the real range. Nobody else publishes it this plainly, because most studios want you on a call before they say a number. This guide breaks down what decides the price, what GoodGround charges for each package in 2026, and how to avoid paying for the wrong thing.",
       },
 
       { type: "h2", text: "The short answer: real 2026 price ranges" },
       {
         type: "p",
-        text: "Four options exist, and each one trades cost against control. Know which trade you're actually making before you commit to one.",
+        text: "Four options exist, and each one trades cost against control. Know which trade you're making before you commit.",
       },
       {
-        type: "ul",
+        type: "options",
         items: [
-          "DIY builder ([Wix](https://www.wix.com/pricing), Squarespace, GoDaddy): R150 to R500 a month. No upfront cost, but you rent the site for as long as you run it, and you build it yourself. Check the provider's own pricing page before committing, plans and currency conversions shift.",
-          "Freelancer: R5,000 to R15,000 for a basic build. Cheaper than a studio, but quality, reliability, and support after launch vary enormously from one freelancer to the next.",
-          "Small studio, fixed-price and custom-coded: R12,000 to R45,000 for a complete build. One quoted price, no monthly rental, built by a team you can actually hold to a contract.",
-          "Large agency or retainer model: R30,000 to R150,000+, frequently with an ongoing monthly fee layered on top of the build cost.",
+          {
+            label: "DIY builder",
+            sub: "Wix, Squarespace, GoDaddy",
+            text: "No upfront cost, but you rent the site for as long as you run it, and you build it yourself.",
+            value: "R150 – R500 / month",
+            shortValue: "R150 – R500 /mo",
+          },
+          {
+            label: "Freelancer",
+            sub: "Working alone",
+            text: "Cheaper than a studio, but quality, reliability and support after launch vary enormously.",
+            value: "R5,000 – R15,000",
+          },
+          {
+            label: "Small studio",
+            sub: "Fixed-price, custom-coded",
+            text: "One quoted price, no monthly rental, built by a team you can hold to a contract.",
+            value: "R12,000 – R45,000",
+            highlight: true,
+          },
+          {
+            label: "Large agency",
+            sub: "Retainer model",
+            text: "Frequently with an ongoing monthly fee layered on top of the build cost.",
+            value: "R30,000 – R150,000+",
+          },
         ],
       },
       {
+        type: "callout",
+        tone: "tip",
+        text: "Match the spend to the job. A one-page site for a pop-up stall doesn't need R30,000; a ten-page site meant to carry a business for five years shouldn't sit on a R200-a-month template.",
+      },
+      {
         type: "p",
-        text: "Cheaper isn't automatically worse, and expensive isn't automatically better. A one-page landing site for a pop-up stall doesn't need R30,000 spent on it. A ten-page site meant to carry a growing business for the next five years shouldn't be built on a R200-a-month template. Match the spend to the job, not to a number that sounded reasonable. We wrote a longer comparison of [what you actually give up with a drag-and-drop builder](/insights/hand-coded-websites-vs-drag-and-drop-builders) if you want the full breakdown.",
+        text: "We wrote a longer comparison of [what you actually give up with a drag-and-drop builder](/insights/hand-coded-websites-vs-drag-and-drop-builders) if you want the full breakdown.",
       },
 
       { type: "h2", text: "What actually decides the price" },
       {
         type: "p",
-        text: "Every website quote, ours included, comes down to the same handful of variables. Understand these and you'll know exactly why one project costs R12,000 and another costs R45,000, instead of guessing.",
+        text: "Every quote, ours included, comes down to the same handful of variables.",
       },
       {
-        type: "ul",
+        type: "factors",
         items: [
-          "Number of pages. A single-page site costs a fraction of a fifteen-page site, because each page needs its own layout, content, and testing.",
-          "Custom code versus a template. A site built from scratch to match your brand costs more than a theme with your logo dropped in, and it looks like it too.",
-          "Functionality. A contact form is cheap. A multi-step quote calculator, a booking widget, or a filterable portfolio each add real development hours.",
-          "Design complexity. Custom animations, interactive elements, and bespoke illustrations cost more than static layouts, because someone has to build and test the motion, not just the picture.",
-          "SEO depth. Basic on-page SEO (titles, headings, meta descriptions) comes standard almost everywhere. Keyword research, schema markup, and site speed optimisation are separate, deeper work.",
-          "Copywriting and content. Writing the words that go on the site is a different skill from building it, and it's priced separately almost everywhere, GoodGround included.",
-          "Revision rounds and timeline. More rounds of changes cost more time. A rush job compresses everyone's schedule and usually carries a rush fee.",
+          { icon: "file", title: "Number of pages", text: "Each page needs its own layout, content and testing." },
+          { icon: "code", title: "Custom code vs a template", text: "Built from scratch for your brand costs more, and looks like it." },
+          { icon: "bolt", title: "Functionality", text: "A contact form is cheap; a quote calculator or booking widget adds real hours." },
+          { icon: "bulb", title: "Design complexity", text: "Animations and interactive elements have to be built and tested, not just drawn." },
+          { icon: "search", title: "SEO depth", text: "Titles and headings are standard; keyword research, schema and speed work are deeper." },
+          { icon: "pen", title: "Copywriting", text: "Writing the words is a different skill, priced separately almost everywhere." },
+          { icon: "cal", title: "Revisions & timeline", text: "More rounds cost more time; a rush job usually carries a rush fee." },
         ],
       },
       {
         type: "p",
-        text: "Two businesses can ask for what sounds like the same thing, a five-page site, and land on very different quotes, because one wants a booking calendar, custom animations, and a blog, while the other wants five plain pages with text and a contact form. The page count was never the real variable. The functionality behind each page is.",
+        text: "Two businesses can ask for \u201ca five-page site\u201d and land on very different quotes. The page count was never the real variable; the functionality behind each page is.",
       },
 
       { type: "h2", text: "How to compare two quotes without getting confused" },
       {
         type: "p",
-        text: "A R12,000 quote and a R25,000 quote for what looks like the same project usually aren't quoting the same project at all. Before you compare numbers, compare what's actually inside them.",
+        text: "A R12,000 quote and a R25,000 quote for what looks like the same project usually aren't quoting the same project at all. Ask these five questions of any quote, ours included.",
       },
       {
-        type: "ul",
+        type: "checklist",
+        id: "quote-questions",
+        title: "5 questions to ask any quote",
         items: [
-          "Is the design template-based or built from scratch for your brand specifically? A template is cheaper because someone else already did most of the work, for someone else's business.",
-          "Is SEO basic (titles and headings) or does it include keyword research, schema markup, and speed optimisation? Those are two different products wearing the same label.",
-          "How many rounds of revisions are included, and what happens once you use them up? Extra rounds cost money almost everywhere, but not every quote tells you that upfront.",
-          "Does the price include copywriting, or are you expected to supply every word yourself? A quote that looks cheaper often just moved a real cost onto your plate instead of removing it.",
-          "Is the number fixed, or does it grow once the project starts? A fixed price agreed before work begins protects you from a final invoice that doesn't match the quote you accepted.",
+          "Is the design template-based, or built from scratch for your brand?",
+          "Is SEO basic (titles and headings), or does it include keyword research, schema and speed work?",
+          "How many revision rounds are included, and what happens after that?",
+          "Does the price include copywriting, or do you supply every word?",
+          "Is the number fixed, or can it grow once the project starts?",
         ],
+        shortItems: ["Template or built from scratch?", "Basic SEO or the deeper work?", "How many revision rounds?", "Is copywriting included?", "Is the number fixed?"],
       },
       {
         type: "p",
-        text: "Ask these five questions of any quote you receive, ours included, and the real comparison becomes obvious fast. Every GoodGround package answers all five on [the pricing page](/pricing#packages) itself, not in a follow-up email after you've already committed.",
+        text: "Every GoodGround package answers all five on [the pricing page](/pricing#packages) itself, not in a follow-up email after you've already committed.",
       },
 
       { type: "h2", text: "GoodGround's actual 2026 pricing" },
       {
         type: "p",
-        text: "We publish real prices instead of hiding them behind a quote form. Each package price below is where that package starts; your own number is confirmed in the quote, and it is fixed before we start, with no surprise invoice at the end. Here's exactly what's on [our pricing page](/pricing#packages) right now.",
+        text: "Each package price is where that package starts. Your own number is confirmed in the quote and fixed before we start, with no surprise invoice at the end.",
       },
+      { type: "plans" },
       {
-        type: "ul",
-        items: [
-          "Micro, from R12,000: a single-page site, fully custom-coded, with micro-interactions and a working contact form. Built in about a week. Suited to freelancers, pop-ups, and holding pages.",
-          "Launch, from R21,000: up to 5 pages, custom-coded, with a contact form and basic on-page SEO. About 2 weeks. Suited to a new business that needs a credible presence without the extras.",
-          "Grow, from R32,000: up to 10 pages including a blog, custom interactive elements, and SEO setup with Analytics and Search Console. 3 to 4 weeks. Suited to a business ready to market itself properly.",
-          "Scale, from R45,000: 15+ pages, advanced custom functionality, advanced SEO and speed optimisation, plus a training session so you can manage updates yourself. 4 to 6 weeks. Suited to a business that needs the site to be a real sales tool.",
-        ],
-      },
-      {
-        type: "p",
-        text: "None of these fit your exact scope? Build your own from a R6,000 Base Build Fee (one homepage, one contact form, basic SEO) and add exactly what you need: R2,500 for an extra standard page, R4,000 for a complex custom-layout page, R4,500 to set up a blog, R3,000 for advanced SEO, R1,500 for a form with conditional logic, and dozens more line items, each with a real price attached before you commit to anything. Configure it yourself in the [build-your-own tool](/pricing#build-your-own) and watch the total update as you add or remove items.",
+        type: "addons",
+        ids: ["pages-standard", "pages-complex", "pages-blog-setup", "seo-advanced", "func-conditional-form"],
+        intro: "None fit? Build your own from a R6,000 base build (one homepage, one contact form, basic SEO) and add exactly what you need:",
       },
 
       { type: "h2", text: "Two ways to pay for it" },
       {
         type: "p",
-        text: "The price is fixed either way. How you pay it is your choice.",
+        text: "The price is fixed either way. How you pay it is your choice, and neither option changes the total.",
       },
-      {
-        type: "ul",
-        items: [
-          "50% deposit: half upfront secures the project, the other half is due on completion, before handover.",
-          "12-month plan: the first instalment secures your booking, and the remaining 11 equal instalments become payable once the project is completed.",
-        ],
-      },
-      {
-        type: "p",
-        text: "Neither option changes the total. Both exist because a proper website shouldn't force a small business to choose between investing in itself and covering next month's expenses. See exactly how each package breaks down under both plans on [the pricing page](/pricing).",
-      },
+      { type: "payment" },
 
       { type: "h2", text: "The costs nobody mentions until after you've paid" },
       {
         type: "p",
-        text: "A website build price and a website's running cost are two different numbers, and any studio that blurs them is setting you up for a surprise. Hosting, a domain name, and ongoing maintenance sit outside the build price everywhere, GoodGround included. Budget roughly R150 to R300 a year for a .co.za domain and anywhere from R100 to R500 a month for hosting, depending on how much traffic and storage your site needs.",
+        text: "A build price and a running cost are two different numbers. Hosting, a domain and ongoing maintenance sit outside the build price almost everywhere, including on GoodGround's four packages. Full Service and the Website Launch Offer are the exceptions: both include hosting.",
+      },
+      {
+        type: "table",
+        head: ["Running cost", "Typical range", "How often"],
+        rows: [
+          [".co.za domain", "R150 – R300", "Per year"],
+          ["Hosting", "R100 – R500", "Per month"],
+          ["Maintenance", "Varies, or included in Full Service", "Ongoing"],
+        ],
       },
       {
         type: "p",
-        text: "Then there's what happens after launch. Plugins go out of date. Content stops being accurate. Small issues turn into slow load times if nobody's watching. If you'd rather not manage hosting, mailboxes, and maintenance yourself, GoodGround's [Full Service package](/pricing#full-service) bundles all of it, plus ongoing SEO work, into one monthly price instead of piling up until something breaks.",
+        text: "If you'd rather not manage hosting, mailboxes and maintenance yourself, GoodGround's [Full Service package](/pricing#full-service) bundles all of it, plus ongoing SEO work, into one monthly price instead of piling up until something breaks.",
       },
 
       { type: "h2", text: "Why the cheapest option often costs more" },
       {
         type: "p",
-        text: "A R200-a-month builder looks cheaper than a R32,000 fixed build on the day you sign up. Run the maths past year three and the comparison flips: three years of that subscription is R7,200, and you still don't own the site, still can't take it elsewhere, and still built it yourself with a template everyone else on the platform has access to. A fixed-price build costs more on day one and belongs to you outright from day one too.",
+        text: "A R200-a-month builder looks cheaper than a R32,000 fixed build on the day you sign up. Run the maths past year three and the picture changes.",
+      },
+      {
+        type: "bars",
+        title: "Builder rent, paid so far",
+        sub: "at R200 / month",
+        unit: "R",
+        bars: [
+          { label: "Year 1", value: 2400 },
+          { label: "Year 2", value: 4800 },
+          { label: "Year 3", value: 7200 },
+        ],
+        note: "…and you still don't own the site, can't take it elsewhere, and built it yourself. A fixed-price build costs more on day one and belongs to you outright from day one.",
       },
       {
         type: "quote",
@@ -172,18 +258,31 @@ export const articles: Article[] = [
       },
       {
         type: "p",
-        text: "A cheap freelancer carries a different risk: no company behind the contract, no guarantee they're still answering emails in a year, and support that depends entirely on one person's availability. That's not true of every freelancer, but it's true often enough to weigh against the lower price before you commit. Ask any freelancer quoting you a low number what happens if they're unavailable for a month, or stop freelancing altogether. A one-person operation with no answer to that question is a real risk sitting inside an attractive price.",
+        text: "A cheap freelancer carries a different risk: no company behind the contract, and support that depends on one person's availability. Ask what happens if they're unavailable for a month.",
       },
 
       { type: "h2", text: "Quick answers" },
       {
-        type: "ul",
+        type: "faq",
         items: [
-          "Does the price include hosting and a domain? No. Those are arranged separately from the build price, and we'll point you in the right direction when you enquire.",
-          "Is there a deposit? Yes, if you choose that option: 50% upfront, 50% on completion. Or spread the same total over 12 monthly instalments instead.",
-          "What if my project needs more than a package includes? Add exactly what you need from the à la carte menu, priced and confirmed before we build it.",
-          "How long does a build take? 1 week for Micro, up to 6 weeks for Scale, depending on scope.",
-          "How do I get an exact number for my project? Configure your own build in the [pricing configurator](/pricing#build-your-own), or [tell us about your project](/start-project) and we'll come back with a firm quote within 1 to 2 business days.",
+          {
+            question: "Does the price include hosting and a domain?",
+            answer: "No. Those are arranged separately from the build price, and we'll point you in the right direction when you enquire.",
+          },
+          {
+            question: "Is there a deposit?",
+            answer: "Yes, if you choose that option: 50% upfront, 50% on completion. Or spread the same total over 12 monthly instalments instead.",
+          },
+          {
+            question: "What if my project needs more than a package includes?",
+            answer: "Add exactly what you need from the à la carte menu, priced and confirmed before we build it.",
+          },
+          { question: "How long does a build take?", answer: "1 week for Micro, up to 6 weeks for Scale, depending on scope." },
+          {
+            question: "How do I get an exact number for my project?",
+            answer:
+              "Configure your own build in the [pricing configurator](/pricing#build-your-own), or [tell us about your project](/start-project) and we'll come back with a firm quote within 1 to 2 business days.",
+          },
         ],
       },
       {
@@ -897,6 +996,27 @@ const wordsIn = (text: string) => text.replace(LINK_RE, "$1").trim().split(/\s+/
 
 export const articleWordCount = (article: Article) =>
   article.body.reduce((total, block) => {
-    if (block.type === "ul") return total + block.items.reduce((sum, item) => sum + wordsIn(item), 0);
-    return total + wordsIn(block.text);
+    switch (block.type) {
+      case "ul":
+        return total + block.items.reduce((sum, item) => sum + wordsIn(item), 0);
+      case "p":
+      case "lead":
+      case "h2":
+      case "h3":
+      case "quote":
+      case "callout":
+        return total + wordsIn(block.text);
+      case "options":
+        return total + block.items.reduce((sum, i) => sum + wordsIn(`${i.label} ${i.text} ${i.value}`), 0);
+      case "factors":
+        return total + block.items.reduce((sum, i) => sum + wordsIn(`${i.title} ${i.text}`), 0);
+      case "checklist":
+        return total + block.items.reduce((sum, item) => sum + wordsIn(item), 0);
+      case "faq":
+        return total + block.items.reduce((sum, i) => sum + wordsIn(`${i.question} ${i.answer}`), 0);
+      case "table":
+        return total + block.rows.reduce((sum, row) => sum + wordsIn(row.join(" ")), 0);
+      default:
+        return total;
+    }
   }, 0);

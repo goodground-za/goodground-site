@@ -70,7 +70,7 @@ export const pick = {
  * a name is shown, and an unknown slug simply shows nothing.
  */
 const REF_FIXED = ["home", "work", "about", "insights", "pricing", "services", "services-consult", "404", "contact", "process", "industry-other"];
-const REF_SLUG = /^(case|service|industry)-[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const REF_SLUG = /^(case|service|industry|insights)-[a-z0-9]+(?:-[a-z0-9]+)*$/;
 export const cleanRef = (v: unknown): string | undefined => {
   if (typeof v !== "string") return undefined;
   const ref = v.trim().toLowerCase();

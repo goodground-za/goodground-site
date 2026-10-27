@@ -55,6 +55,13 @@ Answer in any order; the numbers are for reference.
 38. The live FAQ answer 06 ("most projects take 4-6 weeks") should match the Process timelines (Micro ~1 week to Scale ~4-6 weeks). I did not change faq.ts.
 39. The project tracker on /process is an illustration labelled EXAMPLE, desktop only.
 
+## Insights / Article
+40. Insights cards use the shortened Figma excerpts; titles, topics, dates and read times are the live ones. The cost guide’s body is now rich blocks (option list, factor list, checklist, plan cards from the pricing data, add-on chips, payment options, table, rent-vs-own chart, quick answers) built from the live text, condensed as the Figma example is. The other five articles use the basic blocks (they have no TL;DR card). Say if you want any of them given the rich treatment.
+41. "Prices correct as of 17 September 2026" under the plan cards comes from `pricesAsOf` in content/pricing.ts (the date of the last price change). Confirm the date, and update it whenever prices change.
+42. The article author stays "GoodGround" (no personal name); the avatar is "gg".
+43. Quick-answer accordions show plain text, so links inside those answers are not clickable; the same links remain in the paragraph after them.
+44. Share menu: WhatsApp, LinkedIn and Facebook open their share pages in a new tab; phones use the native share sheet.
+
 ## Global
 25. Georgia ignore in .impeccable/config.json for an illustration. PRODUCT.md / DESIGN.md are stale; updated at the very end (as you said).
 26. README section 10 open items still apply.
