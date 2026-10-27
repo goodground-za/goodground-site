@@ -2,49 +2,9 @@
 
 import { GoogleAnalytics } from "@next/third-parties/google";
 import Link from "next/link";
-import { useSyncExternalStore } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/Button";
-
-const STORAGE_KEY = "gg-cookie-consent";
-/** Fired on ourselves after a write, since `storage` only fires in *other* tabs. */
-const CHANGE_EVENT = "gg-cookie-consent-change";
-
-type Consent = "granted" | "denied";
-/** "unread" = server render / pre-hydration, where localStorage isn't readable. */
-type State = Consent | "unread" | "undecided";
-
-function subscribe(onChange: () => void) {
-  window.addEventListener(CHANGE_EVENT, onChange);
-  // Keeps a second tab in sync if the visitor answers there.
-  window.addEventListener("storage", onChange);
-  return () => {
-    window.removeEventListener(CHANGE_EVENT, onChange);
-    window.removeEventListener("storage", onChange);
-  };
-}
-
-/**
- * Holds the answer when localStorage is unavailable (private mode, blocked
- * storage). Without it the banner would never dismiss for those visitors,
- * because the write silently fails and the next read finds nothing.
- * Page-lifetime only — they get asked again on the next load.
- */
-let fallback: Consent | null = null;
-
-function getSnapshot(): State {
-  let stored: string | null = null;
-  try {
-    stored = localStorage.getItem(STORAGE_KEY);
-  } catch {
-    // Private mode / storage blocked — fall back to the in-memory answer.
-  }
-  const value = stored ?? fallback;
-  return value === "granted" || value === "denied" ? value : "undecided";
-}
-
-// Snapshots are plain strings, so React's identity check is a value check —
-// no caching needed to keep this stable between renders.
-const getServerSnapshot = (): State => "unread";
+import { REOPEN_EVENT, setConsent, useConsent, type Consent } from "@/lib/consent";
 
 /**
  * Note on pageviews: <GoogleAnalytics> only injects the gtag snippet — it does
@@ -64,22 +24,31 @@ const getServerSnapshot = (): State => "unread";
  * the HTML and flashed at visitors who already answered.
  */
 export function Analytics({ gaId }: { gaId?: string }) {
-  const consent = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const consent = useConsent();
+  // The footer's "Cookie settings" link reopens the banner even after a choice was made.
+  const [reopened, setReopened] = useState(false);
+
+  useEffect(() => {
+    const open = () => setReopened(true);
+    window.addEventListener(REOPEN_EVENT, open);
+    return () => window.removeEventListener(REOPEN_EVENT, open);
+  }, []);
+
+  // A script that is already on the page cannot be unloaded; GA's own switch stops it sending.
+  useEffect(() => {
+    if (!gaId) return;
+    (window as unknown as Record<string, boolean>)[`ga-disable-${gaId}`] = consent === "denied";
+  }, [gaId, consent]);
 
   function choose(value: Consent) {
-    fallback = value;
-    try {
-      localStorage.setItem(STORAGE_KEY, value);
-    } catch {
-      // Storage blocked — `fallback` carries the choice for this page view.
-    }
-    window.dispatchEvent(new Event(CHANGE_EVENT));
+    setConsent(value);
+    setReopened(false);
   }
 
   // No measurement ID means nothing can set a cookie, so asking for consent
   // would be theatre — and it would train visitors to dismiss a banner that
   // does nothing. Keeps dev and preview builds clean too.
-  const showBanner = consent === "undecided" && Boolean(gaId);
+  const showBanner = (consent === "undecided" || (reopened && consent !== "unread")) && Boolean(gaId);
 
   return (
     <>

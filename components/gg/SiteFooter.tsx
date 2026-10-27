@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { CookieSettingsLink } from "./CookieSettingsLink";
+
 /**
  * Canonical footer (README 4.6, from Home section 11). Used on every rebuilt
  * page, even where a frame shows a simplified one.
@@ -115,6 +117,12 @@ export function SiteFooter({ ruled = false, stickyBar = false }: { ruled?: boole
               </Link>
             </span>
           ))}
+          <span>
+            <span className="gg-footer__dot" aria-hidden="true">
+              ·
+            </span>
+            <CookieSettingsLink />
+          </span>
         </nav>
       </div>
     </footer>

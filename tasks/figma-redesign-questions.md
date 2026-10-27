@@ -62,6 +62,20 @@ Answer in any order; the numbers are for reference.
 43. Quick-answer accordions show plain text, so links inside those answers are not clickable; the same links remain in the paragraph after them.
 44. Share menu: WhatsApp, LinkedIn and Facebook open their share pages in a new tab; phones use the native share sheet.
 
+## FAQ / Legal
+45. FAQ: all 13 answers are the live text word for word (answer 07 is longer than the shortened Figma version; say if you want the shorter one). FAQ 06 still says "4 to 6 weeks" while /pricing shows about 1 week for Micro and 2 for Launch. Suggested wording: "1 to 6 weeks depending on the package". Approve and I change content/faq.ts (it feeds the Home FAQ and /process too).
+46. FAQ: related links per answer ("See pricing", "How we work", etc.) are my picks since the CMS does not exist; check them. Answer 04 should link to Terms and conditions, which do not exist, so that link is left off until Terms ship.
+47. FAQ: "Helpful? Yes / No" sends faq_helpful to GA4 (only for people who accepted cookies). Opening an answer sends faq_open. No text or personal data is sent.
+48. FAQ: the Home FAQ and /process FAQ still read content/faq.ts, so they match; the Services, Pricing and article quick answers are separate lists. Want them merged into one collection now?
+49. Legal: privacy wording is the shortened Figma text; the Legal notice is the live text. The "Last updated 26 OCT 2026" date is mine (the date of this rebuild). Your attorney should approve the wording before launch.
+50. Legal: POPIA Information Officer is still missing. The company card shows "Name and email to be added" in coral with a REQUIRED BY POPIA tag until you give me a name and email (data.ts, company.informationOfficer). That coral text ships if nothing is added.
+51. Legal: the providers table has two coral "to add" rows (email/form provider, hosting provider). Give me the real names (for example the mail host and Vercel) or they ship as placeholders.
+52. Legal: the Terms and conditions tab is BUILT but switched off (termsLive = false in components/gg/legal/data.ts), because the wording needs your attorney and summaries must not be published as the agreement. Off means: two tabs, #terms still opens the legal notice (as today), no Terms link in the FAQ. Sections 09, 13 and 15 are marked "needs your attorney". The revision numbers in section 07 (Micro and Launch 1, Grow 2, Scale 3, extra R1,500) come from the Figma text; confirm they match the pricing page.
+53. Legal: the cookie switch works now (on stores consent and loads Google Analytics, off deletes the _ga cookies and stops sending). A "Cookie settings" link is in the footer bottom row and reopens the banner. The banner itself still has the old look; I restyle it in step 11.
+54. Legal: the Figma footer has a LEGAL column (notice, privacy, terms); the README says use the canonical footer, so I kept that and only added "Cookie settings". Say if you want the LEGAL column instead.
+55. Legal: with no #hash the page opens on the Privacy tab (the drawn view). #notice, #privacy, #terms and the old #sec-collection, #sec-rights, #sec-cookies anchors all work. On phones the full wording stays (the 390 frame shows shortened intros); I did not shorten legal text for mobile.
+56. Legal: "Download as PDF" on the Terms tab uses the browser print dialog (Save as PDF), not a generated file. Only matters once Terms are live.
+
 ## Global
 25. Georgia ignore in .impeccable/config.json for an illustration. PRODUCT.md / DESIGN.md are stale; updated at the very end (as you said).
 26. README section 10 open items still apply.

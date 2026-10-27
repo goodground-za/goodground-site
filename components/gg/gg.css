@@ -1603,7 +1603,8 @@ html:not(.js) .gg-faq__answer {
 
   .gg-footer__logo,
   .gg-footer__col a,
-  .gg-footer__legal a {
+  .gg-footer__legal a,
+  .gg-footer__legal button {
     display: inline-flex;
     align-items: center;
     min-width: 44px;
@@ -1616,7 +1617,8 @@ html:not(.js) .gg-faq__answer {
     margin-inline: -8px;
   }
 
-  .gg-footer__legal a {
+  .gg-footer__legal a,
+  .gg-footer__legal button {
     justify-content: center;
     padding-inline: 8px;
   }
@@ -1642,6 +1644,12 @@ html:not(.js) .gg-faq__answer {
 
 .gg-footer__dot {
   margin-inline: 8px;
+}
+
+.gg-footer__cookie {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
 }
 
 .gg-footer__legal {
