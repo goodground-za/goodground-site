@@ -341,7 +341,7 @@ export const privacySections: Section[] = [
 
 export const providers: { name: string; purpose: string; when: string; todo?: boolean }[] = [
   { name: "Google (Analytics 4)", purpose: "Analytics and performance", when: "Only after you accept cookies" },
-  { name: "Email and form provider (to add)", purpose: "Receiving and replying to enquiries", when: "When you contact us", todo: true },
+  { name: "Afrihost", purpose: "Our email server: receiving and replying to enquiries sent through the forms", when: "When you contact us" },
   { name: "Afrihost", purpose: "Hosting and running this website", when: "Every visit" },
 ];
 
@@ -440,7 +440,7 @@ export const termsSections: TermsSection[] = [
     n: "11",
     title: "Monthly services",
     summary:
-      "Full Service: month to month, cancel any time. Care Plans and ad management: 30 days’ notice. Ad budgets are paid to Google or Meta and your ad accounts always belong to you.",
+      "Full Service: month to month, cancel any time. Ad management: 30 days’ notice. Ad budgets are paid to Google or Meta and your ad accounts always belong to you.",
   },
   {
     id: "terms-ai",
