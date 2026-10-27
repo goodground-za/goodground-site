@@ -1,0 +1,1866 @@
+/*
+ * GoodGround redesign (Oct 2026) — foundations.
+ *
+ * Spec: docs/redesign/README.md (copied from the Figma hand-off) and the Figma
+ * file PI4P3fF9RVIAiTI7ZMxohj. Global motion note: node 12:150.
+ *
+ * Everything here is namespaced `--gg-*` / `.gg-*` and runs BESIDE the old
+ * ht-* tokens and home2026.css. Pages move onto it one at a time as they are
+ * rebuilt; the old tokens are removed once the whole site is on this.
+ *
+ * Plain CSS rather than Tailwind utilities, on purpose: the motion states
+ * (`.js` start states, `[data-motion="off"]`, hover only on fine pointers) are
+ * selector logic that utilities express badly, and these rules are unlayered,
+ * so they win over globals.css's @layer base element rules without !important.
+ */
+
+:root {
+  /* Colour — Figma collection "GoodGround Color" */
+  --gg-canvas: #f7f7f4;
+  --gg-surface: #ffffff;
+  --gg-ink: #111111;
+  --gg-muted: #5f5b66;
+  --gg-line: #e7e3dc;
+  --gg-plum: #2e1848;
+  --gg-plum-deep: #1c0f2e;
+  --gg-wine: #712344;
+  --gg-coral: #ef4a23;
+  --gg-peach: #f7b48f;
+  --gg-lilac: #eee8f6;
+  --gg-blush: #fcede6;
+  --gg-mint: #e3f1ea;
+  --gg-on-dark-muted: #bdb3cb;
+  --gg-hero: #3a1a44;
+  /* As drawn on the Service/Industry CTA card (96:348). The README's "110deg,
+     0/40/70/100" is an approximation of this. */
+  --gg-gradient-cta: linear-gradient(133.66deg, #3b1a4a 0%, #9a3348 29.63%, #c9583d 51.85%, #5a1e3c 74.07%);
+
+  /* Brand coral fails WCAG AA as small text (3.1–3.7:1 on the light
+     surfaces) and under a white label (3.7:1). These are the same hue darkened
+     until they pass; plain --gg-coral stays for fills, icons, focus rings and
+     display-size type, which only need 3:1. */
+  --gg-coral-text: #c2300e; /* ≥ 4.70:1 on white, canvas, blush, lilac, mint */
+  --gg-coral-fill: #d0340f; /* white label 5.02:1 */
+
+  /* Hover shades from the global motion note (coral darkened with the fill) */
+  --gg-ink-hover: #2b2b2b;
+  --gg-coral-hover: #b82e0d;
+  --gg-light-hover: #f1eee8;
+
+  /* Type */
+  --gg-font-display: var(--font-oswald), "Arial Narrow", ui-sans-serif, system-ui, sans-serif;
+  --gg-font-body: var(--font-ibm-plex-sans), ui-sans-serif, system-ui, sans-serif;
+
+  /* Layout — mobile first; tablet and desktop below */
+  --gg-gutter: 20px;
+  --gg-content: 1200px;
+  --gg-section-y: 64px;
+
+  /* Radii */
+  --gg-r-pill: 999px;
+  --gg-r-card: 20px;
+  --gg-r-card-lg: 24px;
+  --gg-r-cta: 32px;
+  --gg-r-chip: 12px;
+
+  /* Shadows */
+  --gg-shadow-visual: 0 40px 70px rgba(46, 23, 71, 0.3);
+  --gg-shadow-float: 0 20px 48px rgba(46, 23, 71, 0.1);
+  --gg-shadow-hover: 0 24px 48px rgba(46, 24, 72, 0.1);
+  --gg-shadow-sticky: 0 10px 30px rgba(0, 0, 0, 0.25);
+
+  /* Motion — note 12:150 */
+  --gg-motion-xs: 120ms;
+  --gg-motion-sm: 200ms;
+  --gg-motion-md: 400ms;
+  --gg-motion-lg: 700ms;
+  --gg-motion-xl: 1200ms;
+  --gg-stagger: 80ms;
+  --gg-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --gg-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --gg-ease-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --gg-gutter: 40px;
+    --gg-section-y: 96px;
+    --gg-r-card: 24px;
+    --gg-r-card-lg: 28px;
+    --gg-r-cta: 40px;
+  }
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --gg-gutter: 120px;
+    --gg-section-y: 120px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Root scope. Wraps the chrome and body of every rebuilt page.
+ * ------------------------------------------------------------------------- */
+.gg {
+  background: var(--gg-canvas);
+  color: var(--gg-ink);
+  font-family: var(--gg-font-body);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.gg *,
+.gg *::before,
+.gg *::after {
+  box-sizing: border-box;
+}
+
+.gg :where(h1, h2, h3, h4, p, ul, ol, figure, blockquote) {
+  margin: 0;
+}
+
+.gg :where(ul, ol) {
+  padding: 0;
+  list-style: none;
+}
+
+.gg :where(a) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.gg :where(button) {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.gg :where(img, svg, video) {
+  display: block;
+  max-width: 100%;
+}
+
+/* globals.css gives :focus-visible a box-shadow halo with !important. The
+   redesign's focus ring is a plain 2px coral outline, 3px offset, so the halo
+   is switched off inside the scope (it has to match that !important). */
+.gg :focus-visible {
+  outline: 2px solid var(--gg-coral);
+  outline-offset: 3px;
+  box-shadow: none !important;
+}
+
+/* Coral drops to 1.2–1.9:1 against the CTA card's mid tones; white holds
+   ≥ 4.25:1 across all of it. */
+.gg .gg-cta :focus-visible {
+  outline-color: var(--gg-surface);
+}
+
+.gg-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.gg-skip-link {
+  position: absolute;
+  left: 16px;
+  top: -80px;
+  z-index: 60;
+  padding: 12px 20px;
+  border-radius: var(--gg-r-pill);
+  background: var(--gg-ink);
+  color: var(--gg-surface);
+  font-weight: 600;
+}
+
+.gg-skip-link:focus {
+  top: 16px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Layout
+ * ------------------------------------------------------------------------- */
+.gg-wrap {
+  width: 100%;
+  max-width: calc(var(--gg-content) + 2 * var(--gg-gutter));
+  margin-inline: auto;
+  padding-inline: var(--gg-gutter);
+}
+
+.gg-section {
+  padding-block: var(--gg-section-y);
+}
+
+.gg-section--surface {
+  background: var(--gg-surface);
+}
+
+.gg-section--canvas {
+  background: var(--gg-canvas);
+}
+
+.gg-section--dark {
+  background: var(--gg-plum-deep);
+  color: var(--gg-surface);
+}
+
+/* ---------------------------------------------------------------------------
+ * Type. Display sizes scale fluidly from the 390 frame to the 1440 frame
+ * (README 2.2): clamp(mobile, a + b·vw, desktop) hits both values exactly.
+ * Body sizes switch at the 768 breakpoint instead.
+ * ------------------------------------------------------------------------- */
+.gg-display-xl,
+.gg-display-l,
+.gg-display-m {
+  font-family: var(--gg-font-display);
+  font-weight: 500;
+  line-height: 0.92;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+/* 72 → 140 */
+.gg-display-xl {
+  font-size: clamp(72px, 46.74px + 6.476vw, 140px);
+}
+
+/* 56 → 112 */
+.gg-display-l {
+  font-size: clamp(56px, 35.2px + 5.333vw, 112px);
+}
+
+/* 48 → 88 */
+.gg-display-m {
+  font-size: clamp(48px, 33.14px + 3.81vw, 88px);
+}
+
+/* text-wrap: wrap, not balance: the frames break lines greedily, and a 1:1
+   match means the same line breaks. (globals.css balances every h1–h4.) */
+.gg-h2,
+.gg-h2-side,
+.gg-title-l,
+.gg-title-m {
+  font-family: var(--gg-font-body);
+  font-weight: 600;
+  text-transform: none;
+  text-wrap: wrap;
+}
+
+/* 32 → 56, 1.08 → 1.06, -2% → -3% */
+.gg-h2 {
+  font-size: clamp(32px, 23.09px + 2.286vw, 56px);
+  line-height: 1.07;
+  letter-spacing: -0.025em;
+}
+
+/* 28 → 48 */
+.gg-h2-side {
+  font-size: clamp(28px, 20.57px + 1.905vw, 48px);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+/* 20 → 34 */
+.gg-title-l {
+  font-size: clamp(20px, 14.8px + 1.333vw, 34px);
+  line-height: 1.17;
+  letter-spacing: -0.015em;
+}
+
+/* 17 → 22 */
+.gg-title-m {
+  font-size: clamp(17px, 15.14px + 0.476vw, 22px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.gg-lead {
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.gg-body {
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.gg-small {
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+@media (min-width: 768px) {
+  .gg-lead {
+    font-size: 18px;
+  }
+
+  .gg-body {
+    font-size: 16px;
+  }
+
+  .gg-small {
+    font-size: 13px;
+  }
+}
+
+.gg-kicker {
+  font-family: var(--gg-font-display);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.15;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.gg-number {
+  font-family: var(--gg-font-display);
+  font-weight: 500;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.gg-muted {
+  color: var(--gg-muted);
+}
+
+.gg-on-dark-muted {
+  color: var(--gg-on-dark-muted);
+}
+
+/* ---------------------------------------------------------------------------
+ * Icon
+ * ------------------------------------------------------------------------- */
+.gg-icon {
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ---------------------------------------------------------------------------
+ * Button — Figma set 2:38
+ * ------------------------------------------------------------------------- */
+.gg-btn {
+  --btn-bg: var(--gg-ink);
+  --btn-bg-hover: var(--gg-ink-hover);
+  --btn-fg: var(--gg-surface);
+  --btn-chip: rgba(255, 255, 255, 0.2);
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 52px;
+  padding: 8px 8px 8px 24px;
+  border-radius: var(--gg-r-pill);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-family: var(--gg-font-body);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--gg-motion-sm) var(--gg-ease-out),
+    transform var(--gg-motion-xs) var(--gg-ease-out);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.gg-btn--light {
+  --btn-bg: var(--gg-surface);
+  --btn-bg-hover: var(--gg-light-hover);
+  --btn-fg: var(--gg-ink);
+  --btn-chip: rgba(17, 17, 17, 0.08);
+}
+
+.gg-btn--coral {
+  --btn-bg: var(--gg-coral-fill);
+  --btn-bg-hover: var(--gg-coral-hover);
+}
+
+.gg-btn--outline {
+  --btn-bg: transparent;
+  --btn-bg-hover: rgba(17, 17, 17, 0.04);
+  --btn-fg: var(--gg-ink);
+  --btn-chip: rgba(17, 17, 17, 0.08);
+  border: 1px solid var(--gg-ink);
+}
+
+.gg-btn--full {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.gg-btn__chip {
+  position: relative;
+  display: block;
+  width: 36px;
+  height: 36px;
+  flex: none;
+  overflow: hidden;
+  border-radius: var(--gg-r-pill);
+  background: var(--btn-chip);
+  transition: transform var(--gg-motion-sm) var(--gg-ease-out);
+}
+
+.gg-btn__arrow {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  transition: transform var(--gg-motion-sm) var(--gg-ease-out);
+}
+
+/* The copy that slides in waits off the bottom-left corner. */
+.gg-btn__arrow + .gg-btn__arrow {
+  transform: translate(-100%, 100%);
+}
+
+.gg-btn:active {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .gg-btn:hover {
+    background: var(--btn-bg-hover);
+  }
+
+  .gg-btn:hover .gg-btn__chip {
+    transform: scale(1.08);
+  }
+
+  .gg-btn:hover .gg-btn__arrow {
+    transform: translate(100%, -100%);
+  }
+
+  .gg-btn:hover .gg-btn__arrow + .gg-btn__arrow {
+    transform: translate(0, 0);
+  }
+}
+
+
+/* Ghost pill (e.g. "How we work" on /thanks, the CTA email pill). */
+.gg-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 14px 20px;
+  border-radius: var(--gg-r-pill);
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--gg-surface);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.2;
+  transition:
+    background-color var(--gg-motion-sm) var(--gg-ease-out),
+    transform var(--gg-motion-xs) var(--gg-ease-out);
+}
+
+.gg-pill:active {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .gg-pill:hover {
+    background: rgba(255, 255, 255, 0.18);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Tag — Figma set 2:49. Static; never animates on its own.
+ * ------------------------------------------------------------------------- */
+.gg-tag {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  min-height: 30px;
+  padding: 6px 12px;
+  border-radius: var(--gg-r-pill);
+  font-family: var(--gg-font-display);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.gg-tag--neutral {
+  background: var(--gg-surface);
+  color: var(--gg-ink);
+  border: 1px solid var(--gg-line);
+}
+
+.gg-tag--dark {
+  background: var(--gg-ink);
+  color: var(--gg-surface);
+}
+
+.gg-tag--coral {
+  background: var(--gg-blush);
+  color: var(--gg-coral-text);
+}
+
+.gg-tag--plum {
+  background: var(--gg-lilac);
+  color: var(--gg-plum);
+}
+
+.gg-tag--on-dark {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--gg-surface);
+}
+
+/* ---------------------------------------------------------------------------
+ * Text link — underline draws left→right, retracts to the right.
+ * ------------------------------------------------------------------------- */
+.gg-text-link {
+  position: relative;
+  display: inline-block;
+}
+
+.gg-text-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform var(--gg-motion-sm) var(--gg-ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .gg-text-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Linked card — the whole card is one <a>.
+ * ------------------------------------------------------------------------- */
+.gg-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--gg-r-card-lg);
+  background: var(--gg-surface);
+  border: 1px solid var(--gg-line);
+  transition:
+    transform var(--gg-motion-md) var(--gg-ease-out),
+    box-shadow var(--gg-motion-md) var(--gg-ease-out),
+    border-color var(--gg-motion-md) var(--gg-ease-out);
+}
+
+/* Tinted card on a white section ("Pairs well with"): canvas, no border, a
+   white chip. */
+.gg-card--tint {
+  background: var(--gg-canvas);
+  border-color: transparent;
+  --chip-bg: var(--gg-surface);
+}
+
+/* The flagship card in a row of tinted ones. */
+.gg-card--plum {
+  background: var(--gg-plum);
+  border-color: transparent;
+  color: var(--gg-surface);
+  --chip-bg: var(--gg-coral);
+  --chip-fg: var(--gg-surface);
+}
+
+.gg-card:active {
+  transform: scale(0.99);
+}
+
+.gg-chip-arrow {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: var(--chip-size, 44px);
+  height: var(--chip-size, 44px);
+  border-radius: var(--gg-r-pill);
+  background: var(--chip-bg, var(--gg-canvas));
+  color: var(--chip-fg, var(--gg-ink));
+  transition:
+    transform var(--gg-motion-md) var(--gg-ease-out),
+    background-color var(--gg-motion-md) var(--gg-ease-out),
+    color var(--gg-motion-md) var(--gg-ease-out);
+}
+
+.gg-card__cover {
+  overflow: hidden;
+}
+
+.gg-card__cover > * {
+  transition: transform var(--gg-motion-md) var(--gg-ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .gg-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--gg-shadow-hover);
+    border-color: rgba(17, 17, 17, 0.12);
+  }
+
+  .gg-card:hover .gg-chip-arrow {
+    transform: rotate(45deg);
+    background: var(--gg-ink);
+    color: var(--gg-surface);
+  }
+
+  .gg-card:hover .gg-card__cover > * {
+    transform: scale(1.03);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Section header — tag + heading (+ sub-copy, + CTA). HEADER REVEAL.
+ * ------------------------------------------------------------------------- */
+.gg-section-header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.gg-section-header__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 820px;
+}
+
+.gg-section-header__aside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  max-width: 400px;
+}
+
+@media (min-width: 768px) {
+  .gg-section-header,
+  .gg-section-header__copy {
+    gap: 20px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .gg-section-header--split {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 48px;
+  }
+
+  .gg-section-header--split .gg-section-header__copy {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .gg-section-header--split .gg-section-header__aside {
+    flex: 0 1 400px;
+  }
+}
+
+.gg-section-header--on-dark {
+  color: var(--gg-surface);
+}
+
+.gg-section-header--on-dark .gg-section-header__sub {
+  color: var(--gg-on-dark-muted);
+}
+
+.gg-section-header__sub {
+  color: var(--gg-muted);
+}
+
+/* ---------------------------------------------------------------------------
+ * Article cover — Figma set 41:177
+ * Circle positions are the 400×220 reference converted to percentages.
+ * ------------------------------------------------------------------------- */
+.gg-cover {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  isolation: isolate;
+  aspect-ratio: 400 / 220;
+  border-radius: 20px;
+  container-type: inline-size;
+}
+
+.gg-cover--websites {
+  background: var(--gg-lilac);
+  color: var(--gg-plum);
+}
+
+.gg-cover--growth {
+  background: var(--gg-blush);
+  color: var(--gg-coral);
+}
+
+.gg-cover--pricing {
+  background: var(--gg-mint);
+  color: var(--gg-ink);
+}
+
+.gg-cover__circle {
+  position: absolute;
+  z-index: -1;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.gg-cover__circle:nth-child(1) {
+  left: 62.5%;
+  top: -27.27%;
+  width: 60%;
+  aspect-ratio: 1;
+  opacity: 0.45;
+}
+
+.gg-cover__circle:nth-child(2) {
+  left: 75%;
+  top: 50%;
+  width: 40%;
+  aspect-ratio: 1;
+  opacity: 0.3;
+}
+
+.gg-cover__circle:nth-child(3) {
+  left: -10%;
+  top: 63.64%;
+  width: 35%;
+  aspect-ratio: 1;
+  opacity: 0.25;
+}
+
+/* Chip and word sit at fixed offsets (28px, 64px chip, 56px word) on every
+   cover from 300px wide up, as on the 400 set and the 300×320 card cover.
+   Narrower covers scale them with the width. */
+.gg-cover__chip {
+  position: absolute;
+  left: min(28px, 9.33cqi);
+  top: min(28px, 9.33cqi);
+  display: grid;
+  place-items: center;
+  width: min(64px, 21.33cqi);
+  height: min(64px, 21.33cqi);
+  border-radius: 18px;
+  background: #fff;
+}
+
+.gg-cover__chip .gg-icon {
+  width: 50%;
+  height: 50%;
+}
+
+.gg-cover__word {
+  position: absolute;
+  left: min(28px, 9.33cqi);
+  top: min(109px, 36.33cqi);
+  font-family: var(--gg-font-display);
+  font-weight: 500;
+  font-size: min(56px, 18.67cqi);
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------------------------
+ * FAQ accordion — one open at a time; grid-rows height technique.
+ *
+ * Two tones. "lilac" is the README default (closed canvas/white, open lilac
+ * with plum text and a plum chip). "home" is Home section 10 (closed white
+ * with a border and a canvas chip, open canvas with an ink chip).
+ * ------------------------------------------------------------------------- */
+.gg-faq {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.gg-faq__item {
+  --faq-bg: var(--gg-surface);
+  --faq-bg-open: var(--gg-lilac);
+  --faq-border: transparent;
+  --faq-q-open: var(--gg-plum);
+  --faq-chip: var(--gg-canvas);
+  --faq-chip-open: var(--gg-plum);
+  border-radius: 18px;
+  background: var(--faq-bg);
+  border: 1px solid var(--faq-border);
+  transition:
+    background-color var(--gg-motion-md) var(--gg-ease-in-out),
+    border-color var(--gg-motion-md) var(--gg-ease-in-out);
+}
+
+.gg-faq--on-surface .gg-faq__item {
+  --faq-bg: var(--gg-canvas);
+  --faq-border: transparent;
+  --faq-chip: var(--gg-surface);
+}
+
+.gg-faq--home .gg-faq__item {
+  --faq-bg: var(--gg-surface);
+  --faq-border: var(--gg-line);
+  --faq-chip: var(--gg-canvas);
+  --faq-bg-open: var(--gg-canvas);
+  --faq-q-open: var(--gg-ink);
+  --faq-chip-open: var(--gg-ink);
+}
+
+.gg-faq__item.is-open {
+  background: var(--faq-bg-open);
+  border-color: transparent;
+}
+
+.gg-faq__heading {
+  font: inherit;
+}
+
+.gg-faq__button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 56px;
+  padding: 13px 14px 13px 18px;
+  text-align: left;
+  border-radius: inherit;
+}
+
+.gg-faq__num {
+  flex: none;
+  font-family: var(--gg-font-display);
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--gg-coral-text);
+}
+
+.gg-faq__q {
+  flex: 1 1 0;
+  min-width: 0;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  transition: color var(--gg-motion-md) var(--gg-ease-in-out);
+}
+
+.gg-faq__item.is-open .gg-faq__q {
+  color: var(--faq-q-open);
+}
+
+.gg-faq__chip {
+  position: relative;
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--gg-r-pill);
+  background: var(--faq-chip);
+  color: var(--gg-ink);
+  transition:
+    background-color var(--gg-motion-md) var(--gg-ease-in-out),
+    color var(--gg-motion-md) var(--gg-ease-in-out),
+    transform var(--gg-motion-md) var(--gg-ease-in-out);
+}
+
+.gg-faq__item.is-open .gg-faq__chip {
+  background: var(--faq-chip-open);
+  color: var(--gg-surface);
+  transform: rotate(90deg);
+}
+
+/* The "+" is two strokes. Opening rotates the chip 90° and collapses the
+   vertical stroke, which leaves the horizontal one as "−". */
+.gg-faq__chip::before,
+.gg-faq__chip::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 50%;
+  height: 1.75px;
+  margin: -0.875px 0 0 -25%;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform var(--gg-motion-md) var(--gg-ease-in-out);
+}
+
+.gg-faq__chip::after {
+  transform: rotate(90deg);
+}
+
+.gg-faq__item.is-open .gg-faq__chip::before {
+  transform: scaleX(0);
+}
+
+.gg-faq__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--gg-motion-md) var(--gg-ease-in-out);
+}
+
+.gg-faq__item.is-open .gg-faq__panel {
+  grid-template-rows: 1fr;
+}
+
+.gg-faq__panel-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.gg-faq__answer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 14px 16px 18px;
+  color: var(--gg-muted);
+  font-size: 14px;
+  line-height: 1.55;
+  opacity: 0;
+  transition: opacity var(--gg-motion-sm) var(--gg-ease-in-out);
+}
+
+/* Open: text fades in 100ms after the height starts. Close: text goes first. */
+.gg-faq__item.is-open .gg-faq__answer {
+  opacity: 1;
+  transition-delay: 100ms;
+}
+
+@media (min-width: 768px) {
+  .gg-faq {
+    gap: 12px;
+  }
+
+  .gg-faq__item {
+    border-radius: 20px;
+  }
+
+  .gg-faq__button {
+    gap: 16px;
+    min-height: 76px;
+    padding: 20px 20px 20px 28px;
+  }
+
+  .gg-faq__q {
+    font-size: 18px;
+    line-height: 1.3;
+  }
+
+  .gg-faq__num {
+    font-size: 18px;
+  }
+
+  .gg-faq__chip {
+    width: 36px;
+    height: 36px;
+  }
+
+  /* 16/1.55 per README 4.9 and the Service frame (96:274); Home's own
+     section sets it at 15/1.6 (7:161). */
+  .gg-faq__answer {
+    padding: 0 20px 24px 28px;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  .gg-faq--home .gg-faq__answer {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+}
+
+/* No-JS: every answer is open and readable. */
+html:not(.js) .gg-faq__panel {
+  grid-template-rows: 1fr;
+}
+
+html:not(.js) .gg-faq__answer {
+  opacity: 1;
+}
+
+/* ---------------------------------------------------------------------------
+ * Gradient CTA card — "GROWTH STARTS HERE."
+ * ------------------------------------------------------------------------- */
+.gg-cta-section {
+  padding: 12px 12px 32px;
+}
+
+.gg-cta-section--inner {
+  background: var(--gg-surface);
+  padding: 0 var(--gg-gutter) 40px;
+}
+
+.gg-cta {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 56px 24px 28px;
+  border-radius: var(--gg-r-cta);
+  background-color: var(--gg-hero);
+  color: var(--gg-surface);
+}
+
+.gg-cta--inner {
+  max-width: var(--gg-content);
+  margin-inline: auto;
+  align-items: center;
+  text-align: center;
+  padding: 48px 24px;
+  border-radius: 28px;
+}
+
+.gg-cta__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+}
+
+/* Inner (Service 96:348): the frame's gradient on one slightly oversized
+   layer that drifts a few percent either way, so only transform animates and
+   the resting look stays the frame's. */
+.gg-cta--inner .gg-cta__bg::before {
+  content: "";
+  position: absolute;
+  inset: -10% -8%;
+  background: var(--gg-gradient-cta);
+  animation: gg-drift 18s var(--gg-ease-in-out) infinite alternate;
+}
+
+/* Home: the live hero's animated gradient (goodground-motion.mp4, see
+   CtaVideo) in place of the frame's static fill, as the owner asked
+   (27 Oct 2026). The poster is the still. The scrim darkens the left and
+   bottom, where the white type sits. */
+.gg-cta__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gg-cta--home .gg-cta__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(16, 3, 13, 0.3), rgba(16, 3, 13, 0.5));
+}
+
+@keyframes gg-drift {
+  from {
+    transform: translate3d(-5%, -4%, 0);
+  }
+
+  to {
+    transform: translate3d(5%, 4%, 0);
+  }
+}
+
+/* Desktop cursor light (Home): 480px peach radial at 25%. */
+.gg-cta__light {
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  top: 0;
+  width: 480px;
+  height: 480px;
+  margin: -240px 0 0 -240px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(247, 180, 143, 0.25), rgba(247, 180, 143, 0) 70%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--gg-motion-lg) var(--gg-ease-out);
+}
+
+.gg-cta__light.is-on {
+  opacity: 1;
+}
+
+.gg-cta__headline {
+  font-size: 72px;
+}
+
+.gg-cta--inner .gg-cta__headline {
+  font-size: 60px;
+}
+
+.gg-cta__row {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.gg-cta__sub {
+  font-size: 16px;
+  line-height: 1.5;
+  max-width: 520px;
+}
+
+.gg-cta--inner .gg-cta__sub {
+  color: var(--gg-on-dark-muted);
+}
+
+.gg-cta--inner .gg-tag {
+  align-self: center;
+}
+
+.gg-cta__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.gg-cta--inner .gg-cta__actions {
+  width: 100%;
+}
+
+.gg-cta--inner .gg-cta__actions .gg-pill {
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .gg-cta-section {
+    padding: 24px 24px 40px;
+  }
+
+  .gg-cta {
+    gap: 40px;
+    padding: 96px 64px 72px;
+  }
+
+  /* 96/80 in the README, but the frame's one-line headline is 1079 wide in a
+     1200 card (96:351), which only fits with ~60px sides. */
+  .gg-cta--inner {
+    gap: 28px;
+    padding: 96px 56px;
+    border-radius: 40px;
+  }
+
+  /* Full width is a phone layout; from tablet up the pair sits side by side
+     at its natural width (Home 7:217). */
+  .gg-cta__actions .gg-btn--full {
+    display: inline-flex;
+    width: auto;
+  }
+
+  .gg-cta__sub {
+    max-width: 480px;
+  }
+
+  .gg-cta__headline {
+    font-size: clamp(72px, 46.74px + 6.476vw, 140px);
+  }
+
+  .gg-cta--inner .gg-cta__headline {
+    font-size: clamp(60px, 37.71px + 5.714vw, 120px);
+  }
+
+  .gg-cta__sub {
+    font-size: 18px;
+  }
+
+  .gg-cta__actions,
+  .gg-cta--inner .gg-cta__actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: auto;
+  }
+
+  .gg-cta--inner .gg-cta__actions {
+    justify-content: center;
+  }
+}
+
+@media (min-width: 1200px) {
+  .gg-cta {
+    padding: 120px 96px 96px;
+  }
+
+  .gg-cta--inner {
+    padding: 96px 56px;
+  }
+
+  .gg-cta__row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .gg-cta--inner .gg-cta__row {
+    flex-direction: column;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Site header — logo pill, centre breadcrumb pill, MENU pill.
+ * ------------------------------------------------------------------------- */
+.gg-header {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px;
+  background: var(--gg-canvas);
+}
+
+.gg-header--dark {
+  background: var(--gg-plum-deep);
+}
+
+/* 42px tall on phones, as drawn (138×42); the ::after takes the tap area to
+   44 without changing the look. */
+.gg-header__logo::after {
+  content: "";
+  position: absolute;
+  inset: -1px 0;
+}
+
+.gg-header__logo {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+  padding: 8px 16px;
+  border-radius: var(--gg-r-pill);
+  background: var(--gg-ink);
+  color: var(--gg-surface);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.03em;
+}
+
+.gg-header__crumbs {
+  display: none;
+}
+
+.gg-header__menu {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 10px 16px;
+  border-radius: var(--gg-r-pill);
+  background: var(--gg-ink);
+  color: var(--gg-surface);
+  font-family: var(--gg-font-display);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  transition:
+    background-color var(--gg-motion-sm) var(--gg-ease-out),
+    transform var(--gg-motion-xs) var(--gg-ease-out);
+}
+
+.gg-header--dark .gg-header__logo,
+.gg-header--dark .gg-header__menu {
+  background: var(--gg-surface);
+  color: var(--gg-ink);
+}
+
+.gg-header__menu:active {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .gg-header__menu:hover {
+    background: var(--gg-ink-hover);
+  }
+
+  .gg-header--dark .gg-header__menu:hover {
+    background: var(--gg-light-hover);
+  }
+}
+
+@media (min-width: 768px) {
+  .gg-header {
+    padding: 28px 40px;
+  }
+
+  .gg-header__logo {
+    min-height: 51px;
+    padding: 10px 20px;
+    font-size: 24px;
+  }
+
+  .gg-header__crumbs {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 20px;
+    border-radius: var(--gg-r-pill);
+    background: var(--gg-surface);
+    border: 1px solid var(--gg-line);
+    font-family: var(--gg-font-display);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: pre;
+  }
+
+  .gg-header__menu {
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+}
+
+/* The live menu dialog, restyled with the new tokens. Same structure and
+   behaviour as components/home2026/HomeChrome.tsx. */
+.gg-menu {
+  border: 0;
+  width: 100%;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 16px;
+  overflow-y: auto;
+  background: var(--gg-plum-deep);
+  color: var(--gg-surface);
+  font-family: var(--gg-font-body);
+}
+
+.gg-menu::backdrop {
+  background: var(--gg-plum-deep);
+}
+
+.gg-menu[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+.gg-menu__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gg-menu__top .gg-header__logo,
+.gg-menu__top .gg-header__menu {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--gg-surface);
+}
+
+.gg-menu__nav {
+  display: flex;
+  flex-direction: column;
+  width: min(1200px, 100%);
+  margin: 48px auto 32px;
+}
+
+.gg-menu__nav a {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  font-family: var(--gg-font-display);
+  font-weight: 500;
+  font-size: 38px;
+  line-height: 1.2;
+  text-transform: uppercase;
+  transition: color var(--gg-motion-sm) var(--gg-ease-out);
+}
+
+.gg-menu__num {
+  font-family: var(--gg-font-body);
+  font-size: 14px;
+  color: var(--gg-on-dark-muted);
+}
+
+.gg-menu__nav .gg-icon {
+  margin-left: auto;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .gg-menu__nav a:hover {
+    color: var(--gg-peach);
+  }
+}
+
+.gg-menu__bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--gg-on-dark-muted);
+  font-size: 15px;
+}
+
+@media (min-width: 768px) {
+  .gg-menu {
+    padding: 28px 40px;
+  }
+
+  .gg-menu__nav a {
+    font-size: clamp(38px, 5vw, 64px);
+    gap: 32px;
+  }
+
+  .gg-menu__bottom {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Footer — canonical version from Home section 11.
+ * ------------------------------------------------------------------------- */
+.gg-footer {
+  padding: 0 24px 0;
+}
+
+.gg-footer__main {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 12px 0 0;
+}
+
+.gg-footer__brand {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.gg-footer__logo {
+  align-self: flex-start;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+
+.gg-footer__tagline {
+  font-size: 13px;
+  color: var(--gg-muted);
+}
+
+.gg-footer__cols {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.gg-footer__col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.gg-footer__heading {
+  font-size: 11px;
+  color: var(--gg-muted);
+}
+
+.gg-footer__col a {
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+/* Touch screens get 44px rows (brief's touch-target rule); a mouse keeps the
+   drawn 8px rhythm. The padding cannot shift the underline, which only draws
+   on fine pointers. */
+@media (pointer: coarse) {
+  /* Doubled class: outranks the tablet block's gap further down. */
+  .gg-footer__col.gg-footer__col {
+    gap: 0;
+  }
+
+  .gg-footer__heading {
+    margin-bottom: 4px;
+  }
+
+  .gg-footer__logo,
+  .gg-footer__col a,
+  .gg-footer__legal a {
+    display: inline-flex;
+    align-items: center;
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Equal side padding instead of centring in 44px, so the dots stay evenly
+     spaced; the row is pulled out by the same 8px to keep its left edge. */
+  .gg-footer__legal {
+    margin-inline: -8px;
+  }
+
+  .gg-footer__legal a {
+    justify-content: center;
+    padding-inline: 8px;
+  }
+
+  .gg-footer__dot.gg-footer__dot {
+    margin-inline: 0;
+  }
+}
+
+.gg-footer__bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 32px;
+  padding: 24px 0 32px;
+  border-top: 1px solid var(--gg-line);
+}
+
+.gg-footer__copy {
+  font-size: 13px;
+  color: var(--gg-muted);
+}
+
+.gg-footer__dot {
+  margin-inline: 8px;
+}
+
+.gg-footer__legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gg-muted);
+}
+
+.gg-footer__long {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .gg-footer__short {
+    display: none;
+  }
+
+  .gg-footer__long {
+    display: inline;
+  }
+}
+
+/* Desktop: brand and the three columns on one row (Home 7:228). Tablet keeps
+   the brand above a three-column grid, which is too tight on one row. */
+@media (min-width: 1200px) {
+  .gg-footer__main {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .gg-footer__cols {
+    display: contents;
+  }
+}
+
+/* Stand-alone (no CTA card above it): Start project, Contact, Pricing. */
+.gg-footer--ruled {
+  border-top: 1px solid var(--gg-line);
+  padding-top: 40px;
+}
+
+.gg-footer--sticky-bar {
+  padding-bottom: 96px;
+}
+
+@media (min-width: 768px) {
+  .gg-footer {
+    padding-inline: 48px;
+  }
+
+  .gg-footer__main {
+    gap: 40px;
+    padding: 24px 0 0;
+  }
+
+  .gg-footer__brand {
+    gap: 12px;
+  }
+
+  .gg-footer__logo {
+    font-size: 28px;
+  }
+
+  .gg-footer__tagline {
+    font-size: 14px;
+  }
+
+  .gg-footer__cols {
+    gap: 24px;
+  }
+
+  .gg-footer__col {
+    gap: 10px;
+  }
+
+  .gg-footer__heading {
+    font-size: 12px;
+  }
+
+  .gg-footer__col a {
+    font-size: 15px;
+  }
+
+  .gg-footer__bottom {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 48px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Bottom sheet — Work filter, Pricing build sheet, Onboarding steps, TOC.
+ * ------------------------------------------------------------------------- */
+.gg-sheet {
+  border: 0;
+  padding: 0;
+  margin: auto 0 0;
+  width: 100%;
+  max-width: none;
+  max-height: min(88dvh, 760px);
+  border-radius: 24px 24px 0 0;
+  background: var(--gg-surface);
+  color: var(--gg-ink);
+  font-family: var(--gg-font-body);
+  overflow: hidden;
+  transform: translateY(100%);
+  transition:
+    transform var(--gg-motion-md) var(--gg-ease-out),
+    overlay var(--gg-motion-md) allow-discrete,
+    display var(--gg-motion-md) allow-discrete;
+}
+
+.gg-sheet[open] {
+  display: flex;
+  flex-direction: column;
+  transform: translateY(0);
+}
+
+@starting-style {
+  .gg-sheet[open] {
+    transform: translateY(100%);
+  }
+}
+
+.gg-sheet::backdrop {
+  background: rgba(17, 17, 17, 0);
+  transition:
+    background-color var(--gg-motion-md) var(--gg-ease-out),
+    overlay var(--gg-motion-md) allow-discrete,
+    display var(--gg-motion-md) allow-discrete;
+}
+
+.gg-sheet[open]::backdrop {
+  background: rgba(17, 17, 17, 0.4);
+}
+
+@starting-style {
+  .gg-sheet[open]::backdrop {
+    background: rgba(17, 17, 17, 0);
+  }
+}
+
+.gg-sheet__handle {
+  align-self: center;
+  width: 40px;
+  height: 4px;
+  margin-top: 10px;
+  border-radius: 99px;
+  background: var(--gg-line);
+}
+
+.gg-sheet__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 20px 16px;
+  border-bottom: 1px solid var(--gg-line);
+}
+
+.gg-sheet__title {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.gg-sheet__close {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--gg-r-pill);
+  background: var(--gg-canvas);
+}
+
+.gg-sheet__body {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 20px;
+}
+
+body.gg-scroll-locked {
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------------------
+ * Reveals. Hidden start states exist ONLY under html.js, so the page is
+ * complete with JavaScript off. The helper (motion/GgMotion.tsx) adds
+ * `.is-in` once an element passes 85% of the viewport.
+ * ------------------------------------------------------------------------- */
+.js [data-reveal="fade-up"],
+.js [data-reveal="stagger"] > *,
+.js [data-reveal="header"] [data-part="tag"],
+.js [data-reveal="header"] [data-part="sub"],
+.js [data-reveal="header"] [data-part="cta"] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity var(--gg-motion-lg) var(--gg-ease-out),
+    transform var(--gg-motion-lg) var(--gg-ease-out);
+  transition-delay: var(--gg-delay, 0ms);
+}
+
+.js [data-reveal="stagger"] > * {
+  transition-delay: calc(var(--gg-delay, 0ms) + var(--gg-i, 0) * var(--gg-stagger-step, var(--gg-stagger)));
+}
+
+.js [data-reveal="header"] [data-part="sub"] {
+  --gg-delay: 200ms;
+}
+
+.js [data-reveal="header"] [data-part="cta"] {
+  --gg-delay: 300ms;
+}
+
+.js [data-reveal="fade-up"].is-in,
+.js [data-reveal="stagger"].is-in > *,
+.js [data-reveal="header"].is-in [data-part] {
+  opacity: 1;
+  transform: none;
+}
+
+/* The CTA card itself: FADE-UP + scale 0.98→1 (Home 11 note). */
+.js .gg-cta[data-reveal] {
+  opacity: 0;
+  transform: translateY(24px) scale(0.98);
+  transition:
+    opacity var(--gg-motion-lg) var(--gg-ease-out),
+    transform var(--gg-motion-lg) var(--gg-ease-out);
+}
+
+.js .gg-cta[data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* LINE MASK — the heading is split into rendered lines by the helper. */
+.gg-line {
+  display: block;
+  overflow: hidden;
+  /* Room for descenders and accents inside the mask. */
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.gg-line__in {
+  display: block;
+}
+
+.js [data-split] .gg-line__in {
+  transform: translateY(105%);
+  transition: transform var(--gg-line-ms, 800ms) var(--gg-ease-out);
+  transition-delay: calc(var(--gg-delay, 0ms) + var(--gg-line-i, 0) * var(--gg-line-step, 90ms));
+}
+
+.js .is-in[data-split] .gg-line__in,
+.js .is-in [data-split] .gg-line__in {
+  transform: none;
+}
+
+/* COUNT-UP — reserved width so nothing shifts while it counts. */
+.gg-count {
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.gg-count__digits {
+  display: inline-block;
+}
+
+/* Reduced motion, or the "Pause motion" toggle: no translate, scale,
+   parallax or loops. Reveals become a 150ms opacity fade. */
+/* Scoped to .gg: /website-launch has its own bare [data-reveal] system. */
+@media (prefers-reduced-motion: reduce) {
+  .js .gg [data-reveal] *,
+  .js .gg [data-reveal] {
+    transform: none !important;
+    transition-property: opacity !important;
+    transition-duration: 150ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  .gg-cta__bg::before {
+    animation: none;
+  }
+
+  .gg-cta__light {
+    display: none;
+  }
+}
+
+html[data-motion="off"].js .gg [data-reveal] *,
+html[data-motion="off"].js .gg [data-reveal] {
+  transform: none !important;
+  transition-property: opacity !important;
+  transition-duration: 150ms !important;
+  transition-delay: 0ms !important;
+}
+
+html[data-motion="off"] .gg-cta__bg::before {
+  animation: none;
+}
+
+html[data-motion="off"] .gg-cta__light {
+  display: none;
+}
+
+/* Loops pause off-screen and while the tab is hidden. */
+[data-loop]:not([data-visible="true"]) *,
+html[data-tab-hidden] [data-loop] * {
+  animation-play-state: paused !important;
+}

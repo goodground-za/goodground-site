@@ -3,6 +3,9 @@ import localFont from "next/font/local";
 import { Analytics } from "@/components/Analytics";
 import { site } from "@/content/site";
 import "./globals.css";
+// Redesign foundations (Oct 2026). Namespaced --gg-*/.gg-*, so it changes
+// nothing on pages that have not moved over yet.
+import "@/components/gg/gg.css";
 
 // The site's typefaces: Oswald for display, IBM Plex Sans for body.
 //
@@ -21,17 +24,31 @@ const oswald = localFont({
   adjustFontFallback: false,
   src: [
     { path: "../public/fonts/oswald-500.woff2", weight: "500", style: "normal" },
+    // 600 is the redesign's MENU label and a few display numbers (Oct 2026).
+    { path: "../public/fonts/oswald-600.woff2", weight: "600", style: "normal" },
     { path: "../public/fonts/oswald-700.woff2", weight: "700", style: "normal" },
   ],
 });
 
+// The Plex file is a variable font (Google serves the same file for 400, 500
+// and 600 — checked by hash), so one file covers the redesign's Medium and
+// SemiBold too. Declaring the range stops the browser faking bold from 400.
 const ibmPlexSans = localFont({
   variable: "--font-ibm-plex-sans",
   display: "swap",
   fallback: ["ui-sans-serif", "system-ui", "Segoe UI", "sans-serif"],
   adjustFontFallback: false,
-  src: [{ path: "../public/fonts/ibm-plex-sans-400.woff2", weight: "400", style: "normal" }],
+  src: [{ path: "../public/fonts/ibm-plex-sans-400.woff2", weight: "400 600", style: "normal" }],
 });
+
+/**
+ * Runs before first paint (redesign motion note 12:150):
+ *  - `js` on <html>: every hidden reveal start state is scoped to it, so with
+ *    JavaScript off the page is simply complete.
+ *  - `data-motion="off"` from the stored "Pause motion" choice, so an inner
+ *    page never plays motion the visitor already switched off on the home hero.
+ */
+const headScript = `(function(){var d=document.documentElement;d.classList.add('js');try{if(localStorage.getItem('gg-motion')==='off')d.dataset.motion='off'}catch(e){}})()`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -77,11 +94,17 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     // data-scroll-behavior: globals.css sets scroll-behavior:smooth for in-page
     // anchors; without this, Next 16 lets route changes smooth-scroll to top too.
+    // suppressHydrationWarning: the head script adds `js` and data-motion to
+    // this element before React hydrates. It covers this element only.
     <html
       lang="en-ZA"
       data-scroll-behavior="smooth"
       className={`${oswald.variable} ${ibmPlexSans.variable} h-full`}
+      suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: headScript }} />
+      </head>
       {/* No Nav/Footer/skip-link here: they moved to app/(site)/layout.tsx so
           the homepage, which brings its own chrome, can opt out of them. */}
       <body className="flex min-h-full flex-col">

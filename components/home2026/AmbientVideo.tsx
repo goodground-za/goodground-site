@@ -14,12 +14,16 @@ import { useCallback, useEffect, useRef, useState } from "react";
  *    prefers-reduced-motion change must not silently undo it.
  *  - If autoplay is refused (common on metered or low-power devices), it does
  *    not retry or nag — it settles into the paused state and the poster stays.
- *  - The motion state is written to <html data-motion> because the menu reads
- *    it to decide whether to scroll smoothly or jump.
+ *  - A click on the toggle writes <html data-motion="off|on"> and stores it
+ *    under `gg-motion` in localStorage. The redesign's motion system
+ *    (components/gg) reads that flag on every page, and the head script in
+ *    app/layout.tsx re-applies the stored value before paint.
  *
  * Only one of these may be live per page: they share that <html> flag. That
  * holds naturally — the homepage has the Hero, an inner page has PageHero.
  */
+const MOTION_KEY = "gg-motion";
+
 export function useAmbientMotion() {
   const videoRef = useRef<HTMLVideoElement>(null);
   // Starts paused under reduced motion. Resolved in an effect rather than at
@@ -30,9 +34,8 @@ export function useAmbientMotion() {
   // value without being torn down and rebuilt on every toggle.
   const pausedRef = useRef(paused);
 
-  // Drives the element and the <html> flag from whatever the current state is.
+  // Drives the video from whatever the current state is.
   const applyMotion = useCallback((next: boolean) => {
-    document.documentElement.dataset.motion = next ? "paused" : "playing";
     const video = videoRef.current;
     if (!video) return;
     if (next || document.hidden) {
@@ -43,13 +46,20 @@ export function useAmbientMotion() {
       // Autoplay refused. The poster is already showing, so there is nothing
       // to repair — just reflect reality in the control.
       setPaused(true);
-      document.documentElement.dataset.motion = "paused";
     });
   }, []);
 
   useEffect(() => {
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (!manualPreference.current) setPaused(query.matches);
+    // A choice made with the toggle on an earlier visit wins over the system
+    // setting, exactly as a click in this visit does. The head script in
+    // app/layout.tsx has already applied it to <html data-motion>.
+    let stored: string | null = null;
+    try {
+      stored = localStorage.getItem(MOTION_KEY);
+    } catch {}
+    if (stored === "off" || stored === "on") manualPreference.current = true;
+    setPaused(manualPreference.current ? stored === "off" : query.matches);
 
     const onPreferenceChange = () => {
       if (!manualPreference.current) setPaused(query.matches);
@@ -69,9 +79,17 @@ export function useAmbientMotion() {
     applyMotion(paused);
   }, [paused, applyMotion]);
 
+  // Only a deliberate click writes the site-wide flag. A refused autoplay or
+  // the system setting pause the video but say nothing about the visitor's
+  // wishes, so they must not switch off motion on every other page.
   const toggle = useCallback(() => {
     manualPreference.current = true;
-    setPaused((p) => !p);
+    const next = !pausedRef.current;
+    document.documentElement.dataset.motion = next ? "off" : "on";
+    try {
+      localStorage.setItem(MOTION_KEY, next ? "off" : "on");
+    } catch {}
+    setPaused(next);
   }, []);
 
   return { videoRef, paused, toggle };
