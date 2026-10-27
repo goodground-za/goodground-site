@@ -187,13 +187,13 @@ export const ways: Way[] = [
   {
     id: "launch-offer",
     name: "Website Launch Offer",
-    sub: "New businesses without a website. Up to five pages.",
+    sub: "New businesses without a website. One page.",
     tone: "blush",
     upfront: { text: "No deposit" },
     monthly: { money: launchTerms.monthly, coral: true },
     howLong: { text: `${launchTerms.months} months` },
     total: { money: launchTerms.total },
-    get: { text: "Up to five pages, SEO setup, and domain, hosting and email for 12 months." },
+    get: { text: "A one-page site, SEO setup, and domain, hosting and email for 12 months." },
     end: { text: "Yours: we transfer the domain and site, or you move to a Care Plan." },
     cta: { label: "See the Launch Offer", href: "/website-launch", variant: "outline" },
     card: {

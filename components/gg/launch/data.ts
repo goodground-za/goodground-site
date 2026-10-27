@@ -66,14 +66,14 @@ export function getAvailability(): Availability {
 export const terms = launchTerms;
 
 export const keyFacts: { icon: IconName; title: string; body: string }[] = [
-  { icon: "file", title: "Up to five pages", body: "Custom, designed around your business" },
+  { icon: "file", title: "One page", body: "Custom, designed around your business" },
   { icon: "mail", title: "Domain and email", body: "Registered and set up for you" },
   { icon: "search", title: "SEO and Google", body: "Prepared, submitted for indexing" },
   { icon: "cal", title: "12 months", body: "Domain, hosting and email fees included" },
 ];
 
 export const heroChecklist = [
-  { long: "Up to five custom website pages", short: "Up to five custom pages" },
+  { long: "A custom one-page website", short: "Custom one-page website" },
   { long: "Domain registration & business email", short: "Domain & business email" },
   { long: "Hosting for 12 months", short: "Hosting for 12 months" },
   { long: "Detailed SEO setup + Google indexing", short: "SEO setup + Google indexing" },
@@ -130,11 +130,11 @@ export const includedGroups: {
     items: [
       {
         title: "Website planning around your goals",
-        body: "We learn about your business, customers and the enquiries you want. That shapes your pages, their sections and contact options.",
+        body: "We learn about your business, customers and the enquiries you want. That shapes your page, its sections and your contact options.",
       },
       {
-        title: "Up to five custom website pages",
-        body: "Pages for what you do, who you help and how to get in touch, agreed before the build begins.",
+        title: "A custom one-page website",
+        body: "One page with sections for what you do, who you help and how to get in touch, agreed before the build begins.",
       },
       { title: "Responsive across devices", body: "Pages, navigation and forms adapt to phones, tablets and desktops." },
     ],
@@ -187,7 +187,7 @@ export const steps = [
     title: "Review your website",
     body: "We design and build to the agreed brief; you give feedback within the included revision rounds.",
   },
-  { n: "04", title: "Approve and launch", body: "Final checks, publish, and your pages are submitted to Google for indexing." },
+  { n: "04", title: "Approve and launch", body: "Final checks, publish, and your page is submitted to Google for indexing." },
 ];
 
 /** The live nine answers, plus the one the design adds ("Is there a deposit?"). */

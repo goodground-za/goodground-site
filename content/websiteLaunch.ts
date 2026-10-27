@@ -18,11 +18,13 @@
  *    and extra features, which are quoted separately.
  *  - "Two promotional spaces each month" describes monthly capacity. It is NOT
  *    a live count of what is free today, and must never be rendered as one.
- *  - The 12 months of included fees is NOT the payment contract length. The
- *    deposit, minimum commitment, schedule and total payable are still NOT
- *    specified anywhere on this page. Do not invent any of them, and do not
- *    add "cancel anytime" or "no deposit". What happens at the END of the term
- *    IS stated, in the "What happens after the first 12 months?" answer.
+ *  - Payment terms, confirmed by Johandre 2026-09-23: no deposit, R845 a
+ *    month for 12 months, R10 140 in total. After that the site is theirs:
+ *    the domain and site are transferred to them, or they move to a Care Plan.
+ *    Still never write "cancel anytime". Nothing says the 12 months can be
+ *    cut short, and the contract governs early cancellation.
+ *  - It is a ONE-page site (confirmed 2026-09-23). The page said "up to five
+ *    custom website pages" until then, which was wrong.
  */
 
 export const launchOffer = {
@@ -36,11 +38,15 @@ export const launchOffer = {
   priceInline: "R950 per month",
   /** The compact form used in the mobile bar, where space is tight. */
   priceShort: "R950/month",
+  /** The numbers behind the strings above, for anything that has to do maths
+   * with them. */
+  monthlyAmount: 950,
+  termMonths: 12,
 
   /** Always "12 months". Never "a year's contract" — it is not one. */
   includedFees: "Domain, hosting and email fees included for the first 12 months.",
 
-  pageCount: "Up to five custom website pages",
+  pageCount: "A custom one-page website",
 
   cta: "Check availability",
   ctaTarget: "#check-availability",
@@ -49,9 +55,10 @@ export const launchOffer = {
 } as const;
 
 /**
- * Current availability. Confirmed by Johandre 2026-09-13.
+ * Current availability. Confirmed by Johandre 2026-09-13, moved to October on
+ * his instruction 2026-09-23.
  *
- * THIS IS A DATED CLAIM AND IT GOES STALE. "1 slot left for September" is true
+ * THIS IS A DATED CLAIM AND IT GOES STALE. "1 slot left for October" is true
  * until it is not, and a page still saying it in October is telling visitors
  * something false. Nothing updates it: no counter, no date arithmetic, no
  * automatic month, precisely so it cannot quietly keep making a claim nobody
@@ -69,7 +76,7 @@ export const launchOffer = {
  */
 export const launchAvailability = {
   enabled: true,
-  message: "1 slot left for September",
+  message: "1 slot left for October",
   /**
    * What to do about the number, not why the number exists. The "why" is the
    * capacity section directly below the offer block, and having both say it
@@ -132,7 +139,7 @@ export const launchHero = {
   headline: "Launch your first website for R950 per month.",
   lead: "Give your new business a professional place online, with a website designed to help customers understand your services, trust your business and get in touch.",
   body: [
-    "Your package includes up to five custom website pages, domain registration, business email setup, hosting, detailed SEO preparation and submission to Google for indexing.",
+    "Your package includes a custom one-page website, domain registration, business email setup, hosting, detailed SEO preparation and submission to Google for indexing.",
     "We handle the planning, design and launch. You focus on getting your business started.",
   ],
 } as const;
@@ -145,7 +152,7 @@ export const launchHero = {
  * couple of seconds and decide whether to keep reading.
  */
 export const launchFacts = [
-  { icon: "pages", label: "Five pages", detail: "Custom, designed around your business" },
+  { icon: "pages", label: "One page", detail: "Custom, designed around your business" },
   { icon: "domain", label: "Domain and email", detail: "Registered and set up for you" },
   { icon: "search", label: "SEO and Google", detail: "Prepared, submitted for indexing" },
   { icon: "calendar", label: "12 months", detail: "Domain, hosting and email fees included" },
@@ -198,13 +205,13 @@ export const launchInclusions = [
     icon: "plan",
     group: "Planning and design",
     title: "Website planning around your goals",
-    body: "We learn about your new business, your customers and the enquiries you want to receive. That shapes your pages, content structure and contact options.",
+    body: "We learn about your new business, your customers and the enquiries you want to receive. That shapes your page, its sections and your contact options.",
   },
   {
     icon: "pages",
     group: "Planning and design",
-    title: "Up to five custom website pages",
-    body: "A website designed around your brand and services. Your pages could include Home, About, Services, FAQs and Contact. We agree on the right combination before the build begins.",
+    title: "A custom one-page website",
+    body: "A single page designed around your brand and services, with sections for what you do, who you help and how to get in touch. We agree on the sections before the build begins.",
   },
   {
     icon: "devices",
@@ -282,7 +289,7 @@ export const launchCapacity = {
 export const launchSummary = {
   heading: "Your complete website launch package.",
   points: [
-    "Up to five custom website pages, designed around your new business.",
+    "A custom one-page website, designed around your new business.",
     "Domain registration and professional email setup.",
     "Detailed SEO preparation and Google indexing submission.",
     "An enquiry form, responsive design and launch checks.",
@@ -300,7 +307,7 @@ export const launchProcess = {
     },
     {
       title: "Review your proposal.",
-      body: "We confirm availability, your included pages and services, payment terms and project timeline. You review the details before deciding to proceed.",
+      body: "We confirm availability, what your page includes, payment terms and project timeline. You review the details before deciding to proceed.",
     },
     {
       title: "Review your website.",
@@ -352,6 +359,11 @@ export const launchFaqs = {
         "This offer includes detailed SEO setup for your website launch. Ongoing SEO campaigns, new content and continued optimisation can be quoted separately.",
     },
     {
+      question: "Is there a deposit?",
+      answer:
+        "No. You pay R950 a month for 12 months, which comes to R11 400 in total. That includes your domain, hosting and email fees for the 12 months.",
+    },
+    {
       question: "What happens after the first 12 months?",
       // Replaced 2026-09-13 on Johandre's instruction. This is now the page's
       // only statement about what happens at the end of the term, since the
@@ -397,7 +409,7 @@ export const launchRoute = {
   path: "/website-launch",
   title: "First Website for New Businesses | R950/month | GoodGround",
   description:
-    "Launch your new business website for R950 per month. Up to five pages, SEO setup and 12 months of domain, hosting and email fees. Two spaces monthly.",
+    "Launch your new business website for R950 per month. A one-page site, SEO setup and 12 months of domain, hosting and email fees. Two spaces monthly.",
 } as const;
 
 /** Server-side limits, shared by the browser validation and the API route. */

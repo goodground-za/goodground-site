@@ -92,7 +92,10 @@
 .home-2026 .menu-lines{width:1.25rem;height:.7rem;border-top:2px solid currentColor;border-bottom:2px solid currentColor}
 .home-2026 .hero{height:max(49rem,100svh);max-height:85rem;position:relative;isolation:isolate;color:white;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
 .home-2026 .hero-media{position:absolute;inset:0;z-index:-2;background:#4c192c url('/home2026/goodground-motion-poster.jpg') center/cover no-repeat}
-.home-2026 .hero-media:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(16,3,13,.08),rgba(16,3,13,.16) 35%,rgba(16,3,13,.48))}
+/* Overlay raised 2026-09-23 from .08/.16/.48. Measured across every frame of the
+   clip, the 13px hero kicker bottomed out at 3.5:1 (mobile) and 3.66:1 (desktop),
+   under the 4.5:1 AA bar. .30/.30/.52 measures 4.6:1+ on the worst frame. */
+.home-2026 .hero-media:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(16,3,13,.3),rgba(16,3,13,.3) 35%,rgba(16,3,13,.52))}
 .home-2026 .ambient-video{height:100%;width:100%;object-fit:cover}
 .home-2026 .hero-content{display:grid;grid-template-columns:minmax(0,1fr) 20rem;gap:3rem;align-items:end;padding-top:11rem;padding-bottom:6rem}
 .home-2026 .hero-kicker{margin-bottom:2rem}

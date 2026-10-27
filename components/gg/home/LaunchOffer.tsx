@@ -9,12 +9,11 @@ import { SplitHeading } from "../SplitHeading";
 import { Tag } from "../Tag";
 
 /**
- * What the card promises. "Up to five custom pages" is the live offer
- * (content/websiteLaunch.ts pageCount); the Figma sample says "one-page", which
- * would misstate it, so it is flagged in the tracker rather than copied.
+ * What the card promises. A one-page site is the live offer (content/websiteLaunch.ts
+ * pageCount, confirmed 2026-09-23) and matches the Figma sample.
  */
 const CHECKS = [
-  { long: "Up to five custom website pages", short: "Up to five custom pages" },
+  { long: "A custom one-page website", short: "Custom one-page website" },
   { long: "Domain registration & business email", short: "Domain & business email" },
   { long: "Hosting included for 12 months", short: "Hosting for 12 months" },
   { long: "Detailed SEO setup" },
