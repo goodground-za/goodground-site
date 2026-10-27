@@ -45,7 +45,7 @@ export function GradientCta({
   refSource?: string;
   primary?: Action;
   secondary?: Action;
-  size?: "xl" | "l";
+  size?: "xl" | "m" | "l";
   split?: boolean;
 }) {
   const href = refSource ? `/start-project?ref=${encodeURIComponent(refSource)}` : "/start-project";
@@ -58,7 +58,7 @@ export function GradientCta({
   }
 
   const cls = ["gg-cta", `gg-cta--${variant}`, split && "gg-cta--split"].filter(Boolean).join(" ");
-  const headlineCls = ["gg-display-xl", "gg-cta__headline", size === "l" && "gg-cta__headline--l"]
+  const headlineCls = ["gg-display-xl", "gg-cta__headline", size === "l" && "gg-cta__headline--l", size === "m" && "gg-cta__headline--m"]
     .filter(Boolean)
     .join(" ");
 

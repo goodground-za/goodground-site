@@ -1251,6 +1251,19 @@ html:not(.js) .gg-faq__answer {
   align-items: inherit;
 }
 
+/* 96px headline (Oswald 64 on phones): Work, Insights. */
+.gg-cta__headline--m {
+  font-size: 64px;
+  line-height: 0.92;
+}
+
+@media (min-width: 768px) {
+  .gg-cta .gg-cta__headline--m {
+    font-size: clamp(64px, 44.6px + 3.05vw, 96px);
+    line-height: 0.94;
+  }
+}
+
 /* 80px headline (Oswald 44 on phones), used by Services-style closing cards. */
 .gg-cta__headline--l {
   font-size: 44px;
