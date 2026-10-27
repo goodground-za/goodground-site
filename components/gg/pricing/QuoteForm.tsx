@@ -3,9 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 
 import { site } from "@/content/site";
-import { sendEnquiry } from "@/lib/enquiry";
 
 import { Button } from "../Button";
+import { postEnquiry } from "../enquiry";
 import { Field, TextArea } from "../Field";
 import { formatRand } from "../format";
 import { Icon } from "../Icon";
@@ -14,7 +14,7 @@ import { Tag } from "../Tag";
 import { balanceOf, depositOf, fullService, instalmentFor, packageBySlug } from "./data";
 import { scrollToId, usePricing } from "./PricingProvider";
 
-type Status = "idle" | "submitting" | "success" | "mail" | "error";
+type Status = "idle" | "submitting" | "success" | "error";
 type Errors = Partial<Record<"fullName" | "email", string>>;
 
 /**
@@ -33,13 +33,19 @@ export function QuoteForm() {
   const [pulse, setPulse] = useState(0);
   const [firstName, setFirstName] = useState("");
   const form = useRef<HTMLFormElement>(null);
+  const loadedAt = useRef(0);
+  const [copy, setCopy] = useState(false);
+
+  useEffect(() => {
+    loadedAt.current = Date.now();
+  }, []);
 
   // A new attachment pulses the card and moves focus to the name field.
   useEffect(() => {
     if (!attachPulse) return;
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setPulse(attachPulse);
-    setStatus((s) => (s === "success" || s === "mail" ? "idle" : s));
+    setStatus((s) => (s === "success" ? "idle" : s));
     const timer = window.setTimeout(() => {
       form.current?.querySelector<HTMLElement>('[data-field="fullName"]')?.focus({ preventScroll: true });
     }, 700);
@@ -105,8 +111,7 @@ export function QuoteForm() {
     event.preventDefault();
     const el = event.currentTarget;
     const data = new FormData(el);
-    if (data.get("botcheck")) return;
-
+    
     const found = validate(data);
     setErrors(found);
     if (Object.keys(found).length > 0) {
@@ -117,17 +122,28 @@ export function QuoteForm() {
 
     setStatus("submitting");
     const name = String(data.get("fullName") ?? "").trim();
-    setFirstName(name.split(/\s+/)[0] ?? "");
-    const result = await sendEnquiry("New pricing quote request via goodground.co.za", {
-      "Form type": "pricing-quote",
-      Name: name,
-      Business: String(data.get("businessName") ?? ""),
-      Email: String(data.get("email") ?? ""),
-      Phone: String(data.get("phone") ?? ""),
-      Selection: view ? view.text : "Nothing attached: wants to talk it through",
-      Message: String(data.get("message") ?? ""),
+    setFirstName(name.split(/s+/)[0] ?? "");
+    const result = await postEnquiry({
+      formType: "pricing-quote",
+      fullName: name,
+      businessName: String(data.get("businessName") ?? ""),
+      email: String(data.get("email") ?? ""),
+      phone: String(data.get("phone") ?? ""),
+      message: String(data.get("message") ?? ""),
+      selection: view ? view.text : "Nothing attached: wants to talk it through",
+      pageUrl: window.location.pathname,
+      loadedAt: String(loadedAt.current),
+      website: String(data.get("website") ?? ""),
     });
-    setStatus(result);
+    if (result.status === "success") {
+      setCopy(result.copy);
+      setStatus("success");
+    } else if (result.status === "invalid") {
+      setErrors({ ...(result.errors.fullName ? { fullName: result.errors.fullName } : {}), ...(result.errors.email ? { email: result.errors.email } : {}) });
+      setStatus("idle");
+    } else {
+      setStatus("error");
+    }
   };
 
   return (
@@ -173,16 +189,14 @@ export function QuoteForm() {
         ) : null}
       </div>
 
-      {status === "success" || status === "mail" ? (
+      {status === "success" ? (
         <div className="pr-quote__card pr-quote__done" role="status" aria-live="polite">
           <span className="pr-quote__done-icon" aria-hidden="true">
             <Icon name="check" size={22} stroke={2.6} />
           </span>
-          <h3>{status === "success" ? `Thanks${firstName ? `, ${firstName}` : ""}. That’s landed with us.` : "Check your email app."}</h3>
+          <h3>{`Thanks${firstName ? `, ${firstName}` : ""}. That’s landed with us.`}</h3>
           <p>
-            {status === "success"
-              ? "We’ll be in touch within 1–2 business days with a firm quote and timeline based on what you picked."
-              : `We’ve opened a message to ${site.email} with your details. Hit send and we’ll take it from there.`}
+            {copy ? "We’ve sent a copy to your inbox. " : ""}We’ll be in touch within 1–2 business days with a firm quote and timeline based on what you picked.
           </p>
         </div>
       ) : (
@@ -204,7 +218,7 @@ export function QuoteForm() {
           <div aria-hidden="true" className="pr-form__trap">
             <label>
               Do not fill this
-              <input type="text" name="botcheck" tabIndex={-1} autoComplete="off" />
+              <input type="text" name="website" tabIndex={-1} autoComplete="off" />
             </label>
           </div>
 

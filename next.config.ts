@@ -21,11 +21,10 @@ const csp = [
   // data: covers the inline SVG grain utility and OG image data URIs.
   "img-src 'self' data: https://images.unsplash.com https://www.googletagmanager.com",
   "font-src 'self' data:",
-  // GA beacons post to the first two; ContactForm/StartProjectForm submit via
-  // fetch() (not a native form POST), so it's connect-src, not just
-  // form-action, that has to allow the Web3Forms API — see lib/enquiry.ts.
-  "connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com https://api.web3forms.com",
-  "form-action 'self' https://api.web3forms.com",
+  // GA beacons post to the first two. Every form posts to this origin
+  // (/api/enquiry, /api/website-launch), so no third-party form host is allowed.
+  "connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com",
+  "form-action 'self'",
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "object-src 'none'",
@@ -83,6 +82,12 @@ const nextConfig: NextConfig = {
         destination: "/pricing#full-service",
         permanent: true,
       },
+      // /contact is its own page again, for general questions. Old links that
+      // arrive carrying ?plan or ?intent are project enquiries and go to
+      // /start-project with the same parameters (Next passes the query string
+      // through to the destination). Temporary: the page above is the rule.
+      { source: "/contact", has: [{ type: "query", key: "plan" }], destination: "/start-project", permanent: false },
+      { source: "/contact", has: [{ type: "query", key: "intent" }], destination: "/start-project", permanent: false },
     ];
   },
   images: {

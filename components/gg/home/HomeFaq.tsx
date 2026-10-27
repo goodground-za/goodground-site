@@ -35,11 +35,15 @@ const FIRST_ANSWER = {
     "One fixed price up front. Then choose: 50% deposit and 50% on completion, or 12 equal monthly instalments where the first secures your booking.",
 };
 
+/** Deep links from /contact ("Quick answers"): /#faq-payment-options and /#faq-project-length. */
+const SLUGS: Record<number, string> = { 0: "payment-options", 5: "project-length" };
+
 const ITEMS: FaqItem[] = QUESTIONS.map(({ question, short, liveIndex }) => {
   const live = faq[liveIndex]?.answer ?? "";
+  const slug = SLUGS[liveIndex];
   return liveIndex === 0
-    ? { question, answer: [FIRST_ANSWER.long], short: { answer: [FIRST_ANSWER.short] } }
-    : { question, answer: [live], short: short ? { question: short } : undefined };
+    ? { question, slug, answer: [FIRST_ANSWER.long], short: { answer: [FIRST_ANSWER.short] } }
+    : { question, slug, answer: [live], short: short ? { question: short } : undefined };
 });
 
 export function HomeFaq() {

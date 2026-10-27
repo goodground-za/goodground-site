@@ -82,3 +82,4 @@ the intended noindex on the styleguide.
 - Step 4: Work listing + Case study (32c3781).
 - Step 5: Pricing (configurator, shareable ?build= code, quote form with attached build) and Website launch (availability data, sold-out state, eligibility checker, form with plan tag). Lighthouse mobile: /website-launch 100/100/100/100; /pricing 96 a11y before two fixes (pill-toggle measuring, "Added" accessible name), re-run pending.
 - Questions are collected in tasks/figma-redesign-questions.md.
+- Step 6: Start project (4 steps, URL parameters, sessionStorage, no-JS form), Contact (routes, form, channels, quick answers), /thanks, 404, and the shared /api/enquiry route (validation, spam rules, auto-reply, redirect to /thanks). Lighthouse mobile: /contact 100 across; /start-project 100/96/100 (the 96 is the menu prefetching /process, which step 7 builds).

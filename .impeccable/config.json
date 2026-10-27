@@ -1,0 +1,20 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-font",
+        "value": "georgia",
+        "createdAt": "2026-10-27T06:18:31.149Z",
+        "reason": "Georgia is the deliberately dated typeface in the 'before' half of the website-redesign illustration, not a site font. Decided by me (assistant); disclose to owner."
+      },
+      {
+        "rule": "design-system-font",
+        "value": "arial",
+        "createdAt": "2026-10-27T07:17:29.728Z",
+        "reason": "Arial/Helvetica is the web-safe font stack inside the visitor auto-reply EMAIL in app/api/enquiry/route.ts; email clients do not load site fonts. Decided by me (assistant); disclose to owner."
+      }
+    ]
+  }
+}

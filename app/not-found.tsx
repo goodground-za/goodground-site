@@ -1,80 +1,84 @@
-import type { Metadata } from "next";
 import Link from "next/link";
-import { PageHero } from "@/components/PageHero";
-import { SiteShell } from "@/components/home2026/SiteShell";
-import { navLinks } from "@/content/site";
+import type { Metadata } from "next";
+
+import { ButtonLink } from "@/components/gg/Button";
+import { GgShell } from "@/components/gg/GgShell";
+import { Icon } from "@/components/gg/Icon";
+import { SplitHeading } from "@/components/gg/SplitHeading";
+import { Tag } from "@/components/gg/Tag";
+import { NotFoundTracker } from "@/components/gg/utility/NotFoundTracker";
+import "@/components/gg/utility/utility.css";
 
 /**
- * Without its own metadata this page inherited the root layout's default title,
- * so a 404 showed "Website Development in South Africa | GoodGround" in the tab
- * — identical to the homepage.
- *
- * No canonical (a page that doesn't exist has no canonical URL) and no robots
- * field: Next already emits noindex on not-found, and setting it here produced
- * two competing <meta name="robots"> tags.
+ * Without its own metadata this page inherited the root layout's default title.
+ * No canonical (a page that doesn't exist has no canonical URL); Next already
+ * returns a real HTTP 404 and emits noindex for not-found, so no robots field
+ * here (setting one produced two competing robots tags).
  */
 export const metadata: Metadata = {
   title: "Page not found",
   description: "That page doesn't exist. Find GoodGround's website development services, work and contact details.",
 };
 
+const POPULAR = [
+  { label: "Services", href: "/services" },
+  { label: "Our work", href: "/work" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "Insights", href: "/insights" },
+  { label: "Contact", href: "/contact" },
+];
+
 /**
- * 404. Copy verbatim from the copy deck §5, given a branded treatment rather
- * than a cold error, with links out so it is actually useful.
+ * 404 (Figma 100:290 / 100:338). A dark plumDeep page with the dark header
+ * variant. It renders GgShell itself: app/not-found.tsx sits at the app root,
+ * outside every route group, so it gets the root layout and no group layout.
  *
- * It renders SiteShell itself. app/not-found.tsx sits at the app root, outside
- * the (site) route group, so it gets the root layout and NO group layout —
- * which is how it quietly lost its header and footer when the route group was
- * introduced. Rendering the shell here is what keeps them.
+ * Old live URLs that changed 301 to their new home first (redirects in
+ * next.config.ts), so visitors land here only for truly broken links; the
+ * tracker below reports those (page_not_found) so they can be found.
  */
 export default function NotFound() {
   return (
-    <SiteShell>
-      <PageHero
-        eyebrow="Error 404"
-        title="This page hasn't taken root"
-        intro={
-          <>
-            The page you&rsquo;re looking for doesn&rsquo;t exist &mdash; but the rest of
-            GoodGround does.
-          </>
-        }
-      >
-        {/* PageHero already renders its children inside .home-2026, so the
-            homepage’s own .button classes resolve here. */}
-        <div className="mt-10 flex flex-wrap gap-3">
-          <Link className="button button-orange" href="/">
-            <span>Back to home</span>
-            <span className="button-arrow" aria-hidden="true">
-              {"↗︎"}
-            </span>
-          </Link>
-          <Link className="button button-white" href="/start-project">
-            <span>Start your project</span>
-            <span className="button-arrow" aria-hidden="true">
-              {"↗︎"}
-            </span>
-          </Link>
-        </div>
+    <GgShell dark>
+      <section className="nf" aria-labelledby="nf-title">
+        <div className="gg-wrap nf__grid">
+          <div className="nf__copy" data-reveal="header">
+            <Tag tone="on-dark" data-part="tag">
+              ERROR 404
+            </Tag>
+            <SplitHeading as="h1" id="nf-title" className="gg-display-l nf__h1" text="THIS ISN’T GOOD GROUND." />
+            <p className="gg-lead nf__lead" data-part="sub">
+              The page you’re looking for has moved, or never existed. Nothing to build on here, but the rest of the site is solid.
+            </p>
+            <div className="nf__buttons" data-part="cta">
+              <ButtonLink href="/" variant="coral">
+                Back to home
+              </ButtonLink>
+              <ButtonLink href="/start-project?ref=404" variant="light">
+                Start your project
+              </ButtonLink>
+            </div>
+          </div>
 
-        <nav aria-label="Popular pages" className="mt-12 border-t border-white/15 pt-6">
-          <p className="font-ht-body text-[13px] font-medium tracking-[0.12em] text-white/60 uppercase">
-            Or head somewhere useful
-          </p>
-          <ul className="mt-4 flex flex-wrap gap-2">
-            {navLinks.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className="font-ht-body rounded-pill inline-block border border-white/25 px-4 py-2 text-[14px] font-medium text-white/85 transition-colors duration-150 hover:border-white hover:text-white"
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </PageHero>
-    </SiteShell>
+          <nav className="nf__card" aria-label="Popular pages" data-reveal="fade-up" data-delay={150}>
+            <p className="nf__404" aria-hidden="true">
+              404
+            </p>
+            <p className="gg-kicker nf__kicker">POPULAR PAGES</p>
+            <ul data-reveal="stagger" style={{ "--gg-stagger-step": "50ms" } as React.CSSProperties}>
+              {POPULAR.map((page) => (
+                <li key={page.href}>
+                  <Link href={page.href} className="nf__row">
+                    {page.label}
+                    <Icon name="chev" size={18} stroke={2.2} />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+      </section>
+      <NotFoundTracker />
+    </GgShell>
   );
 }

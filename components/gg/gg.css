@@ -2220,3 +2220,19 @@ html[data-motion="off"] .gg-pill-toggle__pill {
 .gg-check .gg-field__error {
   margin-top: 6px;
 }
+
+/* A field in error: blush fill, coral border (Form/Field error state). */
+.gg-field__control[aria-invalid="true"] {
+  background: var(--gg-blush);
+}
+
+.gg-field__error {
+  animation: gg-field-error-in var(--gg-motion-sm) var(--gg-ease-out);
+}
+
+@keyframes gg-field-error-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}

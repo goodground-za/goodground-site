@@ -38,6 +38,16 @@ Answer in any order; the numbers are for reference.
 23. The mobile frame leaves out several sections (journey, 12 payments, work, intake, steps, review/FAQ on /pricing). I kept them, stacked. Say if you want them hidden on phones.
 24. The eligibility checker shows on tablet and desktop, not on phones (as the frame says).
 
+## Start project / Contact / Thanks / 404
+27. Every form now posts to one server route (/api/enquiry) that validates, applies the spam rules (honeypot, under-3-seconds), sends the studio email and the auto-reply. It needs the same SMTP_HOST / SMTP_USER / SMTP_PASS settings the launch form already uses, and SPF, DKIM and DMARC on goodground.co.za (mail-host setup, not code). Until those are set the forms show the "couldn’t send" state. The Pricing quote form moved onto it too (so question 16 is answered: it gets the auto-reply).
+28. The auto-reply email is plain branded HTML with a text wordmark (no logo image, no tracking). Want the logo image in it?
+29. Step 2 (size) is not drawn in Figma; I built it from the notes (same 2 x 2 cards, live labels, "How big is the project?").
+30. ?package=micro|launch|grow|scale and ?intent=seo-audit have no designed banner. I drafted two ("{Name} package", "You’re asking for an SEO audit"). Read the wording.
+31. /thanks: the contact and onboarding variants keep the start-project step-3 label and body (only the title changes), as the note says. I also added a "not sent" variant (?status=failed) for no-JS failures, which is not drawn.
+32. Contact: the location card is a gradient placeholder; I need the static map image (screenshot of George, no live embed). Topic names are from the note.
+33. 404: the "404" gradient text starts very dark on the plum (as drawn). It is decorative, but low contrast. Lighten the start colour?
+34. The old /start-project and /contact forms, PricingEnquiryForm and Web3Forms are deleted; the security policy no longer allows api.web3forms.com.
+
 ## Global
 25. Georgia ignore in .impeccable/config.json for an illustration. PRODUCT.md / DESIGN.md are stale; updated at the very end (as you said).
 26. README section 10 open items still apply.

@@ -33,6 +33,20 @@ type MailInput = {
   text: string;
   /** The sender's address, so replying in the mail client reaches them. */
   replyTo?: string;
+  /**
+   * An HTML alternative (the visitor auto-reply). Always sent WITH `text`.
+   * Callers escape every interpolated value themselves.
+   */
+  html?: string;
+  /**
+   * Overrides the recipient. ONLY for the visitor auto-reply, and only with an
+   * address the caller has already validated: this is the one place a request
+   * value can become a recipient, so it is re-checked below and stripped of
+   * line breaks. Without it, mail goes to the studio inbox.
+   */
+  to?: string;
+  /** Display name on the From header (the address is still the configured mailbox). */
+  fromName?: string;
 };
 
 function readConfig() {
@@ -86,21 +100,31 @@ function getTransport(config: NonNullable<ReturnType<typeof readConfig>>) {
 const headerSafe = (value: string) =>
   value.replace(/[\r\n\t\v\f\u0085\u2028\u2029]+/g, " ").trim();
 
-export async function sendMail({ subject, text, replyTo }: MailInput): Promise<MailResult> {
+const RECIPIENT = /^[^\s@,;<>"]+@[^\s@,;<>"]+\.[^\s@,;<>"]{2,}$/;
+
+export async function sendMail({ subject, text, replyTo, html, to, fromName }: MailInput): Promise<MailResult> {
   const config = readConfig();
   if (!config) {
     console.error("[mail] SMTP is not configured — set SMTP_HOST, SMTP_USER and SMTP_PASS.");
     return { ok: false, reason: "unconfigured" };
   }
 
+  let recipient = config.to;
+  if (to) {
+    const clean = headerSafe(to);
+    if (!RECIPIENT.test(clean)) return { ok: false, reason: "rejected" };
+    recipient = clean;
+  }
+
   try {
     const info = await getTransport(config).sendMail({
-      from: { name: "GoodGround website", address: config.from },
-      to: config.to,
+      from: { name: fromName ? headerSafe(fromName) : "GoodGround website", address: config.from },
+      to: recipient,
       // Only ever a validated address, and stripped of line breaks regardless.
       replyTo: replyTo ? headerSafe(replyTo) : undefined,
       subject: headerSafe(subject),
       text,
+      ...(html ? { html } : {}),
     });
 
     // A message the server did not accept for delivery is not a success, even
