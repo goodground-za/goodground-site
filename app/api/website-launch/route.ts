@@ -229,8 +229,12 @@ export async function POST(request: Request) {
    * The recipient comes from the environment, never from the request, so this
    * cannot be turned into an open relay. Reply-To is the enquirer.
    */
+  // Tagged by the redesigned form: launch, or launch-waitlist once the month is full.
+  // Whitelisted, so nothing else a client sends reaches the message.
+  const plan = get("plan") === "launch-waitlist" ? "launch-waitlist" : "launch";
+
   const sent = await sendMail({
-    subject: `Website Launch enquiry \u2014 ${clean.businessName}`,
+    subject: `Website Launch ${plan === "launch-waitlist" ? "waitlist enquiry" : "enquiry"} \u2014 ${clean.businessName}`,
     replyTo: clean.email,
     text: [
       `Name: ${bodySafe(clean.name)}`,
@@ -242,6 +246,8 @@ export async function POST(request: Request) {
       "",
       `Preferred launch timing: ${bodySafe(clean.timeline) || "Not given"}`,
       `Eligibility: ${launchEnquiry.eligibilityLabel}`,
+      `Form type: launch-availability`,
+      `Plan: ${plan}`,
       `Source: ${launchRoute.path} (Website Launch promotion)`,
     ].join("\n"),
   });

@@ -182,7 +182,7 @@ export const alaCarteCategories: AlaCarteCategory[] = [
     name: "Pages",
     items: [
       { id: "pages-standard", label: "Additional standard page (About, Services, Contact, etc.)", price: 2500, quantifiable: true },
-      { id: "pages-complex", label: "Complex/custom-layout page (interactive landing page, pricing page, etc.)", price: 4000 },
+      { id: "pages-complex", label: "Complex/custom-layout page (interactive landing page, pricing page, etc.)", price: 4000, quantifiable: true },
       { id: "pages-blog-setup", label: "Blog/News section setup (template + first post)", price: 4500 },
       { id: "pages-blog-post", label: "Additional blog post (written & uploaded)", price: 600, quantifiable: true },
     ],
@@ -192,7 +192,7 @@ export const alaCarteCategories: AlaCarteCategory[] = [
     items: [
       { id: "design-logo", label: "Custom logo design", price: 7500, startingAt: true },
       { id: "design-style-guide", label: "Brand style guide (colours, fonts, usage)", price: 2000 },
-      { id: "design-illustrations", label: "Custom illustrations/graphics (per page)", price: 2500, startingAt: true },
+      { id: "design-illustrations", label: "Custom illustrations/graphics (per page)", price: 2500, startingAt: true, quantifiable: true },
       { id: "design-icons", label: "Custom icon set (up to 10 icons)", price: 2500, startingAt: true },
     ],
   },
@@ -201,7 +201,7 @@ export const alaCarteCategories: AlaCarteCategory[] = [
     items: [
       { id: "func-conditional-form", label: "Custom form with conditional logic", price: 1500 },
       { id: "func-multistep-form", label: "Multi-step form / quote calculator", price: 4000 },
-      { id: "func-animations", label: "Custom animations & scroll effects (per page)", price: 1800 },
+      { id: "func-animations", label: "Custom animations & scroll effects (per page)", price: 1800, quantifiable: true },
       { id: "func-gallery", label: "Interactive image gallery/portfolio", price: 2500 },
       { id: "func-map", label: "Interactive map (custom-styled, not just embed)", price: 1200 },
       { id: "func-filtering", label: "Custom filtering/search (e.g. filter services or portfolio items)", price: 3000 },
@@ -230,8 +230,8 @@ export const alaCarteCategories: AlaCarteCategory[] = [
   {
     name: "Content",
     items: [
-      { id: "content-copywriting", label: "Copywriting (per page)", price: 1200 },
-      { id: "content-upload", label: "Content upload/data entry (per page, client-supplied content)", price: 500 },
+      { id: "content-copywriting", label: "Copywriting (per page)", price: 1200, quantifiable: true },
+      { id: "content-upload", label: "Content upload/data entry (per page, client-supplied content)", price: 500, quantifiable: true },
       { id: "content-stock-imagery", label: "Stock imagery sourcing & licensing", price: 800 },
     ],
   },
@@ -241,7 +241,7 @@ export const alaCarteCategories: AlaCarteCategory[] = [
       { id: "extra-revision", label: "Extra round of revisions", price: 1500 },
       { id: "extra-rush", label: "Rush delivery (cuts timeline by ~1 week)", price: 3500 },
       { id: "extra-training", label: "Training/handover session (1 hour)", price: 1200 },
-      { id: "extra-language", label: "Additional language version (per language)", price: 5000 },
+      { id: "extra-language", label: "Additional language version (per language)", price: 5000, quantifiable: true },
       { id: "extra-favicon", label: "Favicon & social share image design", price: 700 },
     ],
   },

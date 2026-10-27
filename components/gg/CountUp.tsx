@@ -43,7 +43,7 @@ export function CountUp({
             moves; otherwise left, so a prefix stays against the digits. */}
         <span
           className="gg-count__digits"
-          style={{ minWidth: `${final.length}ch`, textAlign: suffix ? "right" : "left" } as CSSProperties}
+          style={{ minWidth: `${final.replace(/[^0-9]/g, "").length + (final.length - final.replace(/[^0-9]/g, "").length) * 0.4}ch`, textAlign: suffix ? "right" : "left" } as CSSProperties}
         >
           {final}
         </span>

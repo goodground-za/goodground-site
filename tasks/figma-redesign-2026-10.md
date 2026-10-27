@@ -76,3 +76,9 @@ the intended noindex on the styleguide.
 
 - Review Home (step 2), then say go for step 3 (Services, Service detail, Industry).
 - The open items in docs/redesign/README.md section 10.
+
+## Steps 3 to 5 (27 Oct 2026, local commits, nothing pushed)
+- Step 3: Services (327f37f), Service detail (64c703f), Industry (274fcd5).
+- Step 4: Work listing + Case study (32c3781).
+- Step 5: Pricing (configurator, shareable ?build= code, quote form with attached build) and Website launch (availability data, sold-out state, eligibility checker, form with plan tag). Lighthouse mobile: /website-launch 100/100/100/100; /pricing 96 a11y before two fixes (pill-toggle measuring, "Added" accessible name), re-run pending.
+- Questions are collected in tasks/figma-redesign-questions.md.

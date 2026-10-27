@@ -91,10 +91,25 @@ export const launchAvailability = {
  * Nothing here updates itself, for the reason `launchAvailability` gives.
  */
 export const launchSpots = {
+  year: 2026,
   month: "November",
   nextMonth: "December",
   total: 2,
   taken: 1,
+} as const;
+
+/**
+ * The money behind the R845. The Figma Website launch page and the /pricing
+ * comparison both state a 12-month term, a R10,140 total and no deposit, but
+ * the notes at the top of this file (2026-09-13) say the deposit, total and
+ * schedule were NOT confirmed. They live here, in one place, as numbers: if
+ * the owner does not confirm them, delete this block and the lines that read it.
+ */
+export const launchTerms = {
+  monthly: 845,
+  months: 12,
+  deposit: 0,
+  total: 845 * 12,
 } as const;
 
 /**

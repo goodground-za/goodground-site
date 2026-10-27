@@ -1,0 +1,43 @@
+# Figma redesign: questions for the owner
+
+Collected while building (owner asked: build everything, then ask all questions at the end).
+Each is something I could not decide from the Figma file, the live site, or the honesty rules.
+Answer in any order; the numbers are for reference.
+
+## Home
+1. Launch availability: what is the real month and spots taken? (`launchSpots` in content/websiteLaunch.ts holds Figma's sample: November, 1 of 2 taken.) Everything on Home, /website-launch and the sticky bar reads it.
+2. Trust bar figures (20+ years, 10+ projects, 100% satisfied): content/stats.ts forbids unmeasured numbers. Keep them, or replace?
+3. "One page" (Figma) vs "up to five pages" (live offer). I used the live wording everywhere (Home, /website-launch, /pricing comparison). OK?
+4. Roam Local quote: verbatim from Google, or the shorter Figma wording?
+5. Home project cards are gradients; real 16:10 screenshots exist (public/images/case-*-hero.webp). Use them? (goodground-hero.webp shows the older site design.)
+6. FAQPage JSON-LD on Home duplicates /faq. I left it off. OK?
+
+## Services / Service detail / Industry
+7. Every "Ask us" comparison cell and the growth-report illustrative figures on /services.
+8. DRAFT copy I wrote for Redesign, UX, Google Ads, Meta Ads pages (short problem lines, included titles, bolted-vs-built lists, hero visuals) and the five industries' journey/fix/local-search/bento copy and towns. Please read them.
+9. Trades H1 uses the live wording, not Figma's.
+10. No industry-tagged case studies exist, so industry pages carry an honesty card instead of projects.
+
+## Work / Case study
+11. "How it was built" is generic for the three non-B3TTER studies; spec-bento values are labelled illustrative; there is no 8-second preview clip (none exists).
+
+## Pricing
+12. Number format: `R12,000` (Figma) or `R12 000` (live). One function (components/gg/format.ts) changes it everywhere.
+13. Stepper items: the spec lists extra pages, complex pages, blog posts, copywriting, content upload, animations, illustrations and languages as steppers. I changed content/pricing.ts to match (complex page, illustrations, animations, copywriting, content upload and language are now per-unit). Confirm.
+14. Two FAQ answers are new and DRAFT: "Full Service or instalments: which should I choose?" and "Do I own my website?" (built only from facts on the page).
+15. "Choose {package}" attaches the package to the on-page quote form (per the Figma notes). The build notes also mention `?package=` links to /start-project; those still work from elsewhere. OK?
+16. The quote form sends through the existing Web3Forms path with "Form type: pricing-quote". The Figma note wants an auto-reply ("Your quote request is in"); Web3Forms free cannot do that reliably. Do you want it, and from where (the studio SMTP route)?
+17. Package cards use the shorter Figma inclusion wording; the verbatim client-document wording stays in content/pricing.ts (used for schema). OK?
+
+## Website launch
+18. DEPOSIT / TOTAL: the Figma page and the /pricing comparison say "No deposit", "R10,140 total over 12 months". content/websiteLaunch.ts (13 Sep) says the deposit, total and schedule were NOT confirmed and must not be stated. They are isolated in `launchTerms`. Are they confirmed? If not I delete them in one place.
+19. New FAQ "Is there a deposit?": my draft answer says no deposit, R845 for 12 months. Confirm or reword.
+20. Offer JSON-LD now carries price 845 ZAR, 12-month duration, availability from the live data (the Figma note asks for it; the old page deliberately omitted it for the reason in 18).
+21. Intake calendar footer: Figma says "Live from the booking calendar". There is no booking calendar (it is a setting), so I wrote "Filled spots shown in coral."
+22. Eligibility tick wording kept as live ("…the business does not have a website").
+23. The mobile frame leaves out several sections (journey, 12 payments, work, intake, steps, review/FAQ on /pricing). I kept them, stacked. Say if you want them hidden on phones.
+24. The eligibility checker shows on tablet and desktop, not on phones (as the frame says).
+
+## Global
+25. Georgia ignore in .impeccable/config.json for an illustration. PRODUCT.md / DESIGN.md are stale; updated at the very end (as you said).
+26. README section 10 open items still apply.
