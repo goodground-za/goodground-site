@@ -102,8 +102,9 @@ export const launchSpots = {
   month: "November",
   nextMonth: "December",
   total: 2,
-  // Confirmed by Johandre 2026-10-27: November is fully booked (2 of 2).
-  taken: 2,
+  // Johandre 2026-10-27: November has both of its 2 spaces open, so none are taken.
+  // ("2/2" was first read as fully booked and went live that way for a short while.)
+  taken: 0,
 } as const;
 
 /**

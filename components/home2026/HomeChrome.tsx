@@ -56,13 +56,13 @@ export function HomeChrome() {
    * navLinks, so the menu and the shared <Nav /> on every other page cannot
    * drift apart.
    *
-   * "Our craft" -> /work is deliberate and matches the note in site.ts: the
+   * "Projects" -> /work is deliberate and matches the note in site.ts: the
    * destination is one concept build plus the studio's own site, and calling
    * it "Work" in a nav promises a client portfolio that isn't there yet.
    */
   const MENU = [
     { n: "01", label: "About", href: "/about" },
-    { n: "02", label: "Our craft", href: "/work" },
+    { n: "02", label: "Projects", href: "/work" },
     { n: "03", label: "Services", href: "/services" },
     { n: "04", label: "Pricing", href: "/pricing" },
     { n: "05", label: "Insights", href: "/insights" },

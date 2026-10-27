@@ -62,7 +62,7 @@ export const site = {
 export const navLinks = [
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
-  { label: "Craft", href: "/work" },
+  { label: "Projects", href: "/work" },
   { label: "Insights", href: "/insights" },
   { label: "Contact", href: "/contact" },
 ];
@@ -73,7 +73,7 @@ export const footerLinks = [
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
   { label: "Pricing", href: "/pricing" },
-  { label: "Our Craft", href: "/work" },
+  { label: "Projects", href: "/work" },
   { label: "Insights", href: "/insights" },
   { label: "Contact", href: "/contact" },
 ];

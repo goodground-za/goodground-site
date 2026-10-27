@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import Image from "next/image";
 
 import { ButtonFace, ButtonLink } from "../Button";
 import { Icon } from "../Icon";
@@ -7,35 +8,35 @@ import { Resp } from "../Resp";
 import { SectionHeader } from "../SectionHeader";
 import { SplitHeading } from "../SplitHeading";
 import { Tag } from "../Tag";
+import { workProjects } from "../work/data";
 import { FeaturedParallax } from "./FeaturedParallax";
 import { WorkScroller } from "./WorkScroller";
 
-/**
- * Gradients stand in for the project screenshots, as drawn (README: keep them
- * until real 16:10 screenshots are supplied, open item 6). Nothing here is a
- * stock photo or an invented client.
- */
+/** The real screenshots, read from the case studies so this section cannot drift from /work. */
+const projectOf = (slug: string) => {
+  const project = workProjects.find((p) => p.slug === slug);
+  if (!project) throw new Error(`Unknown case study: ${slug}`);
+  return project;
+};
+
 const PROJECTS = [
   {
     slug: "point-break-surf",
     name: "Point Break Surf Academy",
     desktop: "Concept build  ·  Design · Development · Booking UX",
     phone: "Concept build",
-    gradient: "linear-gradient(135deg, #0f3b4c 0%, #2c8c99 60%, #f2d8a7 100%)",
   },
   {
     slug: "goodground-site",
     name: "GoodGround",
     desktop: "Our own site  ·  Design · Development · SEO",
     phone: "Our own site",
-    gradient: "linear-gradient(135deg, #2e1848 0%, #9a3348 60%, #ef8a5a 100%)",
   },
   {
     slug: "sunbird-early-learners",
     name: "Sunbird Early Learners",
     desktop: "Concept build  ·  Design · Development · Motion",
     phone: "Concept build",
-    gradient: "linear-gradient(135deg, #f6c344 0%, #f28c38 60%, #e2574c 100%)",
   },
 ];
 
@@ -53,7 +54,7 @@ export function WorkShowcase() {
           id="work-title"
           layout="split"
           onDark
-          tag="03 / OUR CRAFT"
+          tag="03 / PROJECTS"
           heading="Real builds, not mockups."
           headingClass="gg-h2 hm-h2"
           sub={
@@ -69,7 +70,15 @@ export function WorkShowcase() {
         <div className="hm-feature-wrap" data-reveal="group">
           <LinkedCard href="/work/b3tter-bottle" className="hm-proj hm-feature">
             <FeaturedParallax>
-              <span className="hm-feature__img" style={{ background: "linear-gradient(135deg, #1e2b3a 0%, #4a6b7c 60%, #c9d6cf 100%)" }} />
+              <span className="hm-feature__img">
+                <Image
+                  src={projectOf("b3tter-bottle").image}
+                  alt={projectOf("b3tter-bottle").imageAlt}
+                  fill
+                  sizes="(min-width: 1200px) 560px, (min-width: 768px) 50vw, 100vw"
+                  priority={false}
+                />
+              </span>
             </FeaturedParallax>
             <div className="hm-feature__body">
               <div className="hm-feature__tags hm-fu" style={{ "--gg-i": 0 } as CSSProperties}>
@@ -105,7 +114,9 @@ export function WorkShowcase() {
             <li key={p.slug} className="hm-proj-item">
               <LinkedCard href={`/work/${p.slug}`} className="hm-proj">
                 <span className="hm-proj__img gg-card__cover">
-                  <span style={{ background: p.gradient }} />
+                  <span>
+                    <Image src={projectOf(p.slug).image} alt={projectOf(p.slug).imageAlt} fill sizes="(min-width: 1200px) 384px, (min-width: 768px) 33vw, 300px" />
+                  </span>
                 </span>
                 <span className="hm-proj__row">
                   <span className="hm-proj__text">

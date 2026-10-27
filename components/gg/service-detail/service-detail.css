@@ -913,8 +913,8 @@
   line-height: 1.45;
 }
 
-.sd-built li > span,
-.sd-bolted li > span {
+.sd-built li > span:first-child,
+.sd-bolted li > span:first-child {
   display: grid;
   flex: none;
   place-items: center;
@@ -923,12 +923,12 @@
   border-radius: 50%;
 }
 
-.sd-built li > span {
+.sd-built li > span:first-child {
   background: var(--gg-mint);
   color: #1c6b4a;
 }
 
-.sd-bolted li > span {
+.sd-bolted li > span:first-child {
   background: rgba(255, 255, 255, 0.1);
 }
 
@@ -1057,8 +1057,8 @@
     line-height: 1.5;
   }
 
-  .sd-built li > span,
-  .sd-bolted li > span {
+  .sd-built li > span:first-child,
+  .sd-bolted li > span:first-child {
     width: 28px;
     height: 28px;
   }

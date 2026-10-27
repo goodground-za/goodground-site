@@ -11,7 +11,7 @@ import { Icon } from "./Icon";
  *
  * The menu panel is the live one (components/home2026/HomeChrome.tsx): same
  * <dialog> structure and open/close behaviour, restyled with the new tokens.
- * Process and FAQ are added to its links, as the brief asks.
+ * Process is added to its links, as the brief asks (FAQ stays in the footer only).
  *
  * Breadcrumb: parent parts are links; the last part is the current page.
  */
@@ -19,13 +19,12 @@ export type Crumb = { label: string; href?: string };
 
 const MENU = [
   { n: "01", label: "About", href: "/about" },
-  { n: "02", label: "Work", href: "/work" },
+  { n: "02", label: "Projects", href: "/work" },
   { n: "03", label: "Services", href: "/services" },
   { n: "04", label: "Process", href: "/process" },
   { n: "05", label: "Pricing", href: "/pricing" },
   { n: "06", label: "Insights", href: "/insights" },
-  { n: "07", label: "FAQ", href: "/faq" },
-  { n: "08", label: "Contact", href: "/contact" },
+  { n: "07", label: "Contact", href: "/contact" },
 ];
 
 export function SiteHeader({ crumbs, dark = false }: { crumbs?: Crumb[]; dark?: boolean }) {
