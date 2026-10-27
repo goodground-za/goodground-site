@@ -76,6 +76,15 @@ Answer in any order; the numbers are for reference.
 55. Legal: with no #hash the page opens on the Privacy tab (the drawn view). #notice, #privacy, #terms and the old #sec-collection, #sec-rights, #sec-cookies anchors all work. On phones the full wording stays (the 390 frame shows shortened intros); I did not shorten legal text for mobile.
 56. Legal: "Download as PDF" on the Terms tab uses the browser print dialog (Save as PDF), not a generated file. Only matters once Terms are live.
 
+## Client onboarding (/onboarding)
+57. Storage, retention, recipient (README item 8) are still open, so the form is local-first: answers autosave in the visitor's browser (localStorage, 800 ms after typing), uploaded files are kept in the browser (IndexedDB), nothing is stored on a server. Header says "Saved on this device". Send emails the brief as text to the studio inbox (MAIL_TO, or the SMTP mailbox) and a short confirmation to the client. Not built because they need your decisions and a database or bucket: server drafts, the emailed private link with a 6-digit code, the 2 GB resumable uploads, the admin view, the attached PDF. Tell me the storage region, how long briefs and files are kept, and who gets the "brief received" email.
+58. Files: because nothing is uploaded yet, the studio email only says how many files the client added, and the Sent screen promises "a separate secure link" for them. The "Download a PDF copy" button opens the browser print dialog (Save as PDF) with the answers laid out as a document, not a generated PDF.
+59. The Sent screen says "within one working day" on purpose (as drawn). Our public reply time is 1-2 business days. Confirm you want both.
+60. /onboarding opens with no token today (any visitor can open the form and send it). Prefill uses ?name=&email=&business=&package=&price=&payment=&addons= in the link; there is no check that the quote is real. Needs the private-token system from question 57.
+61. "Online shop" and "Client login area" are still listed as feature options (as drawn). Your pricing says no e-commerce or member portals. Keep, remove, or keep with a "may change your quote" flag?
+62. Welcome and stepper show on phones as a sheet; the "Save & finish later" sheet only says the draft is on this device, because no link can be emailed yet.
+63. Date field uses the browser's date picker; South African phone check accepts 0XXXXXXXXX or +27XXXXXXXXX (also other +country numbers). Pages allowance next to the page count comes from the package in the link (Micro 1, Launch 5, Grow 10, Scale 15); without a package it just counts.
+
 ## Global
 25. Georgia ignore in .impeccable/config.json for an illustration. PRODUCT.md / DESIGN.md are stale; updated at the very end (as you said).
 26. README section 10 open items still apply.
