@@ -83,7 +83,6 @@ export function Onboarding({ token }: { token: string }) {
   const [confirmName, setConfirmName] = useState("");
   const [sending, setSending] = useState(false);
   const [sendError, setSendError] = useState("");
-  const [sentInfo, setSentInfo] = useState<{ filesPending: number } | null>(null);
   const toastTimer = useRef(0);
   const title = useRef<HTMLHeadingElement>(null);
   const stepsSheet = useRef<BottomSheetHandle>(null);
@@ -224,7 +223,6 @@ export function Onboarding({ token }: { token: string }) {
         setSending(false);
         return;
       }
-      setSentInfo({ filesPending: summary.fileCount });
       update({ sent: true }, true);
       window.scrollTo({ top: 0, behavior: "auto" });
     } catch {
@@ -415,7 +413,7 @@ export function Onboarding({ token }: { token: string }) {
           <p className="ob-hide-phone">Not essential, but they make it quicker.</p>
           <ul>
             {[
-              ["image", "Logo files (SVG, AI or PNG)", "Logo files"],
+              ["image", "Logos and photos in a Google Drive, Dropbox or OneDrive folder", "Logos and photos in a shared folder"],
               ["layout", "Brand colours and fonts, if you have them", "Brand colours and fonts"],
               ["image", "Photos of your team, premises and work", "Photos of your team and work"],
               ["doc", "Any text, brochures or menus to reuse", "Text, brochures or menus"],
@@ -441,7 +439,7 @@ export function Onboarding({ token }: { token: string }) {
           <ol>
             {[
               ["01", "Answer what you can", "Every answer saves as you type, on this device."],
-              ["02", "Add your files", "Add logos, photos and documents straight into the form."],
+              ["02", "Share your files", "Put logos, photos and documents in a Google Drive, Dropbox or OneDrive folder and paste the link."],
               ["03", "Review and send", "We check it, then book your kick-off call."],
             ].map(([n, t, d]) => (
               <li key={n}>
@@ -552,7 +550,7 @@ export function Onboarding({ token }: { token: string }) {
           <p>
             <strong>{summary.percent === 100 ? (who ? `All set, ${who}` : "All set") : who ? `Almost there, ${who}` : "Almost there"}</strong>
             <span>
-              {reviewRows.filter((r) => r.st.missing.length === 0).length} of {steps.length} sections complete · {summary.missing.length} required answer{summary.missing.length === 1 ? "" : "s"} missing · {summary.fileCount} file{summary.fileCount === 1 ? "" : "s"} added ({Math.max(0, Math.round(summary.fileBytes / 1024 / 1024))} MB)
+              {reviewRows.filter((r) => r.st.missing.length === 0).length} of {steps.length} sections complete · {summary.missing.length} required answer{summary.missing.length === 1 ? "" : "s"} missing
             </span>
           </p>
         </div>
@@ -655,7 +653,6 @@ export function Onboarding({ token }: { token: string }) {
   );
 
   /* ================================================================== SENT */
-  const files = sentInfo?.filesPending ?? summary.fileCount;
   const missingCount = summary.missing.length;
   const sent = (
     <div className="ob-sent">
@@ -667,7 +664,7 @@ export function Onboarding({ token }: { token: string }) {
           {who ? `BRIEF RECEIVED. THANK YOU, ${who.toUpperCase()}.` : "BRIEF RECEIVED. THANK YOU."}
         </h1>
         <p>
-          Your answers {files ? `and ${files} file${files === 1 ? "" : "s"} ` : ""}are with us. We’ve emailed you a copy. We’ll confirm we’ve read it within one working day.
+          Your answers are with us. We’ve emailed you a copy. We’ll confirm we’ve read it within one working day.
         </p>
       </section>
       <section className="ob-next" aria-labelledby="ob-next-title">
@@ -675,7 +672,7 @@ export function Onboarding({ token }: { token: string }) {
         <ol>
           {[
             ["cal", "We review your brief", missingCount ? `Within one working day we’ll confirm and follow up on the ${missingCount} missing answer${missingCount === 1 ? "" : "s"}.` : "Within one working day we’ll confirm we’ve read it."],
-            ["lock", files ? "We ask for access and your files, securely" : "We ask for access, securely", files ? `A separate secure link for domain, hosting and email access, and for your ${files} file${files === 1 ? "" : "s"}. Never by email.` : "A separate secure link for domain, hosting and email access. Never by email."],
+            ["lock", "We ask for access, securely", "A separate secure link for domain, hosting and email access. Never by email."],
             ["cal", "Kick-off call", "We walk through the plan, timeline and first designs."],
           ].map(([icon, t, d], i) => (
             <li key={t}>
@@ -700,7 +697,6 @@ export function Onboarding({ token }: { token: string }) {
           variant="outline"
           onClick={() => {
             update({ sent: false, step: 1, started: true }, true);
-            setSentInfo(null);
           }}
         >
           Edit my answers

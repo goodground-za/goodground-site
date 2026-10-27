@@ -20,7 +20,6 @@ export type Field =
   | (Base & { kind: "select"; options: string[] })
   | (Base & { kind: "radio"; options: Opt[]; cols?: 2 | 3 })
   | (Base & { kind: "checks"; options: string[]; preticked?: string[]; max?: number; helper?: string })
-  | (Base & { kind: "files"; sub?: string; compact?: boolean; accept?: string })
   | {
       kind: "repeat";
       id: string;
@@ -393,13 +392,25 @@ export const steps: Step[] = [
         cols: 2,
         options: od(["Complete brand", "Logo, colours, fonts and guidelines"], ["Logo only", "No full brand guide"], ["New brand", "It’s part of our project"], ["Brand refresh", "Refresh our existing brand"]),
       },
-      { kind: "files", id: "logos", label: "Upload your logo files", req: true, hint: "SVG, AI, EPS or PDF are best. High-resolution PNG works too. Max 50 MB per file." },
-      { kind: "files", id: "brandGuide", label: "Brand guide or style guide", compact: true, sub: "PDF or images", show: [{ id: "brandState", in: ["Complete brand", "Brand refresh"] }] },
+      {
+        kind: "url",
+        id: "filesLink",
+        label: "Link to your shared files folder",
+        req: true,
+        ph: "https://drive.google.com/…",
+        hint: "Put your logo files (SVG, AI, EPS or PDF are best), brand guide, fonts, photos, text and documents in one Google Drive, Dropbox or OneDrive folder, and paste its share link here.",
+      },
+      {
+        kind: "note",
+        id: "n4-sharing",
+        tone: "mint",
+        icon: "link",
+        text: "How to share a folder: in Google Drive, right-click the folder, choose Share, set General access to “Anyone with the link” (Viewer), then Copy link. Dropbox and OneDrive work the same way. You can keep adding files to the folder after you send the brief.",
+      },
       { kind: "colors", id: "colors", label: "Your brand colours", hint: "Paste a hex code, or pick a colour from your logo." },
       { kind: "text", id: "headingFont", label: "Font used for headings", span: 3, ph: "e.g. Montserrat", hint: "Not sure? Leave it; we’ll identify it from your logo." },
       { kind: "text", id: "bodyFont", label: "Font used for body text", span: 3, ph: "e.g. Open Sans" },
       { kind: "radio", id: "fontSource", label: "Where do your fonts come from?", cols: 2, options: o("Google Fonts (free)", "Adobe Fonts", "We bought a licence", "Don’t know") },
-      { kind: "files", id: "fontFiles", label: "Font files", compact: true, sub: "OTF, TTF or WOFF", show: [{ id: "fontSource", eq: "We bought a licence" }] },
       { kind: "text", id: "tagline", label: "Tagline or slogan, if you have one" },
       { kind: "textarea", id: "brandRules", label: "Brand rules we must follow, or things never to do", ph: "e.g. never stretch the logo; never use red" },
       { kind: "radio", id: "nameFinal", label: "Is your business name final?", cols: 2, options: o("Yes", "No, we’d like help with naming"), show: [{ id: "brandState", eq: "New brand" }] },
@@ -456,7 +467,7 @@ export const steps: Step[] = [
         cols: 3,
         options: od(["GoodGround writes it", "From this brief (copywriting add-on)"], ["I’ll supply the text", "We’ll edit it for the web"], ["A mix", "I’ll supply some, you write the rest"]),
       },
-      { kind: "files", id: "existingText", label: "Existing text to reuse", compact: true, sub: "Word documents, PDFs, brochures, menus" },
+      { kind: "note", id: "n6-text-files", tone: "mint", icon: "link", text: "Any text you’d like us to reuse, such as documents, brochures and menus, goes in your shared files folder too." },
       {
         kind: "radio",
         id: "photos",
@@ -465,7 +476,7 @@ export const steps: Step[] = [
         cols: 3,
         options: od(["Professional photos", "We have them"], ["Some photos", "Phone or amateur"], ["Stock photos", "We need them"], ["Book a photographer", "We’d like to"], ["Not sure", "We’ll advise"]),
       },
-      { kind: "files", id: "photoFiles", label: "Upload photos of your team, premises, work and products", compact: true, sub: "Drag files here, or browse · max 50 MB each" },
+      { kind: "note", id: "n6-photo-files", tone: "mint", icon: "link", text: "Photos of your team, premises, work and products go in your shared files folder. A sub-folder for each is ideal." },
       { kind: "url", id: "mediaLink", label: "A big photo or video collection? Paste a link", span: 3, ph: "Google Drive, Dropbox or WeTransfer" },
       { kind: "textarea", id: "videoLinks", label: "Video links to feature", span: 3, ph: "YouTube or Vimeo" },
       {
@@ -509,7 +520,7 @@ export const steps: Step[] = [
           { kind: "textarea", id: "bio", label: "Short bio", ph: "One or two sentences" },
         ],
       },
-      { kind: "files", id: "downloads", label: "Files visitors should be able to download", compact: true, sub: "Price lists, menus, brochures · optional" },
+      { kind: "note", id: "n8-download-files", tone: "mint", icon: "link", text: "Files visitors should be able to download, such as price lists, menus and brochures, go in your shared files folder in a sub-folder called Downloads." },
     ],
   },
   {
@@ -592,7 +603,7 @@ export const steps: Step[] = [
     fields: [
       { kind: "text", id: "infoOfficer", label: "Your Information Officer under POPIA: name and email", req: true, ph: "e.g. Thandi Mokoena, thandi@business.co.za", hint: "Usually the owner or managing director." },
       { kind: "radio", id: "regulator", label: "Is your Information Officer registered with the Information Regulator?", cols: 3, options: od(["Yes"], ["No", "We can point you to how"], ["Don’t know"]) },
-      { kind: "files", id: "policyFiles", label: "Existing privacy policy, terms or disclaimers", compact: true, sub: "PDF or Word · optional" },
+      { kind: "note", id: "n11-policy-files", tone: "mint", icon: "link", text: "If you already have a privacy policy, terms or disclaimers, add them to your shared files folder." },
       { kind: "url", id: "policyLink", label: "Or a link to them", ph: "https://…" },
       { kind: "textarea", id: "personalInfo", label: "What personal information will your website forms collect?" },
       { kind: "radio", id: "sellOnline", label: "Will you sell or take payment online?", cols: 3, options: o("Yes", "No", "Maybe later") },
@@ -625,7 +636,6 @@ export const steps: Step[] = [
       { kind: "textarea", id: "worries", label: "Anything you’re worried about with this project?" },
       { kind: "textarea", id: "past", label: "What went well or badly with past websites or agencies?" },
       { kind: "textarea", id: "anything", label: "Anything else we should know?", ph: "Anything at all" },
-      { kind: "files", id: "otherFiles", label: "Any other files you’d like to share", compact: true, sub: "Optional · max 50 MB each" },
       { kind: "note", id: "n12-next", tone: "mint", icon: "info", text: "Next: review everything, see what’s missing, and send. You can still send with gaps." },
     ],
   },

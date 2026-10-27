@@ -5,15 +5,13 @@
  */
 import { steps, type Cond, type Field, type Step } from "./steps";
 
-export type FileMeta = { id: string; name: string; size: number; type: string; error?: string };
 export type Row = { _id: string } & Record<string, string>;
-export type Value = string | string[] | Row[] | FileMeta[];
+export type Value = string | string[] | Row[];
 export type Answers = Record<string, Value>;
 
 export const str = (a: Answers, id: string): string => (typeof a[id] === "string" ? (a[id] as string) : "");
 export const strs = (a: Answers, id: string): string[] => (Array.isArray(a[id]) && (a[id] as unknown[]).every((v) => typeof v === "string") ? (a[id] as string[]) : []);
 export const rowsOf = (a: Answers, id: string): Row[] => (Array.isArray(a[id]) ? (a[id] as Row[]).filter((r) => r && typeof r === "object" && "_id" in r) : []);
-export const filesOf = (a: Answers, id: string): FileMeta[] => (Array.isArray(a[id]) ? (a[id] as FileMeta[]).filter((f) => f && typeof f === "object" && "name" in f) : []);
 
 const nonEmpty = (value: Value | undefined): boolean => {
   if (value === undefined) return false;
@@ -48,7 +46,6 @@ export function isAnswered(field: InputField, a: Answers): boolean {
     return rows.some((row) => (requiredInner.length ? requiredInner.every((f) => (row[f.id] ?? "").trim()) : field.fields.some((f) => (row[f.id] ?? "").trim())));
   }
   if (field.kind === "colors") return rowsOf(a, field.id).some((r) => (r.hex ?? "").trim());
-  if (field.kind === "files") return filesOf(a, field.id).some((f) => !f.error);
   return nonEmpty(a[field.id]);
 }
 
@@ -83,14 +80,11 @@ export function overall(a: Answers) {
     answered += s.answeredRequired;
     missing.push(...s.missing);
   }
-  const files = steps.flatMap((s) => s.fields.filter((f) => f.kind === "files").flatMap((f) => filesOf(a, f.id)));
   return {
     percent: required === 0 ? 100 : Math.round((answered / required) * 100),
     required,
     answered,
     missing,
-    fileCount: files.filter((f) => !f.error).length,
-    fileBytes: files.filter((f) => !f.error).reduce((n, f) => n + f.size, 0),
   };
 }
 
@@ -155,11 +149,6 @@ export function briefSections(a: Answers): BriefSection[] {
         items.push({ label: field.label, lines, blank: lines.length === 0, bullets: true });
         continue;
       }
-      if (field.kind === "files") {
-        const files = filesOf(a, field.id).filter((f) => !f.error);
-        items.push({ label: field.label, lines: files.map((f) => `${clean(f.name)} (${Math.max(1, Math.round(f.size / 1024))} KB)`), blank: files.length === 0, bullets: true });
-        continue;
-      }
       const value = a[field.id];
       if (Array.isArray(value)) {
         const lines = (value as string[]).map(clean).filter(Boolean);
@@ -195,17 +184,6 @@ export function buildBrief(a: Answers, meta: { who: string; business: string; qu
   return out.join("\n");
 }
 
-/** Sizes the form accepts (README: 50 MB per file, 2 GB per brief). Uploads need storage; see the question list. */
-export const FILE_LIMIT = 50 * 1024 * 1024;
-export const BRIEF_LIMIT = 2 * 1024 * 1024 * 1024;
-export const BLOCKED_TYPES: Record<string, string> = {
-  heic: "HEIC isn’t supported yet. Export as JPG or PNG.",
-  heif: "HEIF isn’t supported yet. Export as JPG or PNG.",
-  exe: "That file type can’t be uploaded.",
-  bat: "That file type can’t be uploaded.",
-  js: "That file type can’t be uploaded.",
-};
-
 /* ------------------------------------------------------------- server intake */
 
 const CONTROL = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g;
@@ -239,7 +217,7 @@ export function sanitizeAnswers(raw: unknown): Answers {
           const r = row as Record<string, unknown>;
           const clean: Row = { _id: text(r._id, 24) || `r${i}` } as Row;
           for (const inner of f.fields) {
-            if (inner.kind === "group" || inner.kind === "note" || inner.kind === "quote" || inner.kind === "repeat" || inner.kind === "colors" || inner.kind === "files") continue;
+            if (inner.kind === "group" || inner.kind === "note" || inner.kind === "quote" || inner.kind === "repeat" || inner.kind === "colors") continue;
             clean[inner.id] = text(r[inner.id], inner.kind === "textarea" ? 2000 : 300);
           }
           return [clean];
@@ -250,16 +228,6 @@ export function sanitizeAnswers(raw: unknown): Answers {
           if (!row || typeof row !== "object") return [];
           const r = row as Record<string, unknown>;
           return [{ _id: text(r._id, 24) || `r${i}`, hex: text(r.hex, 9), name: text(r.name, 60), use: text(r.use, 30) } as Row];
-        });
-      } else if (f.kind === "files") {
-        const list = Array.isArray(value) ? value.slice(0, 60) : [];
-        out[f.id] = list.flatMap((file) => {
-          if (!file || typeof file !== "object") return [];
-          const r = file as Record<string, unknown>;
-          const size = typeof r.size === "number" && Number.isFinite(r.size) ? Math.max(0, Math.min(r.size, 1e11)) : 0;
-          const meta: FileMeta = { id: text(r.id, 24), name: text(r.name, 200), size, type: text(r.type, 100) };
-          if (typeof r.error === "string" && r.error) meta.error = text(r.error, 200);
-          return meta.name ? [meta] : [];
         });
       } else {
         out[f.id] = text(value, f.kind === "textarea" ? 4000 : 400);

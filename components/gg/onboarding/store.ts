@@ -2,14 +2,14 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import type { Answers, FileMeta } from "./logic";
+import type { Answers } from "./logic";
 
 /**
  * Local-first persistence for the brief. Answers live in localStorage (debounced 800ms after the
- * last keystroke, immediately on choices and uploads). File contents live in IndexedDB so a reload
- * does not lose them. Nothing here talks to a server: server drafts, the emailed private link and
- * the upload bucket wait on the storage decision (open item 8), so the form says "saved on this
- * device" rather than claiming more.
+ * last keystroke, immediately on choices). Nothing here talks to a server: server drafts and the
+ * emailed private link wait on the storage decision (open item 8), so the form says "saved on this
+ * device" rather than claiming more. Files are not stored at all: clients paste a share link to a
+ * Google Drive, Dropbox or OneDrive folder, so nothing they own is kept on a GoodGround server.
  */
 export type Persisted = {
   answers: Answers;
@@ -122,37 +122,4 @@ export function savedLabel(status: SaveStatus, savedAt: number, now: number): st
   return minutes < 1 ? "Saved just now" : `Saved ${minutes} min ago`;
 }
 
-/* ------------------------------------------------------------------ files */
-
-const DB = "gg-onboarding-files";
-const STORE = "files";
-
-function open(): Promise<IDBDatabase> {
-  return new Promise((resolve, reject) => {
-    const request = indexedDB.open(DB, 1);
-    request.onupgradeneeded = () => request.result.createObjectStore(STORE);
-    request.onsuccess = () => resolve(request.result);
-    request.onerror = () => reject(request.error);
-  });
-}
-
-async function run<T>(mode: IDBTransactionMode, fn: (store: IDBObjectStore) => IDBRequest<T>): Promise<T | undefined> {
-  try {
-    const db = await open();
-    return await new Promise<T>((resolve, reject) => {
-      const request = fn(db.transaction(STORE, mode).objectStore(STORE));
-      request.onsuccess = () => resolve(request.result);
-      request.onerror = () => reject(request.error);
-    });
-  } catch {
-    return undefined;
-  }
-}
-
-export const putFile = (id: string, blob: Blob) => run("readwrite", (s) => s.put(blob, id));
-export const getFile = (id: string) => run<Blob>("readonly", (s) => s.get(id) as IDBRequest<Blob>);
-export const deleteFile = (id: string) => run("readwrite", (s) => s.delete(id));
-
 export const newId = () => (typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID().slice(0, 8) : Math.random().toString(36).slice(2, 10));
-
-export type { FileMeta };

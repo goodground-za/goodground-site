@@ -1,14 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState, type DragEvent, type ReactNode } from "react";
+import { useCallback, useEffect, useMemo, useRef, type ReactNode } from "react";
 
 import { Field, TextArea } from "../Field";
 import { Icon } from "../Icon";
 import {
-  BLOCKED_TYPES,
-  BRIEF_LIMIT,
-  FILE_LIMIT,
-  filesOf,
   formatError,
   isShown,
   normalise,
@@ -16,10 +12,9 @@ import {
   str,
   strs,
   type Answers,
-  type FileMeta,
   type Row,
 } from "./logic";
-import { deleteFile, getFile, newId, putFile } from "./store";
+import { newId } from "./store";
 import type { Field as FieldDef, Opt, Step } from "./steps";
 
 export type Quote = { package: string; price: string; payment: string; addons: string[] } | null;
@@ -187,174 +182,6 @@ function Control({ field, id, value, onChange, error, onCheck }: { field: Extrac
     );
   }
   return null;
-}
-
-/* ------------------------------------------------------------------- files */
-
-const kb = (n: number) => (n >= 1024 * 1024 ? `${(n / 1024 / 1024).toFixed(1)} MB` : `${Math.max(1, Math.round(n / 1024))} KB`);
-
-function Thumb({ file }: { file: FileMeta }) {
-  const [url, setUrl] = useState<string | null>(null);
-  const image = /^image\/(png|jpe?g|gif|webp|svg\+xml|avif)$/.test(file.type);
-  useEffect(() => {
-    if (!image || file.error) return;
-    let made: string | null = null;
-    let live = true;
-    getFile(file.id).then((blob) => {
-      if (!live || !blob) return;
-      made = URL.createObjectURL(blob);
-      setUrl(made);
-    });
-    return () => {
-      live = false;
-      if (made) URL.revokeObjectURL(made);
-    };
-  }, [file.id, file.error, image]);
-  if (url) {
-    // eslint-disable-next-line @next/next/no-img-element
-    return <img src={url} alt="" className="ob-file__thumb" />;
-  }
-  return (
-    <span className="ob-file__chip" aria-hidden="true">
-      <Icon name="file" size={18} stroke={2} />
-    </span>
-  );
-}
-
-function FileRow({ file, busy, onRemove }: { file: FileMeta; busy?: boolean; onRemove: () => void }) {
-  const state = busy ? "busy" : file.error ? "error" : "done";
-  return (
-    <li className={`ob-file ob-file--${state}`}>
-      {busy ? (
-        <span className="ob-file__chip" aria-hidden="true">
-          <Icon name="file" size={18} stroke={2} />
-        </span>
-      ) : (
-        <Thumb file={file} />
-      )}
-      <span className="ob-file__text">
-        <strong>{file.name}</strong>
-        {busy ? (
-          <>
-            <span className="ob-file__bar" aria-hidden="true" />
-            <small>Adding…</small>
-          </>
-        ) : file.error ? (
-          <small>{file.error}</small>
-        ) : (
-          <small>{kb(file.size)} · saved on this device</small>
-        )}
-      </span>
-      {!busy && !file.error ? (
-        <span className="ob-file__ok" aria-hidden="true">
-          <Icon name="check" size={13} stroke={3} />
-        </span>
-      ) : null}
-      <button type="button" className="ob-file__x" aria-label={`Remove ${file.name}`} onClick={onRemove}>
-        <Icon name="x" size={18} stroke={2} />
-      </button>
-    </li>
-  );
-}
-
-function Files({ field, ctx, id }: { field: Extract<FieldDef, { kind: "files" }>; ctx: StepContext; id: string }) {
-  const files = filesOf(ctx.a, id);
-  const [pending, setPending] = useState<{ id: string; name: string }[]>([]);
-  const [drag, setDrag] = useState(false);
-  const input = useRef<HTMLInputElement>(null);
-  const camera = useRef<HTMLInputElement>(null);
-  const filesRef = useRef(files);
-  useEffect(() => {
-    filesRef.current = files;
-  });
-
-  const totalBytes = useCallback(() => {
-    return Object.keys(ctx.a).reduce((n, key) => n + filesOf(ctx.a, key).filter((f) => !f.error).reduce((m, f) => m + f.size, 0), 0);
-  }, [ctx.a]);
-
-  const add = async (list: FileList | File[]) => {
-    const incoming = Array.from(list);
-    if (!incoming.length) return;
-    let used = totalBytes();
-    const placeholders = incoming.map((f) => ({ id: newId(), name: f.name }));
-    setPending((p) => [...p, ...placeholders]);
-    const metas: FileMeta[] = [];
-    for (let i = 0; i < incoming.length; i += 1) {
-      const file = incoming[i];
-      const meta: FileMeta = { id: placeholders[i].id, name: file.name, size: file.size, type: file.type };
-      const ext = file.name.split(".").pop()?.toLowerCase() ?? "";
-      if (BLOCKED_TYPES[ext]) meta.error = BLOCKED_TYPES[ext];
-      else if (file.size > FILE_LIMIT) meta.error = "That file is over 50 MB. Share it as a Google Drive, Dropbox or WeTransfer link instead.";
-      else if (used + file.size > BRIEF_LIMIT) meta.error = "This brief has reached its 2 GB limit. Share the rest as a link instead.";
-      else {
-        const saved = await putFile(meta.id, file);
-        if (saved === undefined) meta.error = "Couldn’t keep that file on this device. Try again, or share it as a link.";
-        else used += file.size;
-      }
-      metas.push(meta);
-    }
-    setPending((p) => p.filter((x) => !placeholders.some((y) => y.id === x.id)));
-    ctx.set(id, [...filesRef.current, ...metas], true);
-  };
-
-  const remove = (file: FileMeta) => {
-    ctx.set(id, files.filter((f) => f.id !== file.id), true);
-    ctx.toast(`Removed ${file.name}`, () => ctx.set(id, [...filesRef.current, file].filter((f, i, arr) => arr.findIndex((x) => x.id === f.id) === i), true));
-    // The stored copy is only dropped after the undo window, so Undo can still restore it.
-    window.setTimeout(() => {
-      if (!filesRef.current.some((f) => f.id === file.id)) void deleteFile(file.id);
-    }, 5500);
-  };
-
-  const onDrop = (event: DragEvent) => {
-    event.preventDefault();
-    setDrag(false);
-    void add(event.dataTransfer.files);
-  };
-
-  const compact = field.compact;
-  const required = field.req;
-  return (
-    <div className="ob-group">
-      <GroupHead label={field.label} hint={field.hint} />
-      {required ? <span className="gg-sr-only">Required</span> : null}
-      <div
-        className={["ob-drop", compact && "ob-drop--compact", drag && "is-drag"].filter(Boolean).join(" ")}
-        onDragOver={(e) => {
-          e.preventDefault();
-          setDrag(true);
-        }}
-        onDragLeave={() => setDrag(false)}
-        onDrop={onDrop}
-      >
-        <span className="ob-drop__icon" aria-hidden="true">
-          <Icon name="upload" size={compact ? 20 : 24} stroke={2} />
-        </span>
-        <span className="ob-drop__text">
-          <strong>{compact ? field.label : "Drag files here, or browse"}</strong>
-          <small>{field.sub ?? "You can add more files later"}</small>
-        </span>
-        <button type="button" className="ob-drop__btn" onClick={() => input.current?.click()}>
-          Choose files<span className="gg-sr-only"> for {field.label}</span>
-        </button>
-        <button type="button" className="ob-drop__btn ob-drop__btn--camera" onClick={() => camera.current?.click()}>
-          Take a photo<span className="gg-sr-only"> for {field.label}</span>
-        </button>
-        <input ref={input} type="file" multiple hidden accept={field.accept} onChange={(e) => { void add(e.target.files ?? []); e.target.value = ""; }} />
-        <input ref={camera} type="file" accept="image/*" capture="environment" hidden onChange={(e) => { void add(e.target.files ?? []); e.target.value = ""; }} />
-      </div>
-      {files.length || pending.length ? (
-        <ul className="ob-files">
-          {files.map((file) => (
-            <FileRow key={file.id} file={file} onRemove={() => remove(file)} />
-          ))}
-          {pending.map((p) => (
-            <FileRow key={p.id} file={{ id: p.id, name: p.name, size: 0, type: "" }} busy onRemove={() => setPending((x) => x.filter((y) => y.id !== p.id))} />
-          ))}
-        </ul>
-      ) : null}
-    </div>
-  );
 }
 
 /* ------------------------------------------------------------- repeat groups */
@@ -543,7 +370,7 @@ function packRows(fields: Item[]): Item[][] {
   return rows;
 }
 
-const FULL_WIDTH: FieldDef["kind"][] = ["radio", "checks", "files", "repeat", "colors", "group", "note", "quote"];
+const FULL_WIDTH: FieldDef["kind"][] = ["radio", "checks", "repeat", "colors", "group", "note", "quote"];
 
 export function StepFields({ step, ctx, errors, setError }: { step: Step; ctx: StepContext; errors: Record<string, string>; setError: (key: string, message: string) => void }) {
   const { a, set } = ctx;
@@ -581,8 +408,6 @@ export function StepFields({ step, ctx, errors, setError }: { step: Step; ctx: S
         );
       case "quote":
         return ctx.quote ? <QuoteCard key={f.id} quote={ctx.quote} /> : null;
-      case "files":
-        return <Files key={f.id} field={f} ctx={ctx} id={f.id} />;
       case "repeat":
         return <Repeat key={f.id} field={f} ctx={ctx} errors={errors} onCheck={check} />;
       case "colors":

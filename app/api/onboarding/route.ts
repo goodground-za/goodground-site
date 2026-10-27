@@ -14,10 +14,10 @@ import { sendMail } from "@/lib/mailer";
  * brief. If that fails the client sees a failure. If it works the brief counts as sent and a
  * confirmation goes to the address given in the brief (best effort, never an error).
  *
- * WHAT IT DOES NOT DO YET (open item 8): store drafts or files on a server, email a private link,
- * attach a PDF, or write to an admin view. Those wait on the storage region, retention period and
- * recipient decisions. Files therefore stay on the client's device; the email lists how many were
- * added and the studio follows up with a secure upload link.
+ * WHAT IT DOES NOT DO YET (open item 8): store drafts on a server, email a private link, attach a
+ * PDF, or write to an admin view. Those wait on the storage region, retention period and recipient
+ * decisions. Files are never uploaded here: the client pastes a share link to their own Google
+ * Drive, Dropbox or OneDrive folder in the brief, so GoodGround stores none of their data.
  *
  * The rate limit and duplicate check are in-process (per warm serverless instance), as on the other
  * form routes: they raise the cost of casual abuse, they are not a hard ceiling.
@@ -105,15 +105,10 @@ export async function POST(request: Request) {
 
   const summary = overall(answers);
   const brief = buildBrief(answers, { who: confirmName, business, quote, sent: new Date(now) });
-  const filesNote =
-    summary.fileCount > 0
-      ? `\n\nFILES: the client added ${summary.fileCount} file(s) in the form. They were NOT uploaded (no storage connected yet). Send the client a secure upload link.\n`
-      : "";
-
   const sent = await sendMail({
     subject: `Client brief received · ${business || confirmName}${summary.missing.length ? ` · ${summary.missing.length} required missing` : ""}`,
     replyTo: EMAIL_RE.test(email) ? email : undefined,
-    text: `${brief}${filesNote}\nConfirmed by: ${confirmName}\nConsents: accurate, right to use materials, use to deliver the project\n`,
+    text: `${brief}\nConfirmed by: ${confirmName}\nConsents: accurate, right to use materials, use to deliver the project\n`,
   });
   if (!sent.ok) return fail(502);
   recent.set(fingerprint, now);
@@ -133,7 +128,7 @@ export async function POST(request: Request) {
         "",
         "WHAT HAPPENS NEXT",
         "1. We confirm we’ve read it within one working day.",
-        `2. We send a separate secure link for access to your accounts${summary.fileCount ? " and your files" : ""}.`,
+        "2. We send a separate secure link for access to your accounts.",
         "3. We book your kick-off call.",
         "",
         "SECTIONS WE RECEIVED",
@@ -148,7 +143,7 @@ export async function POST(request: Request) {
 <p style="font-size:17px">Thanks, ${escapeHtml(first)}. Your brief is in, and a real person will read it.</p>
 <p>${escapeHtml(missingLine)}</p>
 <p style="margin:20px 0 6px;font-weight:bold">What happens next</p>
-<ol style="margin:0;padding-left:20px"><li>We confirm we’ve read it within one working day.</li><li>We send a separate secure link for access to your accounts${summary.fileCount ? " and your files" : ""}.</li><li>We book your kick-off call.</li></ol>
+<ol style="margin:0;padding-left:20px"><li>We confirm we’ve read it within one working day.</li><li>We send a separate secure link for access to your accounts.</li><li>We book your kick-off call.</li></ol>
 <p style="color:#5f5b66">You can keep editing until your kick-off call. After that, changes go through your project lead.</p>
 <p>The GoodGround team<br><a href="mailto:${site.email}">${site.email}</a></p></div>`;
       const result = await sendMail({ to: email, fromName: "GoodGround", replyTo: site.email, subject: "We’ve got your brief", text, html });
