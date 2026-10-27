@@ -69,7 +69,7 @@ export const pick = {
  * shape is checked here; whether the slug is a real project is looked up where
  * a name is shown, and an unknown slug simply shows nothing.
  */
-const REF_FIXED = ["home", "work", "about", "insights", "pricing", "services", "services-consult", "404", "contact", "industry-other"];
+const REF_FIXED = ["home", "work", "about", "insights", "pricing", "services", "services-consult", "404", "contact", "process", "industry-other"];
 const REF_SLUG = /^(case|service|industry)-[a-z0-9]+(?:-[a-z0-9]+)*$/;
 export const cleanRef = (v: unknown): string | undefined => {
   if (typeof v !== "string") return undefined;

@@ -15,6 +15,8 @@ export function FaqBlock({
   sub,
   items,
   tone = "plain",
+  onSurface = false,
+  cta,
   id = "faq",
   className,
 }: {
@@ -23,16 +25,20 @@ export function FaqBlock({
   sub?: string;
   items: FaqItem[];
   tone?: "lilac" | "home" | "plain";
+  /** On a white section: closed items use canvas. */
+  onSurface?: boolean;
+  /** A button under the heading (e.g. "All FAQs"). */
+  cta?: React.ReactNode;
   id?: string;
   className?: string;
 }) {
   return (
     <div id={id} className={className ? `hm-faq ${className}` : "hm-faq"}>
       <div className="hm-faq__intro">
-        <SectionHeader tag={tag} heading={heading} headingClass="gg-h2-side hm-h2" sub={sub} />
+        <SectionHeader tag={tag} heading={heading} headingClass="gg-h2-side hm-h2" sub={sub} cta={cta} />
       </div>
       <div className="hm-faq__list" data-reveal="stagger" style={{ "--gg-stagger-step": "50ms" } as CSSProperties}>
-        <FaqAccordion items={items} tone={tone} />
+        <FaqAccordion items={items} tone={tone} onSurface={onSurface} />
       </div>
     </div>
   );

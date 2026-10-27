@@ -48,6 +48,13 @@ Answer in any order; the numbers are for reference.
 33. 404: the "404" gradient text starts very dark on the plum (as drawn). It is decorative, but low contrast. Lighten the start colour?
 34. The old /start-project and /contact forms, PricingEnquiryForm and Web3Forms are deleted; the security policy no longer allows api.web3forms.com.
 
+## About / Process
+35. About: the hero image is a gradient (no photo exists; the old about-founder.png is not used). The four "On the web" lines are new copy. The stats strip keeps "10+ years founder experience" and "20+ years combined experience": both must be true. The path / rocky ground / thorns cards use general icons (no custom drawings yet). The parable opens in a new native dialog with the same four soils as the old modal.
+36. Process is a NEW page. New copy to confirm: every step’s "What we do / What you do / What you get" list, the 15/15/30/20/20 shares, "feedback within 3 working days", a named project lead, the weekly update, the three calls, "fixes for things we got wrong never use up a round", "changing direction after design approval counts as new scope", and three FAQ answers (slow with content, seeing the site while built, who owns the website). Ownership needs your decision (it belongs in the Terms too).
+37. Process links I had to guess: "Read the handover guide" goes to /insights (no guide exists yet); "Ask about a Care Plan" goes to /contact?topic=support.
+38. The live FAQ answer 06 ("most projects take 4-6 weeks") should match the Process timelines (Micro ~1 week to Scale ~4-6 weeks). I did not change faq.ts.
+39. The project tracker on /process is an illustration labelled EXAMPLE, desktop only.
+
 ## Global
 25. Georgia ignore in .impeccable/config.json for an illustration. PRODUCT.md / DESIGN.md are stale; updated at the very end (as you said).
 26. README section 10 open items still apply.
