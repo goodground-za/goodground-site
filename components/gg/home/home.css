@@ -2870,6 +2870,10 @@
   background: var(--gg-surface);
 }
 
+.hm-more--canvas {
+  background: var(--gg-canvas);
+}
+
 .hm-more__icon {
   display: grid;
   flex: none;

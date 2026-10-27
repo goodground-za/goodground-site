@@ -1,9 +1,9 @@
 import type { CSSProperties } from "react";
 
-import { ButtonLink } from "../Button";
 import { Icon, type IconName } from "../Icon";
 import { LinkedCard } from "../LinkedCard";
 import { SectionHeader } from "../SectionHeader";
+import { NotOnList } from "../shared/NotOnList";
 
 /** Live URLs: /services/{slug} (README section 7). */
 const INDUSTRIES: { icon: IconName; title: string; examples: string; slug: string }[] = [
@@ -52,19 +52,7 @@ export function Industries() {
           ))}
         </div>
 
-        <div className="hm-more" data-reveal="fade-up">
-          <span className="hm-more__icon" aria-hidden="true">
-            <Icon name="plus" size={22} stroke={2.2} />
-          </span>
-          <div className="hm-more__text">
-            <p className="gg-kicker hm-more__kicker">NOT ON THE LIST?</p>
-            <h3 className="hm-more__title">These are just some of the industries we work with.</h3>
-            <p>If your business needs to be found and trusted online, we can build for it, whatever you do.</p>
-          </div>
-          <ButtonLink href="/start-project?ref=industry-other" full>
-            Tell us about your business
-          </ButtonLink>
-        </div>
+        <NotOnList />
       </div>
     </section>
   );

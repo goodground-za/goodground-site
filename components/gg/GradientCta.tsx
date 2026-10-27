@@ -9,6 +9,8 @@ import { Tag } from "./Tag";
 
 const EMAIL = "hello@goodground.co.za";
 
+type Action = { label: string; href: string };
+
 /**
  * "GROWTH STARTS HERE." — the gradient CTA card at the end of most pages.
  *
@@ -21,6 +23,9 @@ const EMAIL = "hello@goodground.co.za";
  *    gradient, centred, Light button + email pill.
  *
  * `refSource` is appended to /start-project as ?ref= (listed per page note).
+ * `primary` / `secondary` replace the two buttons (Services: "Book a free
+ * consultation"); `size="l"` is the 80px headline some pages use; `split`
+ * puts the buttons in a column to the right of the copy on desktop.
  */
 export function GradientCta({
   variant = "home",
@@ -28,12 +33,20 @@ export function GradientCta({
   headline,
   sub,
   refSource,
+  primary,
+  secondary,
+  size = "xl",
+  split = false,
 }: {
   variant?: "home" | "inner";
   tag?: string;
   headline?: string;
   sub?: string | null;
   refSource?: string;
+  primary?: Action;
+  secondary?: Action;
+  size?: "xl" | "l";
+  split?: boolean;
 }) {
   const href = refSource ? `/start-project?ref=${encodeURIComponent(refSource)}` : "/start-project";
   const inner = variant === "inner";
@@ -44,36 +57,52 @@ export function GradientCta({
     sub = "Tell us about your business and we’ll come back with a fixed price and a clear plan.";
   }
 
+  const cls = ["gg-cta", `gg-cta--${variant}`, split && "gg-cta--split"].filter(Boolean).join(" ");
+  const headlineCls = ["gg-display-xl", "gg-cta__headline", size === "l" && "gg-cta__headline--l"]
+    .filter(Boolean)
+    .join(" ");
+
   return (
     <section
       className={inner ? "gg-cta-section gg-cta-section--inner" : "gg-cta-section"}
       aria-labelledby="gg-cta-heading"
     >
-      <div className={`gg-cta gg-cta--${variant}`} data-reveal="header" data-loop="">
+      <div className={cls} data-reveal="header" data-loop="">
         <div className="gg-cta__bg" aria-hidden="true">
           {!inner ? <CtaVideo /> : null}
         </div>
         {!inner ? <CursorLight /> : null}
-        <Tag tone="on-dark" data-part="tag">
-          {tag}
-        </Tag>
-        <SplitHeading
-          id="gg-cta-heading"
-          className="gg-display-xl gg-cta__headline"
-          text={headline}
-          style={{ "--gg-line-step": "120ms", "--gg-line-ms": "900ms" } as CSSProperties}
-        />
+        <div className="gg-cta__copy">
+          <Tag tone="on-dark" data-part="tag">
+            {tag}
+          </Tag>
+          <SplitHeading
+            id="gg-cta-heading"
+            className={headlineCls}
+            text={headline}
+            style={{ "--gg-line-step": "120ms", "--gg-line-ms": "900ms" } as CSSProperties}
+          />
+          {split && sub ? (
+            <p className="gg-cta__sub" data-part="sub">
+              {sub}
+            </p>
+          ) : null}
+        </div>
         <div className="gg-cta__row">
-          {sub ? (
+          {!split && sub ? (
             <p className="gg-cta__sub" data-part="sub">
               {sub}
             </p>
           ) : null}
           <div className="gg-cta__actions" data-part="cta">
-            <ButtonLink href={href} variant="light" full>
-              Start your project
+            <ButtonLink href={primary?.href ?? href} variant="light" full>
+              {primary?.label ?? "Start your project"}
             </ButtonLink>
-            {inner ? (
+            {secondary ? (
+              <ButtonLink href={secondary.href} variant="coral" full>
+                {secondary.label}
+              </ButtonLink>
+            ) : inner ? (
               <a className="gg-pill" href={`mailto:${EMAIL}`}>
                 <Icon name="mail" size={18} stroke={2} />
                 {EMAIL}

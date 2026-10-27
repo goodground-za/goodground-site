@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 
+import "./home/home.css";
 import { GgMotion } from "./motion/GgMotion";
 import { SiteFooter } from "./SiteFooter";
 import { SiteHeader, type Crumb } from "./SiteHeader";

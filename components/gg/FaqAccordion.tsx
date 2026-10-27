@@ -37,7 +37,7 @@ export function FaqAccordion({
 }: {
   items: FaqItem[];
   /** "lilac" = README default. "home" = Home section 10 (open item stays canvas). */
-  tone?: "lilac" | "home";
+  tone?: "lilac" | "home" | "plain";
   /** Closed items on a white section use canvas instead of white. */
   onSurface?: boolean;
   numbered?: boolean;
@@ -109,7 +109,8 @@ export function FaqAccordion({
     buttons.current[target]?.focus();
   };
 
-  const cls = ["gg-faq", tone === "home" && "gg-faq--home", onSurface && "gg-faq--on-surface"]
+  const cls = ["gg-faq", tone === "home" && "gg-faq--home",
+    tone === "plain" && "gg-faq--plain", onSurface && "gg-faq--on-surface"]
     .filter(Boolean)
     .join(" ");
 

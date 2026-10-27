@@ -847,6 +847,20 @@
   border-color: transparent;
 }
 
+/* "plain": surface cards with a hairline in both states (Services FAQ, on canvas). */
+.gg-faq--plain .gg-faq__item {
+  --faq-bg: var(--gg-surface);
+  --faq-bg-open: var(--gg-surface);
+  --faq-border: var(--gg-line);
+  --faq-q-open: var(--gg-ink);
+  --faq-chip: var(--gg-canvas);
+  --faq-chip-open: var(--gg-ink);
+}
+
+.gg-faq--plain .gg-faq__item.is-open {
+  border-color: var(--faq-border);
+}
+
 .gg-faq__heading {
   font: inherit;
 }
@@ -1226,6 +1240,60 @@ html:not(.js) .gg-faq__answer {
 
   .gg-cta--inner .gg-cta__row {
     flex-direction: column;
+  }
+}
+
+/* Copy block (tag + headline [+ sub when split]); keeps the card's own gap. */
+.gg-cta__copy {
+  display: flex;
+  flex-direction: column;
+  gap: inherit;
+  align-items: inherit;
+}
+
+/* 80px headline (Oswald 44 on phones), used by Services-style closing cards. */
+.gg-cta__headline--l {
+  font-size: 44px;
+  line-height: 0.96;
+}
+
+@media (min-width: 768px) {
+  .gg-cta .gg-cta__headline--l {
+    font-size: clamp(44px, 30.63px + 3.43vw, 80px);
+    line-height: 0.94;
+  }
+}
+
+@media (min-width: 1200px) {
+  .gg-cta--split {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 96px;
+  }
+
+  .gg-cta--split .gg-cta__copy {
+    flex: 1;
+    max-width: 880px;
+  }
+
+  .gg-cta--split .gg-cta__sub {
+    max-width: 640px;
+  }
+
+  .gg-cta--split .gg-cta__row {
+    flex: none;
+    width: 320px;
+  }
+
+  .gg-cta--split .gg-cta__actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .gg-cta--split .gg-cta__actions .gg-btn--full {
+    display: flex;
+    width: 100%;
   }
 }
 
