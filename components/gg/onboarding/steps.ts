@@ -191,7 +191,7 @@ export const steps: Step[] = [
         req: true,
         fields: [
           { kind: "text", id: "name", label: "Name", req: true, span: 3, ph: "Name" },
-          { kind: "text", id: "price", label: "Price or “from” price", span: 3, ph: "e.g. from R8,500" },
+          { kind: "text", id: "price", label: "Price or “from” price", span: 3, ph: "e.g. from R8 500" },
           { kind: "textarea", id: "what", label: "What it is and what’s included", ph: "Describe it in a sentence or two" },
           { kind: "text", id: "who", label: "Who it’s for", span: 3 },
           { kind: "select", id: "importance", label: "How important is it to your business?", span: 3, options: ["Most important", "Important", "Less important"] },
@@ -304,7 +304,7 @@ export const steps: Step[] = [
         id: "multilingual",
         label: "Should the website be in more than one language?",
         cols: 3,
-        options: od(["English only"], ["English plus another language", "Extra languages are R5,000 each"], ["Not sure", "We’ll advise"]),
+        options: od(["English only"], ["English plus another language", "Extra languages are R5 000 each"], ["Not sure", "We’ll advise"]),
       },
       {
         kind: "repeat",

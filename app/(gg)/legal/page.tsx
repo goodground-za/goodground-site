@@ -6,10 +6,9 @@ import { Legal } from "@/components/gg/legal/LegalClient";
 import { pageSocialMeta } from "@/lib/metadata";
 import "@/components/gg/legal/legal.css";
 
-// Live title kept (add "& Terms" once the Terms are approved and live).
-const title = { absolute: "Legal Notice & Privacy Policy | GoodGround" };
+const title = { absolute: "Legal Notice, Privacy Policy & Terms | GoodGround" };
 const description =
-  "GoodGround's legal notice and privacy policy: how we handle personal information under South Africa's Protection of Personal Information Act (POPIA).";
+  "GoodGround's legal notice, privacy policy and terms and conditions: how we handle personal information under South Africa's Protection of Personal Information Act (POPIA), and the terms of every project.";
 const path = "/legal";
 
 export const metadata: Metadata = {

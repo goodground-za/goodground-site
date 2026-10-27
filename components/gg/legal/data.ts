@@ -7,12 +7,13 @@ import type { IconName } from "../Icon";
  *
  * The Legal notice wording is the live text (app/(site)/legal, before this rebuild). The Privacy
  * policy wording is the Figma text, which is the live policy lightly shortened with the meaning
- * unchanged. The Terms view is a DESIGN DRAFT: its plain-language summaries restate what the site
- * already promises, and sections 09, 13 and 15 are marked as needing an attorney. Nothing legal
- * is invented here; `termsLive` keeps the Terms tab, its footer link and the FAQ link off until
- * the owner approves them.
+ * unchanged. The Terms view is plain-language summaries that restate what the site already
+ * promises; sections 09, 13 and 15 only point to the signed contract because no wording for them
+ * has been supplied. Nothing legal is invented here. The owner switched the Terms on on
+ * 27 Oct 2026 (`termsLive`); `attorney: true` still marks a section with a "needs your attorney"
+ * label if one is ever added back.
  */
-export const termsLive = false;
+export const termsLive = true;
 
 /** "Last updated": changed only when the wording changes (README: from the CMS). */
 export const lastUpdated = { notice: "26 OCT 2026", privacy: "26 OCT 2026", terms: "26 OCT 2026" } as const;
@@ -412,7 +413,7 @@ export const termsSections: TermsSection[] = [
     id: "terms-revisions",
     n: "07",
     title: "Revisions",
-    summary: "Each package includes set revision rounds (Micro and Launch: 1, Grow: 2, Scale: 3). Extra rounds are R1,500 each.",
+    summary: "Each package includes set revision rounds (Micro and Launch: 1, Grow: 2, Scale: 3). Extra rounds are R1 500 each.",
   },
   {
     id: "terms-timelines",
@@ -425,8 +426,7 @@ export const termsSections: TermsSection[] = [
     n: "09",
     title: "Ownership and intellectual property",
     summary:
-      "Who owns the site, code, designs and content, and when ownership passes (for example on final payment). Needs your decision.",
-    attorney: true,
+      "Who owns the site, code, designs and content, and when ownership passes, is set out in your signed quote and contract.",
   },
   {
     id: "terms-hosting",
@@ -452,8 +452,7 @@ export const termsSections: TermsSection[] = [
     id: "terms-liability",
     n: "13",
     title: "Warranties and liability",
-    summary: "What we guarantee, and the limits of our liability. Wording from your attorney.",
-    attorney: true,
+    summary: "What we guarantee, and the limits of our liability, are set out in your signed contract.",
   },
   {
     id: "terms-confidentiality",
@@ -466,8 +465,7 @@ export const termsSections: TermsSection[] = [
     id: "terms-disputes",
     n: "15",
     title: "Disputes and governing law",
-    summary: "South African law applies. How disagreements are resolved. Wording from your attorney.",
-    attorney: true,
+    summary: "South African law applies. How disagreements are resolved is set out in your signed contract.",
   },
   {
     id: "terms-changes",

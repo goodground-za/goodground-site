@@ -7,7 +7,7 @@ import { pricesAsOf } from "@/content/pricing";
 import { ButtonLink } from "../Button";
 import { FaqAccordion } from "../FaqAccordion";
 import { Icon, type IconName } from "../Icon";
-import { formatRand } from "../format";
+import { formatNumber, formatRand } from "../format";
 import { buildItemById, encodeBuild } from "../pricing/data";
 import { Checklist, PlanCards } from "./ArticleClient";
 
@@ -81,7 +81,7 @@ function BarsChart({ block }: { block: Extract<Block, { type: "bars" }> }) {
           <li key={bar.label} style={{ "--i": i } as CSSProperties}>
             <strong className="gg-number">
               {block.unit}
-              {bar.value.toLocaleString("en-US")}
+              {formatNumber(bar.value)}
             </strong>
             <span className="ar-bars__bar" style={{ "--h": bar.value / max } as CSSProperties} />
             <small>{bar.label}</small>

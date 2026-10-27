@@ -11,7 +11,7 @@ import { formatRand } from "../format";
 
 /* ----------------------------------------------------------------- maths */
 
-/** 12-instalment amount: total ÷ 12 rounded UP to the rand (R19,400 → R1,617). */
+/** 12-instalment amount: total ÷ 12 rounded UP to the rand (R19 400 → R1 617). */
 export const INSTALMENTS = 12;
 export const instalmentFor = (total: number) => Math.ceil(total / INSTALMENTS);
 /** Deposit: half the total. The balance is the other half. */
@@ -302,7 +302,7 @@ export function decodeBuild(code: string | null | undefined): Qty {
 }
 
 /**
- * The package hint: the highest package whose from-price is within R3,000 of
+ * The package hint: the highest package whose from-price is within R3 000 of
  * the total (or already passed). `passed` flips the wording.
  */
 export const HINT_RANGE = 3000;
@@ -317,7 +317,7 @@ export function hintText(hint: { pkg: PackageView; passed: boolean }) {
   return `${passed ? "In the range of" : "Close to"} ${pkg.name} (from ${formatRand(pkg.total)}): ${pkg.hint}.`;
 }
 
-/** Price label for a menu row: "R2,500 each", "from R7,500", "from R2,500 each". */
+/** Price label for a menu row: "R2 500 each", "from R7 500", "from R2 500 each". */
 export function itemPriceLabel(item: AlaCarteItem) {
   const base = `${item.startingAt ? "from " : ""}${formatRand(item.price)}`;
   return item.quantifiable ? `${base} each` : base;

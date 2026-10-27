@@ -9,7 +9,7 @@ import { fullService } from "./data";
 
 /**
  * Pricing 04. A plum band with the monthly price card beside it (stacked on
- * phones). FADE-UP; the chips STAGGER 50ms; "R1,500" counts up. The button goes
+ * phones). FADE-UP; the chips STAGGER 50ms; "R1 500" counts up. The button goes
  * to /start-project with the service and where the visitor came from.
  */
 export function FullServiceBand() {

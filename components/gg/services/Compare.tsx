@@ -126,7 +126,7 @@ export function Compare() {
             <div key={p.key} className={`sv-panel sv-panel--${p.key}`}>
               <div className="sv-panel__head">
                 <strong>{p.key === "build" ? "12-month build" : p.name}</strong>
-                <span>{p.key === "full" ? "From R1,500/month · no minimum term" : p.sub}</span>
+                <span>{p.key === "full" ? "From R1 500/month · no minimum term" : p.sub}</span>
               </div>
               <ul>
                 {MOBILE_ROWS.map((row) => {

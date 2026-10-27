@@ -11,7 +11,8 @@ Answer in any order; the numbers are for reference.
 - All wording approved (Q8, Q13, Q14, Q36, Q38, Q45): FAQ answer 06 now says "1 to 6 weeks depending on the package".
 - Q5/Q35: images stay as they are for now.
 - Old look to new look: /brand-guide rebuilt, the launch enquiry and project-form pages and their result pages restyled, the cookie banner restyled, the old ht-* tokens and 70 unused old components removed.
-- Still open: Q2 trust-bar figures, Q12 number format, Q52 Terms tab (off), Q59 "one working day", Q61 shop and login options, and the email/form provider name.
+- Answered later on 27 Oct 2026 (applied): Q52 Terms tab ON; Q2 trust-bar figures KEEP; Q12 number format `R12 000` (no-break space, one function in components/gg/format.ts plus the hand-written copy); Q59 KEEP "within one working day" on the sent screen; Q61 KEEP "Online shop" and "Client login area" as options.
+- Still open: the email/form provider name for the `/legal` table, real wording for Terms sections 09 (ownership), 13 (warranties and liability) and 15 (disputes) which now only point to the signed contract, and whether section 11 should still mention Care Plans (a retired service).
 
 ## Home
 1. Launch availability: what is the real month and spots taken? (`launchSpots` in content/websiteLaunch.ts holds Figma's sample: November, 1 of 2 taken.) Everything on Home, /website-launch and the sticky bar reads it.

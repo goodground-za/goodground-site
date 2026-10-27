@@ -307,7 +307,7 @@ export const caseStudies: CaseStudy[] = [
         ],
         image: "/images/case-point-break-builder.webp",
         imageAlt:
-          "The Build Your Trip package builder mid-selection, showing a live R45,200 total with an itemised breakdown",
+          "The Build Your Trip package builder mid-selection, showing a live R45 200 total with an itemised breakdown",
       },
       {
         heading: "Pricing tiers that read like tiers, not a template",

@@ -25,7 +25,7 @@ import "@/components/gg/pricing/pricing.css";
 
 const title = { absolute: "Pricing | Website Design Packages, South Africa | GoodGround" };
 const description =
-  "Four website packages from R12,000, a build-your-own menu, or Full Service from R1,500/mo with hosting, mailboxes, SEO and maintenance included.";
+  "Four website packages from R12 000, a build-your-own menu, or Full Service from R1 500/mo with hosting, mailboxes, SEO and maintenance included.";
 const path = "/pricing";
 
 // ?build= is the shared-link code for the configurator; it canonicalises away.

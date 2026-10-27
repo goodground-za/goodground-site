@@ -70,7 +70,7 @@ export const articles: Article[] = [
       "Most website pricing pages hide the number behind a quote form. This one doesn't. Real 2026 prices for DIY builders, freelancers, agencies, and GoodGround's own fixed packages, so you know what you're actually paying for before you enquire.",
     metaTitle: "Website Cost in South Africa: 2026 Guide & Real Prices",
     metaDescription:
-      "What does a website actually cost in South Africa? Real 2026 prices from R12,000: DIY builders vs freelancers vs agencies.",
+      "What does a website actually cost in South Africa? Real 2026 prices from R12 000: DIY builders vs freelancers vs agencies.",
     keyword: "website cost South Africa",
     author: "GoodGround",
     date: "2026-08-13",
@@ -80,23 +80,23 @@ export const articles: Article[] = [
     shortAnswer: {
       label: "One-off build prices, 2026",
       sentence:
-        "A custom-coded business website costs R12,000 to R45,000 as one fixed price. Most small businesses land between R21,000 and R32,000.",
+        "A custom-coded business website costs R12 000 to R45 000 as one fixed price. Most small businesses land between R21 000 and R32 000.",
       max: 150000,
       axis: ["R0", "R30k", "R60k", "R90k", "R120k", "R150k+"],
       ranges: [
-        { label: "Freelancer", range: "R5,000 – R15,000", shortRange: "R5k – R15k", from: 5000, to: 15000 },
+        { label: "Freelancer", range: "R5 000 – R15 000", shortRange: "R5k – R15k", from: 5000, to: 15000 },
         {
           label: "Small studio",
-          range: "R12,000 – R45,000",
+          range: "R12 000 – R45 000",
           shortRange: "R12k – R45k",
           from: 12000,
           to: 45000,
           typical: [21000, 32000],
           highlight: true,
         },
-        { label: "Large agency", range: "R30,000 – R150,000+", shortRange: "R30k – R150k+", from: 30000, to: 150000 },
+        { label: "Large agency", range: "R30 000 – R150 000+", shortRange: "R30k – R150k+", from: 30000, to: 150000 },
       ],
-      legend: "Where most small businesses land: R21,000 – R32,000",
+      legend: "Where most small businesses land: R21 000 – R32 000",
       note: "DIY builders aren’t on this chart: they’re rented, at R150 – R500 a month, for as long as you run the site.",
       shortNote: "DIY builders: R150 – R500 a month, rented.",
     },
@@ -125,27 +125,27 @@ export const articles: Article[] = [
             label: "Freelancer",
             sub: "Working alone",
             text: "Cheaper than a studio, but quality, reliability and support after launch vary enormously.",
-            value: "R5,000 – R15,000",
+            value: "R5 000 – R15 000",
           },
           {
             label: "Small studio",
             sub: "Fixed-price, custom-coded",
             text: "One quoted price, no monthly rental, built by a team you can hold to a contract.",
-            value: "R12,000 – R45,000",
+            value: "R12 000 – R45 000",
             highlight: true,
           },
           {
             label: "Large agency",
             sub: "Retainer model",
             text: "Frequently with an ongoing monthly fee layered on top of the build cost.",
-            value: "R30,000 – R150,000+",
+            value: "R30 000 – R150 000+",
           },
         ],
       },
       {
         type: "callout",
         tone: "tip",
-        text: "Match the spend to the job. A one-page site for a pop-up stall doesn't need R30,000; a ten-page site meant to carry a business for five years shouldn't sit on a R200-a-month template.",
+        text: "Match the spend to the job. A one-page site for a pop-up stall doesn't need R30 000; a ten-page site meant to carry a business for five years shouldn't sit on a R200-a-month template.",
       },
       {
         type: "p",
@@ -177,7 +177,7 @@ export const articles: Article[] = [
       { type: "h2", text: "How to compare two quotes without getting confused" },
       {
         type: "p",
-        text: "A R12,000 quote and a R25,000 quote for what looks like the same project usually aren't quoting the same project at all. Ask these five questions of any quote, ours included.",
+        text: "A R12 000 quote and a R25 000 quote for what looks like the same project usually aren't quoting the same project at all. Ask these five questions of any quote, ours included.",
       },
       {
         type: "checklist",
@@ -206,7 +206,7 @@ export const articles: Article[] = [
       {
         type: "addons",
         ids: ["pages-standard", "pages-complex", "pages-blog-setup", "seo-advanced", "func-conditional-form"],
-        intro: "None fit? Build your own from a R6,000 base build (one homepage, one contact form, basic SEO) and add exactly what you need:",
+        intro: "None fit? Build your own from a R6 000 base build (one homepage, one contact form, basic SEO) and add exactly what you need:",
       },
 
       { type: "h2", text: "Two ways to pay for it" },
@@ -238,7 +238,7 @@ export const articles: Article[] = [
       { type: "h2", text: "Why the cheapest option often costs more" },
       {
         type: "p",
-        text: "A R200-a-month builder looks cheaper than a R32,000 fixed build on the day you sign up. Run the maths past year three and the picture changes.",
+        text: "A R200-a-month builder looks cheaper than a R32 000 fixed build on the day you sign up. Run the maths past year three and the picture changes.",
       },
       {
         type: "bars",

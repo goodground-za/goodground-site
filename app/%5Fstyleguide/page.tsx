@@ -53,7 +53,7 @@ const SERVICE_FAQ: FaqItem[] = [
   {
     question: "Do you offer SEO as a standalone service, or only with a new website?",
     answer: [
-      "SEO foundations come standard with every website we build. If you already have a site, Advanced SEO and site speed optimisation are available as standalone add-ons, from R3,000 and confirmed in a quote. We audit the existing site first so the quote reflects what it actually needs.",
+      "SEO foundations come standard with every website we build. If you already have a site, Advanced SEO and site speed optimisation are available as standalone add-ons, from R3 000 and confirmed in a quote. We audit the existing site first so the quote reflects what it actually needs.",
     ],
     slug: "standalone-seo",
   },

@@ -7,6 +7,7 @@ import { FAQSchema } from "@/components/Schema";
 import { CountUp } from "@/components/gg/CountUp";
 import { GgShell } from "@/components/gg/GgShell";
 import { Icon } from "@/components/gg/Icon";
+import { formatRand } from "@/components/gg/format";
 import { ButtonLink } from "@/components/gg/Button";
 import { LinkedCard, ArrowChip } from "@/components/gg/LinkedCard";
 import { Resp } from "@/components/gg/Resp";
@@ -203,7 +204,7 @@ export default function WebsiteLaunchPage() {
                       <div>
                         <dt className="gg-sr-only">Total</dt>
                         <dd>
-                          <strong>R{terms.total.toLocaleString("en-US")}</strong>
+                          <strong>{formatRand(terms.total)}</strong>
                           <span>total</span>
                         </dd>
                       </div>

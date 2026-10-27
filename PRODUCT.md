@@ -17,7 +17,7 @@ Two things make it unusual to build:
 
 **1. The studio has no track record yet.** No clients, no case studies, no testimonials, no logos. Everything a normal agency site leans on for credibility does not exist. The site has to be persuasive without a single borrowed proof point. `/work` says "case studies, coming soon" rather than inventing any.
 
-**2. Pricing is public.** Four packages from R12,000 to R45,000 (starting prices, quoted per project), plus a build-your-own configurator off a R6,000 base fee. Real numbers, published, no "contact us for a quote" before you see any figure at all. Most competitors hide this, so it is a genuine wedge. The quote itself is still one fixed price agreed before work starts.
+**2. Pricing is public.** Four packages from R12 000 to R45 000 (starting prices, quoted per project), plus a build-your-own configurator off a R6 000 base fee. Real numbers, published, no "contact us for a quote" before you see any figure at all. Most competitors hide this, so it is a genuine wedge. The quote itself is still one fixed price agreed before work starts.
 
 The site itself is also the portfolio. A studio selling custom-coded websites cannot have its own site look templated. If it looks like a template, the pitch dies.
 
@@ -43,13 +43,13 @@ The earlier single "12 equal monthly payments, not a subscription" promise is re
 
 ## Full Service (added 2026-08-25) — the one genuine subscription on the site
 
-A fifth, structurally different offer on `/pricing`, alongside the four fixed one-time packages: a monthly, all-inclusive plan starting from R1,500/mo (final price depends on the site's requirements), covering the website build itself plus hosting, mailboxes, ongoing SEO work, and ongoing updates and maintenance. Month-to-month, no minimum term.
+A fifth, structurally different offer on `/pricing`, alongside the four fixed one-time packages: a monthly, all-inclusive plan starting from R1 500/mo (final price depends on the site's requirements), covering the website build itself plus hosting, mailboxes, ongoing SEO work, and ongoing updates and maintenance. Month-to-month, no minimum term.
 
 This **is** a subscription, on purpose, unlike the two payment options above. Keep the two ideas visually and verbally distinct: the four packages' "12 monthly instalments" is a way to pay off a fixed one-time price, not a recurring service; Full Service is a recurring service. Full Service is styled as a dark full-width plum band (`components/gg/pricing/FullServiceBand.tsx`), deliberately not a fifth white card in the same grid as the other four, so it reads as a different kind of purchase at a glance.
 
 ## Website Launch Offer (price changed 2026-10-27)
 
-A separate promotion at `/website-launch` for new businesses that do not have a website: R950 per month for 12 months (R11,400 in total), with domain, hosting and email fees included for those 12 months and up to five custom pages. It was R845 a month (R10,140). Capacity is two promotional spots a month and the live month and spots taken are a site setting (`launchSpots` in `content/websiteLaunch.ts`; November 2026 is 2 of 2, so the page shows "fully booked" and a December waitlist). The price, total and the "no deposit" wording all read from `content/websiteLaunch.ts`; "no deposit" is the Figma wording and was not separately confirmed. Redesigns and replacements are out of scope.
+A separate promotion at `/website-launch` for new businesses that do not have a website: R950 per month for 12 months (R11 400 in total), with domain, hosting and email fees included for those 12 months and up to five custom pages. It was R845 a month (R10 140). Capacity is two promotional spots a month and the live month and spots taken are a site setting (`launchSpots` in `content/websiteLaunch.ts`; November 2026 is 2 of 2, so the page shows "fully booked" and a December waitlist). The price, total and the "no deposit" wording all read from `content/websiteLaunch.ts`; "no deposit" is the Figma wording and was not separately confirmed. Redesigns and replacements are out of scope.
 
 Full Service replaced the old "Website Care Plans" service (maintenance only, no stated price, no hosting/mailboxes) entirely on 2026-08-25. The internal slug `care-plans` in `content/services.ts` was kept unchanged to avoid a wider rename across `content/industryPages.ts` and `content/articles.ts`'s cross-reference arrays; only the visible content changed. `/services/website-care-plans` now 301-redirects to `/pricing#full-service` (`next.config.ts`).
 
@@ -102,4 +102,4 @@ The full system is in `DESIGN.md`; the values live in `components/gg/gg.css` and
 ## Known gaps (not bugs, missing inputs)
 
 - **`site.phone` is `null`.** No phone number appears anywhere, and `telephone`/`geo`/`streetAddress` are therefore absent from the `LocalBusiness` schema. This is the largest remaining local-SEO gap for a George-based business. It stays absent rather than guessed, per the rule in `content/site.ts`.
-- **Open launch items (2026-10-27).** Server storage, retention and recipients for the onboarding brief; the Terms and conditions wording from an attorney (the Terms tab on `/legal` is built but off: `termsLive` in `components/gg/legal/data.ts`); the real email/form provider in the `/legal` provider table; SMTP and the mail-domain records; real project screenshots and an About photo. The full list is `tasks/figma-redesign-questions.md`.
+- **Open launch items (2026-10-27).** Server storage, retention and recipients for the onboarding brief; the real Terms wording for ownership, warranties and liability, and disputes (the Terms tab on `/legal` is live since 2026-10-27, `termsLive` in `components/gg/legal/data.ts`, and those three sections only point to the signed contract); the real email/form provider in the `/legal` provider table; SMTP and the mail-domain records; real project screenshots and an About photo. The full list is `tasks/figma-redesign-questions.md`.

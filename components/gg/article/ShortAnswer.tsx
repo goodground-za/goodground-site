@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 
 import type { ShortAnswer as ShortAnswerData } from "@/content/articles";
 
+import { formatRand } from "../format";
 import { Tag } from "../Tag";
 
 const pct = (value: number, max: number) => `${(value / max) * 100}%`;
@@ -75,4 +76,4 @@ export function ShortAnswerCard({ data }: { data: ShortAnswerData }) {
   );
 }
 
-const formatK = (value: number) => `R${value.toLocaleString("en-US")}`;
+const formatK = formatRand;

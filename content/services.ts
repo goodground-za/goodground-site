@@ -92,7 +92,7 @@ export const services: Service[] = [
       "We build the site, then keep running it: hosting and mailboxes set up and managed for you, ongoing SEO work, and ongoing updates and maintenance, all handled monthly so you don't have to think about it.",
     outcome:
       "A website that stays fast, secure, and found in search, without you needing to manage a single technical detail of it yourself.",
-    paymentLine: "Monthly, from R1,500, depending on your website's requirements. No minimum term, cancel any time.",
+    paymentLine: "Monthly, from R1 500, depending on your website's requirements. No minimum term, cancel any time.",
     cta: { label: "See Full Service Pricing", href: "/pricing#full-service" },
   },
   {

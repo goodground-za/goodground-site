@@ -39,7 +39,7 @@ export const GROUPS: Group[] = [
     text: "Hosting, mailboxes, updates, monitoring and SEO, so you never manage a technical detail.",
     theme: "blush",
     rows: [
-      { icon: "repeat", name: "Full Service", meta: "From R1,500/month · cancel any time", tag: "MONTHLY", tone: "neutral", anchor: "full-service" },
+      { icon: "repeat", name: "Full Service", meta: "From R1 500/month · cancel any time", tag: "MONTHLY", tone: "neutral", anchor: "full-service" },
       { icon: "shield", name: "Website Care Plans", meta: "Priced per site · 30 days’ notice", tag: "MONTHLY", tone: "neutral", anchor: "care-plans" },
     ],
     note: "Basic maintenance included while you pay off a 12-month build",
@@ -147,7 +147,7 @@ export const DETAILS: Detail[] = [
     tag: "MONTHLY",
     tone: "coral",
     headline: "Everything handled, for one monthly price.",
-    price: "From R1,500/month · no minimum term, cancel any time",
+    price: "From R1 500/month · no minimum term, cancel any time",
     button: { label: "See Full Service pricing", href: "/pricing#full-service", variant: "primary" },
     tint: "blush",
     problem: "Someone still has to run hosting and mailboxes, keep software updated, watch security and stay on top of SEO. Most owners don’t have the time or background.",
@@ -211,7 +211,7 @@ export type PlanKey = "build" | "care" | "full";
 export const PLANS: { key: PlanKey; name: string; sub: string; badge?: string }[] = [
   { key: "build", name: "12-month build plan", sub: "Included while paying off" },
   { key: "care", name: "Website Care Plan", sub: "Priced per site" },
-  { key: "full", name: "Full Service", sub: "From R1,500/month", badge: "MOST HANDS-OFF" },
+  { key: "full", name: "Full Service", sub: "From R1 500/month", badge: "MOST HANDS-OFF" },
 ];
 
 /** "ask" cells are things the live copy does not state (open item 9). */

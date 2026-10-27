@@ -100,7 +100,7 @@ export const launchSpots = {
 } as const;
 
 /**
- * The money behind the R950. 12 monthly payments, R11,400 total: confirmed by
+ * The money behind the R950. 12 monthly payments, R11 400 total: confirmed by
  * Johandre 2026-10-27 (the price moved from R845 to R950 a month). "No deposit"
  * is still the Figma wording and was not separately confirmed. Everything that
  * shows the total reads it from here.
