@@ -42,7 +42,7 @@ export const company = {
     },
   ],
   /** POPIA expects the Information Officer's name and contact details. Shown in coral until supplied. */
-  informationOfficer: null as null | { name: string; email: string },
+  informationOfficer: { name: "Xander Saayman", email: "xander@goodground.co.za" } as null | { name: string; email: string },
 };
 
 export type Block =
@@ -341,7 +341,7 @@ export const privacySections: Section[] = [
 export const providers: { name: string; purpose: string; when: string; todo?: boolean }[] = [
   { name: "Google (Analytics 4)", purpose: "Analytics and performance", when: "Only after you accept cookies" },
   { name: "Email and form provider (to add)", purpose: "Receiving and replying to enquiries", when: "When you contact us", todo: true },
-  { name: "Hosting provider (to add)", purpose: "Running this website", when: "Every visit", todo: true },
+  { name: "Afrihost", purpose: "Hosting and running this website", when: "Every visit" },
 ];
 
 export const rights: { key: string; icon: IconName; title: string; copy: string }[] = [

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { GgShell } from "@/components/gg/GgShell";
 import { IntakeForm } from "@/components/intake/IntakeForm";
-import { site } from "@/content/site";
 import { intakeAssets, intakeHero, intakeRoute, intakeSections } from "@/content/launchIntake";
 import "./intake.css";
 
@@ -36,22 +35,8 @@ export const metadata: Metadata = {
 
 export default function LaunchIntakePage() {
   return (
-    <div className="gg-intake">
-      <a className="gg-intake__skip" href="#main">
-        Skip to the form
-      </a>
-
-      <header className="gg-intake__header">
-        <div className="gg-intake__wrap gg-intake__header-inner">
-          <Link className="gg-intake__brand" href="/" aria-label="GoodGround home">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/home2026/goodground-logo.svg" width={182} height={30} alt="GoodGround" />
-          </Link>
-          <p className="gg-intake__header-tag">{intakeHero.eyebrow}</p>
-        </div>
-      </header>
-
-      <main id="main">
+    <GgShell crumbs={[{ label: "PROJECT FORM" }]}>
+      <div className="gg-intake">
         <section className="gg-intake__hero" aria-labelledby="gi-hero-title">
           <div className="gg-intake__wrap">
             <p className="gg-intake__eyebrow">{intakeHero.eyebrow}</p>
@@ -115,25 +100,7 @@ export default function LaunchIntakePage() {
             <IntakeForm />
           </div>
         </section>
-      </main>
-
-      <footer className="gg-intake__footer">
-        <div className="gg-intake__wrap gg-intake__footer-inner">
-          <Link className="gg-intake__brand" href="/" aria-label="GoodGround home">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/home2026/goodground-logo.svg" width={182} height={30} alt="GoodGround" />
-          </Link>
-          <div className="gg-intake__footer-links">
-            <a href={`mailto:${site.email}`}>{site.email}</a>
-            <Link href="/legal#privacy">Privacy Policy</Link>
-            <Link href="/legal#terms">Terms</Link>
-          </div>
-          <p className="gg-intake__footer-legal">
-            &copy; 2026 {site.legalName}. {site.address.locality}, {site.address.region}, South
-            Africa.
-          </p>
-        </div>
-      </footer>
-    </div>
+      </div>
+    </GgShell>
   );
 }

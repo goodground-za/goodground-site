@@ -4,6 +4,15 @@ Collected while building (owner asked: build everything, then ask all questions 
 Each is something I could not decide from the Figma file, the live site, or the honesty rules.
 Answer in any order; the numbers are for reference.
 
+## Answered by the owner on 27 Oct 2026 (applied)
+- Q1: November is 2 of 2 spots taken (sold-out state, December waitlist). Q18: the Launch Offer is now R950 a month for 12 months, R11,400 in total (was R845 and R10,140).
+- Q50: Information Officer is Xander Saayman, xander@goodground.co.za. Q51: hosting provider is Afrihost (the email/form provider row is still "to add").
+- Q57 (storage and retention) and Q27 (SMTP, SPF, DKIM, DMARC): the owner will build and set these up.
+- All wording approved (Q8, Q13, Q14, Q36, Q38, Q45): FAQ answer 06 now says "1 to 6 weeks depending on the package".
+- Q5/Q35: images stay as they are for now.
+- Old look to new look: /brand-guide rebuilt, the launch enquiry and project-form pages and their result pages restyled, the cookie banner restyled, the old ht-* tokens and 70 unused old components removed.
+- Still open: Q2 trust-bar figures, Q12 number format, Q52 Terms tab (off), Q59 "one working day", Q61 shop and login options, and the email/form provider name.
+
 ## Home
 1. Launch availability: what is the real month and spots taken? (`launchSpots` in content/websiteLaunch.ts holds Figma's sample: November, 1 of 2 taken.) Everything on Home, /website-launch and the sticky bar reads it.
 2. Trust bar figures (20+ years, 10+ projects, 100% satisfied): content/stats.ts forbids unmeasured numbers. Keep them, or replace?

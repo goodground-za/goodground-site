@@ -3,7 +3,8 @@
 import { GoogleAnalytics } from "@next/third-parties/google";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Button } from "@/components/Button";
+import { Button } from "@/components/gg/Button";
+import { Icon } from "@/components/gg/Icon";
 import { REOPEN_EVENT, setConsent, useConsent, type Consent } from "@/lib/consent";
 
 /**
@@ -55,48 +56,26 @@ export function Analytics({ gaId }: { gaId?: string }) {
       {gaId && consent === "granted" ? <GoogleAnalytics gaId={gaId} /> : null}
 
       {showBanner ? (
-        // CSS-only mount animation (step-in, globals.css) rather than framer-motion:
-        // this component sits in the root layout, so pulling in framer-motion here
-        // shipped it to every page on the site just for one banner, not only the
-        // two pages (/about, /pricing) that actually need it. No exit animation
-        // (dismiss just unmounts) — an imperceptible trade for a lighter bundle
-        // sitewide.
-        // bottom-[78px] on mobile clears MobileStickyBar (70.5px tall,
-        // md:hidden), which otherwise sits underneath this banner at the
-        // same bottom-0 edge and gets fully hidden by it (higher z-index,
-        // taller). Reverts to bottom-0 at md, where that bar doesn't
-        // render — safe-area inset applies only there, so the banner
-        // still clears the home-indicator gesture bar when it's the
-        // bottommost fixed element.
-        <div
-          role="region"
-          aria-label="Cookie consent"
-          className="motion-safe:animate-[step-in_0.28s_var(--ease-out)] fixed inset-x-0 bottom-[78px] z-90 p-4 sm:p-6 md:bottom-0 md:pb-[max(1.5rem,env(safe-area-inset-bottom))]"
-        >
-          {/* rounded-block matches every other dark purple surface on the
-              site; the white hairline lifts it off the dark hero bands, which
-              otherwise read as one continuous shape on mobile. Focus rings are
-              handled globally now (two-tone purple+cream ring in globals.css),
-              so no per-panel override is needed here. */}
-          <div className="bg-ht-purple shadow-lift rounded-block border-white/15 mx-auto flex max-w-4xl flex-col gap-5 border p-6 text-white sm:flex-row sm:items-center sm:gap-8 sm:p-7">
-            <p className="text-[14px] leading-relaxed sm:flex-1">
-              We&rsquo;d like to use analytics cookies to see which pages people find useful.
-              Nothing loads until you agree, and we never sell your data.{" "}
-              <Link
-                href="/legal#sec-cookies"
-                className="underline underline-offset-4 hover:no-underline"
-              >
-                Read our cookie policy
-              </Link>
-              .
+        // Redesign look: a plum card on the .gg scope (tokens, buttons and focus ring come from
+        // gg.css, which the root layout loads). CSS-only mount animation, no framer-motion: this sits
+        // in the root layout, so a library here would ship to every page. No exit animation (dismiss
+        // just unmounts). On phones it clears the sticky bottom bars (Pricing, Industry, Website
+        // launch) by sitting above them.
+        <div role="region" aria-label="Cookie consent" className="gg gg-cookie">
+          <div className="gg-cookie__card">
+            <span className="gg-cookie__icon" aria-hidden="true">
+              <Icon name="cookie" size={22} stroke={2} />
+            </span>
+            <p className="gg-cookie__text">
+              We’d like to use analytics cookies to see which pages people find useful. Nothing loads until you agree, and we never sell your data.{" "}
+              <Link href="/legal#sec-cookies">Read our cookie policy</Link>.
             </p>
-            {/* Equal-width on mobile so neither choice is visually weighted;
-                natural width once they sit beside the copy. */}
-            <div className="flex shrink-0 gap-3 *:flex-1 sm:*:flex-none">
-              <Button variant="outline" onClick={() => choose("denied")}>
+            {/* Equal weight, equal width on phones, so neither choice is pushed. */}
+            <div className="gg-cookie__actions">
+              <Button variant="light" onClick={() => choose("denied")}>
                 Decline
               </Button>
-              <Button variant="ember" onClick={() => choose("granted")}>
+              <Button variant="coral" onClick={() => choose("granted")}>
                 Accept
               </Button>
             </div>

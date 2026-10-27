@@ -23,11 +23,14 @@
  */
 
 .gg-intake {
-  --gi-ink: var(--color-ht-purple);
-  --gi-paper: var(--color-ht-cream);
-  --gi-accent: var(--color-ht-orange);
-  --gi-accent-deep: var(--color-ht-crimson);
-  --gi-deep: var(--color-ht-deep-purple);
+  --gi-ink: var(--gg-ink);
+  --gi-paper: var(--gg-canvas);
+  --gi-accent: var(--gg-coral);
+  --gi-accent-deep: var(--gg-coral-text);
+  --gi-fill: var(--gg-coral-fill);
+  --gi-deep: var(--gg-plum-deep);
+  --gi-plum: var(--gg-plum);
+  --gi-peach: var(--gg-peach);
   --gi-surface: #ffffff;
   --gi-line: rgb(17 17 17 / 0.14);
   --gi-line-soft: rgb(17 17 17 / 0.08);
@@ -39,8 +42,8 @@
    * about 3.5:1 on the white card.
    */
   --gi-field-line: rgb(17 17 17 / 0.5);
-  --gi-muted: #55565a;
-  --gi-muted-dark: #b4b4b0;
+  --gi-muted: var(--gg-muted);
+  --gi-muted-dark: var(--gg-on-dark-muted);
   --gi-bad: #b3261e;
 
   --gi-max: 1180px;
@@ -50,7 +53,7 @@
 
   background: var(--gi-paper);
   color: var(--gi-ink);
-  font-family: var(--font-ht-body);
+  font-family: var(--gg-font-body);
   font-size: 17px;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
@@ -159,32 +162,32 @@
 }
 
 .gg-intake__header-tag {
-  font-family: var(--font-ht-display);
+  font-family: var(--gg-font-display);
   font-size: 0.75rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--gi-accent);
+  color: var(--gi-peach);
 }
 
 /* -------------------------------------------------------------------- hero */
 
 .gg-intake__hero {
-  background: var(--gi-ink);
+  background: var(--gi-plum);
   color: #fff;
   padding-block: clamp(2.75rem, 6vw, 4.5rem) var(--gi-section);
 }
 
 .gg-intake__eyebrow {
-  font-family: var(--font-ht-display);
+  font-family: var(--gg-font-display);
   font-size: 0.75rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--gi-accent);
+  color: var(--gi-peach);
 }
 
 .gg-intake__title {
   margin-top: 0.75rem;
-  font-family: var(--font-ht-display);
+  font-family: var(--gg-font-display);
   font-size: clamp(2.25rem, 6vw, 4rem);
   line-height: 1.04;
   letter-spacing: -0.02em;
@@ -237,16 +240,16 @@
      The border alone gives the card its edge, and the eyebrow keeps the same
      contrast as every other orange eyebrow on the page. */
   border: 1px solid rgb(255 255 255 / 0.28);
-  border-radius: var(--radius-block);
+  border-radius: var(--gg-r-card-lg);
   max-width: 46rem;
 }
 
 .gg-intake__toc-title {
-  font-family: var(--font-ht-display);
+  font-family: var(--gg-font-display);
   font-size: 0.8125rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--gi-accent);
+  color: var(--gi-peach);
 }
 
 .gg-intake__toc ol {
@@ -290,13 +293,13 @@
 
 .gg-intake__assets-card {
   padding: clamp(1.5rem, 3vw, 2.25rem);
-  border-radius: var(--radius-block);
+  border-radius: var(--gg-r-card-lg);
   background: var(--gi-deep);
   color: #fff;
 }
 
 .gg-intake__assets-title {
-  font-family: var(--font-ht-display);
+  font-family: var(--gg-font-display);
   font-size: clamp(1.25rem, 2.4vw, 1.625rem);
   line-height: 1.15;
   text-transform: uppercase;
@@ -359,7 +362,7 @@
 .gg-intake__aside-inner {
   padding: 1.1rem 1.15rem;
   border: 1px solid var(--gi-line);
-  border-radius: var(--radius-block);
+  border-radius: var(--gg-r-card-lg);
   background: var(--gi-surface);
 }
 
@@ -376,7 +379,7 @@
 }
 
 .gg-intake__aside-title {
-  font-family: var(--font-ht-display);
+  font-family: var(--gg-font-display);
   font-size: 0.75rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -446,17 +449,15 @@
   height: 1.45rem;
   border-radius: 50%;
   border: 1px solid var(--gi-line);
-  font-family: var(--font-ht-display);
+  font-family: var(--gg-font-display);
   font-size: 0.75rem;
   color: var(--gi-muted);
 }
 
 .gg-intake__steps li[data-complete] .gg-intake__step-mark {
-  background: var(--gi-accent);
-  border-color: var(--gi-accent);
-  /* Ink on orange, 4.90:1. White on orange is 3.86:1 and is never used for
-     text anywhere on this site. */
-  color: var(--gi-ink);
+  background: var(--gi-fill);
+  border-color: var(--gi-fill);
+  color: #fff;
 }
 
 .gg-intake__steps li[data-complete] .gg-intake__step-name {
@@ -523,12 +524,12 @@
 .gg-intake__section {
   padding: clamp(1.5rem, 3.2vw, 2.5rem);
   border: 1px solid var(--gi-line);
-  border-radius: var(--radius-block);
+  border-radius: var(--gg-r-card-lg);
   background: var(--gi-surface);
 }
 
 .gg-intake__section-num {
-  font-family: var(--font-ht-display);
+  font-family: var(--gg-font-display);
   font-size: 0.75rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -537,7 +538,7 @@
 
 .gg-intake__section-title {
   margin-top: 0.5rem;
-  font-family: var(--font-ht-display);
+  font-family: var(--gg-font-display);
   font-size: clamp(1.5rem, 3vw, 2rem);
   line-height: 1.1;
   letter-spacing: -0.015em;
@@ -585,7 +586,7 @@
 .gg-intake__label {
   display: block;
   padding: 0;
-  font-family: var(--font-ht-display);
+  font-family: var(--gg-font-display);
   font-size: 1.0625rem;
   line-height: 1.3;
   font-weight: 600;
@@ -596,7 +597,7 @@
 }
 
 .gg-intake__opt {
-  font-family: var(--font-ht-body);
+  font-family: var(--gg-font-body);
   font-weight: 400;
   font-size: 0.8125rem;
   color: var(--gi-muted);
@@ -765,7 +766,7 @@
 }
 
 .gg-intake__privacy a {
-  color: var(--gi-accent);
+  color: var(--gi-peach);
 }
 
 .gg-intake__btn {
@@ -777,20 +778,20 @@
   padding: 0.9rem 1.75rem;
   border: 0;
   border-radius: 999px;
-  background: var(--gi-accent);
-  /* Ink on orange, 4.90:1. */
-  color: var(--gi-ink);
-  font-family: var(--font-ht-display);
+  background: var(--gi-fill);
+  /* White on the coral fill, 5.02:1. */
+  color: #fff;
+  font-family: var(--gg-font-body);
   font-size: 1rem;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0;
   text-decoration: none;
   cursor: pointer;
   transition: background 180ms var(--gi-ease);
 }
 
 .gg-intake__btn:hover {
-  background: var(--gi-accent-deep);
+  background: var(--gg-coral-hover);
   color: #fff;
 }
 
@@ -802,8 +803,8 @@
 .gg-intake__btn--quiet {
   margin-top: 1.5rem;
   background: transparent;
-  border: 1px solid var(--gi-accent);
-  color: var(--gi-accent);
+  border: 1px solid var(--gi-peach);
+  color: var(--gi-peach);
 }
 
 .gg-intake__submit {
@@ -850,14 +851,14 @@
 .gg-intake__done {
   max-width: 46rem;
   padding: clamp(1.75rem, 4vw, 3rem);
-  border-radius: var(--radius-block);
-  background: var(--gi-ink);
+  border-radius: var(--gg-r-card-lg);
+  background: var(--gi-plum);
   color: #fff;
 }
 
 .gg-intake__done h1,
 .gg-intake__done h2 {
-  font-family: var(--font-ht-display);
+  font-family: var(--gg-font-display);
   font-size: clamp(1.75rem, 4vw, 2.75rem);
   line-height: 1.08;
   text-transform: uppercase;
@@ -871,7 +872,7 @@
 }
 
 .gg-intake__done a:not([class]) {
-  color: var(--gi-accent);
+  color: var(--gi-peach);
 }
 
 .gg-intake__done .gg-intake__btn {
@@ -910,4 +911,36 @@
 .gg-intake__footer-legal {
   font-size: 0.8125rem;
   color: var(--gi-muted-dark);
+}
+
+/* ---- Redesign overrides ------------------------------------------------------ */
+.gg-intake__section-title,
+.gg-intake__assets-title {
+  font-family: var(--gg-font-body);
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: -0.015em;
+}
+
+.gg-intake__title {
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 0.95;
+  max-width: 20ch;
+}
+
+.gg-intake__header-tag {
+  display: none;
+}
+
+.gg-intake--outcome {
+  min-height: 60vh;
+}
+
+.gg-intake__done .gg-btn {
+  margin-top: 1.75rem;
+}
+
+.gg-intake__hero {
+  margin-top: 0;
 }

@@ -51,7 +51,7 @@
 .home-2026 .section-dark{background:var(--ink);color:white}
 /* The promotional surface. See the token comment in globals.css for why this
    is a colour of its own and not a repointed ht-purple. */
-.home-2026 .section-purple{background:var(--color-ht-deep-purple);color:white}
+.home-2026 .section-purple{background:var(--gg-plum);color:white}
 /* Guard for any two dark sections that end up adjacent: without it they read
    as one long block. Nothing matches it today — the purple promotional
    surface separates Process from Reasons — but the next reorder might. */

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { GgShell } from "@/components/gg/GgShell";
 import { intakeCopy, intakeRoute } from "@/content/launchIntake";
 import { site } from "@/content/site";
 import "../intake.css";
@@ -20,19 +21,19 @@ export const metadata: Metadata = {
 
 export default function IntakeProblemPage() {
   return (
-    <div className="gg-intake gg-intake--outcome">
-      <main className="gg-intake__wrap" id="main">
-        <div className="gg-intake__done gg-intake__done--bad">
-          <h1>That did not send.</h1>
-          <p>{intakeCopy.failure}</p>
-          <p>
-            You can{" "}
-            <Link href={intakeRoute.path}>go back and try the form again</Link>, or email us at{" "}
-            <a href={`mailto:${site.email}`}>{site.email}</a> and we will take your answers that
-            way instead.
-          </p>
+    <GgShell crumbs={[{ label: "PROJECT FORM" }, { label: "NOT SENT" }]}>
+      <div className="gg-intake gg-intake--outcome">
+        <div className="gg-intake__wrap">
+          <div className="gg-intake__done gg-intake__done--bad">
+            <h1>That did not send.</h1>
+            <p>{intakeCopy.failure}</p>
+            <p>
+              You can <Link href={intakeRoute.path}>go back and try the form again</Link>, or email us at{" "}
+              <a href={`mailto:${site.email}`}>{site.email}</a> and we will take your answers that way instead.
+            </p>
+          </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </GgShell>
   );
 }

@@ -1,6 +1,6 @@
 # Website Launch promotion — `/website-launch`
 
-A single landing page for the R845/month first-website promotion, built inside
+A single landing page for the R950/month first-website promotion, built inside
 this Next.js app. It reuses the site's build, fonts, colour tokens, portfolio
 data and analytics. No new framework, no new build system, no new tracking
 provider.

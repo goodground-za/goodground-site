@@ -2,11 +2,12 @@
 
 register: brand
 
-> Last verified against the live codebase 2026-08-25. Typography updated
-> 2026-08-20 (Parkinsans/Instrument Sans, documented below). The Full Service
-> monthly package was added 2026-08-25 (see its own section below) — the
-> first genuine subscription offer on the site, distinct from the two
-> one-time-price payment options. Keep this file in step with the code.
+> Last verified against the codebase 2026-10-27, after the Figma redesign (local
+> branch, not yet live). The look is now documented in `DESIGN.md`; the earlier
+> cream/purple/orange palette and the Parkinsans/Instrument Sans pairing are
+> retired. The Full Service monthly package (2026-08-25) is the one genuine
+> subscription on the site, distinct from the two one-time-price payment
+> options. Keep this file in step with the code.
 
 ## What this is
 
@@ -44,7 +45,11 @@ The earlier single "12 equal monthly payments, not a subscription" promise is re
 
 A fifth, structurally different offer on `/pricing`, alongside the four fixed one-time packages: a monthly, all-inclusive plan starting from R1,500/mo (final price depends on the site's requirements), covering the website build itself plus hosting, mailboxes, ongoing SEO work, and ongoing updates and maintenance. Month-to-month, no minimum term.
 
-This **is** a subscription, on purpose, unlike the two payment options above. Keep the two ideas visually and verbally distinct: the four packages' "12 monthly instalments" is a way to pay off a fixed one-time price, not a recurring service; Full Service is a recurring service. Full Service is styled as a dark full-width band (`components/sections/PricingFullService.tsx`), deliberately not a fifth white ring-card in the same grid as the other four, so it reads as a different kind of purchase at a glance.
+This **is** a subscription, on purpose, unlike the two payment options above. Keep the two ideas visually and verbally distinct: the four packages' "12 monthly instalments" is a way to pay off a fixed one-time price, not a recurring service; Full Service is a recurring service. Full Service is styled as a dark full-width plum band (`components/gg/pricing/FullServiceBand.tsx`), deliberately not a fifth white card in the same grid as the other four, so it reads as a different kind of purchase at a glance.
+
+## Website Launch Offer (price changed 2026-10-27)
+
+A separate promotion at `/website-launch` for new businesses that do not have a website: R950 per month for 12 months (R11,400 in total), with domain, hosting and email fees included for those 12 months and up to five custom pages. It was R845 a month (R10,140). Capacity is two promotional spots a month and the live month and spots taken are a site setting (`launchSpots` in `content/websiteLaunch.ts`; November 2026 is 2 of 2, so the page shows "fully booked" and a December waitlist). The price, total and the "no deposit" wording all read from `content/websiteLaunch.ts`; "no deposit" is the Figma wording and was not separately confirmed. Redesigns and replacements are out of scope.
 
 Full Service replaced the old "Website Care Plans" service (maintenance only, no stated price, no hosting/mailboxes) entirely on 2026-08-25. The internal slug `care-plans` in `content/services.ts` was kept unchanged to avoid a wider rename across `content/industryPages.ts` and `content/articles.ts`'s cross-reference arrays; only the visible content changed. `/services/website-care-plans` now 301-redirects to `/pricing#full-service` (`next.config.ts`).
 
@@ -61,35 +66,25 @@ Plain, grounded, quietly confident. The brand story is agricultural (ground, see
 
 South African English. Rand. Never "solutions", "leverage", "showcase", "elevate", or "seamless". **No em dashes in user-facing copy** (checked in review; they had crept into `content/pricing.ts` and were removed 2026-08-13). No shouty caps or exclamation marks in headings.
 
-## Design direction (as built)
+## Design direction (as built, October 2026 redesign)
 
-**Palette** (`app/globals.css`, client-supplied hex, used exactly as given):
+The full system is in `DESIGN.md`; the values live in `components/gg/gg.css` and are shown on the private `/brand-guide` and `/_styleguide` pages. In short: a warm off-white canvas (`#F7F7F4`), ink type (`#111111`), plum (`#2E1848`) for weight and promotion, and coral (`#EF4A23`) for the one action, with white cards, hairline borders, pill buttons with an arrow chip, and soft lilac, blush and mint tints for states. Oswald (display, uppercase) and IBM Plex Sans (everything read as a sentence), self-hosted. Built from the Figma file PI4P3fF9RVIAiTI7ZMxohj; the spec copy is in `docs/redesign/`.
 
-| Token | Hex | Role |
-|---|---|---|
-| `ht-cream` | `#fbf7ec` | base page background |
-| `ht-purple` | `#2e1848` | dark sections, footer, headings on cream |
-| `ht-orange` | `#fe431a` | primary action colour, section fills |
-| `ht-pink` | `#fe9dd2` | accents, card rings |
-| `ht-crimson` | `#ac3026` | accent text on light surfaces, hover depth |
-| `ink` | `#010602` | text on orange surfaces |
+**Contrast rules (load-bearing, WCAG 2.1 AA).** Brand coral is a bright fill and fails as small text (3.1 to 3.7:1):
 
-**Contrast rules (load-bearing, WCAG 2.1 AA).** `ht-orange` is a bright fill and fails easily. The rules established in the 2026-08-13 audit:
+- Small coral text and links on light surfaces use `--gg-coral-text` (`#C2300E`, 4.7:1 or better on white, canvas, blush, lilac and mint).
+- White labels sit only on `--gg-coral-fill` (`#D0340F`, 5.02:1). Ink on plain coral is 5.1:1.
+- On plum, accent text is peach (`#F7B48F`); coral is 4.1:1 there.
+- Muted text (`#5F5B66`) is 6.2:1 on canvas. Touch targets are at least 44px on phones.
+- Targets for every page: Lighthouse mobile Accessibility 100, SEO 100, CLS 0.
 
-- Text on an orange fill uses `text-ink` (5.86:1), not white (3.48:1, fails). Display text at 18.66px+ bold may stay white, since WCAG's large-text bar is 3:1.
-- Accent text on cream or white uses `text-ht-crimson` (6.08:1), not `text-ht-orange` (3.25:1, fails).
-- On the dark purple panel the reverse holds: `ht-orange` passes at 4.50:1 and crimson would fail at 2.41:1. Surface decides the token.
-- Muted body text bottoms out at `text-ht-purple/70` (5.78:1). `/60` fails at 4.22:1.
+**Motion.** Declared with `data-reveal` and run once by `components/gg/motion/GgMotion.tsx` (fade-up, stagger, header, group, line-mask, count-up, fill). No GSAP, Lenis or Framer Motion on the redesigned pages. Eases out, never bounces except tiny pops. `prefers-reduced-motion` and `html[data-motion="off"]` jump to the end state; pages work with no JavaScript.
 
-**Typography** (2026-08-20, client-supplied choice, replacing the Syne/DM Sans pairing that shipped 2026-08-12). Parkinsans for every heading (`font-ht-display`), Instrument Sans for body (`font-ht-body`), both via `next/font/google` in `app/layout.tsx`. Headings use 600 and 700.
+**Pages.** Home, Services, Service detail, Industry, Work, Case study, Pricing, Website launch, Start project, Contact, Thanks, 404, About, Process, Insights, Article, FAQ, Legal and the private Onboarding form are all on the redesign. The Home hero is the earlier gradient-video hero, kept on purpose and scoped under `.home-2026`.
 
-The Satori OG-image renderer needs its own repo-local TTF, separate from the browser font loading, at `app/_og/Parkinsans-Bold.ttf`. That file is a **static instance pinned at wght 700**, generated from the variable font with fontTools. Google publishes Parkinsans only as a variable font whose default axis position is 300 (Light), and Satori renders a variable font at its default instance, so dropping the variable file in directly renders every social card in Light. Regenerate the same way if the font is ever updated.
+**Forms and mail.** Start project, Contact and the Pricing quote form post to `/api/enquiry`; the launch enquiry posts to `/api/website-launch`; the project brief posts to `/api/launch-intake`; the client onboarding brief posts to `/api/onboarding`. All use the studio SMTP settings (`SMTP_HOST`, `SMTP_USER`, `SMTP_PASS`, optional `MAIL_TO`, `MAIL_FROM`) in `lib/mailer.ts` and show a "couldn't send" state until they are set. SPF, DKIM and DMARC for goodground.co.za must be set up on the mail host. Onboarding saves in the visitor's browser only until server storage is built.
 
-Parkinsans has no built-in Next metric overrides, so `adjustFontFallback` is off and an explicit fallback stack is declared instead; without one the swap falls back to the browser default and shifts layout more, not less.
-
-**Structure and motion.** GSAP plus Lenis smooth scroll (`components/motion-gsap/*`): `RevealSection`/`RevealStagger` for scroll reveals, `SplitWords` for headline word-reveals, `MagneticButton`, `HoverCard`. Framer Motion survives only in `ParableModal` and `components/motion/BorderTrail.tsx`. Sections overlap via an ascending z-index stack with rounded/scalloped edges (`CloudDivider`).
-
-Motion eases out and never overshoots. No bounce or elastic curves. Every animation is gated on `prefers-reduced-motion`, both globally in `globals.css` and per-component via `gsap.matchMedia`. Route changes fade via `app/template.tsx` (opacity only, deliberately no transform, see the `route-in` keyframe comment).
+**Cookie consent.** One module (`lib/consent.ts`) drives the banner, the switch on `/legal` and the footer's "Cookie settings" link. Google Analytics loads only after the visitor accepts.
 
 ## Anti-references (what we must not look like)
 
@@ -107,4 +102,4 @@ Motion eases out and never overshoots. No bounce or elastic curves. Every animat
 ## Known gaps (not bugs, missing inputs)
 
 - **`site.phone` is `null`.** No phone number appears anywhere, and `telephone`/`geo`/`streetAddress` are therefore absent from the `LocalBusiness` schema. This is the largest remaining local-SEO gap for a George-based business. It stays absent rather than guessed, per the rule in `content/site.ts`.
-- **No `DESIGN.md`.** The design system is documented here and in `app/globals.css` plus the internal `/brand-guide` page (noindex). Running `/impeccable document` would generate one.
+- **Open launch items (2026-10-27).** Server storage, retention and recipients for the onboarding brief; the Terms and conditions wording from an attorney (the Terms tab on `/legal` is built but off: `termsLive` in `components/gg/legal/data.ts`); the real email/form provider in the `/legal` provider table; SMTP and the mail-domain records; real project screenshots and an About photo. The full list is `tasks/figma-redesign-questions.md`.

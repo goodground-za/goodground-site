@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import { LaunchOutcome } from "@/components/launch/LaunchOutcome";
+import { LaunchOutcome } from "@/components/gg/launch/LaunchOutcome";
 import { launchEnquiry } from "@/content/websiteLaunch";
-import "../launch.css";
 
 /**
  * Where the no-JavaScript form POST lands on success. Reached only by a 303

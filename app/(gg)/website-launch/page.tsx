@@ -45,7 +45,7 @@ export const metadata: Metadata = {
 };
 
 /**
- * Offer per the Figma note: price 845 ZAR a month, a 12-month term, the
+ * Offer per the Figma note: price 950 ZAR a month, a 12-month term, the
  * eligibility, and availability read from the same data as the page (InStock or
  * SoldOut). NOTE the term and total are the open question in
  * content/websiteLaunch.ts (launchTerms).
@@ -144,7 +144,7 @@ export default function WebsiteLaunchPage() {
                     {availability.pill}
                   </span>
                 </div>
-                <SplitHeading as="h1" id="ln-title" className="gg-display-l ln-h1" text="LAUNCH YOUR FIRST WEBSITE FOR R845 A MONTH." />
+                <SplitHeading as="h1" id="ln-title" className="gg-display-l ln-h1" text="LAUNCH YOUR FIRST WEBSITE FOR R950 A MONTH." />
                 <p className="gg-lead ln-hero__lead" data-part="sub">
                   <Resp
                     long="Give your new business a professional place online, designed to help customers understand your services, trust your business and get in touch. We handle the planning, design and launch. You focus on getting your business started."
@@ -347,7 +347,7 @@ export default function WebsiteLaunchPage() {
             <SectionHeader
               tag="THE NUMBERS"
               tagTone="coral"
-              heading="R845 a month. No deposit. No surprises."
+              heading="R950 a month. No deposit. No surprises."
               layout="split"
               id="ln-numbers-title"
               sub="One clear monthly amount for 12 months, and a simple choice when the year ends."
@@ -361,7 +361,7 @@ export default function WebsiteLaunchPage() {
                     <CountUp to={terms.total} prefix="R" /> total
                   </p>
                 </div>
-                <ol className="ln-bars" aria-label="Twelve monthly payments of R845">
+                <ol className="ln-bars" aria-label="Twelve monthly payments of R950">
                   {Array.from({ length: terms.months }, (_, i) => (
                     <li key={i} style={{ "--i": i } as CSSProperties}>
                       <span className={i === 0 ? "ln-bars__bar is-first" : "ln-bars__bar"} />
@@ -514,7 +514,7 @@ export default function WebsiteLaunchPage() {
                 text={availability.soldOut ? `JOIN THE ${availability.nextMonth.toUpperCase()} WAITLIST.` : "GET YOUR FIRST BUSINESS WEBSITE UNDERWAY."}
               />
               <p className="gg-lead ln-form-lead" data-part="sub">
-                R845 a month, with domain, hosting and email fees included for the first 12 months. Exclusively for new businesses
+                R950 a month, with domain, hosting and email fees included for the first 12 months. Exclusively for new businesses
                 without a website.
               </p>
               <p className="ln-banner" data-part="sub">

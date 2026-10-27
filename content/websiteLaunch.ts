@@ -31,11 +31,11 @@ export const launchOffer = {
   capacityLine: "Two promotional spaces each month.",
 
   /** Rendered wherever the price appears. One string, so it cannot drift. */
-  price: "R845",
+  price: "R950",
   pricePeriod: "per month",
-  priceInline: "R845 per month",
+  priceInline: "R950 per month",
   /** The compact form used in the mobile bar, where space is tight. */
-  priceShort: "R845/month",
+  priceShort: "R950/month",
 
   /** Always "12 months". Never "a year's contract" — it is not one. */
   includedFees: "Domain, hosting and email fees included for the first 12 months.",
@@ -95,21 +95,21 @@ export const launchSpots = {
   month: "November",
   nextMonth: "December",
   total: 2,
-  taken: 1,
+  // Confirmed by Johandre 2026-10-27: November is fully booked (2 of 2).
+  taken: 2,
 } as const;
 
 /**
- * The money behind the R845. The Figma Website launch page and the /pricing
- * comparison both state a 12-month term, a R10,140 total and no deposit, but
- * the notes at the top of this file (2026-09-13) say the deposit, total and
- * schedule were NOT confirmed. They live here, in one place, as numbers: if
- * the owner does not confirm them, delete this block and the lines that read it.
+ * The money behind the R950. 12 monthly payments, R11,400 total: confirmed by
+ * Johandre 2026-10-27 (the price moved from R845 to R950 a month). "No deposit"
+ * is still the Figma wording and was not separately confirmed. Everything that
+ * shows the total reads it from here.
  */
 export const launchTerms = {
-  monthly: 845,
+  monthly: 950,
   months: 12,
   deposit: 0,
-  total: 845 * 12,
+  total: 950 * 12,
 } as const;
 
 /**
@@ -129,7 +129,7 @@ export const launchQualifier = {
 } as const;
 
 export const launchHero = {
-  headline: "Launch your first website for R845 per month.",
+  headline: "Launch your first website for R950 per month.",
   lead: "Give your new business a professional place online, with a website designed to help customers understand your services, trust your business and get in touch.",
   body: [
     "Your package includes up to five custom website pages, domain registration, business email setup, hosting, detailed SEO preparation and submission to Google for indexing.",
@@ -371,7 +371,7 @@ export const launchEnquiry = {
   heading: "Get your first business website underway.",
   body: [
     "Launch with a website that explains your services, presents your business professionally and makes contacting you straightforward.",
-    "R845 per month, with domain, hosting and email fees included for the first 12 months.",
+    "R950 per month, with domain, hosting and email fees included for the first 12 months.",
     "Exclusively for new businesses without a website.",
   ],
   /**
@@ -395,9 +395,9 @@ export const launchEnquiry = {
 /** Route and search metadata, kept beside the offer they describe. */
 export const launchRoute = {
   path: "/website-launch",
-  title: "First Website for New Businesses | R845/month | GoodGround",
+  title: "First Website for New Businesses | R950/month | GoodGround",
   description:
-    "Launch your new business website for R845 per month. Up to five pages, SEO setup and 12 months of domain, hosting and email fees. Two spaces monthly.",
+    "Launch your new business website for R950 per month. Up to five pages, SEO setup and 12 months of domain, hosting and email fees. Two spaces monthly.",
 } as const;
 
 /** Server-side limits, shared by the browser validation and the API route. */

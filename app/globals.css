@@ -1,141 +1,21 @@
 @import "tailwindcss";
 
 /*
-  Design tokens for the site's one design language (promoted from the
-  approved /home-test A/B variant — see the ht-* block below for full
-  history/rationale). A few generic tokens survive from the previous
-  bark/pine/ember palette because they're palette-agnostic:
-    --color-ink     near-black, used where a surface needs a genuinely dark
-                    (not brand-purple) text color for contrast reasons —
-                    see components/Button.tsx's outline variant and
-                    app/about/page.tsx's CTA card.
-    --radius-*      the site's shared corner-radius scale.
-    --shadow-*      neutral ink-tinted shadows (not literally palette-colored).
-    --ease-*        custom easing curves used by CSS-only animations.
-
-  Tailwind v4 has no tailwind.config.ts; @theme is the equivalent layer.
+  Base layer for the whole site. The design tokens live in components/gg/gg.css
+  (--gg-*); the old ht-* palette, radius, shadow and type-scale tokens were
+  removed when the last page moved onto the redesign. Tailwind v4 has no config
+  file: @theme is the equivalent layer, and only the two font tokens that the
+  base layer below reads are kept here.
 */
 @theme {
-  --color-ink: #010602; /* near-black, for text needing max contrast on a bright surface */
-
-  /* 2026-09-11, rolling the homepage design out site-wide; 2026-09-12, the
-     correction below.
-
-     The site has ONE container radius. 24px, because that is exactly what the
-     homepage gives its own images (.project-image and .intro-visual are both
-     1.5rem). radius-block and radius-card are deliberately the same value: a
-     panel and a card sitting next to each other with different corners is the
-     inconsistency this is here to prevent. radius-pill stays, because the
-     buttons are pills.
-
-     The first pass set radius-block to 0. That was wrong, and it is worth
-     saying why so it isn't "fixed" back. The homepage has no rounded SECTION
-     edges — true, and still true: its sections run edge to edge and none of
-     them carries this token. But every `rounded-block` call site is an INSET
-     PANEL (a form, a dark bento block, a case-study figure), and squaring those
-     did not match the homepage, it just left hard corners floating on a page
-     whose cards were still round. Sections stay square by having no radius at
-     all; containers are round. */
-  --radius-block: 24px;
-  --radius-card: 24px;
-  --radius-pill: 999px;
-
-  /* The homepage has no drop shadows at all: it separates things with hairline
-     rules (rgba(17,17,17,.2)). These two tokens are therefore rings, not
-     shadows — a 1px hairline drawn at the element's own radius, with no blur
-     and no layout cost, so every existing `shadow-soft` card picks up the new
-     language without touching 27 call sites. `shadow-lift` is the same rule,
-     darker, for hover.
-
-     On a dark surface a dark hairline is invisible, which is correct: the
-     homepage's dark sections separate with white-line borders or nothing. */
-  --shadow-soft: 0 0 0 1px rgb(17 17 17 / 0.12);
-  --shadow-lift: 0 0 0 1px rgb(17 17 17 / 0.3);
-
-  /* Strong custom easing curves (Emil Kowalski's craft bar — the built-in CSS
-     ease-outs are too weak to feel intentional). --ease-out is the default for
-     UI feedback; --ease-in-out for on-screen movement. Exposed as Tailwind
-     tokens so components can use `ease-[var(--ease-out)]`. */
-  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
-  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
-}
-
-/*
-  The site's brand palette and type scale — promoted from the /home-test A/B
-  variant once the client approved that look for the whole site. Kept
-  `ht-*` namespaced rather than renamed to `--color-primary` etc: the prefix
-  is now just a stable identifier, not an experiment marker, and renaming
-  would mean touching every component's Tailwind classes for no visual
-  change. Hex values are the client's supplied palette, used exactly as given.
-*/
-@theme {
-  /* 2026-09-11: repointed to the homepage redesign's palette so the whole site
-     shares one look. The ht-* names are kept — they are stable identifiers now,
-     not experiment markers, and renaming would touch every Tailwind class in
-     59 files for no visual change. What changed is what they point AT.
-
-     The new design has no purple. ht-purple therefore becomes ink: it is still
-     "the dark surface" everywhere it is used (dark sections, footer, headings
-     on the light ground), it is just no longer #2e1848. Purple survives only
-     inside the logo artwork, which is not a UI colour. */
-  /* Repointed from #fe9dd2: the new design has no pink. Note the constraint
-     this creates — orange is 4.90:1 on ink (fine for text) but only 3.59:1
-     on paper, so it is borders/icons/large text there, never small body copy.
-     A contrast audit across every page follows this change. */
-  --color-ht-pink: #f13e1b; /* now the accent orange, not pink */
-  --color-ht-orange: #f13e1b; /* primary action colour: section bg, buttons */
-  --color-ht-crimson: #bc3116; /* depth/shadow under orange, hover states */
-  --color-ht-purple: #111111; /* THE DARK SURFACE — ink, not purple, since 2026-09-11 */
-  --color-ht-cream: #f7f7f4; /* base page background — "paper" in the new design */
-
-  /* The retired 2026 brand purple, brought back 2026-09-13 as the surface for
-     PROMOTIONAL BLOCKS ONLY: the homepage offer band, Reasons, the Growth
-     closer, the About invitation, the article CTA and the capacity band.
-
-     It is deliberately a separate token rather than a repoint of ht-purple,
-     which means ink #111111 and carries every dark section, the footer and
-     the headings on paper. Repointing that would turn the whole site purple.
-
-     Constraint that does NOT apply on ink: orange is 4.08:1 here, so it is
-     large text and icons only on this surface, never small text. White is
-     15.7:1. */
-  --color-ht-deep-purple: #2e1848;
-
-  --font-ht-display: var(--font-oswald), "Arial Narrow", ui-sans-serif, system-ui, sans-serif;
-  --font-ht-body: var(--font-ibm-plex-sans), ui-sans-serif, system-ui, sans-serif;
-
-  /* The generic tokens point at the same pair, so anything using
-     font-heading/font-body (inherited by h1-h4/body in the base layer below)
-     picks up Oswald/IBM Plex Sans automatically. */
   --font-heading: var(--font-oswald), "Arial Narrow", ui-sans-serif, system-ui, sans-serif;
   --font-body: var(--font-ibm-plex-sans), ui-sans-serif, system-ui, sans-serif;
-
-  /* Fluid type scale, ~1.333 ratio, matching the mockup's oversized headline
-     treatment. Named distinctly from font-size utilities so it never collides
-     with one-off clamp() values used directly in components. */
-  --text-ht-display: clamp(2.5rem, 6vw, 5.5rem);
-  --text-ht-h3: clamp(1.5rem, 2.5vw, 2rem);
-  --text-ht-body-lg: clamp(1.1rem, 1.6vw, 1.4rem);
-  --text-ht-body: 1rem;
-  --text-ht-label: 0.8125rem;
-}
-
-/*
-  One page gutter for the whole site.
-
-  The homepage's .wrap uses `clamp(1.25rem, 4.45vw, 5.5rem)` — 20px on a phone,
-  64px at 1440. Inner-page sections were on `px-6 sm:px-10` (24/40px), so a
-  hero's text started 24px further in than the section below it, on every page.
-  This is the same value, as a utility, so the two cannot drift.
-*/
-@utility px-gutter {
-  padding-inline: clamp(1.25rem, 4.45vw, 5.5rem);
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    background-color: var(--color-ht-cream);
+    background-color: var(--gg-canvas);
     /* Hard guard against any horizontal scroll from decorative overflow
        (bleed images, full-bleed sections). `clip` (not `hidden`) doesn't
        create a scroll container, so the sticky nav keeps working and
@@ -144,8 +24,8 @@
   }
 
   body {
-    background-color: var(--color-ht-cream);
-    color: var(--color-ht-purple);
+    background-color: var(--gg-canvas);
+    color: var(--gg-ink);
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
@@ -159,14 +39,14 @@
     still carry the brand.
   */
   ::selection {
-    background-color: var(--color-ht-orange);
-    color: var(--color-ink);
+    background-color: var(--gg-coral);
+    color: var(--gg-ink);
   }
 
   html {
-    caret-color: var(--color-ht-orange);
-    accent-color: var(--color-ht-orange);
-    scrollbar-color: var(--color-ht-purple) var(--color-ht-cream);
+    caret-color: var(--gg-coral);
+    accent-color: var(--gg-coral);
+    scrollbar-color: var(--gg-ink) var(--gg-canvas);
   }
 
   /* Chrome/Safari ignore scrollbar-color; these give them the same treatment
@@ -178,17 +58,17 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: var(--color-ht-cream);
+    background: var(--gg-canvas);
   }
 
   ::-webkit-scrollbar-thumb {
-    background: var(--color-ht-purple);
-    border: 3px solid var(--color-ht-cream);
+    background: var(--gg-ink);
+    border: 3px solid var(--gg-canvas);
     border-radius: 999px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-ht-crimson);
+    background: var(--gg-coral-text);
   }
 
   /* Parkinsans for every heading, per the client. `text-wrap:
@@ -220,14 +100,14 @@
     working in forced-colors / high-contrast mode too.
   */
   :focus-visible {
-    outline: 2px solid var(--color-ht-purple);
+    outline: 2px solid var(--gg-ink);
     outline-offset: 2px;
     /* !important so the halo wins over a component's own decorative shadow
        (cards/buttons carry hard-edge offset shadows, which would otherwise
        override this base-layer box-shadow and wipe the halo). The decorative
        shadow returns on blur; focus visibility is the requirement that must
        take precedence while focused. */
-    box-shadow: 0 0 0 4px var(--color-ht-cream) !important;
+    box-shadow: 0 0 0 4px var(--gg-canvas) !important;
     border-radius: 5px;
   }
 }

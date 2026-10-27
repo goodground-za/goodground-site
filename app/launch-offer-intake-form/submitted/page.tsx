@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { GgShell } from "@/components/gg/GgShell";
+import { ButtonLink } from "@/components/gg/Button";
 import { intakeCopy } from "@/content/launchIntake";
 import "../intake.css";
 
@@ -18,16 +19,18 @@ export const metadata: Metadata = {
 
 export default function IntakeSubmittedPage() {
   return (
-    <div className="gg-intake gg-intake--outcome">
-      <main className="gg-intake__wrap" id="main">
-        <div className="gg-intake__done">
-          <h1>Thank you.</h1>
-          <p>{intakeCopy.success}</p>
-          <Link className="gg-intake__btn" href="/">
-            Back to the GoodGround home page
-          </Link>
+    <GgShell crumbs={[{ label: "PROJECT FORM" }, { label: "RECEIVED" }]}>
+      <div className="gg-intake gg-intake--outcome">
+        <div className="gg-intake__wrap">
+          <div className="gg-intake__done">
+            <h1>Thank you.</h1>
+            <p>{intakeCopy.success}</p>
+            <ButtonLink href="/" variant="coral" className="gg-intake__home">
+              Back to the home page
+            </ButtonLink>
+          </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </GgShell>
   );
 }

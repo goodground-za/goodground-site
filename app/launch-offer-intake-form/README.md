@@ -1,7 +1,7 @@
 # Launch-offer intake form
 
 `/launch-offer-intake-form` — the project form sent to a client after they
-enquire about the R845 website launch offer.
+enquire about the R950 website launch offer.
 
 ## What it is for
 
