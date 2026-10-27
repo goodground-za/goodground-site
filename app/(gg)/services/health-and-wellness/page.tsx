@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { IndustryPageTemplate } from "@/components/sections/IndustryPageTemplate";
+
+import { IndustryPage } from "@/components/gg/industry/IndustryPage";
 import { industryPages } from "@/content/industryPages";
 import { pageSocialMeta } from "@/lib/metadata";
 
-const entry = industryPages.find((p) => p.slug === "retail-and-small-brands")!;
+const entry = industryPages.find((p) => p.slug === "health-and-wellness")!;
 const path = `/services/${entry.slug}`;
 
 export const metadata: Metadata = {
@@ -13,6 +14,6 @@ export const metadata: Metadata = {
   ...pageSocialMeta({ title: entry.metaTitle, description: entry.metaDescription, path }),
 };
 
-export default function RetailAndSmallBrandsPage() {
-  return <IndustryPageTemplate slug={entry.slug} />;
+export default function Page() {
+  return <IndustryPage slug="health-and-wellness" />;
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { IndustryPageTemplate } from "@/components/sections/IndustryPageTemplate";
+
+import { IndustryPage } from "@/components/gg/industry/IndustryPage";
 import { industryPages } from "@/content/industryPages";
 import { pageSocialMeta } from "@/lib/metadata";
 
@@ -13,6 +14,6 @@ export const metadata: Metadata = {
   ...pageSocialMeta({ title: entry.metaTitle, description: entry.metaDescription, path }),
 };
 
-export default function ProfessionalAndConsultingPage() {
-  return <IndustryPageTemplate slug={entry.slug} />;
+export default function Page() {
+  return <IndustryPage slug="professional-and-consulting" />;
 }
