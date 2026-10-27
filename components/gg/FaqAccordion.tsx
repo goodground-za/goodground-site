@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
 
+import { Resp } from "./Resp";
+
 /**
  * FAQ accordion — one answer open at a time, everywhere. First item open by
  * default.
@@ -17,7 +19,13 @@ import { useCallback, useEffect, useId, useRef, useState, type KeyboardEvent } f
  * Answers are plain-text paragraphs so the FAQPage JSON-LD can be generated
  * from exactly what renders (pair with <FAQSchema> from components/Schema).
  */
-export type FaqItem = { question: string; answer: string[]; slug?: string };
+export type FaqItem = {
+  question: string;
+  answer: string[];
+  slug?: string;
+  /** Phone wording where the 390 frame shortens the text (README 3.4: one string per breakpoint, never truncated). */
+  short?: { question?: string; answer?: string[] };
+};
 
 export function FaqAccordion({
   items,
@@ -135,7 +143,9 @@ export function FaqAccordion({
                     {String(index + 1).padStart(2, "0")}
                   </span>
                 ) : null}
-                <span className="gg-faq__q">{item.question}</span>
+                <span className="gg-faq__q">
+                  <Resp long={item.question} short={item.short?.question} />
+                </span>
                 <span className="gg-faq__chip" aria-hidden="true" />
               </button>
             </h3>
@@ -143,7 +153,9 @@ export function FaqAccordion({
               <div className="gg-faq__panel-inner">
                 <div className="gg-faq__answer">
                   {item.answer.map((paragraph, i) => (
-                    <p key={i}>{paragraph}</p>
+                    <p key={i}>
+                      <Resp long={paragraph} short={item.short?.answer?.[i]} />
+                    </p>
                   ))}
                 </div>
               </div>

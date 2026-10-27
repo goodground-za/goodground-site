@@ -158,6 +158,21 @@
   outline-color: var(--gg-surface);
 }
 
+/* One string per breakpoint: short wording on phones, long from 768 up. */
+.gg-resp-long {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .gg-resp-short {
+    display: none;
+  }
+
+  .gg-resp-long {
+    display: inline;
+  }
+}
+
 .gg-sr-only {
   position: absolute;
   width: 1px;

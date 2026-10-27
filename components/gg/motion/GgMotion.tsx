@@ -80,12 +80,17 @@ export function GgMotion() {
       { rootMargin: "0px 0px -15% 0px", threshold: 0 },
     );
     document
-      .querySelectorAll('[data-reveal]:not([data-reveal="count-up"])')
+      .querySelectorAll('[data-reveal]:not([data-reveal="count-up"]):not([data-reveal="fill"])')
       .forEach((el) => reveal.observe(el));
 
     // --- Count-ups ---------------------------------------------------------------
-    const counters = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal="count-up"]'));
+    // data-reveal="fill" (rings, bars) shares the count-up trigger so a number
+    // and the ring around it start together. data-delay staggers a row of them.
+    const counters = Array.from(
+      document.querySelectorAll<HTMLElement>('[data-reveal="count-up"], [data-reveal="fill"]'),
+    );
     const frames = new Set<number>();
+    const timers = new Set<number>();
     const runCount = (el: HTMLElement) => {
       const digits = el.querySelector<HTMLElement>(".gg-count__digits");
       if (!digits) return;
@@ -108,17 +113,29 @@ export function GgMotion() {
       (entries) => {
         for (const entry of entries) {
           if (!entry.isIntersecting) continue;
-          runCount(entry.target as HTMLElement);
-          counter.unobserve(entry.target);
+          const el = entry.target as HTMLElement;
+          counter.unobserve(el);
+          if (el.dataset.reveal === "fill") {
+            el.classList.add("is-in");
+            // Numbers inside a ring count with it.
+            el.querySelectorAll<HTMLElement>('[data-reveal="count-up"]').forEach(runCount);
+            continue;
+          }
+          const delay = motionOff() ? 0 : Number(el.dataset.delay) || 0;
+          if (delay) timers.add(window.setTimeout(() => runCount(el), delay));
+          else runCount(el);
         }
       },
-      { threshold: 0.5 },
+      // Phones count at 30% visible (Home 01 note).
+      { threshold: window.innerWidth < 768 ? 0.3 : 0.5 },
     );
     for (const el of counters) {
-      if (!motionOff()) {
+      if (el.dataset.reveal === "count-up" && !motionOff()) {
         const digits = el.querySelector<HTMLElement>(".gg-count__digits");
         if (digits) digits.textContent = "0";
       }
+      // A number inside a fill is driven by that fill, not on its own.
+      if (el.dataset.reveal === "count-up" && el.closest('[data-reveal="fill"]')) continue;
       counter.observe(el);
     }
 
@@ -141,6 +158,7 @@ export function GgMotion() {
       counter.disconnect();
       loops.disconnect();
       frames.forEach(cancelAnimationFrame);
+      timers.forEach(window.clearTimeout);
       window.removeEventListener("resize", onResize);
       document.removeEventListener("visibilitychange", onVisibility);
       window.clearTimeout(resizeTimer);
@@ -193,7 +211,17 @@ function splitLines(el: HTMLElement) {
   }
 
   el.textContent = "";
-  el.setAttribute("aria-label", text.replace(/\n/g, " "));
+  // aria-label is only valid on headings; any other element (a price, a big
+  // number) keeps its text for assistive tech in a visually hidden copy.
+  const plain = text.replace(/\n/g, " ");
+  if (/^H[1-6]$/.test(el.tagName)) {
+    el.setAttribute("aria-label", plain);
+  } else {
+    const hidden = document.createElement("span");
+    hidden.className = "gg-sr-only";
+    hidden.textContent = plain;
+    el.appendChild(hidden);
+  }
   lines.forEach((line, i) => {
     const mask = document.createElement("span");
     mask.className = "gg-line";

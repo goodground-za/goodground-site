@@ -24,6 +24,8 @@ export function SectionHeader({
   onDark = false,
   id,
   className,
+  subClassName,
+  ctaClassName,
 }: {
   tag?: string;
   tagTone?: TagTone;
@@ -36,15 +38,22 @@ export function SectionHeader({
   onDark?: boolean;
   id?: string;
   className?: string;
+  /** Extra classes for the sub-copy / CTA wrappers (e.g. to hide them on phones). */
+  subClassName?: string;
+  ctaClassName?: string;
 }) {
   const H = headingLevel === 3 ? "h3" : "h2";
 
   const subNode = sub ? (
-    <p className="gg-section-header__sub gg-lead" data-part="sub">
+    <p className={`gg-section-header__sub gg-lead${subClassName ? ` ${subClassName}` : ""}`} data-part="sub">
       {sub}
     </p>
   ) : null;
-  const ctaNode = cta ? <div data-part="cta">{cta}</div> : null;
+  const ctaNode = cta ? (
+    <div className={ctaClassName} data-part="cta">
+      {cta}
+    </div>
+  ) : null;
 
   const cls = [
     "gg-section-header",

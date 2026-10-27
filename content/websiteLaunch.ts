@@ -79,6 +79,25 @@ export const launchAvailability = {
 } as const;
 
 /**
+ * The redesigned Home's availability meter ("November availability, 1 of 2
+ * spots left", Figma Home 03). It is a site setting, per the redesign README:
+ * `month` is the month being offered, `total` the monthly capacity, `taken` how
+ * many are already spoken for. When taken === total the card shows the
+ * sold-out state ("Fully booked", waitlist button).
+ *
+ * PLACEHOLDER VALUES. They are the Figma sample, not a confirmed claim: the
+ * owner must set the real month and spots before this ships (the existing
+ * `launchAvailability` message above says "September" and is now stale).
+ * Nothing here updates itself, for the reason `launchAvailability` gives.
+ */
+export const launchSpots = {
+  month: "November",
+  nextMonth: "December",
+  total: 2,
+  taken: 1,
+} as const;
+
+/**
  * The qualifier. A sales device and a screen in the same block: it tells the
  * right reader this is for them and the wrong one to stop reading.
  *

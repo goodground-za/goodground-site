@@ -17,22 +17,25 @@ export function LinkedCard({
   className,
   style,
   children,
+  ...rest
 }: {
   href: string;
   className?: string;
   style?: CSSProperties;
   children: ReactNode;
+  /** aria-* and data-* only. */
+  [attr: `aria-${string}` | `data-${string}`]: string | number | undefined;
 }) {
   const cls = className ? `gg-card ${className}` : "gg-card";
   if (href.startsWith("/")) {
     return (
-      <Link href={href} className={cls} style={style}>
+      <Link href={href} className={cls} style={style} {...rest}>
         {children}
       </Link>
     );
   }
   return (
-    <a href={href} className={cls} style={style}>
+    <a href={href} className={cls} style={style} {...rest}>
       {children}
     </a>
   );

@@ -77,6 +77,19 @@ export function ButtonLink({
   );
 }
 
+/**
+ * The look of a button, as a <span>, for use INSIDE a linked card where a real
+ * link or button would nest an interactive element in the card's own <a>.
+ * The card's hover/press states drive it through the usual .gg-btn rules.
+ */
+export function ButtonFace({ variant = "primary", className, children }: Omit<Common, "full">) {
+  return (
+    <span className={classes(variant, false, className)}>
+      <Inner>{children}</Inner>
+    </span>
+  );
+}
+
 export function Button({
   variant = "primary",
   full = false,

@@ -15,12 +15,15 @@ export function CountUp({
   prefix = "",
   suffix = "",
   decimals = 0,
+  delay,
   className,
 }: {
   to: number;
   prefix?: string;
   suffix?: string;
   decimals?: number;
+  /** ms to wait after it comes into view, to stagger a row of them. */
+  delay?: number;
   className?: string;
 }) {
   const final = formatNumber(to, decimals);
@@ -30,6 +33,7 @@ export function CountUp({
       data-reveal="count-up"
       data-to={to}
       data-decimals={decimals || undefined}
+      data-delay={delay || undefined}
       role="text"
       aria-label={`${prefix}${final}${suffix}`}
     >

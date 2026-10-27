@@ -58,7 +58,7 @@ export function Hero() {
       </div>
 
       <div className="hero-bottom wrap">
-        <a className="scroll-link" href="#about">
+        <a className="scroll-link" href="#trust">
           <span className="scroll-icon" aria-hidden="true">
             ↓︎
           </span>

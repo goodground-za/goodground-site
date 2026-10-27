@@ -8,8 +8,8 @@ Work on `main`, local commits only. Review each step before the next.
 
 ## Build order
 
-- [x] 1. Foundations + `/_styleguide` (built 26 Oct 2026, awaiting review)
-- [ ] 2. Home (hero untouched)
+- [x] 1. Foundations + `/_styleguide` (built 26 Oct 2026, reviewed 27 Oct, committed locally dbd1813)
+- [x] 2. Home, hero untouched (built 27 Oct 2026, awaiting review; not yet committed)
 - [ ] 3. Services → Service detail (SEO first) → Industry (Trades first)
 - [ ] 4. Work listing + Case study
 - [ ] 5. Pricing (configurator) + Website launch
@@ -30,6 +30,25 @@ Work on `main`, local commits only. Review each step before the next.
 - Reveal helper: `components/gg/motion/GgMotion.tsx` (`data-reveal`, `data-split`, `data-loop`).
 - "Pause motion" now writes `html[data-motion="off|on"]` + localStorage `gg-motion`; the head script in `app/layout.tsx` applies it before paint on every page.
 - Numbers go through `components/gg/format.ts` (open item 4).
+
+## Step 2 notes (Home, built 27 Oct 2026)
+
+- `app/page.tsx` composes it: the hero and its header/menu stay on the old system (`.home-2026`, HomeChrome, Hero), everything after is `.gg` (`components/gg/home/`, styles in `home.css`). The two scopes sit side by side, never nested. Only hook changes to the hero: "Scroll to explore" now goes to `#trust`.
+- Section heights vs Figma at 1440: trust 144/143, why 1037/1005, launch 860/854, services 1370/1369, work 1480/1483, story 880/880; process and pay were short before the 700px header column and the 520px option cards (fixed after). Phone heights are within about 50px on every section.
+- Known deviation: Figma's "Why" cards are 480 tall but their content is 508, so the content overflows the frame; built at natural height (+32px) rather than copying the overflow.
+- Lighthouse on `/`: desktop 100/100/100 (a11y/best practices/SEO), mobile a11y 96 until the carousel dots were made 24px+ targets.
+- Verified: no console errors; JS-off HTML has every section, the FAQ answers and one h1; `html[data-motion="off"]` gives final counts, finished stepper, plain search mock, paused videos, and the meter/score bars keep their values.
+- Carousel dots are 24px-wide targets, so they sit 16px apart instead of the drawn 6px (Lighthouse counts overlapping targets as obscured).
+
+## Home: needs the owner's answer before it ships
+
+- **Launch availability is a placeholder.** The card shows "November availability, 1 of 2 spots left", the Figma sample, kept in `launchSpots` in `content/websiteLaunch.ts`. Give the real month and spots taken. (The older `launchAvailability` message still says September and is not used by the new card.)
+- **Trust bar numbers** (`content/trustBar.ts`): "5.0 on Google", "20+ years combined experience", "10+ live, testable projects", "100% satisfied clients". `content/stats.ts` has a standing rule of honest figures only for a studio founded in 2026. Confirm each is true.
+- **Launch card says "Up to five custom website pages"**, matching the live offer; the Figma sample says "Custom one-page website".
+- **Roam Local quote** uses the verbatim review ("...ongoing support throughout that period."); Figma shortens it, which would edit the review. It wraps to two lines on desktop.
+- **Project images** are the spec's gradients (the repo's old project images are portrait mock-ups and an old site design). Need real 16:10 screenshots (README open item 6).
+- **FAQPage JSON-LD** is not emitted on Home because /faq already emits it for the same questions (duplicate FAQPage content was removed from Home earlier). The README says "wherever an accordion is shown"; say if you want it back.
+- The closing CTA and footer are the step 1 components, unchanged.
 
 ## Owner decisions, 27 Oct 2026
 
@@ -55,5 +74,5 @@ the intended noindex on the styleguide.
 
 ## Waiting on the owner
 
-- Commit step 1 locally? Start step 2 (Home)?
+- Review Home (step 2), then say go for step 3 (Services, Service detail, Industry).
 - The open items in docs/redesign/README.md section 10.
