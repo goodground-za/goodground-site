@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { ServicePageTemplate } from "@/components/sections/ServicePageTemplate";
+
+import { ServiceDetailPage } from "@/components/gg/service-detail/ServiceDetailPage";
 import { servicePages } from "@/content/servicePages";
 import { pageSocialMeta } from "@/lib/metadata";
 
-const entry = servicePages.find((p) => p.slug === "meta-ads")!;
+const entry = servicePages.find((p) => p.slug === "website-redesign")!;
 const path = `/services/${entry.slug}`;
 
 export const metadata: Metadata = {
@@ -13,6 +14,6 @@ export const metadata: Metadata = {
   ...pageSocialMeta({ title: entry.metaTitle, description: entry.metaDescription, path }),
 };
 
-export default function MetaAdsPage() {
-  return <ServicePageTemplate slug={entry.slug} />;
+export default function Page() {
+  return <ServiceDetailPage slug="website-redesign" />;
 }
