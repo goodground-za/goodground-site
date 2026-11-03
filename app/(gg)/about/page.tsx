@@ -6,6 +6,7 @@ import { ButtonLink } from "@/components/gg/Button";
 import { CountUp } from "@/components/gg/CountUp";
 import { GgShell } from "@/components/gg/GgShell";
 import { GradientCta } from "@/components/gg/GradientCta";
+import { PAGE_TRACKS } from "@/content/funnel";
 import { Icon } from "@/components/gg/Icon";
 import { Resp } from "@/components/gg/Resp";
 import { SectionHeader } from "@/components/gg/SectionHeader";
@@ -261,7 +262,8 @@ export default function AboutPage() {
         tag="AN INVITATION"
         headline={"IF YOU’RE BUILDING A BUSINESS YOU PLAN TO STICK WITH, WE’D LIKE TO HEAR ABOUT IT."}
         sub="Let’s talk about the ground you’re building on."
-        primary={{ label: "Start your project", href: "/start-project?ref=about" }}
+        track={PAGE_TRACKS.about}
+        refSource="about"
         secondary={{ label: "Get in touch", href: "/contact" }}
       />
     </GgShell>

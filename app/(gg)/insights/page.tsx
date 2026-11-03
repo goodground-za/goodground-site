@@ -5,6 +5,7 @@ import { BreadcrumbSchema } from "@/components/Breadcrumbs";
 import { CountUp } from "@/components/gg/CountUp";
 import { GgShell } from "@/components/gg/GgShell";
 import { GradientCta } from "@/components/gg/GradientCta";
+import { PAGE_TRACKS } from "@/content/funnel";
 import { Resp } from "@/components/gg/Resp";
 import { SplitHeading } from "@/components/gg/SplitHeading";
 import { Tag } from "@/components/gg/Tag";
@@ -106,6 +107,7 @@ export default function InsightsPage() {
         variant="home"
         tag="GET IN TOUCH"
         sub="Read enough? Tell us about your business and we’ll come back with a fixed price and a clear plan."
+        track={PAGE_TRACKS.insights}
         refSource="insights"
         secondary={{ label: "hello@goodground.co.za", href: "mailto:hello@goodground.co.za" }}
       />

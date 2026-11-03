@@ -12,9 +12,13 @@ import { ArrowChip, LinkedCard } from "@/components/gg/LinkedCard";
 import { SectionHeader } from "@/components/gg/SectionHeader";
 import { Tag } from "@/components/gg/Tag";
 import { faq } from "@/content/faq";
+import { PRIMARY_TRACKS, trackNextLink, trackPrimary, trackSecondary } from "@/content/funnel";
+import { localPlans } from "@/content/pricing";
 import { servicePages } from "@/content/servicePages";
 
 import { SheetDemo } from "./SheetDemo";
+import { formatRand } from "@/components/gg/format";
+import "@/components/gg/start/start.css";
 import "./styleguide.css";
 
 /**
@@ -302,12 +306,98 @@ export default function StyleguidePage() {
           <SheetDemo />
         </Block>
 
+        <Block title="v2 · Plan radio cards (start-project, step 2)" node="v2 · not drawn">
+          <p className="gg-body gg-muted">
+            The monthly-plan choice. Same option-card states as the other steps (default, hover, selected), with the
+            price, a badge and three inclusions. Static here: the live ones are buttons with role=radio.
+          </p>
+          <div className="sp sg-sp">
+            <div className="sp__opts sp__opts--plans" role="presentation">
+              {localPlans.map((plan, i) => (
+                <div key={plan.slug} className={["sp-opt sp-plan", plan.slug === "local-plus" ? "sp-plan--popular" : "", i === 1 ? "is-on" : ""].filter(Boolean).join(" ")}>
+                  <span className="sp-opt__icon" aria-hidden="true">
+                    <Icon name="pin" size={22} stroke={2} />
+                  </span>
+                  <span className="sp-opt__text">
+                    <span className="sp-plan__head">
+                      <strong>{plan.name}</strong>
+                      <span className="sp-plan__price">{formatRand(plan.monthly)}/mo</span>
+                      {plan.badge === "Most popular" ? <span className="sp-plan__badge">{plan.badge}</span> : null}
+                    </span>
+                    <span>{plan.tagline}</span>
+                    <span className="sp-plan__list">
+                      {plan.highlights.map((line) => (
+                        <span key={line} className="sp-plan__item">
+                          <Icon name="check" size={14} stroke={2.6} />
+                          {line}
+                        </span>
+                      ))}
+                    </span>
+                  </span>
+                  <span className="sp-opt__radio" aria-hidden="true">
+                    <Icon name="check" size={13} stroke={3} />
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Block>
+
+        <Block title="v2 · Monthly-plan option, offer banner, NEW pill" node="v2 · not drawn">
+          <div className="sp sg-sp">
+            <div className="sp__opts sp__opts--service" role="presentation">
+              <div className="sp-opt sp-opt--plum">
+                <span className="sp-opt__icon" aria-hidden="true">
+                  <Icon name="pin" size={22} stroke={2} />
+                </span>
+                <span className="sp-opt__text">
+                  <strong>Get found online on a monthly plan</strong>
+                  <span>Website, Google profile and AI visibility from {formatRand(localPlans[0].monthly)}/mo. No deposit.</span>
+                </span>
+                <span className="sp-opt__radio" aria-hidden="true">
+                  <Icon name="check" size={13} stroke={3} />
+                </span>
+              </div>
+            </div>
+            <div className="sp__banner sp__banner--blush" style={{ marginTop: 16 }}>
+              <span className="sp__banner-icon" aria-hidden="true">
+                <Icon name="tag" size={18} stroke={2} />
+              </span>
+              <p className="sp__banner-text">
+                <strong>New Business Offer · first month free</strong>
+                <span>Plus a business mailbox free for 12 months. 2 of 2 November spaces left.</span>
+              </p>
+              <button type="button" className="sp__banner-remove">
+                Remove
+              </button>
+            </div>
+          </div>
+          <p className="gg-body">
+            Footer pill: <span className="gg-footer__new" style={{ marginLeft: 0 }}>NEW</span>
+          </p>
+        </Block>
+
+        <Block title="v2 · Gradient CTA tracks" node="v2 · not drawn">
+          <p className="gg-body gg-muted">
+            The card takes a <code>track</code> (local, custom or check). It sets the Light button and the one text link
+            to the next-best track. Labels and links are written once in content/funnel.ts.
+          </p>
+          <ul className="gg-body" style={{ display: "grid", gap: 8, paddingLeft: 18 }}>
+            {PRIMARY_TRACKS.map((track) => (
+              <li key={track}>
+                <strong>{track}</strong>: {trackPrimary(track, "styleguide").label} ({trackPrimary(track, "styleguide").href}), secondary{" "}
+                {trackSecondary(track).label}, link “{trackNextLink(track, "styleguide").label}”
+              </li>
+            ))}
+          </ul>
+        </Block>
+
         <Block title="Gradient CTA: inner (Industry / Service)" node="96:348" refs={["cta-inner.png"]}>
-          <p className="gg-body gg-muted">Rendered full width below.</p>
+          <p className="gg-body gg-muted">Rendered full width below, with track=check.</p>
         </Block>
       </div>
 
-      <GradientCta variant="inner" refSource="styleguide" headingId="gg-cta-heading-inner" />
+      <GradientCta variant="inner" track="check" refSource="styleguide" headingId="gg-cta-heading-inner" />
 
       <div className="gg-wrap">
         <Block title="Gradient CTA: Home + canonical footer" node="7:210" refs={["cta-home-footer.png"]}>
@@ -315,7 +405,7 @@ export default function StyleguidePage() {
         </Block>
       </div>
 
-      <GradientCta refSource="styleguide" />
+      <GradientCta track="local" refSource="styleguide" />
     </GgShell>
   );
 }

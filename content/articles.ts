@@ -4,6 +4,8 @@
  * by prepending to `articles` (newest first).
  */
 
+import type { PrimaryTrack } from "@/content/funnel";
+
 export type Block =
   | { type: "p"; text: string }
   /** The lead paragraph: larger, opens the article body. */
@@ -41,6 +43,8 @@ export type ShortAnswer = {
 
 export type Article = {
   slug: string;
+  /** The end-of-article call to action. `track` defaults to "check" (the free AI check; blueprint section 3). */
+  cta?: { track?: PrimaryTrack };
   title: string;
   /** Listing + meta description. */
   excerpt: string;
@@ -219,7 +223,7 @@ export const articles: Article[] = [
       { type: "h2", text: "The costs nobody mentions until after you’ve paid" },
       {
         type: "p",
-        text: "A build price and a running cost are two different numbers. Hosting, a domain and ongoing maintenance sit outside the build price almost everywhere, including on GoodGround’s four packages. Full Service and the Website Launch Offer are the exceptions: both include hosting.",
+        text: "A build price and a running cost are two different numbers. Hosting, a domain and ongoing maintenance sit outside the build price almost everywhere, including on GoodGround’s four packages. Full Service and the monthly Local plans are the exceptions: both include hosting.",
       },
       {
         type: "table",

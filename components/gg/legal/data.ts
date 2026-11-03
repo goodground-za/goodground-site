@@ -433,7 +433,7 @@ export const termsSections: TermsSection[] = [
     n: "10",
     title: "Hosting, domains and third-party services",
     summary:
-      "Hosting, domains and email are arranged separately unless you’re on Full Service or the Website Launch Offer. Third-party tools are governed by their own terms.",
+      "Hosting, domains and email are arranged separately unless you’re on Full Service or a monthly Local plan. Third-party tools are governed by their own terms.",
   },
   {
     id: "terms-monthly",

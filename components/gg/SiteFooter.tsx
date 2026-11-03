@@ -14,7 +14,16 @@ const INSTAGRAM = "https://www.instagram.com/goodground.company";
 const FACEBOOK = "https://www.facebook.com/share/14jTaX4tHhU/";
 const EMAIL = "hello@goodground.co.za";
 
-const COLUMNS = [
+/**
+ * The coral "NEW" pill on AI visibility shows for the first three months after
+ * launch (spec README 4.6). The end date is a proposal: set it to launch + 3
+ * months. Evaluated at build time, like the footer year.
+ */
+const NEW_PILL_UNTIL = new Date("2027-03-01T00:00:00+02:00");
+
+type FooterLink = { label: string; short?: string; href: string; badge?: string };
+
+const COLUMNS: { heading: string; links: FooterLink[] }[] = [
   {
     heading: "STUDIO",
     links: [
@@ -28,8 +37,9 @@ const COLUMNS = [
     heading: "SERVICES",
     links: [
       { label: "Website development", short: "Websites", href: "/services#website-development" },
-      { label: "Full service", href: "/services#full-service" },
+      { label: "Monthly plans", href: "/pricing#monthly" },
       { label: "SEO", href: "/services/seo" },
+      { label: "AI visibility", href: "/services/ai-visibility", badge: "NEW" },
       { label: "Google & Meta Ads", short: "Ads", href: "/services/google-ads" },
     ],
   },
@@ -83,7 +93,8 @@ export function SiteFooter({ ruled = false, stickyBar = false }: { ruled?: boole
               <p className="gg-kicker gg-footer__heading">{col.heading}</p>
               {col.links.map((link) => (
                 <Link key={link.href} className="gg-text-link" href={link.href}>
-                  <Label {...link} />
+                  <Label label={link.label} short={link.short} />
+                  {link.badge && Date.now() < NEW_PILL_UNTIL.getTime() ? <span className="gg-footer__new">{link.badge}</span> : null}
                 </Link>
               ))}
             </nav>

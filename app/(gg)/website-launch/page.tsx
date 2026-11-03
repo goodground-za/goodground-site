@@ -33,6 +33,7 @@ import { LaunchFaq } from "@/components/gg/launch/LaunchFaq";
 import { LaunchForm } from "@/components/gg/launch/LaunchForm";
 import { StickyBar } from "@/components/gg/launch/StickyBar";
 import { workProjects } from "@/components/gg/work/data";
+import { localPlans } from "@/content/pricing";
 import { launchOffer, launchRoute } from "@/content/websiteLaunch";
 import { site } from "@/content/site";
 import { pageSocialMeta } from "@/lib/metadata";
@@ -72,10 +73,9 @@ function LaunchSchema() {
       eligibleCustomerType: "New businesses without a website",
       priceSpecification: {
         "@type": "UnitPriceSpecification",
-        price: terms.monthly,
+        price: localPlans[0].monthly,
         priceCurrency: "ZAR",
         unitCode: "MON",
-        billingDuration: terms.months,
       },
       url: `${site.url}${launchRoute.path}`,
     },
@@ -166,7 +166,7 @@ export default function WebsiteLaunchPage() {
                   {availability.soldOut ? null : <Tag tone="coral">NO DEPOSIT</Tag>}
                 </div>
                 <div className="ln-card__price" data-reveal="line-mask">
-                  <SplitHeading as="p" className="gg-number ln-card__amount" text={launchOffer.price} />
+                  <SplitHeading as="p" className="gg-number ln-card__amount" text={`R${terms.monthly}`} />
                   <span className="ln-card__period">
                     <span className="gg-resp-long">/ month</span>
                     <span className="gg-resp-short">/ month · 12 months</span>

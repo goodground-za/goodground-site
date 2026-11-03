@@ -1,4 +1,5 @@
 import type { FAQItem } from "@/content/faq";
+import type { PrimaryTrack } from "@/content/funnel";
 
 /**
  * One dedicated landing page per service (dev brief follow-up: individual
@@ -31,6 +32,8 @@ export type ServicePageData = {
   faq: FAQItem[];
   ctaHref: string;
   ctaLabel: string;
+  /** Which conversion track this page leads with (content/funnel.ts; blueprint section 3). */
+  primaryTrack: PrimaryTrack;
   /** Slugs from content/articles.ts, rendered as a "Related reading" block
    * (SEO audit 2026-08-16, item 7 — zero links existed in either direction
    * between the blog and the service/industry pages they support). */
@@ -40,6 +43,7 @@ export type ServicePageData = {
 export const servicePages: ServicePageData[] = [
   {
     slug: "google-ads",
+    primaryTrack: "custom",
     serviceRef: "google-ads",
     title: "Google Ads",
     metaTitle: "Google Ads Management for Small Businesses",
@@ -109,6 +113,7 @@ export const servicePages: ServicePageData[] = [
   },
   {
     slug: "meta-ads",
+    primaryTrack: "custom",
     serviceRef: "meta-ads",
     title: "Meta Ads",
     metaTitle: "Facebook & Instagram Ads Management",
@@ -183,6 +188,7 @@ export const servicePages: ServicePageData[] = [
   },
   {
     slug: "website-redesign",
+    primaryTrack: "custom",
     title: "Website Redesign",
     metaTitle: "Website Redesign Services | South Africa",
     metaDescription:
@@ -249,6 +255,7 @@ export const servicePages: ServicePageData[] = [
   },
   {
     slug: "seo",
+    primaryTrack: "check",
     serviceRef: "seo-foundations",
     title: "SEO",
     metaTitle: "SEO Services for Small Business | South Africa",
@@ -318,6 +325,7 @@ export const servicePages: ServicePageData[] = [
   },
   {
     slug: "ux-design",
+    primaryTrack: "custom",
     serviceRef: "ux-design",
     title: "UX & Design",
     metaTitle: "UX & UI Design Services | South Africa",

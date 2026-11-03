@@ -1185,6 +1185,296 @@
   }
 }
 
+/* ---- v2: three tracks ------------------------------------------------------ */
+
+/* Step 1: the monthly-plan card leads, plum, full width. */
+@media (min-width: 768px) {
+  .sp__opts--service > .sp-opt--plum {
+    grid-column: 1 / -1;
+  }
+}
+
+.sp-opt--plum {
+  border-color: var(--gg-plum);
+  background: var(--gg-plum);
+  color: var(--gg-surface);
+}
+
+.sp-opt--plum .sp-opt__text span {
+  color: var(--gg-on-dark-muted);
+}
+
+.sp-opt--plum .sp-opt__icon {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--gg-peach);
+}
+
+.sp-opt--plum .sp-opt__radio {
+  border-color: rgba(255, 255, 255, 0.45);
+  background: transparent;
+}
+
+@media (hover: hover) {
+  .sp-opt--plum:hover:not(.is-on) {
+    border-color: var(--gg-plum-deep);
+    background: var(--gg-plum-deep);
+    box-shadow: none;
+  }
+}
+
+.sp-opt--plum.is-on {
+  border-color: var(--gg-coral);
+  background: var(--gg-plum);
+  box-shadow: inset 0 0 0 2px var(--gg-coral);
+}
+
+.sp-opt--plum.is-on .sp-opt__icon {
+  background: var(--gg-surface);
+  color: var(--gg-coral-text);
+}
+
+.sp-opt--plum.is-on .sp-opt__radio {
+  border-color: var(--gg-coral-fill);
+  background: var(--gg-coral-fill);
+}
+
+.sp-opt--plum:focus-visible {
+  outline-color: var(--gg-coral);
+}
+
+/* Step 2 of the monthly track: plan cards with three inclusions each. */
+.sp__opts--plans {
+  gap: 12px;
+}
+
+@media (min-width: 768px) {
+  .sp__opts--plans {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
+
+.sp-plan {
+  align-items: flex-start;
+}
+
+.sp-plan .sp-opt__radio {
+  margin-top: 2px;
+}
+
+.sp-plan__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+}
+
+.sp-opt__text .sp-plan__head {
+  font-size: 18px;
+  color: var(--gg-ink);
+}
+
+.sp-opt__text .sp-plan__head strong {
+  font-size: 18px;
+}
+
+.sp-opt__text .sp-plan__price {
+  font-family: var(--gg-font-display);
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--gg-coral-text);
+}
+
+.sp-opt__text .sp-plan__badge {
+  align-self: center;
+  padding: 2px 8px;
+  border-radius: var(--gg-r-pill);
+  background: var(--gg-coral-fill);
+  color: var(--gg-surface);
+  font-family: var(--gg-font-display);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+
+.sp-plan__list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.sp-opt__text .sp-plan__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--gg-ink);
+}
+
+.sp-plan__item .gg-icon {
+  flex: none;
+  margin-top: 2px;
+  color: var(--gg-coral-text);
+}
+
+/* "Not sure yet" hint card above the size question. */
+.sp__hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--gg-lilac);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.sp__hint .gg-icon {
+  flex: none;
+  margin-top: 1px;
+}
+
+.sp__hint a {
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Your business: the single-field rows and the Google Business Profile choice. */
+.sp__form > .gg-field + .gg-field,
+.sp__form > .sp__fields + .gg-field {
+  margin-top: 14px;
+}
+
+.sp-seg {
+  min-width: 0;
+  margin: 14px 0 0;
+  padding: 0;
+  border: 0;
+}
+
+.sp-seg legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 8px;
+  width: 100%;
+  margin-bottom: 8px;
+  padding: 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.sp-seg__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sp-seg__item {
+  position: relative;
+  display: inline-flex;
+}
+
+.sp-seg__item input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.sp-seg__item span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 80px;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid var(--gg-line);
+  border-radius: var(--gg-r-pill);
+  background: var(--gg-canvas);
+  font-size: 15px;
+  font-weight: 500;
+  transition:
+    border-color var(--gg-motion-sm) var(--gg-ease-out),
+    background-color var(--gg-motion-sm) var(--gg-ease-out);
+}
+
+@media (hover: hover) {
+  .sp-seg__item:hover input:not(:checked) + span {
+    border-color: var(--gg-ink);
+  }
+}
+
+.sp-seg__item input:checked + span {
+  border-color: var(--gg-coral);
+  background: var(--gg-blush);
+  box-shadow: inset 0 0 0 1px var(--gg-coral);
+}
+
+.sp-seg__item input:focus-visible + span {
+  outline: 2px solid var(--gg-ink);
+  outline-offset: 2px;
+}
+
+/* WhatsApp consent: its own row, unticked, never tied to marketing. */
+.sp__consent {
+  margin-top: 16px;
+}
+
+/* Success, monthly track: the three promises. */
+.sp__done-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  list-style: none;
+}
+
+.sp__done-steps li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: var(--gg-canvas);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.sp__done-steps li span {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--gg-blush);
+  font-family: var(--gg-font-display);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--gg-coral-text);
+}
+
+.sp__wait a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.sp__noscript-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
 /* ---- No JavaScript -------------------------------------------------------- */
 html:not(.js) .sp__card > :not(noscript) {
   display: none;

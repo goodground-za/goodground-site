@@ -13,7 +13,7 @@ export const pricingFaqItems: FaqItem[] = [
   {
     question: "Do these prices include hosting and a domain?",
     answer: [
-      "No. Hosting, domain and upkeep are arranged separately from the build price. Full Service and the Website Launch Offer are the exceptions: both include hosting in the monthly price.",
+      "No. Hosting, domain and upkeep are arranged separately from the build price. Full Service and the monthly Local plans are the exceptions: both include hosting in the monthly price.",
     ],
   },
   { question: pricingFaq[1].question, answer: [live(1)] },

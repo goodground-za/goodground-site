@@ -10,6 +10,7 @@ import { ButtonLink } from "../Button";
 import { CountUp } from "../CountUp";
 import { GgShell } from "../GgShell";
 import { GradientCta } from "../GradientCta";
+import { PAGE_TRACKS } from "@/content/funnel";
 import { Icon, type IconName } from "../Icon";
 import { ArrowChip, LinkedCard } from "../LinkedCard";
 import { Resp } from "../Resp";
@@ -378,7 +379,8 @@ export function CasePage({ study }: { study: CaseStudy }) {
         tag="YOUR PROJECT"
         headline={"WANT A WEBSITE\nLIKE THIS?"}
         sub="Tell us what you sell and who you sell it to. We’ll tell you honestly whether a new site is the thing that will move the needle."
-        primary={{ label: "Start your project", href: `/start-project?ref=case-${study.slug}` }}
+        track={PAGE_TRACKS.caseStudy}
+        refSource={`case-${study.slug}`}
         secondary={{ label: "See all projects", href: "/work" }}
       />
     </GgShell>

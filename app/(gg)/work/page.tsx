@@ -5,6 +5,7 @@ import { BreadcrumbSchema } from "@/components/Breadcrumbs";
 import { CountUp } from "@/components/gg/CountUp";
 import { GgShell } from "@/components/gg/GgShell";
 import { GradientCta } from "@/components/gg/GradientCta";
+import { PAGE_TRACKS } from "@/content/funnel";
 import { Icon, type IconName } from "@/components/gg/Icon";
 import { SectionHeader } from "@/components/gg/SectionHeader";
 import { SplitHeading } from "@/components/gg/SplitHeading";
@@ -151,7 +152,7 @@ export default function WorkPage() {
         </section>
       </div>
 
-      <GradientCta variant="home" split size="m" refSource="work" />
+      <GradientCta variant="home" split size="m" track={PAGE_TRACKS.work} refSource="work" />
     </GgShell>
   );
 }

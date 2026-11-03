@@ -1,4 +1,4 @@
-import type { ComponentProps, ReactNode } from "react";
+import type { ChangeEvent, ComponentProps, ReactNode } from "react";
 
 /**
  * Form/Field (README): a label row (label + "Optional"), the control, and an
@@ -125,17 +125,26 @@ export function CheckField({
   error,
   className,
   value,
+  checked,
+  onChange,
+  hint,
 }: {
   label: ReactNode;
   name: string;
   idPrefix?: string;
   /** What the box submits when ticked (default "on"). */
   value?: string;
+  /** Controlled use (the start-project form). Omit both for an uncontrolled box. */
+  checked?: boolean;
+  onChange?: (checked: boolean) => void;
+  /** Small print under the label row. */
+  hint?: ReactNode;
   required?: boolean;
   error?: string;
   className?: string;
 }) {
   const id = `${idPrefix}-${name}`;
+  const described = [error ? `${id}-error` : "", hint ? `${id}-hint` : ""].filter(Boolean).join(" ") || undefined;
   return (
     <div className={className ? `gg-check ${className}` : "gg-check"}>
       <label className="gg-check__row" htmlFor={id}>
@@ -147,8 +156,9 @@ export function CheckField({
           data-field={name}
           aria-required={required || undefined}
           aria-invalid={error ? true : undefined}
-          aria-describedby={error ? `${id}-error` : undefined}
+          aria-describedby={described}
           className="gg-check__input"
+          {...(checked === undefined ? {} : { checked, onChange: (e: ChangeEvent<HTMLInputElement>) => onChange?.(e.target.checked) })}
         />
         <span className="gg-check__box" aria-hidden="true">
           <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
@@ -157,6 +167,11 @@ export function CheckField({
         </span>
         <span className="gg-check__text">{label}</span>
       </label>
+      {hint ? (
+        <p id={`${id}-hint`} className="gg-field__hint">
+          {hint}
+        </p>
+      ) : null}
       {error ? (
         <p id={`${id}-error`} className="gg-field__error">
           {error}

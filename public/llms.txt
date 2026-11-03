@@ -15,7 +15,8 @@
 - Four packages, each a starting price confirmed in a quote: Micro from R12 000, Launch from R21 000, Grow from R32 000 and Scale from R45 000. A build-your-own configurator starts from a R6 000 base fee.
 - Two ways to pay a package: a 50% deposit to secure the project and 50% on completion, before handover; or 12 monthly instalments, where the first secures the booking and the other 11 start once the project is completed. Neither is a subscription: the client owns the website.
 - Full Service is the one genuine monthly plan: from R1 500 a month (the final price depends on the site), month to month, no minimum term.
-- Website Launch Offer, for new businesses that do not have a website yet: a custom one-page website for R950 a month for 12 months (R11 400 in total), no deposit, with domain, hosting and email included for those 12 months. Two spaces are available each month. Redesigns and replacements are not part of this offer.
+- Monthly Local plans, month to month with a free preview before the first debit: Local Start R299 a month, Local Plus R449 a month and Local Pro R799 a month (VAT included; annual prices give two months free).
+- New Business Offer, for businesses going online for the first time: the first month of Local Start free, plus a business mailbox free for 12 months. Two spaces are available each month. Redesigns and replacements are not part of this offer.
 
 ## Pages
 
@@ -34,7 +35,7 @@
   - [Retail and small brands](https://www.goodground.co.za/services/retail-and-small-brands)
   - [Non-profits and community](https://www.goodground.co.za/services/non-profits-and-community)
 - [Pricing](https://www.goodground.co.za/pricing): The four packages, the configurator, Full Service, and both payment options worked out per price.
-- [Website Launch Offer](https://www.goodground.co.za/website-launch): The R950 a month offer for new businesses, with this month's availability.
+- [New Business Offer](https://www.goodground.co.za/website-launch): First month of Local Start free for new businesses, with this month's availability.
 - [Process](https://www.goodground.co.za/process): How a project runs step by step: what we do, what we need from you, how long it takes and when you pay.
 - [Projects](https://www.goodground.co.za/work): Case studies, each ending in numbers measured on the live site, with instructions to check them.
   - [B3TTER](https://www.goodground.co.za/work/b3tter-bottle): Concept product page for an insulated bottle brand. Lighthouse 100 for accessibility and best practices.

@@ -24,6 +24,9 @@
  * before.
  */
 
+import { formatRand } from "@/components/gg/format";
+import { newBusinessOffer as newBusiness } from "@/content/newBusinessOffer";
+
 /**
  * When the figures on this page were last confirmed. Shown as "Prices correct as
  * of {date}" under the plan cards in Insights articles, which read the prices
@@ -165,6 +168,156 @@ export const fullServicePackage = {
   note: "The exact monthly price depends on your website’s requirements and is confirmed in your quote.",
 };
 
+/* ---------------------------------------------------------------- v2: monthly */
+
+/**
+ * The monthly Local plans (v2 funnel, 2026-11-04). Prices include VAT; the
+ * annual figure is 10 months for 12. Card copy is the spec's mockup copy
+ * (mockups/pricing.html). `highlights` are the three lines the /start-project
+ * plan cards show; `inclusions` is the full card list.
+ *
+ * No page types a price by hand: every Local plan price on the site reads this
+ * collection (and `addOns`, `offers`) through formatRand.
+ */
+export type LocalPlanSlug = "local-start" | "local-plus" | "local-pro";
+
+export type LocalPlan = {
+  slug: LocalPlanSlug;
+  name: string;
+  /** Monthly price, rand, incl. VAT. */
+  monthly: number;
+  /** Pay-once price for 12 months (2 months free), rand. */
+  annual: number;
+  tagline: string;
+  /** Three lines for the /start-project plan card. */
+  highlights: [string, string, string];
+  inclusions: string[];
+  /** The first inclusion is "Everything in {previous}, plus:" and is styled as a lead-in. */
+  extendsPrevious?: boolean;
+  bestFor: string;
+  /** "Live in ~5 working days". */
+  liveIn: string;
+  /** Card badge, if any. */
+  badge?: string;
+};
+
+export const localPlans: LocalPlan[] = [
+  {
+    slug: "local-start",
+    name: "Local Start",
+    monthly: 299,
+    annual: 2990,
+    tagline: "A proper website and Google profile, so customers can find you and trust you.",
+    highlights: ["Website up to 5 pages", ".co.za domain, hosting and backups", "Google Business Profile set up"],
+    inclusions: [
+      "Website up to 5 pages, built fast and polished by hand",
+      ".co.za domain in your name, hosting and backups",
+      "WhatsApp button, payment link and POPIA notices",
+      "Google Business Profile set up and verified",
+      "Quarterly AI visibility snapshot",
+      "1 change request a month",
+    ],
+    bestFor: "Trades and solo businesses that need to look credible and be found",
+    liveIn: "Live in ~5 working days",
+    badge: "New business offer",
+  },
+  {
+    slug: "local-plus",
+    name: "Local Plus",
+    monthly: 449,
+    annual: 4490,
+    tagline: "Your site, Google profile and AI visibility, looked after every month.",
+    highlights: ["Up to 10 pages, one per service in your town", "Monthly Google profile updates", "Monthly AI Visibility Report"],
+    inclusions: [
+      "Everything in Local Start, plus:",
+      "Up to 10 pages, incl. a page per service in your town",
+      "Monthly Google profile updates and 2 posts",
+      "Review-request QR code and WhatsApp link",
+      "Monthly AI Visibility Report",
+      "3 change requests a month",
+    ],
+    extendsPrevious: true,
+    bestFor: "Local businesses competing for “near me” searches and AI recommendations",
+    liveIn: "Live in ~5 working days",
+    badge: "Most popular",
+  },
+  {
+    slug: "local-pro",
+    name: "Local Pro",
+    monthly: 799,
+    annual: 7990,
+    tagline: "Everything handled, with more pages, weekly posts and the Fix Pack included.",
+    highlights: ["Up to 15 pages, a new page every quarter", "Weekly Google posts and review-reply drafts", "AI Visibility Fix Pack included"],
+    inclusions: [
+      "Everything in Local Plus, plus:",
+      "Up to 15 pages, with a new page every quarter",
+      "Weekly Google posts and review-reply drafts",
+      "AI report from 3 locations, with a competitor table",
+      "AI Visibility Fix Pack included",
+      "6 change requests a month and a quarterly call",
+    ],
+    extendsPrevious: true,
+    bestFor: "Busy or multi-location businesses in competitive trades",
+    liveIn: "Live in ~7 working days",
+  },
+];
+
+export const localPlanBySlug = (slug: string) => localPlans.find((p) => p.slug === slug);
+
+/** Cheapest monthly plan: "Monthly plans from R299" everywhere reads this. */
+export const localFromMonthly = localPlans[0].monthly;
+
+/** Promise row under the plan cards (spec 08, mockup). */
+export const localPromises = [
+  "Free preview before you pay anything",
+  "Your domain is always yours",
+  "Month to month, no lock-in",
+  "Site files are yours after 6 months",
+];
+
+export type AddOn = {
+  id: "fix-pack" | "visibility-watch" | "business-email";
+  name: string;
+  /** Rand. */
+  price: number;
+  /** "once-off", "/mo", "/mo per mailbox". */
+  unit: string;
+  /** Discounted price on Local Plus, where there is one. */
+  priceOnPlus?: number;
+  /** Included free in this plan. */
+  includedIn?: LocalPlanSlug;
+  description: string;
+};
+
+export const addOns: AddOn[] = [
+  {
+    id: "fix-pack",
+    name: "AI Visibility Fix Pack",
+    price: 2950,
+    unit: "once-off",
+    priceOnPlus: 1450,
+    includedIn: "local-pro",
+    description: `We fix the signals AI engines read: Google profile, service pages, structured data and listings. ${formatRand(1450)} on Local Plus, included in Local Pro.`,
+  },
+  {
+    id: "visibility-watch",
+    name: "Visibility Watch",
+    price: 199,
+    unit: "/mo",
+    description: "The monthly AI Visibility Report on its own, for sites we’ve already built for you.",
+  },
+  {
+    id: "business-email",
+    name: "Business email",
+    price: 49,
+    unit: "/mo per mailbox",
+    description: "Free forwarding to your existing inbox, or a proper mailbox. Google Workspace or Microsoft 365 on request.",
+  },
+];
+
+/** The promotions. The data lives in content/newBusinessOffer.ts. */
+export const offers = { newBusiness } as const;
+
 export const baseBuildFee = {
   total: 6000,
   label: "Base Build Fee",
@@ -259,108 +412,6 @@ export const alaCarteFootnote =
   "All à la carte prices are per item unless stated otherwise. A free quote will confirm the final total before work begins.";
 
 /**
- * The "Ways to pay" comparison at the top of /pricing (added 2026-09-23 after
- * the UX critique: four monthly figures lived on the site with nothing lining
- * them up, and the cheapest-looking one said the least about itself).
- *
- * Every cell restates something confirmed elsewhere: the two payment options
- * and Full Service in this file, the Launch Offer in content/websiteLaunch.ts
- * (its terms confirmed by Johandre 2026-09-23). The package rows quote Micro,
- * the lowest starting price, because every figure is a "from".
- *
- * Full Service deliberately makes no claim about what happens to the site if
- * the plan is cancelled. That is not settled yet (it waits on the attorney
- * review of the contract), so the row says only what is true today.
- *
- * A function rather than a constant so the rand formatting stays in one place
- * (formatRand, a client module this file can't import).
- */
-export type WayToPay = {
-  id: string;
-  name: string;
-  /** Who it is for, or the one condition that matters. */
-  note: string;
-  href: string;
-  linkLabel: string;
-  upfront: string;
-  monthly: string;
-  term: string;
-  total: string;
-  includes: string;
-  end: string;
-};
-
-export const waysToPayColumns = [
-  { key: "upfront", label: "Upfront" },
-  { key: "monthly", label: "Monthly" },
-  { key: "term", label: "How long" },
-  { key: "total", label: "Total over 12 months" },
-  { key: "includes", label: "What you get" },
-  { key: "end", label: "At the end" },
-] as const;
-
-export function waysToPay(
-  rand: (value: number) => string,
-  launch: { monthlyAmount: number; termMonths: number },
-): WayToPay[] {
-  const from = packages[0].total;
-  return [
-    {
-      id: "deposit",
-      name: "A package, paid by deposit",
-      note: "Micro, Launch, Grow or Scale",
-      href: "#packages",
-      linkLabel: "See the packages",
-      upfront: `Half the price, from ${rand(depositFor(from))}`,
-      monthly: "Nothing",
-      term: "The other half on completion, before handover",
-      total: `Your quoted price, from ${rand(from)}`,
-      includes: "The build. Hosting, domain and upkeep are arranged separately.",
-      end: "Paid off. The site is yours.",
-    },
-    {
-      id: "instalments",
-      name: "A package, paid in 12 instalments",
-      note: "Micro, Launch, Grow or Scale",
-      href: "#packages",
-      linkLabel: "See the packages",
-      upfront: `The first instalment, from ${rand(monthlyInstalmentFor(from))}`,
-      monthly: `From ${rand(monthlyInstalmentFor(from))}`,
-      term: "12 payments. The first books your slot, and the other 11 start once your site is finished.",
-      total: `The same quoted price, from ${rand(from)}`,
-      includes: "The build, with basic maintenance and monitoring while you pay it off. Hosting and domain are arranged separately.",
-      end: "Paid off. The site is yours.",
-    },
-    {
-      id: "full-service",
-      name: "Full Service",
-      note: "One monthly price, everything handled",
-      href: "#full-service",
-      linkLabel: "See Full Service",
-      upfront: "No separate build fee",
-      monthly: `From ${rand(fullServicePackage.monthlyFrom)}`,
-      term: "Month to month. Cancel any time.",
-      total: `From ${rand(fullServicePackage.monthlyFrom * 12)}`,
-      includes: "The build, hosting, mailboxes, ongoing SEO, updates and maintenance.",
-      end: "No end date. It runs for as long as you stay on it.",
-    },
-    {
-      id: "launch-offer",
-      name: "Website Launch Offer",
-      note: "Only for new businesses without a website. One page.",
-      href: "/website-launch",
-      linkLabel: "See the Launch Offer",
-      upfront: "No deposit",
-      monthly: rand(launch.monthlyAmount),
-      term: `${launch.termMonths} months`,
-      total: rand(launch.monthlyAmount * launch.termMonths),
-      includes: "A one-page site, SEO setup, and domain, hosting and email for 12 months.",
-      end: "Yours. We transfer the domain and site to you, or you move to a Care Plan.",
-    },
-  ];
-}
-
-/**
  * Pricing-page Q&A. Every answer is derivable from figures already confirmed
  * elsewhere in this file (revision counts per package, the two payment
  * options above, the "free quote before work begins" line) or from the "1–2
@@ -370,7 +421,7 @@ export function waysToPay(
  * The two questions added 2026-09-23 ("Full Service or instalments", "Do I
  * own my website?") answer what the critique found buyers left guessing.
  * Ownership rests on what the site already publishes: a build that is paid
- * off is the client's outright (see the cost article), and the Launch Offer's
+ * off is the client's outright (see the cost article), and the monthly Local plans'
  * end-of-term transfer. Full Service ownership on cancellation is not settled,
  * so it is described, not promised.
  */
@@ -410,7 +461,7 @@ export const pricingFaq: PricingFaqItem[] = [
   {
     question: "Do I own my website?",
     answer:
-      "Yes, once it's paid for. On a package, paid by deposit or instalments, the site is yours outright once the last payment clears. On the Website Launch Offer it's yours after the 12 months: we transfer the domain and site to you, or you move to a Care Plan. Full Service works differently. It's a monthly service, and we host and run the site for you while you're on it.",
+      "Yes, once it's paid for. On a package, paid by deposit or instalments, the site is yours outright once the last payment clears. On a monthly Local plan your domain is always yours and the site files are yours after 6 months. Full Service works differently. It's a monthly service, and we host and run the site for you while you're on it.",
   },
   {
     question: "How many rounds of revisions do I get?",

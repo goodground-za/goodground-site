@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { HomeSchema, ServicesSchema } from "@/components/Schema";
 import { GgMotion } from "@/components/gg/motion/GgMotion";
 import { GradientCta } from "@/components/gg/GradientCta";
+import { PAGE_TRACKS } from "@/content/funnel";
 import { HomeFaq } from "@/components/gg/home/HomeFaq";
 import { Industries } from "@/components/gg/home/Industries";
 import { LaunchOffer } from "@/components/gg/home/LaunchOffer";
@@ -74,7 +75,7 @@ export default function HomePage() {
           <StoryReasons />
           <Industries />
           <HomeFaq />
-          <GradientCta variant="home" />
+          <GradientCta variant="home" track={PAGE_TRACKS.home} refSource="home" />
         </div>
       </main>
 

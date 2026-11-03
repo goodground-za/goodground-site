@@ -9,7 +9,7 @@ import { SplitHeading } from "@/components/gg/SplitHeading";
 import { Tag } from "@/components/gg/Tag";
 import { FocusOnLoad } from "@/components/gg/utility/FocusOnLoad";
 import { site } from "@/content/site";
-import { REPLY_TIME } from "@/lib/enquiryShared";
+import { CHECK_REPORT_TIME, PREVIEW_TIME, REPLY_TIME } from "@/lib/enquiryShared";
 import "@/components/gg/utility/utility.css";
 
 /** The conversion URL and no-JS landing page: never indexed, never in the sitemap. */
@@ -20,82 +20,188 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-type Form = "start-project" | "contact" | "onboarding";
-const isForm = (v: unknown): v is Form => v === "start-project" || v === "contact" || v === "onboarding";
+const FORMS = ["start-project", "contact", "onboarding", "local-preview", "new-business-offer", "ai-check"] as const;
+type Form = (typeof FORMS)[number];
+const isForm = (v: unknown): v is Form => typeof v === "string" && (FORMS as readonly string[]).includes(v);
+
+type Result = "waitlist" | "repeat" | undefined;
+
+type Session = { name: string; email: string; business: string; date: string; next: string };
 
 /**
  * Name and email come from a short-lived, httpOnly cookie set by the server
  * for this one request (never from the URL: no personal data in a URL). Missing
  * or unreadable, the page falls back to the nameless copy.
  */
-async function readSession(): Promise<{ name: string; email: string }> {
+async function readSession(): Promise<Session> {
+  const empty: Session = { name: "", email: "", business: "", date: "", next: "" };
   try {
     const raw = (await cookies()).get("gg_thanks")?.value;
-    if (!raw) return { name: "", email: "" };
-    const data = JSON.parse(decodeURIComponent(raw)) as { name?: unknown; email?: unknown };
-    const name = typeof data.name === "string" ? data.name.replace(/[^\p{L}\p{M}' .-]/gu, "").trim().slice(0, 40) : "";
+    if (!raw) return empty;
+    const data = JSON.parse(decodeURIComponent(raw)) as Record<string, unknown>;
+    const text = (v: unknown, max: number) => (typeof v === "string" ? v.replace(/[^\p{L}\p{M}\p{N}' .,&()-]/gu, "").trim().slice(0, max) : "");
     const email = typeof data.email === "string" && data.email.length <= 254 && /^[^\s@<>"]+@[^\s@<>"]+\.[^\s@<>"]{2,}$/.test(data.email) ? data.email : "";
-    return { name, email };
+    return {
+      name: text(data.name, 40),
+      email,
+      business: text(data.business, 120),
+      date: text(data.date, 30),
+      next: text(data.next, 20),
+    };
   } catch {
-    return { name: "", email: "" };
+    return empty;
   }
 }
 
-const COPY: Record<Form, { crumb: string; tag: string; head: (name: string) => string; body: (email: string) => string; third: string }> = {
+type Step = { label: string; title: string; body: string; icon: IconName; tone: "surface" | "lilac" | "blush" };
+type Action = { label: string; href: string };
+type Copy = {
+  crumb: string;
+  tag: string;
+  head: (name: string) => string;
+  body: (s: Session) => string;
+  steps: Step[];
+  meanwhile: { title: string; primary: Action; secondary: Action };
+  retry: Action;
+};
+
+const inbox = (e: string) => (e ? `A copy is on its way to ${e}` : "A copy is on its way to your inbox");
+const named = (name: string, line: string, fallback: string) => (name ? `THANKS, ${name}. ${line}` : fallback);
+
+const DEFAULT_MEANWHILE = {
+  title: "See what we’ve built, or how a project runs from brief to launch.",
+  primary: { label: "See our projects", href: "/work" },
+  secondary: { label: "How we work", href: "/process" },
+};
+
+const COPY: Record<Form, Copy> = {
   "start-project": {
     crumb: "START YOUR PROJECT",
     tag: "BRIEF RECEIVED",
-    head: (n) => (n ? `THANKS, ${n}. WE’VE GOT IT.` : "THANKS. WE’VE GOT IT."),
-    body: (e) =>
-      `Your project details are with us. ${e ? `A copy is on its way to ${e}` : "A copy is on its way to your inbox"}, so you have a record of what you sent.`,
-    third: "You get a fixed-price quote",
+    head: (n) => named(n, "WE’VE GOT IT.", "THANKS. WE’VE GOT IT."),
+    body: (s) => `Your project details are with us. ${inbox(s.email)}, so you have a record of what you sent.`,
+    steps: [
+      { label: "NOW", title: "Check your inbox", body: "An automatic confirmation with a summary of your brief. Check spam if it isn’t there in a few minutes.", icon: "mail", tone: "surface" },
+      { label: `WITHIN ${REPLY_TIME.toUpperCase()}`, title: "We reply personally", body: "A real person reads your brief and replies with questions or a time to talk.", icon: "chat", tone: "lilac" },
+      { label: "AFTER A SHORT CALL", title: "You get a fixed-price quote", body: "One clear price and timeline, with the 50/50 or 12-month payment option.", icon: "doc", tone: "blush" },
+    ],
+    meanwhile: DEFAULT_MEANWHILE,
+    retry: { label: "Try again", href: "/start-project" },
   },
   contact: {
     crumb: "CONTACT",
     tag: "MESSAGE SENT",
-    head: (n) => (n ? `THANKS, ${n}. MESSAGE RECEIVED.` : "THANKS. MESSAGE RECEIVED."),
-    body: (e) => `Your message is with us. ${e ? `A copy is on its way to ${e}` : "A copy is on its way to your inbox"}, so you have a record of what you sent.`,
-    third: "We take it from there",
+    head: (n) => named(n, "MESSAGE RECEIVED.", "THANKS. MESSAGE RECEIVED."),
+    body: (s) => `Your message is with us. ${inbox(s.email)}, so you have a record of what you sent.`,
+    steps: [
+      { label: "NOW", title: "Check your inbox", body: "An automatic confirmation with a summary of your brief. Check spam if it isn’t there in a few minutes.", icon: "mail", tone: "surface" },
+      { label: `WITHIN ${REPLY_TIME.toUpperCase()}`, title: "We reply personally", body: "A real person reads your brief and replies with questions or a time to talk.", icon: "chat", tone: "lilac" },
+      { label: "AFTER A SHORT CALL", title: "We take it from there", body: "One clear price and timeline, with the 50/50 or 12-month payment option.", icon: "doc", tone: "blush" },
+    ],
+    meanwhile: DEFAULT_MEANWHILE,
+    retry: { label: "Try again", href: "/contact" },
   },
   onboarding: {
     crumb: "ONBOARDING",
     tag: "ONBOARDING COMPLETE",
-    head: (n) => (n ? `THANKS, ${n}. WE’VE GOT IT.` : "THANKS. WE’VE GOT IT."),
-    body: (e) => `Your onboarding details are with us. ${e ? `A copy is on its way to ${e}` : "A copy is on its way to your inbox"}, so you have a record of what you sent.`,
-    third: "We start your build",
+    head: (n) => named(n, "WE’VE GOT IT.", "THANKS. WE’VE GOT IT."),
+    body: (s) => `Your onboarding details are with us. ${inbox(s.email)}, so you have a record of what you sent.`,
+    steps: [
+      { label: "NOW", title: "Check your inbox", body: "An automatic confirmation with a summary of your brief. Check spam if it isn’t there in a few minutes.", icon: "mail", tone: "surface" },
+      { label: `WITHIN ${REPLY_TIME.toUpperCase()}`, title: "We reply personally", body: "A real person reads your brief and replies with questions or a time to talk.", icon: "chat", tone: "lilac" },
+      { label: "AFTER A SHORT CALL", title: "We start your build", body: "One clear price and timeline, with the 50/50 or 12-month payment option.", icon: "doc", tone: "blush" },
+    ],
+    meanwhile: DEFAULT_MEANWHILE,
+    retry: { label: "Try again", href: "/start-project" },
+  },
+  // v2 (blueprint section 4, page 18): each of these is also a conversion URL.
+  "local-preview": {
+    crumb: "FREE PREVIEW",
+    tag: "PREVIEW REQUESTED",
+    head: (n) => named(n, "WE’RE BUILDING YOUR PREVIEW.", "THANKS. WE’RE BUILDING YOUR PREVIEW."),
+    body: (s) => `Your free preview request is with us. ${inbox(s.email)}, so you have a record of what you sent.`,
+    steps: [
+      { label: `WITHIN ${PREVIEW_TIME.toUpperCase()}`, title: "Preview within 5 working days", body: "We build a preview of your website and send you the link.", icon: "layout", tone: "surface" },
+      { label: "YOUR TURN", title: "You review it", body: "Tell us what to change. Nothing is charged while you look.", icon: "eye", tone: "lilac" },
+      { label: "WHEN YOU’RE HAPPY", title: "Approve, then your first debit", body: "Your site goes live when you approve it, and your first debit runs only then.", icon: "check", tone: "blush" },
+    ],
+    meanwhile: {
+      title: "While we build, see how AI engines see local businesses today.",
+      primary: { label: "See a sample report", href: "/services/ai-visibility#sample" },
+      secondary: { label: "How we work", href: "/process" },
+    },
+    retry: { label: "Try again", href: "/start-project" },
+  },
+  "new-business-offer": {
+    crumb: "NEW BUSINESS OFFER",
+    tag: "SPOT REQUESTED",
+    head: (n) => named(n, "YOUR SPOT IS HELD.", "THANKS. YOUR SPOT IS HELD."),
+    body: (s) => `Your spot is held while we confirm. ${inbox(s.email)}, so you have a record of what you sent.`,
+    steps: [
+      { label: `WITHIN ${REPLY_TIME.toUpperCase()}`, title: "We confirm your spot within 1–2 business days", body: "A real person reads your request and confirms by email.", icon: "mail", tone: "surface" },
+      { label: "THEN", title: "We build your free preview", body: `Ready to review within ${PREVIEW_TIME} of your spot being confirmed.`, icon: "layout", tone: "lilac" },
+      { label: "WHEN YOU’RE HAPPY", title: "Approve it to go live", body: "Your first month is free, and the business mailbox is free for 12 months.", icon: "check", tone: "blush" },
+    ],
+    meanwhile: {
+      title: "While you wait, see how AI engines see local businesses today.",
+      primary: { label: "See a sample report", href: "/services/ai-visibility#sample" },
+      secondary: { label: "How we work", href: "/process" },
+    },
+    retry: { label: "Try again", href: "/website-launch" },
+  },
+  "ai-check": {
+    crumb: "AI VISIBILITY CHECK",
+    tag: "CHECK BOOKED",
+    head: (n) => named(n, "YOUR CHECK IS BOOKED.", "THANKS. YOUR CHECK IS BOOKED."),
+    body: (s) => `Your free AI visibility check is booked. ${inbox(s.email)}, so you have a record of what you sent.`,
+    steps: [
+      { label: "STEP ONE", title: "We run it", body: "We check how ChatGPT, Gemini and Google’s AI answer when local customers ask.", icon: "search", tone: "surface" },
+      { label: "STEP TWO", title: "A person reviews it", body: "Someone on the team reads the results before they reach you.", icon: "user", tone: "lilac" },
+      { label: `WITHIN ${CHECK_REPORT_TIME.toUpperCase()}`, title: "Report within 2 business days", body: "Your report arrives by email, with the first fix we’d make.", icon: "doc", tone: "blush" },
+    ],
+    meanwhile: {
+      title: "While you wait, see what a report looks like, or what a monthly plan covers.",
+      primary: { label: "See a sample report", href: "/services/ai-visibility#sample" },
+      secondary: { label: "See monthly plans", href: "/pricing#monthly" },
+    },
+    retry: { label: "Try again", href: "/services/ai-visibility#book" },
   },
 };
 
-const STEPS: { label: string; title: string; body: string; icon: IconName; tone: "surface" | "lilac" | "blush" }[] = [
-  {
-    label: "NOW",
-    title: "Check your inbox",
-    body: "An automatic confirmation with a summary of your brief. Check spam if it isn’t there in a few minutes.",
-    icon: "mail",
-    tone: "surface",
+/** The free check has two more outcomes: a waitlist entry, and a repeat inside 30 days. */
+const CHECK_RESULTS: Record<Exclude<Result, undefined>, { tag: string; head: (n: string) => string; body: (s: Session) => string; steps: Step[] }> = {
+  waitlist: {
+    tag: "ON THE LIST",
+    head: (n) => named(n, "YOU’RE ON THE LIST.", "THANKS. YOU’RE ON THE LIST."),
+    body: (s) =>
+      `We’re fully booked for free checks this month. We’ll run yours on ${s.next || "the 1st of next month"}. ${inbox(s.email)}.`,
+    steps: [
+      { label: "NEXT MONTH", title: "We run it", body: "Your check is first in line when the new month starts.", icon: "search", tone: "surface" },
+      { label: "STEP TWO", title: "A person reviews it", body: "Someone on the team reads the results before they reach you.", icon: "user", tone: "lilac" },
+      { label: `WITHIN ${CHECK_REPORT_TIME.toUpperCase()}`, title: "Report within 2 business days", body: "Your report arrives by email, with the first fix we’d make.", icon: "doc", tone: "blush" },
+    ],
   },
-  {
-    label: `WITHIN ${REPLY_TIME.toUpperCase()}`,
-    title: "We reply personally",
-    body: "A real person reads your brief and replies with questions or a time to talk.",
-    icon: "chat",
-    tone: "lilac",
+  repeat: {
+    tag: "ALREADY CHECKED",
+    head: (n) => named(n, "WE’VE CHECKED THIS ONE.", "THANKS. WE’VE CHECKED THIS ONE."),
+    body: (s) => `We checked ${s.business || "your business"} on ${s.date || "an earlier date"}. We’ve re-sent your report to ${s.email || "your inbox"}.`,
+    steps: [
+      { label: "NOW", title: "Check your inbox", body: "Your earlier report is on its way again. Check spam if it isn’t there in a few minutes.", icon: "mail", tone: "surface" },
+      { label: "ANY TIME", title: "Reply with questions", body: "Reply to that email and a real person will talk it through with you.", icon: "chat", tone: "lilac" },
+      { label: "WHEN YOU’RE READY", title: "Fix what it found", body: "The monthly plans include the report and the work that follows from it.", icon: "wrench", tone: "blush" },
+    ],
   },
-  {
-    label: "AFTER A SHORT CALL",
-    title: "You get a fixed-price quote",
-    body: "One clear price and timeline, with the 50/50 or 12-month payment option.",
-    icon: "doc",
-    tone: "blush",
-  },
-];
+};
 
-export default async function ThanksPage({ searchParams }: { searchParams: Promise<{ form?: string; status?: string }> }) {
+export default async function ThanksPage({ searchParams }: { searchParams: Promise<{ form?: string; status?: string; result?: string }> }) {
   const params = await searchParams;
   const form: Form = isForm(params.form) ? params.form : "start-project";
   const failed = params.status === "failed";
-  const { name, email } = await readSession();
-  const copy = COPY[form];
+  const result: Result = form === "ai-check" && (params.result === "waitlist" || params.result === "repeat") ? params.result : undefined;
+  const session = await readSession();
+  const { name } = session;
+  const base = COPY[form];
+  const copy = result ? { ...base, ...CHECK_RESULTS[result] } : base;
 
   return (
     <GgShell crumbs={[{ label: copy.crumb }, { label: failed ? "NOT SENT" : "RECEIVED" }]}>
@@ -129,12 +235,12 @@ export default async function ThanksPage({ searchParams }: { searchParams: Promi
             <p className="gg-lead th__lead" data-part="sub">
               {failed
                 ? `Something went wrong on our side. Nothing was lost: email us at ${site.email} and we’ll pick it up, or go back and try the form again.`
-                : copy.body(email)}
+                : copy.body(session)}
             </p>
             {failed ? (
               <div className="th__fail-buttons">
-                <ButtonLink href={form === "contact" ? "/contact" : "/start-project"} variant="coral">
-                  Try again
+                <ButtonLink href={copy.retry.href} variant="coral">
+                  {copy.retry.label}
                 </ButtonLink>
                 <ButtonLink href={`mailto:${site.email}`} variant="outline">
                   Email us instead
@@ -146,7 +252,7 @@ export default async function ThanksPage({ searchParams }: { searchParams: Promi
           {failed ? null : (
             <>
               <ol className="th__steps" data-reveal="stagger" style={{ "--gg-stagger-step": "120ms" } as CSSProperties}>
-                {STEPS.map((step, i) => (
+                {copy.steps.map((step, i) => (
                   <li key={step.title} className={`th-step th-step--${step.tone}`}>
                     <span className="th-step__top">
                       <span className="th-step__chip" aria-hidden="true">
@@ -158,7 +264,7 @@ export default async function ThanksPage({ searchParams }: { searchParams: Promi
                     </span>
                     <span className="th-step__text">
                       <span className="gg-kicker th-step__label">{step.label}</span>
-                      <span className="th-step__title">{i === 2 ? copy.third : step.title}</span>
+                      <span className="th-step__title">{step.title}</span>
                       <span className="th-step__body">{step.body}</span>
                     </span>
                   </li>
@@ -168,14 +274,14 @@ export default async function ThanksPage({ searchParams }: { searchParams: Promi
               <div className="th__meanwhile" data-reveal="fade-up">
                 <div>
                   <p className="gg-kicker th__meanwhile-kicker">WHILE YOU WAIT</p>
-                  <p className="th__meanwhile-title">See what we’ve built, or how a project runs from brief to launch.</p>
+                  <p className="th__meanwhile-title">{copy.meanwhile.title}</p>
                 </div>
                 <div className="th__meanwhile-buttons">
-                  <ButtonLink href="/work" variant="light">
-                    See our projects
+                  <ButtonLink href={copy.meanwhile.primary.href} variant="light">
+                    {copy.meanwhile.primary.label}
                   </ButtonLink>
-                  <ButtonLink href="/process" className="th__ghost" variant="outline">
-                    How we work
+                  <ButtonLink href={copy.meanwhile.secondary.href} className="th__ghost" variant="outline">
+                    {copy.meanwhile.secondary.label}
                   </ButtonLink>
                 </div>
               </div>

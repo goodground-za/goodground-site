@@ -4,8 +4,12 @@
  * Services page). Do not paraphrase.
  */
 
+import type { PrimaryTrack } from "@/content/funnel";
+
 export type Service = {
   slug: string;
+  /** Which conversion track this service leads with (content/funnel.ts; blueprint section 3). */
+  primaryTrack: PrimaryTrack;
   title: string;
   /** One-liner for the homepage cards. */
   description: string;
@@ -37,6 +41,7 @@ export type Service = {
 export const services: Service[] = [
   {
     slug: "website-development",
+    primaryTrack: "custom",
     title: "Website Development",
     description: "Custom-built, fast, and made to grow with your business.",
     flagship: true,
@@ -54,6 +59,7 @@ export const services: Service[] = [
   },
   {
     slug: "ux-design",
+    primaryTrack: "custom",
     title: "UX & Design",
     description: "Every page designed around how your customers actually decide.",
     subheading: "Design that’s judged by results, not just looks.",
@@ -68,6 +74,7 @@ export const services: Service[] = [
   },
   {
     slug: "seo-foundations",
+    primaryTrack: "check",
     title: "SEO Foundations",
     description: "Built to be found, not just built to look nice.",
     subheading: "Search visibility designed in from the start.",
@@ -82,6 +89,7 @@ export const services: Service[] = [
   },
   {
     slug: "full-service",
+    primaryTrack: "custom",
     title: "Full Service",
     description: "Build, hosting, mailboxes, SEO, and maintenance, all for one monthly price.",
     monthly: true,
@@ -97,6 +105,7 @@ export const services: Service[] = [
   },
   {
     slug: "care-plans",
+    primaryTrack: "custom",
     title: "Website Care Plans",
     description: "Ongoing care for your site once the build is paid off.",
     monthly: true,
@@ -113,6 +122,7 @@ export const services: Service[] = [
   },
   {
     slug: "google-ads",
+    primaryTrack: "custom",
     title: "Google Ads",
     description: "Be there the moment someone searches for you.",
     growth: true,
@@ -128,6 +138,7 @@ export const services: Service[] = [
   },
   {
     slug: "meta-ads",
+    primaryTrack: "custom",
     title: "Meta Ads (Facebook & Instagram)",
     description: "Stay in front of the people deciding whether to trust you.",
     growth: true,

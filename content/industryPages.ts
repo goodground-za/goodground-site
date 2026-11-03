@@ -1,4 +1,5 @@
 import type { FAQItem } from "@/content/faq";
+import type { PrimaryTrack } from "@/content/funnel";
 import type { Industry } from "@/content/industries";
 
 /**
@@ -25,11 +26,21 @@ export type IndustryPageData = {
   relevantServiceSlugs: string[];
   localProof: string;
   faq: FAQItem[];
+  /** Which conversion track this page leads with (content/funnel.ts; blueprint section 3). */
+  primaryTrack: PrimaryTrack;
+  /**
+   * The question a local customer might ask an AI assistant, used by the
+   * "Built for local search" AI answer card. Plain and generic: it names no
+   * business and promises no result.
+   */
+  aiQuery: string;
 };
 
 export const industryPages: IndustryPageData[] = [
   {
     slug: "trades-and-home-services",
+    primaryTrack: "local",
+    aiQuery: "Who’s the best plumber in George?",
     icon: "trades",
     title: "Trades & Home Services",
     metaTitle: "Website Design for Electricians & Plumbers",
@@ -81,6 +92,8 @@ export const industryPages: IndustryPageData[] = [
   },
   {
     slug: "hospitality-and-food",
+    primaryTrack: "local",
+    aiQuery: "Where can we eat dinner in George tonight?",
     icon: "hospitality",
     title: "Hospitality & Food",
     metaTitle: "Website Design for Restaurants & Guesthouses",
@@ -132,6 +145,8 @@ export const industryPages: IndustryPageData[] = [
   },
   {
     slug: "health-and-wellness",
+    primaryTrack: "local",
+    aiQuery: "Which physiotherapist in George is taking new patients?",
     icon: "health",
     title: "Health & Wellness",
     metaTitle: "Website Design for Clinics & Dentists",
@@ -183,6 +198,8 @@ export const industryPages: IndustryPageData[] = [
   },
   {
     slug: "professional-and-consulting",
+    primaryTrack: "custom",
+    aiQuery: "Which accountant in George works with small businesses?",
     icon: "professional",
     title: "Professional & Consulting",
     metaTitle: "Website Design for Accountants & Consultants",
@@ -234,6 +251,8 @@ export const industryPages: IndustryPageData[] = [
   },
   {
     slug: "retail-and-small-brands",
+    primaryTrack: "local",
+    aiQuery: "Where can I buy locally made gifts in George?",
     icon: "retail",
     title: "Retail & Small Brands",
     metaTitle: "Ecommerce Website Design for Small Brands",
@@ -285,6 +304,8 @@ export const industryPages: IndustryPageData[] = [
   },
   {
     slug: "non-profits-and-community",
+    primaryTrack: "custom",
+    aiQuery: "How can I volunteer with a community project in George?",
     icon: "nonprofit",
     title: "Non-Profits & Community",
     metaTitle: "Website Design for Non-Profits & NPOs",

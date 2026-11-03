@@ -2,18 +2,25 @@
 
 import { useState, type CSSProperties } from "react";
 
-import { launchTerms } from "@/content/websiteLaunch";
 import { site } from "@/content/site";
-import { PLANS, REPLY_TIME, type PlanKey } from "@/lib/enquiryShared";
+import { PREVIEW_TIME, REPLY_TIME } from "@/lib/enquiryShared";
 
 import { Icon } from "../Icon";
-import { STEPS, answerLabel, type Answers, type StepKey } from "./data";
+import { answerLabel, type Answers, type StepDef, type TrackId } from "./data";
 
-const NEXT_STEPS = [
-  `We reply within ${REPLY_TIME}`,
-  "A short call to understand your business",
-  "One fixed price, paid 50/50 or over 12 months",
-];
+/** "What happens next" switches per track (blueprint section 5). */
+const NEXT_STEPS: Record<TrackId, string[]> = {
+  custom: [
+    `We reply within ${REPLY_TIME}`,
+    "A short call to understand your business",
+    "One fixed price, paid 50/50 or over 12 months",
+  ],
+  local: [
+    `We build your free preview within ${PREVIEW_TIME}`,
+    "You review it and ask for changes",
+    "You approve it to go live. Your first debit runs only then",
+  ],
+};
 
 /** One row of "Your answers". The value crossfades in and the row flashes blush for 600ms. */
 function AnswerRow({ label, value, onEdit, locked }: { label: string; value?: string; onEdit?: () => void; locked?: boolean }) {
@@ -44,31 +51,27 @@ function AnswerRow({ label, value, onEdit, locked }: { label: string; value?: st
   );
 }
 
-function AnswerRows({
-  answers,
-  plan,
-  done,
-  onEdit,
-}: {
+/** What the summary needs to list the answers of the current track. */
+export type Summary = {
+  steps: StepDef[];
   answers: Answers;
-  plan?: PlanKey;
-  done: boolean;
-  onEdit: (step: number) => void;
-}) {
+  business: { name: string; town: string };
+};
+
+function AnswerRows({ summary, done, onEdit }: { summary: Summary; done: boolean; onEdit: (step: number) => void }) {
   return (
     <ul className="sp-rows">
-      {plan ? (
-        <AnswerRow label="Plan" value={plan === "launch" ? `Launch · R${launchTerms.monthly}/mo` : PLANS[plan]} locked />
-      ) : null}
-      {STEPS.map((step, index) => (
-        <AnswerRow
-          key={step.key}
-          label={step.label}
-          value={answerLabel(step.key as StepKey, answers)}
-          onEdit={() => onEdit(index)}
-          locked={done}
-        />
-      ))}
+      {summary.steps.map((step, index) =>
+        step.kind === "details" ? null : (
+          <AnswerRow
+            key={step.key}
+            label={step.label}
+            value={answerLabel(step.key, summary.answers, summary.business)}
+            onEdit={() => onEdit(index)}
+            locked={done}
+          />
+        ),
+      )}
     </ul>
   );
 }
@@ -85,12 +88,12 @@ function StartOver({ onStartOver }: { onStartOver?: () => void }) {
   );
 }
 
-function WhatsNext() {
+function WhatsNext({ track }: { track: TrackId }) {
   return (
     <div className="sp-next">
       <p className="gg-kicker sp-next__title">WHAT HAPPENS NEXT</p>
       <ol>
-        {NEXT_STEPS.map((text, i) => (
+        {NEXT_STEPS[track].map((text, i) => (
           <li key={text}>
             <span className="sp-next__n">{String(i + 1).padStart(2, "0")}</span>
             {text}
@@ -103,15 +106,15 @@ function WhatsNext() {
 
 /** Desktop sidebar: sticky while the form scrolls (top 120px). Phones get the pieces below instead. */
 export function Aside({
-  answers,
-  plan,
+  summary,
+  track,
   done,
   onEdit,
   caseName,
   onStartOver,
 }: {
-  answers: Answers;
-  plan?: PlanKey;
+  summary: Summary;
+  track: TrackId;
   done: boolean;
   onEdit: (step: number) => void;
   caseName?: string;
@@ -123,7 +126,7 @@ export function Aside({
       <div className="sp__aside-in" data-reveal="stagger" style={{ "--gg-stagger-step": "100ms" } as CSSProperties}>
         <div className="sp-answers">
           <p className="gg-kicker">YOUR ANSWERS</p>
-          <AnswerRows answers={answers} plan={plan} done={done} onEdit={onEdit} />
+          <AnswerRows summary={summary} done={done} onEdit={onEdit} />
           <StartOver onStartOver={onStartOver} />
         </div>
         {caseName ? (
@@ -132,7 +135,7 @@ export function Aside({
             You came from the {caseName} case study. We’ll mention it in our reply.
           </p>
         ) : null}
-        <WhatsNext />
+        <WhatsNext track={track} />
         <div className="sp-direct">
           <p className="gg-kicker">RATHER TALK DIRECTLY?</p>
           <ul>
@@ -176,14 +179,12 @@ export function Aside({
 
 /** Phones: a collapsed "Your answers (n)" at the bottom of each step. */
 export function AnswersAccordion({
-  answers,
-  plan,
+  summary,
   count,
   onEdit,
   onStartOver,
 }: {
-  answers: Answers;
-  plan?: PlanKey;
+  summary: Summary;
   count: number;
   onEdit: (step: number) => void;
   onStartOver?: () => void;
@@ -199,7 +200,7 @@ export function AnswersAccordion({
       </h3>
       <div id="sp-acc-panel" className="sp-acc__panel" inert={!open}>
         <div className="sp-acc__in">
-          <AnswerRows answers={answers} plan={plan} done={false} onEdit={onEdit} />
+          <AnswerRows summary={summary} done={false} onEdit={onEdit} />
           <StartOver onStartOver={onStartOver} />
         </div>
       </div>
@@ -207,10 +208,10 @@ export function AnswersAccordion({
   );
 }
 
-export function NextMobile() {
+export function NextMobile({ track }: { track: TrackId }) {
   return (
     <div className="sp-mobile-only">
-      <WhatsNext />
+      <WhatsNext track={track} />
     </div>
   );
 }

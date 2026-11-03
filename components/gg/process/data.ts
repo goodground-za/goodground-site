@@ -267,24 +267,10 @@ export const payPlans: { name: string; sub: string; cells: (PayCell | null)[] }[
       { amount: "3–12", caption: "monthly", due: false },
     ],
   },
-  {
-    name: "Website Launch Offer",
-    sub: "R950 × 12",
-    cells: [
-      { amount: "R950", caption: "month 1", due: true },
-      { amount: "R950", caption: "monthly", due: false },
-      null,
-      null,
-      null,
-      null,
-      { amount: "…", caption: "to month 12", due: false },
-    ],
-  },
 ];
 export const payPlansMobile = [
   { name: "50 / 50", a: "50% at booking", b: "50% before handover" },
   { name: "12 instalments", a: "1st at booking", b: "2–12 from completion" },
-  { name: "Launch Offer", a: "R950 monthly", b: "for 12 months" },
 ];
 
 /* ---- revisions ------------------------------------------------------------------------- */

@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react";
 
+import { trackNextLink, trackPrimary, type PrimaryTrack } from "@/content/funnel";
+
 import { ButtonLink } from "./Button";
 import { CtaVideo } from "./CtaVideo";
 import { CursorLight } from "./CursorLight";
@@ -22,10 +24,14 @@ type Action = { label: string; href: string };
  *  - "inner" (Industry, Service detail): 1200 wide on white, full CTA
  *    gradient, centred, Light button + email pill.
  *
- * `refSource` is appended to /start-project as ?ref= (listed per page note).
- * `primary` / `secondary` replace the two buttons (Services: "Book a free
- * consultation"); `size="l"` is the 80px headline some pages use; `split`
- * puts the buttons in a column to the right of the copy on desktop.
+ * `track` (v2 funnel, content/funnel.ts) decides the Light button and the one
+ * text link under the buttons: local = "Get my free preview", custom = "Start
+ * your project", check = "Book a free check"; the link points to the next-best
+ * track. `refSource` is the page the visitor is on and becomes ?ref= on every
+ * destination. `primary` / `secondary` still replace the two buttons
+ * (Services: "Book a free consultation"); `size="l"` is the 80px headline some
+ * pages use; `split` puts the buttons in a column to the right of the copy on
+ * desktop.
  */
 export function GradientCta({
   variant = "home",
@@ -33,6 +39,7 @@ export function GradientCta({
   headline,
   sub,
   refSource,
+  track = "custom",
   primary,
   secondary,
   size = "xl",
@@ -44,6 +51,8 @@ export function GradientCta({
   headline?: string;
   sub?: string | null;
   refSource?: string;
+  /** Which conversion track the page leads with. Default "custom". */
+  track?: PrimaryTrack;
   primary?: Action;
   secondary?: Action;
   size?: "xl" | "m" | "l";
@@ -51,7 +60,8 @@ export function GradientCta({
   /** Only needed where a page shows two cards (the styleguide): ids must be unique. */
   headingId?: string;
 }) {
-  const href = refSource ? `/start-project?ref=${encodeURIComponent(refSource)}` : "/start-project";
+  const lead = trackPrimary(track, refSource);
+  const next = trackNextLink(track, refSource);
   const inner = variant === "inner";
   // The inner card sets the headline on one line and has no sub-copy by
   // default (Service detail 96:348); Home breaks it and adds the line below.
@@ -98,8 +108,8 @@ export function GradientCta({
             </p>
           ) : null}
           <div className="gg-cta__actions" data-part="cta">
-            <ButtonLink href={primary?.href ?? href} variant="light" full>
-              {primary?.label ?? "Start your project"}
+            <ButtonLink href={primary?.href ?? lead.href} variant="light" full>
+              {primary?.label ?? lead.label}
             </ButtonLink>
             {secondary ? (
               <ButtonLink href={secondary.href} variant="coral" full>
@@ -115,6 +125,9 @@ export function GradientCta({
                 {EMAIL}
               </ButtonLink>
             )}
+            <a className="gg-cta__next" href={next.href} data-track-next={track}>
+              {next.label}
+            </a>
           </div>
         </div>
       </div>

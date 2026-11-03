@@ -7,6 +7,7 @@ import { ButtonLink } from "@/components/gg/Button";
 import { CountUp } from "@/components/gg/CountUp";
 import { GgShell } from "@/components/gg/GgShell";
 import { GradientCta } from "@/components/gg/GradientCta";
+import { PAGE_TRACKS } from "@/content/funnel";
 import { Icon } from "@/components/gg/Icon";
 import { Resp } from "@/components/gg/Resp";
 import { SectionHeader } from "@/components/gg/SectionHeader";
@@ -526,7 +527,8 @@ export default function ProcessPage() {
         tag="READY WHEN YOU ARE"
         headline="STEP ONE IS A CONVERSATION."
         sub="Tell us about your business. We’ll come back with a fixed price, a timeline and the dates for every step."
-        primary={{ label: "Start your project", href: "/start-project?ref=process" }}
+        track={PAGE_TRACKS.process}
+        refSource="process"
         secondary={{ label: "See pricing", href: "/pricing" }}
       />
     </GgShell>

@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 import { ButtonLink } from "@/components/gg/Button";
+import { PAGE_TRACKS, trackNextLink, trackPrimary } from "@/content/funnel";
 import { GgShell } from "@/components/gg/GgShell";
 import { Icon } from "@/components/gg/Icon";
 import { SplitHeading } from "@/components/gg/SplitHeading";
@@ -22,6 +23,7 @@ export const metadata: Metadata = {
 
 const POPULAR = [
   { label: "Services", href: "/services" },
+  { label: "AI visibility check", href: "/services/ai-visibility" },
   { label: "Our projects", href: "/work" },
   { label: "Pricing", href: "/pricing" },
   { label: "Insights", href: "/insights" },
@@ -38,6 +40,9 @@ const POPULAR = [
  * tracker below reports those (page_not_found) so they can be found.
  */
 export default function NotFound() {
+  // Visitors are random, so the v1 CTA stays (custom) with the monthly plans one link away.
+  const start = trackPrimary(PAGE_TRACKS.notFound, "404");
+  const next = trackNextLink(PAGE_TRACKS.notFound, "404");
   return (
     <GgShell dark>
       <section className="nf" aria-labelledby="nf-title">
@@ -54,10 +59,13 @@ export default function NotFound() {
               <ButtonLink href="/" variant="coral">
                 Back to home
               </ButtonLink>
-              <ButtonLink href="/start-project?ref=404" variant="light">
-                Start your project
+              <ButtonLink href={start.href} variant="light">
+                {start.label}
               </ButtonLink>
             </div>
+            <p className="nf__next" data-part="cta">
+              <Link href={next.href}>{next.label}</Link>
+            </p>
           </div>
 
           <nav className="nf__card" aria-label="Popular pages" data-reveal="fade-up" data-delay={150}>

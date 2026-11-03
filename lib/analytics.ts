@@ -50,3 +50,40 @@ export const promoEvents = {
   formError: (reason: "validation" | "network" | "server") =>
     trackEvent("promo_form_error", { reason }),
 };
+
+/**
+ * The v2 funnel events (blueprint section 10). Names and properties are fixed
+ * here so a page cannot invent a variant. Properties are whitelisted values
+ * only (plan key, offer key, ref, track): never a name, email, phone, business
+ * name or free text.
+ *
+ *   plan_card_click         plan, ref
+ *   ai_sample_view          ref
+ *   preview_request_sent    plan, offer, ref     (Track A conversion)
+ *   enquiry_sent            track, service, package, ref   (Track B / quote)
+ *   ai_check_request_sent   ref, town, industry  (Track C; no business name)
+ *   ai_check_waitlist_join  ref
+ *   ai_cta_click            position
+ *   offer_spot_view         month
+ *   offer_waitlist_join     month
+ */
+export const funnelEvents = {
+  planCardClick: (p: { plan: string; ref: string }) => trackEvent("plan_card_click", p),
+  aiSampleView: (p: { ref: string }) => trackEvent("ai_sample_view", p),
+  previewRequestSent: (p: { plan: string; offer: string; ref: string }) => trackEvent("preview_request_sent", p),
+  enquirySent: (p: { track: "local" | "custom" | "check"; service?: string; package?: string; ref?: string; plan?: string; intent?: string }) =>
+    trackEvent("enquiry_sent", {
+      track: p.track,
+      service: p.service ?? "none",
+      package: p.package ?? "none",
+      ref: p.ref ?? "none",
+      plan: p.plan ?? "none",
+      intent: p.intent ?? "none",
+    }),
+  aiCheckRequestSent: (p: { ref: string; town?: string; industry?: string }) =>
+    trackEvent("ai_check_request_sent", { ref: p.ref, town: p.town ?? "none", industry: p.industry ?? "none" }),
+  aiCheckWaitlistJoin: (p: { ref: string }) => trackEvent("ai_check_waitlist_join", p),
+  aiCtaClick: (p: { position: "hero" | "included" | "faq" | "sticky" }) => trackEvent("ai_cta_click", p),
+  offerSpotView: (p: { month: string }) => trackEvent("offer_spot_view", p),
+  offerWaitlistJoin: (p: { month: string }) => trackEvent("offer_waitlist_join", p),
+};

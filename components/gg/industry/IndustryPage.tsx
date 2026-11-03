@@ -425,7 +425,7 @@ export function IndustryPage({ slug }: { slug: string }) {
         </section>
       </div>
 
-      <GradientCta variant="inner" tag="READY WHEN YOU ARE" sub={view.ctaSub} refSource={ref} />
+      <GradientCta variant="inner" tag="READY WHEN YOU ARE" sub={view.ctaSub} track={entry.primaryTrack} refSource={ref} />
       <StickyBar startHref={startHref} email={site.email} />
     </GgShell>
   );

@@ -1,36 +1,37 @@
 import type { CSSProperties } from "react";
 
-import { launchOffer, launchRoute, launchSpots } from "@/content/websiteLaunch";
+import { newBusinessOffer } from "@/content/newBusinessOffer";
+import { localPlans } from "@/content/pricing";
+import { launchOffer } from "@/content/websiteLaunch";
 
 import { ButtonLink } from "../Button";
 import { Icon } from "../Icon";
 import { Resp } from "../Resp";
 import { SplitHeading } from "../SplitHeading";
 import { Tag } from "../Tag";
+import { formatRand } from "../format";
 
-/**
- * What the card promises. A one-page site is the live offer (content/websiteLaunch.ts
- * pageCount, confirmed 2026-09-23) and matches the Figma sample.
- */
+/** What the card promises: Local Start inclusions plus the offer (content/pricing.ts, content/newBusinessOffer.ts). */
 const CHECKS = [
-  { long: "A custom one-page website", short: "Custom one-page website" },
-  { long: "Domain registration & business email", short: "Domain & business email" },
-  { long: "Hosting included for 12 months", short: "Hosting for 12 months" },
-  { long: "Detailed SEO setup" },
-  { long: "Submitted to Google for indexing" },
+  { long: "A website up to 5 pages", short: "Website up to 5 pages" },
+  { long: "Domain, hosting and Google profile", short: "Domain, hosting, Google profile" },
+  { long: "First month free", short: "First month free" },
+  { long: "Business mailbox free for 12 months", short: "Mailbox free for 12 months" },
 ];
 
 /**
  * Home 03. Left: HEADER REVEAL of tag, heading, copy and buttons. Right: the
- * pricing card (FADE-UP + scale from 150ms in), "R845" as a LINE MASK (never a
+ * pricing card (FADE-UP + scale from 150ms in), "R0" as a LINE MASK (never a
  * count-up), check chips that pop, and the availability meter, which is data
- * (content/websiteLaunch.ts launchSpots) and has a sold-out state.
+ * (content/newBusinessOffer.ts) and has a sold-out state.
  */
 export function LaunchOffer() {
-  const { month, nextMonth, total, taken } = launchSpots;
+  // INTERIM (Phase A): typed values, so Home stays static. Phase C decides how the live count reaches Home.
+  const { month, nextMonth, spotsTotal: total, spotsTaken: taken } = newBusinessOffer;
+  const monthly = formatRand(localPlans[0].monthly);
   const left = Math.max(0, total - taken);
   const soldOut = left === 0;
-  const startHref = soldOut ? "/start-project?plan=launch-waitlist" : "/start-project?plan=launch";
+  const startHref = soldOut ? "/start-project?offer=new-business-waitlist&ref=home" : "/start-project?offer=new-business&ref=home";
 
   return (
     <section id="pay-offer" className="hm-section hm-section--plum hm-launch" aria-labelledby="launch-title" data-loop="">
@@ -38,21 +39,21 @@ export function LaunchOffer() {
       <div className="gg-wrap hm-launch__grid">
         <div className="hm-launch__copy" data-reveal="header">
           <Tag tone="on-dark" data-part="tag">
-            {soldOut ? <>NEXT OPENING · {nextMonth.toUpperCase()}</> : <Resp long="THE GOODGROUND LAUNCH OFFER" short="LAUNCH OFFER" />}
+            {soldOut ? <>NEXT OPENING · {nextMonth.toUpperCase()}</> : <Resp long="NEW BUSINESS OFFER" short="NEW BUSINESS OFFER" />}
           </Tag>
           <SplitHeading
             id="launch-title"
             className="gg-h2 hm-h2 hm-launch__title"
-            text={`Launch your first website for ${launchOffer.price} a month.`}
+            text="Your first website. First month free."
           />
           <p className="gg-lead hm-launch__sub" data-part="sub">
             <Resp
-              long={`${launchOffer.eligibility} We open two promotional spaces each month, and domain, hosting and email are included for the first 12 months.`}
-              short="For new businesses without a website. Two promotional spaces each month, with domain, hosting and email included for 12 months."
+              long={`${launchOffer.eligibility} Local Start is ${monthly} a month after that, month to month. We open two spaces each month.`}
+              short={`For new businesses. Then Local Start at ${monthly} a month, month to month. Two spaces each month.`}
             />
           </p>
           <div className="hm-launch__buttons" data-part="cta">
-            <ButtonLink href={launchRoute.path} variant="coral">
+            <ButtonLink href={newBusinessOffer.path} variant="coral">
               See the offer
             </ButtonLink>
             <ButtonLink href="#pay" variant="light">
@@ -63,12 +64,12 @@ export function LaunchOffer() {
 
         <div className="hm-launch__card" data-reveal="fade-up" data-delay={150}>
           <div className="hm-launch__card-head">
-            <p className="hm-launch__plan">Launch plan</p>
+            <p className="hm-launch__plan">Local Start</p>
             <Tag tone="coral">NEW BUSINESSES</Tag>
           </div>
           <div className="hm-launch__price" data-reveal="line-mask">
-            <SplitHeading as="p" className="gg-number hm-launch__amount" text={launchOffer.price} />
-            <span className="hm-launch__period">/ month · 12 months</span>
+            <SplitHeading as="p" className="gg-number hm-launch__amount" text="R0" />
+            <span className="hm-launch__period">first month · then {monthly}/mo</span>
           </div>
           <hr className="hm-launch__rule" />
           <ul className="hm-checks">
@@ -99,12 +100,12 @@ export function LaunchOffer() {
             </div>
           </div>
           <ButtonLink href={startHref} variant="primary" full>
-            {soldOut ? "Join the waitlist" : "Claim a launch space"}
+            {soldOut ? "Join the waitlist" : "Check availability"}
           </ButtonLink>
         </div>
 
         <div className="hm-launch__mobile-cta">
-          <ButtonLink href={launchRoute.path} variant="coral" full>
+          <ButtonLink href={newBusinessOffer.path} variant="coral" full>
             See the offer
           </ButtonLink>
         </div>

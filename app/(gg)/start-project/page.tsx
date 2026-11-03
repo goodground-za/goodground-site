@@ -4,6 +4,7 @@ import { BreadcrumbSchema } from "@/components/Breadcrumbs";
 import { GgShell } from "@/components/gg/GgShell";
 import { StartProject } from "@/components/gg/start/StartProject";
 import { site } from "@/content/site";
+import { getOfferSpots } from "@/lib/liveCounters";
 import { pageSocialMeta } from "@/lib/metadata";
 import "@/components/gg/start/start.css";
 
@@ -30,12 +31,15 @@ const pageSchema = {
   isPartOf: { "@id": `${site.url}/#website` },
 };
 
-export default function StartProjectPage() {
+export default async function StartProjectPage() {
+  // Live count when Redis is connected, the typed one otherwise (lib/liveCounters.ts).
+  const live = await getOfferSpots();
+  const spots = { left: live.left, total: live.total, month: live.month, nextMonth: live.nextMonth, soldOut: live.soldOut };
   return (
     <GgShell crumbs={[{ label: "START YOUR PROJECT" }]} footer={{ ruled: true }}>
       <BreadcrumbSchema trail={[{ name: "Start your project", path }]} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }} />
-      <StartProject />
+      <StartProject spots={spots} />
     </GgShell>
   );
 }

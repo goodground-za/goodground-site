@@ -1,5 +1,5 @@
 import { alaCarteCategories, baseBuildFee, fullServicePackage, packages, type AlaCarteItem } from "@/content/pricing";
-import { launchTerms } from "@/content/websiteLaunch";
+import { localPlans } from "@/content/pricing";
 
 import { formatRand } from "../format";
 
@@ -186,20 +186,20 @@ export const ways: Way[] = [
   },
   {
     id: "launch-offer",
-    name: "Website Launch Offer",
-    sub: "New businesses without a website. One page.",
+    name: "New Business Offer",
+    sub: "New businesses going online for the first time.",
     tone: "blush",
-    upfront: { text: "No deposit" },
-    monthly: { money: launchTerms.monthly, coral: true },
-    howLong: { text: `${launchTerms.months} months` },
-    total: { money: launchTerms.total },
-    get: { text: "A one-page site, SEO setup, and domain, hosting and email for 12 months." },
-    end: { text: "Yours: we transfer the domain and site, or you move to a Care Plan." },
-    cta: { label: "See the Launch Offer", href: "/website-launch", variant: "outline" },
+    upfront: { text: "No deposit, first month free" },
+    monthly: { money: localPlans[0].monthly, coral: true },
+    howLong: { text: "Month to month. Cancel any month." },
+    total: { text: "First month free" },
+    get: { text: "Local Start, plus a business mailbox free for 12 months." },
+    end: { text: "Your domain is always yours; the site files are yours after 6 months." },
+    cta: { label: "See the New Business Offer", href: "/website-launch", variant: "outline" },
     card: {
-      name: "Website Launch Offer",
-      monthly: { money: launchTerms.monthly, suffix: "/mo" },
-      total: { money: launchTerms.total },
+      name: "New Business Offer",
+      monthly: { money: localPlans[0].monthly, suffix: "/mo" },
+      total: { text: "First month free" },
     },
   },
 ];

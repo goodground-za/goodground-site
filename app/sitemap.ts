@@ -36,10 +36,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const routes: { path: string; priority: number; file: string }[] = [
     { path: "", priority: 1, file: "app/page.tsx" },
     { path: "/pricing", priority: 0.95, file: "app/(gg)/pricing/page.tsx" },
-    // The Website Launch promotion. Its two confirmation routes are
-    // deliberately absent: both are noindex transactional endpoints. So is
-    // /launch-offer-intake-form and its own two outcome routes — that form is
-    // sent to a client by link after they enquire, not discovered in search.
+    // The New Business Offer (same URL as the retired Website Launch promotion).
+    // Its two confirmation routes are deliberately absent: both are noindex
+    // transactional endpoints. /launch-offer-intake-form was retired and 308s here.
     { path: "/website-launch", priority: 0.9, file: "content/websiteLaunch.ts" },
     { path: "/services", priority: 0.9, file: "app/(gg)/services/page.tsx" },
     ...servicePages.map(({ slug }) => ({ path: `/services/${slug}`, priority: 0.8, file: "content/servicePages.ts" })),

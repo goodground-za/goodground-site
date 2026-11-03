@@ -7,7 +7,7 @@ import nodemailer, { type Transporter } from "nodemailer";
  * That silently never worked in production: Web3Forms refuses server-side calls
  * on the free plan — "Use our API in client side or contact support with server
  * IP address (Pro plan is required)" — so every submission from
- * /website-launch and /launch-offer-intake-form failed at the delivery step and
+ * /website-launch and the old launch intake form failed at the delivery step and
  * showed the visitor an error. The browser-side forms in lib/enquiry.ts were
  * never affected, which is why it went unnoticed.
  *

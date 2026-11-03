@@ -8,6 +8,7 @@ import { ArticleCover } from "@/components/gg/ArticleCover";
 import { ButtonLink } from "@/components/gg/Button";
 import { GgShell } from "@/components/gg/GgShell";
 import { GradientCta } from "@/components/gg/GradientCta";
+import { PAGE_TRACKS, trackSecondary } from "@/content/funnel";
 import { Icon } from "@/components/gg/Icon";
 import { ArrowChip, LinkedCard } from "@/components/gg/LinkedCard";
 import { SplitHeading } from "@/components/gg/SplitHeading";
@@ -56,6 +57,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   const article = getArticle(slug);
   if (!article) notFound();
 
+  const ctaTrack = article.cta?.track ?? PAGE_TRACKS.article;
   const topic = topicOf(article);
   const articleUrl = `${site.url}/insights/${article.slug}`;
   const headings = article.body.flatMap((b) => (b.type === "h2" ? [{ id: slugify(b.text), text: b.text }] : []));
@@ -225,8 +227,9 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
         tag={topic === "pricing" ? "YOUR NUMBER, IN TWO DAYS" : "GET IN TOUCH"}
         headline="READY TO BE FOUND ONLINE?"
         sub="We build fast, honest websites for South African small businesses, with a choice of how you pay. Tell us about yours and get a firm number back within two business days."
-        primary={{ label: "Start your project", href: `/start-project?ref=insights-${article.slug}` }}
-        secondary={{ label: "See how pricing works", href: "/pricing" }}
+        track={ctaTrack}
+        refSource={`insights-${article.slug}`}
+        secondary={trackSecondary(ctaTrack)}
       />
     </GgShell>
   );

@@ -14,16 +14,26 @@ import type { NextConfig } from "next";
  * visitor accepts cookies. Removing it silently breaks GA — see
  * components/Analytics.tsx.
  */
+/**
+ * Cloudflare Turnstile (the free AI check form). The challenge needs its own
+ * script and frame, so challenges.cloudflare.com is allowed for those, and ONLY
+ * when the public site key is set at build time: with no key there is no widget
+ * and the policy below is exactly what it was. Nothing else is loosened.
+ */
+const turnstile = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
+const CF = "https://challenges.cloudflare.com";
+
 const csp = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com",
+  `script-src 'self' 'unsafe-inline' https://www.googletagmanager.com${turnstile ? ` ${CF}` : ""}`,
+  ...(turnstile ? [`frame-src 'self' ${CF}`] : []),
   "style-src 'self' 'unsafe-inline'",
   // data: covers the inline SVG grain utility and OG image data URIs.
   "img-src 'self' data: https://images.unsplash.com https://www.googletagmanager.com",
   "font-src 'self' data:",
   // GA beacons post to the first two. Every form posts to this origin
   // (/api/enquiry, /api/website-launch), so no third-party form host is allowed.
-  "connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com",
+  `connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com${turnstile ? ` ${CF}` : ""}`,
   "form-action 'self'",
   "frame-ancestors 'none'",
   "base-uri 'self'",
@@ -88,6 +98,14 @@ const nextConfig: NextConfig = {
       // through to the destination). Temporary: the page above is the rule.
       { source: "/contact", has: [{ type: "query", key: "plan" }], destination: "/start-project", permanent: false },
       { source: "/contact", has: [{ type: "query", key: "intent" }], destination: "/start-project", permanent: false },
+      // Track C: the free AI check lives on its own page. Next carries the query
+      // string (ref, utm) across; the form also does this in the browser as a fallback.
+      { source: "/start-project", has: [{ type: "query", key: "intent", value: "ai-check" }], destination: "/services/ai-visibility#book", permanent: false },
+      // The old launch intake form was retired with the R950 x 12 offer
+      // (2026-11-03). It and its result pages go to the New Business Offer page
+      // (permanent: Next answers 308).
+      { source: "/launch-offer-intake-form", destination: "/website-launch", permanent: true },
+      { source: "/launch-offer-intake-form/:path*", destination: "/website-launch", permanent: true },
     ];
   },
   images: {

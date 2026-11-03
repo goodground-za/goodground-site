@@ -54,6 +54,43 @@ export const site = {
   ] as { platform: "facebook" | "instagram"; name: string; href: string }[],
 } as const;
 
+/**
+ * The free AI visibility check: settings that change without a deploy once
+ * Upstash Redis is connected (lib/liveCounters.ts), typed fallbacks otherwise.
+ * `monthlyBudget` is the proposed 40 (open item 16: the owner confirms who runs
+ * the checks and the budget). `used` is the fallback for this month's count.
+ * The offer spots live in content/newBusinessOffer.ts.
+ */
+export const freeCheck = {
+  monthlyBudget: 40,
+  used: 0,
+  /** A business gets one free check per this many days. */
+  repeatDays: 30,
+} as const;
+
+/**
+ * Towns offered in the town field (a datalist: free text is still allowed).
+ * The first six are the towns the spec names on the industry pages; the rest
+ * are other Garden Route towns, a plain factual list. The owner may trim or
+ * extend it.
+ */
+export const gardenRouteTowns = [
+  "George",
+  "Wilderness",
+  "Mossel Bay",
+  "Knysna",
+  "Oudtshoorn",
+  "Plettenberg Bay",
+  "Sedgefield",
+  "Hartenbos",
+  "Great Brak River",
+  "Herolds Bay",
+  "Riversdale",
+  "Albertinia",
+  "Stilbaai",
+  "Heidelberg",
+] as const;
+
 // "Craft", not "Work": the destination is one honestly-labelled concept
 // build plus the studio's own site, not a portfolio of client projects.
 // "Work" in primary nav promises a portfolio it can't yet deliver — see the

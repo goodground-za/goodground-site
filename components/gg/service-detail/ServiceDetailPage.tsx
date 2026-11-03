@@ -292,7 +292,7 @@ export function ServiceDetailPage({ slug }: { slug: ServiceView["slug"] }) {
         </section>
       </div>
 
-      <GradientCta variant="inner" refSource={ref} />
+      <GradientCta variant="inner" track={entry.primaryTrack} refSource={ref} />
     </GgShell>
   );
 }

@@ -45,7 +45,7 @@ const colors: Swatch[] = [
   { name: "Coral fill", token: "--gg-coral-fill", hex: "#D0340F", usage: "Behind white labels (coral buttons). White on it is 5.02:1.", dark: true },
   { name: "Peach", token: "--gg-peach", hex: "#F7B48F", usage: "Accent on dark surfaces: totals, links on plum, active counts." },
   { name: "Lilac", token: "--gg-lilac", hex: "#EEE8F6", usage: "Soft tint for icon chips, open accordion rows and the why-we-ask card." },
-  { name: "Blush", token: "--gg-blush", hex: "#FCEDE6", usage: "Soft warm tint: selected cards, warnings, the Launch Offer column." },
+  { name: "Blush", token: "--gg-blush", hex: "#FCEDE6", usage: "Soft warm tint: selected cards, warnings, the New Business Offer column." },
   { name: "Mint", token: "--gg-mint", hex: "#E3F1EA", usage: "Soft success tint: done states, notes, the quote card." },
 ];
 

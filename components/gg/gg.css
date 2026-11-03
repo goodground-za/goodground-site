@@ -1189,6 +1189,33 @@ html:not(.js) .gg-faq__answer {
   width: 100%;
 }
 
+/* The one text link to the next-best track (v2 funnel). Full row under the
+   buttons; 44px tall so it is a proper tap target. */
+.gg-cta__next {
+  flex: 0 0 100%;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--gg-surface);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: rgba(255, 255, 255, 0.5);
+  transition: color var(--gg-motion-sm) var(--gg-ease-out), text-decoration-color var(--gg-motion-sm) var(--gg-ease-out);
+}
+
+@media (hover: hover) {
+  .gg-cta__next:hover {
+    text-decoration-color: currentColor;
+  }
+}
+
+.gg-cta--inner .gg-cta__next {
+  justify-content: center;
+}
+
 .gg-cta--inner .gg-cta__actions .gg-pill {
   justify-content: center;
 }
@@ -1807,6 +1834,23 @@ html:not(.js) .gg.gg-cookie {
 
 .gg-footer__long {
   display: none;
+}
+
+/* Small coral "NEW" pill beside a footer link. White on --gg-coral-fill is 5.02:1. */
+.gg-footer__new {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: var(--gg-r-pill);
+  background: var(--gg-coral-fill);
+  color: var(--gg-surface);
+  font-family: var(--gg-font-display);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  vertical-align: 2px;
+  text-decoration: none;
 }
 
 @media (min-width: 768px) {

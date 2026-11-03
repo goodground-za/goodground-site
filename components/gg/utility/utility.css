@@ -389,6 +389,27 @@
   }
 }
 
+/* The one text link to the monthly plans (v2). */
+.nf__next a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--gg-on-dark-muted);
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: rgba(255, 255, 255, 0.3);
+  transition: color var(--gg-motion-sm) var(--gg-ease-out);
+}
+
+@media (hover: hover) {
+  .nf__next a:hover {
+    color: var(--gg-surface);
+    text-decoration-color: currentColor;
+  }
+}
+
 .nf__card {
   display: flex;
   flex-direction: column;

@@ -5,6 +5,7 @@ import { FAQSchema, ServicesSchema } from "@/components/Schema";
 import { FaqBlock } from "@/components/gg/shared/FaqBlock";
 import { GgShell } from "@/components/gg/GgShell";
 import { GradientCta } from "@/components/gg/GradientCta";
+import { PAGE_TRACKS } from "@/content/funnel";
 import { SplitHeading } from "@/components/gg/SplitHeading";
 import { Tag } from "@/components/gg/Tag";
 import { Compare } from "@/components/gg/services/Compare";
@@ -123,7 +124,8 @@ export default function ServicesPage() {
         tag="GROWTH STARTS HERE"
         headline={"READY TO BRING PEOPLE TO\nTHE GROUND YOU’VE BUILT?"}
         sub="Let’s turn your website into a source of steady, measurable growth, with a plan that makes it easy to start."
-        primary={{ label: "Start your project", href: "/start-project?ref=services" }}
+        track={PAGE_TRACKS.services}
+        refSource="services"
         secondary={{ label: "Book a free consultation", href: "/start-project?ref=services-consult" }}
       />
     </GgShell>

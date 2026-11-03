@@ -4,6 +4,7 @@ import { BreadcrumbSchema } from "@/components/Breadcrumbs";
 import { FAQSchema } from "@/components/Schema";
 import { GgShell } from "@/components/gg/GgShell";
 import { GradientCta } from "@/components/gg/GradientCta";
+import { PAGE_TRACKS } from "@/content/funnel";
 import { Resp } from "@/components/gg/Resp";
 import { SplitHeading } from "@/components/gg/SplitHeading";
 import { Tag } from "@/components/gg/Tag";
@@ -66,7 +67,7 @@ export default function FaqPage() {
       </div>
 
       {/* 03 · CTA ---------------------------------------------------------------------------- */}
-      <GradientCta variant="home" refSource="faq" />
+      <GradientCta variant="home" track={PAGE_TRACKS.faq} refSource="faq" />
     </GgShell>
   );
 }

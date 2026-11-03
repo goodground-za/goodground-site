@@ -1,4 +1,5 @@
-import { launchFaqs, launchSpots, launchTerms } from "@/content/websiteLaunch";
+import { newBusinessOffer } from "@/content/newBusinessOffer";
+import { launchFaqs } from "@/content/websiteLaunch";
 
 import type { FaqItem } from "../FaqAccordion";
 import type { IconName } from "../Icon";
@@ -36,8 +37,9 @@ export type Availability = {
 };
 
 export function getAvailability(): Availability {
-  const { month, total, taken } = launchSpots;
-  const year = launchSpots.year;
+  const { month, year } = newBusinessOffer;
+  const total = newBusinessOffer.spotsTotal;
+  const taken = newBusinessOffer.spotsTaken;
   const left = Math.max(0, total - taken);
   const soldOut = left === 0;
   const next = monthAfter(month, year, 1);
@@ -63,7 +65,13 @@ export function getAvailability(): Availability {
 
 /* -------------------------------------------------------------- content */
 
-export const terms = launchTerms;
+/**
+ * LEGACY, remove in Phase B. The old /website-launch layout (hero maths row,
+ * 12-payment timeline, sticky bar) is built around the RETIRED R950 x 12 offer
+ * and still reads these numbers until that page is rebuilt as the New Business
+ * Offer page. They no longer live in content/ and nothing new may use them.
+ */
+export const terms = { monthly: 950, months: 12, deposit: 0, total: 950 * 12 } as const;
 
 export const keyFacts: { icon: IconName; title: string; body: string }[] = [
   { icon: "file", title: "One page", body: "Custom, designed around your business" },
@@ -203,13 +211,10 @@ export const launchFaqItems: FaqItem[] = [
   { question: "Will my website appear on Google?", answer: [answerOf("Will my website appear on Google?")] },
   { question: "Does the package include ongoing SEO?", answer: [answerOf("Does the package include ongoing SEO?")] },
   {
-    // New in the design, and the answer is DRAFT: it states only what the card says.
     question: "Is there a deposit?",
-    answer: [
-      `No. The offer is R${terms.monthly} a month for ${terms.months} months, with no deposit upfront. Domain, hosting and email fees are included for those first ${terms.months} months.`,
-    ],
+    answer: [answerOf("Is there a deposit?")],
   },
-  { question: "What happens after the first 12 months?", answer: [answerOf("What happens after the first 12 months?")] },
+  { question: "What happens after the free month?", answer: [answerOf("What happens after the free month?")] },
   { question: "Can I add more pages or extra features?", answer: [answerOf("Can I add more pages or extra features?")] },
 ];
 
