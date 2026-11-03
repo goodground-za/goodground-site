@@ -63,7 +63,7 @@ export function WorkShowcase() {
               short="Every project is live at a public URL you can open and test yourself."
             />
           }
-          cta={<ButtonLink href="/work" variant="light">View all work</ButtonLink>}
+          cta={<ButtonLink href="/work" variant="light">View all projects</ButtonLink>}
           ctaClassName="hm-hide-phone"
         />
 
@@ -141,7 +141,7 @@ export function WorkShowcase() {
 
         <div className="hm-phone-only">
           <ButtonLink href="/work" variant="light" full>
-            View all work
+            View all projects
           </ButtonLink>
         </div>
       </div>

@@ -19,7 +19,7 @@ const COLUMNS = [
     heading: "STUDIO",
     links: [
       { label: "About", href: "/about" },
-      { label: "Work", href: "/work" },
+      { label: "Projects", href: "/work" },
       { label: "Process", href: "/process" },
       { label: "Our story", href: "/about#our-story" },
     ],

@@ -11,6 +11,8 @@ import { Icon, ICON_NAMES } from "@/components/gg/Icon";
 import { ArrowChip, LinkedCard } from "@/components/gg/LinkedCard";
 import { SectionHeader } from "@/components/gg/SectionHeader";
 import { Tag } from "@/components/gg/Tag";
+import { faq } from "@/content/faq";
+import { servicePages } from "@/content/servicePages";
 
 import { SheetDemo } from "./SheetDemo";
 import "./styleguide.css";
@@ -48,7 +50,8 @@ const SWATCHES = [
 ] as const;
 
 // Copy from the Service detail (SEO) frame, 96:266. Answers 02–05 are not
-// written in Figma (open item 11); these stand-ins are for the styleguide only.
+// written in Figma (open item 11), so they are the live answers from
+// content/servicePages.ts, as Home's 02 and 03 are from content/faq.ts.
 const SERVICE_FAQ: FaqItem[] = [
   {
     question: "Do you offer SEO as a standalone service, or only with a new website?",
@@ -57,13 +60,7 @@ const SERVICE_FAQ: FaqItem[] = [
     ],
     slug: "standalone-seo",
   },
-  { question: "How long does SEO take to show results?", answer: ["Styleguide placeholder. Live copy goes here."] },
-  { question: "Do you do local SEO for my town specifically?", answer: ["Styleguide placeholder. Live copy goes here."] },
-  {
-    question: "What’s the difference between SEO foundations and Advanced SEO?",
-    answer: ["Styleguide placeholder. Live copy goes here."],
-  },
-  { question: "Can you fix SEO on a site you didn’t build?", answer: ["Styleguide placeholder. Live copy goes here."] },
+  ...(servicePages.find((p) => p.slug === "seo")?.faq ?? []).slice(1).map((item) => ({ question: item.question, answer: [item.answer ?? ""] })),
 ];
 
 // Home section 10 (7:141).
@@ -74,11 +71,7 @@ const HOME_FAQ: FaqItem[] = [
       "We agree one fixed price up front. Then choose: a 50% deposit and 50% on completion, or 12 equal monthly instalments where the first secures your booking and the other 11 start once the project is complete.",
     ],
   },
-  { question: "Is there a deposit before you start?", answer: ["Styleguide placeholder. Live copy goes here."] },
-  {
-    question: "What happens if the scope changes partway through?",
-    answer: ["Styleguide placeholder. Live copy goes here."],
-  },
+  ...faq.slice(1, 3).map((item) => ({ question: item.question, answer: [item.answer ?? ""] })),
 ];
 
 const SMALL_CARDS = [
@@ -229,7 +222,7 @@ export default function StyleguidePage() {
           </div>
         </Block>
 
-        <Block title="Linked card — article" node="96:235" refs={["linked-card-article.png"]}>
+        <Block title="Linked card: article" node="96:235" refs={["linked-card-article.png"]}>
           <LinkedCard href="/insights" className="sg-article-card">
             <div className="gg-card__cover">
               <ArticleCover topic="websites" />
@@ -250,7 +243,7 @@ export default function StyleguidePage() {
           </LinkedCard>
         </Block>
 
-        <Block title="Linked card — tinted row" node="96:311" refs={["linked-card-small.png"]}>
+        <Block title="Linked card: tinted row" node="96:311" refs={["linked-card-small.png"]}>
           <div className="sg-small-cards" style={{ width: "100%" }}>
             {SMALL_CARDS.map((card) => (
               <LinkedCard
@@ -278,14 +271,14 @@ export default function StyleguidePage() {
           </div>
         </Block>
 
-        <Block title="FAQ accordion — numbered (service / FAQ page)" node="96:266" refs={["faq-service.png"]}>
+        <Block title="FAQ accordion: numbered (service / FAQ page)" node="96:266" refs={["faq-service.png"]}>
           {/* 700 wide, as the accordion column is in both frames. */}
           <div style={{ width: "100%", maxWidth: 700 }}>
             <FaqAccordion items={SERVICE_FAQ} numbered />
           </div>
         </Block>
 
-        <Block title="FAQ accordion — Home tone, on white" node="7:141" refs={["faq-home.png"]}>
+        <Block title="FAQ accordion: Home tone, on white" node="7:141" refs={["faq-home.png"]}>
           <div className="sg-faq-home" style={{ width: "100%", maxWidth: 748 }}>
             <FaqAccordion items={HOME_FAQ} tone="home" />
           </div>
@@ -309,15 +302,15 @@ export default function StyleguidePage() {
           <SheetDemo />
         </Block>
 
-        <Block title="Gradient CTA — inner (Industry / Service)" node="96:348" refs={["cta-inner.png"]}>
+        <Block title="Gradient CTA: inner (Industry / Service)" node="96:348" refs={["cta-inner.png"]}>
           <p className="gg-body gg-muted">Rendered full width below.</p>
         </Block>
       </div>
 
-      <GradientCta variant="inner" refSource="styleguide" />
+      <GradientCta variant="inner" refSource="styleguide" headingId="gg-cta-heading-inner" />
 
       <div className="gg-wrap">
-        <Block title="Gradient CTA — Home + canonical footer" node="7:210" refs={["cta-home-footer.png"]}>
+        <Block title="Gradient CTA: Home + canonical footer" node="7:210" refs={["cta-home-footer.png"]}>
           <p className="gg-body gg-muted">Rendered full width below, followed by the site footer.</p>
         </Block>
       </div>

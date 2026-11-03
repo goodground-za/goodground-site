@@ -37,7 +37,7 @@
 }
 
 .gg .id-h1 {
-  font-size: clamp(52px, 35.66px + 4.19vw, 96px);
+  font-size: min(clamp(52px, 35.66px + 4.19vw, 96px), var(--gg-fit, 999px));
   line-height: 0.94;
 }
 

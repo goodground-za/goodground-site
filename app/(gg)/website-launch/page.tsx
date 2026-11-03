@@ -95,7 +95,7 @@ function Meter({ availability, size }: { availability: ReturnType<typeof getAvai
           ) : (
             <>
               <span className="gg-resp-long">
-                {left} of {total} spots left
+                {left} of {total} spaces left
               </span>
               <span className="gg-resp-short">
                 {left} of {total} left
@@ -107,7 +107,7 @@ function Meter({ availability, size }: { availability: ReturnType<typeof getAvai
       <div
         className="ln-meter__segments"
         role="img"
-        aria-label={`${taken} of ${total} ${month} spots taken`}
+        aria-label={`${taken} of ${total} ${month} spaces taken`}
         style={{ "--total": total } as CSSProperties}
       >
         {Array.from({ length: total }, (_, i) => (
@@ -236,7 +236,7 @@ export default function WebsiteLaunchPage() {
                     <span aria-hidden="true">
                       <Icon name="bell" size={15} stroke={2.2} />
                     </span>
-                    Next opening: {availability.nextMonth}, {availability.total} spots.
+                    Next opening: {availability.nextMonth}, {availability.total} spaces.
                   </p>
                 ) : null}
 
@@ -463,12 +463,12 @@ export default function WebsiteLaunchPage() {
                       ))}
                     </span>
                     <span className="ln-calendar__status">
-                      {intake.open === 0 ? "Fully booked" : `${intake.open} spot${intake.open === 1 ? "" : "s"} ${intake.filled > 0 ? "left" : "open"}`}
+                      {intake.open === 0 ? "Fully booked" : `${intake.open} space${intake.open === 1 ? "" : "s"} ${intake.filled > 0 ? "left" : "open"}`}
                     </span>
                   </li>
                 ))}
               </ul>
-              <p className="ln-calendar__note">Filled spots shown in coral.</p>
+              <p className="ln-calendar__note">Filled spaces shown in coral.</p>
             </div>
           </div>
         </section>
@@ -522,7 +522,7 @@ export default function WebsiteLaunchPage() {
                 <i aria-hidden="true" />
                 {availability.soldOut
                   ? `${availability.month} is fully booked. Tell us about your business and we’ll add you to the ${availability.nextMonth} waitlist.`
-                  : `${availability.left} slot${availability.left === 1 ? "" : "s"} left for ${availability.month}. Tell us about your business and we’ll confirm whether ${availability.left === 1 ? "it’s" : "they’re"} still open.`}
+                  : `${availability.left} space${availability.left === 1 ? "" : "s"} left for ${availability.month}. Tell us about your business and we’ll confirm whether ${availability.left === 1 ? "it’s" : "they’re"} still open.`}
               </p>
               <ul className="ln-form-ticks" data-part="cta">
                 {["Takes about a minute", "Commits you to nothing", "We reply about availability and next steps"].map((line) => (

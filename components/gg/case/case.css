@@ -45,14 +45,14 @@
 
 .cs-h1 {
   font-family: var(--gg-font-display);
-  font-size: clamp(96px, 64.8px + 8vw, 180px);
+  font-size: min(clamp(96px, 64.8px + 8vw, 180px), var(--gg-fit, 999px));
   font-weight: 500;
   line-height: 0.9;
   text-transform: uppercase;
 }
 
 .cs-h1--long {
-  font-size: clamp(56px, 38px + 4.6vw, 104px);
+  font-size: min(clamp(56px, 38px + 4.6vw, 104px), var(--gg-fit, 999px));
 }
 
 .cs-hero__summary {
@@ -371,6 +371,11 @@
 
   .cs-media__label {
     display: inline-flex;
+  }
+
+  /* From here the top-left label says the same thing; one caption is enough. */
+  .cs-media__cap {
+    display: none;
   }
 
   .cs-media__live {
@@ -741,6 +746,14 @@
   transform: none;
 }
 
+/* The slide-in starts 48px off the column, past the 20px phone and 40px
+   tablet gutter; clip the page sideways so the start state never widens the
+   layout. `clip`, not `hidden`: no scroll container, so the sticky row labels
+   still stick. */
+.cs-page {
+  overflow-x: clip;
+}
+
 .cs-visual {
   display: flex;
   flex-direction: column;
@@ -806,8 +819,12 @@
   opacity: 1;
 }
 
+/* Six 44px swatches need 304px; a 320 phone's card has 240, so they wrap
+   onto a second centred row rather than poking out of the card. */
 .cs-colour__swatches {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 8px;
 }
 
@@ -1227,7 +1244,15 @@
 }
 
 .cs-stat--hi {
+  container-type: inline-size;
   background: var(--gg-coral-fill);
+}
+
+/* "56 MB → 1.5 MB" reads as one figure: keep it on one line and let it
+   shrink to the card (it is about 6.3em wide) instead of breaking at the arrow. */
+.gg .cs-stat--hi .cs-stat__value {
+  font-size: min(44px, 15cqi);
+  white-space: nowrap;
 }
 
 .cs-stat__value {
@@ -1288,6 +1313,10 @@
 
   .cs-stat__value {
     font-size: 64px;
+  }
+
+  .gg .cs-stat--hi .cs-stat__value {
+    font-size: min(64px, 15cqi);
   }
 
   .gg .cs-stat h3 {

@@ -29,8 +29,8 @@ export function EligibilityChecker() {
   const sub = availability.soldOut
     ? `${availability.month} is full. Join the ${availability.nextMonth} waitlist.`
     : availability.left === 1
-      ? `Check if ${availability.month}’s last slot is still open.`
-      : `Check which ${availability.month} slots are still open.`;
+      ? `Check if ${availability.month}’s last space is still open.`
+      : `Check which ${availability.month} spaces are still open.`;
 
   return (
     <div className="ln-checker">

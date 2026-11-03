@@ -77,8 +77,8 @@ export function SearchMock() {
           </Tag>
         </div>
         <p className="hm-search__title">
-          <span className="gg-resp-long">Your Business — 24/7 Plumbing in Pretoria</span>
-          <span className="gg-resp-short">Your Business — 24/7 Plumbing</span>
+          <span className="gg-resp-long">Your Business | 24/7 Plumbing in Pretoria</span>
+          <span className="gg-resp-short">Your Business | 24/7 Plumbing</span>
         </p>
       </div>
       <div className="hm-search__result" style={{ "--gg-i": 1 } as CSSProperties}>

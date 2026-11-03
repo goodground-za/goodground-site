@@ -17,7 +17,9 @@ import { Icon } from "./Icon";
  */
 export type Crumb = { label: string; href?: string };
 
-const MENU = [
+/** The one menu list. The Home menu (components/home2026/HomeChrome.tsx)
+ * reads this too, so the two cannot drift apart. */
+export const MENU = [
   { n: "01", label: "About", href: "/about" },
   { n: "02", label: "Projects", href: "/work" },
   { n: "03", label: "Services", href: "/services" },

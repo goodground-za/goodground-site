@@ -22,7 +22,7 @@ export type Reason = { title: string; body: string };
 export const sixReasons: Reason[] = [
   {
     title: "World Class Quality",
-    body: "Every project is shaped with senior-level craft, clear thinking, and detail we'd proudly put in our portfolio.",
+    body: "Every project is shaped with senior-level craft, clear thinking, and detail we’d proudly put in our portfolio.",
   },
   {
     title: "Personalised Design",
@@ -30,7 +30,7 @@ export const sixReasons: Reason[] = [
   },
   {
     title: "Problem Solving",
-    body: "We don't just make things look good. We clarify friction, improve journeys, and design with purpose.",
+    body: "We don’t just make things look good. We clarify friction, improve journeys, and design with purpose.",
   },
   {
     title: "Strategy First",

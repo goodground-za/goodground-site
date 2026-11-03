@@ -337,7 +337,9 @@ export const afterOptions: {
     title: "Look after it yourself",
     body: "We hand over everything you need. You can always call on us later.",
     price: "Free",
-    button: { label: "Read the handover guide", href: "/insights", variant: "outline" },
+    // There is no public handover guide (it is handed over with the site), so
+    // this points at step 05, which lists what you get at handover.
+    button: { label: "See what we hand over", href: "#handoff", variant: "outline" },
   },
   {
     icon: "shield",

@@ -1851,31 +1851,32 @@
 .hm-dots {
   display: flex;
   align-items: center;
-  /* Each button is a 44px-tall target, 24px wide (40px for the active one), with
-     the 8px dot centred in it. Targets must not overlap (Lighthouse counts
-     that as obscured), so the dots sit 16px apart rather than the drawn 6px.
-     The negative margins cancel the extra height and offset. */
-  margin: -18px 0 -18px -8px;
+  /* Each button is a 44 x 44 target (the phone floor) with the 8px dot
+     centred in it (a 24px pill when active). Targets must not overlap
+     (Lighthouse counts that as obscured), so the dots sit 36px apart rather
+     than the drawn 6px. The negative margins cancel the extra height and offset. */
+  margin: -18px 0 -18px -18px;
 }
 
 .hm-dot {
   position: relative;
-  width: 24px;
+  width: 44px;
   height: 44px;
-  transition: width var(--gg-motion-md) var(--gg-ease-in-out);
 }
 
 .hm-dot::before {
   content: "";
   position: absolute;
-  inset: 18px 8px;
+  inset: 18px;
   border-radius: 99px;
   background: rgba(255, 255, 255, 0.25);
-  transition: background-color var(--gg-motion-md) var(--gg-ease-in-out);
+  transition:
+    inset var(--gg-motion-md) var(--gg-ease-in-out),
+    background-color var(--gg-motion-md) var(--gg-ease-in-out);
 }
 
-.hm-dot.is-active {
-  width: 40px;
+.hm-dot.is-active::before {
+  inset: 18px 10px;
 }
 
 .hm-dot.is-active::before {
@@ -3185,6 +3186,12 @@ html[data-motion="off"] {
   .js .gg .hm-score .hm-bar__fill {
     transform: scaleX(var(--w)) !important;
   }
+
+  /* The notification rows are placed in their slots by translateY; without
+     it all three sat on top of each other. */
+  .js .gg .hm-notifs .hm-notif {
+    transform: translateY(calc(var(--i) * var(--pitch))) !important;
+  }
 }
 
 html[data-motion="off"].js .gg .hm-meter .hm-meter__fill {
@@ -3193,4 +3200,8 @@ html[data-motion="off"].js .gg .hm-meter .hm-meter__fill {
 
 html[data-motion="off"].js .gg .hm-score .hm-bar__fill {
   transform: scaleX(var(--w)) !important;
+}
+
+html[data-motion="off"].js .gg .hm-notifs .hm-notif {
+  transform: translateY(calc(var(--i) * var(--pitch))) !important;
 }

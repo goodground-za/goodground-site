@@ -118,7 +118,9 @@ function Card({
               <span className={`sv-card__chip sv-card__chip--${d.chip} sv-card__chip--lg`}>
                 <Icon name={d.icon} size={24} stroke={2} />
               </span>
-              <span className="sv-card__n">{d.n}</span>
+              <span className="sv-card__n" aria-hidden="true">
+                {d.n}
+              </span>
               <Tag tone={d.tone}>{d.tag}</Tag>
             </div>
             <h3 className="sv-card__name">{d.name}</h3>

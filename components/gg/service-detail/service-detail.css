@@ -950,6 +950,13 @@
   transform: translateX(32px);
 }
 
+/* The slide-in starts 32px right of the column, past a phone's 20px gutter;
+   clip the page sideways so the start state never widens the layout. `clip`,
+   not `hidden`: no scroll container, so sticky children still stick. */
+.sd-page {
+  overflow-x: clip;
+}
+
 .js [data-reveal="group"].is-in .sd-built.sd-fu {
   transform: none;
 }

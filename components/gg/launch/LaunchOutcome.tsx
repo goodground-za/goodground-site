@@ -54,7 +54,7 @@ export function LaunchOutcome({ heading, body, tone }: { heading: string; body: 
                 </ButtonLink>
               ) : (
                 <ButtonLink href="/work" variant="coral">
-                  See our work
+                  See our projects
                 </ButtonLink>
               )}
               <ButtonLink href={`mailto:${site.email}`} variant="outline">

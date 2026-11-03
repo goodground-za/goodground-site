@@ -1963,8 +1963,9 @@ html[data-motion="off"] .ob-cond {
     font-size: 11pt;
   }
 
-  body.ob-printing .ob-print h1 {
+  body.ob-printing .ob-print .ob-print__title {
     font-size: 20pt;
+    font-weight: 700;
   }
 
   body.ob-printing .ob-print h2 {

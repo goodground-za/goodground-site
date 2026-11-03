@@ -4,6 +4,8 @@ import Link from "next/link";
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import { MENU } from "@/components/gg/SiteHeader";
+
 /**
  * The homepage’s own header and its full-screen menu.
  *
@@ -50,24 +52,12 @@ export function HomeChrome() {
   // anchor any more, so that path was removed rather than left unreachable.)
   const onMenuLinkClick = () => dialogRef.current?.close();
 
-  /**
-   * Every item goes to its own page, not to a section of this one. The labels
-   * are the delivered design's; the destinations match content/site.ts's
-   * navLinks, so the menu and the shared <Nav /> on every other page cannot
-   * drift apart.
-   *
-   * "Projects" -> /work is deliberate and matches the note in site.ts: the
-   * destination is one concept build plus the studio's own site, and calling
-   * it "Work" in a nav promises a client portfolio that isn't there yet.
-   */
-  const MENU = [
-    { n: "01", label: "About", href: "/about" },
-    { n: "02", label: "Projects", href: "/work" },
-    { n: "03", label: "Services", href: "/services" },
-    { n: "04", label: "Pricing", href: "/pricing" },
-    { n: "05", label: "Insights", href: "/insights" },
-    { n: "06", label: "Let’s chat", href: "/contact" },
-  ];
+  // Every item goes to its own page, not to a section of this one. The list
+  // is the shared header's MENU (components/gg/SiteHeader.tsx), so Home lists
+  // the same items, order, numbers and labels as every other page.
+  // "Projects" -> /work is deliberate and matches the note in site.ts: the
+  // destination is concept builds plus the studio's own site, and calling it
+  // "Work" in a nav promises a client portfolio that isn't there yet.
 
   return (
     <>

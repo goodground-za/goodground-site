@@ -8,7 +8,7 @@ import { Icon } from "../Icon";
 import { PillToggle } from "../PillToggle";
 import { SectionHeader } from "../SectionHeader";
 import { Tag } from "../Tag";
-import { balanceOf, BILLING_OPTIONS, BILLING_OPTIONS_SHORT, depositOf, instalmentFor, packageViews, type PackageView } from "./data";
+import { balanceOf, BILLING_OPTIONS, BILLING_OPTIONS_SHORT, depositOf, instalmentFor, INSTALMENTS, packageViews, type PackageView } from "./data";
 import { usePricing } from "./PricingProvider";
 
 /** The price block: both views occupy one grid cell, so the card never changes size and numbers crossfade. */
@@ -17,6 +17,9 @@ function PriceViews({ pkg }: { pkg: PackageView }) {
   const deposit = depositOf(pkg.total);
   const balance = balanceOf(pkg.total);
   const monthly = instalmentFor(pkg.total);
+  // Grow's R32 000 does not divide by 12: R2 667 × 12 is R32 004, so say
+  // "about" (the last instalment balances the total, as the configurator notes).
+  const about = pkg.total % INSTALMENTS !== 0;
   const depositLine = `${formatRand(deposit)} deposit + ${formatRand(balance)} on completion`;
 
   return (
@@ -27,10 +30,14 @@ function PriceViews({ pkg }: { pkg: PackageView }) {
           <strong className="gg-number">{formatRand(pkg.total)}</strong>
         </p>
         <p className="pr-price__split">{depositLine}</p>
-        <p className="pr-price__alt">or {formatRand(monthly)}/mo × 12</p>
+        <p className="pr-price__alt">
+          or {about ? "about " : ""}
+          {formatRand(monthly)}/mo × 12
+        </p>
       </div>
       <div className="pr-price__view" data-on={billing === "instalments" ? "" : undefined} inert={billing !== "instalments"}>
         <p className="pr-price__main">
+          {about ? <small>about</small> : null}
           <strong className="gg-number">{formatRand(monthly)}</strong>
           <small>/mo</small>
         </p>

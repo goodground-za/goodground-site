@@ -64,6 +64,6 @@ The team assisted us with the initial website planning, system integrations and 
 
 One of the biggest benefits for us was the option to pay the project off over 12 months, while still receiving ongoing support throughout that period. For a growing business, this made a big project far more manageable without compromising on the quality of the end result.
 
-Well done to the GoodGround team. We're incredibly happy with the experience and would highly recommend them to any business looking for a reliable web development partner.`,
+Well done to the GoodGround team. We’re incredibly happy with the experience and would highly recommend them to any business looking for a reliable web development partner.`,
   },
 ];

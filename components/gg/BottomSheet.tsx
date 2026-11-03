@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, type ReactNode } from "react";
+import { forwardRef, useCallback, useEffect, useId, useImperativeHandle, useRef, type ReactNode } from "react";
 
 import { Icon } from "./Icon";
 
@@ -21,6 +21,9 @@ export const BottomSheet = forwardRef<
 >(function BottomSheet({ title, children, footer, onClose }, ref) {
   const dialog = useRef<HTMLDialogElement>(null);
   const opener = useRef<Element | null>(null);
+  // One id per sheet: /onboarding has two, and a shared fixed id labelled the
+  // second sheet with the first one's title.
+  const titleId = useId();
 
   const open = useCallback(() => {
     opener.current = document.activeElement;
@@ -44,7 +47,7 @@ export const BottomSheet = forwardRef<
     <dialog
       ref={dialog}
       className="gg-sheet"
-      aria-labelledby="gg-sheet-title"
+      aria-labelledby={titleId}
       onClose={handleClose}
       // A click whose target is the <dialog> itself landed on the backdrop.
       onClick={(event) => {
@@ -53,7 +56,7 @@ export const BottomSheet = forwardRef<
     >
       <span className="gg-sheet__handle" aria-hidden="true" />
       <div className="gg-sheet__head">
-        <h2 id="gg-sheet-title" className="gg-sheet__title">
+        <h2 id={titleId} className="gg-sheet__title">
           {title}
         </h2>
         <button type="button" className="gg-sheet__close" onClick={close} aria-label="Close">

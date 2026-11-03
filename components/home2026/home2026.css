@@ -105,7 +105,7 @@
 .home-2026 .hero-side p{font-size:1.125rem;line-height:1.55;margin-bottom:2rem;max-width:25rem}
 .home-2026 .hero-side .button{width:100%}
 .home-2026 .hero-bottom{display:flex;justify-content:space-between;align-items:center;gap:2rem;padding-bottom:2.5rem;font-size:.875rem;text-transform:uppercase;letter-spacing:.025em}
-.home-2026 .scroll-link{display:inline-flex;align-items:center;gap:.8rem}
+.home-2026 .scroll-link{display:inline-flex;align-items:center;gap:.8rem;min-height:44px}
 .home-2026 .scroll-icon{display:grid;place-items:center;font-size:1.5rem;border:1px solid #ffffff66;border-radius:50%;width:2.8rem;height:2.8rem;transition:transform .3s}
 .home-2026 .scroll-link:hover .scroll-icon{transform:translateY(3px)}
 .home-2026 .hero-social{display:flex;gap:1rem;margin-left:auto}
@@ -125,7 +125,7 @@
 .home-2026 .menu-top .brand-pill, .home-2026 .menu-top .menu-toggle{background:#232323}
 .home-2026 .close-icon{font-family:Arial,sans-serif;font-size:1.8rem;line-height:1}
 .home-2026 .menu-nav{width:min(70rem,100%);margin:3rem auto;display:flex;flex-direction:column}
-.home-2026 .menu-nav>a{display:flex;align-items:center;gap:2rem;padding:.6rem 0;border-bottom:1px solid var(--white-line);font-family:var(--font-oswald),'Arial Narrow',sans-serif;text-transform:uppercase;font-size:clamp(2rem,5vw,4rem);line-height:1.2;transition:color .2s}
+.home-2026 .menu-nav>a{display:flex;align-items:center;gap:2rem;padding:.6rem 0;border-bottom:1px solid var(--white-line);font-family:var(--font-oswald),'Arial Narrow',sans-serif;text-transform:uppercase;font-size:clamp(2rem,min(5vw,6vh),4rem);line-height:1.2;transition:color .2s}
 .home-2026 .menu-nav>a:hover{color:var(--orange)}
 .home-2026 .menu-nav>a>span:first-child{font:400 .875rem var(--font-ibm-plex-sans),sans-serif;align-self:center;color:#aaa}
 .home-2026 .menu-arrow{margin-left:auto}

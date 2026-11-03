@@ -7,6 +7,6 @@ export const contentType = OG_CONTENT_TYPE;
 export default async function Image() {
   return renderOgCard({
     eyebrow: "FAQ",
-    title: "Every question we're actually asked.",
+    title: "Every question we’re actually asked.",
   });
 }

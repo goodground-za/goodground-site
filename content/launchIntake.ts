@@ -73,7 +73,7 @@ export type IntakeSection = {
 export const intakeAssets = {
   driveUrl: "",
   heading: "Sending us your logo and photos",
-  body: "We email you a private Google Drive folder for your project. Upload your logo, photographs and anything else you have to that folder — it handles big files that email would bounce. You do not need to have uploaded anything before sending this form.",
+  body: "We email you a private Google Drive folder for your project. Upload your logo, photographs and anything else you have to that folder. It handles big files that email would bounce. You do not need to have uploaded anything before sending this form.",
   items: [
     "Your logo, in the best quality you have. The original file from your designer is ideal.",
     "Photographs of your work, your premises, your products or your team.",
@@ -87,7 +87,7 @@ export const intakeRoute = {
   api: "/api/launch-intake",
   title: "Website Launch Offer | Project Form | GoodGround",
   description:
-    "The project form for GoodGround's website launch offer. Tell us about your new business so we can build your website.",
+    "The project form for GoodGround’s website launch offer. Tell us about your new business so we can build your website.",
 } as const;
 
 export const intakeHero = {
@@ -168,7 +168,7 @@ export const intakeSections: readonly IntakeSection[] = [
     id: "business",
     number: "2",
     title: "What your business does",
-    intro: "This becomes the words on your home page, so answer it the way you would say it out loud. Do not worry about making it sound polished — that is our job.",
+    intro: "This becomes the words on your home page, so answer it the way you would say it out loud. Do not worry about making it sound polished: that is our job.",
     fields: [
       { id: "one_liner", label: "In one sentence, what does your business do?", type: "text", required: true, max: 200,
         help: "If someone asked you at a braai, what would you say? For example: “We fix and service air conditioners for homes and small offices in the northern suburbs.”" },
@@ -196,7 +196,7 @@ export const intakeSections: readonly IntakeSection[] = [
     intro: "Your services are usually the biggest section of your page. This is what fills it.",
     fields: [
       { id: "services", label: "List everything you offer", type: "textarea", required: true, max: 2500, rows: 8,
-        help: "One per line. For each one, a few words on what it is and who it is for. Rough prices if you have them — you can decide later whether those go on the site." },
+        help: "One per line. For each one, a few words on what it is and who it is for. Rough prices if you have them; you can decide later whether those go on the site." },
       { id: "main_service", label: "Which one do you most want more of?", type: "text", required: true, max: 200,
         help: "We build the site around this one. It gets the most space and the clearest path to contacting you." },
       { id: "pricing_display", label: "Do you want prices on the website?", type: "radio", required: true, max: 60,
@@ -219,7 +219,7 @@ export const intakeSections: readonly IntakeSection[] = [
     intro: "A website works when it answers what a customer is already wondering. These answers do more for the finished site than anything else on this form.",
     fields: [
       { id: "customer_who", label: "Describe your typical customer", type: "textarea", required: true, max: 1200, rows: 4,
-        help: "Homeowners? Landlords? Other businesses? Young families? Be as specific as you can — “everyone” gives us nothing to aim at." },
+        help: "Homeowners? Landlords? Other businesses? Young families? Be as specific as you can: “everyone” gives us nothing to aim at." },
       { id: "customer_problem", label: "What problem do they come to you with?", type: "textarea", required: true, max: 1200, rows: 4,
         help: "In their words, not industry words. What has usually gone wrong, or what are they trying to get done?" },
       { id: "customer_worry", label: "What are they nervous about before they commit?", type: "textarea", max: 1200, rows: 4,
@@ -289,7 +289,7 @@ export const intakeSections: readonly IntakeSection[] = [
           Pink: "#d1477a", Yellow: "#e4a11b", "Earthy browns": "#7a5c3e",
           "Black and white": "#1b1b1b", Grey: "#7c7f85", "Cream and beige": "#ddd0b8",
         },
-        help: "Pick whatever appeals to you. This is enough for us to build a proper palette around — we do the rest." },
+        help: "Pick whatever appeals to you. This is enough for us to build a proper palette around, and we do the rest." },
       { id: "colour_avoid", label: "Any colours to stay away from?", type: "text", max: 200,
         help: "A competitor colour, or something you simply dislike." },
       { id: "feel_words", label: "How should your business come across?", type: "checkboxes", required: true, max: 5,
@@ -360,7 +360,7 @@ export const intakeSections: readonly IntakeSection[] = [
     id: "contact",
     number: "9",
     title: "Your details, as they should appear",
-    intro: "Exactly what goes on the website itself. Check it carefully — this is what customers will use to reach you.",
+    intro: "Exactly what goes on the website itself. Check it carefully: this is what customers will use to reach you.",
     fields: [
       { id: "public_phone", label: "Phone number to show", type: "tel", required: true, max: 40, half: true },
       { id: "public_email", label: "Email address to show", type: "email", required: true, max: 254, half: true,

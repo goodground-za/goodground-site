@@ -1922,3 +1922,12 @@ html[data-motion="off"] .pc-page * {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Phone tap targets: the 44px floor (PRODUCT.md, QA 27 Oct 2026). */
+@media (max-width: 767px) {
+  .pc-nav__chip,
+  .pc-step__head,
+  .pc-seg button {
+    min-height: 44px;
+  }
+}

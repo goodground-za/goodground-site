@@ -1106,3 +1106,18 @@ html[data-motion="off"] .lg-switch span {
     display: block;
   }
 }
+
+/* Phone tap targets: the 44px floor (PRODUCT.md, QA 27 Oct 2026). */
+@media (max-width: 767px) {
+  .lg-tab,
+  .lg-copy {
+    min-height: 44px;
+  }
+
+  .lg-contact p a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-block: -10px;
+  }
+}

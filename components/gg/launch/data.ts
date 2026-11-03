@@ -51,8 +51,8 @@ export function getAvailability(): Availability {
     soldOut,
     plan: soldOut ? "launch-waitlist" : "launch",
     cta: soldOut ? `Join the ${next.month} waitlist` : "Check availability",
-    pill: soldOut ? `${month.toUpperCase()} IS FULLY BOOKED` : `${left} SLOT${left === 1 ? "" : "S"} LEFT FOR ${month.toUpperCase()}`,
-    // Months further out show every spot open until bookings exist.
+    pill: soldOut ? `${month.toUpperCase()} IS FULLY BOOKED` : `${left} SPACE${left === 1 ? "" : "S"} LEFT FOR ${month.toUpperCase()}`,
+    // Months further out show every space open until bookings exist.
     intakes: [
       { label: `${month} ${year}`, filled: taken, open: left },
       { label: `${next.month} ${next.year}`, filled: 0, open: total },

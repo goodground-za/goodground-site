@@ -231,8 +231,14 @@ export function InsightsListing({ cards }: { cards: ArticleCard[] }) {
                 <span className="in-featured__cta">
                   <span className="gg-btn in-btnface">
                     <span className="gg-btn__label">Read the article</span>
+                    {/* Same chip markup as Button: the arrow wrappers centre the icon. */}
                     <span className="gg-btn__chip" aria-hidden="true">
-                      <Icon name="arrow-up-right" size={16} stroke={2.2} />
+                      <span className="gg-btn__arrow">
+                        <Icon name="arrow-up-right" size={16} stroke={2.2} />
+                      </span>
+                      <span className="gg-btn__arrow">
+                        <Icon name="arrow-up-right" size={16} stroke={2.2} />
+                      </span>
                     </span>
                   </span>
                 </span>

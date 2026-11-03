@@ -63,7 +63,7 @@ export function StickyBar() {
         <p className="ln-bar__spots">
           {availability.soldOut
             ? `${availability.month} is fully booked`
-            : `${availability.left} of ${availability.total} ${availability.month} spot${availability.left === 1 ? "" : "s"} left`}
+            : `${availability.left} of ${availability.total} ${availability.month} space${availability.left === 1 ? "" : "s"} left`}
         </p>
       </div>
       <AvailabilityButton placement="sticky-bar" short className="ln-bar__cta" />

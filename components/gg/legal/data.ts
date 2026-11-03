@@ -16,8 +16,8 @@ import type { IconName } from "../Icon";
 export const termsLive = true;
 
 /** "Last updated": changed only when the wording changes (README: from the CMS). */
-export const lastUpdated = { notice: "26 OCT 2026", privacy: "26 OCT 2026", terms: "26 OCT 2026" } as const;
-export const lastUpdatedShort = "26 OCT 2026";
+export const lastUpdated = { notice: "27 OCT 2026", privacy: "27 OCT 2026", terms: "27 OCT 2026" } as const;
+export const lastUpdatedShort = "27 OCT 2026";
 
 export type DocKey = "notice" | "privacy" | "terms";
 
@@ -39,7 +39,7 @@ export const company = {
     },
     {
       label: "VAT STATUS",
-      value: site.vatRegistered ? "VAT registered" : "Not VAT registered; all prices are VAT inclusive",
+      value: site.vatRegistered ? "VAT registered" : "Not VAT registered, so no VAT is added to our prices",
     },
   ],
   /** POPIA expects the Information Officer's name and contact details. Shown in coral until supplied. */
@@ -440,7 +440,7 @@ export const termsSections: TermsSection[] = [
     n: "11",
     title: "Monthly services",
     summary:
-      "Full Service: month to month, cancel any time. Ad management: 30 days’ notice. Ad budgets are paid to Google or Meta and your ad accounts always belong to you.",
+      "Care Plan (starts once your website is paid off): month to month, 30 days’ written notice to cancel. Full Service: month to month, cancel any time. Ad management: 30 days’ notice. Ad budgets are paid to Google or Meta and your ad accounts always belong to you.",
   },
   {
     id: "terms-ai",

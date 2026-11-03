@@ -42,7 +42,7 @@ export const strategyPillars: StrategyPillar[] = [
 ];
 
 export const strategyIntro =
-  "Every business wants the same thing: more enquiries, more customers, more opportunity. But growth doesn't start with marketing. It starts with the foundation underneath it.";
+  "Every business wants the same thing: more enquiries, more customers, more opportunity. But growth doesn’t start with marketing. It starts with the foundation underneath it.";
 
 /** Portfolio section intro. Only real, testable work is featured — see
  * content/caseStudies.ts. Concept builds are labelled as concept builds,

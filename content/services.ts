@@ -44,7 +44,7 @@ export const services: Service[] = [
     problem:
       "Most business websites are built fast and then left alone. They get slow and outdated, and they quietly cost you customers every month they stay that way.",
     solution:
-      "We design and build custom websites from the ground up. They're fast, they work properly on a phone, and they're structured around how your customers actually make decisions rather than around a generic template.",
+      "We design and build custom websites from the ground up. They’re fast, they work properly on a phone, and they’re structured around how your customers actually make decisions rather than around a generic template.",
     outcome:
       "A website that loads quickly, looks credible on any device, and gives your business a digital front door worth walking through.",
     paymentLine:
@@ -56,7 +56,7 @@ export const services: Service[] = [
     slug: "ux-design",
     title: "UX & Design",
     description: "Every page designed around how your customers actually decide.",
-    subheading: "Design that's judged by results, not just looks.",
+    subheading: "Design that’s judged by results, not just looks.",
     problem:
       "A beautiful website that confuses visitors, buries your contact details, or takes six clicks to explain what you do will lose the customer before they act.",
     solution:
@@ -72,7 +72,7 @@ export const services: Service[] = [
     description: "Built to be found, not just built to look nice.",
     subheading: "Search visibility designed in from the start.",
     problem:
-      "A gorgeous website nobody can find on Google isn't an investment. It's a cost.",
+      "A gorgeous website nobody can find on Google isn’t an investment. It’s a cost.",
     solution:
       "Every GoodGround site is built on solid technical SEO from day one: fast load times, proper page structure, local SEO for South African search, and content built around how your customers actually search.",
     outcome:
@@ -87,12 +87,12 @@ export const services: Service[] = [
     monthly: true,
     subheading: "Everything handled, for one monthly price.",
     problem:
-      "A website is only the start. Someone still has to set up hosting, run the mailboxes, keep the software updated, watch for security issues, and stay on top of SEO, and most business owners don't have the time or the technical background for any of it.",
+      "A website is only the start. Someone still has to set up hosting, run the mailboxes, keep the software updated, watch for security issues, and stay on top of SEO, and most business owners don’t have the time or the technical background for any of it.",
     solution:
-      "We build the site, then keep running it: hosting and mailboxes set up and managed for you, ongoing SEO work, and ongoing updates and maintenance, all handled monthly so you don't have to think about it.",
+      "We build the site, then keep running it: hosting and mailboxes set up and managed for you, ongoing SEO work, and ongoing updates and maintenance, all handled monthly so you don’t have to think about it.",
     outcome:
       "A website that stays fast, secure, and found in search, without you needing to manage a single technical detail of it yourself.",
-    paymentLine: "Monthly, from R1 500, depending on your website's requirements. No minimum term, cancel any time.",
+    paymentLine: "Monthly, from R1 500, depending on your website’s requirements. No minimum term, cancel any time.",
     cta: { label: "See Full Service Pricing", href: "/pricing#full-service" },
   },
   {
@@ -118,11 +118,11 @@ export const services: Service[] = [
     growth: true,
     subheading: "Be there the moment someone searches for you.",
     problem:
-      "Most small businesses either don't advertise on Google or hand it to an 'expert' who burns the budget on broad keywords and vague clicks. Money goes out; enquiries don't come in.",
+      "Most small businesses either don’t advertise on Google or hand it to an ‘expert’ who burns the budget on broad keywords and vague clicks. Money goes out; enquiries don’t come in.",
     solution:
-      "We build search campaigns around what your customers actually type when they're ready to act, 'emergency electrician near me', not 'electricity'. Tight keywords, honest ad copy, proper tracking, and landing pages that match the promise. We manage the budget like it's our own, because your trust is the account we care about most.",
+      "We build search campaigns around what your customers actually type when they’re ready to act, ‘emergency electrician near me’, not ‘electricity’. Tight keywords, honest ad copy, proper tracking, and landing pages that match the promise. We manage the budget like it’s our own, because your trust is the account we care about most.",
     outcome:
-      "Qualified enquiries you can see and measure, a cost-per-lead you actually understand, and a tap you can turn up when you're quiet and down when you're full.",
+      "Qualified enquiries you can see and measure, a cost-per-lead you actually understand, and a tap you can turn up when you’re quiet and down when you’re full.",
     cta: { label: "Start Your Project", href: "/start-project" },
     relatedLink: { label: "Full Google Ads details", href: "/services/google-ads" },
   },
@@ -133,9 +133,9 @@ export const services: Service[] = [
     growth: true,
     subheading: "Stay in front of the people deciding whether to trust you.",
     problem:
-      "'Boosting a post' feels like marketing, but it rarely builds anything. It reaches the wrong people, teaches you nothing, and stops working the second you stop paying.",
+      "‘Boosting a post’ feels like marketing, but it rarely builds anything. It reaches the wrong people, teaches you nothing, and stops working the second you stop paying.",
     solution:
-      "We plan Facebook and Instagram campaigns around real audiences, your local area, your ideal customer, and the people who've already visited your site. Scroll-stopping creative, a clear offer, and remarketing that quietly follows up with visitors who didn't enquire the first time.",
+      "We plan Facebook and Instagram campaigns around real audiences, your local area, your ideal customer, and the people who’ve already visited your site. Scroll-stopping creative, a clear offer, and remarketing that quietly follows up with visitors who didn’t enquire the first time.",
     outcome:
       "A brand people recognise before they need you, a steady stream of interest from the right area, and warm leads that already know who you are by the time they get in touch.",
     cta: { label: "Start Your Project", href: "/start-project" },

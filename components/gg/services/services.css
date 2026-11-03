@@ -1420,8 +1420,15 @@ html[data-motion="off"] .sv-nav__pill {
   color: var(--gg-muted);
 }
 
+/* Visually hidden on phones (as drawn), but kept for screen readers so the
+   card h4s are not orphaned under the section h2. */
 .sv-why__title {
-  display: none;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .sv-why__grid {
@@ -1634,7 +1641,12 @@ html[data-motion="off"] .sv-nav__pill {
   }
 
   .sv-why__title {
-    display: block;
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+    white-space: normal;
     margin-bottom: 16px;
     font-family: var(--gg-font-body);
     font-size: 28px;
@@ -2154,5 +2166,20 @@ html[data-motion="off"] .sv-nav__pill {
 
   .sv-page .sv-faq-section {
     padding-top: 24px;
+  }
+}
+
+/* Phone tap targets: the 44px floor (PRODUCT.md, QA 27 Oct 2026). */
+@media (max-width: 767px) {
+  .sv-seg__opt,
+  .sv-nav__chip {
+    min-height: 44px;
+  }
+
+  .sv-card__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-block: -11px;
   }
 }

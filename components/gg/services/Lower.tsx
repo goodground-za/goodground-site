@@ -31,7 +31,9 @@ export function WhyGrow() {
                 <span className="sv-wg__icon" aria-hidden="true">
                   <Icon name={card.icon} size={24} stroke={2} />
                 </span>
-                <span className="sv-wg__n">{String(i + 1).padStart(2, "0")}</span>
+                <span className="sv-wg__n" aria-hidden="true">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
               </div>
               <h3>{card.title}</h3>
               <p>{card.body}</p>

@@ -9,14 +9,20 @@ export function generateStaticParams() {
   return caseStudies.map((c) => ({ slug: c.slug }));
 }
 
+// Unknown slugs 404 through the branded app/not-found.tsx (with lang and one
+// H1) instead of rendering on demand into the bare error shell.
+export const dynamicParams = false;
+
 // Next 16: params is a Promise and must be awaited.
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const study = getCaseStudy(slug);
   if (!study) return {};
 
-  const title = `${study.client}: ${study.title}`;
-  const description = study.standfirst;
+  // Short search titles and descriptions (QA 27 Oct 2026): `client: title`
+  // ran to 83-133 characters and the standfirst to 168-230.
+  const title = study.metaTitle;
+  const description = study.metaDescription;
   const url = `${site.url}/work/${study.slug}`;
   const ogImage = study.heroImage
     ? { url: study.heroImage.src, width: study.heroImage.width, height: study.heroImage.height, alt: study.heroImage.alt }

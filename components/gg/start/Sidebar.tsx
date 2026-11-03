@@ -37,9 +37,7 @@ function AnswerRow({ label, value, onEdit, locked }: { label: string; value?: st
             ) : null}
           </>
         ) : (
-          <span className="sp-row__empty" aria-label="Not answered yet">
-            —
-          </span>
+          <span className="sp-row__empty">Not chosen yet</span>
         )}
       </span>
     </li>
@@ -75,6 +73,18 @@ function AnswerRows({
   );
 }
 
+/** Clears every answer and typed detail (the saved copy in this tab too) and
+ * goes back to step 1: on a shared computer the next person starts clean. */
+function StartOver({ onStartOver }: { onStartOver?: () => void }) {
+  if (!onStartOver) return null;
+  return (
+    <button type="button" className="sp-startover" onClick={onStartOver}>
+      <Icon name="repeat" size={14} stroke={2.2} />
+      Start over
+    </button>
+  );
+}
+
 function WhatsNext() {
   return (
     <div className="sp-next">
@@ -98,12 +108,15 @@ export function Aside({
   done,
   onEdit,
   caseName,
+  onStartOver,
 }: {
   answers: Answers;
   plan?: PlanKey;
   done: boolean;
   onEdit: (step: number) => void;
   caseName?: string;
+  /** Set only while there is something to clear. */
+  onStartOver?: () => void;
 }) {
   return (
     <aside className="sp__aside" aria-label="Your answers and what happens next">
@@ -111,6 +124,7 @@ export function Aside({
         <div className="sp-answers">
           <p className="gg-kicker">YOUR ANSWERS</p>
           <AnswerRows answers={answers} plan={plan} done={done} onEdit={onEdit} />
+          <StartOver onStartOver={onStartOver} />
         </div>
         {caseName ? (
           <p className="sp__ref">
@@ -166,11 +180,13 @@ export function AnswersAccordion({
   plan,
   count,
   onEdit,
+  onStartOver,
 }: {
   answers: Answers;
   plan?: PlanKey;
   count: number;
   onEdit: (step: number) => void;
+  onStartOver?: () => void;
 }) {
   const [open, setOpen] = useState(false);
   return (
@@ -184,6 +200,7 @@ export function AnswersAccordion({
       <div id="sp-acc-panel" className="sp-acc__panel" inert={!open}>
         <div className="sp-acc__in">
           <AnswerRows answers={answers} plan={plan} done={false} onEdit={onEdit} />
+          <StartOver onStartOver={onStartOver} />
         </div>
       </div>
     </div>

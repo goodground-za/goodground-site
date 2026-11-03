@@ -745,3 +745,17 @@ html[data-motion="off"] .fq-topic {
     font-size: 18px;
   }
 }
+
+/* Phone tap targets: the 44px floor (PRODUCT.md, QA 27 Oct 2026). */
+@media (max-width: 767px) {
+  .fq-chips__chip,
+  .fq-tool,
+  .fq-vote__btn,
+  .fq-related {
+    min-height: 44px;
+  }
+
+  .fq-vote__btn {
+    min-width: 44px;
+  }
+}

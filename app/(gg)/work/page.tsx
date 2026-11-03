@@ -15,7 +15,7 @@ import { site } from "@/content/site";
 import { pageSocialMeta } from "@/lib/metadata";
 import "@/components/gg/work/work.css";
 
-const title = { absolute: "Our Work | GoodGround Website Development" };
+const title = { absolute: "Our Projects | GoodGround Website Development" };
 const description =
   "Case studies from GoodGround, a website studio in South Africa. Every project ends in numbers measured on the live site, with instructions to check them.";
 const path = "/work";
@@ -75,8 +75,8 @@ export default function WorkPage() {
   };
 
   return (
-    <GgShell crumbs={[{ label: "OUR WORK" }]}>
-      <BreadcrumbSchema trail={[{ name: "Work", path: "/work" }]} />
+    <GgShell crumbs={[{ label: "OUR PROJECTS" }]}>
+      <BreadcrumbSchema trail={[{ name: "Projects", path: "/work" }]} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(listSchema) }} />
 
       <div className="wk-page">
@@ -84,7 +84,7 @@ export default function WorkPage() {
           <div className="gg-wrap wk-hero__grid">
             <div className="wk-hero__copy" data-reveal="header">
               <Tag tone="coral" data-part="tag">
-                OUR WORK
+                OUR PROJECTS
               </Tag>
               <SplitHeading as="h1" id="wk-title" className="gg-display-l wk-h1" text={"BUILT,\nTHEN MEASURED."} />
               <p className="gg-lead wk-hero__lead" data-part="sub">
@@ -133,7 +133,9 @@ export default function WorkPage() {
                     <span className="wk-m__icon" aria-hidden="true">
                       <Icon name={card.icon} size={24} stroke={2} />
                     </span>
-                    <span className="wk-m__n">{card.n}</span>
+                    <span className="wk-m__n" aria-hidden="true">
+                      {card.n}
+                    </span>
                   </div>
                   <div className="wk-m__text">
                     <h3>{card.title}</h3>

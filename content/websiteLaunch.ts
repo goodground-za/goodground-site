@@ -268,7 +268,7 @@ export const launchWork = {
   heading: "See how we approach website design.",
   body: "Explore GoodGround’s own website and published concept projects to see our approach to layout, mobile browsing and customer journeys.",
   prompt: "Open a project. Try the navigation. Follow the enquiry process.",
-  linkLabel: "Explore our work",
+  linkLabel: "Explore our projects",
   linkHref: "/work",
   /**
    * Slugs from content/caseStudies.ts. Real assets, real destinations, and the

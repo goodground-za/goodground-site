@@ -243,19 +243,32 @@
   text-transform: uppercase;
 }
 
+/* Fit cap. SplitHeading sets --gg-fit-em (its longest word, in em); the
+   heading's column is --gg-fit-w (a page column by default; the CTA card sets
+   its own). Display sizes are min(<designed size>, var(--gg-fit)), so a word
+   too long for a narrow phone shrinks to the column instead of overflowing.
+   With no --gg-fit-em the fallback leaves the designed size alone. */
+:root {
+  --gg-fit-w: calc(100vw - 2 * var(--gg-gutter));
+}
+
+[data-split] {
+  --gg-fit: calc(var(--gg-fit-w) / var(--gg-fit-em));
+}
+
 /* 72 → 140 */
 .gg-display-xl {
-  font-size: clamp(72px, 46.74px + 6.476vw, 140px);
+  font-size: min(clamp(72px, 46.74px + 6.476vw, 140px), var(--gg-fit, 999px));
 }
 
 /* 56 → 112 */
 .gg-display-l {
-  font-size: clamp(56px, 35.2px + 5.333vw, 112px);
+  font-size: min(clamp(56px, 35.2px + 5.333vw, 112px), var(--gg-fit, 999px));
 }
 
 /* 48 → 88 */
 .gg-display-m {
-  font-size: clamp(48px, 33.14px + 3.81vw, 88px);
+  font-size: min(clamp(48px, 33.14px + 3.81vw, 88px), var(--gg-fit, 999px));
 }
 
 /* text-wrap: wrap, not balance: the frames break lines greedily, and a 1:1
@@ -1128,12 +1141,22 @@ html:not(.js) .gg-faq__answer {
   opacity: 1;
 }
 
+/* The fit column is the card's content box: section padding plus card
+   padding off the viewport (the inner card also sits in the page gutter). */
+.gg-cta {
+  --gg-fit-w: calc(100vw - 72px);
+}
+
+.gg-cta--inner {
+  --gg-fit-w: calc(100vw - 2 * var(--gg-gutter) - 48px);
+}
+
 .gg-cta__headline {
-  font-size: 72px;
+  font-size: min(72px, var(--gg-fit, 999px));
 }
 
 .gg-cta--inner .gg-cta__headline {
-  font-size: 60px;
+  font-size: min(60px, var(--gg-fit, 999px));
 }
 
 .gg-cta__row {
@@ -1199,12 +1222,20 @@ html:not(.js) .gg-faq__answer {
     max-width: 480px;
   }
 
+  .gg-cta {
+    --gg-fit-w: calc(100vw - 176px);
+  }
+
+  .gg-cta--inner {
+    --gg-fit-w: calc(100vw - 2 * var(--gg-gutter) - 112px);
+  }
+
   .gg-cta__headline {
-    font-size: clamp(72px, 46.74px + 6.476vw, 140px);
+    font-size: min(clamp(72px, 46.74px + 6.476vw, 140px), var(--gg-fit, 999px));
   }
 
   .gg-cta--inner .gg-cta__headline {
-    font-size: clamp(60px, 37.71px + 5.714vw, 120px);
+    font-size: min(clamp(60px, 37.71px + 5.714vw, 120px), var(--gg-fit, 999px));
   }
 
   .gg-cta__sub {
@@ -1253,31 +1284,35 @@ html:not(.js) .gg-faq__answer {
 
 /* 96px headline (Oswald 64 on phones): Work, Insights. */
 .gg-cta__headline--m {
-  font-size: 64px;
+  font-size: min(64px, var(--gg-fit, 999px));
   line-height: 0.92;
 }
 
 @media (min-width: 768px) {
   .gg-cta .gg-cta__headline--m {
-    font-size: clamp(64px, 44.6px + 3.05vw, 96px);
+    font-size: min(clamp(64px, 44.6px + 3.05vw, 96px), var(--gg-fit, 999px));
     line-height: 0.94;
   }
 }
 
 /* 80px headline (Oswald 44 on phones), used by Services-style closing cards. */
 .gg-cta__headline--l {
-  font-size: 44px;
+  font-size: min(44px, var(--gg-fit, 999px));
   line-height: 0.96;
 }
 
 @media (min-width: 768px) {
   .gg-cta .gg-cta__headline--l {
-    font-size: clamp(44px, 30.63px + 3.43vw, 80px);
+    font-size: min(clamp(44px, 30.63px + 3.43vw, 80px), var(--gg-fit, 999px));
     line-height: 0.94;
   }
 }
 
 @media (min-width: 1200px) {
+  .gg-cta {
+    --gg-fit-w: calc(100vw - 240px);
+  }
+
   .gg-cta--split {
     flex-direction: row;
     align-items: flex-end;
@@ -1285,8 +1320,12 @@ html:not(.js) .gg-faq__answer {
     padding: 96px;
   }
 
+  /* Left-aligned like the frame (About 31:354: tag, headline and sub all at
+     x 0). Inheriting the card's flex-end pushed the headline and sub right of
+     the tag. */
   .gg-cta--split .gg-cta__copy {
     flex: 1;
+    align-items: flex-start;
     max-width: 880px;
   }
 
@@ -1340,7 +1379,8 @@ html:not(.js) .gg-faq__answer {
   position: relative;
   display: inline-flex;
   align-items: center;
-  min-height: 42px;
+  /* 44, not 42: the phone touch-target floor, and the MENU pill's height. */
+  min-height: 44px;
   padding: 8px 16px;
   border-radius: var(--gg-r-pill);
   background: var(--gg-ink);
@@ -1521,8 +1561,10 @@ html:not(.js) .gg-faq__answer {
     padding: 28px 40px;
   }
 
+  /* The vh term keeps all seven items and the contact row on a 900px-tall
+     laptop screen without scrolling the menu. */
   .gg-menu__nav a {
-    font-size: clamp(38px, 5vw, 64px);
+    font-size: clamp(38px, min(5vw, 6vh), 64px);
     gap: 32px;
   }
 
@@ -2024,8 +2066,19 @@ body.gg-scroll-locked {
   white-space: nowrap;
 }
 
-.gg-count__digits {
+.gg-count__box {
+  position: relative;
   display: inline-block;
+}
+
+.gg-count__ghost {
+  visibility: hidden;
+}
+
+.gg-count__digits {
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
 }
 
 /* Reduced motion, or the "Pause motion" toggle: no translate, scale,
@@ -2345,5 +2398,13 @@ html[data-motion="off"] .gg-pill-toggle__pill {
   from {
     opacity: 0;
     transform: translateY(-4px);
+  }
+}
+
+/* Phone tap targets: the 44px floor (PRODUCT.md, QA 27 Oct 2026). The pill
+   follows the option's height (top/bottom 4px), so it grows with it. */
+@media (max-width: 767px) {
+  .gg-pill-toggle__opt {
+    min-height: 44px;
   }
 }

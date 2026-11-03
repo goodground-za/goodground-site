@@ -51,7 +51,7 @@ export const projects: Project[] = [
     url: "https://www.goodground.co.za",
     kind: "self",
     summary:
-      "We launched in 2026 and haven't handed over a client site yet, so we can't show you someone else's. This is the one site we have built. Rather than describe it, the panel below measures it live, in your browser, on your connection, using the same Core Web Vitals Google grades every website by. Open your developer tools and check the numbers if you like. We'd rather be tested than believed.",
+      "We launched in 2026 and haven’t handed over a client site yet, so we can’t show you someone else’s. This is the one site we have built. Rather than describe it, the panel below measures it live, in your browser, on your connection, using the same Core Web Vitals Google grades every website by. Open your developer tools and check the numbers if you like. We’d rather be tested than believed.",
   },
 ];
 

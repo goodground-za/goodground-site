@@ -122,7 +122,8 @@ export function QuoteForm() {
 
     setStatus("submitting");
     const name = String(data.get("fullName") ?? "").trim();
-    setFirstName(name.split(/s+/)[0] ?? "");
+    // Split on whitespace (it was /s+/, which split "Chris" into "Chri").
+    setFirstName(name.split(/\s+/)[0] ?? "");
     const result = await postEnquiry({
       formType: "pricing-quote",
       fullName: name,
@@ -200,7 +201,20 @@ export function QuoteForm() {
           </p>
         </div>
       ) : (
-        <form ref={form} className={more ? "pr-quote__card pr-form is-more" : "pr-quote__card pr-form"} onSubmit={onSubmit} noValidate aria-labelledby="quote-title">
+        // action/method: with JavaScript off it still posts to the same route
+        // (which answers a form post with a 303 to /thanks), as Contact does,
+        // instead of a GET that would put the details in the URL.
+        <form
+          ref={form}
+          className={more ? "pr-quote__card pr-form is-more" : "pr-quote__card pr-form"}
+          action="/api/enquiry"
+          method="post"
+          onSubmit={onSubmit}
+          noValidate
+          aria-labelledby="quote-title"
+        >
+          <input type="hidden" name="formType" value="pricing-quote" />
+          <input type="hidden" name="selection" value={view ? view.text : "Nothing attached: wants to talk it through"} />
           <div className="pr-form__row">
             <Field label="Full name" name="fullName" idPrefix="pq" placeholder="Your name" autoComplete="name" required error={errors.fullName} />
             <Field label="Business name" name="businessName" idPrefix="pq" placeholder="Business" optional autoComplete="organization" className="pr-form__extra" />

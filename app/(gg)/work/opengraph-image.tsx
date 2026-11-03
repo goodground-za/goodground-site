@@ -6,7 +6,7 @@ export const contentType = OG_CONTENT_TYPE;
 
 export default async function Image() {
   return renderOgCard({
-    eyebrow: "Our Work",
+    eyebrow: "Our projects",
     title: "Built, then measured.",
   });
 }

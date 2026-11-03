@@ -12,7 +12,8 @@ const POSTER = "/home2026/goodground-motion-poster.jpg";
  * Home the hero has already cached it). It plays only while the card is on
  * screen, the tab is visible and motion is allowed, which follows the
  * hero's rule: a "Pause motion" click (html[data-motion]) wins, otherwise
- * prefers-reduced-motion decides. Paused or without JS, the poster shows.
+ * prefers-reduced-motion and Save-Data decide. Paused or without JS, the
+ * poster shows.
  */
 export function CtaVideo() {
   const ref = useRef<HTMLVideoElement>(null);
@@ -24,7 +25,9 @@ export function CtaVideo() {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
     let onScreen = false;
 
-    const allowed = () => html.dataset.motion === "on" || (html.dataset.motion !== "off" && !reduce.matches);
+    // Save-Data counts like reduced motion, as on the hero (AmbientVideo.tsx).
+    const saveData = Boolean((navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData);
+    const allowed = () => html.dataset.motion === "on" || (html.dataset.motion !== "off" && !reduce.matches && !saveData);
     const sync = () => {
       if (onScreen && !document.hidden && allowed() && video.getAttribute("src")) {
         // Autoplay refused: the poster stays, nothing to repair.

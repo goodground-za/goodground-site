@@ -888,6 +888,28 @@
   cursor: pointer;
 }
 
+.sp-startover {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--gg-muted);
+  font-family: var(--gg-font-body);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sp-startover:hover {
+    color: var(--gg-ink);
+  }
+}
+
+.sp-startover:focus-visible,
 .sp-row__edit:focus-visible {
   outline: 2px solid var(--gg-ink);
   outline-offset: 2px;

@@ -3,9 +3,10 @@ import { site } from "@/content/site";
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    // /_styleguide is the redesign's private component sheet (also noindex).
-    rules: { userAgent: "*", allow: "/", disallow: ["/_styleguide"] },
+    // /_styleguide and /brand-guide are the redesign's private reference
+    // pages (both also noindex). No `host`: it is a non-standard directive
+    // that only Yandex ever read; the canonical tags carry the www host.
+    rules: { userAgent: "*", allow: "/", disallow: ["/_styleguide", "/brand-guide"] },
     sitemap: `${site.url}/sitemap.xml`,
-    host: site.url,
   };
 }

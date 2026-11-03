@@ -131,7 +131,7 @@ export const projectScopeNote = {
   heading: "These are starting prices, not quotes.",
   body: [
     "The four prices above are where each package starts. A five-page site for a plumber and a five-page site for a law firm rarely take the same amount of work, so we look at what your project actually involves before we put a number on it.",
-    "Tell us what you need and we'll come back with a price, usually within a day or two. Once you accept it, that's the price. Nothing gets added to the invoice at the end.",
+    "Tell us what you need and we’ll come back with a price, usually within a day or two. Once you accept it, that’s the price. Nothing gets added to the invoice at the end.",
   ],
 };
 
@@ -162,7 +162,7 @@ export const fullServicePackage = {
     "Ongoing SEO work",
     "Ongoing updates and maintenance",
   ],
-  note: "The exact monthly price depends on your website's requirements and is confirmed in your quote.",
+  note: "The exact monthly price depends on your website’s requirements and is confirmed in your quote.",
 };
 
 export const baseBuildFee = {
@@ -380,7 +380,7 @@ export const pricingFaq: PricingFaqItem[] = [
   {
     question: "Do these prices include hosting and a domain?",
     answer:
-      "Not on the four packages above. Hosting, domain, and ongoing maintenance are arranged separately from the build price, and we're happy to point you in the right direction when you enquire. If you'd rather have all of that handled for you, the Full Service package below bundles hosting, mailboxes, the build, SEO, and maintenance into one monthly price.",
+      "Not on the four packages above. Hosting, domain, and ongoing maintenance are arranged separately from the build price, and we’re happy to point you in the right direction when you enquire. If you’d rather have all of that handled for you, the Full Service package below bundles hosting, mailboxes, the build, SEO, and maintenance into one monthly price.",
   },
   {
     question: "How do I pay, and is there a deposit?",
@@ -395,7 +395,7 @@ export const pricingFaq: PricingFaqItem[] = [
   {
     question: "What if my scope grows partway through?",
     answer:
-      "Any package can be extended with items from the à la carte menu at the listed price. We'll always confirm additions and cost with you before building them.",
+      "Any package can be extended with items from the à la carte menu at the listed price. We’ll always confirm additions and cost with you before building them.",
   },
   {
     question: "What looks after the site once it's live?",
@@ -405,7 +405,7 @@ export const pricingFaq: PricingFaqItem[] = [
   {
     question: "Full Service or instalments: which should I choose?",
     answer:
-      "Instalments pay off one fixed price. After 12 payments you're done and the site is yours, but hosting, your domain and upkeep are yours to arrange. Full Service is an ongoing monthly service: the build, hosting, mailboxes, SEO and upkeep all sit in one price, and you can cancel any time. If you want to own the site outright, pay it off. If you'd rather not think about your website at all, Full Service is built for that.",
+      "Instalments pay off one fixed price. After 12 payments you’re done and the site is yours, but hosting, your domain and upkeep are yours to arrange. Full Service is an ongoing monthly service: the build, hosting, mailboxes, SEO and upkeep all sit in one price, and you can cancel any time. If you want to own the site outright, pay it off. If you’d rather not think about your website at all, Full Service is built for that.",
   },
   {
     question: "Do I own my website?",
@@ -419,6 +419,6 @@ export const pricingFaq: PricingFaqItem[] = [
   },
   {
     question: "How soon will I hear back after I enquire?",
-    answer: "Within 1–2 business days, with a firm quote and timeline based on what you've told us.",
+    answer: "Within 1–2 business days, with a firm quote and timeline based on what you’ve told us.",
   },
 ];

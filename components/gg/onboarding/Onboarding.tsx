@@ -375,7 +375,7 @@ export function Onboarding({ token }: { token: string }) {
           <span className="ob-phone-only">Everything we need to build your website, in one place. Rough notes are fine; skip what you’re unsure of.</span>
         </p>
         <ul className="ob-hero__chips">
-          {["13 short sections", "Saves as you go", "Finish in more than one sitting"].map((c, i) => (
+          {[`${steps.length} sections plus a review`, "Saves as you go", "Finish in more than one sitting"].map((c, i) => (
             <li key={c} className={i === 2 ? "ob-hide-phone" : undefined}>
               <Icon name="check" size={14} stroke={2.6} />
               {c}
@@ -391,7 +391,7 @@ export function Onboarding({ token }: { token: string }) {
           ) : (
             <p>
               <span className="gg-kicker">ABOUT THIS BRIEF</span>
-              <strong>About {estimate()} minutes, in your own time</strong>
+              <strong>About {estimate()} minutes, and it saves as you go, so you can do it in a few sittings</strong>
             </p>
           )}
           <Button
@@ -461,8 +461,10 @@ export function Onboarding({ token }: { token: string }) {
     </div>
   );
 
+  // The per-step estimates add up to an exact-looking 78; a quarter hour is
+  // as precise as an honest estimate gets.
   function estimate() {
-    return steps.reduce((n, s) => n + s.minutes, 0);
+    return Math.round(steps.reduce((n, s) => n + s.minutes, 0) / 15) * 15;
   }
 
   /* ================================================================== STEP */
@@ -709,7 +711,9 @@ export function Onboarding({ token }: { token: string }) {
   /* ============================================================ the print copy */
   const printView = (
     <div className="ob-print" aria-hidden="true">
-      <h1>Client onboarding brief{business ? ` · ${business}` : ""}</h1>
+      {/* A paragraph, not an h1: the screen page already has its own, and a
+          hidden second h1 still counts in the DOM. Print styles size it. */}
+      <p className="ob-print__title">Client onboarding brief{business ? ` · ${business}` : ""}</p>
       {quote ? <p>{[quote.package, quote.price, quote.payment].filter(Boolean).join(" · ")}</p> : null}
       {briefSections(a).map((section) => (
         <section key={section.n}>

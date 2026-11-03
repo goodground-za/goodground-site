@@ -1986,3 +1986,28 @@ html[data-motion="off"] .ar-page * {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Phone tap targets: the 44px floor (PRODUCT.md, QA 27 Oct 2026). Text-sized
+   controls grow their hit area and give the height back with a negative
+   margin, so nothing around them moves. */
+@media (max-width: 767px) {
+  .ar-back,
+  .ar-check__more,
+  .ar-check__reset {
+    min-height: 44px;
+    margin-block: -10px;
+  }
+
+  .ar-chip {
+    min-height: 44px;
+  }
+
+  .ar-dots {
+    margin-block: -10px;
+  }
+
+  .ar-dots button {
+    width: 44px;
+    height: 44px;
+  }
+}

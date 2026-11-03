@@ -8,6 +8,8 @@ import "@/components/gg/onboarding/onboarding.css";
 export const metadata: Metadata = {
   title: { absolute: "Client onboarding | GoodGround" },
   description: "Your private project brief for GoodGround.",
+  // Its own canonical (every token link is the same form), not the homepage.
+  alternates: { canonical: "/onboarding" },
   robots: { index: false, follow: false },
 };
 

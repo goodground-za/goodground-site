@@ -229,6 +229,27 @@ export function StartProject() {
     setAnswers((prev) => ({ ...prev, [key]: value }));
   };
 
+  // "Start over" (QA 27 Oct 2026): the tab otherwise reopens on the saved step
+  // with the last person's name and email still filled in. Context from the
+  // link (plan, package, ref) stays; only what was chosen or typed goes.
+  const hasProgress = step > 0 || Object.values(answers).some(Boolean) || Object.values(details).some((v) => v.trim());
+  const startOver = () => {
+    window.clearTimeout(advanceTimer.current);
+    try {
+      window.sessionStorage.removeItem(STORAGE_KEY);
+    } catch {
+      /* nothing saved to clear */
+    }
+    setAnswers({});
+    setDetails(EMPTY);
+    setTouched({});
+    setSubmitted(false);
+    setServerErrors({});
+    setStatus("idle");
+    setDir(-1);
+    commit(0, step !== 0);
+  };
+
   const removeContext = (which: "plan" | "intent" | "pkg") => {
     setContext((c) => ({ ...c, [which]: undefined }));
     const url = new URL(window.location.href);
@@ -337,8 +358,8 @@ export function StartProject() {
         tone: "blush" as const,
         title: `Launch offer · R${launchTerms.monthly} a month for ${launchTerms.months} months`,
         short: `Launch offer · R${launchTerms.monthly}/mo`,
-        sub: `Domain, hosting and email included. ${availability.left} of ${availability.total} ${availability.month} spot${availability.left === 1 ? "" : "s"} left.`,
-        shortSub: `${availability.left} of ${availability.total} ${availability.month} spots left.`,
+        sub: `Domain, hosting and email included. ${availability.left} of ${availability.total} ${availability.month} space${availability.left === 1 ? "" : "s"} left.`,
+        shortSub: `${availability.left} of ${availability.total} ${availability.month} spaces left.`,
         remove: "plan" as const,
       };
     }
@@ -444,7 +465,7 @@ export function StartProject() {
                   <p>See how we measure every build in our case studies.</p>
                 </div>
                 <div className="sp__done-buttons">
-                  <ButtonLink href="/work">See our work</ButtonLink>
+                  <ButtonLink href="/work">See our projects</ButtonLink>
                   <ButtonLink href="/" variant="outline">
                     Back to home
                   </ButtonLink>
@@ -688,7 +709,9 @@ export function StartProject() {
             </noscript>
           </div>
 
-          {!done ? <AnswersAccordion answers={answers} plan={effectivePlan} count={answered} onEdit={go} /> : null}
+          {!done ? (
+            <AnswersAccordion answers={answers} plan={effectivePlan} count={answered} onEdit={go} onStartOver={hasProgress ? startOver : undefined} />
+          ) : null}
           {step === 0 || done ? <NextMobile /> : null}
           {step === 0 || done ? <DirectContactMobile /> : null}
           {caseName ? (
@@ -699,7 +722,14 @@ export function StartProject() {
           ) : null}
         </div>
 
-        <Aside answers={answers} plan={effectivePlan} done={done} onEdit={go} caseName={caseName} />
+        <Aside
+          answers={answers}
+          plan={effectivePlan}
+          done={done}
+          onEdit={go}
+          caseName={caseName}
+          onStartOver={hasProgress && !done ? startOver : undefined}
+        />
       </div>
 
       <p className="gg-sr-only" role="status" aria-live="polite">

@@ -87,19 +87,19 @@ export function LaunchOffer() {
             <div className="hm-meter__row">
               <span>{month} availability</span>
               <strong className={soldOut ? "hm-meter__left is-sold-out" : "hm-meter__left"}>
-                {soldOut ? `Fully booked for ${month}` : `${left} of ${total} spots left`}
+                {soldOut ? `Fully booked for ${month}` : `${left} of ${total} spaces left`}
               </strong>
             </div>
             <div
               className={soldOut ? "hm-meter__track is-sold-out" : "hm-meter__track"}
               role="img"
-              aria-label={`${taken} of ${total} spots taken for ${month}`}
+              aria-label={`${taken} of ${total} spaces taken for ${month}`}
             >
               <span className="hm-meter__fill" style={{ "--fill": taken / total } as CSSProperties} />
             </div>
           </div>
           <ButtonLink href={startHref} variant="primary" full>
-            {soldOut ? "Join the waitlist" : "Claim a launch spot"}
+            {soldOut ? "Join the waitlist" : "Claim a launch space"}
           </ButtonLink>
         </div>
 

@@ -25,7 +25,10 @@ export function Hero() {
           muted
           loop
           playsInline
-          preload="auto"
+          // Metadata only up front: the clip downloads when it is played, so
+          // reduced motion and Save-Data (which never play it) keep the poster
+          // and skip the 2.6 MB file.
+          preload="metadata"
           poster="/home2026/goodground-motion-poster.jpg"
           aria-hidden="true"
           tabIndex={-1}

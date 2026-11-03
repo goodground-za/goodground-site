@@ -37,6 +37,7 @@ export function GradientCta({
   secondary,
   size = "xl",
   split = false,
+  headingId = "gg-cta-heading",
 }: {
   variant?: "home" | "inner";
   tag?: string;
@@ -47,6 +48,8 @@ export function GradientCta({
   secondary?: Action;
   size?: "xl" | "m" | "l";
   split?: boolean;
+  /** Only needed where a page shows two cards (the styleguide): ids must be unique. */
+  headingId?: string;
 }) {
   const href = refSource ? `/start-project?ref=${encodeURIComponent(refSource)}` : "/start-project";
   const inner = variant === "inner";
@@ -65,7 +68,7 @@ export function GradientCta({
   return (
     <section
       className={inner ? "gg-cta-section gg-cta-section--inner" : "gg-cta-section"}
-      aria-labelledby="gg-cta-heading"
+      aria-labelledby={headingId}
     >
       <div className={cls} data-reveal="header" data-loop="">
         <div className="gg-cta__bg" aria-hidden="true">
@@ -77,7 +80,7 @@ export function GradientCta({
             {tag}
           </Tag>
           <SplitHeading
-            id="gg-cta-heading"
+            id={headingId}
             className={headlineCls}
             text={headline}
             style={{ "--gg-line-step": "120ms", "--gg-line-ms": "900ms" } as CSSProperties}

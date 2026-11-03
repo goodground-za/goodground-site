@@ -25,6 +25,10 @@ export function generateStaticParams() {
   return articles.map((a) => ({ slug: a.slug }));
 }
 
+// Unknown slugs 404 through the branded app/not-found.tsx (with lang and one
+// H1) instead of rendering on demand into the bare error shell.
+export const dynamicParams = false;
+
 // Next 16: params is a Promise and must be awaited.
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;

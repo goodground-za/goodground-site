@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { Analytics } from "@/components/Analytics";
 import { site } from "@/content/site";
@@ -50,6 +50,11 @@ const ibmPlexSans = localFont({
  */
 const headScript = `(function(){var d=document.documentElement;d.classList.add('js');try{if(localStorage.getItem('gg-motion')==='off')d.dataset.motion='off'}catch(e){}})()`;
 
+// Browser bar colour: the canvas token (--gg-canvas), as in app/manifest.ts.
+export const viewport: Viewport = {
+  themeColor: "#f7f7f4",
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
@@ -58,7 +63,9 @@ export const metadata: Metadata = {
   },
   description:
     "GoodGround is a website development studio building custom, fast business websites across South Africa. Pay a 50% deposit and the rest on completion, or split it over 12 monthly instalments.",
-  alternates: { canonical: "/" },
+  // No site-wide canonical: every indexable page sets its own (Home in
+  // app/page.tsx), and a root "/" leaked onto the noindex pages and 404s as
+  // a canonical pointing at the homepage.
   // Google Search Console ownership check. Emitted as
   // <meta name="google-site-verification" ...>. It lives in the root layout so
   // it appears on every page, which keeps verification working even if Google

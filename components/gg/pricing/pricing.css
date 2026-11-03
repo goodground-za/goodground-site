@@ -2400,3 +2400,14 @@ html[data-motion="off"] .pr-bar {
     width: 520px;
   }
 }
+
+/* Phone tap targets: the 44px floor (PRODUCT.md, QA 27 Oct 2026); the
+   negative margin keeps the link's line where it was. */
+@media (max-width: 767px) {
+  .pr-review__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-block: -11px;
+  }
+}

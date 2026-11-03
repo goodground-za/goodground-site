@@ -117,7 +117,9 @@ export function PayYourWay() {
               <p>“{review.pullQuote}”</p>
             </blockquote>
             <figcaption>
-              <span className="gg-resp-long">— </span>
+              <span className="gg-resp-long" aria-hidden="true">
+                ·{" "}
+              </span>
               {review.author},{" "}
               <a className="gg-text-link" href={review.sourceUrl} target="_blank" rel="noopener noreferrer">
                 Google review<span className="gg-sr-only"> (opens in new tab)</span>

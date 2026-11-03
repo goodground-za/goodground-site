@@ -45,7 +45,7 @@ const servicesFaqQuestions = [
   "Do you only build websites, or do you handle design and SEO too?",
   "How long does a typical project take?",
   "What happens after my website launches?",
-  "What's the difference between Google Ads and Meta Ads?",
+  "What’s the difference between Google Ads and Meta Ads?",
 ];
 const servicesFaqItems = servicesFaqQuestions
   .map((q) => faq.find((item) => item.question === q))

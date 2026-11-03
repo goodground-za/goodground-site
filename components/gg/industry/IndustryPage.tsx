@@ -264,7 +264,7 @@ export function IndustryPage({ slug }: { slug: string }) {
                   Ask what we’re working on
                 </ButtonLink>
                 <ButtonLink href="/work" variant="outline" full>
-                  See all our work
+                  See all our projects
                 </ButtonLink>
               </div>
             </div>

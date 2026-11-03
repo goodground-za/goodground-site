@@ -11,10 +11,10 @@ export type GrowthBenefit = {
 export const growthBenefits: GrowthBenefit[] = [
   {
     title: "Results you can see.",
-    body: "Every rand is tracked to a click, a call, or an enquiry. No mystery, no 'brand awareness' hand-waving.",
+    body: "Every rand is tracked to a click, a call, or an enquiry. No mystery, no ‘brand awareness’ hand-waving.",
   },
   {
-    title: "You're found first.",
+    title: "You’re found first.",
     body: "Show up at the top when customers are searching, above competitors relying on luck.",
   },
   {
@@ -23,7 +23,7 @@ export const growthBenefits: GrowthBenefit[] = [
   },
   {
     title: "Beat bigger budgets with a better plan.",
-    body: "Smart targeting means you don't need to outspend the big players, just out-think them.",
+    body: "Smart targeting means you don’t need to outspend the big players, just out-think them.",
   },
   {
     title: "Turn the tap up or down.",

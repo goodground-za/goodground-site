@@ -16,7 +16,7 @@ export const faq: FAQItem[] = [
   {
     question: "How do the two payment options work?",
     answer:
-      "We agree on one fixed price for your project up front. No hourly billing and no scope surprises. From there, you choose how to pay it: a 50% deposit to secure the project and the remaining 50% on completion, before handover, or 12 equal monthly instalments, where the first instalment secures your booking and the remaining 11 become payable once the project is completed. Either way, you always know exactly what you're paying and when.",
+      "We agree on one fixed price for your project up front. No hourly billing and no scope surprises. From there, you choose how to pay it: a 50% deposit to secure the project and the remaining 50% on completion, before handover, or 12 equal monthly instalments, where the first instalment secures your booking and the remaining 11 become payable once the project is completed. Either way, you always know exactly what you’re paying and when.",
   },
   {
     question: "Is there a deposit before you start?",
@@ -26,7 +26,7 @@ export const faq: FAQItem[] = [
   {
     question: "What happens if the project scope changes partway through?",
     answer:
-      "We'll always let you know before any change affects the price. If you add scope beyond what was originally agreed, we'll quote that separately rather than silently adjusting what you've already agreed to pay.",
+      "We’ll always let you know before any change affects the price. If you add scope beyond what was originally agreed, we’ll quote that separately rather than silently adjusting what you’ve already agreed to pay.",
   },
   {
     question: "What if I need to pause or cancel partway through the project?",
@@ -36,12 +36,12 @@ export const faq: FAQItem[] = [
   {
     question: "Do you only build websites, or do you handle design and SEO too?",
     answer:
-      "Every website we build includes the design, UX, and SEO foundations as part of one process, so you don't need to brief a separate designer or SEO specialist. One team, one project, one price.",
+      "Every website we build includes the design, UX, and SEO foundations as part of one process, so you don’t need to brief a separate designer or SEO specialist. One team, one project, one price.",
   },
   {
     question: "How long does a typical project take?",
     answer:
-      "Most website projects take 1 to 6 weeks from start to launch, depending on the package. The exact time depends on the scope and what your project needs, and we'll give you a firmer estimate once we've scoped it together.",
+      "Most website projects take 1 to 6 weeks from start to launch, depending on the package. The exact time depends on the scope and what your project needs, and we’ll give you a firmer estimate once we’ve scoped it together.",
   },
   {
     question: "What happens after my website launches?",
@@ -51,28 +51,28 @@ export const faq: FAQItem[] = [
   {
     question: "Do you work with businesses anywhere in South Africa?",
     answer:
-      "Yes. We work with businesses right across South Africa. The whole process runs comfortably online, so where you're based is never a barrier.",
+      "Yes. We work with businesses right across South Africa. The whole process runs comfortably online, so where you’re based is never a barrier.",
   },
   // Copy deck: Google Ads & Meta Ads (Growth), §7.
   {
     question: "How much should I spend on ads?",
     answer:
-      "It depends on your goals and margins, but we'll always start with a budget you're comfortable with and only recommend increases once the results justify it. You're never locked into a number.",
+      "It depends on your goals and margins, but we’ll always start with a budget you’re comfortable with and only recommend increases once the results justify it. You’re never locked into a number.",
   },
   {
     question: "Do I need a new website to start?",
     answer:
-      "Not necessarily, but ads work far better when they point to a fast, well-structured site. If your foundation needs work first, we'll tell you honestly.",
+      "Not necessarily, but ads work far better when they point to a fast, well-structured site. If your foundation needs work first, we’ll tell you honestly.",
   },
   {
-    question: "What's the difference between Google Ads and Meta Ads?",
+    question: "What’s the difference between Google Ads and Meta Ads?",
     answer:
       "Google captures people already searching for what you offer, high intent, ready to act. Meta (Facebook and Instagram) builds awareness and trust with the right people before they need you. Most businesses do best with a mix.",
   },
   {
     question: "Is there a long contract?",
     answer:
-      "No. We work month to month with 30 days' notice. We'd rather earn your business every month than trap you in it.",
+      "No. We work month to month with 30 days’ notice. We’d rather earn your business every month than trap you in it.",
   },
   {
     question: "Will I own my ad accounts?",

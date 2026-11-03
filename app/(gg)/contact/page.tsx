@@ -20,7 +20,7 @@ import "@/components/gg/contact/contact.css";
 
 const title = { absolute: "Contact GoodGround | Website Development, South Africa" };
 const description =
-  "Tell us about your business and we'll come back with next steps and how you'd like to pay. A website development studio in South Africa.";
+  "Tell us about your business and we’ll come back with next steps and how you’d like to pay. A website development studio in South Africa.";
 const path = "/contact";
 
 export const metadata: Metadata = {
@@ -63,7 +63,7 @@ const schema = {
 const QUICK: { kicker: string; q: string; a: string; href: string }[] = [
   { kicker: "PRICING", q: "How do the payment options work?", a: "One fixed price: 50/50, or 12 monthly instalments.", href: "/#faq-payment-options" },
   { kicker: "TIMELINES", q: "How long does a project take?", a: "See typical timelines in our FAQ.", href: "/#faq-project-length" },
-  { kicker: "PROOF", q: "Can I see your work first?", a: "Every case study has numbers you can check.", href: "/work" },
+  { kicker: "PROOF", q: "Can I see your projects first?", a: "Every case study has numbers you can check.", href: "/work" },
 ];
 
 function RouteBody({

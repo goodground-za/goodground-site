@@ -1,36 +1,62 @@
 # GoodGround
 
-> GoodGround is a website development studio in South Africa. We design and build custom, fast business websites, quoted as one fixed price with a choice of how to pay it: 50% upfront and 50% on completion, or 12 equal monthly instalments. Based in George, on the Garden Route, working with small and medium businesses across South Africa.
+> GoodGround is a website development studio in George, on the Garden Route, South Africa. We design and build custom, fast business websites for small and medium businesses across South Africa. Every project is one fixed price agreed before work starts, paid either as a 50% deposit and 50% on completion, or in 12 monthly instalments.
 
 ## What we do
 
-- Website development: custom-built, fast websites made to grow with a business.
-- UX and design: every page structured around how customers actually decide.
-- SEO foundations: built to be found in South African search from launch.
-- Full Service: hosting, mailboxes, the website build, ongoing SEO work, and ongoing updates and maintenance, all for one monthly price.
+- Website development: custom-coded websites, built mobile-first and made to grow with a business.
+- Website redesign, UX and design: sites structured around how customers actually decide.
+- SEO: foundations in every build, with Advanced SEO available as an add-on.
+- Google Ads and Meta (Facebook and Instagram) Ads management.
+- Full Service: the website build plus hosting, mailboxes, ongoing SEO, updates and maintenance, for one monthly price.
 
 ## How we price
 
-Two ways to buy a GoodGround website. Most clients pay one fixed price for the build: a 50% deposit to secure the project and the remaining 50% on completion, before handover, or 12 equal monthly instalments (the first instalment secures the booking, the remaining 11 become payable once the project is completed). Either way, it is not a subscription: once paid off, the website is fully owned by the client. The alternative is Full Service, a genuine monthly plan starting from R1,500 (final price depends on the site's requirements) that bundles the build itself with hosting, mailboxes, SEO, and maintenance, month-to-month with no minimum term.
+- Four packages, each a starting price confirmed in a quote: Micro from R12 000, Launch from R21 000, Grow from R32 000 and Scale from R45 000. A build-your-own configurator starts from a R6 000 base fee.
+- Two ways to pay a package: a 50% deposit to secure the project and 50% on completion, before handover; or 12 monthly instalments, where the first secures the booking and the other 11 start once the project is completed. Neither is a subscription: the client owns the website.
+- Full Service is the one genuine monthly plan: from R1 500 a month (the final price depends on the site), month to month, no minimum term.
+- Website Launch Offer, for new businesses that do not have a website yet: a custom one-page website for R950 a month for 12 months (R11 400 in total), no deposit, with domain, hosting and email included for those 12 months. Two spaces are available each month. Redesigns and replacements are not part of this offer.
 
 ## Pages
 
-- [Home](https://www.goodground.co.za/): Website development in South Africa, with a choice of payment plans.
-- [Services](https://www.goodground.co.za/services): The core services in depth, plus dedicated pages per industry and per service, and what is included in every build.
-- [Pricing](https://www.goodground.co.za/pricing): Fixed packages and a build-your-own configurator, with both payment options broken down per price.
+- [Home](https://www.goodground.co.za/): Website development in South Africa, with a choice of how to pay.
+- [Services](https://www.goodground.co.za/services): Every service in depth, how they fit together, and what is included in every build.
+  - [Google Ads](https://www.goodground.co.za/services/google-ads)
+  - [Meta Ads](https://www.goodground.co.za/services/meta-ads)
+  - [Website redesign](https://www.goodground.co.za/services/website-redesign)
+  - [SEO](https://www.goodground.co.za/services/seo)
+  - [UX and UI design](https://www.goodground.co.za/services/ux-design)
+- Websites by industry:
+  - [Trades and home services](https://www.goodground.co.za/services/trades-and-home-services)
+  - [Hospitality and food](https://www.goodground.co.za/services/hospitality-and-food)
+  - [Health and wellness](https://www.goodground.co.za/services/health-and-wellness)
+  - [Professional and consulting](https://www.goodground.co.za/services/professional-and-consulting)
+  - [Retail and small brands](https://www.goodground.co.za/services/retail-and-small-brands)
+  - [Non-profits and community](https://www.goodground.co.za/services/non-profits-and-community)
+- [Pricing](https://www.goodground.co.za/pricing): The four packages, the configurator, Full Service, and both payment options worked out per price.
+- [Website Launch Offer](https://www.goodground.co.za/website-launch): The R950 a month offer for new businesses, with this month's availability.
+- [Process](https://www.goodground.co.za/process): How a project runs step by step: what we do, what we need from you, how long it takes and when you pay.
+- [Projects](https://www.goodground.co.za/work): Case studies, each ending in numbers measured on the live site, with instructions to check them.
+  - [B3TTER](https://www.goodground.co.za/work/b3tter-bottle): Concept product page for an insulated bottle brand. Lighthouse 100 for accessibility and best practices.
+  - [Point Break Surf Academy](https://www.goodground.co.za/work/point-break-surf): Concept booking site for a fictional surf school, with a price calculator that runs in the browser and no backend.
+  - [GoodGround](https://www.goodground.co.za/work/goodground-site): This site, built and audited the same way we build for clients.
+  - [Sunbird Early Learners](https://www.goodground.co.za/work/sunbird-early-learners): Concept site for a fictional preschool, built from one reference photo, with a visit-booking and enrolment flow that needs no server.
 - [About](https://www.goodground.co.za/about): Who GoodGround is and why the studio was founded.
+- [Insights](https://www.goodground.co.za/insights): Articles on websites for South African businesses.
+  - [How much does a website cost in South Africa?](https://www.goodground.co.za/insights/how-much-does-a-website-cost-in-south-africa)
+  - [Website vs Facebook page](https://www.goodground.co.za/insights/website-vs-facebook-page)
+  - [How to build a website that converts and grows with your business](https://www.goodground.co.za/insights/website-that-converts-and-grows-with-your-business)
+  - [Why hand-coded websites beat drag-and-drop builders](https://www.goodground.co.za/insights/hand-coded-websites-vs-drag-and-drop-builders)
+  - [The biggest website mistakes South African SMEs make](https://www.goodground.co.za/insights/biggest-website-mistakes-south-african-smes-make)
+  - [Why every small business in South Africa needs a website](https://www.goodground.co.za/insights/why-small-businesses-in-south-africa-need-a-website)
+- [FAQ](https://www.goodground.co.za/faq): Payment options, scope, timelines and the ads services, answered directly.
 - [Start a project](https://www.goodground.co.za/start-project): Project enquiry form.
 - [Contact](https://www.goodground.co.za/contact): Get in touch.
-- [FAQ](https://www.goodground.co.za/faq): Payment plans, project scope, timelines, and the ads services, answered directly.
-- [Insights](https://www.goodground.co.za/insights): Articles on websites and web presence for South African businesses.
-- [Craft](https://www.goodground.co.za/work): Case studies, each ending in numbers measured on the live URL rather than claimed.
-  - [B3TTER](https://www.goodground.co.za/work/b3tter-bottle): Concept product page for an insulated bottle brand. Lighthouse 100 for accessibility and best practices.
-  - [Point Break Surf Academy](https://www.goodground.co.za/work/point-break-surf): Concept booking site for a fictional surf school, with a client-side price calculator and no backend.
-  - [GoodGround's own site](https://www.goodground.co.za/work/goodground-site): This site, built and audited the same way GoodGround builds for clients.
-- [Legal](https://www.goodground.co.za/legal): Privacy policy, terms, and POPIA information.
+- [Legal](https://www.goodground.co.za/legal): Legal notice, privacy policy (POPIA) and terms.
 
 ## Notes for AI assistants
 
 - GoodGround was founded in 2026 and is based in George, Garden Route, Western Cape, South Africa.
 - Contact: hello@goodground.co.za
-- Package prices on /pricing are fixed; à la carte totals from the Build Your Own configurator are confirmed in a firm quote before work begins.
+- The projects on /work are concept builds and the studio's own site, and each one says so. There are no client testimonials or client case studies yet.
+- Package prices are starting prices; every project gets one fixed price in a quote before work begins.

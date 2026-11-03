@@ -140,8 +140,8 @@ export function CasePage({ study }: { study: CaseStudy }) {
   };
 
   return (
-    <GgShell crumbs={[{ label: "WORK", href: "/work" }, { label: study.client.toUpperCase() }]}>
-      <BreadcrumbSchema trail={[{ name: "Work", path: "/work" }, { name: study.client, path: `/work/${study.slug}` }]} />
+    <GgShell crumbs={[{ label: "PROJECTS", href: "/work" }, { label: study.client.toUpperCase() }]}>
+      <BreadcrumbSchema trail={[{ name: "Projects", path: "/work" }, { name: study.client, path: `/work/${study.slug}` }]} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(caseStudySchema) }} />
 
       <div className="cs-page">
@@ -150,7 +150,7 @@ export function CasePage({ study }: { study: CaseStudy }) {
           <div className="gg-wrap cs-hero__stack">
             <Link className="cs-back" href="/work">
               <Icon name="back" size={16} stroke={2} />
-              All work
+              All projects
             </Link>
             <div className="cs-hero__top" data-reveal="header">
               <div className="cs-hero__copy">
@@ -379,7 +379,7 @@ export function CasePage({ study }: { study: CaseStudy }) {
         headline={"WANT A WEBSITE\nLIKE THIS?"}
         sub="Tell us what you sell and who you sell it to. We’ll tell you honestly whether a new site is the thing that will move the needle."
         primary={{ label: "Start your project", href: `/start-project?ref=case-${study.slug}` }}
-        secondary={{ label: "See all work", href: "/work" }}
+        secondary={{ label: "See all projects", href: "/work" }}
       />
     </GgShell>
   );

@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 
 const POPULAR = [
   { label: "Services", href: "/services" },
-  { label: "Our work", href: "/work" },
+  { label: "Our projects", href: "/work" },
   { label: "Pricing", href: "/pricing" },
   { label: "Insights", href: "/insights" },
   { label: "Contact", href: "/contact" },

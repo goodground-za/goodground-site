@@ -14,7 +14,9 @@ import "@/components/gg/utility/utility.css";
 
 /** The conversion URL and no-JS landing page: never indexed, never in the sitemap. */
 export const metadata: Metadata = {
-  title: "Thank you | GoodGround",
+  // The root template adds " | GoodGround"; writing it here doubled it.
+  title: "Thank you",
+  description: "Your message reached GoodGround. Here is what happens next, and when to expect a reply.",
   robots: { index: false, follow: false },
 };
 
@@ -170,7 +172,7 @@ export default async function ThanksPage({ searchParams }: { searchParams: Promi
                 </div>
                 <div className="th__meanwhile-buttons">
                   <ButtonLink href="/work" variant="light">
-                    See our work
+                    See our projects
                   </ButtonLink>
                   <ButtonLink href="/process" className="th__ghost" variant="outline">
                     How we work

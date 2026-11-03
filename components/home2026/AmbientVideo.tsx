@@ -29,6 +29,10 @@ export function useAmbientMotion() {
   // Starts paused under reduced motion. Resolved in an effect rather than at
   // render so the server and the first client paint agree.
   const [paused, setPaused] = useState(false);
+  // Nothing plays until the starting state is known; otherwise the first
+  // render's `paused: false` started the clip for a moment under reduced
+  // motion before the real state arrived.
+  const [resolved, setResolved] = useState(false);
   const manualPreference = useRef(false);
   // Mirrors `paused` so the visibilitychange listener below reads the live
   // value without being torn down and rebuilt on every toggle.
@@ -59,10 +63,15 @@ export function useAmbientMotion() {
       stored = localStorage.getItem(MOTION_KEY);
     } catch {}
     if (stored === "off" || stored === "on") manualPreference.current = true;
-    setPaused(manualPreference.current ? stored === "off" : query.matches);
+    // Save-Data (data-saver mode) counts like reduced motion: the poster
+    // stays and the 2.6 MB clip is never played, so never downloaded.
+    const saveData = Boolean((navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData);
+    const systemPaused = () => query.matches || saveData;
+    setPaused(manualPreference.current ? stored === "off" : systemPaused());
+    setResolved(true);
 
     const onPreferenceChange = () => {
-      if (!manualPreference.current) setPaused(query.matches);
+      if (!manualPreference.current) setPaused(systemPaused());
     };
     const onVisibility = () => applyMotion(pausedRef.current);
 
@@ -76,8 +85,8 @@ export function useAmbientMotion() {
 
   useEffect(() => {
     pausedRef.current = paused;
-    applyMotion(paused);
-  }, [paused, applyMotion]);
+    if (resolved) applyMotion(paused);
+  }, [paused, resolved, applyMotion]);
 
   // Only a deliberate click writes the site-wide flag. A refused autoplay or
   // the system setting pause the video but say nothing about the visitor's
@@ -146,7 +155,7 @@ export function AmbientVideo() {
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
           poster="/home2026/goodground-motion-poster.jpg"
           aria-hidden="true"
           tabIndex={-1}

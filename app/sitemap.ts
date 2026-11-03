@@ -18,7 +18,9 @@ const buildTime = new Date();
  */
 function lastModifiedFor(relativeFile: string): Date {
   try {
-    const iso = execSync(`git log -1 --format=%aI -- ${relativeFile}`, { encoding: "utf-8" }).trim();
+    // Quoted: the route-group folders are named `(gg)`, and an unquoted
+    // parenthesis is a shell syntax error, which silently fell back to build time.
+    const iso = execSync(`git log -1 --format=%aI -- "${relativeFile}"`, { encoding: "utf-8" }).trim();
     return iso ? new Date(iso) : buildTime;
   } catch {
     return buildTime;
@@ -33,22 +35,23 @@ function lastModifiedFor(relativeFile: string): Date {
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes: { path: string; priority: number; file: string }[] = [
     { path: "", priority: 1, file: "app/page.tsx" },
-    { path: "/pricing", priority: 0.95, file: "app/(site)/pricing/page.tsx" },
+    { path: "/pricing", priority: 0.95, file: "app/(gg)/pricing/page.tsx" },
     // The Website Launch promotion. Its two confirmation routes are
     // deliberately absent: both are noindex transactional endpoints. So is
     // /launch-offer-intake-form and its own two outcome routes — that form is
     // sent to a client by link after they enquire, not discovered in search.
     { path: "/website-launch", priority: 0.9, file: "content/websiteLaunch.ts" },
-    { path: "/services", priority: 0.9, file: "app/(site)/services/page.tsx" },
+    { path: "/services", priority: 0.9, file: "app/(gg)/services/page.tsx" },
     ...servicePages.map(({ slug }) => ({ path: `/services/${slug}`, priority: 0.8, file: "content/servicePages.ts" })),
     ...industryPages.map(({ slug }) => ({ path: `/services/${slug}`, priority: 0.75, file: "content/industryPages.ts" })),
-    { path: "/start-project", priority: 0.8, file: "app/(site)/start-project/page.tsx" },
-    { path: "/about", priority: 0.8, file: "app/(site)/about/page.tsx" },
-    { path: "/contact", priority: 0.8, file: "app/(site)/contact/page.tsx" },
-    { path: "/faq", priority: 0.7, file: "app/(site)/faq/page.tsx" },
-    { path: "/insights", priority: 0.7, file: "app/(site)/insights/page.tsx" },
-    { path: "/work", priority: 0.6, file: "app/(site)/work/page.tsx" },
-    { path: "/legal", priority: 0.3, file: "app/(site)/legal/page.tsx" },
+    { path: "/start-project", priority: 0.8, file: "app/(gg)/start-project/page.tsx" },
+    { path: "/about", priority: 0.8, file: "app/(gg)/about/page.tsx" },
+    { path: "/process", priority: 0.8, file: "app/(gg)/process/page.tsx" },
+    { path: "/contact", priority: 0.8, file: "app/(gg)/contact/page.tsx" },
+    { path: "/faq", priority: 0.7, file: "app/(gg)/faq/page.tsx" },
+    { path: "/insights", priority: 0.7, file: "app/(gg)/insights/page.tsx" },
+    { path: "/work", priority: 0.6, file: "app/(gg)/work/page.tsx" },
+    { path: "/legal", priority: 0.3, file: "app/(gg)/legal/page.tsx" },
   ];
 
   const pages: MetadataRoute.Sitemap = routes.map(({ path, priority, file }) => ({

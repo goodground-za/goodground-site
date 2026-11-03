@@ -8,7 +8,7 @@ import "@/components/gg/legal/legal.css";
 
 const title = { absolute: "Legal Notice, Privacy Policy & Terms | GoodGround" };
 const description =
-  "GoodGround's legal notice, privacy policy and terms and conditions: how we handle personal information under South Africa's Protection of Personal Information Act (POPIA), and the terms of every project.";
+  "GoodGround’s legal notice, privacy policy and terms: how we handle personal information under POPIA, and the terms that apply to every project.";
 const path = "/legal";
 
 export const metadata: Metadata = {

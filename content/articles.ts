@@ -67,8 +67,8 @@ export const articles: Article[] = [
     slug: "how-much-does-a-website-cost-in-south-africa",
     title: "How much does a website cost in South Africa? (2026 guide, with real numbers)",
     excerpt:
-      "Most website pricing pages hide the number behind a quote form. This one doesn't. Real 2026 prices for DIY builders, freelancers, agencies, and GoodGround's own fixed packages, so you know what you're actually paying for before you enquire.",
-    metaTitle: "Website Cost in South Africa: 2026 Guide & Real Prices",
+      "Most website pricing pages hide the number behind a quote form. This one doesn’t. Real 2026 prices for DIY builders, freelancers, agencies, and GoodGround’s own fixed packages, so you know what you’re actually paying for before you enquire.",
+    metaTitle: "Website Cost in South Africa: 2026 Guide",
     metaDescription:
       "What does a website actually cost in South Africa? Real 2026 prices from R12 000: DIY builders vs freelancers vs agencies.",
     keyword: "website cost South Africa",
@@ -103,13 +103,13 @@ export const articles: Article[] = [
     body: [
       {
         type: "lead",
-        text: "That's the real range. Nobody else publishes it this plainly, because most studios want you on a call before they say a number. This guide breaks down what decides the price, what GoodGround charges for each package in 2026, and how to avoid paying for the wrong thing.",
+        text: "That’s the real range. Nobody else publishes it this plainly, because most studios want you on a call before they say a number. This guide breaks down what decides the price, what GoodGround charges for each package in 2026, and how to avoid paying for the wrong thing.",
       },
 
       { type: "h2", text: "The short answer: real 2026 price ranges" },
       {
         type: "p",
-        text: "Four options exist, and each one trades cost against control. Know which trade you're making before you commit.",
+        text: "Four options exist, and each one trades cost against control. Know which trade you’re making before you commit.",
       },
       {
         type: "options",
@@ -145,7 +145,7 @@ export const articles: Article[] = [
       {
         type: "callout",
         tone: "tip",
-        text: "Match the spend to the job. A one-page site for a pop-up stall doesn't need R30 000; a ten-page site meant to carry a business for five years shouldn't sit on a R200-a-month template.",
+        text: "Match the spend to the job. A one-page site for a pop-up stall doesn’t need R30 000; a ten-page site meant to carry a business for five years shouldn’t sit on a R200-a-month template.",
       },
       {
         type: "p",
@@ -177,7 +177,7 @@ export const articles: Article[] = [
       { type: "h2", text: "How to compare two quotes without getting confused" },
       {
         type: "p",
-        text: "A R12 000 quote and a R25 000 quote for what looks like the same project usually aren't quoting the same project at all. Ask these five questions of any quote, ours included.",
+        text: "A R12 000 quote and a R25 000 quote for what looks like the same project usually aren’t quoting the same project at all. Ask these five questions of any quote, ours included.",
       },
       {
         type: "checklist",
@@ -194,10 +194,10 @@ export const articles: Article[] = [
       },
       {
         type: "p",
-        text: "Every GoodGround package answers all five on [the pricing page](/pricing#packages) itself, not in a follow-up email after you've already committed.",
+        text: "Every GoodGround package answers all five on [the pricing page](/pricing#packages) itself, not in a follow-up email after you’ve already committed.",
       },
 
-      { type: "h2", text: "GoodGround's actual 2026 pricing" },
+      { type: "h2", text: "GoodGround’s actual 2026 pricing" },
       {
         type: "p",
         text: "Each package price is where that package starts. Your own number is confirmed in the quote and fixed before we start, with no surprise invoice at the end.",
@@ -216,10 +216,10 @@ export const articles: Article[] = [
       },
       { type: "payment" },
 
-      { type: "h2", text: "The costs nobody mentions until after you've paid" },
+      { type: "h2", text: "The costs nobody mentions until after you’ve paid" },
       {
         type: "p",
-        text: "A build price and a running cost are two different numbers. Hosting, a domain and ongoing maintenance sit outside the build price almost everywhere, including on GoodGround's four packages. Full Service and the Website Launch Offer are the exceptions: both include hosting.",
+        text: "A build price and a running cost are two different numbers. Hosting, a domain and ongoing maintenance sit outside the build price almost everywhere, including on GoodGround’s four packages. Full Service and the Website Launch Offer are the exceptions: both include hosting.",
       },
       {
         type: "table",
@@ -232,7 +232,7 @@ export const articles: Article[] = [
       },
       {
         type: "p",
-        text: "If you'd rather not manage hosting, mailboxes and maintenance yourself, GoodGround's [Full Service package](/pricing#full-service) bundles all of it, plus ongoing SEO work, into one monthly price instead of piling up until something breaks.",
+        text: "If you’d rather not manage hosting, mailboxes and maintenance yourself, GoodGround’s [Full Service package](/pricing#full-service) bundles all of it, plus ongoing SEO work, into one monthly price instead of piling up until something breaks.",
       },
 
       { type: "h2", text: "Why the cheapest option often costs more" },
@@ -250,15 +250,15 @@ export const articles: Article[] = [
           { label: "Year 2", value: 4800 },
           { label: "Year 3", value: 7200 },
         ],
-        note: "…and you still don't own the site, can't take it elsewhere, and built it yourself. A fixed-price build costs more on day one and belongs to you outright from day one.",
+        note: "…and you still don’t own the site, can’t take it elsewhere, and built it yourself. A fixed-price build costs more on day one and belongs to you outright from day one.",
       },
       {
         type: "quote",
-        text: "You're not comparing a cheap website to an expensive one. You're comparing rent to ownership.",
+        text: "You’re not comparing a cheap website to an expensive one. You’re comparing rent to ownership.",
       },
       {
         type: "p",
-        text: "A cheap freelancer carries a different risk: no company behind the contract, and support that depends on one person's availability. Ask what happens if they're unavailable for a month.",
+        text: "A cheap freelancer carries a different risk: no company behind the contract, and support that depends on one person’s availability. Ask what happens if they’re unavailable for a month.",
       },
 
       { type: "h2", text: "Quick answers" },
@@ -267,7 +267,7 @@ export const articles: Article[] = [
         items: [
           {
             question: "Does the price include hosting and a domain?",
-            answer: "No. Those are arranged separately from the build price, and we'll point you in the right direction when you enquire.",
+            answer: "No. Those are arranged separately from the build price, and we’ll point you in the right direction when you enquire.",
           },
           {
             question: "Is there a deposit?",
@@ -281,7 +281,7 @@ export const articles: Article[] = [
           {
             question: "How do I get an exact number for my project?",
             answer:
-              "Configure your own build in the [pricing configurator](/pricing#build-your-own), or [tell us about your project](/start-project) and we'll come back with a firm quote within 1 to 2 business days.",
+              "Configure your own build in the [pricing configurator](/pricing#build-your-own), or [tell us about your project](/start-project) and we’ll come back with a firm quote within 1 to 2 business days.",
           },
         ],
       },
@@ -295,10 +295,10 @@ export const articles: Article[] = [
     slug: "website-vs-facebook-page",
     title: "Website vs Facebook page: which one actually grows your business?",
     excerpt:
-      "A Facebook page took you an afternoon to build. That speed is exactly the problem. Here's what a website does that a Facebook page structurally cannot, and the order in which the smartest businesses actually use both.",
-    metaTitle: "Website vs Facebook Page: Which Grows Your Business?",
+      "A Facebook page took you an afternoon to build. That speed is exactly the problem. Here’s what a website does that a Facebook page structurally cannot, and the order in which the smartest businesses actually use both.",
+    metaTitle: "Website vs Facebook Page for Your Business",
     metaDescription:
-      "A Facebook page is fast and free. It still can't do half of what a website does for a South African small business. Here's the honest comparison.",
+      "A Facebook page is fast and free. It still can’t do half of what a website does for a South African small business. Here’s the honest comparison.",
     keyword: "website vs Facebook page South Africa",
     author: "GoodGround",
     date: "2026-08-11",
@@ -307,95 +307,95 @@ export const articles: Article[] = [
     body: [
       {
         type: "p",
-        text: "Ask ten small business owners why they haven't built a website yet, and most will give you some version of the same answer: I already have a Facebook page. It's a reasonable position. The page took an afternoon to set up, it cost nothing, and people actually comment on the posts. Why pay for a website when Facebook already does the job for free?",
+        text: "Ask ten small business owners why they haven’t built a website yet, and most will give you some version of the same answer: I already have a Facebook page. It’s a reasonable position. The page took an afternoon to set up, it cost nothing, and people actually comment on the posts. Why pay for a website when Facebook already does the job for free?",
       },
       {
         type: "p",
-        text: "Here's the honest answer. A Facebook page and a website are not two versions of the same tool. They do different jobs, and one of those jobs, the one that decides whether a stranger finds you, trusts you, and can actually reach you, is a job a Facebook page cannot do no matter how well you run it. Not because Facebook built a worse product. Because a page inside someone else's platform was never designed to be a business's front door. It was designed to be a stall inside someone else's market.",
+        text: "Here’s the honest answer. A Facebook page and a website are not two versions of the same tool. They do different jobs, and one of those jobs, the one that decides whether a stranger finds you, trusts you, and can actually reach you, is a job a Facebook page cannot do no matter how well you run it. Not because Facebook built a worse product. Because a page inside someone else’s platform was never designed to be a business’s front door. It was designed to be a stall inside someone else’s market.",
       },
 
       { type: "h2", text: "Give the Facebook page its due" },
       {
         type: "p",
-        text: "A Facebook page earns its keep in specific, narrow ways, and pretending otherwise doesn't help anyone make a good decision. It costs nothing to start. It puts you in front of an audience that already exists on the platform. Posting a photo of today's special or an event happening this weekend takes thirty seconds and reaches people who follow you right now. Comments happen in public, which builds a kind of visible social proof a static page can't fake. For fast, low-stakes updates, Facebook is genuinely good at what it does.",
+        text: "A Facebook page earns its keep in specific, narrow ways, and pretending otherwise doesn’t help anyone make a good decision. It costs nothing to start. It puts you in front of an audience that already exists on the platform. Posting a photo of today’s special or an event happening this weekend takes thirty seconds and reaches people who follow you right now. Comments happen in public, which builds a kind of visible social proof a static page can’t fake. For fast, low-stakes updates, Facebook is genuinely good at what it does.",
       },
       {
         type: "p",
-        text: "None of that is in dispute. The question isn't whether a Facebook page has value. It's whether that value is enough to carry the weight small business owners are quietly asking it to carry: being found by strangers, being trusted by them, and converting that trust into an actual enquiry. On all three, a Facebook page runs into walls it cannot get past, because those walls were built into the platform on purpose.",
+        text: "None of that is in dispute. The question isn’t whether a Facebook page has value. It’s whether that value is enough to carry the weight small business owners are quietly asking it to carry: being found by strangers, being trusted by them, and converting that trust into an actual enquiry. On all three, a Facebook page runs into walls it cannot get past, because those walls were built into the platform on purpose.",
       },
 
       { type: "h2", text: "Google barely knows your Facebook page exists" },
       {
         type: "p",
-        text: "Type a service and a suburb into Google, an electrician in Bellville, a caterer in Nelspruit, a physio near me, and look closely at what actually shows up. Real websites. Google Business Profiles. Directory listings. A Facebook page occasionally appears, usually buried well below the businesses that built an actual site, because Google's search results are built to reward sites it can properly read: clean pages, clear headings, content that matches what people are searching for, and a domain that belongs to you specifically.",
+        text: "Type a service and a suburb into Google, an electrician in Bellville, a caterer in Nelspruit, a physio near me, and look closely at what actually shows up. Real websites. Google Business Profiles. Directory listings. A Facebook page occasionally appears, usually buried well below the businesses that built an actual site, because Google’s search results are built to reward sites it can properly read: clean pages, clear headings, content that matches what people are searching for, and a domain that belongs to you specifically.",
       },
       {
         type: "p",
-        text: "A Facebook page hands none of that control to you. You cannot set your own page titles the way a website lets you. You cannot structure the page around the exact words a customer searches. You cannot build the ten or twenty pages a website can, each one written to answer a different question a different customer is typing into Google. Facebook decided what a business page looks like, and every business on the platform gets the same shape. We've written before about why [your customers are already searching for you before they ever see your marketing](/insights/why-small-businesses-in-south-africa-need-a-website), and a page that Google mostly can't parse means you're invisible at the exact moment someone typed in exactly what you offer.",
+        text: "A Facebook page hands none of that control to you. You cannot set your own page titles the way a website lets you. You cannot structure the page around the exact words a customer searches. You cannot build the ten or twenty pages a website can, each one written to answer a different question a different customer is typing into Google. Facebook decided what a business page looks like, and every business on the platform gets the same shape. We’ve written before about why [your customers are already searching for you before they ever see your marketing](/insights/why-small-businesses-in-south-africa-need-a-website), and a page that Google mostly can’t parse means you’re invisible at the exact moment someone typed in exactly what you offer.",
       },
       {
         type: "quote",
-        text: "The customer didn't reject you. They never saw you, because Google never showed them a Facebook page instead of a website.",
+        text: "The customer didn’t reject you. They never saw you, because Google never showed them a Facebook page instead of a website.",
       },
 
       { type: "h2", text: "A Facebook-only business reads as a smaller business" },
       {
         type: "p",
-        text: "Before anyone pays a deposit or books an appointment, they're running a quiet background check. Is this a real business? Will it still exist next month? Can I trust these people with my money? A website, even a modest one, answers that question in seconds: a clear description of what you do, real photos of real work, a proper way to contact you, maybe a page or two explaining how you operate. It reads as a business that took itself seriously enough to build something.",
+        text: "Before anyone pays a deposit or books an appointment, they’re running a quiet background check. Is this a real business? Will it still exist next month? Can I trust these people with my money? A website, even a modest one, answers that question in seconds: a clear description of what you do, real photos of real work, a proper way to contact you, maybe a page or two explaining how you operate. It reads as a business that took itself seriously enough to build something.",
       },
       {
         type: "p",
-        text: "A Facebook page alone reads differently, whether that's fair or not. It looks like a side project. It looks like something anyone could set up in an afternoon, because that's exactly what it is. Customers comparing you to a competitor with an actual website, even a competitor who does slightly worse work, will often pick the one that looks like it's built to last. Legitimacy is not about spending a fortune on design. It's about having something that looks like yours, not something that looks like a stall inside somebody else's market.",
+        text: "A Facebook page alone reads differently, whether that’s fair or not. It looks like a side project. It looks like something anyone could set up in an afternoon, because that’s exactly what it is. Customers comparing you to a competitor with an actual website, even a competitor who does slightly worse work, will often pick the one that looks like it’s built to last. Legitimacy is not about spending a fortune on design. It’s about having something that looks like yours, not something that looks like a stall inside somebody else’s market.",
       },
 
-      { type: "h2", text: "You don't own a Facebook page. You rent it." },
+      { type: "h2", text: "You don’t own a Facebook page. You rent it." },
       {
         type: "p",
-        text: "This is the one that costs businesses the most, and it costs them quietly enough that most owners never connect the dots. Facebook can change how many of your followers actually see your posts, and it has, repeatedly, over the years, without asking anyone's permission: organic reach for business pages has fallen from roughly 16% when pages first launched to a low single-digit percentage today, according to [HubSpot's tracking of the decline](https://blog.hubspot.com/marketing/facebook-organic-reach-declining). An account can get restricted or suspended over an automated flag with no human to call and no timeline for a fix. The platform's rules, its algorithm, its whole business model, none of it answers to you. You built an audience on ground you don't own, and the landlord can change the terms whenever the landlord wants.",
+        text: "This is the one that costs businesses the most, and it costs them quietly enough that most owners never connect the dots. Facebook can change how many of your followers actually see your posts, and it has, repeatedly, over the years, without asking anyone’s permission: organic reach for business pages has fallen from roughly 16% when pages first launched to a low single-digit percentage today, according to [HubSpot’s tracking of the decline](https://blog.hubspot.com/marketing/facebook-organic-reach-declining). An account can get restricted or suspended over an automated flag with no human to call and no timeline for a fix. The platform’s rules, its algorithm, its whole business model, none of it answers to you. You built an audience on ground you don’t own, and the landlord can change the terms whenever the landlord wants.",
       },
       {
         type: "p",
-        text: "A website doesn't have that problem, because there's no landlord. Your domain is registered in your name. Your content lives on hosting you control. Nobody can throttle how many people see your homepage this month because an algorithm shifted. We called this exact trade-off [rented ground versus land you actually own](/insights/why-small-businesses-in-south-africa-need-a-website) in an earlier piece, and it's worth repeating here in the specific context of Facebook: a page can vanish, get restricted, or simply stop reaching anyone, and you'd have no real recourse. A website is the one piece of your online presence that answers to you and nobody else.",
+        text: "A website doesn’t have that problem, because there’s no landlord. Your domain is registered in your name. Your content lives on hosting you control. Nobody can throttle how many people see your homepage this month because an algorithm shifted. We called this exact trade-off [rented ground versus land you actually own](/insights/why-small-businesses-in-south-africa-need-a-website) in an earlier piece, and it’s worth repeating here in the specific context of Facebook: a page can vanish, get restricted, or simply stop reaching anyone, and you’d have no real recourse. A website is the one piece of your online presence that answers to you and nobody else.",
       },
       {
         type: "ul",
         items: [
-          "Your website's domain is registered in your business's name, not a platform account that can be suspended.",
-          "A website's reach isn't decided by an algorithm you don't control and can't see inside.",
-          "Customer enquiries land in your inbox directly, not inside a platform's messaging system you have to check separately.",
+          "Your website’s domain is registered in your business’s name, not a platform account that can be suspended.",
+          "A website’s reach isn’t decided by an algorithm you don’t control and can’t see inside.",
+          "Customer enquiries land in your inbox directly, not inside a platform’s messaging system you have to check separately.",
           "Nothing about how your website looks, loads, or is structured depends on decisions Meta makes for reasons that have nothing to do with you.",
         ],
       },
 
-      { type: "h2", text: "A page can't structure a real decision the way a website can" },
+      { type: "h2", text: "A page can’t structure a real decision the way a website can" },
       {
         type: "p",
         text: "Most real purchases involve more than one question. What do you actually offer? What does it cost, or roughly what should someone expect to pay? How long does it take? What happens after they get in touch? A Facebook page is built around a feed of posts in chronological order, which is a poor tool for answering a structured set of questions in the order a customer actually needs them answered. Somebody trying to understand your pricing has to scroll backwards through months of unrelated updates hoping you once posted about it.",
       },
       {
         type: "p",
-        text: "A website doesn't have that constraint. A dedicated pricing page lays out exactly what something costs and what's included, the way [our own pricing page](/pricing) breaks down fixed packages and a build-your-own option so a visitor never has to guess. A services page explains what you do in the order that makes sense for a stranger, not in the order you happened to post about it. Structure is not a nice-to-have. It's the difference between a visitor finding an answer in ten seconds and a visitor giving up and moving to the next search result.",
+        text: "A website doesn’t have that constraint. A dedicated pricing page lays out exactly what something costs and what’s included, the way [our own pricing page](/pricing) breaks down fixed packages and a build-your-own option so a visitor never has to guess. A services page explains what you do in the order that makes sense for a stranger, not in the order you happened to post about it. Structure is not a nice-to-have. It’s the difference between a visitor finding an answer in ten seconds and a visitor giving up and moving to the next search result.",
       },
 
       { type: "h2", text: "The right order: website first, Facebook page as the megaphone" },
       {
         type: "p",
-        text: "None of this is an argument to delete your Facebook page. It's an argument about which one does the foundational work and which one amplifies it. A website is the destination: the place that actually explains what you do, proves you're legitimate, and gives a visitor a clear way to act. A Facebook page is a megaphone: a way to tell your existing audience about a new post, a promotion, or an update, and point them somewhere that can actually close the sale.",
+        text: "None of this is an argument to delete your Facebook page. It’s an argument about which one does the foundational work and which one amplifies it. A website is the destination: the place that actually explains what you do, proves you’re legitimate, and gives a visitor a clear way to act. A Facebook page is a megaphone: a way to tell your existing audience about a new post, a promotion, or an update, and point them somewhere that can actually close the sale.",
       },
       {
         type: "p",
-        text: "Run it the other way round, all your effort poured into the page and nothing behind it, and you're building an audience you don't own on a platform that answers a question nobody asked. Build the website first, and every Facebook post becomes a lot more valuable, because it's now sending people somewhere built to convert them rather than somewhere built to keep them scrolling.",
+        text: "Run it the other way round, all your effort poured into the page and nothing behind it, and you’re building an audience you don’t own on a platform that answers a question nobody asked. Build the website first, and every Facebook post becomes a lot more valuable, because it’s now sending people somewhere built to convert them rather than somewhere built to keep them scrolling.",
       },
 
       { type: "h2", text: "What this looks like in practice" },
       {
         type: "ul",
         items: [
-          "Build the website first. It's the one asset in this list you'll actually own in five years.",
-          "Keep the Facebook page. Use it for what it's good at: quick updates, events, and staying visible to people who already know you.",
+          "Build the website first. It’s the one asset in this list you’ll actually own in five years.",
+          "Keep the Facebook page. Use it for what it’s good at: quick updates, events, and staying visible to people who already know you.",
           "Every post should point somewhere. Link back to the relevant page on your website instead of assuming the post itself has to do all the convincing.",
           "Put your website address in your Facebook bio, not just a phone number. Make the path from platform to owned ground obvious.",
-          "Claim your Google Business Profile and link it to your website, not your Facebook page. It's free, and it's often the first thing a local search shows.",
+          "Claim your Google Business Profile and link it to your website, not your Facebook page. It’s free, and it’s often the first thing a local search shows.",
         ],
       },
 
@@ -404,14 +404,14 @@ export const articles: Article[] = [
         type: "ul",
         items: [
           "A Facebook page is fast, free, and good at quick updates to an audience that already follows you.",
-          "It's structurally weak at the three things that actually grow a business: being found by strangers on Google, reading as a legitimate business to someone who's never heard of you, and answering a structured decision in the order a customer needs it answered.",
+          "It’s structurally weak at the three things that actually grow a business: being found by strangers on Google, reading as a legitimate business to someone who’s never heard of you, and answering a structured decision in the order a customer needs it answered.",
           "You rent a Facebook page. You own a website. One of those can be restricted or throttled by rules you never agreed to.",
           "The right setup uses both, in order: a website as the foundation, a Facebook page as the megaphone that points people back to it.",
         ],
       },
       {
         type: "p",
-        text: "If your business is currently running on a Facebook page and nothing else, that's not a failure. It's a starting point most businesses pass through. The only mistake is staying there longer than you need to. [Tell us about your business](/start-project) and we'll come back with next steps, or have a look at [what a proper build costs](/pricing) before you decide anything.",
+        text: "If your business is currently running on a Facebook page and nothing else, that’s not a failure. It’s a starting point most businesses pass through. The only mistake is staying there longer than you need to. [Tell us about your business](/start-project) and we’ll come back with next steps, or have a look at [what a proper build costs](/pricing) before you decide anything.",
       },
     ],
   },
@@ -420,7 +420,7 @@ export const articles: Article[] = [
     title: "How to build a website that converts customers and grows with your business",
     excerpt:
       "Most businesses treat conversion and growth as separate problems: marketing worries about one, the developer worries about the other. Build them into the same site from day one and neither costs you customers later.",
-    metaTitle: "A Website That Converts Customers and Grows With Your Business",
+    metaTitle: "A Website That Converts and Grows With You",
     metaDescription:
       "Two questions decide whether a website works: does it turn visitors into enquiries, and can it grow without a rebuild? How to get both right.",
     keyword: "website that converts South Africa",
@@ -438,7 +438,7 @@ export const articles: Article[] = [
         text: "That split is the mistake. A site built to convert today and a site built to grow tomorrow are not two projects. They are the same project, decided at the same wireframe, and the businesses that get this right end up with a site that keeps performing years after launch instead of one that has to be rebuilt the moment it starts working.",
       },
 
-      { type: "h2", text: "Clarity converts. A menu of options doesn't." },
+      { type: "h2", text: "Clarity converts. A menu of options doesn’t." },
       {
         type: "p",
         text: "Visitors do not convert because a page is clever. They convert because it removes every reason to hesitate. A confused visitor does not ask you a question. They close the tab and try the next result on Google.",
@@ -451,7 +451,7 @@ export const articles: Article[] = [
         type: "ul",
         items: [
           "One obvious next step per page. Not three buttons competing for attention. One.",
-          "A first sentence that answers what you do, who it's for, and what happens if they get in touch, before they have to scroll to find out.",
+          "A first sentence that answers what you do, who it’s for, and what happens if they get in touch, before they have to scroll to find out.",
           "Proof placed exactly where the doubt shows up, not buried on a separate page nobody visits.",
         ],
       },
@@ -461,21 +461,21 @@ export const articles: Article[] = [
       },
       {
         type: "quote",
-        text: "A confused visitor doesn't ask a question. They close the tab.",
+        text: "A confused visitor doesn’t ask a question. They close the tab.",
       },
 
       { type: "h2", text: "Speed is the first impression, not a technical detail" },
       {
         type: "p",
-        text: "Before a visitor reads a word of your copy, the page has already made an argument for or against you: how fast it appeared. A page that loads instantly feels like a business that has its act together. A page that hangs for three seconds on mobile data feels like a warning sign, whether that's fair or not. Google's own [Core Web Vitals guidance](https://web.dev/articles/vitals) treats loading speed, responsiveness, and visual stability as ranking-relevant signals for exactly this reason: a slow page isn't just an annoyance, it's measurably worse at holding on to visitors.",
+        text: "Before a visitor reads a word of your copy, the page has already made an argument for or against you: how fast it appeared. A page that loads instantly feels like a business that has its act together. A page that hangs for three seconds on mobile data feels like a warning sign, whether that’s fair or not. Google’s own [Core Web Vitals guidance](https://web.dev/articles/vitals) treats loading speed, responsiveness, and visual stability as ranking-relevant signals for exactly this reason: a slow page isn’t just an annoyance, it’s measurably worse at holding on to visitors.",
       },
       {
         type: "p",
-        text: "We've written before about why this matters even more on the connections most South Africans are actually using in [the biggest website mistakes South African SMEs make](/insights/biggest-website-mistakes-south-african-smes-make). The short version applies here too: a slow site and a bloated site are usually the same site, and every extra second is a visitor quietly deciding whether you're worth the wait.",
+        text: "We’ve written before about why this matters even more on the connections most South Africans are actually using in [the biggest website mistakes South African SMEs make](/insights/biggest-website-mistakes-south-african-smes-make). The short version applies here too: a slow site and a bloated site are usually the same site, and every extra second is a visitor quietly deciding whether you’re worth the wait.",
       },
       {
         type: "p",
-        text: "The fix is not glamorous. Compress the images. Load only the fonts you're using. Keep the layout stable so a button doesn't jump out from under someone's thumb the moment they go to tap it. None of that shows up in a mockup, and all of it shows up in whether the enquiry actually arrives.",
+        text: "The fix is not glamorous. Compress the images. Load only the fonts you’re using. Keep the layout stable so a button doesn’t jump out from under someone’s thumb the moment they go to tap it. None of that shows up in a mockup, and all of it shows up in whether the enquiry actually arrives.",
       },
 
       { type: "h2", text: "Built to grow, not just built to launch" },
@@ -485,7 +485,7 @@ export const articles: Article[] = [
       },
       {
         type: "p",
-        text: "A site built to grow is built on a small number of reusable pieces instead of one-off pages stitched together as they were needed. The same button, the same card, the same heading style, used consistently across the whole site rather than reinvented per page. Content that lives in a structure, not scattered across whatever layout felt right at the time. Get that foundation right once, and adding a new page becomes an afternoon's work instead of a small redesign.",
+        text: "A site built to grow is built on a small number of reusable pieces instead of one-off pages stitched together as they were needed. The same button, the same card, the same heading style, used consistently across the whole site rather than reinvented per page. Content that lives in a structure, not scattered across whatever layout felt right at the time. Get that foundation right once, and adding a new page becomes an afternoon’s work instead of a small redesign.",
       },
       {
         type: "ul",
@@ -503,7 +503,7 @@ export const articles: Article[] = [
       },
       {
         type: "p",
-        text: "It's also why every project comes with a choice in how you pay for it: a 50% deposit and the rest on completion, or 12 monthly instalments. A website that's actually built to grow keeps earning its cost well past launch day, and the way you pay for it should match that.",
+        text: "It’s also why every project comes with a choice in how you pay for it: a 50% deposit and the rest on completion, or 12 monthly instalments. A website that’s actually built to grow keeps earning its cost well past launch day, and the way you pay for it should match that.",
       },
 
       { type: "h2", text: "The short version" },
@@ -511,14 +511,14 @@ export const articles: Article[] = [
         type: "ul",
         items: [
           "Conversion comes from clarity: one next step, an answer in the first sentence, proof at the point of doubt.",
-          "Speed is not a nice-to-have. It's the first thing a visitor judges you on, before they've read anything.",
+          "Speed is not a nice-to-have. It’s the first thing a visitor judges you on, before they’ve read anything.",
           "A site built on reusable components and structured content grows by addition, not by rebuild.",
           "Treat conversion and growth as the same project from the first wireframe, and neither one costs you the other later.",
         ],
       },
       {
         type: "p",
-        text: "A website that converts today and a website that scales tomorrow are built the same way: on a clear, deliberate foundation. If yours is fighting you on either front, [tell us about your business](/start-project) and we'll come back with next steps.",
+        text: "A website that converts today and a website that scales tomorrow are built the same way: on a clear, deliberate foundation. If yours is fighting you on either front, [tell us about your business](/start-project) and we’ll come back with next steps.",
       },
     ],
     relatedServiceSlugs: ["ux-design"],
@@ -527,10 +527,10 @@ export const articles: Article[] = [
     slug: "hand-coded-websites-vs-drag-and-drop-builders",
     title: "Why hand-coded websites will always beat drag-and-drop website builders",
     excerpt:
-      "Drag-and-drop builders win the first afternoon. Hand-coded websites win every day after that. Here's what you're actually trading away for the convenience, and when it does and doesn't matter.",
-    metaTitle: "Hand-Coded Websites vs Drag-and-Drop Website Builders",
+      "Drag-and-drop builders win the first afternoon. Hand-coded websites win every day after that. Here’s what you’re actually trading away for the convenience, and when it does and doesn’t matter.",
+    metaTitle: "Hand-Coded Websites vs Drag-and-Drop Builders",
     metaDescription:
-      "Wix, Squarespace and GoDaddy get you online fast, but at a cost you notice later. What hand-coded websites get you that builders can't.",
+      "Wix, Squarespace and GoDaddy get you online fast, but at a cost you notice later. What hand-coded websites get you that builders can’t.",
     keyword: "hand-coded website vs website builder",
     author: "GoodGround",
     date: "2026-07-27",
@@ -539,35 +539,35 @@ export const articles: Article[] = [
     body: [
       {
         type: "p",
-        text: "Somewhere in the process of shopping for a website, most business owners see two very different numbers. One is a monthly fee from a drag-and-drop builder, small enough to feel like nothing, with a promise that you'll have a live site by the end of the afternoon. The other is a quote from someone who is going to sit down and write the thing by hand, which takes longer and costs more upfront.",
+        text: "Somewhere in the process of shopping for a website, most business owners see two very different numbers. One is a monthly fee from a drag-and-drop builder, small enough to feel like nothing, with a promise that you’ll have a live site by the end of the afternoon. The other is a quote from someone who is going to sit down and write the thing by hand, which takes longer and costs more upfront.",
       },
       {
         type: "p",
-        text: "On paper the builder looks like the obvious choice. It's cheaper today, it's faster today, and it doesn't require you to trust a stranger with weeks of your time and money. The problem is that a website isn't judged on today. It's judged on the two or three years it sits there working, or not working, for your business. Measured over that stretch, the maths flips completely.",
+        text: "On paper the builder looks like the obvious choice. It’s cheaper today, it’s faster today, and it doesn’t require you to trust a stranger with weeks of your time and money. The problem is that a website isn’t judged on today. It’s judged on the two or three years it sits there working, or not working, for your business. Measured over that stretch, the maths flips completely.",
       },
       {
         type: "p",
-        text: "This isn't an argument that drag-and-drop tools are badly made. Wix, Squarespace and GoDaddy's builder are genuinely impressive pieces of software for what they're trying to do. The argument is narrower than that: they're trying to do something different from what most growing businesses actually need, and the gap between the two only shows up once you're living with the result.",
+        text: "This isn’t an argument that drag-and-drop tools are badly made. Wix, Squarespace and GoDaddy’s builder are genuinely impressive pieces of software for what they’re trying to do. The argument is narrower than that: they’re trying to do something different from what most growing businesses actually need, and the gap between the two only shows up once you’re living with the result.",
       },
 
       { type: "h2", text: "What a drag-and-drop builder is actually building" },
       {
         type: "p",
-        text: "A builder isn't building your site from scratch when you drag a block onto the page. It's assembling your site out of a fixed set of components that every other customer on that platform is also using, wrapped in code written to handle every possible thing anyone might ever want, not the specific thing you want. Your \"custom\" layout is really a configuration of someone else's system.",
+        text: "A builder isn’t building your site from scratch when you drag a block onto the page. It’s assembling your site out of a fixed set of components that every other customer on that platform is also using, wrapped in code written to handle every possible thing anyone might ever want, not the specific thing you want. Your “custom” layout is really a configuration of someone else’s system.",
       },
       {
         type: "p",
-        text: "That's a reasonable trade when you have no other option. It stops being reasonable once you realise what it costs you: every page loads code for features you're not using, every layout is bent to fit a grid someone else designed, and every change you want to make has to be possible within the builder's menu of options, not just possible in principle.",
+        text: "That’s a reasonable trade when you have no other option. It stops being reasonable once you realise what it costs you: every page loads code for features you’re not using, every layout is bent to fit a grid someone else designed, and every change you want to make has to be possible within the builder’s menu of options, not just possible in principle.",
       },
 
       { type: "h2", text: "Page weight, and who actually pays for it" },
       {
         type: "p",
-        text: "Because a builder has to support everyone's possible use case at once, it ships a lot of code your visitor never asked for. Widgets for features you've never touched, styling systems layered on top of styling systems, tracking scripts baked in by default. HTTP Archive's [Web Almanac page-weight report](https://almanac.httparchive.org/en/2025/page-weight) puts the median mobile page at over 2MB, most of it images and JavaScript the visitor never chose to load. A hand-coded site ships exactly what that page needs and nothing else, because there was no library of extra features to drag in.",
+        text: "Because a builder has to support everyone’s possible use case at once, it ships a lot of code your visitor never asked for. Widgets for features you’ve never touched, styling systems layered on top of styling systems, tracking scripts baked in by default. HTTP Archive’s [Web Almanac page-weight report](https://almanac.httparchive.org/en/2025/page-weight) puts the median mobile page at over 2MB, most of it images and JavaScript the visitor never chose to load. A hand-coded site ships exactly what that page needs and nothing else, because there was no library of extra features to drag in.",
       },
       {
         type: "p",
-        text: "That difference is invisible on fast fibre in an office. It's not invisible on the connection most of your customers are actually using. We've written before about how [most South African website visitors arrive on a phone, often on patchy mobile data](/insights/biggest-website-mistakes-south-african-smes-make), and a bloated page is one of the quietest ways a business loses an enquiry it never even knew it had.",
+        text: "That difference is invisible on fast fibre in an office. It’s not invisible on the connection most of your customers are actually using. We’ve written before about how [most South African website visitors arrive on a phone, often on patchy mobile data](/insights/biggest-website-mistakes-south-african-smes-make), and a bloated page is one of the quietest ways a business loses an enquiry it never even knew it had.",
       },
       {
         type: "quote",
@@ -577,11 +577,11 @@ export const articles: Article[] = [
       { type: "h2", text: "Design that stops where the template stops" },
       {
         type: "p",
-        text: "Every builder has a ceiling, even the good ones. You can rearrange the furniture, but you're still working inside someone else's floor plan. Want a layout that breaks the grid, an interaction that doesn't exist as a pre-built widget, or a page that behaves differently for two kinds of customer? You're either stuck, or you're paying for a third-party plugin that half-works and slows the whole site down further.",
+        text: "Every builder has a ceiling, even the good ones. You can rearrange the furniture, but you’re still working inside someone else’s floor plan. Want a layout that breaks the grid, an interaction that doesn’t exist as a pre-built widget, or a page that behaves differently for two kinds of customer? You’re either stuck, or you’re paying for a third-party plugin that half-works and slows the whole site down further.",
       },
       {
         type: "p",
-        text: "Hand-coded work has no ceiling like that, because nothing was pre-built to fight against. If it can be described, it can be built. That matters less for a single static page than it does for a business that's actually trying to differentiate itself from three competitors running the exact same template with different logos in the corner.",
+        text: "Hand-coded work has no ceiling like that, because nothing was pre-built to fight against. If it can be described, it can be built. That matters less for a single static page than it does for a business that’s actually trying to differentiate itself from three competitors running the exact same template with different logos in the corner.",
       },
 
       { type: "h2", text: "SEO you can actually control" },
@@ -591,41 +591,41 @@ export const articles: Article[] = [
       },
       {
         type: "p",
-        text: "A hand-coded site gives you control over every one of those layers, because there's no platform standing between you and the code. That's a big part of why [being findable has to be built into the site from the start rather than bolted on later](/insights/why-small-businesses-in-south-africa-need-a-website), and it's much harder to do properly when the tool you're using was never designed to hand you that level of control in the first place.",
+        text: "A hand-coded site gives you control over every one of those layers, because there’s no platform standing between you and the code. That’s a big part of why [being findable has to be built into the site from the start rather than bolted on later](/insights/why-small-businesses-in-south-africa-need-a-website), and it’s much harder to do properly when the tool you’re using was never designed to hand you that level of control in the first place.",
       },
 
       { type: "h2", text: "Whose website is it, really?" },
       {
         type: "p",
-        text: "This is the one that bites hardest, and latest. A site built inside a drag-and-drop platform only exists inside that platform. There's no folder of files you can hand to someone else. If you ever want to leave, and prices do go up, features do get discontinued, accounts do get suspended over nothing, leaving means rebuilding the entire site from scratch somewhere else.",
+        text: "This is the one that bites hardest, and latest. A site built inside a drag-and-drop platform only exists inside that platform. There’s no folder of files you can hand to someone else. If you ever want to leave, and prices do go up, features do get discontinued, accounts do get suspended over nothing, leaving means rebuilding the entire site from scratch somewhere else.",
       },
       {
         type: "p",
-        text: "We've covered this trap in more detail in [the biggest website mistakes South African SMEs make](/insights/biggest-website-mistakes-south-african-smes-make), but the short version is worth repeating here: you should always be able to answer who owns the domain, where the site is hosted, and whether you can get a real copy of it. With a hand-coded site those answers are simple, because there's nothing standing between you and your own work.",
+        text: "We’ve covered this trap in more detail in [the biggest website mistakes South African SMEs make](/insights/biggest-website-mistakes-south-african-smes-make), but the short version is worth repeating here: you should always be able to answer who owns the domain, where the site is hosted, and whether you can get a real copy of it. With a hand-coded site those answers are simple, because there’s nothing standing between you and your own work.",
       },
       {
         type: "ul",
         items: [
-          "Your domain is registered in your business's name, not the builder's account.",
+          "Your domain is registered in your business’s name, not the builder’s account.",
           "The actual code exists as files you can hand to anyone, not a configuration locked inside one platform.",
-          "Leaving, if you ever want to, means moving house. It doesn't mean starting over.",
+          "Leaving, if you ever want to, means moving house. It doesn’t mean starting over.",
         ],
       },
 
       { type: "h2", text: "The subscription that never stops" },
       {
         type: "p",
-        text: "Builders are rarely sold as one fee. There's the plan itself, then a fee to remove their branding, then a fee for the app that handles bookings, then another for the one that handles forms properly, then a jump to a higher tier once you hit a traffic or feature limit. None of these are large on their own. Stacked over three or four years, they usually add up to more than a proper build would have cost outright.",
+        text: "Builders are rarely sold as one fee. There’s the plan itself, then a fee to remove their branding, then a fee for the app that handles bookings, then another for the one that handles forms properly, then a jump to a higher tier once you hit a traffic or feature limit. None of these are large on their own. Stacked over three or four years, they usually add up to more than a proper build would have cost outright.",
       },
       {
         type: "p",
-        text: "The difference is what you're left holding at the end. Keep paying a builder for four years and you own nothing you can walk away with. This is exactly why every GoodGround project can be paid off over 12 monthly instalments instead of one large invoice: you get a predictable monthly cost without the ongoing rent, because at the end of it the finished site is genuinely yours.",
+        text: "The difference is what you’re left holding at the end. Keep paying a builder for four years and you own nothing you can walk away with. This is exactly why every GoodGround project can be paid off over 12 monthly instalments instead of one large invoice: you get a predictable monthly cost without the ongoing rent, because at the end of it the finished site is genuinely yours.",
       },
 
       { type: "h2", text: "What happens when the business actually grows" },
       {
         type: "p",
-        text: "A template is sized for an average business doing average things. The moment yours needs something specific, a quote calculator, a booking flow that matches how your team actually works, an integration with the system you already use to run the business, the builder either can't do it or forces you into a workaround held together with third-party plugins and hope.",
+        text: "A template is sized for an average business doing average things. The moment yours needs something specific, a quote calculator, a booking flow that matches how your team actually works, an integration with the system you already use to run the business, the builder either can’t do it or forces you into a workaround held together with third-party plugins and hope.",
       },
       {
         type: "p",
@@ -635,11 +635,11 @@ export const articles: Article[] = [
       { type: "h2", text: "Where a builder is honestly the right call" },
       {
         type: "p",
-        text: "None of this means drag-and-drop tools are always the wrong answer. If you're testing an idea before it's a real business, running a market stall for one weekend, or you genuinely have no budget and need something online today, a builder is a sensible stopgap. Nobody should feel bad about starting there.",
+        text: "None of this means drag-and-drop tools are always the wrong answer. If you’re testing an idea before it’s a real business, running a market stall for one weekend, or you genuinely have no budget and need something online today, a builder is a sensible stopgap. Nobody should feel bad about starting there.",
       },
       {
         type: "p",
-        text: "The distinction worth holding onto is that a builder is a starting point, not a destination. It's fine for the business you have on day one. It quietly becomes the wrong tool for the business you're trying to build, and the businesses that outgrow it fastest are usually the ones actually succeeding.",
+        text: "The distinction worth holding onto is that a builder is a starting point, not a destination. It’s fine for the business you have on day one. It quietly becomes the wrong tool for the business you’re trying to build, and the businesses that outgrow it fastest are usually the ones actually succeeding.",
       },
 
       { type: "h2", text: "The short version" },
@@ -647,9 +647,9 @@ export const articles: Article[] = [
         type: "ul",
         items: [
           "A builder assembles your site from a shared template. A hand-coded site is built around your business specifically.",
-          "Builders ship code for features you don't use. Hand-coded sites load only what the page needs.",
-          "Design, SEO and structured data are only fully in your control when there's no platform standing between you and the code.",
-          "A builder site only exists inside that platform's account. A hand-coded site is files you actually own.",
+          "Builders ship code for features you don’t use. Hand-coded sites load only what the page needs.",
+          "Design, SEO and structured data are only fully in your control when there’s no platform standing between you and the code.",
+          "A builder site only exists inside that platform’s account. A hand-coded site is files you actually own.",
           "Monthly builder fees stack up for years and leave you with nothing to show for them. A proper build, paid off monthly, ends with you owning the result outright.",
         ],
       },
@@ -659,7 +659,7 @@ export const articles: Article[] = [
       },
       {
         type: "p",
-        text: "If you've outgrown the template you started with, or you'd rather skip it altogether, [tell us about your business](/start-project) and we'll come back with next steps.",
+        text: "If you’ve outgrown the template you started with, or you’d rather skip it altogether, [tell us about your business](/start-project) and we’ll come back with next steps.",
       },
     ],
     relatedServiceSlugs: ["website-redesign"],
@@ -669,7 +669,7 @@ export const articles: Article[] = [
     title: "The biggest website mistakes South African SMEs make (and how to fix them)",
     excerpt:
       "Most small business websites do not fail because they look bad. They fail for duller reasons: nobody can find them, they take too long to load on a phone, and they never ask anyone to do anything.",
-    metaTitle: "The Biggest Website Mistakes South African SMEs Make",
+    metaTitle: "Website Mistakes South African SMEs Make",
     metaDescription:
       "The eight website mistakes that quietly cost South African small businesses enquiries, and what to do about each one. Practical, no jargon.",
     keyword: "small business website mistakes South Africa",
@@ -694,7 +694,7 @@ export const articles: Article[] = [
       { type: "h2", text: "1. Building a brochure when you needed a salesperson" },
       {
         type: "p",
-        text: "The most common website in South Africa is a digital pamphlet. A homepage with a nice photo, an About page that opens with \"Founded in 2013, we pride ourselves on quality service\", a Services page listing what you do, and a Contact page. Nothing on it is wrong. Nothing on it is working either.",
+        text: "The most common website in South Africa is a digital pamphlet. A homepage with a nice photo, an About page that opens with “Founded in 2013, we pride ourselves on quality service”, a Services page listing what you do, and a Contact page. Nothing on it is wrong. Nothing on it is working either.",
       },
       {
         type: "p",
@@ -712,7 +712,7 @@ export const articles: Article[] = [
       },
       {
         type: "p",
-        text: "This matters more here than owners realise, because South Africans search locally and specifically. People do not search \"electrical services\". They search \"electrician Durbanville\" or \"emergency electrician near me\". If the words a customer types never appear anywhere on your site, Google has nothing to match them against, and you never enter the running.",
+        text: "This matters more here than owners realise, because South Africans search locally and specifically. People do not search “electrical services”. They search “electrician Durbanville” or “emergency electrician near me”. If the words a customer types never appear anywhere on your site, Google has nothing to match them against, and you never enter the running.",
       },
       {
         type: "p",
@@ -722,11 +722,11 @@ export const articles: Article[] = [
       { type: "h2", text: "3. It is slow, on exactly the connection your customers are using" },
       {
         type: "p",
-        text: "Most South Africans will meet your website on a phone, often on mobile data, sometimes on a patchy signal, occasionally during load shedding on whatever the router is running off. [DataReportal's Digital 2026 South Africa report](https://datareportal.com/reports/digital-2026-south-africa) counts 127 million active mobile connections in the country, nearly double the population, almost all of it on 3G, 4G or 5G rather than fixed lines. A site that feels snappy on fibre in an office can be genuinely unusable in those conditions.",
+        text: "Most South Africans will meet your website on a phone, often on mobile data, sometimes on a patchy signal, occasionally during load shedding on whatever the router is running off. [DataReportal’s Digital 2026 South Africa report](https://datareportal.com/reports/digital-2026-south-africa) counts 127 million active mobile connections in the country, nearly double the population, almost all of it on 3G, 4G or 5G rather than fixed lines. A site that feels snappy on fibre in an office can be genuinely unusable in those conditions.",
       },
       {
         type: "p",
-        text: "The usual culprits are boring. Enormous uncompressed images straight off a camera. A page loading six different fonts. A pile of plugins each dragging in scripts nobody needed. A video autoplaying in the background that eats a visitor's data before they have read a word.",
+        text: "The usual culprits are boring. Enormous uncompressed images straight off a camera. A page loading six different fonts. A pile of plugins each dragging in scripts nobody needed. A video autoplaying in the background that eats a visitor’s data before they have read a word.",
       },
       {
         type: "p",
@@ -771,7 +771,7 @@ export const articles: Article[] = [
       },
       {
         type: "p",
-        text: "You do not need to be technical to avoid this. You need to be able to answer three questions: whose name is the domain registered in, where is the site hosted, and can you get a copy of it. If the answer to any of those is \"the person who built it knows\", that is worth sorting out now rather than during a disagreement.",
+        text: "You do not need to be technical to avoid this. You need to be able to answer three questions: whose name is the domain registered in, where is the site hosted, and can you get a copy of it. If the answer to any of those is “the person who built it knows”, that is worth sorting out now rather than during a disagreement.",
       },
 
       { type: "h2", text: "6. Launching it and then leaving it" },
@@ -849,8 +849,8 @@ export const articles: Article[] = [
     slug: "why-small-businesses-in-south-africa-need-a-website",
     title: "Why every small business in South Africa needs a website (and what a good one actually does)",
     excerpt:
-      "Word of mouth has a ceiling. Here's why an online presence, built on solid website design, has become the difference between being found and being forgotten for South African small businesses.",
-    metaTitle: "Why Small Businesses in South Africa Need a Website",
+      "Word of mouth has a ceiling. Here’s why an online presence, built on solid website design, has become the difference between being found and being forgotten for South African small businesses.",
+    metaTitle: "Why South African Businesses Need a Website",
     metaDescription:
       "Most South African small businesses lose customers before they say a word. Why a good website is now a foundation, not a luxury.",
     keyword: "website design in South Africa",
@@ -875,7 +875,7 @@ export const articles: Article[] = [
       { type: "h2", text: "Your customers are already searching for you" },
       {
         type: "p",
-        text: "South Africans research on their phones before they buy almost anything. A plumber, a dentist, a coffee spot, a company to redo the office network. The pattern is the same: type a few words into Google, add \"near me\" or a suburb, and pick from whatever comes back. If your business is not in those results, you are not in the running. The customer never rejected you. They simply never saw you.",
+        text: "South Africans research on their phones before they buy almost anything. A plumber, a dentist, a coffee spot, a company to redo the office network. The pattern is the same: type a few words into Google, add “near me” or a suburb, and pick from whatever comes back. If your business is not in those results, you are not in the running. The customer never rejected you. They simply never saw you.",
       },
       {
         type: "p",
@@ -887,7 +887,7 @@ export const articles: Article[] = [
       },
       {
         type: "p",
-        text: "There is a companion to this that no small business should skip: a [Google Business Profile](https://support.google.com/business/answer/3038063). It is free, it puts you on Google Maps, and it is often the first thing someone sees when they search your name or your trade in your area. But a profile works best pointing at something. When your listing links to a real website that backs up the claim, the two reinforce each other, and you start showing up for the local searches that actually turn into phone calls.",
+        text: "There is a companion to this that no small business should skip: a [Google Business Profile](https://support.google.com/business/answer/7039811). It is free, it puts you on Google Maps, and it is often the first thing someone sees when they search your name or your trade in your area. But a profile works best pointing at something. When your listing links to a real website that backs up the claim, the two reinforce each other, and you start showing up for the local searches that actually turn into phone calls.",
       },
       {
         type: "p",
@@ -901,7 +901,7 @@ export const articles: Article[] = [
       },
       {
         type: "p",
-        text: "A website is different. It is the one place online that is genuinely yours. Your domain, your content, your customer enquiries landing in your inbox rather than a platform's notifications. Social media is where you catch attention. Your website is where you keep it, and where you send people when you are ready for them to actually do business with you.",
+        text: "A website is different. It is the one place online that is genuinely yours. Your domain, your content, your customer enquiries landing in your inbox rather than a platform’s notifications. Social media is where you catch attention. Your website is where you keep it, and where you send people when you are ready for them to actually do business with you.",
       },
 
       { type: "h2", text: "A website is proof that you are a real business" },
@@ -952,7 +952,7 @@ export const articles: Article[] = [
       },
       {
         type: "p",
-        text: "This is exactly why every GoodGround project offers a choice in how you pay: a 50% deposit and the rest on completion, or twelve equal monthly instalments. A website can sit in your budget like any other business expense, not force you to choose between growing online and covering next month's costs. When the barrier to starting drops, the only expensive option left is standing still while your competitors get found instead of you.",
+        text: "This is exactly why every GoodGround project offers a choice in how you pay: a 50% deposit and the rest on completion, or twelve equal monthly instalments. A website can sit in your budget like any other business expense, not force you to choose between growing online and covering next month’s costs. When the barrier to starting drops, the only expensive option left is standing still while your competitors get found instead of you.",
       },
 
       { type: "h2", text: "Start with the ground, not the decoration" },
