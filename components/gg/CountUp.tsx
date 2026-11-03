@@ -42,7 +42,7 @@ export function CountUp({
         {/* The box is exactly as wide as the final value (an invisible copy
             holds it open) and the counting digits sit on top of it, so nothing
             moves while it counts and no gap is left after it. A width in ch
-            assumed tabular figures, which Oswald does not have: "R11 400
+            assumed tabular figures, which Oswald does not have: "R12 000
             total" kept a 7px gap. Right-aligned only when a suffix follows, so
             the suffix never moves; otherwise left, so a prefix stays against
             the digits. */}

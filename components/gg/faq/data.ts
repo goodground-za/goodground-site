@@ -40,8 +40,8 @@ type Meta = { slug: string; topic: TopicKey; related?: FaqEntry["related"] };
 
 // Same order as content/faq.ts.
 const META: Meta[] = [
-  { slug: "payment-options", topic: "payments", related: { label: "See pricing →", href: "/pricing#ways-to-pay" } },
-  { slug: "deposit", topic: "payments", related: { label: "See pricing →", href: "/pricing#ways-to-pay" } },
+  { slug: "payment-options", topic: "payments", related: { label: "See pricing →", href: "/pricing#custom" } },
+  { slug: "deposit", topic: "payments", related: { label: "See pricing →", href: "/pricing#custom" } },
   { slug: "scope-changes", topic: "payments", related: { label: "How we work →", href: "/process" } },
   // The Terms page does not exist yet (open item 3); until it ships the link is left off.
   { slug: "pause-or-cancel", topic: "payments", related: termsLive ? { label: "Terms & conditions →", href: "/legal#terms" } : undefined },

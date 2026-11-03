@@ -987,6 +987,17 @@
   opacity: 1;
   transition-delay: 100ms;
 }
+.gg-faq__link a {
+  color: var(--gg-coral-text);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.gg-faq__link a:focus-visible {
+  outline: 2px solid var(--gg-coral-text);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
 
 @media (min-width: 768px) {
   .gg-faq {
@@ -2152,6 +2163,12 @@ html[data-motion="off"].js .gg [data-reveal] {
   transition-property: opacity !important;
   transition-duration: 150ms !important;
   transition-delay: 0ms !important;
+}
+
+/* The segmented control's pill is positioned with a transform, not animated by it: keep it
+   where the selected option is even when reveals are flattened (it sits inside section headers). */
+html.js .gg [data-reveal] .gg-pill-toggle__pill {
+  transform: translateX(var(--pill-x, 4px)) !important;
 }
 
 html[data-motion="off"] .gg-cta__bg::before {

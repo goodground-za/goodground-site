@@ -312,10 +312,11 @@ function BuildSummary({ variant, onSend }: { variant: "aside" | "sheet"; onSend?
  * Pricing 05. The menu on the left; the live summary on the right (sticky,
  * desktop). Below 1100px the summary becomes a sticky total bar that opens the
  * "Your build" sheet. The build is saved and mirrored in the URL by the
- * provider.
+ * provider. v2: it sits in the collapsed "Build your own" panel, and the total
+ * bar only appears once that panel is open.
  */
 export function Configurator() {
-  const { total, attach, announcement } = usePricing();
+  const { total, attach, announcement, buildOpen } = usePricing();
   const root = useRef<HTMLDivElement>(null);
   const sheet = useRef<BottomSheetHandle>(null);
   const [past, setPast] = useState(false);
@@ -350,6 +351,7 @@ export function Configurator() {
     };
   }, []);
 
+  const barOn = buildOpen && past && !quoteInView;
   const send = () => attach({ kind: "build" });
   const sendFromSheet = () => {
     sheet.current?.close();
@@ -393,9 +395,9 @@ export function Configurator() {
 
       <button
         type="button"
-        className={past && !quoteInView ? "pr-bar is-on" : "pr-bar"}
-        aria-hidden={!(past && !quoteInView)}
-        tabIndex={past && !quoteInView ? 0 : -1}
+        className={barOn ? "pr-bar is-on" : "pr-bar"}
+        aria-hidden={!barOn}
+        tabIndex={barOn ? 0 : -1}
         onClick={() => sheet.current?.open()}
       >
         <span className="pr-bar__text">

@@ -1,3 +1,5 @@
+> **SUPERSEDED (v1 snapshot, 26 October 2026).** This folder is the original Figma hand-off. The launch offer it describes (a fixed monthly price for 12 months) is retired: `/website-launch` is now the New Business Offer, and `/pricing` leads with monthly Local plans. The live behaviour is in `PRODUCT.md` and the code; do not copy figures from this folder.
+
 # GoodGround redesign: full build specification
 
 This folder is the complete hand-off from the Figma design phase to the build. The goal is a site that matches the Figma frames 1:1 on desktop (1440) and mobile (390), with all the motion and interaction behaviour written in the Figma notes.

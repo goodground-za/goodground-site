@@ -140,326 +140,7 @@
   outline-offset: 2px;
 }
 
-/* ---- 02 Ways to pay ----------------------------------------------------- */
-.pr-ways-table-wrap {
-  display: none;
-  margin-top: 48px;
-}
-
-@media (min-width: 1100px) {
-  .pr-ways-table-wrap {
-    display: block;
-  }
-
-  .pr-ways-cards {
-    display: none !important;
-  }
-}
-
-.pr-ways-table {
-  width: calc(100% + 24px);
-  margin-inline: -12px;
-  table-layout: fixed;
-  border-collapse: separate;
-  border-spacing: 12px 0;
-  font-family: var(--gg-font-body);
-}
-
-.pr-ways-labels {
-  width: 162px;
-}
-
-.pr-col {
-  position: relative;
-  padding: 14px 20px 10px;
-  text-align: left;
-  vertical-align: top;
-  font-size: 13.5px;
-  font-weight: 500;
-  line-height: 1.4;
-  color: var(--gg-ink);
-  transition: opacity var(--gg-motion-sm) var(--gg-ease-out);
-  --ring: var(--gg-ink);
-}
-
-.pr-col--surface {
-  background: var(--gg-surface);
-  border-inline: 1px solid var(--gg-line);
-}
-
-.pr-col--blush {
-  background: var(--gg-blush);
-}
-
-.pr-col--plum {
-  background: var(--gg-plum);
-  color: var(--gg-surface);
-  --ring: var(--gg-coral);
-}
-
-th.pr-col.is-first {
-  padding: 20px 20px 12px;
-  border-radius: 24px 24px 0 0;
-}
-
-.pr-col--surface.is-first {
-  border-top: 1px solid var(--gg-line);
-}
-
-td.pr-col.is-last {
-  padding: 12px 20px 20px;
-  border-radius: 0 0 24px 24px;
-}
-
-.pr-col--surface.is-last {
-  border-bottom: 1px solid var(--gg-line);
-}
-
-/* The line above each value row sits inside the column padding. */
-tbody td.pr-col::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 20px;
-  right: 20px;
-  height: 1px;
-  background: var(--gg-line);
-}
-
-tbody tr:last-child td.pr-col::before {
-  display: none;
-}
-
-.pr-col--plum::before {
-  background: rgba(255, 255, 255, 0.15) !important;
-}
-
-.pr-col__name {
-  display: block;
-  font-size: 19px;
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-}
-
-.pr-col__sub {
-  display: block;
-  margin-top: 4px;
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 1.4;
-  color: var(--gg-muted);
-}
-
-.pr-col--plum .pr-col__sub {
-  color: var(--gg-on-dark-muted);
-}
-
-.pr-rowlabel {
-  padding: 14px 0 0;
-  text-align: left;
-  vertical-align: top;
-  font-family: var(--gg-font-display);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--gg-muted);
-}
-
-.pr-money {
-  font-family: var(--gg-font-display);
-  font-size: 22px;
-  font-weight: 500;
-  line-height: 1.1;
-  font-variant-numeric: tabular-nums;
-}
-
-.pr-money.is-coral {
-  color: var(--gg-coral-text);
-}
-
-.pr-money small {
-  font-size: 0.7em;
-}
-
-/* Column hover: ring the column, dim the rest to 85%. */
-.pr-ways-table[data-hover] .pr-col:not([data-active]) {
-  opacity: 0.85;
-}
-
-.pr-col[data-active] {
-  box-shadow:
-    inset 2px 0 0 var(--ring),
-    inset -2px 0 0 var(--ring);
-}
-
-th.pr-col.is-first[data-active] {
-  box-shadow:
-    inset 2px 0 0 var(--ring),
-    inset -2px 0 0 var(--ring),
-    inset 0 2px 0 var(--ring);
-}
-
-td.pr-col.is-last[data-active] {
-  box-shadow:
-    inset 2px 0 0 var(--ring),
-    inset -2px 0 0 var(--ring),
-    inset 0 -2px 0 var(--ring);
-}
-
-/* Swipeable cards (phones and tablets). */
-.pr-ways-cards {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  margin: 24px calc(-1 * var(--gg-gutter)) 0;
-  padding: 0 var(--gg-gutter) 4px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-padding-inline: var(--gg-gutter);
-  list-style: none;
-}
-
-.pr-wcard {
-  flex: 0 0 280px;
-  scroll-snap-align: start;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 18px;
-  border: 1px solid var(--gg-line);
-  border-radius: 22px;
-  background: var(--gg-surface);
-  color: var(--gg-ink);
-}
-
-.pr-wcard--plum {
-  border-color: transparent;
-  background: var(--gg-plum);
-  color: var(--gg-surface);
-}
-
-.pr-wcard--blush {
-  border-color: transparent;
-  background: var(--gg-blush);
-}
-
-.pr-wcard__name {
-  font-size: 17px;
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-}
-
-.pr-wcard__vals {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.pr-wcard__label {
-  margin-bottom: 2px;
-  font-family: var(--gg-font-display);
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--gg-muted);
-}
-
-.pr-wcard--plum .pr-wcard__label {
-  color: var(--gg-on-dark-muted);
-}
-
-.pr-wcard__more {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  align-self: flex-start;
-  min-height: 44px;
-  margin-block: -8px;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: var(--gg-coral-text);
-  font-family: var(--gg-font-body);
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.pr-wcard--plum .pr-wcard__more {
-  color: var(--gg-peach);
-}
-
-.pr-wcard__more .gg-icon {
-  transform: rotate(90deg);
-  transition: transform var(--gg-motion-sm) var(--gg-ease-out);
-}
-
-.pr-wcard.is-open .pr-wcard__more .gg-icon {
-  transform: rotate(-90deg);
-}
-
-.pr-wcard__more:focus-visible {
-  outline: 2px solid var(--gg-coral-text);
-  outline-offset: 2px;
-}
-
-.pr-wcard__panel {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows var(--gg-motion-md) var(--gg-ease-out);
-}
-
-.pr-wcard.is-open .pr-wcard__panel {
-  grid-template-rows: 1fr;
-}
-
-.pr-wcard__panel-in {
-  min-height: 0;
-  overflow: hidden;
-}
-
-.pr-wcard__panel dl {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding-top: 10px;
-  border-top: 1px solid var(--gg-line);
-}
-
-.pr-wcard--plum .pr-wcard__panel dl {
-  border-color: rgba(255, 255, 255, 0.15);
-}
-
-.pr-wcard__panel dt {
-  font-family: var(--gg-font-display);
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--gg-muted);
-}
-
-.pr-wcard--plum .pr-wcard__panel dt {
-  color: var(--gg-on-dark-muted);
-}
-
-.pr-wcard__panel dd {
-  margin: 2px 0 0;
-  font-size: 13.5px;
-  font-weight: 500;
-  line-height: 1.4;
-}
-
-.pr-wcard__cta {
-  margin-top: 16px;
-  width: 100%;
-}
-
-/* ---- 03 Packages -------------------------------------------------------- */
+/* ---- 03 Custom builds (the v1 packages) ---------------------------------- */
 .pr-pkg-mobile-head {
   flex-direction: column;
   gap: 16px;
@@ -938,159 +619,7 @@ td.pr-col.is-last[data-active] {
   }
 }
 
-/* ---- 04 Full Service ---------------------------------------------------- */
-.pr-page .pr-fs-section {
-  padding-top: 0;
-}
-
-.pr-fs {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 20px;
-  border-radius: 24px;
-  background: var(--gg-plum);
-  color: var(--gg-surface);
-}
-
-.pr-fs__copy {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  align-items: flex-start;
-}
-
-.pr-fs__title {
-  font-size: 32px;
-  line-height: 1;
-  color: var(--gg-surface);
-}
-
-.pr-fs__lead,
-.pr-fs__chips {
-  display: none;
-}
-
-.pr-fs__short {
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--gg-on-dark-muted);
-}
-
-.pr-fs__card {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.pr-fs__price {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-}
-
-.pr-fs__price small {
-  font-size: 12px;
-  color: var(--gg-on-dark-muted);
-}
-
-.pr-fs__amount {
-  font-size: 28px;
-  color: var(--gg-peach);
-}
-
-.pr-fs__note {
-  display: none;
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--gg-muted);
-}
-
-@media (min-width: 768px) {
-  .pr-fs {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 360px);
-    align-items: center;
-    gap: 32px 48px;
-    padding: 48px;
-    border-radius: 32px;
-  }
-
-  .pr-fs__copy {
-    gap: 16px;
-  }
-
-  .pr-fs__title {
-    font-size: 56px;
-  }
-
-  .pr-fs__lead {
-    display: block;
-    font-size: 17px;
-    line-height: 1.55;
-    color: var(--gg-on-dark-muted);
-  }
-
-  .pr-fs__chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    list-style: none;
-  }
-
-  .pr-fs__chips li {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 14px 8px 12px;
-    border-radius: 99px;
-    background: rgba(255, 255, 255, 0.08);
-    font-size: 13px;
-    font-weight: 500;
-  }
-
-  .pr-fs__chips .gg-icon {
-    color: var(--gg-peach);
-  }
-
-  .pr-fs__short {
-    display: none;
-  }
-
-  .pr-fs__card {
-    padding: 28px;
-    border-radius: 24px;
-    background: var(--gg-surface);
-    color: var(--gg-ink);
-  }
-
-  .pr-fs__price small {
-    font-size: 13px;
-    color: var(--gg-muted);
-  }
-
-  .pr-fs__price small:last-child {
-    font-size: 16px;
-  }
-
-  .pr-fs__amount {
-    font-size: 56px;
-    line-height: 1;
-    color: var(--gg-ink);
-  }
-
-  .pr-fs__note {
-    display: block;
-  }
-}
-
-@media (max-width: 767px) {
-  .pr-fs__tag {
-    display: contents;
-  }
-}
-
-/* ---- 05 Configurator ---------------------------------------------------- */
+/* ---- 04 Build your own: the configurator ---------------------------------- */
 .pr-config {
   display: grid;
   gap: 32px;
@@ -2354,6 +1883,332 @@ td.pr-col.is-last[data-active] {
   color: var(--gg-muted);
 }
 
+/* ---- v2: 02 Monthly plans ------------------------------------------------ */
+.pr-page .pr-packages {
+  position: relative;
+}
+
+/* Zero-size anchor so the old #packages links still land on the custom builds. */
+.pr-anchor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Three cards: one column up to 1100 (capped on tablets), three from 1100. */
+.pr-pkgs--three {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 768px) {
+  .pr-pkgs--three {
+    max-width: 600px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .pr-pkgs--three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: none;
+  }
+}
+
+/* The custom packages sit on a canvas section now: white cards, canvas "best for" box. */
+.pr-pkgs--on-canvas .pr-pkg:not(.is-rec) {
+  background: var(--gg-surface);
+}
+
+.pr-pkgs--on-canvas .pr-pkg:not(.is-rec) .pr-pkg__toggle {
+  background: var(--gg-canvas);
+}
+
+@media (min-width: 768px) {
+  .pr-pkgs--on-canvas .pr-pkg:not(.is-rec) .pr-pkg__best,
+  .pr-pkgs--on-canvas .pr-pkg:not(.is-rec).is-open .pr-pkg__best {
+    background: var(--gg-canvas);
+  }
+}
+
+.pr-pkg__incl li.is-lead span {
+  font-weight: 600;
+}
+
+/* Local Start's offer box: first month free, spaces left, link to the offer page. */
+.pr-promo {
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--gg-blush);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.pr-promo__head {
+  font-weight: 600;
+  color: var(--gg-ink);
+}
+
+.pr-promo__line {
+  font-weight: 500;
+  color: var(--gg-coral-text);
+}
+
+.pr-promo__line a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.pr-promo__line a:focus-visible {
+  outline: 2px solid var(--gg-coral-text);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.pr-promises {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  margin-top: 28px;
+  list-style: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.pr-promises li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pr-promises .gg-icon {
+  flex: none;
+  color: var(--gg-coral-text);
+}
+
+.pr-addons {
+  margin-top: 48px;
+}
+
+.pr-addons__title {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.pr-addons__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+  list-style: none;
+}
+
+@media (min-width: 900px) {
+  .pr-addons__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
+
+.pr-addon {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  min-width: 0;
+  padding: 20px;
+  border-radius: 20px;
+  background: var(--gg-canvas);
+}
+
+.pr-addon__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 10px;
+}
+
+.pr-addon__row strong {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.pr-addon__amt {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.pr-addon__amt small {
+  font-family: var(--gg-font-body);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--gg-muted);
+}
+
+.pr-addon__text {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--gg-muted);
+}
+
+/* The Full Service strip under the plans. */
+.pr-strip {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  margin-top: 16px;
+  padding: 20px;
+  border-radius: 24px;
+  background: var(--gg-plum);
+  color: var(--gg-surface);
+}
+
+.pr-strip h3 {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--gg-surface);
+}
+
+.pr-strip p {
+  margin-top: 4px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--gg-on-dark-muted);
+}
+
+@media (min-width: 768px) {
+  .pr-strip {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 24px 28px;
+  }
+
+  .pr-strip h3 {
+    font-size: 20px;
+  }
+
+  .pr-strip__text {
+    max-width: 720px;
+  }
+}
+
+/* ---- v2: 04 Build your own, collapsed panel ------------------------------ */
+.pr-buildpanel__head {
+  display: grid;
+  gap: 20px;
+  padding: 20px;
+  border: 1px solid var(--gg-line);
+  border-radius: 24px;
+  background: var(--gg-surface);
+}
+
+@media (min-width: 768px) {
+  .pr-buildpanel__head {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 20px 32px;
+    padding: 28px;
+    border-radius: 28px;
+  }
+}
+
+.pr-buildpanel__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.pr-buildpanel__title {
+  font-size: 22px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+@media (min-width: 768px) {
+  .pr-buildpanel__title {
+    font-size: 28px;
+  }
+}
+
+.pr-buildpanel__lead {
+  max-width: 60ch;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--gg-muted);
+}
+
+.pr-buildpanel__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+}
+
+.pr-buildpanel__chips li {
+  padding: 6px 12px;
+  border-radius: 99px;
+  background: var(--gg-canvas);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* The configurator opens in place (grid rows). It is clipped, not scrolled,
+   so its sticky summary still sticks. Hidden (and inert) until opened. */
+.pr-buildpanel__body {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition:
+    grid-template-rows var(--gg-motion-md) var(--gg-ease-in-out),
+    visibility 0s linear var(--gg-motion-md);
+}
+
+.pr-buildpanel.is-open .pr-buildpanel__body {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.pr-buildpanel__in {
+  min-height: 0;
+  overflow: clip;
+}
+
+/* ---- v2: quote form select ------------------------------------------------ */
+.pr-select {
+  position: relative;
+}
+
+.pr-select select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 44px;
+  cursor: pointer;
+}
+
+.pr-select .gg-icon {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%) rotate(90deg);
+  pointer-events: none;
+}
+
+.pr-form__local-note {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--gg-muted);
+}
+
 /* ---- Motion off ---------------------------------------------------------- */
 html[data-motion="off"] .pr-page *,
 html[data-motion="off"] .pr-bar {
@@ -2382,13 +2237,6 @@ html[data-motion="off"] .pr-bar {
   }
 }
 
-/* Buttons in the ways-to-pay columns fit a 204px column. */
-.pr-col .gg-btn {
-  gap: 8px;
-  padding-left: 16px;
-  font-size: 14px;
-}
-
 /* Quote layout: the card keeps its 520px; declared last so it wins over the card base rule. */
 @media (min-width: 1100px) {
   .pr-quote__copy {
@@ -2410,4 +2258,15 @@ html[data-motion="off"] .pr-bar {
     min-height: 44px;
     margin-block: -11px;
   }
+}
+
+/* Two canvas sections in a row (custom builds, then the build panel): no double padding. */
+.pr-page .pr-build {
+  padding-top: 0;
+}
+
+/* Segmented control on a canvas section: its own white track, like the monthly one on white. */
+.pr-packages .gg-pill-toggle:not(.gg-pill-toggle--fill) {
+  background: var(--gg-surface);
+  box-shadow: inset 0 0 0 1px var(--gg-line);
 }

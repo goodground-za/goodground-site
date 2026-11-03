@@ -1,15 +1,13 @@
 /**
  * Copy for the /website-launch page and its enquiry route.
  *
- * THE OFFER ITSELF (spots, month, terms, SEO) is in content/newBusinessOffer.ts
- * and the plan price in content/pricing.ts. The R950 x 12 Website Launch Offer
- * and the R845 x 12 version before it are RETIRED (owner decision, 2026-11-03):
- * no figure from either lives in content/ any more.
+ * THE OFFER ITSELF (spaces, month, terms, SEO) is in content/newBusinessOffer.ts
+ * and the plan price in content/pricing.ts. The fixed-term Website Launch Offers
+ * that came before it are RETIRED (owner decision, 2026-11-03): no figure from
+ * either lives in the repo any more.
  *
- * What is left here is the page copy the current /website-launch UI reads.
- * Phase B rebuilds that page as the New Business Offer page and replaces what
- * remains of the old layout (components/gg/launch/data.ts still carries the
- * retired R950 x 12 maths for the old layout, marked LEGACY).
+ * What is here is the page copy the /website-launch UI reads: the FAQ, the
+ * form copy and the route metadata.
  *
  * Rules that still hold from the original promotion (confirmed 2026-09-13):
  *  - Exclusively for NEW businesses going online for the first time.
@@ -88,11 +86,10 @@ export const launchFaqs = {
 } as const;
 
 export const launchEnquiry = {
-  /** WCAG-relevant: this exact string is also asserted server-side. */
+  /** The confirmation tick. The server checks the box was ticked (/api/enquiry, new-business-offer). */
   eligibilityLabel:
     "I confirm that this is a new business and the business does not have a website.",
-  success:
-    "Thanks for your enquiry. We’ll review your business details and contact you about availability and next steps.",
+  success: "We’ll review your business details and contact you about availability and next steps.",
   failure:
     "We couldn’t submit your enquiry. Please try again or contact us using the details below.",
 } as const;

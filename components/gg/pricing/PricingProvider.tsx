@@ -34,6 +34,9 @@ import {
  * form all restore it. The URL wins over storage when both are present. The
  * server render and first client render use the empty defaults; the saved
  * state is applied in an effect, so hydration always matches.
+ *
+ * v2: the configurator sits in a collapsed "Build your own" panel. `buildOpen`
+ * lives here so "Edit" on the quote form, "Compare" and a ?build= link can open it.
  */
 
 export type Attached = { kind: "package"; slug: string } | { kind: "build" } | { kind: "full-service" } | null;
@@ -54,6 +57,9 @@ type Ctx = {
   attached: Attached;
   /** Increments each time something is attached, so the card can pulse again. */
   attachPulse: number;
+  /** The collapsed "Build your own" panel: open or closed. */
+  buildOpen: boolean;
+  setBuildOpen: (open: boolean) => void;
   attach: (attached: Attached, opts?: { scroll?: boolean }) => void;
   detach: () => void;
   /** "Compare" on the package hint: which package card to bring into view. */
@@ -106,6 +112,7 @@ export function PricingProvider({ children }: { children: ReactNode }) {
   const [compare, setCompare] = useState<Ctx["compare"]>(null);
   const [announcement, setAnnouncement] = useState("");
   const [ready, setReady] = useState(false);
+  const [buildOpen, setBuildOpen] = useState(false);
   const interacted = useRef(false);
 
   // Restore: URL first, then storage.
@@ -118,7 +125,18 @@ export function PricingProvider({ children }: { children: ReactNode }) {
     const fromUrl = new URLSearchParams(window.location.search).get("build");
     const restored = decodeBuild(fromUrl ?? safeGet(BUILD_KEY));
     if (Object.keys(restored).length) setQtyState(restored);
+    // A ?build= link or the #build-your-own anchor opens the collapsed panel.
+    if (fromUrl || window.location.hash === "#build-your-own") setBuildOpen(true);
     setReady(true);
+  }, []);
+
+  // Clicking a "Build your own" jump link on the page opens the panel too.
+  useEffect(() => {
+    const onHash = () => {
+      if (window.location.hash === "#build-your-own") setBuildOpen(true);
+    };
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
   }, []);
 
   const lines = useMemo(() => buildLines(qty), [qty]);
@@ -196,7 +214,7 @@ export function PricingProvider({ children }: { children: ReactNode }) {
 
   const comparePackage = useCallback((slug: string) => {
     setCompare((prev) => ({ slug, n: (prev?.n ?? 0) + 1 }));
-    scrollToId("packages");
+    scrollToId("custom");
   }, []);
 
   const value: Ctx = {
@@ -213,6 +231,8 @@ export function PricingProvider({ children }: { children: ReactNode }) {
     hasFrom,
     attached,
     attachPulse,
+    buildOpen,
+    setBuildOpen,
     attach,
     detach,
     compare,

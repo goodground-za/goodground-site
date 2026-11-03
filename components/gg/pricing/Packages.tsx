@@ -49,7 +49,7 @@ function PriceViews({ pkg }: { pkg: PackageView }) {
 }
 
 /**
- * Pricing 03. Billing toggle (remembered, and shared with the configurator),
+ * Pricing 03 (v2: "Custom builds", #custom, alias #packages). Billing toggle (remembered, and shared with the configurator),
  * four cards that stagger in with Grow last. On phones the cards collapse to a
  * name and a price; tap to open the inclusions (one open, Grow by default).
  */
@@ -74,18 +74,18 @@ export function Packages() {
     <>
       <div className="hm-hide-phone">
         <SectionHeader
-          tag="THE PACKAGES"
-          heading="Four starting points. Pick the one closest to your brief."
+          tag="CUSTOM BUILDS"
+          heading="Want it fully custom? Four starting points."
           layout="split"
           cta={<PillToggle options={BILLING_OPTIONS} value={billing} onChange={setBilling} label="How you pay" />}
         />
       </div>
       <div className="hm-phone-only pr-pkg-mobile-head">
-        <SectionHeader heading="Four starting points." />
+        <SectionHeader tag="CUSTOM BUILDS" heading="Want it fully custom? Four starting points." />
         <PillToggle options={BILLING_OPTIONS_SHORT} value={billing} onChange={setBilling} label="How you pay" fill size="sm" />
       </div>
 
-      <ul className="pr-pkgs" data-reveal="stagger" style={{ "--gg-stagger-step": "100ms" } as CSSProperties}>
+      <ul className="pr-pkgs pr-pkgs--on-canvas" data-reveal="stagger" style={{ "--gg-stagger-step": "100ms" } as CSSProperties}>
         {packageViews.map((pkg) => {
           const isOpen = open === pkg.slug;
           const button = (

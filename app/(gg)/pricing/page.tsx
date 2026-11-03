@@ -5,27 +5,26 @@ import { FAQSchema } from "@/components/Schema";
 import { GgShell } from "@/components/gg/GgShell";
 import { Icon } from "@/components/gg/Icon";
 import { Resp } from "@/components/gg/Resp";
-import { SectionHeader } from "@/components/gg/SectionHeader";
 import { FaqBlock } from "@/components/gg/shared/FaqBlock";
 import { SplitHeading } from "@/components/gg/SplitHeading";
 import { Tag } from "@/components/gg/Tag";
-import { Configurator } from "@/components/gg/pricing/Configurator";
+import { formatRand } from "@/components/gg/format";
+import { BuildYourOwn } from "@/components/gg/pricing/BuildYourOwn";
 import { packageViews } from "@/components/gg/pricing/data";
 import { pricingFaqItems } from "@/components/gg/pricing/faq";
-import { FullServiceBand } from "@/components/gg/pricing/FullServiceBand";
+import { MonthlyPlans } from "@/components/gg/pricing/MonthlyPlans";
 import { Packages } from "@/components/gg/pricing/Packages";
 import { PricingProvider } from "@/components/gg/pricing/PricingProvider";
 import { QuoteForm } from "@/components/gg/pricing/QuoteForm";
 import { ReviewCard } from "@/components/gg/pricing/ReviewCard";
-import { WaysTable } from "@/components/gg/pricing/WaysTable";
-import { fullServicePackage } from "@/content/pricing";
+import { fullServicePackage, localFromMonthly, localPlans } from "@/content/pricing";
 import { site } from "@/content/site";
+import { getOfferSpots } from "@/lib/liveCounters";
 import { pageSocialMeta } from "@/lib/metadata";
 import "@/components/gg/pricing/pricing.css";
 
 const title = { absolute: "Pricing | Website Design Packages, South Africa | GoodGround" };
-const description =
-  "Four website packages from R12 000, a build-your-own menu, or Full Service from R1 500/mo with hosting, mailboxes, SEO and maintenance included.";
+const description = `Monthly website plans from ${formatRand(localFromMonthly)} with no deposit, four custom website packages from ${formatRand(packageViews[0].total)}, a build-your-own menu, and Full Service from ${formatRand(fullServicePackage.monthlyFrom)}/mo.`;
 const path = "/pricing";
 
 // ?build= is the shared-link code for the configurator; it canonicalises away.
@@ -37,23 +36,39 @@ export const metadata: Metadata = {
 };
 
 const JUMP = [
-  { href: "#ways-to-pay", label: "Ways to pay" },
-  { href: "#packages", label: "Packages" },
-  { href: "#full-service", label: "Full Service" },
+  { href: "#monthly", label: "Monthly plans" },
+  { href: "#custom", label: "Custom builds" },
   { href: "#build-your-own", label: "Build your own" },
+  { href: "#faq", label: "FAQ" },
 ];
 
-/** Service with an Offer per package ("starting from" via minPrice) and Full Service as a monthly offer. */
+/**
+ * Service with an Offer per Local plan (price per month, ZAR), an Offer per
+ * custom package ("starting from" via minPrice) and Full Service as a monthly offer.
+ */
 function PricingSchema() {
   const schema = {
     "@context": "https://schema.org",
     "@type": "Service",
     "@id": `${site.url}/pricing#service`,
-    name: "Website design and development packages",
+    name: "Website plans, packages and Full Service",
     provider: { "@id": `${site.url}/#organization` },
     areaServed: { "@type": "Country", name: "South Africa" },
     url: `${site.url}${path}`,
     offers: [
+      ...localPlans.map((plan) => ({
+        "@type": "Offer",
+        name: `${plan.name} monthly plan`,
+        description: plan.tagline,
+        priceCurrency: "ZAR",
+        url: `${site.url}/pricing#plan-${plan.slug}`,
+        priceSpecification: {
+          "@type": "UnitPriceSpecification",
+          price: plan.monthly,
+          priceCurrency: "ZAR",
+          unitCode: "MON",
+        },
+      })),
       ...packageViews.map((pkg) => ({
         "@type": "Offer",
         name: `${pkg.name} website package`,
@@ -80,7 +95,10 @@ function PricingSchema() {
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
 }
 
-export default function PricingPage() {
+export default async function PricingPage() {
+  // The live count (Upstash Redis when connected, the typed fallback otherwise).
+  const spots = await getOfferSpots();
+
   return (
     <GgShell crumbs={[{ label: "PRICING" }]}>
       <div className="pr-page">
@@ -98,8 +116,8 @@ export default function PricingPage() {
               <div className="pr-hero__row" data-part="sub">
                 <p className="gg-lead pr-hero__lead">
                   <Resp
-                    long="Pick a package, build your own from the menu, or have everything handled for one monthly price. Every price is a real number, and every build gives you a choice of how to pay."
-                    short="Pick a package, build your own, or have everything handled monthly."
+                    long="Two ways to work with us: a monthly plan that gets you found on Google, Maps and AI, or a custom website built to your brief. Every price is a real number, and nothing gets added at the end."
+                    short="A monthly plan to get found online, or a custom website built to your brief."
                   />
                 </p>
                 <nav className="pr-jump" aria-label="On this page">
@@ -116,43 +134,23 @@ export default function PricingPage() {
         </section>
 
         <PricingProvider>
-          <section id="ways-to-pay" className="hm-section hm-section--canvas pr-ways" aria-label="Four ways to pay">
+          <section id="monthly" className="hm-section hm-section--surface pr-monthly" aria-label="Monthly plans">
             <div className="gg-wrap">
-              <SectionHeader
-                tag="WAYS TO PAY"
-                heading="Four ways to pay, side by side."
-                layout="split"
-                sub="Package and Full Service figures are starting prices. Your quote confirms the real number before work begins, and it doesn’t change once you accept it."
-                subClassName="hm-hide-phone"
-              />
-              <WaysTable />
+              <MonthlyPlans offer={spots} />
             </div>
           </section>
 
-          <section id="packages" className="hm-section hm-section--surface pr-packages" aria-label="The packages">
+          <section id="custom" className="hm-section hm-section--canvas pr-packages" aria-label="Custom builds">
+            {/* Old links used #packages; it still scrolls here. */}
+            <span id="packages" className="pr-anchor" aria-hidden="true" />
             <div className="gg-wrap">
               <Packages />
             </div>
           </section>
 
-          <section id="full-service" className="hm-section hm-section--surface pr-fs-section" aria-label="Full Service">
-            <div className="gg-wrap">
-              <FullServiceBand />
-            </div>
-          </section>
-
           <section id="build-your-own" className="hm-section hm-section--canvas pr-build" aria-labelledby="pr-build-title">
             <div className="gg-wrap">
-              <SectionHeader
-                tag="BUILD YOUR OWN"
-                tagTone="coral"
-                heading="Pick a starting point. Add exactly what you need."
-                sub="Every build starts from the same base. Add what your business needs, watch the total update live, and send it through when you’re ready."
-                subClassName="hm-hide-phone"
-                layout="split"
-                id="pr-build-title"
-              />
-              <Configurator />
+              <BuildYourOwn />
             </div>
           </section>
 

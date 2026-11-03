@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
 
 import { Resp } from "./Resp";
@@ -23,6 +24,8 @@ export type FaqItem = {
   question: string;
   answer: string[];
   slug?: string;
+  /** A "See monthly plans →" style link under the answer (the shared v2 FAQ entries carry one). */
+  link?: { label: string; href: string };
   /** Phone wording where the 390 frame shortens the text (README 3.4: one string per breakpoint, never truncated). */
   short?: { question?: string; answer?: string[] };
 };
@@ -158,6 +161,11 @@ export function FaqAccordion({
                       <Resp long={paragraph} short={item.short?.answer?.[i]} />
                     </p>
                   ))}
+                  {item.link ? (
+                    <p className="gg-faq__link">
+                      <Link href={item.link.href}>{item.link.label}</Link>
+                    </p>
+                  ) : null}
                 </div>
               </div>
             </div>

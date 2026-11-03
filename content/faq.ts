@@ -80,3 +80,89 @@ export const faq: FAQItem[] = [
       "Always. Your accounts, your data, your audiences, they belong to you, whatever happens down the line.",
   },
 ];
+
+/* ------------------------------------------------------------------- v2 */
+
+/**
+ * Shared FAQ entries for the monthly plans and AI visibility (spec 15-faq.md v2
+ * block). ONE source: Pricing, the AI visibility page and (later) Home, Industry
+ * and /faq read these by `slug`, so an answer is only ever edited once. They are
+ * deliberately NOT part of `faq` above, because /faq, Home and Services read that
+ * list by position.
+ *
+ * Prices and counts come from content/pricing.ts and content/newBusinessOffer.ts
+ * through formatRand; nothing here types a figure by hand.
+ */
+import { formatRand } from "@/components/gg/format";
+import { newBusinessOffer } from "@/content/newBusinessOffer";
+import { localPlans, localTerms } from "@/content/pricing";
+
+export type SharedFaqSlug =
+  | "monthly-or-custom"
+  | "monthly-included"
+  | "cancel-monthly"
+  | "new-business-offer"
+  | "ai-recommend"
+  | "ai-guarantee"
+  | "ai-report";
+
+export type SharedFaqEntry = {
+  slug: SharedFaqSlug;
+  question: string;
+  answer: string;
+  /** The "See monthly plans →" style link the spec puts at the end of an answer. */
+  link?: { label: string; href: string };
+};
+
+const NUMBER_WORDS = ["No", "One", "Two", "Three", "Four", "Five", "Six"];
+const startPrice = `${formatRand(localPlans[0].monthly)}/mo`;
+
+export const sharedFaq: SharedFaqEntry[] = [
+  {
+    slug: "monthly-or-custom",
+    question: "Monthly plan or custom build: which should I choose?",
+    answer:
+      "If you mainly need to be found and look credible, a monthly plan gets you live in days with no upfront cost. If you need a unique design, custom features or a bigger site, a custom build is the better fit, and you can still pay it over 12 months.",
+    link: { label: "See monthly plans →", href: "/pricing#monthly" },
+  },
+  {
+    slug: "monthly-included",
+    question: "What’s included in a monthly plan?",
+    answer:
+      "A website, hosting and a .co.za domain in your name, your Google Business Profile, and (on Local Plus and Pro) a monthly AI Visibility Report.",
+    link: { label: "Compare plans →", href: "/pricing#monthly" },
+  },
+  {
+    slug: "cancel-monthly",
+    question: "Can I cancel a monthly plan?",
+    answer: `Yes, at the end of any paid month, with no penalty. Your domain is always yours, and after six paid months the site files are yours too. Leaving earlier? You can buy the files for ${formatRand(localTerms.filesBuyout)} or simply keep the domain.`,
+  },
+  {
+    slug: "new-business-offer",
+    question: "How does the New Business Offer work?",
+    answer: `For businesses going online for the first time: Local Start with your first month free and a business mailbox included for ${newBusinessOffer.terms.mailboxFreeMonths} months. Then ${startPrice}, cancel any month. ${NUMBER_WORDS[newBusinessOffer.spotsTotal] ?? newBusinessOffer.spotsTotal} businesses a month.`,
+    link: { label: "Check availability →", href: "/website-launch#check-availability" },
+  },
+  {
+    slug: "ai-recommend",
+    question: "Does AI recommend my business?",
+    answer:
+      "Ask us. Our free check asks ChatGPT, Gemini and Google’s AI what your customers ask, several times each, and shows how often you’re named and who’s named instead.",
+    link: { label: "Book a free check →", href: "/services/ai-visibility#book" },
+  },
+  {
+    slug: "ai-guarantee",
+    question: "Can you guarantee AI will recommend me?",
+    answer: "No, and be wary of anyone who does. We improve the signals AI engines read and show you, honestly, whether it’s working.",
+  },
+  {
+    // Wording from the pricing mockup (mockups/pricing.html); the spec's FAQ block names the question but not the answer.
+    slug: "ai-report",
+    question: "What is the AI Visibility Report?",
+    answer:
+      "Each month we ask ChatGPT, Gemini and Google’s AI the questions your customers ask, several times each, and show how often you’re named and who’s named instead.",
+    link: { label: "See how it works →", href: "/services/ai-visibility#how" },
+  },
+];
+
+export const sharedFaqBySlug = (slug: SharedFaqSlug) => sharedFaq.find((entry) => entry.slug === slug)!;

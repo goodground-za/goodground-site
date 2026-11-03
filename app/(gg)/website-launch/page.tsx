@@ -4,38 +4,43 @@ import type { Metadata } from "next";
 
 import { BreadcrumbSchema } from "@/components/Breadcrumbs";
 import { FAQSchema } from "@/components/Schema";
-import { CountUp } from "@/components/gg/CountUp";
 import { GgShell } from "@/components/gg/GgShell";
 import { Icon } from "@/components/gg/Icon";
 import { formatRand } from "@/components/gg/format";
 import { ButtonLink } from "@/components/gg/Button";
+import Link from "next/link";
 import { LinkedCard, ArrowChip } from "@/components/gg/LinkedCard";
 import { Resp } from "@/components/gg/Resp";
 import { SectionHeader } from "@/components/gg/SectionHeader";
 import { SplitHeading } from "@/components/gg/SplitHeading";
 import { Tag } from "@/components/gg/Tag";
 import { AvailabilityButton } from "@/components/gg/launch/AvailabilityButton";
+import { AvailabilityProvider } from "@/components/gg/launch/AvailabilityContext";
 import {
-  afterTwelve,
+  buildAvailability,
   criteria,
-  getAvailability,
+  firstMonths,
+  growChoices,
   heroChecklist,
   keyFacts,
   launchFaqItems,
   launchWorkSlugs,
   moments,
   steps,
-  terms,
+  type Availability,
 } from "@/components/gg/launch/data";
 import { EligibilityChecker } from "@/components/gg/launch/EligibilityChecker";
 import { IncludedGroups } from "@/components/gg/launch/IncludedGroups";
 import { LaunchFaq } from "@/components/gg/launch/LaunchFaq";
 import { LaunchForm } from "@/components/gg/launch/LaunchForm";
+import { OfferViewTracker } from "@/components/gg/launch/OfferViewTracker";
 import { StickyBar } from "@/components/gg/launch/StickyBar";
 import { workProjects } from "@/components/gg/work/data";
+import { newBusinessOffer } from "@/content/newBusinessOffer";
 import { localPlans } from "@/content/pricing";
 import { launchOffer, launchRoute } from "@/content/websiteLaunch";
 import { site } from "@/content/site";
+import { getOfferSpots } from "@/lib/liveCounters";
 import { pageSocialMeta } from "@/lib/metadata";
 import "@/components/gg/launch/launch.css";
 
@@ -46,14 +51,15 @@ export const metadata: Metadata = {
   ...pageSocialMeta({ title: { absolute: launchRoute.title }, description: launchRoute.description, path: launchRoute.path }),
 };
 
+const localStart = localPlans.find((plan) => plan.slug === newBusinessOffer.planSlug)!;
+const monthly = formatRand(localStart.monthly);
+
 /**
- * Offer per the Figma note: price 950 ZAR a month, a 12-month term, the
- * eligibility, and availability read from the same data as the page (InStock or
- * SoldOut). NOTE the term and total are the open question in
- * content/websiteLaunch.ts (launchTerms).
+ * Offer (spec 09 v2): the first month costs 0 ZAR, then Local Start's monthly
+ * price, both as UnitPriceSpecification; the eligibility, and availability read
+ * from the same live data as the page (InStock or SoldOut).
  */
-function LaunchSchema() {
-  const availability = getAvailability();
+function LaunchSchema({ availability }: { availability: Availability }) {
   const schema = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -71,19 +77,17 @@ function LaunchSchema() {
       priceCurrency: "ZAR",
       availability: availability.soldOut ? "https://schema.org/SoldOut" : "https://schema.org/InStock",
       eligibleCustomerType: "New businesses without a website",
-      priceSpecification: {
-        "@type": "UnitPriceSpecification",
-        price: localPlans[0].monthly,
-        priceCurrency: "ZAR",
-        unitCode: "MON",
-      },
+      priceSpecification: [
+        { "@type": "UnitPriceSpecification", name: "First month free", price: 0, priceCurrency: "ZAR", unitCode: "MON", billingDuration: 1 },
+        { "@type": "UnitPriceSpecification", name: "Local Start, from month 2", price: localStart.monthly, priceCurrency: "ZAR", unitCode: "MON" },
+      ],
       url: `${site.url}${launchRoute.path}`,
     },
   };
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
 }
 
-function Meter({ availability, size }: { availability: ReturnType<typeof getAvailability>; size: "lg" | "sm" }) {
+function Meter({ availability, size }: { availability: Availability; size: "lg" | "sm" }) {
   const { month, total, taken, left, soldOut } = availability;
   return (
     <div className={`ln-meter ln-meter--${size}`} data-reveal="fill">
@@ -118,18 +122,21 @@ function Meter({ availability, size }: { availability: ReturnType<typeof getAvai
   );
 }
 
-export default function WebsiteLaunchPage() {
-  const availability = getAvailability();
+export default async function WebsiteLaunchPage() {
+  // The live count (Upstash Redis when connected, the typed fallback otherwise).
+  const availability = buildAvailability(await getOfferSpots());
   const projects = launchWorkSlugs
     .map((slug) => workProjects.find((p) => p.slug === slug))
     .filter((p): p is NonNullable<typeof p> => Boolean(p));
 
   return (
-    <GgShell crumbs={[{ label: "WEBSITE LAUNCH OFFER" }]} footer={{ stickyBar: true }}>
+    <GgShell crumbs={[{ label: "NEW BUSINESS OFFER" }]} footer={{ stickyBar: true }}>
+      <AvailabilityProvider value={availability}>
       <div className="ln-page">
-        <BreadcrumbSchema trail={[{ name: "Website launch offer", path: launchRoute.path }]} />
+        <BreadcrumbSchema trail={[{ name: "New Business Offer", path: launchRoute.path }]} />
         <FAQSchema items={launchFaqItems.map((i) => ({ question: i.question, answer: i.answer.join(" ") }))} id="launch-faq" />
-        <LaunchSchema />
+        <LaunchSchema availability={availability} />
+        <OfferViewTracker />
 
         {/* 01 · Hero + offer card ------------------------------------------------ */}
         <section id="gg-launch-hero" className="hm-section hm-section--canvas ln-hero" aria-labelledby="ln-title">
@@ -138,14 +145,14 @@ export default function WebsiteLaunchPage() {
               <div className="ln-hero__copy" data-reveal="header">
                 <div className="ln-hero__tags" data-part="tag">
                   <Tag tone="coral" className="ln-hero__tag">
-                    FOR NEW BUSINESSES WITHOUT A WEBSITE
+                    NEW BUSINESS OFFER
                   </Tag>
                   <span className={availability.soldOut ? "ln-pill is-full" : "ln-pill"}>
                     <i aria-hidden="true" />
                     {availability.pill}
                   </span>
                 </div>
-                <SplitHeading as="h1" id="ln-title" className="gg-display-l ln-h1" text="LAUNCH YOUR FIRST WEBSITE FOR R950 A MONTH." />
+                <SplitHeading as="h1" id="ln-title" className="gg-display-l ln-h1" text="YOUR FIRST WEBSITE. FIRST MONTH FREE." />
                 <p className="gg-lead ln-hero__lead" data-part="sub">
                   <Resp
                     long="Give your new business a professional place online, designed to help customers understand your services, trust your business and get in touch. We handle the planning, design and launch. You focus on getting your business started."
@@ -162,14 +169,14 @@ export default function WebsiteLaunchPage() {
 
               <div id="ln-offer-card" className={availability.soldOut ? "ln-card is-sold-out" : "ln-card"} data-reveal="fade-up" data-delay={150}>
                 <div className="ln-card__head">
-                  <p className="ln-card__name">Website Launch</p>
+                  <p className="ln-card__name">{localStart.name}</p>
                   {availability.soldOut ? null : <Tag tone="coral">NO DEPOSIT</Tag>}
                 </div>
                 <div className="ln-card__price" data-reveal="line-mask">
-                  <SplitHeading as="p" className="gg-number ln-card__amount" text={`R${terms.monthly}`} />
+                  <SplitHeading as="p" className="gg-number ln-card__amount" text={formatRand(0)} />
                   <span className="ln-card__period">
-                    <span className="gg-resp-long">/ month</span>
-                    <span className="gg-resp-short">/ month · 12 months</span>
+                    <span className="gg-resp-long">/ first month</span>
+                    <span className="gg-resp-short">/ first month · then {monthly}/mo</span>
                   </span>
                 </div>
 
@@ -177,42 +184,40 @@ export default function WebsiteLaunchPage() {
                   <>
                     <dl className="ln-maths">
                       <div>
-                        <dt className="gg-sr-only">Monthly</dt>
+                        <dt className="gg-sr-only">Month 1</dt>
                         <dd>
-                          <strong>R{terms.monthly}</strong>
-                          <span>monthly</span>
+                          <strong>{formatRand(0)}</strong>
+                          <span>month 1</span>
                         </dd>
                       </div>
                       <div>
-                        <dt className="gg-sr-only">Months</dt>
+                        <dt className="gg-sr-only">Then</dt>
                         <dd>
-                          <strong>× {terms.months}</strong>
-                          <span>months</span>
+                          <strong>{monthly}/mo</strong>
+                          <span>then</span>
                         </dd>
                       </div>
                       <div>
-                        <dt className="gg-sr-only">Total</dt>
+                        <dt className="gg-sr-only">Cancel</dt>
                         <dd className="is-total">
-                          <strong>
-                            <CountUp to={terms.total} prefix="R" />
-                          </strong>
-                          <span>total</span>
+                          <strong>Cancel</strong>
+                          <span>any month</span>
                         </dd>
                       </div>
                     </dl>
                     <dl className="ln-tiles">
                       <div>
-                        <dt className="gg-sr-only">Total</dt>
+                        <dt className="gg-sr-only">First month</dt>
                         <dd>
-                          <strong>{formatRand(terms.total)}</strong>
-                          <span>total</span>
+                          <strong>{formatRand(0)}</strong>
+                          <span>first month</span>
                         </dd>
                       </div>
                       <div>
-                        <dt className="gg-sr-only">Deposit</dt>
+                        <dt className="gg-sr-only">Then</dt>
                         <dd>
-                          <strong>R{terms.deposit}</strong>
-                          <span>deposit</span>
+                          <strong>{monthly}/mo</strong>
+                          <span>then, cancel any month</span>
                         </dd>
                       </div>
                     </dl>
@@ -348,30 +353,31 @@ export default function WebsiteLaunchPage() {
             <SectionHeader
               tag="THE NUMBERS"
               tagTone="coral"
-              heading="R950 a month. No deposit. No surprises."
+              heading={`${formatRand(0)} for the first month. Then ${monthly}. No surprises.`}
               layout="split"
               id="ln-numbers-title"
-              sub="One clear monthly amount for 12 months, and a simple choice when the year ends."
+              sub="One clear monthly amount, month to month, and an easy way to grow when you’re ready."
               subClassName="hm-hide-phone"
             />
             <div className="ln-money">
               <div className="ln-timeline" data-reveal="group">
                 <div className="ln-timeline__head">
-                  <h3>Your 12 payments</h3>
-                  <p className="gg-number">
-                    <CountUp to={terms.total} prefix="R" /> total
-                  </p>
+                  <h3>Your first 3 months</h3>
+                  <p className="gg-number">{formatRand(0)} up front</p>
                 </div>
-                <ol className="ln-bars" aria-label="Twelve monthly payments of R950">
-                  {Array.from({ length: terms.months }, (_, i) => (
-                    <li key={i} style={{ "--i": i } as CSSProperties}>
-                      <span className={i === 0 ? "ln-bars__bar is-first" : "ln-bars__bar"} />
-                      <span className="ln-bars__label">M{i + 1}</span>
+                <ol className="ln-months">
+                  {firstMonths.map((month, i) => (
+                    <li key={month.n} style={{ "--i": i } as CSSProperties}>
+                      <span className={i === 0 ? "ln-months__bar is-first" : "ln-months__bar"}>{month.amount}</span>
+                      <span className="ln-months__text">
+                        <strong>{month.label}</strong>
+                        <span>{month.body}</span>
+                      </span>
                     </li>
                   ))}
                 </ol>
                 <ul className="ln-ticks">
-                  {[`R${terms.monthly} each month`, "Domain, hosting and email fees included", "No deposit upfront"].map((line) => (
+                  {["First month free", `${monthly} a month after that, cancel any month`, "No deposit upfront"].map((line) => (
                     <li key={line}>
                       <Icon name="check" size={14} stroke={2.6} />
                       {line}
@@ -380,17 +386,22 @@ export default function WebsiteLaunchPage() {
                 </ul>
               </div>
               <div className="ln-after" data-reveal="fade-up" data-delay={120}>
-                <h3>After month 12, you choose</h3>
+                <h3>Grow when you’re ready</h3>
                 <ul>
-                  {afterTwelve.map((choice) => (
+                  {growChoices.map((choice) => (
                     <li key={choice.title}>
-                      <span className="ln-after__icon" aria-hidden="true">
-                        <Icon name={choice.icon} size={18} stroke={2} />
-                      </span>
-                      <span>
-                        <strong>{choice.title}</strong>
-                        <span>{choice.body}</span>
-                      </span>
+                      <Link href={choice.href} className="ln-after__link">
+                        <span className="ln-after__icon" aria-hidden="true">
+                          <Icon name={choice.icon} size={18} stroke={2} />
+                        </span>
+                        <span className="ln-after__text">
+                          <strong>{choice.title}</strong>
+                          <span>{choice.body}</span>
+                        </span>
+                        <span className="ln-after__go" aria-hidden="true">
+                          <Icon name="chev" size={16} stroke={2.2} />
+                        </span>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -515,8 +526,8 @@ export default function WebsiteLaunchPage() {
                 text={availability.soldOut ? `JOIN THE ${availability.nextMonth.toUpperCase()} WAITLIST.` : "GET YOUR FIRST BUSINESS WEBSITE UNDERWAY."}
               />
               <p className="gg-lead ln-form-lead" data-part="sub">
-                R950 a month, with domain, hosting and email fees included for the first 12 months. Exclusively for new businesses
-                without a website.
+                First month free, then {monthly} a month, with a business mailbox free for {newBusinessOffer.terms.mailboxFreeMonths} months.
+                Exclusively for new businesses without a website.
               </p>
               <p className="ln-banner" data-part="sub">
                 <i aria-hidden="true" />
@@ -539,6 +550,7 @@ export default function WebsiteLaunchPage() {
 
         <StickyBar />
       </div>
+      </AvailabilityProvider>
     </GgShell>
   );
 }

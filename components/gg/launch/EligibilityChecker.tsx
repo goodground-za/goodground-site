@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Icon } from "../Icon";
 import { PillToggle } from "../PillToggle";
 import { AvailabilityButton } from "./AvailabilityButton";
-import { getAvailability } from "./data";
+import { useAvailability } from "./AvailabilityContext";
 
 type YesNo = "yes" | "no";
 const OPTIONS: { value: YesNo; label: string }[] = [
@@ -16,14 +16,14 @@ const OPTIONS: { value: YesNo; label: string }[] = [
 
 /**
  * Launch 03. Two segmented questions. Yes + No qualifies (mint); any other
- * combination gets a blush note pointing at the Launch package or a redesign.
+ * combination gets a blush note pointing at the monthly plans.
  * Guidance only: it never blocks the form, which keeps its own required
  * confirmation. The result is announced (aria-live) and swaps with a crossfade.
  */
 export function EligibilityChecker() {
   const [isNew, setIsNew] = useState<YesNo>("yes");
   const [hasSite, setHasSite] = useState<YesNo>("no");
-  const availability = getAvailability();
+  const availability = useAvailability();
   const qualifies = isNew === "yes" && hasSite === "no";
 
   const sub = availability.soldOut
@@ -58,8 +58,8 @@ export function EligibilityChecker() {
             </>
           ) : (
             <p>
-              This offer is for new businesses without a website. A Launch package or a redesign may suit you better.{" "}
-              <Link href="/pricing#packages">See packages</Link>
+              This offer is for new businesses without a website. A regular monthly plan may suit you better.{" "}
+              <Link href="/pricing#monthly">See monthly plans</Link>
             </p>
           )}
         </div>

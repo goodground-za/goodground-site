@@ -1,5 +1,4 @@
 import { alaCarteCategories, baseBuildFee, fullServicePackage, packages, type AlaCarteItem } from "@/content/pricing";
-import { localPlans } from "@/content/pricing";
 
 import { formatRand } from "../format";
 
@@ -111,107 +110,6 @@ export const packageViews: PackageView[] = packages.map((p) => ({
 }));
 
 export const packageBySlug = (slug: string) => packageViews.find((p) => p.slug === slug);
-
-/* -------------------------------------------------------- ways to pay */
-
-export type WayValue = { text?: string; prefix?: string; money?: number; suffix?: string; coral?: boolean };
-export type Way = {
-  id: string;
-  name: string;
-  sub: string;
-  tone: "surface" | "plum" | "blush";
-  upfront: WayValue;
-  monthly: WayValue;
-  howLong: WayValue;
-  total: WayValue;
-  get: WayValue;
-  end: WayValue;
-  cta: { label: string; href: string; variant: "outline" | "coral" };
-  /** Phone card: the two headline values. */
-  card: { name: string; monthly: WayValue; total: WayValue };
-};
-
-const lowest = packageViews[0].total;
-
-export const ways: Way[] = [
-  {
-    id: "deposit",
-    name: "A package, paid by deposit",
-    sub: "Micro, Launch, Grow or Scale",
-    tone: "surface",
-    upfront: { text: "Half the price, from ", money: depositOf(lowest) },
-    monthly: { text: "Nothing" },
-    howLong: { text: "Other half on completion, before handover" },
-    total: { prefix: "From ", money: lowest },
-    get: { text: "The build. Hosting, domain and upkeep arranged separately." },
-    end: { text: "Paid off. The site is yours." },
-    cta: { label: "See the packages", href: "#packages", variant: "outline" },
-    card: { name: "Package, by deposit", monthly: { text: "Nothing monthly" }, total: { prefix: "From ", money: lowest } },
-  },
-  {
-    id: "instalments",
-    name: "A package, in 12 instalments",
-    sub: "Micro, Launch, Grow or Scale",
-    tone: "surface",
-    upfront: { text: "First instalment, from ", money: instalmentFor(lowest) },
-    monthly: { prefix: "From ", money: instalmentFor(lowest) },
-    howLong: { text: "12 payments: the first books your slot, the other 11 start once your site is finished" },
-    total: { prefix: "From ", money: lowest },
-    get: { text: "The build, with basic maintenance and monitoring while you pay it off." },
-    end: { text: "Paid off. The site is yours." },
-    cta: { label: "See the packages", href: "#packages", variant: "outline" },
-    card: {
-      name: "Package, 12 instalments",
-      monthly: { prefix: "From ", money: instalmentFor(lowest), suffix: "/mo" },
-      total: { prefix: "From ", money: lowest },
-    },
-  },
-  {
-    id: "full-service",
-    name: "Full Service",
-    sub: "One monthly price, everything handled",
-    tone: "plum",
-    upfront: { text: "No separate build fee" },
-    monthly: { prefix: "From ", money: fullServicePackage.monthlyFrom },
-    howLong: { text: "Month to month. Cancel any time." },
-    total: { prefix: "From ", money: fullServicePackage.monthlyFrom * 12 },
-    get: { text: "Build, hosting, mailboxes, ongoing SEO, updates and maintenance." },
-    end: { text: "No end date. It runs for as long as you stay on it." },
-    cta: { label: "See Full Service", href: "#full-service", variant: "coral" },
-    card: {
-      name: "Full Service",
-      monthly: { prefix: "From ", money: fullServicePackage.monthlyFrom, suffix: "/mo" },
-      total: { prefix: "From ", money: fullServicePackage.monthlyFrom * 12 },
-    },
-  },
-  {
-    id: "launch-offer",
-    name: "New Business Offer",
-    sub: "New businesses going online for the first time.",
-    tone: "blush",
-    upfront: { text: "No deposit, first month free" },
-    monthly: { money: localPlans[0].monthly, coral: true },
-    howLong: { text: "Month to month. Cancel any month." },
-    total: { text: "First month free" },
-    get: { text: "Local Start, plus a business mailbox free for 12 months." },
-    end: { text: "Your domain is always yours; the site files are yours after 6 months." },
-    cta: { label: "See the New Business Offer", href: "/website-launch", variant: "outline" },
-    card: {
-      name: "New Business Offer",
-      monthly: { money: localPlans[0].monthly, suffix: "/mo" },
-      total: { text: "First month free" },
-    },
-  },
-];
-
-export const WAY_ROWS: { key: "upfront" | "monthly" | "howLong" | "total" | "get" | "end"; label: string; money: boolean }[] = [
-  { key: "upfront", label: "Upfront", money: false },
-  { key: "monthly", label: "Monthly", money: true },
-  { key: "howLong", label: "How long", money: false },
-  { key: "total", label: "Total over 12 months", money: true },
-  { key: "get", label: "What you get", money: false },
-  { key: "end", label: "At the end", money: false },
-];
 
 /* --------------------------------------------------------- configurator */
 

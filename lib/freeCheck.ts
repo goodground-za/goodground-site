@@ -117,3 +117,10 @@ export const longDate = (iso: string) =>
   new Intl.DateTimeFormat("en-ZA", { timeZone: "Africa/Johannesburg", day: "numeric", month: "long", year: "numeric" })
     .format(new Date(iso))
     .replace(/,/g, "");
+
+/** First of next month, in South African time: "1 December". Where a waitlisted request will be run. */
+export function firstOfNextMonth(now: Date = new Date()): string {
+  const sast = new Date(now.getTime() + 2 * 60 * 60 * 1000);
+  const next = new Date(Date.UTC(sast.getUTCFullYear(), sast.getUTCMonth() + 1, 1));
+  return `1 ${new Intl.DateTimeFormat("en-ZA", { timeZone: "UTC", month: "long" }).format(next)}`;
+}

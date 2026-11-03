@@ -33,7 +33,7 @@ import {
   type OfferKey,
   type PlanKey,
 } from "@/lib/enquiryShared";
-import { gateFreeCheck, longDate, type CheckGate } from "@/lib/freeCheck";
+import { firstOfNextMonth, gateFreeCheck, longDate, type CheckGate } from "@/lib/freeCheck";
 import { getOfferSpots } from "@/lib/liveCounters";
 import { sendMail } from "@/lib/mailer";
 import { turnstileRequired, verifyTurnstile } from "@/lib/turnstile";
@@ -53,7 +53,7 @@ import { turnstileRequired, verifyTurnstile } from "@/lib/turnstile";
  *     value). Unknown values are dropped, not echoed.
  *  4. Rate limit and duplicate suppression (in-process, per warm serverless
  *     instance: raises the cost of casual abuse, not a hard ceiling, as with
- *     /api/website-launch).
+ *     the retired /api/website-launch route).
  *  5. ai-check only: Cloudflare Turnstile (when a secret is set), then the
  *     free-check guardrails in lib/freeCheck.ts (30-day repeat, monthly cap).
  *     THE SITE NEVER RUNS A SCAN: it only records the request and tells the team.
@@ -124,13 +124,6 @@ export type EnquiryResponse = {
 
 const FAILURE = "We couldn’t send that just now. Your answers are saved, so you can try again.";
 const TURNSTILE_FAILURE = "We couldn’t confirm you’re not a robot. Please try again.";
-
-/** First of next month, in South African time: "1 December". */
-function firstOfNextMonth(now: Date) {
-  const sast = new Date(now.getTime() + 2 * 60 * 60 * 1000);
-  const next = new Date(Date.UTC(sast.getUTCFullYear(), sast.getUTCMonth() + 1, 1));
-  return `1 ${new Intl.DateTimeFormat("en-ZA", { timeZone: "UTC", month: "long" }).format(next)}`;
-}
 
 export async function POST(request: Request) {
   const now = Date.now();
@@ -208,6 +201,8 @@ export async function POST(request: Request) {
   const phone = oneLine(get("phone") || get("whatsapp")).slice(0, LIMITS.phone + 1);
   const message = bodySafe(get("message")).trim();
   const selection = bodySafe(get("selection")).trim();
+  // New Business Offer form only: when they would like to launch (free text, shown to the team).
+  const launchTiming = oneLine(get("launchTiming")).slice(0, 121);
   const town = oneLine(get("town")).slice(0, LIMITS.town + 1);
   const mainServices = oneLine(get("mainServices") || get("mainService")).slice(0, LIMITS.services + 1);
   const websiteUrl = oneLine(get("websiteUrl")).slice(0, LIMITS.website + 1);
@@ -225,6 +220,8 @@ export async function POST(request: Request) {
   if (!email) errors.email = "We need an email to reply to.";
   else if (email.length > LIMITS.email || !EMAIL_RE.test(email)) errors.email = "That email doesn’t look right.";
   if (kind === "contact" && !message) errors.message = "Add a message so we know how to help.";
+  if (kind === "new-business-offer" && !message) errors.message = "Tell us a little about your new business.";
+  if (kind === "new-business-offer" && launchTiming.length > 120) errors.message = errors.message ?? "One of the fields is too long.";
   if (message.length > LIMITS.message) errors.message = "Please shorten this a little.";
   if (selection.length > LIMITS.selection) errors.selection = "That selection is too long.";
   if (business.length > LIMITS.business || phone.length > LIMITS.phone) {
@@ -347,6 +344,7 @@ export async function POST(request: Request) {
     lines.push(`WhatsApp updates: ${whatsappOptIn ? `YES, consent given ${new Date(now).toISOString()}` : "no"}`);
   }
   if (kind === "ai-check") lines.push("Consent to run the check: yes", `Marketing opt-in: ${marketingOptIn ? "yes" : "no"}`);
+  if (kind === "new-business-offer" && launchTiming) lines.push(`Would like to launch: ${launchTiming}`);
   if (kind === "start-project") {
     lines.push("", `Service: ${service ? SERVICES[service] : "-"}`, `Size: ${size ? SIZES[size] : "-"}`, `Timeline: ${timeline ? TIMELINES[timeline] : "-"}`);
     if (intent) lines.push(`Intent: ${INTENTS[intent]}`);

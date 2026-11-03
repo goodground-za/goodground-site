@@ -177,3 +177,39 @@
 .sg-count {
   font-size: 56px;
 }
+
+/* v2: offer box and band pills */
+.sg-v2-offer {
+  display: grid;
+  gap: 12px;
+  max-width: 420px;
+}
+
+.sg-v2-bands {
+  display: grid;
+  gap: 12px;
+}
+
+.sg-v2-bands__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.sg-v2-bands__row--dark {
+  width: fit-content;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: var(--gg-plum);
+}
+
+.sg-v2-bands__pair {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 12px;
+  background: var(--gg-surface);
+  font-size: 14px;
+}

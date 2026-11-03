@@ -9,6 +9,7 @@
 - SEO: foundations in every build, with Advanced SEO available as an add-on.
 - Google Ads and Meta (Facebook and Instagram) Ads management.
 - Full Service: the website build plus hosting, mailboxes, ongoing SEO, updates and maintenance, for one monthly price.
+- AI visibility: a free check (by request, one per business) of how often ChatGPT, Gemini and Google’s AI recommend a local business, and a monthly AI Visibility Report with the Local Plus and Local Pro plans. A person runs every check; there is no instant scanner and no guaranteed result.
 
 ## How we price
 
@@ -24,6 +25,7 @@
 - [Services](https://www.goodground.co.za/services): Every service in depth, how they fit together, and what is included in every build.
   - [Google Ads](https://www.goodground.co.za/services/google-ads)
   - [Meta Ads](https://www.goodground.co.za/services/meta-ads)
+  - [AI visibility](https://www.goodground.co.za/services/ai-visibility): Does AI recommend your business? How the free check works, a sample report (example data), and how we report without fake scores.
   - [Website redesign](https://www.goodground.co.za/services/website-redesign)
   - [SEO](https://www.goodground.co.za/services/seo)
   - [UX and UI design](https://www.goodground.co.za/services/ux-design)
@@ -34,7 +36,7 @@
   - [Professional and consulting](https://www.goodground.co.za/services/professional-and-consulting)
   - [Retail and small brands](https://www.goodground.co.za/services/retail-and-small-brands)
   - [Non-profits and community](https://www.goodground.co.za/services/non-profits-and-community)
-- [Pricing](https://www.goodground.co.za/pricing): The four packages, the configurator, Full Service, and both payment options worked out per price.
+- [Pricing](https://www.goodground.co.za/pricing): The monthly Local plans, the four custom packages with both payment options worked out per price, the build-your-own configurator and Full Service.
 - [New Business Offer](https://www.goodground.co.za/website-launch): First month of Local Start free for new businesses, with this month's availability.
 - [Process](https://www.goodground.co.za/process): How a project runs step by step: what we do, what we need from you, how long it takes and when you pay.
 - [Projects](https://www.goodground.co.za/work): Case studies, each ending in numbers measured on the live site, with instructions to check them.

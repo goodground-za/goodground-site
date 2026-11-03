@@ -1,6 +1,6 @@
 /**
  * The New Business Offer: every confirmed fact in one place. It replaces the
- * retired R950 x 12 Website Launch Offer (owner decision, 2026-11-03/04).
+ * retired fixed-term Website Launch Offer (owner decision, 2026-11-03/04).
  *
  * THE OFFER: Local Start (see content/pricing.ts localPlans) with the first
  * month free, plus a business mailbox free for 12 months, for businesses going

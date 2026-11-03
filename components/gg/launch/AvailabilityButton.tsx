@@ -3,7 +3,7 @@
 import { promoEvents } from "@/lib/analytics";
 
 import { ButtonLink, type ButtonStyle } from "../Button";
-import { getAvailability } from "./data";
+import { useAvailability } from "./AvailabilityContext";
 
 /**
  * Every "Check availability" on the page (it becomes "Join the {Next month}
@@ -27,7 +27,7 @@ export function AvailabilityButton({
   short?: boolean;
   className?: string;
 }) {
-  const availability = getAvailability();
+  const availability = useAvailability();
   const label = availability.soldOut && short ? "Join waitlist" : availability.cta;
 
   return (
@@ -39,7 +39,7 @@ export function AvailabilityButton({
       onClick={() => {
         promoEvents.ctaClick(placement);
         if (window.matchMedia("(pointer: fine)").matches) {
-          window.setTimeout(() => document.getElementById("ln-name")?.focus({ preventScroll: true }), 700);
+          window.setTimeout(() => document.getElementById("ln-fullName")?.focus({ preventScroll: true }), 700);
         }
       }}
     >

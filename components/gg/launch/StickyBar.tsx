@@ -2,17 +2,17 @@
 
 import { useEffect, useState } from "react";
 
-import { terms, getAvailability } from "./data";
 import { AvailabilityButton } from "./AvailabilityButton";
+import { useAvailability } from "./AvailabilityContext";
 
 /**
- * Launch mobile bar: price and spots left on the left, the CTA on the right.
+ * Launch mobile bar: the offer and spaces left on the left, the CTA on the right.
  * It appears once the hero offer card has scrolled out of view, and hides while
  * the form is on screen or a field has focus (so it never sits between the
  * content and an open keyboard). Below 768px only.
  */
 export function StickyBar() {
-  const availability = getAvailability();
+  const availability = useAvailability();
   const [cardGone, setCardGone] = useState(false);
   const [formVisible, setFormVisible] = useState(false);
   const [typing, setTyping] = useState(false);
@@ -57,9 +57,7 @@ export function StickyBar() {
   return (
     <div className={shown ? "ln-bar is-on" : "ln-bar"} inert={!shown} role="region" aria-label="This offer">
       <div className="ln-bar__text">
-        <p className="ln-bar__price">
-          R{terms.monthly} / month
-        </p>
+        <p className="ln-bar__price">First month free</p>
         <p className="ln-bar__spots">
           {availability.soldOut
             ? `${availability.month} is fully booked`

@@ -42,6 +42,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/website-launch", priority: 0.9, file: "content/websiteLaunch.ts" },
     { path: "/services", priority: 0.9, file: "app/(gg)/services/page.tsx" },
     ...servicePages.map(({ slug }) => ({ path: `/services/${slug}`, priority: 0.8, file: "content/servicePages.ts" })),
+    // AI visibility check and monthly report (v2). A service page under /services, not in servicePages.
+    { path: "/services/ai-visibility", priority: 0.85, file: "content/aiVisibility.ts" },
     ...industryPages.map(({ slug }) => ({ path: `/services/${slug}`, priority: 0.75, file: "content/industryPages.ts" })),
     { path: "/start-project", priority: 0.8, file: "app/(gg)/start-project/page.tsx" },
     { path: "/about", priority: 0.8, file: "app/(gg)/about/page.tsx" },

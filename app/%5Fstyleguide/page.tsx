@@ -14,10 +14,14 @@ import { Tag } from "@/components/gg/Tag";
 import { faq } from "@/content/faq";
 import { PRIMARY_TRACKS, trackNextLink, trackPrimary, trackSecondary } from "@/content/funnel";
 import { localPlans } from "@/content/pricing";
+import { BandPill } from "@/components/gg/ai/BandPill";
+import { MonthlyPlans, OfferBoxView } from "@/components/gg/pricing/MonthlyPlans";
 import { servicePages } from "@/content/servicePages";
 
 import { SheetDemo } from "./SheetDemo";
 import { formatRand } from "@/components/gg/format";
+import "@/components/gg/ai/ai.css";
+import "@/components/gg/pricing/pricing.css";
 import "@/components/gg/start/start.css";
 import "./styleguide.css";
 
@@ -375,6 +379,44 @@ export default function StyleguidePage() {
           <p className="gg-body">
             Footer pill: <span className="gg-footer__new" style={{ marginLeft: 0 }}>NEW</span>
           </p>
+        </Block>
+
+        <Block title="v2 · Local plan cards, offer box, band pills" node="v2 · not drawn">
+          <p className="gg-body gg-muted">
+            The three monthly plans in the package-card styling (/pricing#monthly), with the Monthly | Annual toggle. Local
+            Plus is plum. Below 768px the cards collapse to a name and a price, one open at a time. Prices come from
+            content/pricing.ts.
+          </p>
+          <div className="pr-page">
+            <MonthlyPlans offer={{ left: 1, total: 2, soldOut: false, month: "November", nextMonth: "December" }} />
+          </div>
+          <p className="gg-kicker gg-muted">OFFER BOX: SPACES LEFT, AND SOLD OUT</p>
+          <div className="sg-v2-offer">
+            <OfferBoxView offer={{ left: 1, total: 2, soldOut: false, month: "November", nextMonth: "December" }} />
+            <OfferBoxView offer={{ left: 0, total: 2, soldOut: true, month: "November", nextMonth: "December" }} />
+          </div>
+          <p className="gg-kicker gg-muted">BAND PILLS (AI VISIBILITY): USUALLY 2/3 OR MORE, SOMETIMES 1/3 TO 2/3, RARELY SOME, NOT SEEN NONE</p>
+          <div className="sg-v2-bands">
+            <div className="sg-v2-bands__row">
+              <BandPill band="usually" />
+              <BandPill band="sometimes" />
+              <BandPill band="rarely" />
+              <BandPill band="not-seen" />
+            </div>
+            <div className="sg-v2-bands__row sg-v2-bands__row--dark">
+              <BandPill band="usually" on="dark" />
+              <BandPill band="sometimes" on="dark" />
+              <BandPill band="rarely" on="dark" />
+              <BandPill band="not-seen" on="dark" />
+            </div>
+            <div className="sg-v2-bands__row">
+              {[0, 1, 2, 3, 4, 6, 9].map((n) => (
+                <span key={n} className="sg-v2-bands__pair">
+                  {n} of 9 <BandPill named={n} checks={9} />
+                </span>
+              ))}
+            </div>
+          </div>
         </Block>
 
         <Block title="v2 · Gradient CTA tracks" node="v2 · not drawn">

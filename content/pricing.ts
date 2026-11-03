@@ -267,6 +267,17 @@ export const localPlanBySlug = (slug: string) => localPlans.find((p) => p.slug =
 /** Cheapest monthly plan: "Monthly plans from R299" everywhere reads this. */
 export const localFromMonthly = localPlans[0].monthly;
 
+/**
+ * Terms that appear in FAQ answers and the cancel copy. The legal wording is the
+ * attorney's (open item 15); these are only the figures the spec states.
+ */
+export const localTerms = {
+  /** Site files become the client's after this many paid months. */
+  filesYoursAfterMonths: 6,
+  /** Buying the files earlier, rand. */
+  filesBuyout: 1500,
+} as const;
+
 /** Promise row under the plan cards (spec 08, mockup). */
 export const localPromises = [
   "Free preview before you pay anything",
@@ -431,7 +442,7 @@ export const pricingFaq: PricingFaqItem[] = [
   {
     question: "Do these prices include hosting and a domain?",
     answer:
-      "Not on the four packages above. Hosting, domain, and ongoing maintenance are arranged separately from the build price, and we’re happy to point you in the right direction when you enquire. If you’d rather have all of that handled for you, the Full Service package below bundles hosting, mailboxes, the build, SEO, and maintenance into one monthly price.",
+      "Monthly plans do: hosting and a .co.za domain registered in your name are included. Full Service includes hosting, mailboxes, SEO and maintenance in its monthly price. Custom builds are priced separately from hosting, domain and upkeep, which we arrange with you when you enquire.",
   },
   {
     question: "How do I pay, and is there a deposit?",

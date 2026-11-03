@@ -32,7 +32,7 @@ const csp = [
   "img-src 'self' data: https://images.unsplash.com https://www.googletagmanager.com",
   "font-src 'self' data:",
   // GA beacons post to the first two. Every form posts to this origin
-  // (/api/enquiry, /api/website-launch), so no third-party form host is allowed.
+  // (/api/enquiry, /api/onboarding), so no third-party form host is allowed.
   `connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com${turnstile ? ` ${CF}` : ""}`,
   "form-action 'self'",
   "frame-ancestors 'none'",
@@ -101,11 +101,15 @@ const nextConfig: NextConfig = {
       // Track C: the free AI check lives on its own page. Next carries the query
       // string (ref, utm) across; the form also does this in the browser as a fallback.
       { source: "/start-project", has: [{ type: "query", key: "intent", value: "ai-check" }], destination: "/services/ai-visibility#book", permanent: false },
-      // The old launch intake form was retired with the R950 x 12 offer
+      // The old launch intake form was retired with the fixed-term launch offer
       // (2026-11-03). It and its result pages go to the New Business Offer page
       // (permanent: Next answers 308).
       { source: "/launch-offer-intake-form", destination: "/website-launch", permanent: true },
       { source: "/launch-offer-intake-form/:path*", destination: "/website-launch", permanent: true },
+      // The New Business Offer form posts to /api/enquiry and lands on /thanks, so the old
+      // Website Launch result pages (and the /api/website-launch route, now removed) are retired.
+      { source: "/website-launch/enquiry-received", destination: "/thanks?form=new-business-offer", permanent: true },
+      { source: "/website-launch/enquiry-problem", destination: "/website-launch", permanent: true },
     ];
   },
   images: {
