@@ -3,9 +3,12 @@ import type { CSSProperties } from "react";
 import { BreadcrumbSchema } from "@/components/Breadcrumbs";
 import { FAQSchema } from "@/components/Schema";
 import { industryPages } from "@/content/industryPages";
+import { localFromMonthly } from "@/content/pricing";
 import { site } from "@/content/site";
 
 import { ButtonLink } from "../Button";
+import { CtaTracker } from "../CtaTracker";
+import { formatRand } from "../format";
 import { FaqAccordion, type FaqItem } from "../FaqAccordion";
 import { GgShell } from "../GgShell";
 import { GradientCta } from "../GradientCta";
@@ -44,11 +47,21 @@ export function IndustryPage({ slug }: { slug: string }) {
   const entry = industryPages.find((p) => p.slug === slug)!;
   const view = INDUSTRY_VIEWS[slug];
   const ref = `industry-${slug}`;
-  const startHref = `/start-project?ref=${ref}`;
+  // v2: local industries lead with the monthly plan; custom ones keep the v1 CTAs.
+  const isLocal = entry.primaryTrack === "local";
+  const startHref = isLocal ? `/start-project?plan=local-plus&ref=${ref}` : `/start-project?ref=${ref}`;
+  const from = formatRand(localFromMonthly);
   const intro = sentences(entry.heroIntro);
   const introShort = intro.length > 2 ? `${intro[0]} ${intro[intro.length - 1]}` : entry.heroIntro;
 
   const faqItems: FaqItem[] = entry.faq.map((item) => ({ question: item.question, answer: [item.answer ?? ""] }));
+  // v2: every local industry answers "Can I pay monthly instead?" with the Local plans.
+  const monthlyFaq = {
+    question: "Can I pay monthly instead?",
+    answer: `Yes. Our Local plans start at ${from}/mo with no deposit: a website, your Google profile and an AI visibility report, looked after every month. You can cancel any month.`,
+  };
+  if (isLocal) faqItems.push({ question: monthlyFaq.question, answer: [monthlyFaq.answer], slug: "pay-monthly", link: { label: "See monthly plans →", href: "/pricing#monthly" } });
+  const schemaFaq = isLocal ? [...entry.faq, monthlyFaq] : entry.faq;
 
   const serviceSchema = {
     "@context": "https://schema.org",
@@ -65,13 +78,13 @@ export function IndustryPage({ slug }: { slug: string }) {
     url: `${site.url}/services/${entry.slug}`,
   };
 
-  const { phone, moment, problems, local, bento } = view;
+  const { phone, moment, problems, local: localView, bento } = view;
 
   return (
     <GgShell crumbs={[{ label: "SERVICES", href: "/services" }, { label: view.name.toUpperCase() }]} footer={{ stickyBar: true }}>
       <BreadcrumbSchema trail={[{ name: "Services", path: "/services" }, { name: entry.title, path: `/services/${entry.slug}` }]} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
-      <FAQSchema items={entry.faq} id={`${entry.slug}-faq`} />
+      <FAQSchema items={schemaFaq} id={`${entry.slug}-faq`} />
 
       <div className="id-page">
         {/* 01 Hero + phone mock */}
@@ -94,13 +107,18 @@ export function IndustryPage({ slug }: { slug: string }) {
                 ))}
               </ul>
               <div className="id-hero__buttons" data-part="cta">
-                <ButtonLink href={startHref} variant="coral">
-                  Start your project
+                <ButtonLink href={startHref} variant="coral" data-cta="hero">
+                  {isLocal ? "Get my free preview" : "Start your project"}
                 </ButtonLink>
-                <ButtonLink href="/pricing" variant="outline">
+                <ButtonLink href={isLocal ? "/pricing#monthly" : "/pricing"} variant="outline" data-cta="hero-secondary">
                   See pricing
                 </ButtonLink>
               </div>
+              {isLocal ? (
+                <p className="id-hero__from" data-part="cta">
+                  From {from}/mo · no deposit · live in days
+                </p>
+              ) : null}
             </div>
 
             <div className="id-phone-wrap" data-reveal="fade-up" data-delay={300}>
@@ -223,12 +241,12 @@ export function IndustryPage({ slug }: { slug: string }) {
               <Tag tone="on-dark" data-part="tag">
                 LOCAL SEARCH
               </Tag>
-              <SplitHeading id="id-local-title" className="gg-h2 hm-h2 id-local__h" text={local.heading} />
+              <SplitHeading id="id-local-title" className="gg-h2 hm-h2 id-local__h" text={localView.heading} />
               <p className="gg-lead id-local__lead" data-part="sub">
-                <Resp long={local.body} short={local.bodyShort} />
+                <Resp long={localView.body} short={localView.bodyShort} />
               </p>
               <ul className="id-areas" data-reveal="stagger" style={{ "--gg-stagger-step": "40ms" } as CSSProperties}>
-                {local.towns.map((town, i) => (
+                {localView.towns.map((town, i) => (
                   <li key={town} className={i >= 4 ? "hm-hide-phone" : undefined}>
                     <Icon name="pin" size={14} stroke={2} />
                     {town}
@@ -237,7 +255,12 @@ export function IndustryPage({ slug }: { slug: string }) {
               </ul>
             </div>
             <div data-reveal="fade-up" className="id-local__card">
-              <LocalSearchMock query={local.query} hit={local.hit} dim={local.dim} callLabel={local.callLabel} />
+              <LocalSearchMock query={localView.query} hit={localView.hit} dim={localView.dim} callLabel={localView.callLabel} ai={{ query: entry.aiQuery, answer: localView.aiAnswer }} />
+              <div className="id-local__ai-cta">
+                <ButtonLink href={`/services/ai-visibility?ref=${ref}#book`} variant="light" data-ai-cta="industry-search">
+                  Check if AI recommends you
+                </ButtonLink>
+              </div>
             </div>
           </div>
         </section>
@@ -326,18 +349,25 @@ export function IndustryPage({ slug }: { slug: string }) {
                       View service <Icon name="arrow-up-right" size={16} stroke={2.2} />
                     </span>
                   </LinkedCard>
-                  <LinkedCard href="/services#full-service" className="id-card id-card--lilac">
+                  <LinkedCard href="/pricing#monthly" className="id-card id-card--lilac">
                     <span className="id-card__top">
                       <span className="id-card__chip">
-                        <Icon name="shield" size={24} stroke={2} />
+                        <Icon name="repeat" size={24} stroke={2} />
                       </span>
                       <Tag>MONTHLY</Tag>
                     </span>
-                    <span className="gg-kicker id-card__kicker">03 · FULL SERVICE</span>
-                    <span className="id-card__title id-card__title--m">{bento.full.title}</span>
-                    <span className="id-card__body">{bento.full.body}</span>
+                    <span className="gg-kicker id-card__kicker">03 · MONTHLY PLANS</span>
+                    <span className="id-card__title id-card__title--m">From {from}/mo, no deposit.</span>
+                    <span className="id-card__rows">
+                      {["A website with hosting", "Your Google profile", "A monthly AI report"].map((row) => (
+                        <span key={row} className="id-card__row">
+                          <Icon name="check" size={16} stroke={2.4} />
+                          {row}
+                        </span>
+                      ))}
+                    </span>
                     <span className="id-card__link">
-                      View service <Icon name="arrow-up-right" size={16} stroke={2.2} />
+                      View plans <Icon name="arrow-up-right" size={16} stroke={2.2} />
                     </span>
                   </LinkedCard>
                 </div>
@@ -369,7 +399,7 @@ export function IndustryPage({ slug }: { slug: string }) {
               <div className="id-payband__copy">
                 <div className="id-payband__head">
                   <Tag tone="plum">PRICING</Tag>
-                  <h2 id="id-pay-title">Every project is one fixed price.</h2>
+                  <h2 id="id-pay-title">Pay monthly, or one fixed price.</h2>
                 </div>
                 <div className="id-payband__buttons">
                   <ButtonLink href="/pricing" variant="primary" className="id-payband__btn">
@@ -381,6 +411,13 @@ export function IndustryPage({ slug }: { slug: string }) {
                 </div>
               </div>
               <div className="id-payband__tiles" data-reveal="line-mask">
+                <div className="id-tile id-tile--mint">
+                  <span className="gg-kicker">MONTHLY PLAN</span>
+                  <SplitHeading as="p" className="id-tile__big" text={`${from}/mo`} />
+                  <span className="id-tile__sub">
+                    <Resp long={`Monthly plan from ${from}/mo, no deposit.`} short="No deposit, cancel any month." />
+                  </span>
+                </div>
                 <div className="id-tile id-tile--lilac">
                   <span className="gg-kicker">OPTION A</span>
                   <SplitHeading as="p" className="id-tile__big" text="50 / 50" />
@@ -425,8 +462,9 @@ export function IndustryPage({ slug }: { slug: string }) {
         </section>
       </div>
 
+      <CtaTracker event="industry_cta_click" slug={entry.slug} track={entry.primaryTrack} />
       <GradientCta variant="inner" tag="READY WHEN YOU ARE" sub={view.ctaSub} track={entry.primaryTrack} refSource={ref} />
-      <StickyBar startHref={startHref} email={site.email} />
+      <StickyBar startHref={startHref} startLabel={isLocal ? "Free preview" : "Start your project"} email={site.email} />
     </GgShell>
   );
 }

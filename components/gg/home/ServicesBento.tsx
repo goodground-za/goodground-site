@@ -1,18 +1,20 @@
 import type { CSSProperties } from "react";
 
+import { fullServicePackage, localFromMonthly } from "@/content/pricing";
+
 import { ButtonLink } from "../Button";
+import { formatRand } from "../format";
 import { Icon, type IconName } from "../Icon";
 import { ArrowChip, LinkedCard } from "../LinkedCard";
 import { Resp } from "../Resp";
 import { SectionHeader } from "../SectionHeader";
 import { Tag } from "../Tag";
 
-const FULL_SERVICE_ROWS = [
-  "Website & updates",
-  "Hosting & SSL",
-  "Business mailboxes",
-  "SEO monitoring",
-  "Maintenance & backups",
+/** "Run it monthly" rows (v2). Prices read content/pricing.ts. */
+const RUN_ROWS = [
+  `Local plans from ${formatRand(localFromMonthly)}/mo`,
+  "AI Visibility Report",
+  `Full Service from ${formatRand(fullServicePackage.monthlyFrom)}/mo`,
 ];
 
 const BENEFITS = ["Emergency call-outs", "Free quotes in 24h", "4.9 ★ on Google"];
@@ -136,23 +138,23 @@ export function ServicesBento() {
             </div>
 
             <div className="hm-svc-wrap" data-reveal="group" data-delay={100}>
-              <LinkedCard href="/services#full-service" className="hm-svc hm-svc--full">
+              <LinkedCard href="/pricing#monthly" className="hm-svc hm-svc--full">
                 <div className="hm-svc__intro">
                   <Tag tone="coral">MONTHLY</Tag>
                   <ArrowChip size={36} className="hm-svc__chip hm-svc__chip--phone" />
                   <div className="hm-svc__copy">
-                    <h3 className="hm-svc__title">Full service</h3>
-                    <p>Build, hosting, mailboxes, SEO and maintenance, all for one monthly price.</p>
+                    <h3 className="hm-svc__title">Run it monthly</h3>
+                    <p>Get found with a Local plan, or have everything handled with Full Service.</p>
                   </div>
                 </div>
-                <div className="hm-statement" aria-hidden="true">
+                <div className="hm-statement">
                   <div className="hm-statement__head">
-                    <strong>This month</strong>
-                    <span>All covered</span>
+                    <strong>Every month</strong>
+                    <span>No deposit</span>
                   </div>
-                  {FULL_SERVICE_ROWS.map((row, i) => (
+                  {RUN_ROWS.map((row, i) => (
                     <div key={row} className="hm-statement__row" style={{ "--gg-i": i } as CSSProperties}>
-                      <svg className="hm-statement__tick" viewBox="0 0 24 24" width="14" height="14" focusable="false">
+                      <svg className="hm-statement__tick" viewBox="0 0 24 24" width="14" height="14" focusable="false" aria-hidden="true">
                         <path d="M20 6 9 17l-5-5" pathLength="1" />
                       </svg>
                       <span>{row}</span>

@@ -72,11 +72,14 @@ export function LocalSearchMock({
   hit,
   dim,
   callLabel,
+  ai,
 }: {
   query: string;
   hit: { title: string; sub: string };
   dim: [{ t: string; s: string }, { t: string; s: string }];
   callLabel: string;
+  /** The AI answer card (v2): the industry's aiQuery and a two-line answer naming the example business. */
+  ai?: { query: string; answer: string };
 }) {
   const root = useRef<HTMLDivElement>(null);
   const typed = useRef<HTMLSpanElement>(null);
@@ -145,6 +148,14 @@ export function LocalSearchMock({
           </span>
         </div>
       ))}
+      {ai ? (
+        <figure className="id-search__ai" style={{ "--i": 3 } as CSSProperties}>
+          <span className="gg-kicker id-search__ai-kicker">AI ANSWER</span>
+          <p className="id-search__ai-query">{ai.query}</p>
+          <p className="id-search__ai-answer">{ai.answer}</p>
+          <figcaption>Illustration. AI answers vary from one search to the next.</figcaption>
+        </figure>
+      ) : null}
       <p className="id-search__cap">
         <span className="gg-resp-long">Illustration of the goal, not a ranking promise. Search results depend on Google.</span>
         <span className="gg-resp-short">Illustration of the goal, not a ranking promise.</span>
@@ -168,7 +179,7 @@ function Stars() {
  * has scrolled out of view, hides while the closing CTA card is in view and on
  * a fast scroll down (> 1200px/s). Respects the iOS safe-area inset.
  */
-export function StickyBar({ startHref, email }: { startHref: string; email: string }) {
+export function StickyBar({ startHref, startLabel = "Start your project", email }: { startHref: string; startLabel?: string; email: string }) {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -218,10 +229,10 @@ export function StickyBar({ startHref, email }: { startHref: string; email: stri
 
   return (
     <div className={show ? "id-sticky is-on" : "id-sticky"} aria-hidden={!show}>
-      <a className="id-sticky__start" href={startHref} tabIndex={show ? 0 : -1}>
-        Start your project
+      <a className="id-sticky__start" href={startHref} tabIndex={show ? 0 : -1} data-cta="sticky">
+        {startLabel}
       </a>
-      <a className="id-sticky__mail" href={`mailto:${email}`} tabIndex={show ? 0 : -1}>
+      <a className="id-sticky__mail" href={`mailto:${email}`} tabIndex={show ? 0 : -1} data-cta="sticky-email">
         <Icon name="mail" size={14} stroke={2} />
         Email
       </a>

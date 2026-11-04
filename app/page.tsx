@@ -5,7 +5,7 @@ import { GradientCta } from "@/components/gg/GradientCta";
 import { PAGE_TRACKS } from "@/content/funnel";
 import { HomeFaq } from "@/components/gg/home/HomeFaq";
 import { Industries } from "@/components/gg/home/Industries";
-import { LaunchOffer } from "@/components/gg/home/LaunchOffer";
+import { MonthlyOffer } from "@/components/gg/home/MonthlyOffer";
 import { PayYourWay } from "@/components/gg/home/PayYourWay";
 import { ProcessStepper } from "@/components/gg/home/ProcessStepper";
 import { ServicesBento } from "@/components/gg/home/ServicesBento";
@@ -67,7 +67,7 @@ export default function HomePage() {
         <div className="gg">
           <TrustBar />
           <WhyBento />
-          <LaunchOffer />
+          <MonthlyOffer />
           <ServicesBento />
           <WorkShowcase />
           <ProcessStepper />
@@ -75,7 +75,13 @@ export default function HomePage() {
           <StoryReasons />
           <Industries />
           <HomeFaq />
-          <GradientCta variant="home" track={PAGE_TRACKS.home} refSource="home" />
+          <GradientCta
+            variant="home"
+            track={PAGE_TRACKS.home}
+            refSource="home"
+            sub="Tell us about your business and we’ll start your free preview, or send a fixed price for a custom build."
+            nextLink={{ label: "Need a custom website? Start your project →", href: "/start-project?ref=home" }}
+          />
         </div>
       </main>
 

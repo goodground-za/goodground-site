@@ -42,6 +42,7 @@ export function GradientCta({
   track = "custom",
   primary,
   secondary,
+  nextLink,
   size = "xl",
   split = false,
   headingId = "gg-cta-heading",
@@ -55,13 +56,15 @@ export function GradientCta({
   track?: PrimaryTrack;
   primary?: Action;
   secondary?: Action;
+  /** Replaces the track's default text link (Home: "Need a custom website?"). */
+  nextLink?: Action;
   size?: "xl" | "m" | "l";
   split?: boolean;
   /** Only needed where a page shows two cards (the styleguide): ids must be unique. */
   headingId?: string;
 }) {
   const lead = trackPrimary(track, refSource);
-  const next = trackNextLink(track, refSource);
+  const next = nextLink ?? trackNextLink(track, refSource);
   const inner = variant === "inner";
   // The inner card sets the headline on one line and has no sub-copy by
   // default (Service detail 96:348); Home breaks it and adds the line below.
@@ -108,7 +111,7 @@ export function GradientCta({
             </p>
           ) : null}
           <div className="gg-cta__actions" data-part="cta">
-            <ButtonLink href={primary?.href ?? lead.href} variant="light" full>
+            <ButtonLink href={primary?.href ?? lead.href} variant="light" full data-cta="cta">
               {primary?.label ?? lead.label}
             </ButtonLink>
             {secondary ? (

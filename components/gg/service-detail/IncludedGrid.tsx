@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, type CSSProperties } from "react";
 
 import { Icon } from "../Icon";
@@ -18,17 +19,28 @@ export function IncludedGrid({ items }: { items: Included[] }) {
   return (
     <>
       <div className="sd-inc" data-reveal="stagger" style={{ "--gg-stagger-step": "50ms" } as CSSProperties}>
-        {items.map((item) => (
-          <article key={item.title} className="sd-inc__card">
-            <span className={`sd-inc__chip sd-inc__chip--${item.tint}`} aria-hidden="true">
-              <Icon name={item.icon} size={22} stroke={2} />
-            </span>
-            <div>
-              <h3>{item.title}</h3>
-              <p>{item.body}</p>
-            </div>
-          </article>
-        ))}
+        {items.map((item) => {
+          const inner = (
+            <>
+              <span className={`sd-inc__chip sd-inc__chip--${item.tint}`} aria-hidden="true">
+                <Icon name={item.icon} size={22} stroke={2} />
+              </span>
+              <div>
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+              </div>
+            </>
+          );
+          return item.href ? (
+            <Link key={item.title} href={item.href} className="sd-inc__card sd-inc__card--link">
+              {inner}
+            </Link>
+          ) : (
+            <article key={item.title} className="sd-inc__card">
+              {inner}
+            </article>
+          );
+        })}
       </div>
 
       <div className="sd-list">
@@ -38,7 +50,7 @@ export function IncludedGrid({ items }: { items: Included[] }) {
               <span className="sd-list__tick" aria-hidden="true">
                 <Icon name="check" size={13} stroke={2.6} />
               </span>
-              {item.title}
+              {item.href ? <Link href={item.href}>{item.title}</Link> : item.title}
             </li>
           ))}
         </ul>
@@ -51,7 +63,7 @@ export function IncludedGrid({ items }: { items: Included[] }) {
                     <span className="sd-list__tick" aria-hidden="true">
                       <Icon name="check" size={13} stroke={2.6} />
                     </span>
-                    {item.title}
+                    {item.href ? <Link href={item.href}>{item.title}</Link> : item.title}
                   </li>
                 ))}
               </ul>

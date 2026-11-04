@@ -1,13 +1,31 @@
 "use client";
 
+import Link from "next/link";
 import { useRef, useState, type CSSProperties, type TouchEvent } from "react";
 
 import { Icon } from "../Icon";
 import { SectionHeader } from "../SectionHeader";
 import { SplitHeading } from "../SplitHeading";
 import { Tag } from "../Tag";
-import { GROUPS, type Group } from "./data";
+import { GROUPS, type Group, type ServiceRow } from "./data";
 import { scrollToAnchor } from "./scroll";
+
+function RowInner({ row }: { row: ServiceRow }) {
+  return (
+    <>
+      <span className="sv-row__icon" aria-hidden="true">
+        <Icon name={row.icon} size={18} stroke={2} />
+      </span>
+      <span className="sv-row__text">
+        <strong>{row.name}</strong>
+        <span>{row.meta}</span>
+      </span>
+      <Tag tone={row.tone} className="sv-row__tag">
+        {row.tag}
+      </Tag>
+    </>
+  );
+}
 
 /**
  * Services 03: Build · Run · Grow. Three group cards on desktop (STAGGER GRID,
@@ -41,7 +59,7 @@ export function Overview() {
           tag="THREE WAYS WE HELP"
           heading="Build it. Run it. Grow it."
           headingClass="gg-h2 hm-h2"
-          sub="Seven services in three groups. Most clients start with a build, then add running and growth when they need it."
+          sub="Nine services in three groups. Most clients start with a build or a monthly plan, then add running and growth when they need it."
           subClassName="hm-hide-phone"
         />
 
@@ -85,25 +103,22 @@ export function Overview() {
               <ul className="sv-rows">
                 {g.rows.map((row) => (
                   <li key={row.anchor}>
-                    <a
-                      className="sv-row"
-                      href={`#${row.anchor}`}
-                      onClick={(event) => {
-                        event.preventDefault();
-                        scrollToAnchor(row.anchor);
-                      }}
-                    >
-                      <span className="sv-row__icon" aria-hidden="true">
-                        <Icon name={row.icon} size={18} stroke={2} />
-                      </span>
-                      <span className="sv-row__text">
-                        <strong>{row.name}</strong>
-                        <span>{row.meta}</span>
-                      </span>
-                      <Tag tone={row.tone} className="sv-row__tag">
-                        {row.tag}
-                      </Tag>
-                    </a>
+                    {row.href ? (
+                      <Link className="sv-row" href={row.href}>
+                        <RowInner row={row} />
+                      </Link>
+                    ) : (
+                      <a
+                        className="sv-row"
+                        href={`#${row.anchor}`}
+                        onClick={(event) => {
+                          event.preventDefault();
+                          scrollToAnchor(row.anchor);
+                        }}
+                      >
+                        <RowInner row={row} />
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>

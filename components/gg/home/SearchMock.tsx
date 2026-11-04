@@ -93,6 +93,13 @@ export function SearchMock() {
         </div>
         <p className="hm-search__title hm-search__title--quiet">Directory listing · Plumbers</p>
       </div>
+      <div className="hm-search__ai" style={{ "--gg-i": 3 } as CSSProperties}>
+        <Tag tone="plum">AI OVERVIEW</Tag>
+        <p>
+          …recommends <strong>Your Business</strong>
+        </p>
+        <span className="hm-search__ill">Illustration</span>
+      </div>
     </div>
   );
 }

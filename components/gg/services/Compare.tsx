@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 
 import { ButtonLink } from "../Button";
@@ -8,7 +9,9 @@ import { SectionHeader } from "../SectionHeader";
 import { Tag } from "../Tag";
 import { COMPARE_ROWS, MOBILE_ROWS, PLANS, PLAN_CTA, type Cell, type PlanKey } from "./data";
 
-const KEYS: PlanKey[] = ["build", "care", "full"];
+const KEYS: PlanKey[] = ["local", "care", "full"];
+
+const SHORT: Record<PlanKey, string> = { local: "Local Plus", care: "Care Plan", full: "Full Service" };
 
 function CellContent({ value, plum }: { value: Cell; plum?: boolean }) {
   if (value === "yes") {
@@ -44,7 +47,7 @@ function CellContent({ value, plum }: { value: Cell; plum?: boolean }) {
  * open item for the owner (README section 10, item 9).
  */
 export function Compare() {
-  const [plan, setPlan] = useState<PlanKey>("full");
+  const [plan, setPlan] = useState<PlanKey>("local");
   const [hover, setHover] = useState<PlanKey | null>(null);
 
   return (
@@ -56,13 +59,13 @@ export function Compare() {
           tag="AFTER LAUNCH"
           heading="Three ways your site is looked after."
           headingClass="gg-h2 hm-h2"
-          sub="Basic care is included while you pay off a 12-month build. After that, pick the level of help you want."
+          sub="Pick the level of help you want: a monthly Local plan, a Care Plan for a custom build, or Full Service."
           subClassName="hm-hide-phone"
         />
 
         <div className="sv-table-wrap" data-reveal="fade-up">
           <table className="sv-table" data-hover={hover ?? undefined} onMouseLeave={() => setHover(null)}>
-            <caption className="gg-sr-only">Compare the 12-month build plan, Website Care Plan and Full Service</caption>
+            <caption className="gg-sr-only">Compare Local Plus, the Website Care Plan and Full Service</caption>
             <thead>
               <tr>
                 <th scope="col" className="sv-table__feature">
@@ -106,6 +109,13 @@ export function Compare() {
           </table>
         </div>
 
+        <p className="sv-compare__note" data-reveal="fade-up">
+          Paying off a custom 12-month build? Basic care is included while you pay it off.{" "}
+          <Link className="gg-text-link" href="/pricing#custom">
+            See custom builds
+          </Link>
+        </p>
+
         <div className="sv-planswitch">
           <div className="sv-seg" role="tablist" aria-label="Plans" data-n="3" data-i={KEYS.indexOf(plan)}>
             <span className="sv-seg__pill" aria-hidden="true" />
@@ -118,15 +128,15 @@ export function Compare() {
                 className="sv-seg__opt"
                 onClick={() => setPlan(p.key)}
               >
-                {p.key === "build" ? "Build plan" : p.key === "care" ? "Care Plan" : "Full Service"}
+                {SHORT[p.key]}
               </button>
             ))}
           </div>
           {PLANS.filter((p) => p.key === plan).map((p) => (
             <div key={p.key} className={`sv-panel sv-panel--${p.key}`}>
               <div className="sv-panel__head">
-                <strong>{p.key === "build" ? "12-month build" : p.name}</strong>
-                <span>{p.key === "full" ? "From R1 500/month · no minimum term" : p.sub}</span>
+                <strong>{p.name}</strong>
+                <span>{p.sub}</span>
               </div>
               <ul>
                 {MOBILE_ROWS.map((row) => {

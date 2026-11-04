@@ -1,6 +1,9 @@
 import type { CSSProperties } from "react";
 
+import { localFromMonthly } from "@/content/pricing";
+
 import { ButtonLink } from "../Button";
+import { formatRand } from "../format";
 import { Icon } from "../Icon";
 import { ArrowChip, LinkedCard } from "../LinkedCard";
 import { SectionHeader } from "../SectionHeader";
@@ -88,9 +91,9 @@ export function PaymentBand() {
             </h2>
             <p>
               <span className="gg-resp-long">
-                Every website project is quoted as one fixed price. Pay 50% upfront and the rest on completion, or split it into 12 monthly instalments. No surprise final invoice, either way.
+                Monthly plans have no deposit. Custom website projects are quoted as one fixed price: pay 50% upfront and the rest on completion, or split it into 12 monthly instalments. No surprise final invoice, either way.
               </span>
-              <span className="gg-resp-short">One fixed price: 50% upfront and 50% on completion, or 12 monthly instalments.</span>
+              <span className="gg-resp-short">A monthly plan with no deposit, or one fixed price: 50% upfront and 50% on completion, or 12 monthly instalments.</span>
             </p>
             <ButtonLink href="/pricing" variant="coral" className="sv-payband__btn">
               See pricing
@@ -104,6 +107,10 @@ export function PaymentBand() {
             <div className="sv-tile">
               <SplitHeading as="p" className="sv-tile__big" text="12 ×" />
               <span>Monthly instalments</span>
+            </div>
+            <div className="sv-tile sv-tile--monthly">
+              <SplitHeading as="p" className="sv-tile__big" text={`${formatRand(localFromMonthly)}/mo`} />
+              <span>Monthly plan from {formatRand(localFromMonthly)}/mo, no deposit</span>
             </div>
           </div>
         </div>

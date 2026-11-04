@@ -52,7 +52,7 @@
   - [Why hand-coded websites beat drag-and-drop builders](https://www.goodground.co.za/insights/hand-coded-websites-vs-drag-and-drop-builders)
   - [The biggest website mistakes South African SMEs make](https://www.goodground.co.za/insights/biggest-website-mistakes-south-african-smes-make)
   - [Why every small business in South Africa needs a website](https://www.goodground.co.za/insights/why-small-businesses-in-south-africa-need-a-website)
-- [FAQ](https://www.goodground.co.za/faq): Payment options, scope, timelines and the ads services, answered directly.
+- [FAQ](https://www.goodground.co.za/faq): Monthly plans and AI visibility, payment options, scope, timelines and the ads services, answered directly.
 - [Start a project](https://www.goodground.co.za/start-project): Project enquiry form.
 - [Contact](https://www.goodground.co.za/contact): Get in touch.
 - [Legal](https://www.goodground.co.za/legal): Legal notice, privacy policy (POPIA) and terms.

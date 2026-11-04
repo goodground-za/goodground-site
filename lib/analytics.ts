@@ -83,7 +83,7 @@ export const funnelEvents = {
   aiCheckRequestSent: (p: { ref: string; town?: string; industry?: string }) =>
     trackEvent("ai_check_request_sent", { ref: p.ref, town: p.town ?? "none", industry: p.industry ?? "none" }),
   aiCheckWaitlistJoin: (p: { ref: string }) => trackEvent("ai_check_waitlist_join", p),
-  aiCtaClick: (p: { position: "hero" | "included" | "faq" | "sticky" }) => trackEvent("ai_cta_click", p),
+  aiCtaClick: (p: { position: "hero" | "included" | "faq" | "sticky" | "home" | "industry-search" | "service-seo" }) => trackEvent("ai_cta_click", p),
   offerSpotView: (p: { month: string }) => trackEvent("offer_spot_view", p),
   offerWaitlistJoin: (p: { month: string }) => trackEvent("offer_waitlist_join", p),
 };

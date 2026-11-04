@@ -41,6 +41,8 @@ export type IndustryView = {
     query: string;
     towns: string[];
     hit: { title: string; sub: string };
+    /** The two-line AI answer in the "AI ANSWER" card; names the example business. Illustration. */
+    aiAnswer: string;
     dim: [{ t: string; s: string }, { t: string; s: string }];
     callLabel: string;
   };
@@ -50,14 +52,11 @@ export type IndustryView = {
     checklist: string[];
     dev: { text: string; short: string };
     seo: { title: string; body: string };
-    full: { title: string; body: string };
     ads: { title: string; body: string; short: string };
   };
   faq: { tag: string; heading: string };
   ctaSub: string;
 };
-
-const FULL = { title: "We keep it running.", body: "Hosting, updates, backups and small content changes." };
 
 export const INDUSTRY_VIEWS: Record<string, IndustryView> = {
   "trades-and-home-services": {
@@ -116,6 +115,7 @@ export const INDUSTRY_VIEWS: Record<string, IndustryView> = {
       query: "plumber in george",
       towns: ["George", "Wilderness", "Mossel Bay", "Knysna", "Oudtshoorn", "Plettenberg Bay"],
       hit: { title: "Your Trade Co. · Plumbers in George", sub: "4.9 · Website · Open 24 hours" },
+      aiAnswer: "Your Trade Co. is a licensed plumber covering George and the Garden Route. It is open 24 hours and has a 4.9 rating from Google reviews.",
       dim: [
         { t: "Another plumbing business", s: "Facebook page · Last post 9 months ago" },
         { t: "Garden Route plumbing directory", s: "Listing only · No website" },
@@ -137,7 +137,6 @@ export const INDUSTRY_VIEWS: Record<string, IndustryView> = {
         short: "Mobile-first, with your services, service area, reviews and tap-to-call on every page.",
       },
       seo: { title: "Found for the towns you work in.", body: "Service-area pages, Google Business Profile tune-up, local schema." },
-      full: FULL,
       ads: {
         title: "Show up first when the geyser bursts.",
         body: "Call-focused campaigns for emergency and high-value jobs, with a clear monthly report.",
@@ -192,6 +191,7 @@ export const INDUSTRY_VIEWS: Record<string, IndustryView> = {
       query: "physio in george",
       towns: ["George", "Wilderness", "Mossel Bay", "Knysna", "Oudtshoorn"],
       hit: { title: "Your Practice · Physiotherapists in George", sub: "4.9 · Website · Book online" },
+      aiAnswer: "Your Practice is taking new patients in George. Its website lists the physiotherapists, online booking and a 4.9 rating.",
       dim: [
         { t: "Another practice", s: "Facebook page · Last post 9 months ago" },
         { t: "Health directory", s: "Listing only · No website" },
@@ -210,7 +210,6 @@ export const INDUSTRY_VIEWS: Record<string, IndustryView> = {
       ],
       dev: { text: "Mobile-first and fast, with your treatments, practitioners, reviews and a clear way to book.", short: "Mobile-first, with your treatments, practitioners, reviews and a clear way to book." },
       seo: { title: "Found for what you treat.", body: "Treatment pages, local SEO, Google Business Profile tune-up." },
-      full: FULL,
       ads: { title: "Be there when someone needs you.", body: "Search campaigns for the treatments you want more of, with a clear monthly report.", short: "Search campaigns for the treatments you want more of." },
     },
     faq: { tag: "QUESTIONS FROM PRACTICES", heading: "Things practices ask us." },
@@ -261,6 +260,7 @@ export const INDUSTRY_VIEWS: Record<string, IndustryView> = {
       query: "guesthouse in wilderness",
       towns: ["Wilderness", "George", "Knysna", "Sedgefield", "Mossel Bay"],
       hit: { title: "Your Guesthouse · Wilderness", sub: "4.8 · Website · Book direct" },
+      aiAnswer: "Your Guesthouse serves dinner near Wilderness and George. The menu is on its website, you can book direct, and it has a 4.8 rating.",
       dim: [
         { t: "Another guesthouse", s: "Listing only · Booking site fees apply" },
         { t: "Accommodation directory", s: "Listing only · No website" },
@@ -279,7 +279,6 @@ export const INDUSTRY_VIEWS: Record<string, IndustryView> = {
       ],
       dev: { text: "Mobile-first and fast, with your rooms or menu, photos, reviews and a clear way to book.", short: "Mobile-first, with your rooms or menu, photos, reviews and a clear way to book." },
       seo: { title: "Found for where you are.", body: "Local pages, Google Business Profile tune-up, local schema." },
-      full: FULL,
       ads: { title: "Fill the quiet weeks.", body: "Search and social campaigns timed to your seasons, with a clear monthly report.", short: "Campaigns timed to your seasons." },
     },
     faq: { tag: "QUESTIONS FROM VENUES", heading: "Things venues ask us." },
@@ -330,6 +329,7 @@ export const INDUSTRY_VIEWS: Record<string, IndustryView> = {
       query: "handmade candles south africa",
       towns: ["Cape Town", "George", "Johannesburg", "Durban", "Pretoria"],
       hit: { title: "Your Brand · Handmade candles", sub: "4.9 · Website · Free delivery" },
+      aiAnswer: "Your Brand sells locally made gifts online. Its website shows free delivery and a 4.9 rating from customers.",
       dim: [
         { t: "Another shop", s: "Marketplace listing · Fees apply" },
         { t: "Gift directory", s: "Listing only · No website" },
@@ -348,7 +348,6 @@ export const INDUSTRY_VIEWS: Record<string, IndustryView> = {
       ],
       dev: { text: "Mobile-first and fast, with your products, photography, reviews and a clear way to buy.", short: "Mobile-first, with your products, photography, reviews and a clear way to buy." },
       seo: { title: "Found beyond social media.", body: "Product and category SEO, structured data, speed." },
-      full: FULL,
       ads: { title: "Put the product in front of buyers.", body: "Shopping and search campaigns focused on what sells, with a clear monthly report.", short: "Campaigns focused on what sells." },
     },
     faq: { tag: "QUESTIONS FROM BRANDS", heading: "Things small brands ask us." },
@@ -399,6 +398,7 @@ export const INDUSTRY_VIEWS: Record<string, IndustryView> = {
       query: "accountant in george",
       towns: ["George", "Mossel Bay", "Knysna", "Oudtshoorn", "Cape Town"],
       hit: { title: "Your Firm · Accountants in George", sub: "4.9 · Website · Free consultation" },
+      aiAnswer: "Your Firm works with small businesses in George. Its website lists its services, a free first consultation and a 4.9 rating.",
       dim: [
         { t: "Another firm", s: "Listing only · Last updated 2019" },
         { t: "Business directory", s: "Listing only · No website" },
@@ -417,7 +417,6 @@ export const INDUSTRY_VIEWS: Record<string, IndustryView> = {
       ],
       dev: { text: "Mobile-first and fast, with your services, team, credentials and a clear first step.", short: "Mobile-first, with your services, team, credentials and a clear first step." },
       seo: { title: "Found by the clients you want.", body: "Service pages, local SEO, Google Business Profile tune-up." },
-      full: FULL,
       ads: { title: "Be there when they search.", body: "Search campaigns for the services you want more of, with a clear monthly report.", short: "Search campaigns for the services you want more of." },
     },
     faq: { tag: "QUESTIONS FROM FIRMS", heading: "Things firms ask us." },
@@ -468,6 +467,7 @@ export const INDUSTRY_VIEWS: Record<string, IndustryView> = {
       query: "feeding scheme in george",
       towns: ["George", "Knysna", "Mossel Bay", "Oudtshoorn", "Plettenberg Bay"],
       hit: { title: "Your Organisation · Feeding scheme in George", sub: "Registered NPO · Website · Donate online" },
+      aiAnswer: "Your Organisation is a registered NPO in George. Its website explains how to volunteer and has a short form to get started.",
       dim: [
         { t: "Another organisation", s: "Facebook page · Last post 9 months ago" },
         { t: "Charity directory", s: "Listing only · No website" },
@@ -486,7 +486,6 @@ export const INDUSTRY_VIEWS: Record<string, IndustryView> = {
       ],
       dev: { text: "Mobile-first and fast, with your story, your work and a clear way to give or get involved.", short: "Mobile-first, with your story, your work and a clear way to give." },
       seo: { title: "Found by the people who want to help.", body: "Local and cause-based SEO, Google for Nonprofits guidance." },
-      full: FULL,
       ads: { title: "Reach the people who care.", body: "Campaigns for donors and volunteers on a budget you control, with a clear monthly report.", short: "Campaigns for donors and volunteers." },
     },
     faq: { tag: "QUESTIONS FROM ORGANISATIONS", heading: "Things organisations ask us." },

@@ -1434,3 +1434,28 @@
     padding-block: 56px;
   }
 }
+
+/* v2: the "Checked for AI answers" item links to /services/ai-visibility. */
+.sd-inc__card--link {
+  color: inherit;
+  transition: border-color var(--gg-motion-sm) var(--gg-ease-out);
+}
+
+.sd-inc__card--link:focus-visible,
+.sd-list a:focus-visible {
+  outline: 2px solid var(--gg-coral);
+  outline-offset: 3px;
+}
+
+.sd-list a {
+  color: var(--gg-coral-text);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sd-inc__card--link:hover {
+    border-color: rgba(17, 17, 17, 0.3);
+  }
+}

@@ -4,13 +4,14 @@ import { faq } from "@/content/faq";
 
 import { ButtonLink } from "../Button";
 import { FaqAccordion, type FaqItem } from "../FaqAccordion";
+import { sharedFaqItem } from "../shared/sharedFaq";
 import { Icon } from "../Icon";
 import { SectionHeader } from "../SectionHeader";
 
 /**
  * Home 10. Questions and phone wording as drawn; answers come from the live
- * FAQ (content/faq.ts, by position) except the first, which Figma writes out.
- * Only the first question is open on load and only one is ever open.
+ * FAQ (content/faq.ts, by position) except the custom-build payment answer, which
+ * Figma writes out. Only the first question is open on load and only one is ever open.
  *
  * No FAQPage JSON-LD here: /faq already emits it for this same question set,
  * and repeating it put duplicate FAQPage content on two indexed URLs (the
@@ -19,7 +20,11 @@ import { SectionHeader } from "../SectionHeader";
  * is flagged for the owner in the tracker.
  */
 const QUESTIONS: { question: string; short?: string; liveIndex: number }[] = [
-  { question: "How do the two payment options work?", liveIndex: 0 },
+  {
+    question: "How do the payment options work on a custom build?",
+    short: "How do custom-build payments work?",
+    liveIndex: 0,
+  },
   { question: "Is there a deposit before you start?", liveIndex: 1 },
   { question: "What happens if the scope changes partway through?", short: "What if the scope changes partway through?", liveIndex: 2 },
   { question: "What if I need to pause or cancel the project?", short: "Can I pause or cancel the project?", liveIndex: 3 },
@@ -38,13 +43,20 @@ const FIRST_ANSWER = {
 /** Deep links from /contact ("Quick answers"): /#faq-payment-options and /#faq-project-length. */
 const SLUGS: Record<number, string> = { 0: "payment-options", 5: "project-length" };
 
-const ITEMS: FaqItem[] = QUESTIONS.map(({ question, short, liveIndex }) => {
+const LIVE_ITEMS: FaqItem[] = QUESTIONS.map(({ question, short, liveIndex }) => {
   const live = faq[liveIndex]?.answer ?? "";
   const slug = SLUGS[liveIndex];
   return liveIndex === 0
     ? { question, slug, answer: [FIRST_ANSWER.long], short: { answer: [FIRST_ANSWER.short] } }
     : { question, slug, answer: [live], short: short ? { question: short } : undefined };
 });
+
+/**
+ * v2: the monthly-plan question leads (open on load) and the AI question follows,
+ * both from the shared FAQ source (content/faq.ts) so Home, /faq and Pricing never
+ * disagree. The live questions keep their order after them.
+ */
+const ITEMS: FaqItem[] = [sharedFaqItem("monthly-or-custom"), sharedFaqItem("ai-recommend"), ...LIVE_ITEMS];
 
 export function HomeFaq() {
   return (

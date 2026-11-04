@@ -1,4 +1,9 @@
+import { addOns as pricingAddOns, localFromMonthly } from "@/content/pricing";
+
+import { formatRand } from "../format";
 import type { IconName } from "../Icon";
+
+const fixPack = pricingAddOns.find((a) => a.id === "fix-pack")!;
 
 /**
  * Structured copy for the Service detail template (Figma 95:159 SEO, 98:201).
@@ -12,8 +17,19 @@ import type { IconName } from "../Icon";
  */
 
 export type Problem = { title: string; body: string; short: string; icon: IconName };
-export type Included = { title: string; body: string; icon: IconName; tint: "mint" | "lilac" | "blush" };
-export type AddOn = { kicker: string; title: string; shortTitle: string; body: string; from: string; note: string; cta: string; href: string };
+export type Included = { title: string; body: string; icon: IconName; tint: "mint" | "lilac" | "blush"; /** Makes the card a link (SEO: the AI visibility item). */ href?: string };
+export type AddOn = {
+  kicker: string;
+  title: string;
+  shortTitle: string;
+  body: string;
+  /** Small label above the amount; defaults to "FROM". */
+  priceLabel?: string;
+  from: string;
+  note: string;
+  cta: string;
+  href: string;
+};
 
 export type ServiceView = {
   slug: "seo" | "website-redesign" | "ux-design" | "google-ads" | "meta-ads";
@@ -35,7 +51,8 @@ export type ServiceView = {
     good: string[];
     goodShort: string[];
   };
-  addOn?: AddOn;
+  /** Add-on bands, in order (SEO has two). */
+  addOns?: AddOn[];
   faqHeading: string;
   /** First-answer wording used on the page (Figma), if it differs from the live copy. */
   faqFirstAnswer?: { long: string; short: string };
@@ -53,7 +70,7 @@ export const SERVICE_VIEWS: Record<ServiceView["slug"], ServiceView> = {
     problemsHeading: "Most SEO problems aren’t exotic.",
     problemsSub:
       "They’re ordinary things done wrong or skipped entirely. Fixing the ordinary things properly does more for most small businesses than any exotic tactic.",
-    includedHeading: "Nine things every GoodGround site gets right.",
+    includedHeading: "Nine things every GoodGround site gets right, plus an AI check.",
     includedLinkRef: "/services#seo",
     problems: [
       {
@@ -85,6 +102,13 @@ export const SERVICE_VIEWS: Record<ServiceView["slug"], ServiceView> = {
       { title: "Structured data", body: "Schema that describes your business correctly to search engines.", icon: "code", tint: "blush" },
       { title: "Alt text + compression", body: "Pages stay fast and accessible without losing useful context.", icon: "image", tint: "mint" },
       { title: "Internal linking", body: "Authority and relevance flow through the site.", icon: "share", tint: "lilac" },
+      {
+        title: "Checked for AI answers",
+        body: "ChatGPT, Gemini and Google AI, on monthly plans.",
+        icon: "eye",
+        tint: "mint",
+        href: "/services/ai-visibility",
+      },
     ],
     approach: {
       heading: "The same people who build the site think about how it ranks.",
@@ -106,7 +130,8 @@ export const SERVICE_VIEWS: Record<ServiceView["slug"], ServiceView> = {
         "No second project to fix it later",
       ],
     },
-    addOn: {
+    addOns: [
+      {
       kicker: "ALREADY HAVE A SITE?",
       title: "Advanced SEO and site speed optimisation, as standalone add-ons.",
       shortTitle: "Advanced SEO + site speed add-ons",
@@ -115,7 +140,19 @@ export const SERVICE_VIEWS: Record<ServiceView["slug"], ServiceView> = {
       note: "confirmed in a quote",
       cta: "Ask for an SEO audit",
       href: "/start-project?intent=seo-audit&ref=service-seo",
-    },
+      },
+      {
+        kicker: "AI VISIBILITY",
+        title: fixPack.name,
+        shortTitle: fixPack.name,
+        body: "We fix the signals AI engines read: Google profile, service pages, structured data and listings.",
+        priceLabel: "PRICE",
+        from: formatRand(fixPack.price),
+        note: fixPack.unit,
+        cta: "See how it works",
+        href: "/services/ai-visibility",
+      },
+    ],
     faqHeading: "Questions about SEO.",
     faqFirstAnswer: {
       long: "SEO foundations come standard with every website we build. If you already have a site, Advanced SEO and site speed optimisation are available as standalone add-ons, from R3 000 and confirmed in a quote. We audit the existing site first so the quote reflects what it actually needs.",
@@ -369,6 +406,8 @@ export const PAIRS = [
   { key: "seo", name: "SEO", tag: "INCLUDED", href: "/services/seo" },
   { key: "google-ads", name: "Google Ads", tag: "GROWTH", href: "/services/google-ads" },
   { key: "meta-ads", name: "Meta Ads", tag: "GROWTH", href: "/services/meta-ads" },
+  { key: "ai-visibility", name: "AI visibility", tag: "FREE CHECK", href: "/services/ai-visibility" },
+  { key: "monthly-plans", name: "Monthly plans", tag: `FROM ${formatRand(localFromMonthly)}/MO`, href: "/pricing#monthly" },
 ];
 
 export const tintOf = tint;

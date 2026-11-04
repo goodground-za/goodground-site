@@ -95,6 +95,8 @@ function Card({
   return (
     <>
     {d.id === "seo" ? <span id="seo-foundations" className="sv-alias" /> : null}
+    {/* AI visibility has its own page (/services/ai-visibility); this keeps /services#ai-visibility landing in the Grow cards. */}
+    {d.id === "google-ads" ? <span id="ai-visibility" className="sv-alias" /> : null}
     <article id={d.id} className={cls} data-reveal="group">
       <button
         type="button"

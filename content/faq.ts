@@ -41,7 +41,7 @@ export const faq: FAQItem[] = [
   {
     question: "How long does a typical project take?",
     answer:
-      "Most website projects take 1 to 6 weeks from start to launch, depending on the package. The exact time depends on the scope and what your project needs, and we’ll give you a firmer estimate once we’ve scoped it together.",
+      "Custom builds take about 1 to 6 weeks depending on the package (Micro ~1 week, Launch ~2, Grow ~3–4, Scale ~4–6). Monthly plans go live within about 5–7 working days.",
   },
   {
     question: "What happens after my website launches?",

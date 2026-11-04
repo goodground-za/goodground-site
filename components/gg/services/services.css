@@ -21,7 +21,6 @@
   --n: 3;
 }
 
-.sv-seg[data-mode="12"],
 .sv-seg[data-i="1"] {
   --k: 1;
 }
@@ -71,6 +70,12 @@ html[data-motion="off"] .sv-seg__pill,
 html[data-motion="off"] .sv-viz *,
 html[data-motion="off"] .sv-nav__pill {
   transition: none !important;
+}
+
+@media (max-width: 359px) {
+  .sv-seg__opt {
+    font-size: 12px;
+  }
 }
 
 @media (min-width: 768px) {
@@ -145,6 +150,7 @@ html[data-motion="off"] .sv-nav__pill {
   height: 36px;
 }
 
+.sv-viz__dots,
 .sv-viz__bars,
 .sv-viz__blocks {
   position: absolute;
@@ -158,6 +164,23 @@ html[data-motion="off"] .sv-nav__pill {
 
 .sv-viz__bars {
   align-items: flex-end;
+}
+
+/* "Monthly plan": twelve equal dots, one per month. */
+.sv-viz__dots {
+  align-items: center;
+  gap: 5px;
+  opacity: 0;
+  transform: scaleX(0.85);
+  pointer-events: none;
+}
+
+.sv-viz__dot {
+  flex: 1;
+  aspect-ratio: 1;
+  max-height: 100%;
+  border-radius: 50%;
+  background: var(--gg-coral);
 }
 
 .sv-viz__bar {
@@ -201,9 +224,15 @@ html[data-motion="off"] .sv-nav__pill {
   color: var(--gg-ink);
 }
 
-.sv-viz[data-mode="50"] .sv-viz__bars {
+.sv-viz[data-mode="50"] .sv-viz__bars,
+.sv-viz[data-mode="monthly"] .sv-viz__bars {
   opacity: 0;
   transform: scaleX(0.6);
+}
+
+.sv-viz[data-mode="monthly"] .sv-viz__dots {
+  opacity: 1;
+  transform: none;
 }
 
 .sv-viz[data-mode="50"] .sv-viz__blocks {
@@ -1103,7 +1132,7 @@ html[data-motion="off"] .sv-nav__pill {
   animation: sv-fade var(--gg-motion-md) var(--gg-ease-out);
 }
 
-.sv-panel--build {
+.sv-panel--local {
   background: var(--gg-canvas);
 }
 
@@ -1237,7 +1266,7 @@ html[data-motion="off"] .sv-nav__pill {
       box-shadow var(--gg-motion-sm) var(--gg-ease-out);
   }
 
-  .sv-col--build {
+  .sv-col--local {
     background: var(--gg-canvas);
   }
 
@@ -1304,19 +1333,19 @@ html[data-motion="off"] .sv-nav__pill {
     vertical-align: middle;
   }
 
-  .sv-table[data-hover="build"] .sv-col:not([data-col="build"]),
+  .sv-table[data-hover="local"] .sv-col:not([data-col="local"]),
   .sv-table[data-hover="care"] .sv-col:not([data-col="care"]),
   .sv-table[data-hover="full"] .sv-col:not([data-col="full"]) {
     opacity: 0.8;
   }
 
-  .sv-table[data-hover] .sv-col[data-col="build"],
+  .sv-table[data-hover] .sv-col[data-col="local"],
   .sv-table[data-hover] .sv-col[data-col="care"],
   .sv-table[data-hover] .sv-col[data-col="full"] {
     box-shadow: none;
   }
 
-  .sv-table[data-hover="build"] .sv-col[data-col="build"],
+  .sv-table[data-hover="local"] .sv-col[data-col="local"],
   .sv-table[data-hover="care"] .sv-col[data-col="care"],
   .sv-table[data-hover="full"] .sv-col[data-col="full"] {
     box-shadow:
@@ -2084,15 +2113,16 @@ html[data-motion="off"] .sv-nav__pill {
 
   .sv-payband__tiles {
     display: flex;
+    flex-wrap: wrap;
     gap: 12px;
   }
 
   .sv-tile {
     display: flex;
-    flex: 1;
+    flex: 1 1 160px;
     flex-direction: column;
     gap: 6px;
-    min-width: 200px;
+    min-width: 160px;
     padding: 24px;
     border-radius: 24px;
     background: rgba(255, 255, 255, 0.08);
@@ -2105,7 +2135,11 @@ html[data-motion="off"] .sv-nav__pill {
     line-height: 1;
   }
 
-  .sv-tile span {
+  .sv-tile--monthly {
+    background: rgba(239, 74, 35, 0.2);
+  }
+
+  .sv-tile > span {
     font-size: 13px;
     color: var(--gg-on-dark-muted);
   }
@@ -2123,6 +2157,10 @@ html[data-motion="off"] .sv-nav__pill {
 }
 
 @media (min-width: 1200px) {
+  .gg .sv-tile__big {
+    font-size: 44px;
+  }
+
   .sv-whygrow {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -2182,4 +2220,23 @@ html[data-motion="off"] .sv-nav__pill {
     min-height: 44px;
     margin-block: -11px;
   }
+}
+
+/* Compare: the note that carries the retired "Build plan" column. */
+.sv-compare__note {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--gg-muted);
+}
+
+.sv-compare__note a {
+  font-weight: 600;
+  color: var(--gg-coral-text);
+}
+
+/* The segmented control's pill is positioned with a transform, not animated by it. The payment
+   chooser sits inside a reveal wrapper, and "Pause motion" / reduced motion flatten transforms
+   there, which left the pill on the first option. Keep it under the selected one. */
+html.js .gg [data-reveal] .sv-seg__pill {
+  transform: translateX(calc(var(--k) * (100% + 4px))) !important;
 }

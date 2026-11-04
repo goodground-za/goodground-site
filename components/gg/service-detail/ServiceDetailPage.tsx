@@ -8,6 +8,7 @@ import { site } from "@/content/site";
 
 import { ArticleCover, type CoverTopic } from "../ArticleCover";
 import { ButtonLink } from "../Button";
+import { CtaTracker } from "../CtaTracker";
 import { FaqAccordion, type FaqItem } from "../FaqAccordion";
 import { GgShell } from "../GgShell";
 import { GradientCta } from "../GradientCta";
@@ -91,12 +92,25 @@ export function ServiceDetailPage({ slug }: { slug: ServiceView["slug"] }) {
                 ))}
               </ul>
               <div className="sd-hero__buttons" data-part="cta">
-                <ButtonLink href={`/start-project?ref=${ref}`} variant="coral">
-                  Start your project
-                </ButtonLink>
-                <ButtonLink href="/pricing" variant="outline">
-                  See pricing
-                </ButtonLink>
+                {entry.primaryTrack === "check" ? (
+                  <>
+                    <ButtonLink href={`/services/ai-visibility?ref=${ref}#book`} variant="coral" data-cta="hero" data-ai-cta="service-seo">
+                      Book a free AI visibility check
+                    </ButtonLink>
+                    <ButtonLink href={`/start-project?ref=${ref}`} variant="outline" data-cta="hero-secondary">
+                      Start your project
+                    </ButtonLink>
+                  </>
+                ) : (
+                  <>
+                    <ButtonLink href={`/start-project?ref=${ref}`} variant="coral" data-cta="hero">
+                      Start your project
+                    </ButtonLink>
+                    <ButtonLink href="/pricing" variant="outline" data-cta="hero-secondary">
+                      See pricing
+                    </ButtonLink>
+                  </>
+                )}
               </div>
             </div>
             <HeroVisual kind={view.visual} />
@@ -187,25 +201,25 @@ export function ServiceDetailPage({ slug }: { slug: ServiceView["slug"] }) {
                 </ul>
               </div>
             </div>
-            {view.addOn ? (
-              <div className="sd-addon" data-reveal="fade-up">
+            {view.addOns?.map((addOn) => (
+              <div key={addOn.title} className="sd-addon" data-reveal="fade-up">
                 <div className="sd-addon__copy">
-                  <p className="gg-kicker">{view.addOn.kicker}</p>
+                  <p className="gg-kicker">{addOn.kicker}</p>
                   <h3>
-                    <Resp long={view.addOn.title} short={view.addOn.shortTitle} />
+                    <Resp long={addOn.title} short={addOn.shortTitle} />
                   </h3>
-                  <p className="sd-addon__body">{view.addOn.body}</p>
+                  <p className="sd-addon__body">{addOn.body}</p>
                 </div>
                 <p className="sd-addon__price">
-                  <span className="gg-kicker">FROM</span>
-                  <span className="sd-addon__amount">{view.addOn.from}</span>
-                  <span className="sd-addon__note">{view.addOn.note}</span>
+                  <span className="gg-kicker">{addOn.priceLabel ?? "FROM"}</span>
+                  <span className="sd-addon__amount">{addOn.from}</span>
+                  <span className="sd-addon__note">{addOn.note}</span>
                 </p>
-                <ButtonLink href={view.addOn.href} variant="light" full>
-                  {view.addOn.cta}
+                <ButtonLink href={addOn.href} variant="light" full data-addon-cta="">
+                  {addOn.cta}
                 </ButtonLink>
               </div>
-            ) : null}
+            ))}
           </div>
         </section>
 
@@ -292,6 +306,7 @@ export function ServiceDetailPage({ slug }: { slug: ServiceView["slug"] }) {
         </section>
       </div>
 
+      <CtaTracker event="service_cta_click" slug={entry.slug} track={entry.primaryTrack} />
       <GradientCta variant="inner" track={entry.primaryTrack} refSource={ref} />
     </GgShell>
   );

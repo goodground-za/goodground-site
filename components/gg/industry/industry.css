@@ -1422,3 +1422,143 @@ html[data-motion="off"] .id-sticky,
 html[data-motion="off"] .id-tilt {
   transition: none;
 }
+
+/* ---------------------------------------------------------------------------
+ * v2 additions
+ * ------------------------------------------------------------------------- */
+
+/* Hero: the one line under the buttons on local industries. */
+.id-hero__from {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gg-muted);
+}
+
+/* 04: the AI answer card inside the search illustration. */
+.id-search__ai {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 14px;
+  border: 1px dashed rgba(46, 24, 72, 0.3);
+  border-radius: 14px;
+  background: var(--gg-blush);
+}
+
+.id-search__ai-kicker {
+  color: var(--gg-coral-text);
+}
+
+.id-search__ai-query {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--gg-plum);
+}
+
+.id-search__ai-answer {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--gg-ink);
+}
+
+.id-search__ai figcaption {
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--gg-muted);
+}
+
+.id-search.is-armed .id-search__ai {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.id-search.is-armed.is-typed .id-search__ai {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--gg-motion-md) var(--gg-ease-out),
+    transform var(--gg-motion-md) var(--gg-ease-out);
+  transition-delay: calc(var(--i) * 100ms);
+}
+
+.id-local__ai-cta {
+  display: flex;
+  margin-top: 16px;
+}
+
+.id-local__ai-cta .gg-btn {
+  width: 100%;
+}
+
+/* 06: the Monthly plans card rows. */
+.id-card__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.id-card__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--gg-ink);
+}
+
+.id-card__row .gg-icon {
+  flex: none;
+  color: var(--gg-coral-text);
+}
+
+/* 07: three payment tiles, monthly first; stacked so the figures keep their size. */
+.id-tile--mint {
+  background: var(--gg-mint);
+}
+
+.id-payband__tiles {
+  flex-direction: column;
+  height: auto;
+}
+
+.id-payband__tiles .id-tile {
+  flex: 1 1 auto;
+  padding: 16px 20px;
+}
+
+.gg .id-payband__tiles .id-tile__big {
+  font-size: 34px;
+}
+
+@media (min-width: 768px) {
+  .id-local__ai-cta .gg-btn {
+    width: auto;
+  }
+
+  .id-search__ai {
+    padding: 18px 20px;
+    border-radius: 18px;
+  }
+
+  .id-search__ai-query {
+    font-size: 16px;
+  }
+
+  .id-search__ai-answer {
+    font-size: 14px;
+  }
+
+  .id-search__ai figcaption {
+    font-size: 12px;
+  }
+
+  .id-payband__tiles .id-tile {
+    padding: 22px 32px;
+  }
+
+  .gg .id-payband__tiles .id-tile__big {
+    font-size: 48px;
+  }
+}

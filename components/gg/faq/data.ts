@@ -1,15 +1,17 @@
-import { faq } from "@/content/faq";
+import { faq, sharedFaq } from "@/content/faq";
 
 import type { IconName } from "../Icon";
 import { termsLive } from "../legal/data";
 
 /**
- * /faq (Figma 67:151 desktop, 68:167 mobile). The 13 questions and answers are the live ones in
+ * /faq (Figma 67:151 desktop, 68:167 mobile). Four topics. The first, "Monthly plans & AI visibility"
+ * (v2), is the six shared entries in content/faq.ts `sharedFaq` (the same ones Home, /services and
+ * /pricing read). The 13 questions and answers after it are the live ones in
  * content/faq.ts, by position and verbatim (open item: answer 07 is drawn lightly shortened, and
  * answer 06 still says 4 to 6 weeks while /pricing shows 1 to 2 weeks for the smaller packages).
  * What this file adds is the topic, the permanent anchor and the related link per question.
  */
-export type TopicKey = "payments" | "projects" | "ads";
+export type TopicKey = "monthly" | "payments" | "projects" | "ads";
 
 export type Topic = {
   key: TopicKey;
@@ -21,6 +23,7 @@ export type Topic = {
 };
 
 export const topics: Topic[] = [
+  { key: "monthly", title: "Monthly plans & AI visibility", short: "Monthly & AI", icon: "repeat", tint: "lilac" },
   { key: "payments", title: "Payments & pricing", short: "Payments", icon: "wallet", tint: "blush" },
   { key: "projects", title: "Website projects", short: "Projects", icon: "code", tint: "lilac" },
   { key: "ads", title: "Ads & growth", short: "Ads", icon: "up", tint: "mint" },
@@ -56,11 +59,20 @@ const META: Meta[] = [
   { slug: "ad-accounts", topic: "ads" },
 ];
 
-export const entries: FaqEntry[] = faq.map((item, i) => ({
+/** The six monthly-plan and AI entries, in the spec's order. Their slugs are the permanent anchors (/faq#monthly-or-custom ...). */
+const MONTHLY_SLUGS = ["monthly-or-custom", "monthly-included", "cancel-monthly", "new-business-offer", "ai-recommend", "ai-guarantee"] as const;
+
+const monthlyEntries: Omit<FaqEntry, "number">[] = MONTHLY_SLUGS.map((slug) => {
+  const entry = sharedFaq.find((e) => e.slug === slug)!;
+  return { slug, topic: "monthly", question: entry.question, answer: entry.answer, related: entry.link };
+});
+
+const liveEntries: Omit<FaqEntry, "number">[] = faq.map((item, i) => ({
   ...META[i],
-  number: String(i + 1).padStart(2, "0"),
   question: item.question,
   answer: item.answer ?? "",
 }));
+
+export const entries: FaqEntry[] = [...monthlyEntries, ...liveEntries].map((e, i) => ({ ...e, number: String(i + 1).padStart(2, "0") }));
 
 export const topicCount = (key: TopicKey) => entries.filter((e) => e.topic === key).length;

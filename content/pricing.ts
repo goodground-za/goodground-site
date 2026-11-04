@@ -189,6 +189,8 @@ export type LocalPlan = {
   /** Pay-once price for 12 months (2 months free), rand. */
   annual: number;
   tagline: string;
+  /** One line for the Home plan rows. */
+  oneLine: string;
   /** Three lines for the /start-project plan card. */
   highlights: [string, string, string];
   inclusions: string[];
@@ -208,6 +210,7 @@ export const localPlans: LocalPlan[] = [
     monthly: 299,
     annual: 2990,
     tagline: "A proper website and Google profile, so customers can find you and trust you.",
+    oneLine: "5 pages and your Google profile",
     highlights: ["Website up to 5 pages", ".co.za domain, hosting and backups", "Google Business Profile set up"],
     inclusions: [
       "Website up to 5 pages, built fast and polished by hand",
@@ -227,6 +230,7 @@ export const localPlans: LocalPlan[] = [
     monthly: 449,
     annual: 4490,
     tagline: "Your site, Google profile and AI visibility, looked after every month.",
+    oneLine: "10 pages and a monthly AI report",
     highlights: ["Up to 10 pages, one per service in your town", "Monthly Google profile updates", "Monthly AI Visibility Report"],
     inclusions: [
       "Everything in Local Start, plus:",
@@ -247,6 +251,7 @@ export const localPlans: LocalPlan[] = [
     monthly: 799,
     annual: 7990,
     tagline: "Everything handled, with more pages, weekly posts and the Fix Pack included.",
+    oneLine: "15 pages, weekly posts, Fix Pack",
     highlights: ["Up to 15 pages, a new page every quarter", "Weekly Google posts and review-reply drafts", "AI Visibility Fix Pack included"],
     inclusions: [
       "Everything in Local Plus, plus:",

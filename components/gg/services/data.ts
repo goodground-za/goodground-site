@@ -1,9 +1,26 @@
+import { addOns, fullServicePackage, localPlans, packages } from "@/content/pricing";
+
+import { formatRand } from "../format";
 import type { IconName } from "../Icon";
 import type { TagTone } from "../Tag";
 
+const planPlus = localPlans.find((p) => p.slug === "local-plus")!;
+const fromMonthly = formatRand(localPlans[0].monthly);
+const watch = addOns.find((a) => a.id === "visibility-watch")!;
+const email = addOns.find((a) => a.id === "business-email")!;
+
 /** Copy from the Services frames (Figma 35:151 / 39:229), tightened from the live /services page. */
 
-export type ServiceRow = { icon: IconName; name: string; meta: string; tag: string; tone: TagTone; anchor: string };
+export type ServiceRow = {
+  icon: IconName;
+  name: string;
+  meta: string;
+  tag: string;
+  tone: TagTone;
+  anchor: string;
+  /** Set when the row leaves the page (the AI visibility service has its own page). */
+  href?: string;
+};
 
 export type Group = {
   key: "build" | "run" | "grow";
@@ -39,7 +56,8 @@ export const GROUPS: Group[] = [
     text: "Hosting, mailboxes, updates, monitoring and SEO, so you never manage a technical detail.",
     theme: "blush",
     rows: [
-      { icon: "repeat", name: "Full Service", meta: "From R1 500/month · cancel any time", tag: "MONTHLY", tone: "neutral", anchor: "full-service" },
+      { icon: "pin", name: "Local plans", meta: `From ${fromMonthly}/month · no deposit`, tag: "MONTHLY", tone: "coral", anchor: "local-plans" },
+      { icon: "repeat", name: "Full Service", meta: `From ${formatRand(fullServicePackage.monthlyFrom)}/month · cancel any time`, tag: "MONTHLY", tone: "neutral", anchor: "full-service" },
       { icon: "shield", name: "Website Care Plans", meta: "Priced per site · 30 days’ notice", tag: "MONTHLY", tone: "neutral", anchor: "care-plans" },
     ],
     note: "Basic maintenance included while you pay off a 12-month build",
@@ -52,6 +70,7 @@ export const GROUPS: Group[] = [
     text: "Google and Meta campaigns aimed at ready-to-buy customers, measured in leads, not likes.",
     theme: "plum",
     rows: [
+      { icon: "eye", name: "AI visibility", meta: `Free check · Watch ${formatRand(watch.price)}${watch.unit}`, tag: "NEW", tone: "on-dark", anchor: "ai-visibility", href: "/services/ai-visibility" },
       { icon: "target", name: "Google Ads", meta: "Monthly fee + a budget you control", tag: "GROWTH", tone: "on-dark", anchor: "google-ads" },
       { icon: "users", name: "Meta Ads", meta: "Facebook & Instagram", tag: "GROWTH", tone: "on-dark", anchor: "meta-ads" },
     ],
@@ -64,6 +83,7 @@ export const NAV = [
   { anchor: "website-development", name: "Website Development", short: "Development" },
   { anchor: "ux-design", name: "UX & Design", short: "UX & Design" },
   { anchor: "seo", name: "SEO Foundations", short: "SEO" },
+  { anchor: "local-plans", name: "Local plans", short: "Local plans" },
   { anchor: "full-service", name: "Full Service", short: "Full Service" },
   { anchor: "care-plans", name: "Care Plans", short: "Care Plans" },
   { anchor: "google-ads", name: "Google Ads", short: "Google Ads" },
@@ -139,15 +159,32 @@ export const DETAILS: Detail[] = [
     outcome: "A site that works in search from launch, not a second project six months later to “fix the SEO”.",
   },
   {
-    id: "full-service",
+    id: "local-plans",
     n: "04",
+    name: "Local plans",
+    icon: "pin",
+    chip: "coral",
+    tag: "MONTHLY",
+    tone: "coral",
+    headline: "Found on Google, Maps and AI, for one monthly fee.",
+    price: `From ${fromMonthly}/month · no deposit · cancel any month`,
+    button: { label: "Get my free preview", href: "/start-project?plan=local-plus&ref=services", variant: "coral" },
+    link: { label: "Compare plans →", href: "/pricing#monthly" },
+    tint: "blush",
+    problem: `Most small businesses can’t justify ${formatRand(packages[0].total)} upfront, so they stay invisible online.`,
+    approach: "A website, Google Business Profile care and a monthly AI visibility report for one monthly fee.",
+    outcome: `Found on Google, Maps and AI from ${fromMonthly}/mo, live in days.`,
+  },
+  {
+    id: "full-service",
+    n: "05",
     name: "Full Service",
     icon: "repeat",
     chip: "coral",
     tag: "MONTHLY",
     tone: "coral",
     headline: "Everything handled, for one monthly price.",
-    price: "From R1 500/month · no minimum term, cancel any time",
+    price: `From ${formatRand(fullServicePackage.monthlyFrom)}/month · no minimum term, cancel any time`,
     button: { label: "See Full Service pricing", href: "/pricing#full-service", variant: "primary" },
     tint: "blush",
     problem: "Someone still has to run hosting and mailboxes, keep software updated, watch security and stay on top of SEO. Most owners don’t have the time or background.",
@@ -156,7 +193,7 @@ export const DETAILS: Detail[] = [
   },
   {
     id: "care-plans",
-    n: "05",
+    n: "06",
     name: "Website Care Plans",
     icon: "shield",
     chip: "coral",
@@ -172,7 +209,7 @@ export const DETAILS: Detail[] = [
   },
   {
     id: "google-ads",
-    n: "06",
+    n: "07",
     name: "Google Ads",
     icon: "target",
     chip: "plum",
@@ -189,7 +226,7 @@ export const DETAILS: Detail[] = [
   },
   {
     id: "meta-ads",
-    n: "07",
+    n: "08",
     name: "Meta Ads (Facebook & Instagram)",
     icon: "users",
     chip: "plum",
@@ -207,29 +244,35 @@ export const DETAILS: Detail[] = [
 ];
 
 export type Cell = "yes" | "no" | "ask" | string;
-export type PlanKey = "build" | "care" | "full";
+export type PlanKey = "local" | "care" | "full";
 export const PLANS: { key: PlanKey; name: string; sub: string; badge?: string }[] = [
-  { key: "build", name: "12-month build plan", sub: "Included while paying off" },
+  { key: "local", name: "Local Plus", sub: `${formatRand(planPlus.monthly)}/month, no deposit`, badge: "MOST POPULAR" },
   { key: "care", name: "Website Care Plan", sub: "Priced per site" },
-  { key: "full", name: "Full Service", sub: "From R1 500/month", badge: "MOST HANDS-OFF" },
+  { key: "full", name: "Full Service", sub: `From ${formatRand(fullServicePackage.monthlyFrom)}/month`, badge: "MOST HANDS-OFF" },
 ];
 
-/** "ask" cells are things the live copy does not state (open item 9). */
+/**
+ * "ask" cells are things the live copy does not state (open item 9). Local Plus
+ * cells come from its inclusions in content/pricing.ts; anything those lines do
+ * not state is "ask" until the owner confirms it.
+ */
 export const COMPARE_ROWS: { feature: string; short?: string; cells: [Cell, Cell, Cell] }[] = [
   { feature: "Basic maintenance", cells: ["yes", "yes", "yes"] },
-  { feature: "Health checks & site monitoring", short: "Monitoring, certificates, reviews", cells: ["Basic", "Around the clock, alerts in minutes", "ask"] },
+  { feature: "Health checks & site monitoring", short: "Monitoring, certificates, reviews", cells: ["ask", "Around the clock, alerts in minutes", "ask"] },
   { feature: "Security certificate tracking", cells: ["ask", "yes", "ask"] },
   { feature: "Software kept up to date", cells: ["ask", "yes", "yes"] },
-  { feature: "Content updates", cells: ["no", "As agreed", "ask"] },
-  { feature: "Latest Google reviews refreshed monthly", cells: ["no", "yes", "ask"] },
-  { feature: "Monthly note on what changed", cells: ["no", "yes", "ask"] },
-  { feature: "Hosting & mailboxes managed", cells: ["ask", "ask", "yes"] },
-  { feature: "Ongoing SEO work", cells: ["no", "no", "yes"] },
-  { feature: "Term", cells: ["While paying off", "30 days’ notice", "No minimum term"] },
+  { feature: "Content updates", cells: ["3 change requests a month", "As agreed", "ask"] },
+  { feature: "Latest Google reviews refreshed monthly", cells: ["ask", "yes", "ask"] },
+  { feature: "Monthly note on what changed", cells: ["ask", "yes", "ask"] },
+  { feature: "Monthly AI Visibility Report", cells: ["yes", "no", "ask"] },
+  { feature: "Google Business Profile care", cells: ["yes", "no", "ask"] },
+  { feature: "Hosting & mailboxes managed", cells: [`Hosting included, mailboxes ${formatRand(email.price)}/mo`, "ask", "yes"] },
+  { feature: "Ongoing SEO work", cells: ["ask", "no", "yes"] },
+  { feature: "Term", cells: ["Month to month", "30 days’ notice", "No minimum term"] },
 ];
 
 export const PLAN_CTA: Record<PlanKey, { label: string; href: string; variant: "outline" | "coral" }> = {
-  build: { label: "Start a 12-month build", href: "/start-project?ref=services", variant: "outline" },
+  local: { label: "Get my free preview", href: "/start-project?plan=local-plus&ref=services", variant: "coral" },
   care: { label: "Ask about a Care Plan", href: "/contact?topic=support", variant: "outline" },
   full: { label: "See Full Service pricing", href: "/pricing#full-service", variant: "coral" },
 };
@@ -273,7 +316,9 @@ export const WHY_GROW = [
 export const MOBILE_ROWS: { feature: string; cells: [Cell, Cell, Cell] }[] = [
   { feature: "Basic maintenance", cells: ["yes", "yes", "yes"] },
   { feature: "Software kept up to date", cells: ["ask", "yes", "yes"] },
-  { feature: "Hosting & mailboxes managed", cells: ["ask", "ask", "yes"] },
-  { feature: "Ongoing SEO work", cells: ["no", "no", "yes"] },
-  { feature: "Monitoring, certificates, reviews", cells: ["Basic", "Around the clock", "ask"] },
+  { feature: "Hosting & mailboxes managed", cells: ["yes", "ask", "yes"] },
+  { feature: "Monthly AI Visibility Report", cells: ["yes", "no", "ask"] },
+  { feature: "Google Business Profile care", cells: ["yes", "no", "ask"] },
+  { feature: "Ongoing SEO work", cells: ["ask", "no", "yes"] },
+  { feature: "Monitoring, certificates, reviews", cells: ["ask", "Around the clock", "ask"] },
 ];

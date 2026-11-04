@@ -15,7 +15,8 @@ import { PaymentBand, ServicesIndustries, WhyGrow } from "@/components/gg/servic
 import { Overview } from "@/components/gg/services/Overview";
 import { PayChooser } from "@/components/gg/services/PayChooser";
 import { ServiceNav } from "@/components/gg/services/ServiceNav";
-import { faq, type FAQItem } from "@/content/faq";
+import { faq, sharedFaqBySlug, type FAQItem } from "@/content/faq";
+import { addOns, localPlans } from "@/content/pricing";
 import { services } from "@/content/services";
 import { site } from "@/content/site";
 import { pageSocialMeta } from "@/lib/metadata";
@@ -48,9 +49,61 @@ const servicesFaqQuestions = [
   "What happens after my website launches?",
   "What’s the difference between Google Ads and Meta Ads?",
 ];
-const servicesFaqItems = servicesFaqQuestions
-  .map((q) => faq.find((item) => item.question === q))
-  .filter((item): item is FAQItem => Boolean(item));
+const monthlyFaq = sharedFaqBySlug("monthly-or-custom");
+const servicesFaqItems = [
+  { question: monthlyFaq.question, answer: monthlyFaq.answer } as FAQItem,
+  ...servicesFaqQuestions.map((q) => faq.find((item) => item.question === q)).filter((item): item is FAQItem => Boolean(item)),
+];
+
+/**
+ * v2: a Service with an Offer per Local plan (monthly price) and one for the AI
+ * visibility service (the check is free; Visibility Watch is the paid monthly
+ * report). Every price reads content/pricing.ts.
+ */
+function PlansSchema() {
+  const watch = addOns.find((a) => a.id === "visibility-watch")!;
+  const nodes = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "@id": `${site.url}/services#local-plans`,
+      name: "Local plans: website, Google profile and AI visibility, monthly",
+      serviceType: "Website and local search plans",
+      provider: { "@id": `${site.url}/#organization` },
+      areaServed: { "@type": "Country", name: "South Africa" },
+      url: `${site.url}/services#local-plans`,
+      offers: localPlans.map((plan) => ({
+        "@type": "Offer",
+        name: plan.name,
+        description: plan.tagline,
+        priceCurrency: "ZAR",
+        url: `${site.url}/pricing#plan-${plan.slug}`,
+        priceSpecification: { "@type": "UnitPriceSpecification", price: plan.monthly, priceCurrency: "ZAR", unitCode: "MON" },
+      })),
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "@id": `${site.url}/services/ai-visibility#service`,
+      name: "AI visibility check and monthly report",
+      provider: { "@id": `${site.url}/#organization` },
+      areaServed: { "@type": "Country", name: "South Africa" },
+      url: `${site.url}/services/ai-visibility`,
+      offers: [
+        { "@type": "Offer", name: "Free AI visibility check", price: 0, priceCurrency: "ZAR", url: `${site.url}/services/ai-visibility#book` },
+        {
+          "@type": "Offer",
+          name: watch.name,
+          description: watch.description,
+          priceCurrency: "ZAR",
+          url: `${site.url}/services/ai-visibility`,
+          priceSpecification: { "@type": "UnitPriceSpecification", price: watch.price, priceCurrency: "ZAR", unitCode: "MON" },
+        },
+      ],
+    },
+  ];
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(nodes) }} />;
+}
 
 export default function ServicesPage() {
   const serviceListSchema = {
@@ -72,6 +125,7 @@ export default function ServicesPage() {
       <BreadcrumbSchema trail={[{ name: "Services", path: "/services" }]} />
       <ServicesSchema services={services} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceListSchema) }} />
+      <PlansSchema />
       <FAQSchema items={servicesFaqItems} id="services-faq" />
 
       <section className="hm-section hm-section--canvas sv-hero" aria-labelledby="sv-title">
@@ -111,7 +165,11 @@ export default function ServicesPage() {
           <FaqBlock
             tag="FAQ"
             heading="Questions about what we build."
-            items={servicesFaqItems.map((item) => ({ question: item.question, answer: [item.answer ?? ""] }))}
+            items={servicesFaqItems.map((item) => ({
+              question: item.question,
+              answer: [item.answer ?? ""],
+              ...(item.question === monthlyFaq.question ? { slug: monthlyFaq.slug, link: monthlyFaq.link } : {}),
+            }))}
           />
         </div>
       </section>

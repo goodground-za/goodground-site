@@ -31,7 +31,7 @@ export default function FaqPage() {
     <GgShell crumbs={[{ label: "FAQ" }]}>
       <div className="fq-page">
         <BreadcrumbSchema trail={[{ name: "FAQ", path }]} />
-        {/* All 13 questions, answers stay in the DOM when closed. */}
+        {/* Every question (the monthly-plan group included), answers stay in the DOM when closed. */}
         <FAQSchema items={entries.map((e) => ({ question: e.question, answer: e.answer }))} id="faq-page-faq" />
 
         <FaqProvider>
