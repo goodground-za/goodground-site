@@ -347,7 +347,9 @@ export const providers: { name: string; purpose: string; when: string; todo?: bo
   { name: "Google (Analytics 4)", purpose: "Analytics and performance", when: "Only after you accept cookies" },
   { name: "Afrihost", purpose: "Our email server: receiving and replying to enquiries sent through the forms", when: "When you contact us" },
   { name: "Afrihost", purpose: "Hosting and running this website", when: "Every visit" },
-  { name: "AI services for the free AI check", purpose: "Running the check on the public details of your business", when: "Only if you request a free check" },
+  { name: "OpenAI (ChatGPT)", purpose: "Answering the questions we ask for the free AI check, using the public details of your business", when: "Only if you request a free check" },
+  { name: "Google (Gemini and Google AI)", purpose: "Answering the questions we ask for the free AI check, using the public details of your business", when: "Only if you request a free check" },
+  { name: "Anthropic (Claude)", purpose: "Answering the questions we ask for the free AI check, using the public details of your business", when: "Only if you request a free check" },
 ];
 
 export const rights: { key: string; icon: IconName; title: string; copy: string }[] = [
@@ -405,7 +407,7 @@ export const termsSections: TermsSection[] = [
     n: "05",
     title: "Pausing and cancelling a project",
     summary:
-      "The project price is fixed. If you cancel partway through, the outstanding balance of the agreed price becomes payable, whichever payment option you chose.",
+      "The project price is fixed. If you cancel partway through, the outstanding balance of the agreed price becomes payable, whichever payment option you chose. If you are paying a custom build over 12 instalments, Section 18 sets out what applies when you end it early.",
   },
   {
     id: "terms-responsibilities",
@@ -479,29 +481,19 @@ export const termsSections: TermsSection[] = [
     summary: "We may update these terms; changes apply to new quotes, never to a contract you’ve already signed.",
   },
   // Added 4 Nov 2026. Sections 01 to 16 keep their numbers and anchors, so these two follow them.
-  // Like 09, 13 and 15, the body only points to the signed contract; the subjects are listed so the
-  // structure is visible, and no wording is given here.
   {
     id: "terms-local-plans",
     n: "17",
     title: "Monthly plans",
-    summary: "How a Local Start, Local Plus or Local Pro plan works, from cancelling to who owns what, is set out in your signed quote and contract.",
-    topics: [
-      "Month to month, with cancellation at the end of any paid month",
-      "When your first payment is taken, after you approve your preview",
-      "Your cooling-off period",
-      "Your domain is registered in your name",
-      "When your site files are handed over to you",
-      "The New Business Offer",
-      "No guarantee of AI recommendations or search rankings",
-    ],
+    summary:
+      "A Local Start, Local Plus or Local Pro plan runs month to month. You can cancel at the end of any paid month, with no penalty. We build a free preview first, and we take your first payment only after you approve it. You have a seven-day cooling-off period after signing up online, as the law provides. Your domain is registered in your name. After six paid months the site files are yours at no charge; if you leave earlier you can buy them for R1 500, or simply keep your domain. The New Business Offer gives a new business its first month free and a business mailbox free for 12 months, for two new businesses a month, and is then the normal plan. We work to improve the signals that search engines and AI assistants read, but we do not guarantee that any AI assistant will recommend your business or where it ranks.",
   },
   {
     id: "terms-early-exit",
     n: "18",
     title: "Ending a 12-instalment build early",
-    summary: "What applies if you end a custom build you are paying over 12 instalments before it is fully paid is set out in your signed quote and contract.",
-    topics: ["Charges when a 12-instalment build ends early"],
+    summary:
+      "If you end a custom build that you are paying over 12 instalments before it is fully paid, any early-exit charge is limited to the value of the work done that has not yet been paid for. You never owe the remaining monthly instalments just because you stop early.",
   },
 ];
 

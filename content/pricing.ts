@@ -171,7 +171,7 @@ export const fullServicePackage = {
 /* ---------------------------------------------------------------- v2: monthly */
 
 /**
- * The monthly Local plans (v2 funnel, 2026-11-04). Prices include VAT; the
+ * The monthly Local plans (v2 funnel, 2026-11-04). No VAT is added to these prices (not VAT registered); the
  * annual figure is 10 months for 12. `highlights` are the three lines the /start-project
  * plan cards show; `inclusions` is the full card list.
  *
@@ -183,7 +183,7 @@ export type LocalPlanSlug = "local-start" | "local-plus" | "local-pro";
 export type LocalPlan = {
   slug: LocalPlanSlug;
   name: string;
-  /** Monthly price, rand, incl. VAT. */
+  /** Monthly price, rand, no VAT added. */
   monthly: number;
   /** Pay-once price for 12 months (2 months free), rand. */
   annual: number;

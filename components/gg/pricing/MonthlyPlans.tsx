@@ -36,7 +36,7 @@ function PlanPrice({ plan, period }: { plan: LocalPlan; period: Period }) {
           <small>/mo</small>
         </p>
         <p className="pr-price__split">No deposit · first debit at go-live</p>
-        <p className="pr-price__alt">Incl. VAT · cancel any month</p>
+        <p className="pr-price__alt">No VAT added · cancel any month</p>
       </div>
       <div className="pr-price__view" data-on={period === "year" ? "" : undefined} inert={period !== "year"}>
         <p className="pr-price__main">
@@ -44,7 +44,7 @@ function PlanPrice({ plan, period }: { plan: LocalPlan; period: Period }) {
           <small>/yr</small>
         </p>
         <p className="pr-price__split">Pay once for 12 months, get 2 free</p>
-        <p className="pr-price__alt">Incl. VAT · saves {formatRand(plan.monthly * 12 - plan.annual)}</p>
+        <p className="pr-price__alt">No VAT added · saves {formatRand(plan.monthly * 12 - plan.annual)}</p>
       </div>
     </div>
   );

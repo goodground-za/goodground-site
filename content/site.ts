@@ -11,7 +11,7 @@ export const site = {
   // longer operates under The Trail Tribe — it's its own registered company.
   legalName: "GoodGround (Pty) Ltd",
   registrationNumber: "2024/641034/07",
-  vatRegistered: false, // not VAT registered — all displayed prices are VAT inclusive
+  vatRegistered: false, // not VAT registered — no VAT is added to displayed prices
   tagline: "Growth starts here.",
   // Canonical host is www: Vercel serves www and 308-redirects the apex, so
   // this must match or every sitemap URL and canonical tag points at a
