@@ -1266,6 +1266,11 @@ html[data-motion="off"] .sv-nav__pill {
       box-shadow var(--gg-motion-sm) var(--gg-ease-out);
   }
 
+  /* Plan names line up along the top; a column without a badge just ends sooner. */
+  .sv-table thead .sv-col {
+    vertical-align: top;
+  }
+
   .sv-col--local {
     background: var(--gg-canvas);
   }

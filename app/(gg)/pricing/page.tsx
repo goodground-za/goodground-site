@@ -19,7 +19,7 @@ import { QuoteForm } from "@/components/gg/pricing/QuoteForm";
 import { ReviewCard } from "@/components/gg/pricing/ReviewCard";
 import { fullServicePackage, localFromMonthly, localPlans } from "@/content/pricing";
 import { site } from "@/content/site";
-import { getOfferSpots } from "@/lib/liveCounters";
+import { typedOfferSpots } from "@/lib/liveCounters";
 import { pageSocialMeta } from "@/lib/metadata";
 import "@/components/gg/pricing/pricing.css";
 
@@ -95,9 +95,9 @@ function PricingSchema() {
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
 }
 
-export default async function PricingPage() {
-  // The live count (Upstash Redis when connected, the typed fallback otherwise).
-  const spots = await getOfferSpots();
+export default function PricingPage() {
+  // Static page: the typed count here, swapped for the live one after load (components/gg/useLiveCounters.ts).
+  const spots = typedOfferSpots();
 
   return (
     <GgShell crumbs={[{ label: "PRICING" }]}>

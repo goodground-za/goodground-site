@@ -12,7 +12,7 @@ import { Icon } from "./Icon";
  * The menu panel is the live one (components/home2026/HomeChrome.tsx): same
  * <dialog> structure and open/close behaviour, restyled with the new tokens.
  * Process and (v2) AI visibility are in its links; Pricing too. FAQ stays in the
- * footer only (owner decision).
+ * footer only.
  *
  * Breadcrumb: parent parts are links; the last part is the current page.
  */

@@ -26,7 +26,7 @@ export type IndustryPageData = {
   relevantServiceSlugs: string[];
   localProof: string;
   faq: FAQItem[];
-  /** Which conversion track this page leads with (content/funnel.ts; blueprint section 3). */
+  /** Which conversion track this page leads with (content/funnel.ts). */
   primaryTrack: PrimaryTrack;
   /**
    * The question a local customer might ask an AI assistant, used by the

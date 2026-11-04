@@ -519,7 +519,7 @@ html:not(.js) .fq-search {
   scroll-margin-top: 120px;
 }
 
-/* Open item: ink border (1.5px) on the plain tone. */
+/* Ink border (1.5px) on the open item of the plain tone. */
 .fq-list .gg-faq__item.is-open {
   border-color: var(--gg-ink);
   box-shadow: 0 0 0 0.5px var(--gg-ink);

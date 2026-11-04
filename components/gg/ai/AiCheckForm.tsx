@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 import { book } from "@/content/aiVisibility";
-import { gardenRouteTowns } from "@/content/site";
+import { gardenRouteTowns, site } from "@/content/site";
 import { funnelEvents } from "@/lib/analytics";
 import { EMAIL_RE, LIMITS, WEBSITE_RE } from "@/lib/enquiryShared";
 
@@ -13,6 +13,7 @@ import { postEnquiry, sourceParams } from "../enquiry";
 import { CheckField, Field } from "../Field";
 import { Icon } from "../Icon";
 import { Turnstile, turnstileEnabled } from "../Turnstile";
+import { useLiveCounters } from "../useLiveCounters";
 
 type FieldName = "businessName" | "town" | "mainService" | "websiteUrl" | "email" | "whatsapp" | "consent" | "turnstile";
 type Errors = Partial<Record<FieldName, string>>;
@@ -26,7 +27,10 @@ type Outcome =
 
 const KNOWN_TOWNS = new Set(gardenRouteTowns.map((town) => town.toLowerCase()));
 
-function validate(data: FormData, needsToken: boolean, token: string): Errors {
+const CHECK_WAIT = "Please wait for the check below to finish, then send again.";
+const CHECK_BLOCKED = `The spam check couldn’t load. Check your connection or ad blocker, then try again, or email us at ${site.email} and we’ll book your check by hand.`;
+
+function validate(data: FormData, needsToken: boolean, token: string, blocked: boolean): Errors {
   const errors: Errors = {};
   const get = (k: string) => String(data.get(k) ?? "").trim();
 
@@ -51,7 +55,7 @@ function validate(data: FormData, needsToken: boolean, token: string): Errors {
 
   if (get("whatsapp").length > LIMITS.phone) errors.whatsapp = "That number is too long.";
   if (data.get("consent") !== "yes") errors.consent = "Please tick the box so we can run your check.";
-  if (needsToken && !token) errors.turnstile = "Please wait for the check below to finish, then send again.";
+  if (needsToken && !token) errors.turnstile = blocked ? CHECK_BLOCKED : CHECK_WAIT;
   return errors;
 }
 
@@ -62,23 +66,32 @@ const townForAnalytics = (town: string) => (KNOWN_TOWNS.has(town.trim().toLowerC
 const industryFromRef = (ref: string) => (/^industry-[a-z0-9-]{1,60}$/.test(ref) ? ref.slice("industry-".length) : undefined);
 
 /**
- * The free AI visibility check (page 19 #book). It is a REQUEST: the form never
+ * The free AI visibility check (#book on the AI visibility page). It is a REQUEST: the form never
  * runs a scan. It posts to /api/enquiry as formType ai-check, which emails the
  * team, applies the 30-day rule and the monthly cap (lib/freeCheck.ts), and
  * answers with what happened:
  *   booked   "Thanks. Your check is booked." and the three steps
  *   repeat   "We checked {business} on {date}. We've re-sent your report to {email}."
  *   waitlist "Fully booked for free checks this month", kept for the 1st of next month
- * `full` is the same cap read when the page rendered, so the card already
- * says "fully booked" before anyone types. Spam: honeypot ("website"), the
+ * `full` is the same cap (typed when the static page was built, then the live
+ * one from /api/offer-spots), so the card already says "fully booked" before
+ * anyone types. Spam: honeypot ("website"), the
  * 3-second rule (loadedAt) and Cloudflare Turnstile when a site key is set.
  * With JavaScript off it still posts and lands on /thanks?form=ai-check.
  */
-export function AiCheckForm({ full, nextRun }: { full: boolean; nextRun: string }) {
+export function AiCheckForm({ full: typedFull, nextRun: typedNextRun }: { full: boolean; nextRun: string }) {
+  // The page is static: it renders the typed budget and the live one replaces it after load.
+  const liveCheck = useLiveCounters()?.freeCheck;
+  const full = liveCheck ? liveCheck.full : typedFull;
+  const nextRun = liveCheck ? liveCheck.nextRun : typedNextRun;
   const [outcome, setOutcome] = useState<Outcome>({ kind: "idle" });
   const [errors, setErrors] = useState<Errors>({});
   const [token, setToken] = useState("");
   const [tokenReset, setTokenReset] = useState(0);
+  // The spam check can be blocked (ad blocker, strict network): say so, and let the visitor retry or email.
+  const [blocked, setBlocked] = useState(false);
+  const [challengeKey, setChallengeKey] = useState(0);
+  const blockedBox = useRef<HTMLDivElement>(null);
   const loadedAt = useRef(0);
   const heading = useRef<HTMLHeadingElement>(null);
 
@@ -97,11 +110,12 @@ export function AiCheckForm({ full, nextRun }: { full: boolean; nextRun: string 
     const form = event.currentTarget;
     const data = new FormData(form);
 
-    const found = validate(data, turnstileEnabled, token);
+    const found = validate(data, turnstileEnabled, token, blocked);
     setErrors(found);
     const firstBad = Object.keys(found)[0];
     if (firstBad) {
-      form.querySelector<HTMLElement>(`[name="${firstBad}"]`)?.focus();
+      if (firstBad === "turnstile" && blocked) blockedBox.current?.focus();
+      else form.querySelector<HTMLElement>(`[name="${firstBad}"]`)?.focus();
       return;
     }
 
@@ -266,8 +280,30 @@ export function AiCheckForm({ full, nextRun }: { full: boolean; nextRun: string 
       />
       <CheckField label={book.marketing} name="marketingOptIn" value="yes" idPrefix="ai" />
 
-      <Turnstile onToken={setToken} resetKey={tokenReset} />
-      {errors.turnstile ? (
+      <Turnstile
+        key={challengeKey}
+        onToken={setToken}
+        onStatus={(status) => setBlocked(status === "blocked")}
+        resetKey={tokenReset}
+        hidden={blocked}
+      />
+      {blocked ? (
+        <div ref={blockedBox} className="ai-form__blocked" role="alert" tabIndex={-1}>
+          <p>{CHECK_BLOCKED}</p>
+          <button
+            type="button"
+            className="ai-form__retry"
+            onClick={() => {
+              setBlocked(false);
+              setToken("");
+              setErrors((e) => ({ ...e, turnstile: undefined }));
+              setChallengeKey((n) => n + 1);
+            }}
+          >
+            Try the check again
+          </button>
+        </div>
+      ) : errors.turnstile ? (
         <p className="gg-field__error" role="alert" data-field="turnstile">
           {errors.turnstile}
         </p>

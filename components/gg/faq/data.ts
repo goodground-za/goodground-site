@@ -7,7 +7,7 @@ import { termsLive } from "../legal/data";
  * /faq (Figma 67:151 desktop, 68:167 mobile). Four topics. The first, "Monthly plans & AI visibility"
  * (v2), is the six shared entries in content/faq.ts `sharedFaq` (the same ones Home, /services and
  * /pricing read). The 13 questions and answers after it are the live ones in
- * content/faq.ts, by position and verbatim (open item: answer 07 is drawn lightly shortened, and
+ * content/faq.ts, by position and verbatim (answer 07 is drawn lightly shortened, and
  * answer 06 still says 4 to 6 weeks while /pricing shows 1 to 2 weeks for the smaller packages).
  * What this file adds is the topic, the permanent anchor and the related link per question.
  */
@@ -46,7 +46,7 @@ const META: Meta[] = [
   { slug: "payment-options", topic: "payments", related: { label: "See pricing →", href: "/pricing#custom" } },
   { slug: "deposit", topic: "payments", related: { label: "See pricing →", href: "/pricing#custom" } },
   { slug: "scope-changes", topic: "payments", related: { label: "How we work →", href: "/process" } },
-  // The Terms page does not exist yet (open item 3); until it ships the link is left off.
+  // The link shows only once the Terms page is live (termsLive).
   { slug: "pause-or-cancel", topic: "payments", related: termsLive ? { label: "Terms & conditions →", href: "/legal#terms" } : undefined },
   { slug: "design-and-seo", topic: "projects", related: { label: "See our services →", href: "/services" } },
   { slug: "project-length", topic: "projects", related: { label: "See our process →", href: "/process" } },
@@ -59,7 +59,7 @@ const META: Meta[] = [
   { slug: "ad-accounts", topic: "ads" },
 ];
 
-/** The six monthly-plan and AI entries, in the spec's order. Their slugs are the permanent anchors (/faq#monthly-or-custom ...). */
+/** The six monthly-plan and AI entries, in this order. Their slugs are the permanent anchors (/faq#monthly-or-custom ...). */
 const MONTHLY_SLUGS = ["monthly-or-custom", "monthly-included", "cancel-monthly", "new-business-offer", "ai-recommend", "ai-guarantee"] as const;
 
 const monthlyEntries: Omit<FaqEntry, "number">[] = MONTHLY_SLUGS.map((slug) => {

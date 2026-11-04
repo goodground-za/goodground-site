@@ -323,10 +323,10 @@ function TermsView() {
             <span className="gg-kicker lg-n">{term.n}</span>
             {term.title}
           </h2>
-          <div className={term.attorney ? "lg-plain lg-plain--attorney" : "lg-plain"}>
+          <div className="lg-plain">
             <Icon name="info" size={18} stroke={2} />
             <p>
-              <span className="gg-kicker">{term.attorney ? "NEEDS YOUR ATTORNEY" : "IN PLAIN LANGUAGE"}</span>
+              <span className="gg-kicker">IN PLAIN LANGUAGE</span>
               {term.summary}
             </p>
           </div>

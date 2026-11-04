@@ -32,7 +32,7 @@ export type ServicePageData = {
   faq: FAQItem[];
   ctaHref: string;
   ctaLabel: string;
-  /** Which conversion track this page leads with (content/funnel.ts; blueprint section 3). */
+  /** Which conversion track this page leads with (content/funnel.ts). */
   primaryTrack: PrimaryTrack;
   /** Slugs from content/articles.ts, rendered as a "Related reading" block
    * (SEO audit 2026-08-16, item 7 — zero links existed in either direction

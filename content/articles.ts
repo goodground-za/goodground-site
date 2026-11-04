@@ -48,7 +48,7 @@ export type ShortAnswer = {
 
 export type Article = {
   slug: string;
-  /** The end-of-article call to action. `track` defaults to "check" (the free AI check; blueprint section 3). */
+  /** The end-of-article call to action. `track` defaults to "check" (the free AI check). */
   cta?: { track?: PrimaryTrack };
   title: string;
   /** Listing + meta description. */

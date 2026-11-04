@@ -172,8 +172,7 @@ export const fullServicePackage = {
 
 /**
  * The monthly Local plans (v2 funnel, 2026-11-04). Prices include VAT; the
- * annual figure is 10 months for 12. Card copy is the spec's mockup copy
- * (mockups/pricing.html). `highlights` are the three lines the /start-project
+ * annual figure is 10 months for 12. `highlights` are the three lines the /start-project
  * plan cards show; `inclusions` is the full card list.
  *
  * No page types a price by hand: every Local plan price on the site reads this
@@ -197,7 +196,7 @@ export type LocalPlan = {
   /** The first inclusion is "Everything in {previous}, plus:" and is styled as a lead-in. */
   extendsPrevious?: boolean;
   bestFor: string;
-  /** "Live in ~5 working days". */
+  /** "Free preview in 5 working days": the preview is what arrives in 5 days; the site goes live after the client approves it. */
   liveIn: string;
   /** Card badge, if any. */
   badge?: string;
@@ -221,7 +220,7 @@ export const localPlans: LocalPlan[] = [
       "1 change request a month",
     ],
     bestFor: "Trades and solo businesses that need to look credible and be found",
-    liveIn: "Live in ~5 working days",
+    liveIn: "Free preview in 5 working days",
     badge: "New business offer",
   },
   {
@@ -242,7 +241,7 @@ export const localPlans: LocalPlan[] = [
     ],
     extendsPrevious: true,
     bestFor: "Local businesses competing for “near me” searches and AI recommendations",
-    liveIn: "Live in ~5 working days",
+    liveIn: "Free preview in 5 working days",
     badge: "Most popular",
   },
   {
@@ -263,7 +262,7 @@ export const localPlans: LocalPlan[] = [
     ],
     extendsPrevious: true,
     bestFor: "Busy or multi-location businesses in competitive trades",
-    liveIn: "Live in ~7 working days",
+    liveIn: "Free preview in 5 working days",
   },
 ];
 
@@ -273,8 +272,8 @@ export const localPlanBySlug = (slug: string) => localPlans.find((p) => p.slug =
 export const localFromMonthly = localPlans[0].monthly;
 
 /**
- * Terms that appear in FAQ answers and the cancel copy. The legal wording is the
- * attorney's (open item 15); these are only the figures the spec states.
+ * Terms that appear in FAQ answers and the cancel copy. These are only the
+ * figures; the legal wording is the signed contract's.
  */
 export const localTerms = {
   /** Site files become the client's after this many paid months. */
@@ -283,7 +282,7 @@ export const localTerms = {
   filesBuyout: 1500,
 } as const;
 
-/** Promise row under the plan cards (spec 08, mockup). */
+/** Promise row under the plan cards. */
 export const localPromises = [
   "Free preview before you pay anything",
   "Your domain is always yours",

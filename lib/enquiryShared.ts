@@ -89,7 +89,7 @@ export const pick = {
 };
 
 /**
- * `plan` and `offer` together (blueprint section 4):
+ * `plan` and `offer` together:
  *  - `offer=new-business` (or its waitlist) forces plan = local-start;
  *  - the retired `plan=launch` means local-start + new-business, and
  *    `plan=launch-waitlist` means local-start + new-business-waitlist.

@@ -1,6 +1,6 @@
 /**
  * The New Business Offer: every confirmed fact in one place. It replaces the
- * retired fixed-term Website Launch Offer (owner decision, 2026-11-03/04).
+ * retired fixed-term Website Launch Offer.
  *
  * THE OFFER: Local Start (see content/pricing.ts localPlans) with the first
  * month free, plus a business mailbox free for 12 months, for businesses going
@@ -35,7 +35,7 @@ export const newBusinessOffer = {
   },
   /** One-line summary used by banners, tags and emails. */
   summary: "First month free, plus a business mailbox free for 12 months.",
-  /** Proposed SEO (open item 13, owner to confirm). */
+  /** SEO title and description for /website-launch. */
   seo: {
     title: "First Website for New Businesses | First Month Free | GoodGround",
     description:

@@ -2,9 +2,8 @@ import { formatRand } from "@/components/gg/format";
 import { localFromMonthly } from "@/content/pricing";
 
 /**
- * The three conversion tracks of the v2 funnel (spec: V2-FUNNEL-BLUEPRINT.md
- * sections 3 and 5) and the one place their button labels, destinations and
- * next-best-track links are written. The gradient CTA, and later the heroes and
+ * The three conversion tracks of the funnel and the one place their button
+ * labels, destinations and next-best-track links are written. The gradient CTA, and later the heroes and
  * sticky bars, read these; no page types a track label by hand.
  *
  *  - local:  Track A, a monthly Local plan. "Get my free preview".
@@ -32,7 +31,7 @@ export function trackPrimary(track: PrimaryTrack, ref?: string): TrackAction {
   }
 }
 
-/** The secondary link/button for a track (blueprint section 3 table). */
+/** The secondary link/button for a track. */
 export function trackSecondary(track: PrimaryTrack): TrackAction {
   switch (track) {
     case "local":
@@ -45,23 +44,23 @@ export function trackSecondary(track: PrimaryTrack): TrackAction {
 }
 
 /**
- * The single text link under the CTA buttons, pointing to the next-best track
- * (blueprint section 3, rule 4). Custom pages offer the monthly plans; local
- * pages offer the free check; check pages offer the free preview.
+ * The single text link under the CTA buttons, pointing to the next-best track.
+ * Custom pages offer the monthly plans; local pages offer the free check; check
+ * pages offer a custom build.
  */
 export function trackNextLink(track: PrimaryTrack, ref?: string): TrackAction {
   switch (track) {
     case "local":
       return { label: "Not ready yet? Book a free AI check →", href: `/services/ai-visibility${ref ? `?${q(ref)}` : ""}#book` };
     case "check":
-      return { label: "Ready now? Get my free preview →", href: `/start-project?plan=local-plus${ref ? `&${q(ref)}` : ""}` };
+      return { label: "Ready to build? Start your project →", href: `/start-project${ref ? `?${q(ref)}` : ""}` };
     default:
       return { label: `Just need to be found? Monthly plans from ${formatRand(localFromMonthly)} →`, href: "/pricing#monthly" };
   }
 }
 
 /**
- * Default track per page type (blueprint section 3, rule 3). Content records
+ * Default track per page type. Content records
  * carry their own `primaryTrack`; these cover pages with no record.
  */
 export const PAGE_TRACKS = {

@@ -15,6 +15,7 @@ import { PillToggle } from "../PillToggle";
 import { Resp } from "../Resp";
 import { SectionHeader } from "../SectionHeader";
 import { Tag } from "../Tag";
+import { useLiveCounters } from "../useLiveCounters";
 
 type Period = "month" | "year";
 const PERIODS: { value: Period; label: string }[] = [
@@ -22,7 +23,7 @@ const PERIODS: { value: Period; label: string }[] = [
   { value: "year", label: "Annual · 2 months free" },
 ];
 
-/** What the offer box needs from the live count (lib/liveCounters.ts getOfferSpots). */
+/** What the offer box needs from the offer count (lib/liveCounters.ts). */
 export type OfferBox = Pick<OfferSpots, "left" | "total" | "soldOut" | "month" | "nextMonth">;
 
 /** The price block: month and year views share one grid cell, so the card never changes size. */
@@ -76,7 +77,9 @@ export function OfferBoxView({ offer }: { offer: OfferBox }) {
  * Service strip. On phones the cards collapse to a name and a price except
  * Local Plus (accordion, one open), like the custom packages below.
  */
-export function MonthlyPlans({ offer }: { offer: OfferBox }) {
+export function MonthlyPlans({ offer: typed }: { offer: OfferBox }) {
+  // The page is static: it renders the typed count and the live one replaces it after load.
+  const offer = useLiveCounters()?.offer ?? typed;
   const [period, setPeriod] = useState<Period>("month");
   const [open, setOpen] = useState<string>("local-plus");
   const toggle = <PillToggle options={PERIODS} value={period} onChange={setPeriod} label="Billing period" fill className="pr-period" />;

@@ -644,7 +644,7 @@ export const steps: Step[] = [
 /* ---------------------------------------------------------------------- v2 tracks */
 
 /**
- * `?track=local` (v2, spec 17 "v2 changes"): the short brief for Local plan clients, sent after
+ * `?track=local`: the short brief for Local plan clients, sent after
  * they approve their preview. It is the same form with five steps, built from the full steps
  * above so a question is only ever defined once:
  *

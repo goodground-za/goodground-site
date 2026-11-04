@@ -1,8 +1,8 @@
 import { BAND_LABEL, bandFor, type Band } from "@/content/aiVisibility";
 
 /**
- * The AI visibility band pill (spec 19 "Band rules", shared with the scanner
- * and the monthly report). Either pass the band or `named` / `checks` and let
+ * The AI visibility band pill (the band rules in content/aiVisibility.ts,
+ * shared with the scanner and the monthly report). Either pass the band or `named` / `checks` and let
  * bandFor decide, so the colour can never disagree with the rule.
  *
  *   Usually   mint on dark green text         (named in at least 2/3 of checks)

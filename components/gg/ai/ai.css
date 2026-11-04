@@ -1,5 +1,5 @@
 /* ---------------------------------------------------------------------------
- * /services/ai-visibility (spec page 19, visual reference mockups/ai-visibility.html)
+ * /services/ai-visibility
  * Prefix: ai-. Mobile first; tablet from 768, desktop from 1100.
  * ------------------------------------------------------------------------- */
 .ai-page {
@@ -248,6 +248,20 @@
   font-size: 12.5px;
   line-height: 1.4;
   color: var(--gg-muted);
+}
+
+/* 44px tap target around the one-line source link. */
+.ai-stat__src a::before {
+  content: "";
+  position: absolute;
+  inset: -12px 0;
+}
+
+.ai-stat__src a {
+  position: relative;
+  display: inline-block;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 /* ---- 03 How it works ----------------------------------------------------------- */
@@ -805,6 +819,10 @@
   min-height: 65px;
 }
 
+.gg-turnstile[hidden] {
+  display: none;
+}
+
 .ai-form__fine {
   font-size: 12.5px;
   line-height: 1.5;
@@ -815,6 +833,36 @@
   font-size: 14px;
   font-weight: 500;
   color: var(--gg-coral-text);
+}
+
+/* The spam check could not load (blocked script): the message, a retry and the email address. */
+.ai-form__blocked {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--gg-blush);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--gg-ink);
+}
+
+.ai-form__blocked p {
+  margin: 0;
+}
+
+.ai-form__retry {
+  min-height: 44px;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-weight: 600;
+  color: var(--gg-coral-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
 }
 
 .ai-form--done {

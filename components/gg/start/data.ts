@@ -31,7 +31,7 @@ import { workProjects } from "../work/data";
  * parameter handling. The values are whitelisted in lib/enquiryShared.ts, which
  * the server re-checks.
  *
- * Two tracks share one form (blueprint section 5):
+ * Two tracks share one form:
  *  - local  (Track A, a monthly plan): What you need > Which plan? > Your
  *    business > Your details. Posts formType local-preview.
  *  - custom (Track B, the existing form): Service > Size > Timeline > Your
@@ -191,7 +191,7 @@ export type Arrival = {
 };
 
 /**
- * Read the URL's parameters (blueprint section 4):
+ * Read the URL's parameters:
  *  - ?plan=local-start|local-plus|local-pro|local-help pre-answers steps 1-2 and opens at step 3;
  *  - ?offer=new-business forces Local Start, same arrival, plus the offer banner;
  *  - legacy ?plan=launch means local-start + new-business, ?plan=launch-waitlist the waitlist;

@@ -1448,6 +1448,11 @@
 }
 
 .sd-list a {
+  /* The link fills the row's height, so its tap target is 44px tall. */
+  display: flex;
+  flex: 1;
+  align-items: center;
+  min-height: 44px;
   color: var(--gg-coral-text);
   font-weight: 600;
   text-decoration: underline;

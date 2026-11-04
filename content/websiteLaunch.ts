@@ -3,7 +3,7 @@
  *
  * THE OFFER ITSELF (spaces, month, terms, SEO) is in content/newBusinessOffer.ts
  * and the plan price in content/pricing.ts. The fixed-term Website Launch Offers
- * that came before it are RETIRED (owner decision, 2026-11-03): no figure from
+ * that came before it are RETIRED: no figure from
  * either lives in the repo any more.
  *
  * What is here is the page copy the /website-launch UI reads: the FAQ, the

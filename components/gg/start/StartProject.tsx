@@ -16,6 +16,7 @@ import {
   WEBSITE_RE,
   firstName,
   planSummary,
+  resolvePlanOffer,
   type GbpKey,
 } from "@/lib/enquiryShared";
 
@@ -26,6 +27,7 @@ import { formatRand } from "../format";
 import { Icon } from "../Icon";
 import { SplitHeading } from "../SplitHeading";
 import { Tag } from "../Tag";
+import { useLiveCounters } from "../useLiveCounters";
 import {
   EMPTY_BUSINESS,
   TOTAL_STEPS,
@@ -59,7 +61,7 @@ type Details = { fullName: string; businessName: string; email: string; phone: s
 const EMPTY: Details = { fullName: "", businessName: "", email: "", phone: "", message: "" };
 type Status = "idle" | "submitting" | "success" | "failed";
 
-/** What the page knows about this month's offer spaces (live from Redis when connected, else typed). */
+/** This month's offer spaces: the typed count the static page renders, replaced by the live one after load. */
 export type Spots = { left: number; total: number; month: string; nextMonth: string; soldOut: boolean };
 const FALLBACK_SPOTS: Spots = {
   left: Math.max(0, newBusinessOffer.spotsTotal - newBusinessOffer.spotsTaken),
@@ -121,10 +123,12 @@ function AutoHeight({ children }: { children: React.ReactNode }) {
  * and never written to the page as raw text.
  *
  * Step 2 of Track B (size) is not drawn in Figma: it uses the same 2 x 2 option
- * cards with the live form's labels. The plan step (Track A) is built from the
- * spec's description and the pricing mockup.
+ * cards with the live form's labels. The plan step (Track A) reuses the
+ * plan cards from /pricing.
  */
-export function StartProject({ spots = FALLBACK_SPOTS }: { spots?: Spots }) {
+export function StartProject({ spots: typedSpots = FALLBACK_SPOTS }: { spots?: Spots }) {
+  const live = useLiveCounters();
+  const spots = live?.offer ?? typedSpots;
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Answers>({});
   const [details, setDetails] = useState<Details>(EMPTY);
@@ -169,7 +173,7 @@ export function StartProject({ spots = FALLBACK_SPOTS }: { spots?: Spots }) {
   useEffect(() => {
     loadedAt.current = Date.now();
     const search = new URLSearchParams(window.location.search);
-    const arrival = parseArrival(search, spots.soldOut);
+    const arrival = parseArrival(search, typedSpots.soldOut);
     if (arrival.handoff) {
       // Track C lives on the AI visibility page; ref is kept in the link.
       window.location.replace(arrival.handoff);
@@ -213,7 +217,18 @@ export function StartProject({ spots = FALLBACK_SPOTS }: { spots?: Spots }) {
     /* eslint-enable react-hooks/set-state-in-effect */
     if (nextStep > 0) window.history.replaceState({ step: nextStep }, "", withStep(nextStep));
     trackEvent("step_view", { step: nextStep + 1 });
-  }, [spots.soldOut, answered]);
+  }, [typedSpots.soldOut, answered]);
+
+  // The live count arrives after load: a link that asked for the New Business Offer follows it
+  // (open space, or the waitlist), unless the visitor already removed the banner.
+  useEffect(() => {
+    if (!live) return;
+    const search = new URLSearchParams(window.location.search);
+    if (resolvePlanOffer(search.get("plan"), search.get("offer")).offer !== "new-business") return;
+    const next = live.offer.soldOut ? "new-business-waitlist" : "new-business";
+    /* eslint-disable-next-line react-hooks/set-state-in-effect -- reacts to the live count arriving, once */
+    setContext((c) => (c.offer && c.offer !== next ? { ...c, offer: next } : c));
+  }, [live]);
 
   // Persist (after arrival, so an empty first render never wipes a saved start).
   // The WhatsApp consent tick is deliberately not stored: consent is given in the moment.
@@ -329,6 +344,10 @@ export function StartProject({ spots = FALLBACK_SPOTS }: { spots?: Spots }) {
     setServerErrors({});
     setStatus("idle");
     setDir(-1);
+    // Links that pre-answer the form (plan, service, package) go too, or a reload would answer it again.
+    const url = new URL(window.location.href);
+    for (const key of ["plan", "service", "package"]) url.searchParams.delete(key);
+    window.history.replaceState(window.history.state, "", url);
     commit(0, step !== 0);
   };
 
@@ -1012,7 +1031,7 @@ export function StartProject({ spots = FALLBACK_SPOTS }: { spots?: Spots }) {
   );
 }
 
-/** The sent state, per track (blueprint section 5). */
+/** The sent state, per track. */
 function Success({ sent, copy, spots }: { sent: { name: string; email: string; track: TrackId; offer?: string }; copy: boolean; spots: Spots }) {
   const local = sent.track === "local";
   const waitlist = sent.offer === "new-business-waitlist";
@@ -1021,11 +1040,6 @@ function Success({ sent, copy, spots }: { sent: { name: string; email: string; t
       ? `You’re on the ${spots.nextMonth} waitlist${sent.name ? `, ${sent.name}` : ""}.`
       : `Thanks${sent.name ? `, ${sent.name}` : ""}. We’re building your preview.`
     : `Thanks${sent.name ? `, ${sent.name}` : ""}. Your enquiry is in.`;
-  const steps = [
-    `We build your preview within ${PREVIEW_TIME}.`,
-    "You review it and ask for changes.",
-    "Approve it to go live. Your first debit runs only then.",
-  ];
   return (
     <div className="sp__done" role="status">
       <span className="sp__done-badge" aria-hidden="true">
@@ -1046,16 +1060,6 @@ function Success({ sent, copy, spots }: { sent: { name: string; email: string; t
               : ""
           : `Expect a reply within ${REPLY_TIME}, usually sooner.`}
       </p>
-      {local ? (
-        <ol className="sp__done-steps">
-          {steps.map((text, i) => (
-            <li key={text}>
-              <span aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
-              {text}
-            </li>
-          ))}
-        </ol>
-      ) : null}
       <div className="sp__wait">
         <p className="gg-kicker">WHILE YOU WAIT</p>
         {local ? (

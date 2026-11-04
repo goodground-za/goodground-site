@@ -8,7 +8,7 @@ import type { PrimaryTrack } from "@/content/funnel";
 
 export type Service = {
   slug: string;
-  /** Which conversion track this service leads with (content/funnel.ts; blueprint section 3). */
+  /** Which conversion track this service leads with (content/funnel.ts). */
   primaryTrack: PrimaryTrack;
   title: string;
   /** One-liner for the homepage cards. */

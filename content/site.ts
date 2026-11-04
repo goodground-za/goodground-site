@@ -57,9 +57,9 @@ export const site = {
 /**
  * The free AI visibility check: settings that change without a deploy once
  * Upstash Redis is connected (lib/liveCounters.ts), typed fallbacks otherwise.
- * `monthlyBudget` is the proposed 40 (open item 16: the owner confirms who runs
- * the checks and the budget). `used` is the fallback for this month's count.
- * The offer spots live in content/newBusinessOffer.ts.
+ * `monthlyBudget` is the number of free checks the team runs a month. `used` is
+ * the fallback for this month's count. The offer spaces live in
+ * content/newBusinessOffer.ts.
  */
 export const freeCheck = {
   monthlyBudget: 40,
@@ -70,9 +70,8 @@ export const freeCheck = {
 
 /**
  * Towns offered in the town field (a datalist: free text is still allowed).
- * The first six are the towns the spec names on the industry pages; the rest
- * are other Garden Route towns, a plain factual list. The owner may trim or
- * extend it.
+ * The first six are the towns named on the industry pages; the rest are other
+ * Garden Route towns, a plain factual list. Trim or extend it as needed.
  */
 export const gardenRouteTowns = [
   "George",

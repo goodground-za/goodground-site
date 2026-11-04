@@ -4,7 +4,7 @@ import { BreadcrumbSchema } from "@/components/Breadcrumbs";
 import { GgShell } from "@/components/gg/GgShell";
 import { StartProject } from "@/components/gg/start/StartProject";
 import { site } from "@/content/site";
-import { getOfferSpots } from "@/lib/liveCounters";
+import { typedOfferSpots } from "@/lib/liveCounters";
 import { pageSocialMeta } from "@/lib/metadata";
 import "@/components/gg/start/start.css";
 
@@ -31,9 +31,9 @@ const pageSchema = {
   isPartOf: { "@id": `${site.url}/#website` },
 };
 
-export default async function StartProjectPage() {
-  // Live count when Redis is connected, the typed one otherwise (lib/liveCounters.ts).
-  const live = await getOfferSpots();
+export default function StartProjectPage() {
+  // Static page: the typed count here, swapped for the live one after load (components/gg/useLiveCounters.ts).
+  const live = typedOfferSpots();
   const spots = { left: live.left, total: live.total, month: live.month, nextMonth: live.nextMonth, soldOut: live.soldOut };
   return (
     <GgShell crumbs={[{ label: "START YOUR PROJECT" }]} footer={{ ruled: true }}>

@@ -119,7 +119,7 @@ export const DETAILS: Detail[] = [
     tone: "coral",
     headline: "A website that works as hard as you do.",
     price: "Fixed price · 50% deposit or 12 monthly instalments",
-    button: { label: "Start your project", href: "/start-project?service=website-development&ref=services", variant: "coral" },
+    button: { label: "Start your project", href: "/start-project?service=new-website&ref=services", variant: "coral" },
     link: { label: "Redesigning an existing site? See website redesign →", href: "/services/website-redesign" },
     tint: "mint",
     problem: "Most business websites are built fast and then left alone. They get slow and outdated, and quietly cost you customers every month.",
@@ -217,7 +217,7 @@ export const DETAILS: Detail[] = [
     tone: "dark",
     headline: "Be there the moment someone searches for you.",
     price: "Monthly management fee + an ad budget you control",
-    button: { label: "Start your project", href: "/start-project?service=google-ads&ref=services", variant: "primary" },
+    button: { label: "Start your project", href: "/start-project?ref=service-google-ads", variant: "primary" },
     link: { label: "Full Google Ads details →", href: "/services/google-ads" },
     tint: "lilac",
     problem: "Most small businesses either don’t advertise on Google or hand it to someone who burns the budget on broad keywords and vague clicks.",
@@ -234,7 +234,7 @@ export const DETAILS: Detail[] = [
     tone: "dark",
     headline: "Stay in front of the people deciding whether to trust you.",
     price: "Monthly management fee + an ad budget you control",
-    button: { label: "Start your project", href: "/start-project?service=meta-ads&ref=services", variant: "primary" },
+    button: { label: "Start your project", href: "/start-project?ref=service-meta-ads", variant: "primary" },
     link: { label: "Full Meta Ads details →", href: "/services/meta-ads" },
     tint: "lilac",
     problem: "Boosting a post feels like marketing but rarely builds anything. It reaches the wrong people and stops working the second you stop paying.",
@@ -252,9 +252,9 @@ export const PLANS: { key: PlanKey; name: string; sub: string; badge?: string }[
 ];
 
 /**
- * "ask" cells are things the live copy does not state (open item 9). Local Plus
- * cells come from its inclusions in content/pricing.ts; anything those lines do
- * not state is "ask" until the owner confirms it.
+ * "ask" cells are things the live copy does not state. Local Plus cells come from
+ * its inclusions in content/pricing.ts; anything those lines do not state is
+ * "ask" until it is confirmed.
  */
 export const COMPARE_ROWS: { feature: string; short?: string; cells: [Cell, Cell, Cell] }[] = [
   { feature: "Basic maintenance", cells: ["yes", "yes", "yes"] },

@@ -16,8 +16,7 @@ const EMAIL = "hello@goodground.co.za";
 
 /**
  * The coral "NEW" pill on AI visibility shows for the first three months after
- * launch (spec README 4.6). The end date is a proposal: set it to launch + 3
- * months. Evaluated at build time, like the footer year.
+ * launch. The end date is a proposal: set it to launch + 3 months. Evaluated at build time, like the footer year.
  */
 const NEW_PILL_UNTIL = new Date("2027-03-01T00:00:00+02:00");
 

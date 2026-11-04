@@ -5,7 +5,7 @@ import { freeCheckUsedKey, getFreeCheckCounters } from "@/lib/liveCounters";
 import { redisCommand, redisConfigured, redisPipeline, warnStorageNotConnected } from "@/lib/redis";
 
 /**
- * Free AI visibility check: the guardrails (blueprint section 8, page 19).
+ * Free AI visibility check: the guardrails.
  *
  * THE SITE NEVER RUNS A SCAN. This module only decides what to do with a
  * request: accept it, treat it as a repeat of one already done, or put it on
@@ -20,6 +20,9 @@ import { redisCommand, redisConfigured, redisPipeline, warnStorageNotConnected }
  *    not use this month's budget.
  *  - No Redis connected (or Redis failing): the request is accepted, the team is
  *    emailed, and there is no dedupe and no cap. This is logged once.
+ *  - The claim is taken BEFORE the studio email (the email says what the gate
+ *    decided), so a failed send must give it back: releaseFreeCheck. A request
+ *    only counts once the team has it, and the visitor's retry is a first request.
  */
 
 const DAY = 24 * 60 * 60;
@@ -58,9 +61,11 @@ export function businessKeys(input: { business: string; town: string; website?: 
 
 export type CheckGate =
   | { mode: "unconnected" }
-  | { mode: "accepted"; used: number }
+  | { mode: "accepted"; used: number; keys: ClaimKeys; usedKey: string }
   | { mode: "repeat"; at: string }
-  | { mode: "waitlist"; alreadyWaiting: boolean };
+  | { mode: "waitlist"; alreadyWaiting: boolean; waitKey: string };
+
+type ClaimKeys = ReturnType<typeof businessKeys>;
 
 /** Decide what happens to one free-check request. Never throws. */
 export async function gateFreeCheck(input: { business: string; town: string; website?: string }, now = new Date()): Promise<CheckGate> {
@@ -104,12 +109,32 @@ export async function gateFreeCheck(input: { business: string; town: string; web
     await redisPipeline([["DECR", usedKey], ["DEL", keys.strict], ["DEL", keys.loose]]);
     return waitlist(keys.wait);
   }
-  return { mode: "accepted", used };
+  return { mode: "accepted", used, keys, usedKey };
 }
 
 async function waitlist(waitKey: string): Promise<CheckGate> {
   const added = await redisCommand("SET", waitKey, new Date().toISOString(), "NX", "EX", 35 * DAY);
-  return { mode: "waitlist", alreadyWaiting: added === null };
+  return { mode: "waitlist", alreadyWaiting: added === null, waitKey };
+}
+
+/**
+ * Give back what gateFreeCheck took, because the studio email did not go. An
+ * accepted request frees the business keys and the budget unit; a new waitlist
+ * entry frees its waitlist key. Repeats and unconnected requests took nothing.
+ * Returns false if Redis could not confirm the release (logged; never throws).
+ */
+export async function releaseFreeCheck(gate: CheckGate | null): Promise<boolean> {
+  if (!gate) return true;
+  let commands: [string, ...string[]][] = [];
+  if (gate.mode === "accepted") {
+    commands = [["DEL", gate.keys.strict], ["DEL", gate.keys.loose], ["DECR", gate.usedKey]];
+  } else if (gate.mode === "waitlist" && !gate.alreadyWaiting) {
+    commands = [["DEL", gate.waitKey]];
+  }
+  if (commands.length === 0) return true;
+  const rows = await redisPipeline(commands);
+  if (!rows) console.error("[storage] Could not release a free-check claim after a failed send.");
+  return rows !== null;
 }
 
 /** "3 November 2026" in South African time. */

@@ -43,8 +43,8 @@ function CellContent({ value, plum }: { value: Cell; plum?: boolean }) {
  * dims the others. Phones get a segmented control that shows one plan at a time
  * (default Full Service) and a CTA that follows the plan.
  *
- * Every "Ask us" cell is something the live copy does not state; they are the
- * open item for the owner (README section 10, item 9).
+ * Every "Ask us" cell is something the live copy does not state, so it sends the
+ * visitor to ask rather than promise.
  */
 export function Compare() {
   const [plan, setPlan] = useState<PlanKey>("local");

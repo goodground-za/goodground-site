@@ -17,7 +17,8 @@
 - Two ways to pay a package: a 50% deposit to secure the project and 50% on completion, before handover; or 12 monthly instalments, where the first secures the booking and the other 11 start once the project is completed. Neither is a subscription: the client owns the website.
 - Full Service is a separate monthly plan, for custom designs: from R1 500 a month (the final price depends on the site), month to month, no minimum term.
 - Care Plan: for custom-build clients after launch, a monthly retainer priced per site, with 30 days’ notice.
-- Monthly Local plans, month to month with a free preview before the first debit: Local Start R299 a month, Local Plus R449 a month and Local Pro R799 a month (VAT included; annual prices give two months free).
+- Monthly Local plans, month to month. A free preview arrives within 5 working days, the site goes live when the client approves it, and the first debit runs only then: Local Start R299 a month, Local Plus R449 a month and Local Pro R799 a month (VAT included). Annual prices give two months free: R2 990, R4 490 and R7 990 a year.
+- Add-ons for the Local plans: AI Visibility Fix Pack R2 950 once-off (R1 450 on Local Plus, included in Local Pro), Visibility Watch R199 a month (the monthly AI Visibility Report on its own, for sites GoodGround has built), and business email R49 a month per mailbox.
 - New Business Offer, for businesses going online for the first time: the first month of Local Start free, plus a business mailbox free for 12 months. Two spaces are available each month. Redesigns and replacements are not part of this offer.
 
 ## Pages

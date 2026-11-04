@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Cloudflare Turnstile widget for the free AI check form (Phase B mounts it).
+ * Cloudflare Turnstile widget for the free AI check form.
  *
  * Renders nothing unless NEXT_PUBLIC_TURNSTILE_SITE_KEY is set, so the form
  * works without a key (the honeypot and the 3-second rule still run). With a
@@ -13,6 +13,11 @@ import { useEffect, useRef } from "react";
  * is single-use, so `resetKey` lets the form ask for a fresh one after a failed
  * send. The CSP allows challenges.cloudflare.com only when the key is set
  * (next.config.ts).
+ *
+ * The script can be blocked (an ad blocker, a strict network) or the challenge
+ * can fail. `onStatus("blocked")` tells the form, so it can say so and offer a
+ * retry and an email address instead of waiting for a token that cannot come;
+ * remounting the component (a new `key`) tries again from scratch.
  */
 const SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 const SCRIPT = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
@@ -30,29 +35,59 @@ declare global {
 
 export const turnstileEnabled = Boolean(SITE_KEY);
 
-export function Turnstile({ onToken, resetKey = 0 }: { onToken: (token: string) => void; resetKey?: number }) {
+/** How long to wait for Cloudflare's script before calling the check blocked. */
+const LOAD_TIMEOUT_MS = 10_000;
+
+export function Turnstile({
+  onToken,
+  onStatus,
+  resetKey = 0,
+  hidden = false,
+}: {
+  onToken: (token: string) => void;
+  onStatus?: (status: "ready" | "blocked") => void;
+  resetKey?: number;
+  /** Hide the (empty) widget box, e.g. while the form shows that the check is blocked. */
+  hidden?: boolean;
+}) {
   const box = useRef<HTMLDivElement>(null);
   const widget = useRef<string | undefined>(undefined);
   const callback = useRef(onToken);
+  const status = useRef(onStatus);
   useEffect(() => {
     callback.current = onToken;
+    status.current = onStatus;
   });
 
   useEffect(() => {
     if (!SITE_KEY || !box.current) return;
     const el = box.current;
+    let alive = true;
+    let timer = 0;
+    let script: HTMLScriptElement | null = null;
     const draw = () => {
-      if (!window.turnstile || widget.current) return;
+      if (!alive || !window.turnstile || widget.current) return;
+      window.clearTimeout(timer);
       widget.current = window.turnstile.render(el, {
         sitekey: SITE_KEY,
         callback: (token: string) => callback.current(token),
         "expired-callback": () => callback.current(""),
-        "error-callback": () => callback.current(""),
+        "error-callback": () => {
+          callback.current("");
+          status.current?.("blocked");
+        },
       });
+      status.current?.("ready");
+    };
+    const blocked = () => {
+      if (!alive || widget.current) return;
+      // A script that failed stays in the document and never loads again: drop it so a retry fetches a fresh one.
+      if (!window.turnstile) script?.remove();
+      status.current?.("blocked");
     };
     if (window.turnstile) draw();
     else {
-      let script = document.querySelector<HTMLScriptElement>(`script[src="${SCRIPT}"]`);
+      script = document.querySelector<HTMLScriptElement>(`script[src="${SCRIPT}"]`);
       if (!script) {
         script = document.createElement("script");
         script.src = SCRIPT;
@@ -61,8 +96,14 @@ export function Turnstile({ onToken, resetKey = 0 }: { onToken: (token: string) 
         document.head.appendChild(script);
       }
       script.addEventListener("load", draw);
+      script.addEventListener("error", blocked);
+      timer = window.setTimeout(blocked, LOAD_TIMEOUT_MS);
     }
     return () => {
+      alive = false;
+      window.clearTimeout(timer);
+      script?.removeEventListener("load", draw);
+      script?.removeEventListener("error", blocked);
       if (widget.current) window.turnstile?.remove(widget.current);
       widget.current = undefined;
     };
@@ -73,5 +114,5 @@ export function Turnstile({ onToken, resetKey = 0 }: { onToken: (token: string) 
   }, [resetKey]);
 
   if (!SITE_KEY) return null;
-  return <div ref={box} className="gg-turnstile" />;
+  return <div ref={box} className="gg-turnstile" hidden={hidden} />;
 }

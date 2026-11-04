@@ -58,7 +58,7 @@ const SWATCHES = [
 ] as const;
 
 // Copy from the Service detail (SEO) frame, 96:266. Answers 02–05 are not
-// written in Figma (open item 11), so they are the live answers from
+// written in Figma, so they are the live answers from
 // content/servicePages.ts, as Home's 02 and 03 are from content/faq.ts.
 const SERVICE_FAQ: FaqItem[] = [
   {

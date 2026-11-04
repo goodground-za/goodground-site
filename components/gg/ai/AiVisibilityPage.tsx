@@ -22,7 +22,7 @@ import { sharedFaqBySlug } from "@/content/faq";
 import { addOns, localPlans } from "@/content/pricing";
 import { site } from "@/content/site";
 import { firstOfNextMonth } from "@/lib/freeCheck";
-import { getFreeCheckCounters } from "@/lib/liveCounters";
+import { typedFreeCheck } from "@/lib/liveCounters";
 
 import { ButtonLink } from "../Button";
 import type { FaqItem } from "../FaqAccordion";
@@ -80,17 +80,18 @@ function ServiceSchema() {
 }
 
 /**
- * /services/ai-visibility (spec page 19, mockups/ai-visibility.html).
+ * /services/ai-visibility.
  *
  * The hook page for Track C: does AI matter for me (hero, stats), how do you
  * check it honestly (how it works, the sample, the method), and what do I get
  * and what does it cost (included plans, the booking form). THE PAGE NEVER RUNS
  * A SCAN: the sample is fictional and labelled EXAMPLE DATA, and the form only
- * takes a request. Whether the month's free checks are used up is read on the
- * server (Upstash Redis when connected, the typed settings otherwise).
+ * takes a request. The page is static: whether the month's free checks are used
+ * up starts as the typed setting and the form swaps in the live count after load
+ * (GET /api/offer-spots, Upstash Redis when connected).
  */
-export async function AiVisibilityPage() {
-  const counters = await getFreeCheckCounters();
+export function AiVisibilityPage() {
+  const counters = typedFreeCheck();
   const nextRun = firstOfNextMonth();
 
   return (
@@ -160,7 +161,9 @@ export async function AiVisibilityPage() {
                   <p className="ai-stat__label">{stat.label}</p>
                   <p className="ai-stat__src">
                     <span className="gg-sr-only">Source: </span>
-                    {stat.source}
+                    <a href={stat.href} target="_blank" rel="noopener noreferrer">
+                      {stat.source}
+                    </a>
                   </p>
                 </li>
               ))}

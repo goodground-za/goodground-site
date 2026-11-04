@@ -23,7 +23,7 @@ import { sendMail } from "@/lib/mailer";
  * as "missing") for answers that only the full brief asks. Both show in the team email subject and
  * body, and in the client confirmation.
  *
- * WHAT IT DOES NOT DO YET (open item 8): store drafts on a server, email a private link, attach a
+ * WHAT IT DOES NOT DO YET: store drafts on a server, email a private link, attach a
  * PDF, or write to an admin view. Those wait on the storage region, retention period and recipient
  * decisions. Files are never uploaded here: the client pastes a share link to their own Google
  * Drive, Dropbox or OneDrive folder in the brief, so GoodGround stores none of their data.

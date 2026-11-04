@@ -40,7 +40,7 @@ export function PayYourWay() {
           }
           cta={
             <div className="hm-pay__cta">
-              <ButtonLink href="/start-project?intent=quote">Get a fixed quote</ButtonLink>
+              <ButtonLink href="/start-project?intent=quote&ref=home">Get a fixed quote</ButtonLink>
               <a className="gg-text-link hm-pay__link" href="/pricing#monthly">
                 Compare monthly plans →
               </a>
@@ -169,7 +169,7 @@ export function PayYourWay() {
         </figure>
 
         <div className="hm-phone-only">
-          <ButtonLink href="/start-project?intent=quote" full>
+          <ButtonLink href="/start-project?intent=quote&ref=home" full>
             Get a fixed quote
           </ButtonLink>
           <a className="gg-text-link hm-pay__link" href="/pricing#monthly">

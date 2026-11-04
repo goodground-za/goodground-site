@@ -4,8 +4,8 @@ import { Icon, type IconName } from "./Icon";
  * Generated cover art for Insights cards, the article page and "Related
  * reading" — Figma set 41:177. No photos.
  *
- * A new topic needs a colour and icon decision before it is added here. "AI search" (v2, mint
- * with the search icon) is the spec's suggestion for the funnel articles.
+ * A new topic needs a colour and icon decision before it is added here. "AI search" (mint
+ * with the search icon) is the cover for the AI visibility articles.
  */
 export type CoverTopic = "websites" | "growth" | "pricing" | "ai-search";
 

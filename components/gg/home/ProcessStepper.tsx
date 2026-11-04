@@ -114,7 +114,7 @@ export function ProcessStepper() {
           headingClass="gg-h2 hm-h2"
           sub="Six clear steps, one team the whole way through, and a month of support included after launch."
           subClassName="hm-hide-phone"
-          cta={<ButtonLink href="/start-project">Start your project</ButtonLink>}
+          cta={<ButtonLink href="/start-project?ref=home">Start your project</ButtonLink>}
           ctaClassName="hm-hide-phone"
         />
 
@@ -145,7 +145,7 @@ export function ProcessStepper() {
         </ol>
 
         <div className="hm-phone-only">
-          <ButtonLink href="/start-project" full>
+          <ButtonLink href="/start-project?ref=home" full>
             Start your project
           </ButtonLink>
         </div>

@@ -20,7 +20,7 @@ const first = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v
 export default async function OnboardingPage({ params, searchParams }: { params: Promise<{ token?: string[] }>; searchParams: Promise<Search> }) {
   const { token } = await params;
   const query = await searchParams;
-  // The token will select the saved brief once server storage exists (open item 8); for now it only names the local draft.
+  // The token will select the saved brief once server storage exists; for now it only names the local draft.
   const key = (token?.[0] ?? "default").replace(/[^A-Za-z0-9_-]/g, "").slice(0, 64) || "default";
   // v2: ?track=local is the short brief for monthly-plan clients, ?plan= (local-start | local-plus | local-pro) names their plan.
   // Both are whitelisted: anything else is ignored and the full brief is used.

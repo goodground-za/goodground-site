@@ -52,7 +52,7 @@ export const promoEvents = {
 };
 
 /**
- * The v2 funnel events (blueprint section 10). Names and properties are fixed
+ * The funnel events. Names and properties are fixed
  * here so a page cannot invent a variant. Properties are whitelisted values
  * only (plan key, offer key, ref, track): never a name, email, phone, business
  * name or free text.

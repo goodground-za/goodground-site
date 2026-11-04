@@ -936,9 +936,17 @@
   color: var(--gg-ink);
   cursor: pointer;
   touch-action: manipulation;
+  position: relative;
   transition:
     background-color var(--gg-motion-xs) var(--gg-ease-out),
     transform var(--gg-motion-xs) var(--gg-ease-out);
+}
+
+/* 44px hit area on the 36px button. */
+.pr-stepper__btn::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
 }
 
 .pr-stepper.is-on .pr-stepper__btn {
@@ -961,7 +969,9 @@
 }
 
 .pr-stepper__value {
-  width: 34px;
+  /* As tall as the buttons beside it (36px), so it is a real touch target next to their 44px hit areas. */
+  width: 36px;
+  height: 36px;
   padding: 0;
   border: 0;
   background: transparent;

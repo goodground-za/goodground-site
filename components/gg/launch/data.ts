@@ -1,70 +1,12 @@
 import { newBusinessOffer } from "@/content/newBusinessOffer";
 import { localPlans, packages } from "@/content/pricing";
 import { launchFaqs } from "@/content/websiteLaunch";
-import type { OfferSpots } from "@/lib/liveCounters";
 
 import type { FaqItem } from "../FaqAccordion";
 import { formatRand } from "../format";
 import type { IconName } from "../Icon";
 
-/**
- * Availability (Website launch note 78:252): one source, read by the live pill,
- * the offer-card meter, the intake calendar, the sticky mobile bar and the form
- * banner. The spaces taken come from lib/liveCounters.ts getOfferSpots (Upstash
- * Redis when connected, content/newBusinessOffer.ts spotsTaken otherwise); the
- * page reads it on the server and shares it with the client pieces through
- * AvailabilityProvider. Month names come from the setting, never typed twice.
- */
-const MONTHS = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December",
-];
-
-const monthAfter = (month: string, year: number, steps: number) => {
-  const i = MONTHS.indexOf(month);
-  const index = i + steps;
-  return { month: MONTHS[index % 12], year: year + Math.floor(index / 12) };
-};
-
-export type Availability = {
-  month: string;
-  nextMonth: string;
-  total: number;
-  taken: number;
-  left: number;
-  soldOut: boolean;
-  /** The offer tag on a submission (blueprint section 4). */
-  offer: "new-business" | "new-business-waitlist";
-  /** What every "Check availability" button says. */
-  cta: string;
-  /** The live pill: "1 OF 2 SPACES LEFT IN NOVEMBER". */
-  pill: string;
-  intakes: { label: string; filled: number; open: number }[];
-};
-
-export function buildAvailability(spots: OfferSpots): Availability {
-  const { month, year } = newBusinessOffer;
-  const { total, taken, left, soldOut } = spots;
-  const next = monthAfter(month, year, 1);
-  const third = monthAfter(month, year, 2);
-  return {
-    month,
-    nextMonth: next.month,
-    total,
-    taken,
-    left,
-    soldOut,
-    offer: soldOut ? "new-business-waitlist" : "new-business",
-    cta: soldOut ? `Join the ${next.month} waitlist` : "Check availability",
-    pill: soldOut ? `${month.toUpperCase()} IS FULLY BOOKED` : `${left} OF ${total} SPACES LEFT IN ${month.toUpperCase()}`,
-    // Months further out show every space open until bookings exist.
-    intakes: [
-      { label: `${month} ${year}`, filled: taken, open: left },
-      { label: `${next.month} ${next.year}`, filled: 0, open: total },
-      { label: `${third.month} ${third.year}`, filled: 0, open: total },
-    ],
-  };
-}
+export { buildAvailability, type Availability } from "./availability";
 
 /* -------------------------------------------------------------- content */
 
@@ -131,8 +73,7 @@ export const criteria = {
 /**
  * What the offer includes, grouped as the page groups it: Local Start's
  * inclusions (content/pricing.ts localPlans) plus the free mailbox. Wording
- * for the card bodies is the page's own (the spec lists the inclusions, not
- * their descriptions).
+ * for the card bodies is the page's own.
  */
 export const includedGroups: {
   n: string;
@@ -183,14 +124,14 @@ export const includedGroups: {
   },
 ];
 
-/** "Your first 3 months" (spec 09 v2 block). */
+/** "Your first 3 months". */
 export const firstMonths: { n: string; label: string; amount: string; body: string }[] = [
   { n: "M1", label: "Month 1", amount: formatRand(0), body: "Free. Your preview, then go-live." },
   { n: "M2", label: "Month 2", amount: monthly, body: "Your first debit. Your Google profile is live." },
   { n: "M3", label: "Month 3", amount: monthly, body: "Your first AI visibility snapshot." },
 ];
 
-/** "Grow when you’re ready" (spec 09 v2 block): each links to #monthly or #custom. */
+/** "Grow when you’re ready": each links to #monthly or #custom. */
 export const growChoices: { icon: IconName; title: string; body: string; href: string }[] = [
   {
     icon: "shield",

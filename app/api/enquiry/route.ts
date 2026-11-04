@@ -33,7 +33,7 @@ import {
   type OfferKey,
   type PlanKey,
 } from "@/lib/enquiryShared";
-import { firstOfNextMonth, gateFreeCheck, longDate, type CheckGate } from "@/lib/freeCheck";
+import { firstOfNextMonth, gateFreeCheck, longDate, releaseFreeCheck, type CheckGate } from "@/lib/freeCheck";
 import { getOfferSpots } from "@/lib/liveCounters";
 import { sendMail } from "@/lib/mailer";
 import { turnstileRequired, verifyTurnstile } from "@/lib/turnstile";
@@ -58,7 +58,9 @@ import { turnstileRequired, verifyTurnstile } from "@/lib/turnstile";
  *     free-check guardrails in lib/freeCheck.ts (30-day repeat, monthly cap).
  *     THE SITE NEVER RUNS A SCAN: it only records the request and tells the team.
  *  6. The enquiry to the studio inbox. If this fails the visitor sees a
- *     failure. If it works the enquiry counts as sent, whatever happens next.
+ *     failure, and anything step 5 claimed (the 30-day record, the budget unit,
+ *     the waitlist entry) is given back, so their retry is a first request. If
+ *     it works the enquiry counts as sent, whatever happens next.
  *  7. The auto-reply to the visitor, at most one per address per 10 minutes. If
  *     it fails it is logged and the visitor never hears about it.
  *
@@ -80,12 +82,14 @@ const MIN_FILL_MS = 3000;
 
 type Hit = { count: number; first: number };
 const hits = new Map<string, Hit>();
-const recentEnquiry = new Map<string, number>();
+/** A sent enquiry, remembered for 10 minutes so a double click is answered the same way as the first send. */
+type Sent = { at: number; result?: EnquiryResponse["result"]; business?: string; date?: string; message?: string };
+const recentEnquiry = new Map<string, Sent>();
 const recentReply = new Map<string, number>();
 
 function sweep(now: number) {
   for (const [k, v] of hits) if (now - v.first > RATE.windowMs) hits.delete(k);
-  for (const [k, t] of recentEnquiry) if (now - t > WINDOW) recentEnquiry.delete(k);
+  for (const [k, v] of recentEnquiry) if (now - v.at > WINDOW) recentEnquiry.delete(k);
   for (const [k, t] of recentReply) if (now - t > WINDOW) recentReply.delete(k);
 }
 
@@ -115,7 +119,7 @@ export type EnquiryResponse = {
   /** True when a confirmation email was actually sent, so the success copy can say so. */
   copy?: boolean;
   message?: string;
-  /** ai-check only: what happened to the request. */
+  /** ai-check and new-business-offer: what happened to the request (the offer form: booked or waitlist). */
   result?: "booked" | "waitlist" | "repeat";
   /** ai-check repeat: the business and the date of the earlier check, for the on-page line. */
   business?: string;
@@ -172,7 +176,15 @@ export async function POST(request: Request) {
     res.cookies.set(
       "gg_thanks",
       encodeURIComponent(
-        JSON.stringify({ form: kind, name: firstName(extra.name), email: extra.email, business: extra.business, date: extra.date, next: extra.result === "waitlist" ? firstOfNextMonth(new Date(now)) : undefined }),
+        JSON.stringify({
+          form: kind,
+          name: firstName(extra.name),
+          email: extra.email,
+          copy: extra.copy,
+          business: extra.business,
+          date: extra.date,
+          next: extra.result === "waitlist" ? (kind === "ai-check" ? firstOfNextMonth(new Date(now)) : newBusinessOffer.nextMonth) : undefined,
+        }),
       ),
       {
         httpOnly: true,
@@ -282,13 +294,36 @@ export async function POST(request: Request) {
   const fingerprint = createHash("sha256")
     .update(`${kind}|${email.toLowerCase()}|${business.toLowerCase()}|${message.slice(0, 80)}|${service ?? ""}|${plan ?? ""}`)
     .digest("hex");
-  if (recentEnquiry.has(fingerprint)) return done({ copy: false, name: fullName, email, result: kind === "ai-check" ? "booked" : undefined });
+  // A double click or a quick resend: answered like the first send (waitlist stays waitlist, repeat stays repeat), nothing sent again.
+  const earlier = recentEnquiry.get(fingerprint);
+  if (earlier) {
+    return done({
+      copy: false,
+      name: fullName,
+      email,
+      result: earlier.result ?? (kind === "ai-check" ? "booked" : undefined),
+      business: earlier.business,
+      date: earlier.date,
+      message: earlier.message,
+    });
+  }
 
   // Free-check guardrails. The site never runs a scan; this only decides how the request is handled.
   let gate: CheckGate | null = null;
   if (kind === "ai-check") gate = await gateFreeCheck({ business, town, website: websiteUrl });
+  // The offer form reports what the server decided too, so the page never promises a held space for a waitlist entry.
   const result: EnquiryResponse["result"] =
-    gate?.mode === "repeat" ? "repeat" : gate?.mode === "waitlist" ? "waitlist" : kind === "ai-check" ? "booked" : undefined;
+    gate?.mode === "repeat"
+      ? "repeat"
+      : gate?.mode === "waitlist"
+        ? "waitlist"
+        : kind === "ai-check"
+          ? "booked"
+          : kind === "new-business-offer"
+            ? offer === "new-business-waitlist"
+              ? "waitlist"
+              : "booked"
+            : undefined;
   const repeatDate = gate?.mode === "repeat" ? longDate(gate.at) : undefined;
 
   // Studio email.
@@ -304,7 +339,7 @@ export async function POST(request: Request) {
       case "local-preview":
         return ["New preview request", plan ? PLANS[plan] : null, offer ? OFFERS[offer] : null, business, where].filter(Boolean).join(" · ");
       case "new-business-offer":
-        return [offer === "new-business-waitlist" ? "New Business Offer WAITLIST" : "New Business Offer spot request", business, where].filter(Boolean).join(" · ");
+        return [offer === "new-business-waitlist" ? "New Business Offer WAITLIST" : "New Business Offer space request", business, where].filter(Boolean).join(" · ");
       case "ai-check":
         return result === "repeat"
           ? `Repeat free-check request · resend earlier report · ${business}`
@@ -361,22 +396,21 @@ export async function POST(request: Request) {
   if (pagePath) lines.push(`Page: ${pagePath}`);
   lines.push(`Sent: ${new Date(now).toISOString()}`);
 
-  const sent = await sendMail({ subject, replyTo: email, text: lines.join("\n") });
-  if (!sent.ok) return wantsJson ? json({ ok: false, message: FAILURE }, 502) : bad(502, kind);
-  recentEnquiry.set(fingerprint, now);
+  // Nothing counts until the team has the email. A failed or thrown send gives
+  // back whatever the gate claimed, so the visitor's retry is a first request
+  // (never "we've re-sent your report" for a report nobody asked us to send).
+  const sent = await sendMail({ subject, replyTo: email, text: lines.join("\n") }).catch(() => ({ ok: false as const, reason: "threw" as const }));
+  if (!sent.ok) {
+    await releaseFreeCheck(gate).catch(() => false);
+    return wantsJson ? json({ ok: false, message: FAILURE }, 502) : bad(502, kind);
+  }
 
   // A repeat free check gets no new scan record and no second auto-reply: the
   // team resends the earlier report. The visitor sees the on-page line.
   if (result === "repeat") {
-    return done({
-      copy: false,
-      name: fullName,
-      email,
-      result,
-      business,
-      date: repeatDate,
-      message: `We checked ${business} on ${repeatDate}. We’ve re-sent your report to ${email}.`,
-    });
+    const message = `We checked ${business} on ${repeatDate}. We’ve re-sent your report to ${email}.`;
+    recentEnquiry.set(fingerprint, { at: now, result, business, date: repeatDate, message });
+    return done({ copy: false, name: fullName, email, result, business, date: repeatDate, message });
   }
   const duplicateWait = gate?.mode === "waitlist" && gate.alreadyWaiting;
 
@@ -405,16 +439,13 @@ export async function POST(request: Request) {
     }
   }
 
-  return done({
-    copy,
-    name: fullName,
-    email,
-    result,
-    business: kind === "ai-check" ? business : undefined,
-    message: result === "waitlist"
+  const finalMessage =
+    kind === "ai-check" && result === "waitlist"
       ? `We’re fully booked for free checks this month. You’re on the list, and we’ll run yours on ${firstOfNextMonth(new Date(now))}.`
-      : undefined,
-  });
+      : undefined;
+  const finalBusiness = kind === "ai-check" ? business : undefined;
+  recentEnquiry.set(fingerprint, { at: now, result, business: finalBusiness, message: finalMessage });
+  return done({ copy, name: fullName, email, result, business: finalBusiness, message: finalMessage });
 }
 
 export async function GET() {
@@ -480,14 +511,14 @@ function buildAutoReply(input: ReplyInput) {
     case "new-business-offer":
       subject = input.waitlist || input.offer === "new-business-waitlist"
         ? `You’re on the ${month} New Business Offer waitlist`
-        : "Your New Business Offer spot request is in";
+        : "Your New Business Offer space request is in";
       opening = input.offer === "new-business-waitlist"
         ? `${hello} The offer is fully booked this month, so you’re on the ${month} waitlist.`
-        : `${hello} Your spot request is in, and your spot is held while we confirm.`;
+        : `${hello} Your space request is in, and your space is held while we confirm.`;
       steps = input.offer === "new-business-waitlist"
         ? [`We tell you as soon as a space opens in ${month}`, `We build your free preview within ${PREVIEW_TIME}`, "You approve it to go live. Your first debit runs only then"]
         : [
-            `We confirm your spot within ${REPLY_TIME}`,
+            `We confirm your space within ${REPLY_TIME}`,
             `We build your free preview within ${PREVIEW_TIME}`,
             "You approve it to go live. Your first month is free, and the business mailbox is free for 12 months",
           ];

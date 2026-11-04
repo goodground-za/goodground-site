@@ -84,8 +84,7 @@ export const faq: FAQItem[] = [
 /* ------------------------------------------------------------------- v2 */
 
 /**
- * Shared FAQ entries for the monthly plans and AI visibility (spec 15-faq.md v2
- * block). ONE source: Pricing, the AI visibility page and (later) Home, Industry
+ * Shared FAQ entries for the monthly plans and AI visibility. ONE source: Pricing, the AI visibility page and (later) Home, Industry
  * and /faq read these by `slug`, so an answer is only ever edited once. They are
  * deliberately NOT part of `faq` above, because /faq, Home and Services read that
  * list by position.
@@ -111,7 +110,7 @@ export type SharedFaqEntry = {
   slug: SharedFaqSlug;
   question: string;
   answer: string;
-  /** The "See monthly plans →" style link the spec puts at the end of an answer. */
+  /** The "See monthly plans →" style link at the end of an answer. */
   link?: { label: string; href: string };
 };
 
@@ -157,7 +156,6 @@ export const sharedFaq: SharedFaqEntry[] = [
     answer: "No, and be wary of anyone who does. We improve the signals AI engines read and show you, honestly, whether it’s working.",
   },
   {
-    // Wording from the pricing mockup (mockups/pricing.html); the spec's FAQ block names the question but not the answer.
     slug: "ai-report",
     question: "What is the AI Visibility Report?",
     answer:
@@ -165,7 +163,7 @@ export const sharedFaq: SharedFaqEntry[] = [
     link: { label: "See how it works →", href: "/services/ai-visibility#how" },
   },
   {
-    // Added with the Process panel (spec 10-process v2 block names the question, not the answer). Not part of /faq.
+    // Added with the Process panel. Not part of /faq.
     slug: "monthly-different",
     question: "How is a monthly plan different?",
     answer:

@@ -9,9 +9,8 @@ import type { IconName } from "../Icon";
  * policy wording is the Figma text, which is the live policy lightly shortened with the meaning
  * unchanged. The Terms view is plain-language summaries that restate what the site already
  * promises; sections 09, 13 and 15 only point to the signed contract because no wording for them
- * has been supplied. Nothing legal is invented here. The owner switched the Terms on on
- * 27 Oct 2026 (`termsLive`); `attorney: true` still marks a section with a "needs your attorney"
- * label if one is ever added back.
+ * has been supplied. Nothing legal is invented here. The Terms went live on
+ * 27 Oct 2026 (`termsLive`).
  */
 export const termsLive = true;
 
@@ -366,9 +365,7 @@ export type TermsSection = {
   n: string;
   title: string;
   summary: string;
-  /** The wording or decision has to come from the owner's attorney. */
-  attorney?: boolean;
-  /** Full legal wording, once the attorney supplies it. */
+  /** Full legal wording, when a section carries more than its plain-language summary. */
   wording?: string[];
   /** The subjects the section deals with, shown as a plain list under the summary. */
   topics?: string[];

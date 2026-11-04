@@ -111,6 +111,7 @@ function Stepper({ item, n }: { item: BuildItem; n: number }) {
       <input
         type="number"
         className="pr-stepper__value"
+        name={`qty-${item.id}`}
         inputMode="numeric"
         min={0}
         max={MAX_QTY}

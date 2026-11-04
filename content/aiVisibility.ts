@@ -1,18 +1,15 @@
 import { newBusinessOffer } from "@/content/newBusinessOffer";
 
 /**
- * Copy and data for /services/ai-visibility (spec page 19 and the
- * mockups/ai-visibility.html reference). All of it is NEW COPY awaiting the
- * owner's sign-off.
+ * Copy and data for /services/ai-visibility.
  *
  * HONESTY RULES this file enforces:
  *  - THE SITE NEVER RUNS A SCAN. The sample below is fictional and every place
  *    it appears is labelled EXAMPLE DATA. The free check is a request the team
  *    runs by hand (app/api/enquiry, lib/freeCheck.ts).
  *  - No score, no ranking promise, no guarantee.
- *  - Every statistic carries a visible source line, and the three stat cards use
- *    only the figures in the spec/mockup. Stats the mockup gives without a named
- *    source are flagged below (UNSOURCED) for the owner.
+ *  - Every statistic carries a visible source line that links to where the
+ *    figure was published. A claim with no source is not on the page.
  *
  * Plan prices, add-ons and the free-check budget are NOT here: the page reads
  * them from content/pricing.ts and content/site.ts.
@@ -20,7 +17,6 @@ import { newBusinessOffer } from "@/content/newBusinessOffer";
 
 export const aiPage = {
   path: "/services/ai-visibility",
-  // Spec 19 SEO block (to confirm).
   title: "AI Visibility Check: Does AI Recommend You? | GoodGround",
   description:
     "Find out how often ChatGPT, Gemini and Google’s AI recommend your business when local customers ask. Free check for Garden Route businesses.",
@@ -31,7 +27,7 @@ export const aiPage = {
 /* ----------------------------------------------------------- band rules */
 
 /**
- * The band rules, shared with the scanner and the monthly report (spec 19):
+ * The band rules, shared with the scanner and the monthly report:
  * Usually: named in at least two thirds of checks. Sometimes: a third to two
  * thirds. Rarely: more than none, under a third. Not seen: none.
  * Integer maths, so 3 of 9 (exactly a third) is Sometimes.
@@ -93,7 +89,7 @@ export const sample = {
   heroFoot: "Named instead most often: two George competitors and one Knysna firm.",
   fixFirst: [
     { title: "Complete your Google Business Profile", body: "Add services, service areas and photos, and post twice a month." },
-    { title: "Ask for reviews that mention the service and George", body: "Review volume tracks closely with how often a business is recommended." },
+    { title: "Ask for reviews that mention the service and George", body: "We give you simple wording to send customers." },
     { title: "Add a page for geyser repair in George", body: "It gives AI engines a direct answer to quote." },
   ],
   /** The period on the sample label follows the offer intake month. */
@@ -121,16 +117,19 @@ export const stats = [
     value: "70%",
     label: "of South African adults have used an AI chatbot.",
     source: "Google / Ipsos, 2026 (Google-sponsored)",
+    href: "https://www.bizcommunity.com/article/new-report-finds-strong-growth-in-ai-use-among-sa-adults-395368a",
   },
   {
     value: "Aug 2025",
     label: "Google’s AI Mode launched in South Africa, joining AI Overviews in search results.",
     source: "TechCentral",
+    href: "https://techcentral.co.za/google-rolls-out-advanced-ai-mode-in-south-africa-nigeria-and-kenya/268933/",
   },
   {
     value: "~70%",
     label: "of what AI cites for local businesses comes from their own website and Google Business Profile.",
     source: "BrightLocal local AI study, 2026 (42% websites, ~28.5% Google profiles)",
+    href: "https://www.brightlocal.com/research/local-ai-visibility-study/",
   },
 ] as const;
 
@@ -167,8 +166,7 @@ export const method = {
   rows: [
     {
       title: "We ask every question three times",
-      // UNSOURCED on the page: the mockup gives no study name. Kept as the mockup has it; the owner decides whether to name the source or drop the figure.
-      body: "In a 2026 study of 200,000 local searches, asking again returned a matching list only about a quarter to a third of the time.",
+      body: "Every question goes to each assistant three times, so we can count how often you’re named instead of relying on a single answer.",
     },
     {
       title: "We show a range, not a number",

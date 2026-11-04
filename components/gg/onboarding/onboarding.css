@@ -67,6 +67,7 @@
 }
 
 .ob-top__logo {
+  position: relative;
   padding: 6px 12px;
   border-radius: 999px;
   background: var(--gg-ink);
@@ -74,6 +75,13 @@
   font-size: 16px;
   font-weight: 600;
   letter-spacing: -0.03em;
+}
+
+/* 44px touch target on the 37px pill. */
+.ob-top__logo::after {
+  content: "";
+  position: absolute;
+  inset: -4px 0;
 }
 
 @media (min-width: 768px) {

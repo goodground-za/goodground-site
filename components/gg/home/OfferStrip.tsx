@@ -32,7 +32,7 @@ export function OfferStrip({ initial }: { initial: OfferState }) {
 
   useEffect(() => {
     let live = true;
-    fetch("/api/offer-spots", { headers: { Accept: "application/json" } })
+    fetch("/api/offer-spots", { headers: { Accept: "application/json" }, cache: "no-cache" })
       .then((response) => (response.ok ? response.json() : null))
       .then((data: unknown) => {
         if (live && isState(data)) setState(data);

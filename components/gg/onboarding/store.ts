@@ -8,7 +8,7 @@ import type { Track } from "./steps";
 /**
  * Local-first persistence for the brief. Answers live in localStorage (debounced 800ms after the
  * last keystroke, immediately on choices). Nothing here talks to a server: server drafts and the
- * emailed private link wait on the storage decision (open item 8), so the form says "saved on this
+ * emailed private link are not built yet, so the form says "saved on this
  * device" rather than claiming more. Files are not stored at all: clients paste a share link to a
  * Google Drive, Dropbox or OneDrive folder, so nothing they own is kept on a GoodGround server.
  */

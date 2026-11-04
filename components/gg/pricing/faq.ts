@@ -9,8 +9,8 @@ import type { FaqItem } from "../FaqAccordion";
  * from content/faq.ts by slug, so the four v2 questions are written once for
  * Pricing, the AI page and (later) Home and /faq.
  *
- * Order (mockups/pricing.html): hosting and domain first (v2 wording), then the
- * monthly-plan questions, then the custom-build questions.
+ * Order: hosting and domain first, then the monthly-plan questions, then the
+ * custom-build questions.
  */
 const live = (index: number): FaqItem => ({ question: pricingFaq[index].question, answer: [pricingFaq[index].answer] });
 

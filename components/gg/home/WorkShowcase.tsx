@@ -134,7 +134,7 @@ export function WorkShowcase() {
 
         <div className="hm-next" data-reveal="fade-up">
           <p>Your project could be next. We’d rather show you real, testable work than pad this out with stock mock-ups.</p>
-          <ButtonLink href="/start-project" variant="coral">
+          <ButtonLink href="/start-project?ref=home" variant="coral">
             Start your project
           </ButtonLink>
         </div>

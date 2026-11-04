@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { funnelEvents } from "@/lib/analytics";
 
 /**
- * Analytics for /services/ai-visibility (spec 19): one delegated click handler
+ * Analytics for /services/ai-visibility: one delegated click handler
  * and one observer, so the server-rendered page stays server-rendered.
  *
  *   ai_cta_click {position}        any [data-ai-cta="hero|included|faq|sticky"], and

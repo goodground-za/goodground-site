@@ -1046,14 +1046,6 @@ html[data-motion="off"] .lg-doc {
   color: var(--gg-muted);
 }
 
-.lg-plain--attorney {
-  background: var(--gg-blush);
-}
-
-.lg-plain--attorney .gg-kicker {
-  color: var(--gg-coral-text);
-}
-
 /* Toast */
 .lg-toast {
   position: fixed;

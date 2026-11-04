@@ -70,6 +70,8 @@ export function LaunchForm() {
   const [errors, setErrors] = useState<Errors>({});
   const [first, setFirst] = useState("");
   const [copy, setCopy] = useState(false);
+  // What the server decided (the live count can have moved since the page rendered).
+  const [waitlisted, setWaitlisted] = useState(false);
   const started = useRef(false);
   const converted = useRef(false);
   const loadedAt = useRef(0);
@@ -122,12 +124,14 @@ export function LaunchForm() {
     });
 
     if (result.status === "success") {
+      const waitlist = result.result ? result.result === "waitlist" : availability.soldOut;
       if (!converted.current) {
         converted.current = true;
         promoEvents.leadSuccess();
         funnelEvents.enquirySent({ track: "local", plan: "local-start", ref: "offer" });
-        if (availability.soldOut) funnelEvents.offerWaitlistJoin({ month: availability.nextMonth });
+        if (waitlist) funnelEvents.offerWaitlistJoin({ month: availability.nextMonth });
       }
+      setWaitlisted(waitlist);
       setCopy(result.copy);
       setStatus("success");
       return;
@@ -164,9 +168,9 @@ export function LaunchForm() {
           <Icon name="check" size={22} stroke={2.6} />
         </span>
         <h3>
-          {availability.soldOut
+          {waitlisted
             ? `Thanks${first ? `, ${first}` : ""}. You’re on the ${availability.nextMonth} waitlist, and we’ll be in touch within 1–2 business days.`
-            : `Thanks${first ? `, ${first}` : ""}. Your spot is held while we confirm, within 1–2 business days.`}
+            : `Thanks${first ? `, ${first}` : ""}. Your space is held while we confirm, within 1–2 business days.`}
         </h3>
         <p>
           {copy ? "We’ve sent a confirmation to your inbox. " : ""}

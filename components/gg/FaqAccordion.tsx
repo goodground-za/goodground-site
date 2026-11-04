@@ -39,7 +39,7 @@ export function FaqAccordion({
   onOpen,
 }: {
   items: FaqItem[];
-  /** "lilac" = README default. "home" = Home section 10 (open item stays canvas). */
+  /** "lilac" = README default. "home" = Home section 10 (a closed item stays canvas). */
   tone?: "lilac" | "home" | "plain";
   /** Closed items on a white section use canvas instead of white. */
   onSurface?: boolean;

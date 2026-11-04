@@ -1429,41 +1429,6 @@
   margin-top: 16px;
 }
 
-/* Success, monthly track: the three promises. */
-.sp__done-steps {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-  list-style: none;
-}
-
-.sp__done-steps li {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 14px 16px;
-  border-radius: 16px;
-  background: var(--gg-canvas);
-  font-size: 15px;
-  font-weight: 500;
-  line-height: 1.45;
-}
-
-.sp__done-steps li span {
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: var(--gg-blush);
-  font-family: var(--gg-font-display);
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--gg-coral-text);
-}
-
 .sp__wait a {
   text-decoration: underline;
   text-underline-offset: 3px;

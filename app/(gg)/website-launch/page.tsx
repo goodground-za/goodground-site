@@ -15,7 +15,7 @@ import { SectionHeader } from "@/components/gg/SectionHeader";
 import { SplitHeading } from "@/components/gg/SplitHeading";
 import { Tag } from "@/components/gg/Tag";
 import { AvailabilityButton } from "@/components/gg/launch/AvailabilityButton";
-import { AvailabilityProvider } from "@/components/gg/launch/AvailabilityContext";
+import { LiveAvailabilityProvider } from "@/components/gg/launch/AvailabilityContext";
 import {
   buildAvailability,
   criteria,
@@ -30,6 +30,7 @@ import {
   type Availability,
 } from "@/components/gg/launch/data";
 import { EligibilityChecker } from "@/components/gg/launch/EligibilityChecker";
+import { FormCopy, HeroPill, IntakeCalendar, OfferCard } from "@/components/gg/launch/LiveParts";
 import { IncludedGroups } from "@/components/gg/launch/IncludedGroups";
 import { LaunchFaq } from "@/components/gg/launch/LaunchFaq";
 import { LaunchForm } from "@/components/gg/launch/LaunchForm";
@@ -40,7 +41,7 @@ import { newBusinessOffer } from "@/content/newBusinessOffer";
 import { localPlans } from "@/content/pricing";
 import { launchOffer, launchRoute } from "@/content/websiteLaunch";
 import { site } from "@/content/site";
-import { getOfferSpots } from "@/lib/liveCounters";
+import { typedOfferSpots } from "@/lib/liveCounters";
 import { pageSocialMeta } from "@/lib/metadata";
 import "@/components/gg/launch/launch.css";
 
@@ -55,9 +56,9 @@ const localStart = localPlans.find((plan) => plan.slug === newBusinessOffer.plan
 const monthly = formatRand(localStart.monthly);
 
 /**
- * Offer (spec 09 v2): the first month costs 0 ZAR, then Local Start's monthly
- * price, both as UnitPriceSpecification; the eligibility, and availability read
- * from the same live data as the page (InStock or SoldOut).
+ * Offer: the first month costs 0 ZAR, then Local Start's monthly price, both as
+ * UnitPriceSpecification, plus the eligibility and availability (InStock or
+ * SoldOut). The page is static, so availability is the typed count at build.
  */
 function LaunchSchema({ availability }: { availability: Availability }) {
   const schema = {
@@ -87,51 +88,16 @@ function LaunchSchema({ availability }: { availability: Availability }) {
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
 }
 
-function Meter({ availability, size }: { availability: Availability; size: "lg" | "sm" }) {
-  const { month, total, taken, left, soldOut } = availability;
-  return (
-    <div className={`ln-meter ln-meter--${size}`} data-reveal="fill">
-      <p className="ln-meter__row">
-        <span>{month} intake</span>
-        <strong className={soldOut ? "is-full" : undefined}>
-          {soldOut ? (
-            "Fully booked"
-          ) : (
-            <>
-              <span className="gg-resp-long">
-                {left} of {total} spaces left
-              </span>
-              <span className="gg-resp-short">
-                {left} of {total} left
-              </span>
-            </>
-          )}
-        </strong>
-      </p>
-      <div
-        className="ln-meter__segments"
-        role="img"
-        aria-label={`${taken} of ${total} ${month} spaces taken`}
-        style={{ "--total": total } as CSSProperties}
-      >
-        {Array.from({ length: total }, (_, i) => (
-          <span key={i} className={soldOut ? "is-full" : i < taken ? "is-taken" : undefined} style={{ "--i": i } as CSSProperties} />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-export default async function WebsiteLaunchPage() {
-  // The live count (Upstash Redis when connected, the typed fallback otherwise).
-  const availability = buildAvailability(await getOfferSpots());
+export default function WebsiteLaunchPage() {
+  // Static page: built from the typed count; LiveAvailabilityProvider swaps in the live one after load.
+  const availability = buildAvailability(typedOfferSpots());
   const projects = launchWorkSlugs
     .map((slug) => workProjects.find((p) => p.slug === slug))
     .filter((p): p is NonNullable<typeof p> => Boolean(p));
 
   return (
     <GgShell crumbs={[{ label: "NEW BUSINESS OFFER" }]} footer={{ stickyBar: true }}>
-      <AvailabilityProvider value={availability}>
+      <LiveAvailabilityProvider initial={availability}>
       <div className="ln-page">
         <BreadcrumbSchema trail={[{ name: "New Business Offer", path: launchRoute.path }]} />
         <FAQSchema items={launchFaqItems.map((i) => ({ question: i.question, answer: i.answer.join(" ") }))} id="launch-faq" />
@@ -147,10 +113,7 @@ export default async function WebsiteLaunchPage() {
                   <Tag tone="coral" className="ln-hero__tag">
                     NEW BUSINESS OFFER
                   </Tag>
-                  <span className={availability.soldOut ? "ln-pill is-full" : "ln-pill"}>
-                    <i aria-hidden="true" />
-                    {availability.pill}
-                  </span>
+                  <HeroPill />
                 </div>
                 <SplitHeading as="h1" id="ln-title" className="gg-display-l ln-h1" text="YOUR FIRST WEBSITE. FIRST MONTH FREE." />
                 <p className="gg-lead ln-hero__lead" data-part="sub">
@@ -167,89 +130,7 @@ export default async function WebsiteLaunchPage() {
                 </div>
               </div>
 
-              <div id="ln-offer-card" className={availability.soldOut ? "ln-card is-sold-out" : "ln-card"} data-reveal="fade-up" data-delay={150}>
-                <div className="ln-card__head">
-                  <p className="ln-card__name">{localStart.name}</p>
-                  {availability.soldOut ? null : <Tag tone="coral">NO DEPOSIT</Tag>}
-                </div>
-                <div className="ln-card__price" data-reveal="line-mask">
-                  <SplitHeading as="p" className="gg-number ln-card__amount" text={formatRand(0)} />
-                  <span className="ln-card__period">
-                    <span className="gg-resp-long">/ first month</span>
-                    <span className="gg-resp-short">/ first month · then {monthly}/mo</span>
-                  </span>
-                </div>
-
-                {availability.soldOut ? null : (
-                  <>
-                    <dl className="ln-maths">
-                      <div>
-                        <dt className="gg-sr-only">Month 1</dt>
-                        <dd>
-                          <strong>{formatRand(0)}</strong>
-                          <span>month 1</span>
-                        </dd>
-                      </div>
-                      <div>
-                        <dt className="gg-sr-only">Then</dt>
-                        <dd>
-                          <strong>{monthly}/mo</strong>
-                          <span>then</span>
-                        </dd>
-                      </div>
-                      <div>
-                        <dt className="gg-sr-only">Cancel</dt>
-                        <dd className="is-total">
-                          <strong>Cancel</strong>
-                          <span>any month</span>
-                        </dd>
-                      </div>
-                    </dl>
-                    <dl className="ln-tiles">
-                      <div>
-                        <dt className="gg-sr-only">First month</dt>
-                        <dd>
-                          <strong>{formatRand(0)}</strong>
-                          <span>first month</span>
-                        </dd>
-                      </div>
-                      <div>
-                        <dt className="gg-sr-only">Then</dt>
-                        <dd>
-                          <strong>{monthly}/mo</strong>
-                          <span>then, cancel any month</span>
-                        </dd>
-                      </div>
-                    </dl>
-                    <ul className="ln-checks">
-                      {heroChecklist.map((item, i) => (
-                        <li key={item.long} style={{ "--i": i } as CSSProperties}>
-                          <span className="ln-checks__chip" aria-hidden="true">
-                            <Icon name="check" size={11} stroke={3} />
-                          </span>
-                          <Resp long={item.long} short={item.short} />
-                        </li>
-                      ))}
-                    </ul>
-                  </>
-                )}
-
-                <Meter availability={availability} size="lg" />
-
-                {availability.soldOut ? (
-                  <p className="ln-next">
-                    <span aria-hidden="true">
-                      <Icon name="bell" size={15} stroke={2.2} />
-                    </span>
-                    Next opening: {availability.nextMonth}, {availability.total} spaces.
-                  </p>
-                ) : null}
-
-                <AvailabilityButton placement="offer-card" full />
-                {availability.soldOut ? null : (
-                  <p className="ln-card__fine">No obligation. We confirm availability and fit before you book.</p>
-                )}
-              </div>
+              <OfferCard checklist={heroChecklist} />
             </div>
 
             <ul className="ln-facts" data-reveal="stagger" style={{ "--gg-stagger-step": "80ms" } as CSSProperties}>
@@ -462,25 +343,7 @@ export default async function WebsiteLaunchPage() {
                 development and testing. Once they’re booked, we’ll discuss the next available intake with you.
               </p>
             </div>
-            <div className="ln-calendar" data-reveal="group">
-              <h3>Upcoming intakes</h3>
-              <ul>
-                {availability.intakes.map((intake, i) => (
-                  <li key={intake.label} className={intake.filled > 0 ? "has-filled" : undefined} style={{ "--i": i } as CSSProperties}>
-                    <span className="ln-calendar__month">{intake.label}</span>
-                    <span className="ln-calendar__dots" aria-hidden="true">
-                      {Array.from({ length: availability.total }, (_, d) => (
-                        <i key={d} className={d < intake.filled ? "is-filled" : undefined} style={{ "--d": d } as CSSProperties} />
-                      ))}
-                    </span>
-                    <span className="ln-calendar__status">
-                      {intake.open === 0 ? "Fully booked" : `${intake.open} space${intake.open === 1 ? "" : "s"} ${intake.filled > 0 ? "left" : "open"}`}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              <p className="ln-calendar__note">Filled spaces shown in coral.</p>
-            </div>
+            <IntakeCalendar />
           </div>
         </section>
 
@@ -515,42 +378,14 @@ export default async function WebsiteLaunchPage() {
         {/* 10 · Check availability (form) ------------------------------------------ */}
         <section id="check-availability" className="hm-section hm-section--plum ln-form-section" aria-labelledby="ln-form-title">
           <div className="gg-wrap ln-form-grid">
-            <div className="ln-form-copy" data-reveal="header">
-              <Tag tone="on-dark" data-part="tag">
-                {availability.soldOut ? "JOIN THE WAITLIST" : "CHECK AVAILABILITY"}
-              </Tag>
-              <SplitHeading
-                as="h2"
-                id="ln-form-title"
-                className="gg-display-m ln-form-title"
-                text={availability.soldOut ? `JOIN THE ${availability.nextMonth.toUpperCase()} WAITLIST.` : "GET YOUR FIRST BUSINESS WEBSITE UNDERWAY."}
-              />
-              <p className="gg-lead ln-form-lead" data-part="sub">
-                First month free, then {monthly} a month, with a business mailbox free for {newBusinessOffer.terms.mailboxFreeMonths} months.
-                Exclusively for new businesses without a website.
-              </p>
-              <p className="ln-banner" data-part="sub">
-                <i aria-hidden="true" />
-                {availability.soldOut
-                  ? `${availability.month} is fully booked. Tell us about your business and we’ll add you to the ${availability.nextMonth} waitlist.`
-                  : `${availability.left} space${availability.left === 1 ? "" : "s"} left for ${availability.month}. Tell us about your business and we’ll confirm whether ${availability.left === 1 ? "it’s" : "they’re"} still open.`}
-              </p>
-              <ul className="ln-form-ticks" data-part="cta">
-                {["Takes about a minute", "Commits you to nothing", "We reply about availability and next steps"].map((line) => (
-                  <li key={line}>
-                    <Icon name="check" size={14} stroke={2.6} />
-                    {line}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <FormCopy />
             <LaunchForm />
           </div>
         </section>
 
         <StickyBar />
       </div>
-      </AvailabilityProvider>
+      </LiveAvailabilityProvider>
     </GgShell>
   );
 }

@@ -561,6 +561,13 @@
   display: inline-block;
 }
 
+/* 44px tap target around a one-line link. */
+.gg-text-link::before {
+  content: "";
+  position: absolute;
+  inset: -12px 0;
+}
+
 .gg-text-link::after {
   content: "";
   position: absolute;
@@ -989,10 +996,18 @@
   transition-delay: 100ms;
 }
 .gg-faq__link a {
+  position: relative;
+  display: inline-block;
   color: var(--gg-coral-text);
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+/* 44px tap target around the one-line link. */
+.gg-faq__link a::before {
+  content: "";
+  position: absolute;
+  inset: -12px 0;
 }
 .gg-faq__link a:focus-visible {
   outline: 2px solid var(--gg-coral-text);

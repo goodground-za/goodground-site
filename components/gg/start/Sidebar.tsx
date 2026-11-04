@@ -8,7 +8,7 @@ import { PREVIEW_TIME, REPLY_TIME } from "@/lib/enquiryShared";
 import { Icon } from "../Icon";
 import { answerLabel, type Answers, type StepDef, type TrackId } from "./data";
 
-/** "What happens next" switches per track (blueprint section 5). */
+/** "What happens next" switches per track (per track). */
 const NEXT_STEPS: Record<TrackId, string[]> = {
   custom: [
     `We reply within ${REPLY_TIME}`,
