@@ -352,7 +352,7 @@ export function AiVisibilityPage() {
                   </li>
                   <li>
                     <Icon name="check" size={16} stroke={2.4} />
-                    Competitor table and quarterly call
+                    Competitor table
                   </li>
                   <li>
                     <Icon name="check" size={16} stroke={2.4} />

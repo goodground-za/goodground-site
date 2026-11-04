@@ -25,7 +25,7 @@ export type Block =
    * Plan cards and add-on chips are pulled from content/pricing.ts, never typed here.
    * `plans`: `ids` may mix custom packages (micro | launch | grow | scale) and monthly plans
    * (local-start | local-plus | local-pro); without `ids` it shows the four custom packages.
-   * `addons`: build-your-own item ids, plus "fixpack" and "watch" for the monthly add-ons.
+   * `addons`: "fixpack" and "watch", the monthly add-ons.
    */
   | { type: "plans"; ids?: string[] }
   | { type: "addons"; ids: string[]; intro: string }
@@ -214,8 +214,8 @@ export const articles: Article[] = [
       { type: "plans" },
       {
         type: "addons",
-        ids: ["pages-standard", "pages-complex", "pages-blog-setup", "seo-advanced", "func-conditional-form"],
-        intro: "None fit? Build your own from a R6 000 base build (one homepage, one contact form, basic SEO) and add exactly what you need:",
+        ids: ["fixpack", "watch"],
+        intro: "Going monthly instead? The plans take two add-ons, only when you need them:",
       },
 
       { type: "h2", text: "Two ways to pay for it" },
@@ -284,19 +284,19 @@ export const articles: Article[] = [
           },
           {
             question: "What if my project needs more than a package includes?",
-            answer: "Add exactly what you need from the à la carte menu, priced and confirmed before we build it.",
+            answer: "Anything beyond a package is quoted separately, and priced and confirmed before we build it.",
           },
           { question: "How long does a build take?", answer: "1 week for Micro, up to 6 weeks for Scale, depending on scope." },
           {
             question: "How do I get an exact number for my project?",
             answer:
-              "Configure your own build in the [pricing configurator](/pricing#build-your-own), or [tell us about your project](/start-project) and we’ll come back with a firm quote within 1 to 2 business days.",
+              "Look at the [four custom packages](/pricing#custom), or [tell us about your project](/start-project) and we’ll come back with a firm quote within 1 to 2 business days.",
           },
         ],
       },
       {
         type: "p",
-        text: "A website is one of the few business expenses you can actually price before you commit to it. [See every package and build your own total](/pricing), or [start your project](/start-project) and get a firm number back within two business days.",
+        text: "A website is one of the few business expenses you can actually price before you commit to it. [See every package and monthly plan](/pricing), or [start your project](/start-project) and get a firm number back within two business days.",
       },
     ],
   },
@@ -383,7 +383,7 @@ export const articles: Article[] = [
       },
       {
         type: "p",
-        text: "A website doesn’t have that constraint. A dedicated pricing page lays out exactly what something costs and what’s included, the way [our own pricing page](/pricing) breaks down fixed packages and a build-your-own option so a visitor never has to guess. A services page explains what you do in the order that makes sense for a stranger, not in the order you happened to post about it. Structure is not a nice-to-have. It’s the difference between a visitor finding an answer in ten seconds and a visitor giving up and moving to the next search result.",
+        text: "A website doesn’t have that constraint. A dedicated pricing page lays out exactly what something costs and what’s included, the way [our own pricing page](/pricing) breaks down monthly plans and fixed packages so a visitor never has to guess. A services page explains what you do in the order that makes sense for a stranger, not in the order you happened to post about it. Structure is not a nice-to-have. It’s the difference between a visitor finding an answer in ten seconds and a visitor giving up and moving to the next search result.",
       },
 
       { type: "h2", text: "The right order: website first, Facebook page as the megaphone" },

@@ -1,4 +1,4 @@
-> **SUPERSEDED (v1 snapshot, 26 October 2026).** This folder is the original Figma hand-off. The launch offer it describes (a fixed monthly price for 12 months) is retired: `/website-launch` is now the New Business Offer, and `/pricing` leads with monthly Local plans. The live behaviour is in `PRODUCT.md` and the code; do not copy figures from this folder.
+> **SUPERSEDED (v1 snapshot, 26 October 2026).** This folder is the original Figma hand-off. The launch offer it describes (a fixed monthly price for 12 months) is retired: `/website-launch` is now the New Business Offer, and `/pricing` leads with monthly Local plans. The live behaviour is in `PRODUCT.md` and the code; do not copy figures from this folder. Also superseded on 2026-11-05: the Build your own configurator is gone, /pricing is one Plans section (Monthly plans | Custom builds) and there is no annual plan option.
 
 # GoodGround redesign: full build specification
 

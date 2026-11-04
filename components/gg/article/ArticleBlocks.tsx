@@ -8,7 +8,6 @@ import { ButtonLink } from "../Button";
 import { FaqAccordion } from "../FaqAccordion";
 import { Icon, type IconName } from "../Icon";
 import { formatNumber, formatRand } from "../format";
-import { buildItemById, encodeBuild } from "../pricing/data";
 import { Checklist, PlanCards } from "./ArticleClient";
 
 /** "The short answer: real 2026 price ranges" -> "the-short-answer-real-2026-price-ranges". */
@@ -53,14 +52,6 @@ const CALLOUT_ICON: Record<"tip" | "warning" | "note", IconName> = { tip: "bulb"
 
 /** Add-on chip ids for the monthly add-ons, as an article writes them. */
 const MONTHLY_ADDON: Record<string, string> = { fixpack: "fix-pack", watch: "visibility-watch" };
-
-const ADDON_LABEL: Record<string, string> = {
-  "pages-standard": "Extra standard page",
-  "pages-complex": "Complex custom page",
-  "pages-blog-setup": "Blog setup",
-  "seo-advanced": "Advanced SEO",
-  "func-conditional-form": "Conditional-logic form",
-};
 
 function Soft({ children, className }: { children: ReactNode; className?: string }) {
   // Content blocks (not paragraphs or headings) fade up 12px.
@@ -235,11 +226,7 @@ export function ArticleBlocks({ blocks, slug }: { blocks: Block[]; slug: string 
               </Soft>
             );
           case "addons": {
-            const items = block.ids.flatMap((id) => {
-              const item = buildItemById.get(id);
-              return item ? [{ item, label: ADDON_LABEL[id] ?? item.short }] : [];
-            });
-            // Monthly add-ons ("fixpack", "watch") are read from the pricing data and point at the monthly plans.
+            // The monthly add-ons ("fixpack", "watch") are read from the pricing data and point at the monthly plans.
             const monthly = block.ids.flatMap((id) => {
               const addOn = addOns.find((a) => a.id === MONTHLY_ADDON[id]);
               return addOn ? [{ addOn, price: `${formatRand(addOn.price)}${addOn.unit.startsWith("/") ? addOn.unit : ` ${addOn.unit}`}` }] : [];
@@ -257,26 +244,10 @@ export function ArticleBlocks({ blocks, slug }: { blocks: Block[]; slug: string 
                       </Link>
                     </li>
                   ))}
-                  {items.map(({ item, label }) => (
-                    <li key={item.id}>
-                      {/* Opens the build-your-own tool with this item already added. */}
-                      <Link href={`/pricing?build=${encodeBuild({ [item.id]: 1 })}#build-your-own`} className="ar-chip">
-                        <Icon name="plus" size={14} stroke={2.4} />
-                        <span>{label}</span>
-                        <strong>{formatRand(item.price)}</strong>
-                      </Link>
-                    </li>
-                  ))}
                 </ul>
-                {items.length || !monthly.length ? (
-                  <ButtonLink href="/pricing#build-your-own" variant="outline">
-                    Open the build-your-own tool
-                  </ButtonLink>
-                ) : (
-                  <ButtonLink href="/pricing#monthly" variant="outline">
-                    See monthly plans
-                  </ButtonLink>
-                )}
+                <ButtonLink href="/pricing#monthly" variant="outline">
+                  See monthly plans
+                </ButtonLink>
               </Soft>
             );
           }

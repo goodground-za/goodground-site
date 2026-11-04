@@ -116,7 +116,7 @@ export function IndustryPage({ slug }: { slug: string }) {
               </div>
               {isLocal ? (
                 <p className="id-hero__from" data-part="cta">
-                  From {from}/mo · no deposit · live in days
+                  From {from}/mo · no deposit · free preview first
                 </p>
               ) : null}
             </div>

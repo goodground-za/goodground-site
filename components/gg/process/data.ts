@@ -1,11 +1,10 @@
 import { faq } from "@/content/faq";
-import { fullServicePackage, packages } from "@/content/pricing";
+import { customExtras, fullServicePackage, packages, previewTime } from "@/content/pricing";
 
 import type { FaqItem } from "../FaqAccordion";
 import { sharedFaqItem } from "../shared/sharedFaq";
 import type { IconName } from "../Icon";
 import { formatRand } from "../format";
-import { buildItemById } from "../pricing/data";
 
 /**
  * /process: a NEW page (Figma 80:151). What comes from the live site and the
@@ -17,8 +16,8 @@ import { buildItemById } from "../pricing/data";
  */
 
 /* ---- shared with /pricing: timelines, revision rounds, prices ------------ */
-export const EXTRA_ROUND = buildItemById.get("extra-revision")?.price ?? 1500;
-export const RUSH = buildItemById.get("extra-rush")?.price ?? 3500;
+export const EXTRA_ROUND = customExtras.extraRound;
+export const RUSH = customExtras.rush;
 export const FULL_SERVICE_FROM = fullServicePackage.monthlyFrom;
 
 export const ROUNDS: Record<string, number> = { micro: 1, launch: 1, grow: 2, scale: 3 };
@@ -313,7 +312,7 @@ export const afterSegments = [
 /** "On a monthly plan? It's simpler." (v2 panel): the four steps, in the after-launch strip style. */
 export const monthlySegments = [
   { label: "STEP 1", text: "Request a free preview", tone: "coral" },
-  { label: "STEP 2", text: "Preview within 5 working days", tone: "mint" },
+  { label: "STEP 2", text: `Preview within ${previewTime}`, tone: "mint" },
   { label: "STEP 3", text: "Approve, then your first debit", tone: "canvas" },
   { label: "STEP 4", text: "Monthly care and an AI report", tone: "canvas" },
 ];

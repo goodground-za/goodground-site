@@ -381,7 +381,7 @@ export const servicePages: ServicePageData[] = [
       {
         question: "How many rounds of design revisions do I get?",
         answer:
-          "It depends on the package: Micro and Launch include 1 round, Grow includes 2, and Scale includes 3. Extra rounds can be added from the à la carte menu on request. Most projects don’t need every available round, because the customer-journey mapping upfront catches a lot of what a later revision round would otherwise be fixing.",
+          "It depends on the package: Micro and Launch include 1 round, Grow includes 2, and Scale includes 3. Extra rounds can be added on request. Most projects don’t need every available round, because the customer-journey mapping upfront catches a lot of what a later revision round would otherwise be fixing.",
       },
       {
         question: "Do you use design tools like Figma, or design straight in code?",

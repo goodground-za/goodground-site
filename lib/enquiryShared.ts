@@ -1,5 +1,5 @@
 import { formatRand } from "@/components/gg/format";
-import { localPlanBySlug } from "@/content/pricing";
+import { localPlanBySlug, previewTime } from "@/content/pricing";
 
 /**
  * What the redesigned forms (/start-project, /contact, the /pricing quote form,
@@ -104,7 +104,7 @@ export function resolvePlanOffer(planRaw: unknown, offerRaw: unknown): { plan?: 
   return { plan, offer };
 }
 
-/** "Local Plus · R449/mo" for a summary row. `local-help` has no price. */
+/** "Local Plus · R1 750/mo" for a summary row. `local-help` has no price. */
 export function planSummary(plan: PlanKey): string {
   const found = localPlanBySlug(plan);
   return found ? `${found.name} · ${formatRand(found.monthly)}/mo` : PLANS[plan];
@@ -160,5 +160,5 @@ export const firstName = (name: string) => name.trim().split(/\s+/)[0] ?? "";
 /** Reply time, one string site-wide. */
 export const REPLY_TIME = "1–2 business days";
 /** The Track A and Track C promises, one string each. */
-export const PREVIEW_TIME = "5 working days";
+export const PREVIEW_TIME = previewTime;
 export const CHECK_REPORT_TIME = "2 business days";

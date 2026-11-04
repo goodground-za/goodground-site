@@ -13,7 +13,7 @@ import { PlanRows } from "./PlanRows";
 const PREVIEW_HREF = "/start-project?plan=local-plus&ref=home";
 
 /**
- * Home 03 (v2): "Get found online from R299 a month." Left: HEADER REVEAL of
+ * Home 03 (v2): "Get found online from R950 a month." Left: HEADER REVEAL of
  * tag, heading, copy and the Light button with a text link. Right: the pricing
  * card (FADE-UP + scale from 150ms in) with the three plan rows (prices are a
  * LINE MASK, never a count-up), the New Business Offer strip with the

@@ -1,5 +1,5 @@
 import { newBusinessOffer } from "@/content/newBusinessOffer";
-import { localPlans, packages } from "@/content/pricing";
+import { localPlans, packages, previewTime } from "@/content/pricing";
 import { launchFaqs } from "@/content/websiteLaunch";
 
 import type { FaqItem } from "../FaqAccordion";
@@ -25,7 +25,7 @@ export const keyFacts: { icon: IconName; title: string; body: string }[] = [
 const CHECK_SHORT = [
   "Website up to 5 pages",
   ".co.za domain, hosting, backups",
-  "WhatsApp button, payment link, POPIA",
+  "WhatsApp button, POPIA notices",
   "Google Business Profile set up",
   "Quarterly AI visibility snapshot",
   "1 change request a month",
@@ -118,7 +118,7 @@ export const includedGroups: {
     items: [
       { title: "Google Business Profile", body: "Set up and verified, so customers can find you on Google and Maps." },
       { title: "Search Console and indexing", body: "We connect Google Search Console, submit your sitemap and request indexing." },
-      { title: "A clear way to enquire", body: "A WhatsApp button, a payment link and POPIA notices, so people can contact you and you stay compliant." },
+      { title: "A clear way to enquire", body: "A WhatsApp button and POPIA notices, so people can contact you and you stay compliant." },
       { title: "Launch checks and an AI snapshot", body: "Images, speed, links, forms and mobile layouts checked before go-live, then a quarterly AI visibility snapshot." },
     ],
   },
@@ -159,7 +159,7 @@ export const steps = [
   {
     n: "03",
     title: "Review your free preview",
-    body: "We build your preview within 5 working days. You review it and ask for changes before anything goes live.",
+    body: `We build your preview within ${previewTime}. You review it and ask for changes before anything goes live.`,
   },
   { n: "04", title: "Approve and launch", body: "Final checks, publish, and your pages are submitted to Google for indexing." },
 ];

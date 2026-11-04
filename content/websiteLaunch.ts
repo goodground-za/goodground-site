@@ -20,6 +20,7 @@
  */
 
 import { newBusinessOffer } from "@/content/newBusinessOffer";
+import { previewTime } from "@/content/pricing";
 
 export const launchOffer = {
   name: newBusinessOffer.name,
@@ -55,7 +56,7 @@ export const launchFaqs = {
     {
       question: "How long will my website take?",
       answer:
-        "We build your free preview within 5 working days. You review it, ask for changes, and approve it to go live. We confirm the exact dates once we understand your content.",
+        `We build your free preview within ${previewTime}. You review it, ask for changes, and approve it to go live. We confirm the exact dates once we understand your content.`,
     },
     {
       question: "Will my website appear on Google?",

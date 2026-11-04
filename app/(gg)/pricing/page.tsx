@@ -9,11 +9,9 @@ import { FaqBlock } from "@/components/gg/shared/FaqBlock";
 import { SplitHeading } from "@/components/gg/SplitHeading";
 import { Tag } from "@/components/gg/Tag";
 import { formatRand } from "@/components/gg/format";
-import { BuildYourOwn } from "@/components/gg/pricing/BuildYourOwn";
 import { packageViews } from "@/components/gg/pricing/data";
 import { pricingFaqItems } from "@/components/gg/pricing/faq";
-import { MonthlyPlans } from "@/components/gg/pricing/MonthlyPlans";
-import { Packages } from "@/components/gg/pricing/Packages";
+import { Plans } from "@/components/gg/pricing/Plans";
 import { PricingProvider } from "@/components/gg/pricing/PricingProvider";
 import { QuoteForm } from "@/components/gg/pricing/QuoteForm";
 import { ReviewCard } from "@/components/gg/pricing/ReviewCard";
@@ -24,10 +22,10 @@ import { pageSocialMeta } from "@/lib/metadata";
 import "@/components/gg/pricing/pricing.css";
 
 const title = { absolute: "Pricing | Website Design Packages, South Africa | GoodGround" };
-const description = `Monthly website plans from ${formatRand(localFromMonthly)} with no deposit, four custom website packages from ${formatRand(packageViews[0].total)}, a build-your-own menu, and Full Service from ${formatRand(fullServicePackage.monthlyFrom)}/mo.`;
+const description = `Monthly website plans from ${formatRand(localFromMonthly)} with no deposit, four custom website packages from ${formatRand(packageViews[0].total)}, and Full Service from ${formatRand(fullServicePackage.monthlyFrom)}/mo.`;
 const path = "/pricing";
 
-// ?build= is the shared-link code for the configurator; it canonicalises away.
+// Links from the retired build menu still open the page; the canonical tag drops any query.
 export const metadata: Metadata = {
   title,
   description,
@@ -36,9 +34,9 @@ export const metadata: Metadata = {
 };
 
 const JUMP = [
+  { href: "#plans", label: "Plans" },
   { href: "#monthly", label: "Monthly plans" },
   { href: "#custom", label: "Custom builds" },
-  { href: "#build-your-own", label: "Build your own" },
   { href: "#faq", label: "FAQ" },
 ];
 
@@ -134,25 +132,7 @@ export default function PricingPage() {
         </section>
 
         <PricingProvider>
-          <section id="monthly" className="hm-section hm-section--surface pr-monthly" aria-label="Monthly plans">
-            <div className="gg-wrap">
-              <MonthlyPlans offer={spots} />
-            </div>
-          </section>
-
-          <section id="custom" className="hm-section hm-section--canvas pr-packages" aria-label="Custom builds">
-            {/* Old links used #packages; it still scrolls here. */}
-            <span id="packages" className="pr-anchor" aria-hidden="true" />
-            <div className="gg-wrap">
-              <Packages />
-            </div>
-          </section>
-
-          <section id="build-your-own" className="hm-section hm-section--canvas pr-build" aria-labelledby="pr-build-title">
-            <div className="gg-wrap">
-              <BuildYourOwn />
-            </div>
-          </section>
+          <Plans offer={spots} />
 
           <section className="hm-section hm-section--surface pr-review-section" aria-label="From a client">
             <div className="gg-wrap">

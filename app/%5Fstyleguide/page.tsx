@@ -383,7 +383,7 @@ export default function StyleguidePage() {
 
         <Block title="v2 · Local plan cards, offer box, band pills" node="v2 · not drawn">
           <p className="gg-body gg-muted">
-            The three monthly plans in the package-card styling (/pricing#monthly), with the Monthly | Annual toggle. Local
+            The three monthly plans in the package-card styling (/pricing#monthly), under the Monthly plans | Custom builds switch. Local
             Plus is plum. Below 768px the cards collapse to a name and a price, one open at a time. Prices come from
             content/pricing.ts.
           </p>

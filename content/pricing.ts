@@ -138,20 +138,13 @@ export const projectScopeNote = {
   ],
 };
 
-export const packagesFootnote =
-  "All packages are one-time website builds, fully custom-coded (no e-commerce or member-portal builds), priced from the figure shown. " +
-  "Hosting, domain, and ongoing maintenance are arranged separately, unless you choose the Full Service " +
-  "monthly package below, which bundles all of that in. Need more than your package includes? " +
-  "Any package can be extended with items from the Build Your Own menu below, for example adding extra pages to " +
-  "Micro, or Advanced SEO to Launch.";
-
 /**
  * Full Service: a monthly, all-inclusive alternative to the four fixed
  * one-time packages above (confirmed 2026-08-25). Covers the build itself,
  * so there is no separate upfront project fee on top of the monthly price.
  * Month-to-month, no minimum term. "From" because the final monthly figure
  * depends on the website's own requirements and is confirmed in the quote,
- * the same "starting at" logic already used for à la carte items below.
+ * the same "starting at" logic as the four packages above.
  */
 export const fullServicePackage = {
   name: "Full Service",
@@ -171,13 +164,16 @@ export const fullServicePackage = {
 /* ---------------------------------------------------------------- v2: monthly */
 
 /**
- * The monthly Local plans (v2 funnel, 2026-11-04). No VAT is added to these prices (not VAT registered); the
- * annual figure is 10 months for 12. `highlights` are the three lines the /start-project
+ * The monthly Local plans (v2 funnel, 2026-11-04; prices set 2026-11-05). No VAT is added to these prices (not VAT
+ * registered). Monthly only, month to month. `highlights` are the three lines the /start-project
  * plan cards show; `inclusions` is the full card list.
  *
  * No page types a price by hand: every Local plan price on the site reads this
  * collection (and `addOns`, `offers`) through formatRand.
  */
+/** How long the free preview takes. The one string every page, form and email reads. */
+export const previewTime = "10 to 15 working days";
+
 export type LocalPlanSlug = "local-start" | "local-plus" | "local-pro";
 
 export type LocalPlan = {
@@ -185,8 +181,6 @@ export type LocalPlan = {
   name: string;
   /** Monthly price, rand, no VAT added. */
   monthly: number;
-  /** Pay-once price for 12 months (2 months free), rand. */
-  annual: number;
   tagline: string;
   /** One line for the Home plan rows. */
   oneLine: string;
@@ -196,7 +190,7 @@ export type LocalPlan = {
   /** The first inclusion is "Everything in {previous}, plus:" and is styled as a lead-in. */
   extendsPrevious?: boolean;
   bestFor: string;
-  /** "Free preview in 5 working days": the preview is what arrives in 5 days; the site goes live after the client approves it. */
+  /** "Free preview in 10 to 15 working days": the preview is what arrives then; the site goes live after the client approves it. */
   liveIn: string;
   /** Card badge, if any. */
   badge?: string;
@@ -206,33 +200,32 @@ export const localPlans: LocalPlan[] = [
   {
     slug: "local-start",
     name: "Local Start",
-    monthly: 299,
-    annual: 2990,
+    monthly: 950,
     tagline: "A proper website and Google profile, so customers can find you and trust you.",
     oneLine: "5 pages and your Google profile",
     highlights: ["Website up to 5 pages", ".co.za domain, hosting and backups", "Google Business Profile set up"],
     inclusions: [
       "Website up to 5 pages, built fast and polished by hand",
       ".co.za domain in your name, hosting and backups",
-      "WhatsApp button, payment link and POPIA notices",
+      "WhatsApp button and POPIA notices",
       "Google Business Profile set up and verified",
       "Quarterly AI visibility snapshot",
       "1 change request a month",
     ],
     bestFor: "Trades and solo businesses that need to look credible and be found",
-    liveIn: "Free preview in 5 working days",
+    liveIn: `Free preview in ${previewTime}`,
     badge: "New business offer",
   },
   {
     slug: "local-plus",
     name: "Local Plus",
-    monthly: 449,
-    annual: 4490,
+    monthly: 1750,
     tagline: "Your site, Google profile and AI visibility, looked after every month.",
     oneLine: "10 pages and a monthly AI report",
     highlights: ["Up to 10 pages, one per service in your town", "Monthly Google profile updates", "Monthly AI Visibility Report"],
     inclusions: [
       "Everything in Local Start, plus:",
+      "Payment link on your site",
       "Up to 10 pages, incl. a page per service in your town",
       "Monthly Google profile updates and 2 posts",
       "Review-request QR code and WhatsApp link",
@@ -241,14 +234,13 @@ export const localPlans: LocalPlan[] = [
     ],
     extendsPrevious: true,
     bestFor: "Local businesses competing for “near me” searches and AI recommendations",
-    liveIn: "Free preview in 5 working days",
+    liveIn: `Free preview in ${previewTime}`,
     badge: "Most popular",
   },
   {
     slug: "local-pro",
     name: "Local Pro",
-    monthly: 799,
-    annual: 7990,
+    monthly: 2750,
     tagline: "Everything handled, with more pages, weekly posts and the Fix Pack included.",
     oneLine: "15 pages, weekly posts, Fix Pack",
     highlights: ["Up to 15 pages, a new page every quarter", "Weekly Google posts and review-reply drafts", "AI Visibility Fix Pack included"],
@@ -258,17 +250,17 @@ export const localPlans: LocalPlan[] = [
       "Weekly Google posts and review-reply drafts",
       "AI report from 3 locations, with a competitor table",
       "AI Visibility Fix Pack included",
-      "6 change requests a month and a quarterly call",
+      "6 change requests a month",
     ],
     extendsPrevious: true,
     bestFor: "Busy or multi-location businesses in competitive trades",
-    liveIn: "Free preview in 5 working days",
+    liveIn: `Free preview in ${previewTime}`,
   },
 ];
 
 export const localPlanBySlug = (slug: string) => localPlans.find((p) => p.slug === slug);
 
-/** Cheapest monthly plan: "Monthly plans from R299" everywhere reads this. */
+/** Cheapest monthly plan: "Monthly plans from R950" everywhere reads this. */
 export const localFromMonthly = localPlans[0].monthly;
 
 /**
@@ -333,98 +325,16 @@ export const addOns: AddOn[] = [
 /** The promotions. The data lives in content/newBusinessOffer.ts. */
 export const offers = { newBusiness } as const;
 
-export const baseBuildFee = {
-  total: 6000,
-  label: "Base Build Fee",
-  includes:
-    "Homepage, fully custom-coded & mobile-responsive, 1 contact form, basic on-page SEO, 1 round of revisions. Add pages and features below.",
-};
-
-export type AlaCarteItem = {
-  id: string;
-  label: string;
-  price: number;
-  /** Visitor picks a quantity (e.g. "how many extra pages") instead of a
-   * single on/off toggle — price is per unit. */
-  quantifiable?: boolean;
-  /** Price is a starting point, not a fixed figure — final cost depends on
-   * complexity and is confirmed in the quote. Rendered as "from RX". */
-  startingAt?: boolean;
-};
-export type AlaCarteCategory = { name: string; items: AlaCarteItem[] };
-
-export const alaCarteCategories: AlaCarteCategory[] = [
-  {
-    name: "Pages",
-    items: [
-      { id: "pages-standard", label: "Additional standard page (About, Services, Contact, etc.)", price: 2500, quantifiable: true },
-      { id: "pages-complex", label: "Complex/custom-layout page (interactive landing page, pricing page, etc.)", price: 4000, quantifiable: true },
-      { id: "pages-blog-setup", label: "Blog/News section setup (template + first post)", price: 4500 },
-      { id: "pages-blog-post", label: "Additional blog post (written & uploaded)", price: 600, quantifiable: true },
-    ],
-  },
-  {
-    name: "Design",
-    items: [
-      { id: "design-logo", label: "Custom logo design", price: 7500, startingAt: true },
-      { id: "design-style-guide", label: "Brand style guide (colours, fonts, usage)", price: 2000 },
-      { id: "design-illustrations", label: "Custom illustrations/graphics (per page)", price: 2500, startingAt: true, quantifiable: true },
-      { id: "design-icons", label: "Custom icon set (up to 10 icons)", price: 2500, startingAt: true },
-    ],
-  },
-  {
-    name: "Functionality & Interactivity",
-    items: [
-      { id: "func-conditional-form", label: "Custom form with conditional logic", price: 1500 },
-      { id: "func-multistep-form", label: "Multi-step form / quote calculator", price: 4000 },
-      { id: "func-animations", label: "Custom animations & scroll effects (per page)", price: 1800, quantifiable: true },
-      { id: "func-gallery", label: "Interactive image gallery/portfolio", price: 2500 },
-      { id: "func-map", label: "Interactive map (custom-styled, not just embed)", price: 1200 },
-      { id: "func-filtering", label: "Custom filtering/search (e.g. filter services or portfolio items)", price: 3000 },
-      { id: "func-sticky-nav", label: "Sticky/dynamic navigation elements", price: 900 },
-    ],
-  },
-  {
-    name: "Integrations",
-    items: [
-      { id: "int-google-maps", label: "Google Maps embed", price: 700 },
-      { id: "int-whatsapp", label: "WhatsApp chat button", price: 900 },
-      { id: "int-booking", label: "Third-party calendar/booking widget embed", price: 2000 },
-      { id: "int-newsletter", label: "Newsletter signup (Mailchimp/similar)", price: 1200 },
-      { id: "int-social-feed", label: "Social media feed embed", price: 1000 },
-      { id: "int-live-chat", label: "Live chat widget integration", price: 1300 },
-    ],
-  },
-  {
-    name: "SEO & Performance",
-    items: [
-      { id: "seo-advanced", label: "Advanced SEO (keyword research, schema markup, meta strategy)", price: 3000 },
-      { id: "seo-speed", label: "Site speed optimisation", price: 2500 },
-      { id: "seo-analytics", label: "Google Analytics & Search Console setup", price: 1000 },
-    ],
-  },
-  {
-    name: "Content",
-    items: [
-      { id: "content-copywriting", label: "Copywriting (per page)", price: 1200, quantifiable: true },
-      { id: "content-upload", label: "Content upload/data entry (per page, client-supplied content)", price: 500, quantifiable: true },
-      { id: "content-stock-imagery", label: "Stock imagery sourcing & licensing", price: 800 },
-    ],
-  },
-  {
-    name: "Extras",
-    items: [
-      { id: "extra-revision", label: "Extra round of revisions", price: 1500 },
-      { id: "extra-rush", label: "Rush delivery (cuts timeline by ~1 week)", price: 3500 },
-      { id: "extra-training", label: "Training/handover session (1 hour)", price: 1200 },
-      { id: "extra-language", label: "Additional language version (per language)", price: 5000, quantifiable: true },
-      { id: "extra-favicon", label: "Favicon & social share image design", price: 700 },
-    ],
-  },
-];
-
-export const alaCarteFootnote =
-  "All à la carte prices are per item unless stated otherwise. A free quote will confirm the final total before work begins.";
+/**
+ * Prices for the extras a custom build can add later (the /process page quotes
+ * them). Only these two of the old extras list are still sold by name.
+ */
+export const customExtras = {
+  /** One more round of revisions, rand. */
+  extraRound: 1500,
+  /** Rush delivery, cuts about a week, rand. */
+  rush: 3500,
+} as const;
 
 /**
  * Pricing-page Q&A. Every answer is derivable from figures already confirmed
@@ -461,7 +371,7 @@ export const pricingFaq: PricingFaqItem[] = [
   {
     question: "What if my scope grows partway through?",
     answer:
-      "Any package can be extended with items from the à la carte menu at the listed price. We’ll always confirm additions and cost with you before building them.",
+      "If you add something beyond what was agreed, we quote it separately and confirm the cost with you before building it. We never adjust the price quietly.",
   },
   {
     question: "What looks after the site once it’s live?",
@@ -480,8 +390,7 @@ export const pricingFaq: PricingFaqItem[] = [
   },
   {
     question: "How many rounds of revisions do I get?",
-    answer:
-      "It depends on the package. Micro and Launch include 1 round, Grow includes 2, and Scale includes 3. Need more? Extra rounds can be added from the à la carte menu.",
+    answer: `It depends on the package. Micro and Launch include 1 round, Grow includes 2, and Scale includes 3. Need more? An extra round is ${formatRand(customExtras.extraRound)}.`,
   },
   {
     question: "How soon will I hear back after I enquire?",

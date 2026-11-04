@@ -140,7 +140,7 @@ const COPY: Record<Form, Copy> = {
     head: (n) => named(n, "WE’RE BUILDING YOUR PREVIEW.", "THANKS. WE’RE BUILDING YOUR PREVIEW."),
     body: (s) => `Your free preview request is with us. ${record(s)}`,
     steps: [
-      { label: `WITHIN ${PREVIEW_TIME.toUpperCase()}`, title: "Preview within 5 working days", body: "We build a preview of your website and send you the link.", icon: "layout", tone: "surface" },
+      { label: `WITHIN ${PREVIEW_TIME.toUpperCase()}`, title: `Preview within ${PREVIEW_TIME}`, body: "We build a preview of your website and send you the link.", icon: "layout", tone: "surface" },
       { label: "YOUR TURN", title: "You review it", body: "Tell us what to change. Nothing is charged while you look.", icon: "eye", tone: "lilac" },
       { label: "WHEN YOU’RE HAPPY", title: "Approve, then your first debit", body: "Your site goes live when you approve it, and your first debit runs only then.", icon: "check", tone: "blush" },
     ],

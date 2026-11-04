@@ -41,7 +41,7 @@ export const faq: FAQItem[] = [
   {
     question: "How long does a typical project take?",
     answer:
-      "Custom builds take about 1 to 6 weeks depending on the package (Micro ~1 week, Launch ~2, Grow ~3–4, Scale ~4–6). Monthly plans go live within about 5–7 working days.",
+      `Custom builds take about 1 to 6 weeks depending on the package (Micro ~1 week, Launch ~2, Grow ~3–4, Scale ~4–6). On a monthly plan, your free preview takes ${previewTime}, and the site goes live once you approve it.`,
   },
   {
     question: "What happens after my website launches?",
@@ -94,7 +94,7 @@ export const faq: FAQItem[] = [
  */
 import { formatRand } from "@/components/gg/format";
 import { newBusinessOffer } from "@/content/newBusinessOffer";
-import { localPlans, localTerms } from "@/content/pricing";
+import { localPlans, localTerms, previewTime } from "@/content/pricing";
 
 export type SharedFaqSlug =
   | "monthly-or-custom"
@@ -122,7 +122,7 @@ export const sharedFaq: SharedFaqEntry[] = [
     slug: "monthly-or-custom",
     question: "Monthly plan or custom build: which should I choose?",
     answer:
-      "If you mainly need to be found and look credible, a monthly plan gets you live in days with no upfront cost. If you need a unique design, custom features or a bigger site, a custom build is the better fit, and you can still pay it over 12 months.",
+      `If you mainly need to be found and look credible, a monthly plan gets you a free preview in ${previewTime}, with no upfront cost. If you need a unique design, custom features or a bigger site, a custom build is the better fit, and you can still pay it over 12 months.`,
     link: { label: "See monthly plans →", href: "/pricing#monthly" },
   },
   {

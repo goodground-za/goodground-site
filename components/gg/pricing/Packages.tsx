@@ -1,12 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useState, type CSSProperties } from "react";
 
 import { ButtonLink } from "../Button";
 import { formatRand } from "../format";
 import { Icon } from "../Icon";
 import { PillToggle } from "../PillToggle";
-import { SectionHeader } from "../SectionHeader";
 import { Tag } from "../Tag";
 import { balanceOf, BILLING_OPTIONS, BILLING_OPTIONS_SHORT, depositOf, instalmentFor, INSTALMENTS, packageViews, type PackageView } from "./data";
 import { usePricing } from "./PricingProvider";
@@ -18,7 +17,7 @@ function PriceViews({ pkg }: { pkg: PackageView }) {
   const balance = balanceOf(pkg.total);
   const monthly = instalmentFor(pkg.total);
   // Grow's R32 000 does not divide by 12: R2 667 × 12 is R32 004, so say
-  // "about" (the last instalment balances the total, as the configurator notes).
+  // "about" (the last instalment balances the total).
   const about = pkg.total % INSTALMENTS !== 0;
   const depositLine = `${formatRand(deposit)} deposit + ${formatRand(balance)} on completion`;
 
@@ -49,43 +48,28 @@ function PriceViews({ pkg }: { pkg: PackageView }) {
 }
 
 /**
- * Pricing 03 (v2: "Custom builds", #custom, alias #packages). Billing toggle (remembered, and shared with the configurator),
- * four cards that stagger in with Grow last. On phones the cards collapse to a
- * name and a price; tap to open the inclusions (one open, Grow by default).
+ * Pricing 03 (v2), the "Custom builds" panel of the Plans section (#custom, alias
+ * #packages). Billing toggle (remembered), four cards that stagger in with Grow
+ * last. On phones the cards collapse to a name and a price; tap to open the
+ * inclusions (one open, Grow by default).
  */
 export function Packages() {
-  const { billing, setBilling, attach, compare } = usePricing();
+  const { billing, setBilling, attach } = usePricing();
   const [open, setOpen] = useState("grow");
-  const [pulse, setPulse] = useState<string | null>(null);
-  const timer = useRef(0);
-
-  // "Compare →" in the configurator: open that card on phones and pulse it.
-  useEffect(() => {
-    if (!compare) return;
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setOpen(compare.slug);
-    setPulse(compare.slug);
-    window.clearTimeout(timer.current);
-    timer.current = window.setTimeout(() => setPulse(null), 1600);
-    return () => window.clearTimeout(timer.current);
-  }, [compare]);
 
   return (
     <>
-      <div className="hm-hide-phone">
-        <SectionHeader
-          tag="CUSTOM BUILDS"
-          heading="Want it fully custom? Four starting points."
-          layout="split"
-          cta={<PillToggle options={BILLING_OPTIONS} value={billing} onChange={setBilling} label="How you pay" />}
-        />
-      </div>
-      <div className="hm-phone-only pr-pkg-mobile-head">
-        <SectionHeader tag="CUSTOM BUILDS" heading="Want it fully custom? Four starting points." />
-        <PillToggle options={BILLING_OPTIONS_SHORT} value={billing} onChange={setBilling} label="How you pay" fill size="sm" />
+      <div className="pr-panel__bar">
+        <p className="pr-panel__title">Want it fully custom? Four starting points.</p>
+        <div className="hm-hide-phone">
+          <PillToggle options={BILLING_OPTIONS} value={billing} onChange={setBilling} label="How you pay" />
+        </div>
+        <div className="hm-phone-only">
+          <PillToggle options={BILLING_OPTIONS_SHORT} value={billing} onChange={setBilling} label="How you pay" fill size="sm" />
+        </div>
       </div>
 
-      <ul className="pr-pkgs pr-pkgs--on-canvas" data-reveal="stagger" style={{ "--gg-stagger-step": "100ms" } as CSSProperties}>
+      <ul className="pr-pkgs" data-reveal="stagger" style={{ "--gg-stagger-step": "100ms" } as CSSProperties}>
         {packageViews.map((pkg) => {
           const isOpen = open === pkg.slug;
           const button = (
@@ -106,7 +90,7 @@ export function Packages() {
             <li key={pkg.slug} className={pkg.recommended ? "pr-pkg-slot is-rec" : "pr-pkg-slot"}>
               <article
                 id={`package-${pkg.slug}`}
-                className={["pr-pkg", pkg.recommended && "is-rec", isOpen && "is-open", pulse === pkg.slug && "is-pulse"].filter(Boolean).join(" ")}
+                className={["pr-pkg", pkg.recommended && "is-rec", isOpen && "is-open"].filter(Boolean).join(" ")}
               >
                 <div className="pr-pkg__head" onClick={() => setOpen(isOpen ? "" : pkg.slug)}>
                   <h3 className="pr-pkg__name">{pkg.name.toUpperCase()}</h3>

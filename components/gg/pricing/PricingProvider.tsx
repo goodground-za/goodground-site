@@ -1,73 +1,45 @@
 "use client";
 
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  type ReactNode,
-} from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 
-import { formatRand } from "../format";
-import {
-  buildItemById,
-  buildLines,
-  decodeBuild,
-  encodeBuild,
-  instalmentFor,
-  MAX_QTY,
-  totalOf,
-  type Billing,
-  type BuildLine,
-  type Qty,
-} from "./data";
+import type { Billing } from "./data";
 
 /**
- * The page's one shared state: how the visitor wants to pay, what they have
- * built, and what is attached to the quote form.
+ * The page's one shared state: which tab of the Plans section is showing, how
+ * the visitor wants to pay a custom build, and what is attached to the quote
+ * form.
  *
- * Persistence (Pricing note 54:225): the build lives in localStorage AND in the
- * URL as ?build=<code>, so a refresh, a shared link and "Edit" from the quote
- * form all restore it. The URL wins over storage when both are present. The
- * server render and first client render use the empty defaults; the saved
- * state is applied in an effect, so hydration always matches.
+ * Tabs. #plans, #monthly, #custom and the old #packages are zero-size anchors
+ * that are always visible, so the browser scrolls to them on its own; this
+ * provider only has to put the right tab on show. Anything inside a panel
+ * (#plan-local-plus, #package-grow, #full-service) is hidden while its tab is
+ * off, so it switches the tab first and scrolls afterwards. In-page links that
+ * Next handles without a hashchange (a Link to /pricing#custom) are caught on
+ * click. Links from the retired build menu (a query string and a hash that no
+ * longer exist) match nothing here and simply open the default tab.
  *
- * v2: the configurator sits in a collapsed "Build your own" panel. `buildOpen`
- * lives here so "Edit" on the quote form, "Compare" and a ?build= link can open it.
+ * The billing choice is remembered in localStorage. The server render and first
+ * client render use the defaults, so hydration always matches; the saved choice
+ * is applied in an effect.
  */
 
-export type Attached = { kind: "package"; slug: string } | { kind: "build" } | { kind: "full-service" } | null;
+export type PlansTab = "monthly" | "custom";
+
+export type Attached = { kind: "package"; slug: string } | { kind: "full-service" } | null;
 
 type Ctx = {
+  tab: PlansTab;
+  /** A visitor's own switch of the tab: also records it in the URL hash. */
+  chooseTab: (tab: PlansTab) => void;
   billing: Billing;
   setBilling: (billing: Billing) => void;
-  qty: Qty;
-  setQty: (id: string, n: number) => void;
-  /** Change a stepper by +1 / -1 (functional, so held-down repeats never read a stale count). */
-  step: (id: string, delta: number) => void;
-  toggle: (id: string) => void;
-  reset: () => void;
-  lines: BuildLine[];
-  total: number;
-  monthly: number;
-  hasFrom: boolean;
   attached: Attached;
   /** Increments each time something is attached, so the card can pulse again. */
   attachPulse: number;
-  /** The collapsed "Build your own" panel: open or closed. */
-  buildOpen: boolean;
-  setBuildOpen: (open: boolean) => void;
   attach: (attached: Attached, opts?: { scroll?: boolean }) => void;
   detach: () => void;
-  /** "Compare" on the package hint: which package card to bring into view. */
-  compare: { slug: string; n: number } | null;
-  comparePackage: (slug: string) => void;
-  /** Text for the polite live region, set only by the visitor's own changes. */
-  announcement: string;
-  ready: boolean;
+  /** Show a tab, then scroll to an element inside it once it is on screen. */
+  goTo: (tab: PlansTab, id: string) => void;
 };
 
 const PricingContext = createContext<Ctx | null>(null);
@@ -79,7 +51,6 @@ export function usePricing() {
 }
 
 const BILLING_KEY = "gg-pricing-billing";
-const BUILD_KEY = "gg-pricing-build";
 
 const safeGet = (key: string) => {
   try {
@@ -90,118 +61,91 @@ const safeGet = (key: string) => {
 };
 const safeSet = (key: string, value: string) => {
   try {
-    if (value) window.localStorage.setItem(key, value);
-    else window.localStorage.removeItem(key);
+    window.localStorage.setItem(key, value);
   } catch {
     /* storage can be blocked; the page works without it */
   }
 };
 
-export function scrollToId(id: string) {
+function scrollToId(id: string) {
   const el = document.getElementById(id);
   if (!el) return;
   const off = document.documentElement.dataset.motion === "off" || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   el.scrollIntoView({ behavior: off ? "auto" : "smooth", block: "start" });
 }
 
+/** The always-visible anchors that mean a tab, and the id prefixes of things inside a panel. */
+const ANCHOR_TAB: Record<string, PlansTab> = { plans: "monthly", monthly: "monthly", custom: "custom", packages: "custom", "full-service": "monthly" };
+const INNER_PREFIX: [string, PlansTab][] = [
+  ["plan-", "monthly"],
+  ["package-", "custom"],
+];
+/** Ids that sit inside a panel and so need a scroll once the tab is on show. */
+const isInner = (id: string) => id === "full-service" || INNER_PREFIX.some(([prefix]) => id.startsWith(prefix));
+
+function tabForId(id: string): PlansTab | null {
+  if (id in ANCHOR_TAB) return ANCHOR_TAB[id];
+  return INNER_PREFIX.find(([prefix]) => id.startsWith(prefix))?.[1] ?? null;
+}
+
 export function PricingProvider({ children }: { children: ReactNode }) {
+  const [tab, setTab] = useState<PlansTab>("monthly");
   const [billing, setBillingState] = useState<Billing>("deposit");
-  const [qty, setQtyState] = useState<Qty>({});
   const [attached, setAttached] = useState<Attached>(null);
   const [attachPulse, setAttachPulse] = useState(0);
-  const [compare, setCompare] = useState<Ctx["compare"]>(null);
-  const [announcement, setAnnouncement] = useState("");
-  const [ready, setReady] = useState(false);
-  const [buildOpen, setBuildOpen] = useState(false);
-  const interacted = useRef(false);
+  const [pending, setPending] = useState<{ id: string; n: number } | null>(null);
 
-  // Restore: URL first, then storage.
+  // Show the tab a hash (or an in-page link) points at; scroll afterwards if the target sits inside a panel.
+  const follow = useCallback((rawId: string) => {
+    const id = decodeURIComponent(rawId.replace(/^#/, ""));
+    const next = tabForId(id);
+    if (!next) return;
+    setTab(next);
+    if (isInner(id)) setPending((prev) => ({ id, n: (prev?.n ?? 0) + 1 }));
+  }, []);
+
   useEffect(() => {
     const saved = safeGet(BILLING_KEY);
-    // Restoring saved choices is one setState after mount, by design: the server
+    // Restoring a saved choice is one setState after mount, by design: the server
     // render and first client render use the defaults so hydration matches.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     if (saved === "deposit" || saved === "instalments") setBillingState(saved);
-    const fromUrl = new URLSearchParams(window.location.search).get("build");
-    const restored = decodeBuild(fromUrl ?? safeGet(BUILD_KEY));
-    if (Object.keys(restored).length) setQtyState(restored);
-    // A ?build= link or the #build-your-own anchor opens the collapsed panel.
-    if (fromUrl || window.location.hash === "#build-your-own") setBuildOpen(true);
-    setReady(true);
-  }, []);
+    if (window.location.hash) follow(window.location.hash);
 
-  // Clicking a "Build your own" jump link on the page opens the panel too.
-  useEffect(() => {
-    const onHash = () => {
-      if (window.location.hash === "#build-your-own") setBuildOpen(true);
+    const onHash = () => follow(window.location.hash);
+    const onClick = (event: MouseEvent) => {
+      const link = (event.target as Element | null)?.closest?.("a[href]") as HTMLAnchorElement | null;
+      if (!link || !link.hash) return;
+      const url = new URL(link.href, window.location.href);
+      if (url.origin === window.location.origin && url.pathname.replace(/\/$/, "") === window.location.pathname.replace(/\/$/, "")) follow(url.hash);
     };
     window.addEventListener("hashchange", onHash);
-    return () => window.removeEventListener("hashchange", onHash);
+    document.addEventListener("click", onClick, true);
+    return () => {
+      window.removeEventListener("hashchange", onHash);
+      document.removeEventListener("click", onClick, true);
+    };
+  }, [follow]);
+
+  // Runs after the panel has been shown, so the target has a box to scroll to.
+  useEffect(() => {
+    if (pending) scrollToId(pending.id);
+  }, [pending]);
+
+  const chooseTab = useCallback((next: PlansTab) => {
+    setTab(next);
+    // Record the choice in the URL so a reload or a shared link opens the same tab. No scroll.
+    window.history.replaceState(window.history.state, "", `#${next}`);
   }, []);
 
-  const lines = useMemo(() => buildLines(qty), [qty]);
-  const total = useMemo(() => totalOf(lines), [lines]);
-  const hasFrom = lines.some((line) => line.from);
-  const monthly = instalmentFor(total);
-
-  // Persist (after the restore, so an empty first render never wipes a saved build).
-  useEffect(() => {
-    if (!ready) return;
-    const code = encodeBuild(qty);
-    safeSet(BUILD_KEY, code);
-    const url = new URL(window.location.href);
-    if (code) url.searchParams.set("build", code);
-    else url.searchParams.delete("build");
-    window.history.replaceState(window.history.state, "", url);
-  }, [qty, ready]);
-
-  useEffect(() => {
-    if (ready) safeSet(BILLING_KEY, billing);
-  }, [billing, ready]);
-
-  useEffect(() => {
-    // The live region speaks only after the visitor has changed something.
-    if (interacted.current) setAnnouncement(`Total now ${formatRand(total)}`);
-  }, [total]);
-
-  const setBilling = useCallback((next: Billing) => setBillingState(next), []);
-
-  const setQty = useCallback((id: string, n: number) => {
-    const item = buildItemById.get(id);
-    if (!item) return;
-    interacted.current = true;
-    const clamped = Math.max(0, Math.min(item.quantifiable ? MAX_QTY : 1, Math.round(n)));
-    setQtyState((prev) => {
-      const next = { ...prev };
-      if (clamped > 0) next[id] = clamped;
-      else delete next[id];
-      return next;
-    });
+  const goTo = useCallback((next: PlansTab, id: string) => {
+    setTab(next);
+    setPending((prev) => ({ id, n: (prev?.n ?? 0) + 1 }));
   }, []);
 
-  const step = useCallback((id: string, delta: number) => {
-    const item = buildItemById.get(id);
-    if (!item) return;
-    interacted.current = true;
-    setQtyState((prev) => {
-      const next = { ...prev };
-      const n = Math.max(0, Math.min(item.quantifiable ? MAX_QTY : 1, (prev[id] ?? 0) + delta));
-      if (n > 0) next[id] = n;
-      else delete next[id];
-      return next;
-    });
-  }, []);
-
-  const toggle = useCallback(
-    (id: string) => {
-      setQty(id, (qty[id] ?? 0) > 0 ? 0 : 1);
-    },
-    [qty, setQty],
-  );
-
-  const reset = useCallback(() => {
-    interacted.current = true;
-    setQtyState({});
+  const setBilling = useCallback((next: Billing) => {
+    setBillingState(next);
+    safeSet(BILLING_KEY, next);
   }, []);
 
   const attach = useCallback((next: Attached, opts?: { scroll?: boolean }) => {
@@ -212,34 +156,10 @@ export function PricingProvider({ children }: { children: ReactNode }) {
 
   const detach = useCallback(() => setAttached(null), []);
 
-  const comparePackage = useCallback((slug: string) => {
-    setCompare((prev) => ({ slug, n: (prev?.n ?? 0) + 1 }));
-    scrollToId("custom");
-  }, []);
-
-  const value: Ctx = {
-    billing,
-    setBilling,
-    qty,
-    setQty,
-    step,
-    toggle,
-    reset,
-    lines,
-    total,
-    monthly,
-    hasFrom,
-    attached,
-    attachPulse,
-    buildOpen,
-    setBuildOpen,
-    attach,
-    detach,
-    compare,
-    comparePackage,
-    announcement,
-    ready,
-  };
+  const value = useMemo<Ctx>(
+    () => ({ tab, chooseTab, billing, setBilling, attached, attachPulse, attach, detach, goTo }),
+    [tab, chooseTab, billing, setBilling, attached, attachPulse, attach, detach, goTo],
+  );
 
   return <PricingContext.Provider value={value}>{children}</PricingContext.Provider>;
 }

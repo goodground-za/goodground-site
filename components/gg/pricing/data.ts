@@ -1,6 +1,4 @@
-import { alaCarteCategories, baseBuildFee, fullServicePackage, packages, type AlaCarteItem } from "@/content/pricing";
-
-import { formatRand } from "../format";
+import { fullServicePackage, packages } from "@/content/pricing";
 
 /**
  * Everything the /pricing page computes or words, in one place. The prices
@@ -39,8 +37,6 @@ export type PackageView = {
   bestFor: string;
   timeline: string;
   recommended?: boolean;
-  /** What the configurator's hint says this package covers, in a clause. */
-  hint: string;
 };
 
 const CARD_COPY: Record<string, Omit<PackageView, "slug" | "name" | "total" | "timeline">> = {
@@ -55,7 +51,6 @@ const CARD_COPY: Record<string, Omit<PackageView, "slug" | "name" | "total" | "t
       "1 round of revisions",
     ],
     bestFor: "Solo freelancers, personal brands, pop-ups, events, holding pages",
-    hint: "a single page with a contact form and basic SEO",
   },
   launch: {
     tagline: "A clean, professional website to get you online fast.",
@@ -68,7 +63,6 @@ const CARD_COPY: Record<string, Omit<PackageView, "slug" | "name" | "total" | "t
       "1 round of revisions",
     ],
     bestFor: "New businesses or solo founders who need a credible presence",
-    hint: "up to 5 pages, contact form, basic SEO and social links",
   },
   grow: {
     tagline: "Fully custom, with the interactive touches that make you stand out.",
@@ -83,7 +77,6 @@ const CARD_COPY: Record<string, Omit<PackageView, "slug" | "name" | "total" | "t
     ],
     bestFor: "Small businesses ready to market online and stand out",
     recommended: true,
-    hint: "up to 10 pages with a blog, interactive elements and SEO with analytics",
   },
   scale: {
     tagline: "A fully custom platform built to be your business hub online.",
@@ -97,7 +90,6 @@ const CARD_COPY: Record<string, Omit<PackageView, "slug" | "name" | "total" | "t
       "1-hour training session",
     ],
     bestFor: "Businesses that need the site to be a real sales or operations tool",
-    hint: "15+ pages, advanced functionality and advanced SEO",
   },
 };
 
@@ -110,116 +102,6 @@ export const packageViews: PackageView[] = packages.map((p) => ({
 }));
 
 export const packageBySlug = (slug: string) => packageViews.find((p) => p.slug === slug);
-
-/* --------------------------------------------------------- configurator */
-
-/** Group names as designed (the content file capitalises differently). */
-const GROUP_NAMES: Record<string, string> = {
-  "Functionality & Interactivity": "Functionality & interactivity",
-  "SEO & Performance": "SEO & performance",
-};
-
-export type BuildItem = AlaCarteItem & {
-  /** Position in the flat list: the key used by the ?build= code. */
-  order: number;
-  group: string;
-  /** Name without the bracketed examples, for line items and chips. */
-  short: string;
-};
-export type BuildGroup = { name: string; items: BuildItem[] };
-
-let counter = 0;
-export const buildGroups: BuildGroup[] = alaCarteCategories.map((category) => {
-  const name = GROUP_NAMES[category.name] ?? category.name;
-  return {
-    name,
-    items: category.items.map((item) => ({
-      ...item,
-      order: counter++,
-      group: name,
-      short: item.label.replace(/\s*\(.*?\)\s*/g, " ").replace(/\s+/g, " ").trim(),
-    })),
-  };
-});
-
-export const buildItems: BuildItem[] = buildGroups.flatMap((g) => g.items);
-export const buildItemById = new Map(buildItems.map((i) => [i.id, i]));
-
-export const BASE_FEE = baseBuildFee.total;
-export const BASE_INCLUDES =
-  "Homepage, fully custom-coded & mobile-responsive, 1 contact form, basic on-page SEO, 1 round of revisions.";
-export const MAX_QTY = 20;
-
-export type Qty = Record<string, number>;
-
-export type BuildLine = { id: string; name: string; qty: number; amount: number; from: boolean; order: number; removable: boolean };
-
-/** Base fee first, then each chosen item in menu order. */
-export function buildLines(qty: Qty): BuildLine[] {
-  const lines: BuildLine[] = [
-    { id: "base", name: baseBuildFee.label, qty: 1, amount: BASE_FEE, from: false, order: -1, removable: false },
-  ];
-  for (const item of buildItems) {
-    const n = qty[item.id] ?? 0;
-    if (n <= 0) continue;
-    lines.push({
-      id: item.id,
-      name: item.quantifiable && n > 1 ? `${item.short} × ${n}` : item.short,
-      qty: n,
-      amount: item.price * n,
-      from: Boolean(item.startingAt),
-      order: item.order,
-      removable: true,
-    });
-  }
-  return lines;
-}
-
-export const totalOf = (lines: BuildLine[]) => lines.reduce((sum, line) => sum + line.amount, 0);
-
-/** The ?build= code: item positions, "x" and a count when above one, joined by "-". */
-export function encodeBuild(qty: Qty): string {
-  return buildItems
-    .filter((item) => (qty[item.id] ?? 0) > 0)
-    .map((item) => (qty[item.id] > 1 ? `${item.order.toString(36)}x${qty[item.id]}` : item.order.toString(36)))
-    .join("-");
-}
-
-export function decodeBuild(code: string | null | undefined): Qty {
-  const qty: Qty = {};
-  if (!code) return qty;
-  for (const part of code.split("-")) {
-    const [position, count] = part.split("x");
-    const item = buildItems[Number.parseInt(position, 36)];
-    if (!item) continue;
-    const n = count === undefined ? 1 : Number.parseInt(count, 10);
-    if (!Number.isFinite(n) || n < 1) continue;
-    qty[item.id] = item.quantifiable ? Math.min(MAX_QTY, n) : 1;
-  }
-  return qty;
-}
-
-/**
- * The package hint: the highest package whose from-price is within R3 000 of
- * the total (or already passed). `passed` flips the wording.
- */
-export const HINT_RANGE = 3000;
-export function packageHint(total: number): { pkg: PackageView; passed: boolean } | null {
-  let found: PackageView | null = null;
-  for (const pkg of packageViews) if (total >= pkg.total - HINT_RANGE) found = pkg;
-  return found ? { pkg: found, passed: total >= found.total } : null;
-}
-
-export function hintText(hint: { pkg: PackageView; passed: boolean }) {
-  const { pkg, passed } = hint;
-  return `${passed ? "In the range of" : "Close to"} ${pkg.name} (from ${formatRand(pkg.total)}): ${pkg.hint}.`;
-}
-
-/** Price label for a menu row: "R2 500 each", "from R7 500", "from R2 500 each". */
-export function itemPriceLabel(item: AlaCarteItem) {
-  const base = `${item.startingAt ? "from " : ""}${formatRand(item.price)}`;
-  return item.quantifiable ? `${base} each` : base;
-}
 
 /* ------------------------------------------------------- full service */
 

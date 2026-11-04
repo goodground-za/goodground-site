@@ -3,8 +3,8 @@
 import { useCallback, useLayoutEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
 
 /**
- * Segmented control with a sliding ink pill (Pricing billing toggle 54:264,
- * configurator payment toggle, Website launch eligibility checker).
+ * Segmented control with a sliding ink pill (the Pricing plan-type switch and
+ * how-you-pay toggle, Website launch eligibility checker).
  *
  * A radiogroup: arrow keys move and select, Home/End jump, one tab stop. The
  * pill is a single element placed from the selected option's measured box and

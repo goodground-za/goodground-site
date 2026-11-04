@@ -173,7 +173,7 @@ export const DETAILS: Detail[] = [
     tint: "blush",
     problem: `Most small businesses can’t justify ${formatRand(packages[0].total)} upfront, so they stay invisible online.`,
     approach: "A website, Google Business Profile care and a monthly AI visibility report for one monthly fee.",
-    outcome: `Found on Google, Maps and AI from ${fromMonthly}/mo, live in days.`,
+    outcome: `Found on Google, Maps and AI from ${fromMonthly}/mo, with a free preview first.`,
   },
   {
     id: "full-service",

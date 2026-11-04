@@ -11,40 +11,24 @@ import type { OfferSpots } from "@/lib/liveCounters";
 import { ButtonLink } from "../Button";
 import { formatRand } from "../format";
 import { Icon } from "../Icon";
-import { PillToggle } from "../PillToggle";
 import { Resp } from "../Resp";
-import { SectionHeader } from "../SectionHeader";
 import { Tag } from "../Tag";
 import { useLiveCounters } from "../useLiveCounters";
-
-type Period = "month" | "year";
-const PERIODS: { value: Period; label: string }[] = [
-  { value: "month", label: "Monthly" },
-  { value: "year", label: "Annual · 2 months free" },
-];
 
 /** What the offer box needs from the offer count (lib/liveCounters.ts). */
 export type OfferBox = Pick<OfferSpots, "left" | "total" | "soldOut" | "month" | "nextMonth">;
 
-/** The price block: month and year views share one grid cell, so the card never changes size. */
-function PlanPrice({ plan, period }: { plan: LocalPlan; period: Period }) {
+/** The price block: monthly only, month to month. */
+function PlanPrice({ plan }: { plan: LocalPlan }) {
   return (
     <div className="pr-price">
-      <div className="pr-price__view" data-on={period === "month" ? "" : undefined} inert={period !== "month"}>
+      <div className="pr-price__view" data-on="">
         <p className="pr-price__main">
           <strong className="gg-number">{formatRand(plan.monthly)}</strong>
           <small>/mo</small>
         </p>
         <p className="pr-price__split">No deposit · first debit at go-live</p>
         <p className="pr-price__alt">No VAT added · cancel any month</p>
-      </div>
-      <div className="pr-price__view" data-on={period === "year" ? "" : undefined} inert={period !== "year"}>
-        <p className="pr-price__main">
-          <strong className="gg-number">{formatRand(plan.annual)}</strong>
-          <small>/yr</small>
-        </p>
-        <p className="pr-price__split">Pay once for 12 months, get 2 free</p>
-        <p className="pr-price__alt">No VAT added · saves {formatRand(plan.monthly * 12 - plan.annual)}</p>
       </div>
     </div>
   );
@@ -72,32 +56,20 @@ export function OfferBoxView({ offer }: { offer: OfferBox }) {
 }
 
 /**
- * Pricing 02 (v2). The three monthly Local plans in the package-card styling:
- * a Monthly | Annual toggle, a promise row, the add-ons row and the plum Full
- * Service strip. On phones the cards collapse to a name and a price except
- * Local Plus (accordion, one open), like the custom packages below.
+ * Pricing 02 (v2), the "Monthly plans" panel of the Plans section. The three
+ * monthly Local plans in the package-card styling, a promise row, the add-ons
+ * row and the plum Full Service strip. Monthly only, month to month.
+ * On phones the cards collapse to a name and a price except Local Plus
+ * (accordion, one open), like the custom builds.
  */
 export function MonthlyPlans({ offer: typed }: { offer: OfferBox }) {
   // The page is static: it renders the typed count and the live one replaces it after load.
   const offer = useLiveCounters()?.offer ?? typed;
-  const [period, setPeriod] = useState<Period>("month");
   const [open, setOpen] = useState<string>("local-plus");
-  const toggle = <PillToggle options={PERIODS} value={period} onChange={setPeriod} label="Billing period" fill className="pr-period" />;
 
   return (
     <>
-      <div className="hm-hide-phone">
-        <SectionHeader
-          tag="MONTHLY PLANS"
-          heading="Get found online. One monthly fee, no deposit."
-          layout="split"
-          cta={<PillToggle options={PERIODS} value={period} onChange={setPeriod} label="Billing period" />}
-        />
-      </div>
-      <div className="hm-phone-only pr-pkg-mobile-head">
-        <SectionHeader tag="MONTHLY PLANS" heading="Get found online. One monthly fee, no deposit." />
-        {toggle}
-      </div>
+      <p className="pr-panel__title">Get found online. One monthly fee, no deposit.</p>
 
       <ul className="pr-pkgs pr-pkgs--three" data-reveal="stagger" style={{ "--gg-stagger-step": "100ms" } as CSSProperties}>
         {localPlans.map((plan) => {
@@ -134,7 +106,7 @@ export function MonthlyPlans({ offer: typed }: { offer: OfferBox }) {
                   </button>
                 </div>
                 <p className="pr-pkg__tagline">{plan.tagline}</p>
-                <PlanPrice plan={plan} period={period} />
+                <PlanPrice plan={plan} />
                 <div id={`pr-plan-body-${plan.slug}`} className="pr-pkg__body">
                   <div className="pr-pkg__body-in">
                     <ButtonLink

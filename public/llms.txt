@@ -13,11 +13,11 @@
 
 ## How we price
 
-- Four packages, each a starting price confirmed in a quote: Micro from R12 000, Launch from R21 000, Grow from R32 000 and Scale from R45 000. A build-your-own configurator starts from a R6 000 base fee.
+- Four packages, each a starting price confirmed in a quote: Micro from R12 000, Launch from R21 000, Grow from R32 000 and Scale from R45 000.
 - Two ways to pay a package: a 50% deposit to secure the project and 50% on completion, before handover; or 12 monthly instalments, where the first secures the booking and the other 11 start once the project is completed. Neither is a subscription: the client owns the website.
 - Full Service is a separate monthly plan, for custom designs: from R1 500 a month (the final price depends on the site), month to month, no minimum term.
 - Care Plan: for custom-build clients after launch, a monthly retainer priced per site, with 30 days’ notice.
-- Monthly Local plans, month to month. A free preview arrives within 5 working days, the site goes live when the client approves it, and the first debit runs only then: Local Start R299 a month, Local Plus R449 a month and Local Pro R799 a month (no VAT is added). Annual prices give two months free: R2 990, R4 490 and R7 990 a year.
+- Monthly Local plans, month to month. A free preview takes 10 to 15 working days, the site goes live once the client approves it, and the first debit runs only then: Local Start R950 a month, Local Plus R1 750 a month and Local Pro R2 750 a month (no VAT is added). Monthly only. Local Start includes the website, domain, hosting, Google Business Profile and a WhatsApp button; Local Plus adds a payment link on the website.
 - Add-ons for the Local plans: AI Visibility Fix Pack R2 950 once-off (R1 450 on Local Plus, included in Local Pro), Visibility Watch R199 a month (the monthly AI Visibility Report on its own, for sites GoodGround has built), and business email R49 a month per mailbox.
 - New Business Offer, for businesses going online for the first time: the first month of Local Start free, plus a business mailbox free for 12 months. Two spaces are available each month. Redesigns and replacements are not part of this offer.
 
@@ -38,7 +38,7 @@
   - [Professional and consulting](https://www.goodground.co.za/services/professional-and-consulting)
   - [Retail and small brands](https://www.goodground.co.za/services/retail-and-small-brands)
   - [Non-profits and community](https://www.goodground.co.za/services/non-profits-and-community)
-- [Pricing](https://www.goodground.co.za/pricing): The monthly Local plans, the four custom packages with both payment options worked out per price, the build-your-own configurator and Full Service.
+- [Pricing](https://www.goodground.co.za/pricing): The monthly Local plans, the four custom packages with both payment options worked out per price, and Full Service.
 - [New Business Offer](https://www.goodground.co.za/website-launch): First month of Local Start free for new businesses, with this month's availability.
 - [Process](https://www.goodground.co.za/process): How a project runs step by step: what we do, what we need from you, how long it takes and when you pay.
 - [Projects](https://www.goodground.co.za/work): Case studies, each ending in numbers measured on the live site, with instructions to check them.

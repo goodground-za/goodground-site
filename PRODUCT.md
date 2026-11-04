@@ -18,7 +18,7 @@ Two things make it unusual to build:
 
 **1. The studio has no track record yet.** No clients, no case studies, no testimonials, no logos. Everything a normal agency site leans on for credibility does not exist. The site has to be persuasive without a single borrowed proof point. `/work` says "case studies, coming soon" rather than inventing any.
 
-**2. Pricing is public.** Monthly Local plans from R299, four custom packages from R12 000 to R45 000 (starting prices, quoted per project), plus a build-your-own configurator off a R6 000 base fee. Real numbers, published, no "contact us for a quote" before you see any figure at all. Most competitors hide this, so it is a genuine wedge. The quote itself is still one fixed price agreed before work starts.
+**2. Pricing is public.** Monthly Local plans from R950, four custom packages from R12 000 to R45 000 (starting prices, quoted per project), plus Full Service from R1 500 a month. Real numbers, published, no "contact us for a quote" before you see any figure at all. Most competitors hide this, so it is a genuine wedge. The quote itself is still one fixed price agreed before work starts.
 
 The site itself is also the portfolio. A studio selling custom-coded websites cannot have its own site look templated. If it looks like a template, the pitch dies.
 
@@ -36,8 +36,8 @@ The site answers the second question far more directly than most agencies dare t
 One pricing collection (`content/pricing.ts`: `localPlans`, `addOns`, `packages`, `fullServicePackage`; offer in `content/newBusinessOffer.ts`) feeds every page, so no page types a price. The ladder, as shown on the public site:
 
 - **Free:** the AI visibility check (by request, one per business per 30 days) and a website preview before the first debit of a monthly plan.
-- **Monthly Local plans:** Local Start R299, Local Plus R449, Local Pro R799 a month (VAT included; the annual price gives two months free). Month to month, domain always the client's, site files the client's after 6 paid months. The New Business Offer is Local Start with the first month free.
-- **Custom builds:** Micro, Launch, Grow, Scale, or build-your-own, paid 50/50 or over 12 months. **Full Service** from R1 500 a month and the **Care Plan** (per site, after a build) are the recurring services for custom clients.
+- **Monthly Local plans:** Local Start R950, Local Plus R1 750, Local Pro R2 750 a month (no VAT added; monthly only). The free preview takes 10 to 15 working days. Month to month, domain always the client's, site files the client's after 6 paid months. The New Business Offer is Local Start with the first month free.
+- **Custom builds:** Micro, Launch, Grow, Scale, paid 50/50 or over 12 months. **Full Service** from R1 500 a month and the **Care Plan** (per site, after a build) are the recurring services for custom clients.
 - **Add-ons:** AI Visibility Fix Pack, Visibility Watch, business email.
 
 Every page has a `primaryTrack` (`local`, `custom` or `check`, defaults in `content/funnel.ts`) that sets its main button, its gradient CTA and the one text link to the next-best track. The three tracks each have their own form, auto-reply and `/thanks?form=` variant: **local** (`/start-project?plan=local-*`, formType `local-preview`), **custom** (`/start-project`, formType `start-project`) and **check** (`/services/ai-visibility#book`, formType `ai-check`). Parameters are whitelisted in `lib/enquiryShared.ts`; the retired `?plan=launch` maps to the New Business Offer. After a preview is approved a monthly-plan client gets the short onboarding (`/onboarding?track=local`, four steps plus review); custom clients get the full one.

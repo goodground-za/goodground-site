@@ -15,7 +15,7 @@ import { Icon } from "../Icon";
 import { Resp } from "../Resp";
 import { Tag } from "../Tag";
 import { balanceOf, depositOf, fullService, instalmentFor, packageBySlug } from "./data";
-import { scrollToId, usePricing } from "./PricingProvider";
+import { usePricing } from "./PricingProvider";
 
 type Status = "idle" | "submitting" | "success" | "error";
 type Errors = Partial<Record<"fullName" | "email" | "businessName" | "town" | "mainServices", string>>;
@@ -34,10 +34,10 @@ const interestLabel = (value: Interest) => INTERESTS.find((i) => i.value === val
 /**
  * Pricing 08. The quote form, with whatever the visitor picked attached. It
  * sends through the same path as every other form on the site (lib/enquiry.ts),
- * tagged formType pricing-quote, with the build or package in the message.
+ * tagged formType pricing-quote, with the package in the message.
  *
- * Arriving from "View & send" or "Choose …" pulses the attached card once and
- * moves focus to the name field. With nothing attached the card is hidden.
+ * Arriving from "Choose …" pulses the attached card once and moves focus to the
+ * name field. With nothing attached the card is hidden.
  *
  * v2: "I'm interested in" picks the route. A Local plan is a free-preview
  * request (formType local-preview, same endpoint), so it also needs the
@@ -45,7 +45,7 @@ const interestLabel = (value: Interest) => INTERESTS.find((i) => i.value === val
  * fields appear when a Local plan is chosen. Anything else stays a quote request.
  */
 export function QuoteForm() {
-  const { attached, attachPulse, billing, lines, total, hasFrom, detach, setBuildOpen } = usePricing();
+  const { attached, attachPulse, billing, detach, goTo } = usePricing();
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<Errors>({});
   const [more, setMore] = useState(false);
@@ -95,7 +95,7 @@ export function QuoteForm() {
         chips: [`${pkg.name} package`, payLabel],
         left: `from ${formatRand(pkg.total)} · ${payLabel}`,
         right: billing === "deposit" ? `${formatRand(depositOf(pkg.total))} deposit` : `${formatRand(instalmentFor(pkg.total))}/mo`,
-        edit: () => scrollToId("custom"),
+        edit: () => goTo("custom", "custom"),
         text: `${pkg.name} package, from ${formatRand(pkg.total)}. ${
           billing === "deposit"
             ? `50% deposit: ${formatRand(depositOf(pkg.total))} to start + ${formatRand(balanceOf(pkg.total))} on completion`
@@ -103,31 +103,13 @@ export function QuoteForm() {
         }`,
       };
     }
-    if (attached.kind === "full-service") {
-      return {
-        title: "Attached: Full Service",
-        chips: ["Full Service", "Month to month"],
-        left: `from ${formatRand(fullService.monthlyFrom)}/mo · cancel any time`,
-        right: `${formatRand(fullService.monthlyFrom)}/mo`,
-        edit: () => scrollToId("full-service"),
-        text: `Full Service, from ${formatRand(fullService.monthlyFrom)}/mo, month to month`,
-      };
-    }
-    const list = lines.map((line) => `- ${line.name} (${line.from ? "from " : ""}${formatRand(line.amount)})`).join("\n");
     return {
-      title: "Attached: your build",
-      chips: lines.map((line) => line.name.replace(/^Base Build Fee$/, "Base build")),
-      left: `${hasFrom ? "From " : ""}${formatRand(total)} · ${payLabel}`,
-      right: billing === "deposit" ? `${formatRand(depositOf(total))} deposit` : `${formatRand(instalmentFor(total))}/mo`,
-      edit: () => {
-        setBuildOpen(true);
-        scrollToId("build-your-own");
-      },
-      text: `Build Your Own, ${hasFrom ? "from " : ""}${formatRand(total)} total\n${list}\nPayment: ${
-        billing === "deposit"
-          ? `50% deposit (${formatRand(depositOf(total))} to start + ${formatRand(balanceOf(total))} on completion)`
-          : `12 monthly instalments of ${formatRand(instalmentFor(total))}`
-      }`,
+      title: "Attached: Full Service",
+      chips: ["Full Service", "Month to month"],
+      left: `from ${formatRand(fullService.monthlyFrom)}/mo · cancel any time`,
+      right: `${formatRand(fullService.monthlyFrom)}/mo`,
+      edit: () => goTo("monthly", "full-service"),
+      text: `Full Service, from ${formatRand(fullService.monthlyFrom)}/mo, month to month`,
     };
   })();
 
@@ -181,7 +163,7 @@ export function QuoteForm() {
             plan: interest,
             town: String(data.get("town") ?? ""),
             mainServices: String(data.get("mainServices") ?? ""),
-            // A custom package or build they had attached stays in the team's email.
+            // A custom package they had attached stays in the team's email.
             message: [notes, view ? `Also had attached: ${view.text}` : ""].filter(Boolean).join("\n\n"),
           }
         : {
