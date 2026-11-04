@@ -10,7 +10,6 @@ import { funnelEvents, trackEvent } from "@/lib/analytics";
 import {
   EMAIL_RE,
   GBP,
-  PREVIEW_TIME,
   REPLY_TIME,
   SERVICES,
   WEBSITE_RE,
@@ -25,6 +24,7 @@ import { mailtoFor, postEnquiry } from "../enquiry";
 import { CheckField, Field, TextArea } from "../Field";
 import { formatRand } from "../format";
 import { Icon } from "../Icon";
+import { PlanTermButton } from "../shared/PlanTermModal";
 import { SplitHeading } from "../SplitHeading";
 import { Tag } from "../Tag";
 import { useLiveCounters } from "../useLiveCounters";
@@ -403,7 +403,7 @@ export function StartProject({ spots: typedSpots = FALLBACK_SPOTS }: { spots?: S
   const submitLabel = isLocal
     ? offerNow === "new-business-waitlist"
       ? "Join the waitlist"
-      : "Get my free preview"
+      : "Start my plan"
     : context.intent === "quote"
       ? "Request my fixed quote"
       : "Send your enquiry";
@@ -489,7 +489,7 @@ export function StartProject({ spots: typedSpots = FALLBACK_SPOTS }: { spots?: S
     setStatus("failed");
   };
 
-  const emailLink = mailtoFor(isLocal ? `Free preview request${context.ref ? ` (from ${context.ref})` : ""}` : `Project enquiry${context.ref ? ` (from ${context.ref})` : ""}`, [
+  const emailLink = mailtoFor(isLocal ? `Monthly plan request${context.ref ? ` (from ${context.ref})` : ""}` : `Project enquiry${context.ref ? ` (from ${context.ref})` : ""}`, [
     ...(isLocal
       ? [
           `Plan: ${answers.plan ? planSummary(answers.plan) : "-"}`,
@@ -520,8 +520,8 @@ export function StartProject({ spots: typedSpots = FALLBACK_SPOTS }: { spots?: S
         tone: "blush" as const,
         title: "New Business Offer · first month free",
         short: "New Business Offer · first month free",
-        sub: `Plus a business mailbox free for 12 months. ${spots.left} of ${spots.total} ${spots.month} space${spots.left === 1 ? "" : "s"} left.`,
-        shortSub: `${spots.left} of ${spots.total} ${spots.month} spaces left.`,
+        sub: `Your deposit covers month two, and the business mailbox is free for 12 months. ${spots.left} of ${spots.total} ${spots.month} space${spots.left === 1 ? "" : "s"} left.`,
+        shortSub: `Deposit covers month two. ${spots.left} of ${spots.total} spaces left.`,
         remove: "offer" as const,
       };
     }
@@ -686,7 +686,15 @@ export function StartProject({ spots: typedSpots = FALLBACK_SPOTS }: { spots?: S
                         <h2 id="sp-q" ref={questionRef} tabIndex={-1} className="sp__q">
                           {current.question}
                         </h2>
-                        <p className="sp__sub">{current.sub}</p>
+                        <p className="sp__sub">
+                          {current.kind === "plans" ? (
+                            <>
+                              Every plan is a <PlanTermButton placement="start-plan-step">12-month plan</PlanTermButton>. A deposit of one month’s fee starts your build.
+                            </>
+                          ) : (
+                            current.sub
+                          )}
+                        </p>
                         <div
                           className={
                             current.kind === "plans" ? "sp__opts sp__opts--plans" : rows ? "sp__opts sp__opts--rows" : current.key === "service" ? "sp__opts sp__opts--service" : "sp__opts"
@@ -758,7 +766,7 @@ export function StartProject({ spots: typedSpots = FALLBACK_SPOTS }: { spots?: S
                         <p className="sp__foot">
                           <span>
                             <Icon name="lock" size={14} stroke={2.2} />
-                            {current.kind === "plans" ? "Free preview first. Month to month, cancel any month." : "No obligation. We never share your details."}
+                            {current.kind === "plans" ? "Nothing is built until your deposit is paid." : "No obligation. We never share your details."}
                           </span>
                           <span className="sp__foot-hint">Choosing an option moves you to the next step</span>
                         </p>
@@ -857,7 +865,7 @@ export function StartProject({ spots: typedSpots = FALLBACK_SPOTS }: { spots?: S
                         <Button type="submit" variant="coral" full>
                           Continue
                         </Button>
-                        <p className="sp__fine">We use this to start your preview. We never share your details.</p>
+                        <p className="sp__fine">We use this to prepare your plan. We never share your details.</p>
                       </form>
                     ) : (
                       <form
@@ -873,8 +881,8 @@ export function StartProject({ spots: typedSpots = FALLBACK_SPOTS }: { spots?: S
                           {current.question}
                         </h2>
                         <p className="sp__sub">
-                          <span className="gg-resp-long">{isLocal ? `We’ll send your preview within ${PREVIEW_TIME}.` : `We’ll get back to you within ${REPLY_TIME}.`}</span>
-                          <span className="gg-resp-short">{isLocal ? `Preview within ${PREVIEW_TIME}.` : `We’ll reply within ${REPLY_TIME}.`}</span>
+                          <span className="gg-resp-long">{isLocal ? `We’ll email you a deposit invoice within ${REPLY_TIME}.` : `We’ll get back to you within ${REPLY_TIME}.`}</span>
+                          <span className="gg-resp-short">{isLocal ? `Deposit invoice within ${REPLY_TIME}.` : `We’ll reply within ${REPLY_TIME}.`}</span>
                         </p>
 
                         <div className="sp__fields">
@@ -946,8 +954,8 @@ export function StartProject({ spots: typedSpots = FALLBACK_SPOTS }: { spots?: S
                         {isLocal ? (
                           <CheckField
                             className="sp__consent"
-                            label="WhatsApp me updates about my preview"
-                            hint="We’ll only use your number to message you about your preview. You can stop at any time. This is separate from any marketing."
+                            label="WhatsApp me updates about my plan"
+                            hint="We’ll only use your number to message you about your plan. You can stop at any time. This is separate from any marketing."
                             name="whatsappOptIn"
                             idPrefix="sp"
                             checked={whatsapp}
@@ -1038,7 +1046,7 @@ function Success({ sent, copy, spots }: { sent: { name: string; email: string; t
   const heading = local
     ? waitlist
       ? `You’re on the ${spots.nextMonth} waitlist${sent.name ? `, ${sent.name}` : ""}.`
-      : `Thanks${sent.name ? `, ${sent.name}` : ""}. We’re building your preview.`
+      : `Thanks${sent.name ? `, ${sent.name}` : ""}. We’ve got your plan request.`
     : `Thanks${sent.name ? `, ${sent.name}` : ""}. Your enquiry is in.`;
   return (
     <div className="sp__done" role="status">
@@ -1057,7 +1065,7 @@ function Success({ sent, copy, spots }: { sent: { name: string; email: string; t
             ? `Your New Business Offer space is held while we confirm, within ${REPLY_TIME}.`
             : waitlist
               ? "We’ll tell you as soon as a space opens."
-              : ""
+              : `We’ll email you a deposit invoice (one month’s fee) within ${REPLY_TIME}.`
           : `Expect a reply within ${REPLY_TIME}, usually sooner.`}
       </p>
       <div className="sp__wait">
@@ -1088,7 +1096,7 @@ function NoScriptForm() {
       <form className="sp__noscript" action="/api/enquiry" method="post">
         <input type="hidden" name="formType" value="local-preview" />
         <p className="sp__q">Get found on a monthly plan</p>
-        <p className="sp__fine">Free preview first, from {from} a month. No deposit.</p>
+        <p className="sp__fine">From {from} a month on a 12-month plan. A deposit of one month’s fee starts your build.</p>
         <label className="gg-field">
           <span className="gg-field__label">Which plan?</span>
           <select name="plan" className="gg-field__control" defaultValue="local-plus">
@@ -1130,7 +1138,7 @@ function NoScriptForm() {
         </label>
         <label className="gg-check__row">
           <input name="whatsappOptIn" type="checkbox" value="yes" />
-          <span>WhatsApp me updates about my preview (needs a phone number above)</span>
+          <span>WhatsApp me updates about my plan (needs a phone number above)</span>
         </label>
         <div className="sp__trap" aria-hidden="true">
           <label>
@@ -1139,7 +1147,7 @@ function NoScriptForm() {
           </label>
         </div>
         <button type="submit" className="gg-btn gg-btn--coral">
-          <span className="gg-btn__label">Get my free preview</span>
+          <span className="gg-btn__label">Start my plan</span>
         </button>
       </form>
 

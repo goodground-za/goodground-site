@@ -66,6 +66,7 @@ export const promoEvents = {
  *   ai_cta_click            position
  *   offer_spot_view         month
  *   offer_waitlist_join     month
+ *   contract_modal_open     placement            (the "12-month plan" dialog; placement is a fixed label)
  */
 export const funnelEvents = {
   planCardClick: (p: { plan: string; ref: string }) => trackEvent("plan_card_click", p),
@@ -86,4 +87,5 @@ export const funnelEvents = {
   aiCtaClick: (p: { position: "hero" | "included" | "faq" | "sticky" | "home" | "industry-search" | "service-seo" }) => trackEvent("ai_cta_click", p),
   offerSpotView: (p: { month: string }) => trackEvent("offer_spot_view", p),
   offerWaitlistJoin: (p: { month: string }) => trackEvent("offer_waitlist_join", p),
+  contractModalOpen: (p: { placement: string }) => trackEvent("contract_modal_open", p),
 };

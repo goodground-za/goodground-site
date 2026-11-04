@@ -9,7 +9,7 @@ import { SplitHeading } from "@/components/gg/SplitHeading";
 import { Tag } from "@/components/gg/Tag";
 import { FocusOnLoad } from "@/components/gg/utility/FocusOnLoad";
 import { site } from "@/content/site";
-import { CHECK_REPORT_TIME, PREVIEW_TIME, REPLY_TIME } from "@/lib/enquiryShared";
+import { CHECK_REPORT_TIME, BUILD_TIME, REPLY_TIME } from "@/lib/enquiryShared";
 import "@/components/gg/utility/utility.css";
 
 /** The conversion URL and no-JS landing page: never indexed, never in the sitemap. */
@@ -135,17 +135,17 @@ const COPY: Record<Form, Copy> = {
   },
   // Each of these is also a conversion URL.
   "local-preview": {
-    crumb: "FREE PREVIEW",
-    tag: "PREVIEW REQUESTED",
-    head: (n) => named(n, "WE’RE BUILDING YOUR PREVIEW.", "THANKS. WE’RE BUILDING YOUR PREVIEW."),
-    body: (s) => `Your free preview request is with us. ${record(s)}`,
+    crumb: "MONTHLY PLAN",
+    tag: "PLAN REQUESTED",
+    head: (n) => named(n, "WE’VE GOT YOUR PLAN REQUEST.", "THANKS. WE’VE GOT YOUR PLAN REQUEST."),
+    body: (s) => `Your plan request is with us. ${record(s)}`,
     steps: [
-      { label: `WITHIN ${PREVIEW_TIME.toUpperCase()}`, title: `Preview within ${PREVIEW_TIME}`, body: "We build a preview of your website and send you the link.", icon: "layout", tone: "surface" },
-      { label: "YOUR TURN", title: "You review it", body: "Tell us what to change. Nothing is charged while you look.", icon: "eye", tone: "lilac" },
-      { label: "WHEN YOU’RE HAPPY", title: "Approve, then your first debit", body: "Your site goes live when you approve it, and your first debit runs only then.", icon: "check", tone: "blush" },
+      { label: `WITHIN ${REPLY_TIME.toUpperCase()}`, title: "We email you a deposit invoice", body: "The deposit is one month’s fee. Nothing is built until it is paid.", icon: "doc", tone: "surface" },
+      { label: "ONCE IT’S PAID", title: "We send your onboarding link", body: "It takes you through a short brief about your business.", icon: "mail", tone: "lilac" },
+      { label: "THEN", title: "You fill in the brief and we build", body: `Your site is built in ${BUILD_TIME}, counted from when the deposit and your brief are both in.`, icon: "layout", tone: "blush" },
     ],
     meanwhile: {
-      title: "While we build, see how AI engines see local businesses today.",
+      title: "While you wait, see how AI engines see local businesses today.",
       primary: { label: "See a sample report", href: "/services/ai-visibility#sample" },
       secondary: { label: "How we work", href: "/process" },
     },
@@ -157,9 +157,9 @@ const COPY: Record<Form, Copy> = {
     head: (n) => named(n, "YOUR SPACE IS HELD.", "THANKS. YOUR SPACE IS HELD."),
     body: (s) => `Your space is held while we confirm. ${record(s)}`,
     steps: [
-      { label: `WITHIN ${REPLY_TIME.toUpperCase()}`, title: "We confirm your space within 1–2 business days", body: "A real person reads your request and confirms by email.", icon: "mail", tone: "surface" },
-      { label: "THEN", title: "We build your free preview", body: `Ready to review within ${PREVIEW_TIME} of your space being confirmed.`, icon: "layout", tone: "lilac" },
-      { label: "WHEN YOU’RE HAPPY", title: "Approve it to go live", body: "Your first month is free, and the business mailbox is free for 12 months.", icon: "check", tone: "blush" },
+      { label: `WITHIN ${REPLY_TIME.toUpperCase()}`, title: "We confirm your space and send a deposit invoice", body: "A real person reads your request and confirms by email.", icon: "mail", tone: "surface" },
+      { label: "ONCE IT’S PAID", title: "We send your onboarding link", body: "You fill in a short brief about your business. The deposit is one month’s fee.", icon: "mail", tone: "lilac" },
+      { label: "THEN", title: `We build in ${BUILD_TIME}`, body: "Your first month is free, your deposit then covers your second month, and the business mailbox is free for 12 months.", icon: "layout", tone: "blush" },
     ],
     meanwhile: {
       title: "While you wait, see how AI engines see local businesses today.",
@@ -194,8 +194,8 @@ const OFFER_WAITLIST: { tag: string; head: (n: string) => string; body: (s: Sess
   body: (s) => `The offer is fully booked this month, so you’re on the ${s.next ? `${s.next} waitlist` : "waitlist for next month"}. ${record(s)}`,
   steps: [
     { label: "WHEN A SPACE OPENS", title: "We tell you", body: "A real person emails you as soon as a space opens.", icon: "mail", tone: "surface" },
-    { label: "THEN", title: "We build your free preview", body: `Ready to review within ${PREVIEW_TIME}.`, icon: "layout", tone: "lilac" },
-    { label: "WHEN YOU’RE HAPPY", title: "Approve it to go live", body: "Your first debit runs only then.", icon: "check", tone: "blush" },
+    { label: "THEN", title: "You pay a one-month deposit", body: "We email you a deposit invoice and, once it is paid, your onboarding link.", icon: "mail", tone: "lilac" },
+    { label: "THEN", title: `We build in ${BUILD_TIME}`, body: "Counted from when the deposit and your onboarding brief are both in.", icon: "layout", tone: "blush" },
   ],
 };
 

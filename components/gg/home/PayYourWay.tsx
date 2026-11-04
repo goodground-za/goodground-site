@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 
-import { localFromMonthly } from "@/content/pricing";
+import { localFromMonthly, PLAN_TERM_LABEL } from "@/content/pricing";
 import { testimonials } from "@/content/testimonials";
 
 import { ButtonLink } from "../Button";
@@ -10,13 +10,14 @@ import { SectionHeader } from "../SectionHeader";
 import { SplitHeading } from "../SplitHeading";
 import { Tag } from "../Tag";
 import { formatRand } from "../format";
+import { PlanTermButton } from "../shared/PlanTermModal";
 
 const review = testimonials[0];
 
 /**
  * Home 07 (v2): "Three ways to pay". HEADER REVEAL, then the three option cards
- * 120ms apart. Option 1 is the monthly plan: twelve equal dots, no deposit,
- * cancel any month. Option 2's deposit block wipes in, then "On completion"
+ * 120ms apart. Option 1 is the monthly plan: twelve equal dots, a
+ * 12-month plan. Option 2's deposit block wipes in, then "On completion"
  * draws its border; option 3's twelve bars grow with the first in coral. The
  * dots and bars are decorative: the legend carries the meaning. Instalment
  * tooltips are CSS, desktop hover only.
@@ -34,8 +35,8 @@ export function PayYourWay() {
           headingClass="gg-h2 hm-h2"
           sub={
             <Resp
-              long="Start on a monthly plan with no deposit, or agree one fixed price for a custom build. No hourly billing and no scope surprises either way."
-              short="A monthly plan with no deposit, or one fixed price for a custom build."
+              long="Start on a 12-month plan with a one-month deposit, or agree one fixed price for a custom build. No hourly billing and no scope surprises either way."
+              short="A 12-month plan, or one fixed price for a custom build."
             />
           }
           cta={
@@ -55,16 +56,17 @@ export function PayYourWay() {
               <span className="gg-kicker hm-option__label">
                 <Resp long="Option 1" short="OPTION 1" />
               </span>
-              <Tag>NO DEPOSIT</Tag>
+              <Tag>12-MONTH PLAN</Tag>
             </div>
             <div data-reveal="line-mask">
               <SplitHeading as="h3" className="hm-option__title" text={`From ${formatRand(localFromMonthly)}/mo`} />
             </div>
             <p className="hm-option__copy">
               <Resp
-                long="Monthly plan: a website, your Google profile and an AI report. No deposit, and your first debit runs only once you’re live."
-                short="Website, Google profile and AI report. No deposit; the first debit runs once you’re live."
-              />
+                long="Monthly plan: a website, your Google profile and an AI report. A deposit of one month’s fee starts your build."
+                short="Website, Google profile and AI report. A one-month deposit starts your build."
+              />{" "}
+              <PlanTermButton placement="home-pay">{PLAN_TERM_LABEL}</PlanTermButton>
             </p>
             <div className="hm-months" data-reveal="fill" aria-hidden="true">
               <div className="hm-months__dots">
@@ -74,7 +76,7 @@ export function PayYourWay() {
               </div>
               <div className="hm-months__legend">
                 <span>12 equal months</span>
-                <span className="hm-months__cancel">cancel any month</span>
+                <span className="hm-months__cancel">12-month plan</span>
               </div>
             </div>
           </article>

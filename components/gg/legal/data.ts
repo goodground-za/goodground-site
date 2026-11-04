@@ -1,3 +1,4 @@
+import { buildTime } from "@/content/pricing";
 import { site } from "@/content/site";
 
 import type { IconName } from "../Icon";
@@ -393,7 +394,7 @@ export const termsSections: TermsSection[] = [
     n: "03",
     title: "Payment options",
     summary:
-      "Pay a 50% deposit and 50% on completion, before handover; or 12 equal monthly instalments, where the first secures your booking and the other 11 start once the project is completed. The total is the same either way.",
+      "Pay a 50% deposit and 50% on completion, before handover; or 12 equal monthly instalments, where the first secures your booking and the other 11 start once the project is completed. The total is the same either way. This section is about custom website projects; monthly plans are covered in Section 17.",
   },
   {
     id: "terms-scope",
@@ -407,7 +408,7 @@ export const termsSections: TermsSection[] = [
     n: "05",
     title: "Pausing and cancelling a project",
     summary:
-      "The project price is fixed. If you cancel partway through, the outstanding balance of the agreed price becomes payable, whichever payment option you chose. If you are paying a custom build over 12 instalments, Section 18 sets out what applies when you end it early.",
+      "The project price is fixed. If you cancel partway through, the outstanding balance of the agreed price becomes payable, whichever payment option you chose. If you are paying a custom build over 12 instalments, Section 18 sets out what applies when you end it early. For a monthly plan, Section 17 sets out what applies when you cancel.",
   },
   {
     id: "terms-responsibilities",
@@ -486,7 +487,7 @@ export const termsSections: TermsSection[] = [
     n: "17",
     title: "Monthly plans",
     summary:
-      "A Local Start, Local Plus or Local Pro plan runs month to month. You can cancel at the end of any paid month, with no penalty. We build a free preview first, and we take your first payment only after you approve it. You have a seven-day cooling-off period after signing up online, as the law provides. Your domain is registered in your name. After six paid months the site files are yours at no charge; if you leave earlier you can buy them for R1 500, or simply keep your domain. The New Business Offer gives a new business its first month free and a business mailbox free for 12 months, for two new businesses a month, and is then the normal plan. We work to improve the signals that search engines and AI assistants read, but we do not guarantee that any AI assistant will recommend your business or where it ranks.",
+      `A Local Start, Local Plus or Local Pro plan runs for 12 months. A deposit of one month’s fee starts the build. We build the site in ${buildTime} once the deposit is paid and your onboarding brief is in. If you cancel the plan during the 12 months, you are liable to pay the outstanding amount of the website’s full price, and you take over ownership of your hosting, your domain and everything that goes with it. The New Business Offer gives a new business its first month free and a business mailbox free for 12 months, for two new businesses a month. You still pay the one-month deposit to start, and it is credited against your second month, which is your first paid month. We work to improve the signals that search engines and AI assistants read, but we do not guarantee that any AI assistant will recommend your business or where it ranks.`,
   },
   {
     id: "terms-early-exit",

@@ -1,16 +1,17 @@
 import { newBusinessOffer } from "@/content/newBusinessOffer";
-import { localFromMonthly } from "@/content/pricing";
+import { localFromMonthly, PLAN_TERM_LABEL } from "@/content/pricing";
 
 import { ButtonLink } from "../Button";
 import { Icon } from "../Icon";
 import { SplitHeading } from "../SplitHeading";
 import { Tag } from "../Tag";
 import { formatRand } from "../format";
+import { PlanTermButton } from "../shared/PlanTermModal";
 import { AiCheckStrip } from "./AiCheckStrip";
 import { OfferStrip, type OfferState } from "./OfferStrip";
 import { PlanRows } from "./PlanRows";
 
-const PREVIEW_HREF = "/start-project?plan=local-plus&ref=home";
+const START_HREF = "/start-project?plan=local-plus&ref=home";
 
 /**
  * Home 03 (v2): "Get found online from R950 a month." Left: HEADER REVEAL of
@@ -39,11 +40,12 @@ export function MonthlyOffer() {
           </Tag>
           <SplitHeading id="launch-title" className="gg-h2 hm-h2 hm-launch__title" text={`Get found online from ${from} a month.`} />
           <p className="gg-lead hm-launch__sub" data-part="sub">
-            A website, your Google profile and an honest AI visibility report, looked after every month. No deposit, cancel any month.
+            A website, your Google profile and an honest AI visibility report, looked after every month. A deposit of one month’s fee starts your build, on a{" "}
+            <PlanTermButton placement="home-03">{PLAN_TERM_LABEL}</PlanTermButton>.
           </p>
           <div className="hm-launch__buttons" data-part="cta">
-            <ButtonLink href={PREVIEW_HREF} variant="light">
-              Get my free preview
+            <ButtonLink href={START_HREF} variant="light">
+              Start my plan
             </ButtonLink>
             <a className="gg-text-link hm-launch__link" href="/pricing#monthly">
               See monthly plans
@@ -55,7 +57,7 @@ export function MonthlyOffer() {
           <div className="hm-launch__card" data-reveal="fade-up" data-delay={150}>
             <div className="hm-launch__card-head">
               <p className="hm-launch__plan">Monthly plans</p>
-              <Tag tone="coral">NO DEPOSIT</Tag>
+              <Tag tone="coral">12-MONTH PLANS</Tag>
             </div>
             <PlanRows />
             <OfferStrip initial={initial} />
@@ -65,8 +67,8 @@ export function MonthlyOffer() {
         </div>
 
         <div className="hm-launch__mobile-cta">
-          <ButtonLink href={PREVIEW_HREF} variant="light" full>
-            Get my free preview
+          <ButtonLink href={START_HREF} variant="light" full>
+            Start my plan
           </ButtonLink>
           <a className="gg-text-link hm-launch__link" href="/pricing#monthly">
             See monthly plans

@@ -22,7 +22,7 @@ import { pageSocialMeta } from "@/lib/metadata";
 import "@/components/gg/pricing/pricing.css";
 
 const title = { absolute: "Pricing | Website Design Packages, South Africa | GoodGround" };
-const description = `Monthly website plans from ${formatRand(localFromMonthly)} with no deposit, four custom website packages from ${formatRand(packageViews[0].total)}, and Full Service from ${formatRand(fullServicePackage.monthlyFrom)}/mo.`;
+const description = `12-month website plans from ${formatRand(localFromMonthly)} a month, four custom website packages from ${formatRand(packageViews[0].total)}, and Full Service from ${formatRand(fullServicePackage.monthlyFrom)}/mo.`;
 const path = "/pricing";
 
 // Links from the retired build menu still open the page; the canonical tag drops any query.

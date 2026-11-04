@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { localPlanBySlug } from "@/content/pricing";
+import { buildTime, localPlanBySlug } from "@/content/pricing";
 import { site } from "@/content/site";
 
 import { BottomSheet, type BottomSheetHandle } from "../BottomSheet";
@@ -706,7 +706,7 @@ export function Onboarding({ token, track = "full", plan = "" }: { token: string
         </h1>
         <p>
           {local
-            ? "Your answers are with us. We’ve emailed you a copy. We’ll have your site live within about 2 working days of receiving everything."
+            ? `Your answers are with us. We’ve emailed you a copy. We build your site in ${buildTime}, counted from now.`
             : "Your answers are with us. We’ve emailed you a copy. We’ll confirm we’ve read it within one working day."}
         </p>
       </section>
@@ -717,7 +717,7 @@ export function Onboarding({ token, track = "full", plan = "" }: { token: string
             ? [
                 ["cal", "We check what you’ve sent", missingCount ? `We’ll follow up on the ${missingCount} missing answer${missingCount === 1 ? "" : "s"}.` : "Every required answer is in, so there is nothing to chase."],
                 ["lock", "We ask for access, securely", "A separate secure link for domain, hosting and email access. Never by email."],
-                ["bolt", "Your site goes live", "About 2 working days after we have everything."],
+                ["bolt", "We build your site", `${buildTime}, counted from when we have everything.`],
               ]
             : [
                 ["cal", "We review your brief", missingCount ? `Within one working day we’ll confirm and follow up on the ${missingCount} missing answer${missingCount === 1 ? "" : "s"}.` : "Within one working day we’ll confirm we’ve read it."],

@@ -3,7 +3,7 @@
 import { useState, type CSSProperties } from "react";
 
 import { site } from "@/content/site";
-import { PREVIEW_TIME, REPLY_TIME } from "@/lib/enquiryShared";
+import { LOCAL_NEXT_STEPS, REPLY_TIME } from "@/lib/enquiryShared";
 
 import { Icon } from "../Icon";
 import { answerLabel, type Answers, type StepDef, type TrackId } from "./data";
@@ -15,11 +15,7 @@ const NEXT_STEPS: Record<TrackId, string[]> = {
     "A short call to understand your business",
     "One fixed price, paid 50/50 or over 12 months",
   ],
-  local: [
-    `We build your free preview within ${PREVIEW_TIME}`,
-    "You review it and ask for changes",
-    "You approve it to go live. Your first debit runs only then",
-  ],
+  local: LOCAL_NEXT_STEPS,
 };
 
 /** One row of "Your answers". The value crossfades in and the row flashes blush for 600ms. */

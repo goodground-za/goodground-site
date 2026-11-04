@@ -80,7 +80,7 @@ const SERVICE_STEP: StepDef = {
     {
       value: "local",
       label: "Get found online on a monthly plan",
-      desc: `Website, Google profile and AI visibility from ${localFrom}/mo. No deposit.`,
+      desc: `Website, Google profile and AI visibility from ${localFrom}/mo, on a 12-month plan.`,
       icon: "pin",
       highlight: true,
     },
@@ -130,7 +130,7 @@ export const STEPS_LOCAL: StepDef[] = [
     key: "plan",
     label: "Plan",
     question: "Which plan?",
-    sub: "You see a free preview before you pay anything. Change plan any month.",
+    sub: "Every plan runs for 12 months. A deposit of one month’s fee starts your build.",
     kind: "plans",
     options: [
       ...localPlans.map((plan) => ({
@@ -154,7 +154,7 @@ export const STEPS_LOCAL: StepDef[] = [
     key: "business",
     label: "Your business",
     question: "Tell us about your business.",
-    sub: "So we can start your preview. A rough answer is fine.",
+    sub: "So we can prepare your plan. A rough answer is fine.",
     kind: "business",
     options: [],
   },

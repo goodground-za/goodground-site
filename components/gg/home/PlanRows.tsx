@@ -13,7 +13,7 @@ import { Tag } from "../Tag";
 /**
  * Home 03: the three monthly plans as rows in the pricing card. Every figure
  * and line reads content/pricing.ts `localPlans`. Each row is one link into the
- * short preview form with that plan chosen and fires plan_card_click. The price
+ * short plan form with that plan chosen and fires plan_card_click. The price
  * is a LINE MASK (never a count-up).
  */
 export function PlanRows() {

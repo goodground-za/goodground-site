@@ -79,7 +79,7 @@ export default function HomePage() {
             variant="home"
             track={PAGE_TRACKS.home}
             refSource="home"
-            sub="Tell us about your business and we’ll start your free preview, or send a fixed price for a custom build."
+            sub="Tell us about your business and we’ll set up your monthly plan, or send a fixed price for a custom build."
             nextLink={{ label: "Need a custom website? Start your project →", href: "/start-project?ref=home" }}
           />
         </div>

@@ -76,7 +76,7 @@ export function OfferCard({ checklist }: { checklist: { long: string; short: str
     <div id="ln-offer-card" className={availability.soldOut ? "ln-card is-sold-out" : "ln-card"} data-reveal="fade-up" data-delay={150}>
       <div className="ln-card__head">
         <p className="ln-card__name">{localStart.name}</p>
-        {availability.soldOut ? null : <Tag tone="coral">NO DEPOSIT</Tag>}
+        {availability.soldOut ? null : <Tag tone="coral">12-MONTH PLAN</Tag>}
       </div>
       <div className="ln-card__price" data-reveal="line-mask">
         <SplitHeading as="p" className="gg-number ln-card__amount" text={formatRand(0)} />
@@ -90,6 +90,13 @@ export function OfferCard({ checklist }: { checklist: { long: string; short: str
         <>
           <dl className="ln-maths">
             <div>
+              <dt className="gg-sr-only">Deposit</dt>
+              <dd>
+                <strong>{monthly}</strong>
+                <span>deposit to start</span>
+              </dd>
+            </div>
+            <div>
               <dt className="gg-sr-only">Month 1</dt>
               <dd>
                 <strong>{formatRand(0)}</strong>
@@ -97,21 +104,21 @@ export function OfferCard({ checklist }: { checklist: { long: string; short: str
               </dd>
             </div>
             <div>
-              <dt className="gg-sr-only">Then</dt>
-              <dd>
-                <strong>{monthly}/mo</strong>
-                <span>then</span>
-              </dd>
-            </div>
-            <div>
-              <dt className="gg-sr-only">Cancel</dt>
+              <dt className="gg-sr-only">From month 2</dt>
               <dd className="is-total">
-                <strong>Cancel</strong>
-                <span>any month</span>
+                <strong>{monthly}/mo</strong>
+                <span>from month 2</span>
               </dd>
             </div>
           </dl>
           <dl className="ln-tiles">
+            <div>
+              <dt className="gg-sr-only">Deposit</dt>
+              <dd>
+                <strong>{monthly}</strong>
+                <span>deposit to start</span>
+              </dd>
+            </div>
             <div>
               <dt className="gg-sr-only">First month</dt>
               <dd>
@@ -119,14 +126,8 @@ export function OfferCard({ checklist }: { checklist: { long: string; short: str
                 <span>first month</span>
               </dd>
             </div>
-            <div>
-              <dt className="gg-sr-only">Then</dt>
-              <dd>
-                <strong>{monthly}/mo</strong>
-                <span>then, cancel any month</span>
-              </dd>
-            </div>
           </dl>
+          <p className="ln-card__deposit">{newBusinessOffer.depositLine}</p>
           <ul className="ln-checks">
             {checklist.map((item, i) => (
               <li key={item.long} style={{ "--i": i } as CSSProperties}>
@@ -201,7 +202,8 @@ export function FormCopy() {
       />
       <p className="gg-lead ln-form-lead" data-part="sub">
         First month free, then {monthly} a month, with a business mailbox free for {newBusinessOffer.terms.mailboxFreeMonths} months.
-        Exclusively for new businesses without a website.
+        {" "}
+        {newBusinessOffer.depositLine} Exclusively for new businesses without a website.
       </p>
       <p className="ln-banner" data-part="sub">
         <i aria-hidden="true" />

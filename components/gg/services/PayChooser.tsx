@@ -81,7 +81,7 @@ export function PayChooser() {
       </div>
       <p className="sv-pay__caption" aria-live="polite">
         {mode === "monthly" ? (
-          `From ${formatRand(localFromMonthly)}/mo. No deposit, cancel any month. Website, Google profile and AI report included.`
+          `From ${formatRand(localFromMonthly)}/mo on a 12-month plan, with a deposit of one month’s fee to start. Website, Google profile and AI report included.`
         ) : mode === "12" ? (
           <Resp
             long="The first instalment secures your booking. The other 11 start once your site is live."

@@ -142,7 +142,7 @@ export const projectScopeNote = {
  * Full Service: a monthly, all-inclusive alternative to the four fixed
  * one-time packages above (confirmed 2026-08-25). Covers the build itself,
  * so there is no separate upfront project fee on top of the monthly price.
- * Month-to-month, no minimum term. "From" because the final monthly figure
+ * Month-to-month (Full Service is not one of the 12-month Local plans). "From" because the final monthly figure
  * depends on the website's own requirements and is confirmed in the quote,
  * the same "starting at" logic as the four packages above.
  */
@@ -165,14 +165,26 @@ export const fullServicePackage = {
 
 /**
  * The monthly Local plans (v2 funnel, 2026-11-04; prices set 2026-11-05). No VAT is added to these prices (not VAT
- * registered). Monthly only, month to month. `highlights` are the three lines the /start-project
+ * registered). Monthly only. Since 2026-11-04 (owner decision) every plan is a 12-MONTH plan:
+ * a deposit of one month's fee starts the build, and nothing is built before it is paid. `highlights` are the three lines the /start-project
  * plan cards show; `inclusions` is the full card list.
  *
  * No page types a price by hand: every Local plan price on the site reads this
  * collection (and `addOns`, `offers`) through formatRand.
  */
-/** How long the free preview takes. The one string every page, form and email reads. */
-export const previewTime = "10 to 15 working days";
+/**
+ * How long the build takes, for all three plans. The clock starts once the deposit is paid and
+ * the onboarding brief is in. The one string every page, form and email reads.
+ */
+export const buildTime = "10 to 15 working days";
+
+/** A monthly plan runs for this many months (owner decision 2026-11-04). */
+export const PLAN_TERM_MONTHS = 12;
+/** The words every trigger for the plan-term dialog uses (components/gg/shared/PlanTermModal.tsx). */
+export const PLAN_TERM_LABEL = "12-month plan";
+
+/** The deposit that starts a plan's build: one month's fee. */
+export const planDepositFor = (plan: Pick<LocalPlan, "monthly">) => plan.monthly;
 
 export type LocalPlanSlug = "local-start" | "local-plus" | "local-pro";
 
@@ -190,7 +202,7 @@ export type LocalPlan = {
   /** The first inclusion is "Everything in {previous}, plus:" and is styled as a lead-in. */
   extendsPrevious?: boolean;
   bestFor: string;
-  /** "Free preview in 10 to 15 working days": the preview is what arrives then; the site goes live after the client approves it. */
+  /** "Built in 10 to 15 working days": counted from when the deposit is paid and the onboarding brief is in. */
   liveIn: string;
   /** Card badge, if any. */
   badge?: string;
@@ -213,7 +225,7 @@ export const localPlans: LocalPlan[] = [
       "1 change request a month",
     ],
     bestFor: "Trades and solo businesses that need to look credible and be found",
-    liveIn: `Free preview in ${previewTime}`,
+    liveIn: `Built in ${buildTime}`,
     badge: "New business offer",
   },
   {
@@ -234,7 +246,7 @@ export const localPlans: LocalPlan[] = [
     ],
     extendsPrevious: true,
     bestFor: "Local businesses competing for “near me” searches and AI recommendations",
-    liveIn: `Free preview in ${previewTime}`,
+    liveIn: `Built in ${buildTime}`,
     badge: "Most popular",
   },
   {
@@ -254,7 +266,7 @@ export const localPlans: LocalPlan[] = [
     ],
     extendsPrevious: true,
     bestFor: "Busy or multi-location businesses in competitive trades",
-    liveIn: `Free preview in ${previewTime}`,
+    liveIn: `Built in ${buildTime}`,
   },
 ];
 
@@ -263,23 +275,12 @@ export const localPlanBySlug = (slug: string) => localPlans.find((p) => p.slug =
 /** Cheapest monthly plan: "Monthly plans from R950" everywhere reads this. */
 export const localFromMonthly = localPlans[0].monthly;
 
-/**
- * Terms that appear in FAQ answers and the cancel copy. These are only the
- * figures; the legal wording is the signed contract's.
- */
-export const localTerms = {
-  /** Site files become the client's after this many paid months. */
-  filesYoursAfterMonths: 6,
-  /** Buying the files earlier, rand. */
-  filesBuyout: 1500,
-} as const;
-
 /** Promise row under the plan cards. */
 export const localPromises = [
-  "Free preview before you pay anything",
-  "Your domain is always yours",
-  "Month to month, no lock-in",
-  "Site files are yours after 6 months",
+  "A deposit of one month’s fee starts your build",
+  `Built in ${buildTime}`,
+  PLAN_TERM_LABEL,
+  "Your domain is registered in your name",
 ];
 
 export type AddOn = {
@@ -361,7 +362,7 @@ export const pricingFaq: PricingFaqItem[] = [
   {
     question: "How do I pay, and is there a deposit?",
     answer:
-      "You choose: pay 50% upfront to secure the project and the remaining 50% on completion, before handover, or split the total into 12 equal monthly instalments. On the instalment plan the first payment secures your booking, and the remaining 11 become payable once the project is completed. Either way, the price is fixed and agreed before work begins.",
+      "You choose: pay 50% upfront to secure the project and the remaining 50% on completion, before handover, or split the total into 12 equal monthly instalments. On the instalment plan the first payment secures your booking, and the remaining 11 become payable once the project is completed. Either way, the price is fixed and agreed before work begins. Monthly plans work differently: a deposit of one month’s fee starts your build, and the plan runs for 12 months.",
   },
   {
     question: "Why does every package say “from”?",
@@ -386,7 +387,7 @@ export const pricingFaq: PricingFaqItem[] = [
   {
     question: "Do I own my website?",
     answer:
-      "Yes, once it’s paid for. On a package, paid by deposit or instalments, the site is yours outright once the last payment clears. On a monthly Local plan your domain is always yours and the site files are yours after 6 months. Full Service works differently. It’s a monthly service, and we host and run the site for you while you’re on it.",
+      "Yes, once it’s paid for. On a package, paid by deposit or instalments, the site is yours outright once the last payment clears. On a monthly Local plan, which runs for 12 months, your domain is registered in your name, and if you cancel during the 12 months you take over ownership of your hosting, your domain and everything that goes with it. Full Service works differently. It’s a monthly service, and we host and run the site for you while you’re on it.",
   },
   {
     question: "How many rounds of revisions do I get?",

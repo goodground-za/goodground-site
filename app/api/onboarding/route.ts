@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 import { briefSections, buildBrief, EMAIL_RE, overall, sanitizeAnswers, str } from "@/components/gg/onboarding/logic";
 import { parsePlan, parseTrack, trackConfig } from "@/components/gg/onboarding/steps";
-import { localPlanBySlug } from "@/content/pricing";
+import { buildTime, localPlanBySlug } from "@/content/pricing";
 import { site } from "@/content/site";
 import { sendMail } from "@/lib/mailer";
 
@@ -138,7 +138,7 @@ export async function POST(request: Request) {
         ? `${summary.missing.length} required answer(s) are still missing. We’ll follow up on those.`
         : "Every required answer is filled in.";
       const next = local
-        ? ["We check what you’ve sent.", "We send a separate secure link for access to your accounts.", "We’ll have your site live within about 2 working days of receiving everything."]
+        ? ["We check what you’ve sent.", "We send a separate secure link for access to your accounts.", `We build your site in ${buildTime}, counted from now.`]
         : ["We confirm we’ve read it within one working day.", "We send a separate secure link for access to your accounts.", "We book your kick-off call."];
       const editNote = local
         ? "You can keep editing until your site goes live. After that, message us with any changes."

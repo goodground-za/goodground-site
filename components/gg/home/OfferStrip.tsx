@@ -71,7 +71,7 @@ export function OfferStrip({ initial }: { initial: OfferState }) {
         <span className="hm-offer__line">
           {soldOut
             ? `Fully booked for ${month} · join the ${nextMonth} waitlist`
-            : `${left} of ${total} ${total === 1 ? "space" : "spaces"} left in ${month}`}
+            : `${left} of ${total} ${total === 1 ? "space" : "spaces"} left in ${month} · your deposit covers month two`}
         </span>
       </span>
       <span

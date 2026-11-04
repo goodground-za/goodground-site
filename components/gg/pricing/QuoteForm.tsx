@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { fullServicePackage, localPlans } from "@/content/pricing";
 import { gardenRouteTowns, site } from "@/content/site";
 import { funnelEvents } from "@/lib/analytics";
-import { PREVIEW_TIME } from "@/lib/enquiryShared";
+import { BUILD_TIME } from "@/lib/enquiryShared";
 
 import { Button } from "../Button";
 import { postEnquiry } from "../enquiry";
@@ -39,9 +39,9 @@ const interestLabel = (value: Interest) => INTERESTS.find((i) => i.value === val
  * Arriving from "Choose …" pulses the attached card once and moves focus to the
  * name field. With nothing attached the card is hidden.
  *
- * v2: "I'm interested in" picks the route. A Local plan is a free-preview
- * request (formType local-preview, same endpoint), so it also needs the
- * business name, town and main services the preview is built from; those
+ * v2: "I'm interested in" picks the route. A Local plan is a plan request
+ * (formType local-preview, same endpoint), so it also needs the
+ * business name, town and main services the site is built from; those
  * fields appear when a Local plan is chosen. Anything else stays a quote request.
  */
 export function QuoteForm() {
@@ -248,10 +248,10 @@ export function QuoteForm() {
           </span>
           {doneLocal ? (
             <>
-              <h3>{`Thanks${firstName ? `, ${firstName}` : ""}. We’re building your preview.`}</h3>
+              <h3>{`Thanks${firstName ? `, ${firstName}` : ""}. We’ve got your plan request.`}</h3>
               <p>
-                {copy ? "We’ve sent a copy to your inbox. " : ""}Your free preview will be ready within {PREVIEW_TIME}. You review it and ask for changes, and your
-                first debit runs only when you approve it to go live.
+                {copy ? "We’ve sent a copy to your inbox. " : ""}We’ll email you a deposit invoice (one month’s fee) within 1–2 business days. Once it is paid we send
+                your onboarding link, and we build your site in {BUILD_TIME}.
               </p>
             </>
           ) : (
@@ -350,7 +350,7 @@ export function QuoteForm() {
                   <option key={town} value={town} />
                 ))}
               </datalist>
-              <p className="pr-form__local-note">A Local plan starts with a free preview, so we need a few details about your business.</p>
+              <p className="pr-form__local-note">A Local plan starts with a deposit of one month’s fee, so we need a few details about your business.</p>
             </>
           ) : null}
           <TextArea label="Anything else we should know?" name="message" idPrefix="pq" placeholder="Optional notes" optional rows={3} className="pr-form__extra" />
@@ -374,11 +374,11 @@ export function QuoteForm() {
           ) : null}
 
           <Button type="submit" variant="coral" full disabled={status === "submitting"}>
-            {status === "submitting" ? "Sending…" : local ? "Get my free preview" : "Get this quote"}
+            {status === "submitting" ? "Sending…" : local ? "Start my plan" : "Get this quote"}
           </Button>
           <p className="pr-form__fine">
             {local
-              ? `Nothing is charged. Your free preview is ready within ${PREVIEW_TIME}, and your first debit runs only when you approve it.`
+              ? `Nothing is charged by sending this. We email you a deposit invoice within 1–2 business days, and we build your site in ${BUILD_TIME} once it is paid and your brief is in.`
               : "Nothing is charged. We reply within 1–2 business days."}
           </p>
         </form>

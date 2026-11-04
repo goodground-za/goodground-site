@@ -64,7 +64,7 @@ const QUICK: { kicker: string; q: string; a: string; href: string }[] = [
   { kicker: "PRICING", q: "How do the payment options work?", a: "One fixed price: 50/50, or 12 monthly instalments.", href: "/#faq-payment-options" },
   { kicker: "TIMELINES", q: "How long does a project take?", a: "See typical timelines in our FAQ.", href: "/#faq-project-length" },
   { kicker: "PROOF", q: "Can I see your projects first?", a: "Every case study has numbers you can check.", href: "/work" },
-  { kicker: "MONTHLY PLANS", q: "Can I cancel a monthly plan?", a: "Yes, at the end of any paid month, with no penalty.", href: "/faq#cancel-monthly" },
+  { kicker: "MONTHLY PLANS", q: "Can I cancel a monthly plan?", a: "A monthly plan runs for 12 months. See what cancelling means.", href: "/faq#cancel-monthly" },
 ];
 
 function RouteBody({

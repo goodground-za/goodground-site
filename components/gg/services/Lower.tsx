@@ -91,9 +91,9 @@ export function PaymentBand() {
             </h2>
             <p>
               <span className="gg-resp-long">
-                Monthly plans have no deposit. Custom website projects are quoted as one fixed price: pay 50% upfront and the rest on completion, or split it into 12 monthly instalments. No surprise final invoice, either way.
+                Monthly plans run for 12 months, and a deposit of one month’s fee starts your build. Custom website projects are quoted as one fixed price: pay 50% upfront and the rest on completion, or split it into 12 monthly instalments. No surprise final invoice, either way.
               </span>
-              <span className="gg-resp-short">A monthly plan with no deposit, or one fixed price: 50% upfront and 50% on completion, or 12 monthly instalments.</span>
+              <span className="gg-resp-short">A 12-month plan with a one-month deposit, or one fixed price: 50% upfront and 50% on completion, or 12 monthly instalments.</span>
             </p>
             <ButtonLink href="/pricing" variant="coral" className="sv-payband__btn">
               See pricing
@@ -110,7 +110,7 @@ export function PaymentBand() {
             </div>
             <div className="sv-tile sv-tile--monthly">
               <SplitHeading as="p" className="sv-tile__big" text={`${formatRand(localFromMonthly)}/mo`} />
-              <span>Monthly plan from {formatRand(localFromMonthly)}/mo, no deposit</span>
+              <span>12-month plan from {formatRand(localFromMonthly)}/mo</span>
             </div>
           </div>
         </div>

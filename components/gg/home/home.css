@@ -2784,7 +2784,7 @@
   transition: transform var(--gg-motion-md) var(--gg-ease-out);
 }
 
-/* Option 1 (v2): the monthly plan. Twelve equal dots, one per month, no deposit. */
+/* Option 1 (v2): the monthly plan. Twelve equal dots, one per month of the 12-month plan. */
 .hm-option--monthly {
   background: var(--gg-blush);
 }

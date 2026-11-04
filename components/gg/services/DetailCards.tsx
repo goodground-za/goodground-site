@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type CSSProperties, type TouchEvent } from
 
 import { ButtonLink } from "../Button";
 import { Icon } from "../Icon";
+import { PlanTermButton } from "../shared/PlanTermModal";
 import { Tag } from "../Tag";
 import { DETAILS, type Detail } from "./data";
 
@@ -129,7 +130,15 @@ function Card({
             <p className="sv-card__headline">{d.headline}</p>
             <p className="sv-card__price">
               <Icon name="tag" size={16} stroke={2} />
-              {d.price}
+              <span>
+                {d.price}
+                {d.planTerm ? (
+                  <>
+                    {" "}
+                    <PlanTermButton placement="services-local-plans">12-month plan</PlanTermButton>
+                  </>
+                ) : null}
+              </span>
             </p>
             {d.button ? (
               <div className="sv-card__cta">

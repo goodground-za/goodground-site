@@ -1970,3 +1970,108 @@ html[data-motion="off"] .pc-page * {
     min-height: 44px;
   }
 }
+
+/* ---- 04 Timelines: the monthly-plans group, above the custom-build bars ------ */
+.pc-plantime {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+  padding: 20px;
+  border-radius: 24px;
+  background: var(--gg-blush);
+}
+
+.pc-plantime__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.pc-plantime__copy h3 {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.pc-plantime__note {
+  font-size: 14px;
+  color: var(--gg-muted);
+}
+
+.pc-plantime__time {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pc-plantime__big {
+  font-size: 32px;
+  line-height: 1.1;
+}
+
+.pc-plantime__track {
+  display: block;
+  height: 12px;
+  overflow: hidden;
+  border-radius: 99px;
+  background: var(--gg-surface);
+}
+
+.pc-plantime__track i {
+  display: block;
+  height: 100%;
+  border-radius: 99px;
+  background: var(--gg-coral);
+}
+
+.pc-time__group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  margin-top: 32px;
+}
+
+.pc-time__group h3 {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.pc-time__group p {
+  font-size: 14px;
+  color: var(--gg-muted);
+}
+
+@media (min-width: 768px) {
+  .pc-plantime {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    margin-top: 40px;
+    padding: 28px 32px;
+    border-radius: 28px;
+  }
+
+  .pc-plantime__time {
+    flex: 0 1 380px;
+  }
+
+  .pc-plantime__big {
+    font-size: 40px;
+  }
+
+  .pc-time__group {
+    margin-top: 48px;
+  }
+}
+
+@media (min-width: 1100px) {
+
+  .pc-time__group + .pc-gantt {
+    margin-top: 24px;
+  }
+}

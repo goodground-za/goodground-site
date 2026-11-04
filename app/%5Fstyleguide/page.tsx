@@ -356,7 +356,7 @@ export default function StyleguidePage() {
                 </span>
                 <span className="sp-opt__text">
                   <strong>Get found online on a monthly plan</strong>
-                  <span>Website, Google profile and AI visibility from {formatRand(localPlans[0].monthly)}/mo. No deposit.</span>
+                  <span>Website, Google profile and AI visibility from {formatRand(localPlans[0].monthly)}/mo, on a 12-month plan.</span>
                 </span>
                 <span className="sp-opt__radio" aria-hidden="true">
                   <Icon name="check" size={13} stroke={3} />
@@ -369,7 +369,7 @@ export default function StyleguidePage() {
               </span>
               <p className="sp__banner-text">
                 <strong>New Business Offer · first month free</strong>
-                <span>Plus a business mailbox free for 12 months. 2 of 2 November spaces left.</span>
+                <span>Your deposit covers month two, and the business mailbox is free for 12 months. 2 of 2 November spaces left.</span>
               </p>
               <button type="button" className="sp__banner-remove">
                 Remove

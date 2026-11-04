@@ -19,14 +19,17 @@
  *    from newBusinessOffer / lib/liveCounters.ts.
  */
 
+import { formatRand } from "@/components/gg/format";
 import { newBusinessOffer } from "@/content/newBusinessOffer";
-import { previewTime } from "@/content/pricing";
+import { buildTime, localPlans } from "@/content/pricing";
+
+const planMonthly = localPlans.find((plan) => plan.slug === newBusinessOffer.planSlug)!.monthly;
 
 export const launchOffer = {
   name: newBusinessOffer.name,
   eligibility: newBusinessOffer.eligibility,
   capacityLine: "Two spaces each month.",
-  /** Always "12 months". Never "a year's contract": the plans are month to month. */
+  /** Always "12 months" (the mailbox). The plan itself is also a 12-month plan. */
   includedFees: "First month free, plus a business mailbox free for 12 months.",
 } as const;
 
@@ -56,7 +59,7 @@ export const launchFaqs = {
     {
       question: "How long will my website take?",
       answer:
-        `We build your free preview within ${previewTime}. You review it, ask for changes, and approve it to go live. We confirm the exact dates once we understand your content.`,
+        `Your website is built in ${buildTime}. The clock starts once your deposit is paid and your onboarding brief is in. We confirm the exact dates once we understand your content.`,
     },
     {
       question: "Will my website appear on Google?",
@@ -71,12 +74,12 @@ export const launchFaqs = {
     {
       question: "Is there a deposit?",
       answer:
-        "No. You see a free preview first, and your first debit runs only when you approve the site to go live. The first month of Local Start is free.",
+        `Yes. You pay a one-month deposit (${formatRand(planMonthly)} for Local Start) to start the build. Your first month is free, and your deposit then covers your second month.`,
     },
     {
       question: "What happens after the free month?",
       answer:
-        "You stay on Local Start, month to month, and you can cancel any month or upgrade any time. Your domain is always yours, and the site files are yours after 6 months. The business mailbox stays free for the full 12 months.",
+        "You stay on Local Start for the rest of your 12-month plan, and you can upgrade any time. If you cancel the plan during the 12 months, you are liable to pay the outstanding amount of the website’s full price, and you take over ownership of your hosting, your domain and everything that goes with it. The business mailbox stays free for the full 12 months.",
     },
     {
       question: "Can I add more pages or extra features?",

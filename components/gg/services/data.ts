@@ -1,4 +1,4 @@
-import { addOns, fullServicePackage, localPlans, packages } from "@/content/pricing";
+import { addOns, buildTime, fullServicePackage, localPlans, packages } from "@/content/pricing";
 
 import { formatRand } from "../format";
 import type { IconName } from "../Icon";
@@ -56,7 +56,7 @@ export const GROUPS: Group[] = [
     text: "Hosting, mailboxes, updates, monitoring and SEO, so you never manage a technical detail.",
     theme: "blush",
     rows: [
-      { icon: "pin", name: "Local plans", meta: `From ${fromMonthly}/month · no deposit`, tag: "MONTHLY", tone: "coral", anchor: "local-plans" },
+      { icon: "pin", name: "Local plans", meta: `From ${fromMonthly}/month · 12-month plans`, tag: "MONTHLY", tone: "coral", anchor: "local-plans" },
       { icon: "repeat", name: "Full Service", meta: `From ${formatRand(fullServicePackage.monthlyFrom)}/month · cancel any time`, tag: "MONTHLY", tone: "neutral", anchor: "full-service" },
       { icon: "shield", name: "Website Care Plans", meta: "Priced per site · 30 days’ notice", tag: "MONTHLY", tone: "neutral", anchor: "care-plans" },
     ],
@@ -100,6 +100,8 @@ export type Detail = {
   tone: TagTone;
   headline: string;
   price: string;
+  /** Show the "12-month plan" dialog trigger after the price line. */
+  planTerm?: boolean;
   button?: { label: string; href: string; variant: "coral" | "primary" };
   link?: { label: string; href: string };
   tint: "mint" | "blush" | "lilac";
@@ -167,13 +169,14 @@ export const DETAILS: Detail[] = [
     tag: "MONTHLY",
     tone: "coral",
     headline: "Found on Google, Maps and AI, for one monthly fee.",
-    price: `From ${fromMonthly}/month · no deposit · cancel any month`,
-    button: { label: "Get my free preview", href: "/start-project?plan=local-plus&ref=services", variant: "coral" },
+    price: `From ${fromMonthly}/month · one month’s fee as a deposit ·`,
+    planTerm: true,
+    button: { label: "Start my plan", href: "/start-project?plan=local-plus&ref=services", variant: "coral" },
     link: { label: "Compare plans →", href: "/pricing#monthly" },
     tint: "blush",
     problem: `Most small businesses can’t justify ${formatRand(packages[0].total)} upfront, so they stay invisible online.`,
     approach: "A website, Google Business Profile care and a monthly AI visibility report for one monthly fee.",
-    outcome: `Found on Google, Maps and AI from ${fromMonthly}/mo, with a free preview first.`,
+    outcome: `Found on Google, Maps and AI from ${fromMonthly}/mo, built in ${buildTime}.`,
   },
   {
     id: "full-service",
@@ -246,7 +249,7 @@ export const DETAILS: Detail[] = [
 export type Cell = "yes" | "no" | "ask" | string;
 export type PlanKey = "local" | "care" | "full";
 export const PLANS: { key: PlanKey; name: string; sub: string; badge?: string }[] = [
-  { key: "local", name: "Local Plus", sub: `${formatRand(planPlus.monthly)}/month, no deposit`, badge: "MOST POPULAR" },
+  { key: "local", name: "Local Plus", sub: `${formatRand(planPlus.monthly)}/month, 12-month plan`, badge: "MOST POPULAR" },
   { key: "care", name: "Website Care Plan", sub: "Priced per site" },
   { key: "full", name: "Full Service", sub: `From ${formatRand(fullServicePackage.monthlyFrom)}/month`, badge: "MOST HANDS-OFF" },
 ];
@@ -268,11 +271,11 @@ export const COMPARE_ROWS: { feature: string; short?: string; cells: [Cell, Cell
   { feature: "Google Business Profile care", cells: ["yes", "no", "ask"] },
   { feature: "Hosting & mailboxes managed", cells: [`Hosting included, mailboxes ${formatRand(email.price)}/mo`, "ask", "yes"] },
   { feature: "Ongoing SEO work", cells: ["ask", "no", "yes"] },
-  { feature: "Term", cells: ["Month to month", "30 days’ notice", "No minimum term"] },
+  { feature: "Term", cells: ["12-month plan", "30 days’ notice", "No minimum term"] },
 ];
 
 export const PLAN_CTA: Record<PlanKey, { label: string; href: string; variant: "outline" | "coral" }> = {
-  local: { label: "Get my free preview", href: "/start-project?plan=local-plus&ref=services", variant: "coral" },
+  local: { label: "Start my plan", href: "/start-project?plan=local-plus&ref=services", variant: "coral" },
   care: { label: "Ask about a Care Plan", href: "/contact?topic=support", variant: "outline" },
   full: { label: "See Full Service pricing", href: "/pricing#full-service", variant: "coral" },
 };

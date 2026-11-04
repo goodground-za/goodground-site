@@ -14,6 +14,7 @@ import { Resp } from "@/components/gg/Resp";
 import { SectionHeader } from "@/components/gg/SectionHeader";
 import { SplitHeading } from "@/components/gg/SplitHeading";
 import { Tag } from "@/components/gg/Tag";
+import { PlanTermButton } from "@/components/gg/shared/PlanTermModal";
 import { AvailabilityButton } from "@/components/gg/launch/AvailabilityButton";
 import { LiveAvailabilityProvider } from "@/components/gg/launch/AvailabilityContext";
 import {
@@ -38,7 +39,7 @@ import { OfferViewTracker } from "@/components/gg/launch/OfferViewTracker";
 import { StickyBar } from "@/components/gg/launch/StickyBar";
 import { workProjects } from "@/components/gg/work/data";
 import { newBusinessOffer } from "@/content/newBusinessOffer";
-import { localPlans } from "@/content/pricing";
+import { localPlans, PLAN_TERM_LABEL } from "@/content/pricing";
 import { launchOffer, launchRoute } from "@/content/websiteLaunch";
 import { site } from "@/content/site";
 import { typedOfferSpots } from "@/lib/liveCounters";
@@ -74,7 +75,7 @@ function LaunchSchema({ availability }: { availability: Availability }) {
     offers: {
       "@type": "Offer",
       name: launchOffer.name,
-      description: `${launchOffer.eligibility} ${launchOffer.includedFees}`,
+      description: `${launchOffer.eligibility} ${launchOffer.includedFees} ${newBusinessOffer.depositLine}`,
       priceCurrency: "ZAR",
       availability: availability.soldOut ? "https://schema.org/SoldOut" : "https://schema.org/InStock",
       eligibleCustomerType: "New businesses without a website",
@@ -140,7 +141,9 @@ export default function WebsiteLaunchPage() {
                     <Icon name={fact.icon} size={20} stroke={2} />
                   </span>
                   <span>
-                    <strong>{fact.title}</strong>
+                    <strong>
+                      {fact.title === PLAN_TERM_LABEL ? <PlanTermButton placement="launch-facts">{PLAN_TERM_LABEL}</PlanTermButton> : fact.title}
+                    </strong>
                     <span>{fact.body}</span>
                   </span>
                 </li>
@@ -237,14 +240,14 @@ export default function WebsiteLaunchPage() {
               heading={`${formatRand(0)} for the first month. Then ${monthly}. No surprises.`}
               layout="split"
               id="ln-numbers-title"
-              sub="One clear monthly amount, month to month, and an easy way to grow when you’re ready."
+              sub={`${newBusinessOffer.depositLine} One clear monthly amount after that, and an easy way to grow when you’re ready.`}
               subClassName="hm-hide-phone"
             />
             <div className="ln-money">
               <div className="ln-timeline" data-reveal="group">
                 <div className="ln-timeline__head">
                   <h3>Your first 3 months</h3>
-                  <p className="gg-number">{formatRand(0)} up front</p>
+                  <p className="gg-number">{monthly} deposit to start</p>
                 </div>
                 <ol className="ln-months">
                   {firstMonths.map((month, i) => (
@@ -258,12 +261,20 @@ export default function WebsiteLaunchPage() {
                   ))}
                 </ol>
                 <ul className="ln-ticks">
-                  {["First month free", `${monthly} a month after that, cancel any month`, "No deposit upfront"].map((line) => (
-                    <li key={line}>
-                      <Icon name="check" size={14} stroke={2.6} />
-                      {line}
-                    </li>
-                  ))}
+                  <li>
+                    <Icon name="check" size={14} stroke={2.6} />
+                    First month free
+                  </li>
+                  <li>
+                    <Icon name="check" size={14} stroke={2.6} />
+                    Your deposit covers month two
+                  </li>
+                  <li>
+                    <Icon name="check" size={14} stroke={2.6} />
+                    <span>
+                      {monthly} a month after that, on a <PlanTermButton placement="launch-numbers">{PLAN_TERM_LABEL}</PlanTermButton>
+                    </span>
+                  </li>
                 </ul>
               </div>
               <div className="ln-after" data-reveal="fade-up" data-delay={120}>

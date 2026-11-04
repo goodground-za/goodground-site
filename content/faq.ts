@@ -41,7 +41,7 @@ export const faq: FAQItem[] = [
   {
     question: "How long does a typical project take?",
     answer:
-      `Custom builds take about 1 to 6 weeks depending on the package (Micro ~1 week, Launch ~2, Grow ~3–4, Scale ~4–6). On a monthly plan, your free preview takes ${previewTime}, and the site goes live once you approve it.`,
+      `Custom builds take about 1 to 6 weeks depending on the package (Micro ~1 week, Launch ~2, Grow ~3–4, Scale ~4–6). Monthly plans take ${buildTime} once the deposit is paid and your brief is in.`,
   },
   {
     question: "What happens after my website launches?",
@@ -94,7 +94,7 @@ export const faq: FAQItem[] = [
  */
 import { formatRand } from "@/components/gg/format";
 import { newBusinessOffer } from "@/content/newBusinessOffer";
-import { localPlans, localTerms, previewTime } from "@/content/pricing";
+import { localPlans, buildTime } from "@/content/pricing";
 
 export type SharedFaqSlug =
   | "monthly-or-custom"
@@ -122,7 +122,7 @@ export const sharedFaq: SharedFaqEntry[] = [
     slug: "monthly-or-custom",
     question: "Monthly plan or custom build: which should I choose?",
     answer:
-      `If you mainly need to be found and look credible, a monthly plan gets you a free preview in ${previewTime}, with no upfront cost. If you need a unique design, custom features or a bigger site, a custom build is the better fit, and you can still pay it over 12 months.`,
+      `If you mainly need to be found and look credible, a monthly plan is the quicker route: a deposit of one month’s fee starts your build, and your site is built in ${buildTime} once the deposit is paid and your onboarding brief is in. A monthly plan runs for 12 months. If you need a unique design, custom features or a bigger site, a custom build is the better fit, paid as one fixed price: 50% and 50%, or in 12 instalments.`,
     link: { label: "See monthly plans →", href: "/pricing#monthly" },
   },
   {
@@ -135,12 +135,13 @@ export const sharedFaq: SharedFaqEntry[] = [
   {
     slug: "cancel-monthly",
     question: "Can I cancel a monthly plan?",
-    answer: `Yes, at the end of any paid month, with no penalty. Your domain is always yours, and after six paid months the site files are yours too. Leaving earlier? You can buy the files for ${formatRand(localTerms.filesBuyout)} or simply keep the domain.`,
+    answer:
+      "A monthly plan runs for 12 months. If you cancel the plan during the 12 months, you are liable to pay the outstanding amount of the website’s full price. You then also take over ownership of your hosting, your domain and everything that goes with it.",
   },
   {
     slug: "new-business-offer",
     question: "How does the New Business Offer work?",
-    answer: `For businesses going online for the first time: Local Start with your first month free and a business mailbox included for ${newBusinessOffer.terms.mailboxFreeMonths} months. Then ${startPrice}, cancel any month. ${NUMBER_WORDS[newBusinessOffer.spotsTotal] ?? newBusinessOffer.spotsTotal} businesses a month.`,
+    answer: `For businesses going online for the first time: Local Start with your first month free and a business mailbox free for ${newBusinessOffer.terms.mailboxFreeMonths} months. You pay a one-month deposit to start, your first month is free, and your deposit then covers your second month. After that it is ${startPrice} for the rest of the 12-month plan. ${NUMBER_WORDS[newBusinessOffer.spotsTotal] ?? newBusinessOffer.spotsTotal} businesses a month.`,
     link: { label: "Check availability →", href: "/website-launch#check-availability" },
   },
   {
@@ -167,7 +168,7 @@ export const sharedFaq: SharedFaqEntry[] = [
     slug: "monthly-different",
     question: "How is a monthly plan different?",
     answer:
-      "A monthly plan is the quicker, simpler route. We build you a free preview first, your first payment only runs once you approve it, and one monthly price covers the site, hosting, your Google profile and ongoing care. A custom build is designed from scratch around your business, with a fixed price you pay as 50% and 50% or over 12 months, and follows the six steps on this page.",
+      `A monthly plan is the quicker, simpler route. You pay a deposit of one month’s fee, fill in your onboarding brief, and we build your site in ${buildTime}. One monthly price then covers the site, hosting, your Google profile and ongoing care, and the plan runs for 12 months. A custom build is designed from scratch around your business, with a fixed price you pay as 50% and 50% or over 12 months, and follows the six steps on this page.`,
     link: { label: "See monthly plans →", href: "/pricing#monthly" },
   },
 ];

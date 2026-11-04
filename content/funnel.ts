@@ -6,7 +6,7 @@ import { localFromMonthly } from "@/content/pricing";
  * labels, destinations and next-best-track links are written. The gradient CTA, and later the heroes and
  * sticky bars, read these; no page types a track label by hand.
  *
- *  - local:  Track A, a monthly Local plan. "Get my free preview".
+ *  - local:  Track A, a monthly Local plan. "Start my plan".
  *  - custom: Track B, a custom build. "Start your project".
  *  - check:  Track C, the free AI visibility check. "Book a free check".
  */
@@ -23,7 +23,7 @@ const q = (ref?: string) => (ref ? `ref=${encodeURIComponent(ref)}` : "");
 export function trackPrimary(track: PrimaryTrack, ref?: string): TrackAction {
   switch (track) {
     case "local":
-      return { label: "Get my free preview", href: `/start-project?plan=local-plus${ref ? `&${q(ref)}` : ""}` };
+      return { label: "Start my plan", href: `/start-project?plan=local-plus${ref ? `&${q(ref)}` : ""}` };
     case "check":
       return { label: "Book a free check", href: `/services/ai-visibility${ref ? `?${q(ref)}` : ""}#book` };
     default:

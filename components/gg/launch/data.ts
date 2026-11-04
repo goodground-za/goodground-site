@@ -1,5 +1,5 @@
 import { newBusinessOffer } from "@/content/newBusinessOffer";
-import { localPlans, packages, previewTime } from "@/content/pricing";
+import { localPlans, packages, buildTime, PLAN_TERM_LABEL } from "@/content/pricing";
 import { launchFaqs } from "@/content/websiteLaunch";
 
 import type { FaqItem } from "../FaqAccordion";
@@ -18,7 +18,7 @@ export const keyFacts: { icon: IconName; title: string; body: string }[] = [
   { icon: "file", title: "Up to 5 pages", body: "Custom, designed around your business" },
   { icon: "mail", title: "Domain and mailbox", body: `.co.za in your name, mailbox free for ${mailboxMonths} months` },
   { icon: "search", title: "Google profile", body: "Set up and verified for you" },
-  { icon: "cal", title: "Month to month", body: `First month free, then ${monthly}. Cancel any month` },
+  { icon: "cal", title: PLAN_TERM_LABEL, body: `First month free, then ${monthly}. Your deposit covers month two` },
 ];
 
 /** The offer card: the Local Start inclusions (content/pricing.ts) plus the free mailbox. */
@@ -124,11 +124,14 @@ export const includedGroups: {
   },
 ];
 
-/** "Your first 3 months". */
+/**
+ * "Your first 3 months". The one-month deposit is paid before month 1 to start the
+ * build and is credited against month 2, the first paid month (owner decision 2026-11-04).
+ */
 export const firstMonths: { n: string; label: string; amount: string; body: string }[] = [
-  { n: "M1", label: "Month 1", amount: formatRand(0), body: "Free. Your preview, then go-live." },
-  { n: "M2", label: "Month 2", amount: monthly, body: "Your first debit. Your Google profile is live." },
-  { n: "M3", label: "Month 3", amount: monthly, body: "Your first AI visibility snapshot." },
+  { n: "M1", label: "Month 1", amount: formatRand(0), body: "Free. Your site is built and goes live." },
+  { n: "M2", label: "Month 2", amount: monthly, body: "Your deposit covers it. Your Google profile is live." },
+  { n: "M3", label: "Month 3", amount: monthly, body: "Your first payment after the deposit. Your first AI visibility snapshot." },
 ];
 
 /** "Grow when you’re ready": each links to #monthly or #custom. */
@@ -136,7 +139,7 @@ export const growChoices: { icon: IconName; title: string; body: string; href: s
   {
     icon: "shield",
     title: "Stay on Local Start",
-    body: "Keep everything as it is, month to month. Cancel any month.",
+    body: "Keep everything as it is for the rest of your 12-month plan.",
     href: "/pricing#monthly",
   },
   {
@@ -155,13 +158,17 @@ export const growChoices: { icon: IconName; title: string; body: string; href: s
 
 export const steps = [
   { n: "01", title: "Tell us about your business", body: "What you offer, who you want to reach and when you hope to launch." },
-  { n: "02", title: "We confirm your space", body: "We confirm availability, what’s included and the timeline. You decide." },
+  { n: "02", title: "We confirm your space", body: "We confirm availability and what’s included, then email you a deposit invoice for one month’s fee." },
   {
     n: "03",
-    title: "Review your free preview",
-    body: `We build your preview within ${previewTime}. You review it and ask for changes before anything goes live.`,
+    title: "Pay the deposit, fill in your brief",
+    body: "Once the deposit is paid we send your onboarding link. Your deposit is credited against your second month.",
   },
-  { n: "04", title: "Approve and launch", body: "Final checks, publish, and your pages are submitted to Google for indexing." },
+  {
+    n: "04",
+    title: `We build in ${buildTime}`,
+    body: "The clock starts once the deposit and your onboarding brief are in. Then final checks, launch, and your pages are submitted to Google for indexing.",
+  },
 ];
 
 /** The ten answers (content/websiteLaunch.ts), in the order the page shows them. */

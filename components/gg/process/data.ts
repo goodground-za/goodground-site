@@ -1,5 +1,5 @@
 import { faq } from "@/content/faq";
-import { customExtras, fullServicePackage, packages, previewTime } from "@/content/pricing";
+import { customExtras, fullServicePackage, packages, buildTime } from "@/content/pricing";
 
 import type { FaqItem } from "../FaqAccordion";
 import { sharedFaqItem } from "../shared/sharedFaq";
@@ -36,7 +36,7 @@ export const NAV = [
 
 export const quickFacts = [
   { to: 6, value: "6", label: "steps", short: "steps" },
-  { to: null as number | null, value: "1–6", label: "weeks, by package", short: "weeks" },
+  { to: null as number | null, value: "1–6", label: "weeks, custom builds", short: "weeks" },
   { to: 1, value: "1", label: "fixed price", short: "fixed price" },
   { to: null as number | null, value: "1 month", label: "support included", short: "" },
 ];
@@ -311,11 +311,23 @@ export const afterSegments = [
 
 /** "On a monthly plan? It's simpler." (v2 panel): the four steps, in the after-launch strip style. */
 export const monthlySegments = [
-  { label: "STEP 1", text: "Request a free preview", tone: "coral" },
-  { label: "STEP 2", text: `Preview within ${previewTime}`, tone: "mint" },
-  { label: "STEP 3", text: "Approve, then your first debit", tone: "canvas" },
-  { label: "STEP 4", text: "Monthly care and an AI report", tone: "canvas" },
+  { label: "STEP 1", text: "Choose your plan", tone: "coral" },
+  { label: "STEP 2", text: "Pay the deposit (one month’s fee)", tone: "mint" },
+  { label: "STEP 3", text: "Fill in your onboarding brief", tone: "canvas" },
+  { label: "STEP 4", text: `We build in ${buildTime}`, tone: "canvas" },
 ];
+
+/**
+ * "How long it takes", the monthly-plans group. Local Start, Local Plus and Local Pro share one
+ * build time (owner decision 2026-11-04); the four custom builds keep their own (gantt below).
+ */
+export const monthlyTime = {
+  names: "Local Start, Local Plus and Local Pro",
+  duration: buildTime,
+  note: "The clock starts once your deposit is paid and your onboarding brief is in.",
+  /** 15 working days is about 3 weeks, on the same 6-week scale as the custom bars. */
+  mobile: 50,
+};
 
 export const afterOptions: {
   icon: IconName;
@@ -382,7 +394,7 @@ export const processFaq: FaqItem[] = [
   {
     // New in the design; DRAFT. Ownership needs the owner's decision (it also belongs in the Terms).
     question: "Who owns the website when it’s done?",
-    answer: ["You do. Once your project is paid in full, the website, its files and its content are yours, and we hand them over at launch."],
+    answer: ["You do. Once your custom build is paid in full, the website, its files and its content are yours, and we hand them over at launch."],
   },
   { question: "What happens after my website launches?", answer: [live("What happens after my website launches?")] },
 ];

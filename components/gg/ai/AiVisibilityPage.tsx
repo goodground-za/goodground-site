@@ -381,7 +381,7 @@ export function AiVisibilityPage() {
                   </li>
                   <li>
                     <Icon name="check" size={16} stroke={2.4} />
-                    Cancel any month
+                    Billed monthly
                   </li>
                 </ul>
                 <ButtonLink href="#book" variant="outline" full data-ai-cta="included" data-ai-plan="visibility-watch">

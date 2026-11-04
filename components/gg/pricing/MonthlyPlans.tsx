@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, type CSSProperties } from "react";
 
-import { addOns, fullServicePackage, localPlans, localPromises, type LocalPlan } from "@/content/pricing";
+import { addOns, fullServicePackage, localPlans, localPromises, planDepositFor, PLAN_TERM_LABEL, type LocalPlan } from "@/content/pricing";
 import { newBusinessOffer } from "@/content/newBusinessOffer";
 import { funnelEvents } from "@/lib/analytics";
 import type { OfferSpots } from "@/lib/liveCounters";
@@ -12,13 +12,14 @@ import { ButtonLink } from "../Button";
 import { formatRand } from "../format";
 import { Icon } from "../Icon";
 import { Resp } from "../Resp";
+import { PlanTermButton } from "../shared/PlanTermModal";
 import { Tag } from "../Tag";
 import { useLiveCounters } from "../useLiveCounters";
 
 /** What the offer box needs from the offer count (lib/liveCounters.ts). */
 export type OfferBox = Pick<OfferSpots, "left" | "total" | "soldOut" | "month" | "nextMonth">;
 
-/** The price block: monthly only, month to month. */
+/** The price block: the monthly fee, the deposit that starts the build, and the 12-month plan dialog. */
 function PlanPrice({ plan }: { plan: LocalPlan }) {
   return (
     <div className="pr-price">
@@ -27,8 +28,10 @@ function PlanPrice({ plan }: { plan: LocalPlan }) {
           <strong className="gg-number">{formatRand(plan.monthly)}</strong>
           <small>/mo</small>
         </p>
-        <p className="pr-price__split">No deposit · first debit at go-live</p>
-        <p className="pr-price__alt">No VAT added · cancel any month</p>
+        <p className="pr-price__split">{formatRand(planDepositFor(plan))} deposit starts your build</p>
+        <p className="pr-price__alt">
+          No VAT added · <PlanTermButton placement={`pricing-${plan.slug}`}>{PLAN_TERM_LABEL}</PlanTermButton>
+        </p>
       </div>
     </div>
   );
@@ -58,7 +61,7 @@ export function OfferBoxView({ offer }: { offer: OfferBox }) {
 /**
  * Pricing 02 (v2), the "Monthly plans" panel of the Plans section. The three
  * monthly Local plans in the package-card styling, a promise row, the add-ons
- * row and the plum Full Service strip. Monthly only, month to month.
+ * row and the plum Full Service strip. Monthly only, 12-month plans.
  * On phones the cards collapse to a name and a price except Local Plus
  * (accordion, one open), like the custom builds.
  */
@@ -69,7 +72,7 @@ export function MonthlyPlans({ offer: typed }: { offer: OfferBox }) {
 
   return (
     <>
-      <p className="pr-panel__title">Get found online. One monthly fee, no deposit.</p>
+      <p className="pr-panel__title">Get found online. One monthly fee, on a 12-month plan.</p>
 
       <ul className="pr-pkgs pr-pkgs--three" data-reveal="stagger" style={{ "--gg-stagger-step": "100ms" } as CSSProperties}>
         {localPlans.map((plan) => {
@@ -116,7 +119,7 @@ export function MonthlyPlans({ offer: typed }: { offer: OfferBox }) {
                       className="pr-pkg__cta"
                       onClick={() => funnelEvents.planCardClick({ plan: plan.slug, ref: "pricing-monthly" })}
                     >
-                      Get my free preview
+                      Start my plan
                     </ButtonLink>
                     <hr className="pr-pkg__rule" />
                     <ul className="pr-pkg__incl">
@@ -150,7 +153,7 @@ export function MonthlyPlans({ offer: typed }: { offer: OfferBox }) {
         {localPromises.map((line) => (
           <li key={line}>
             <Icon name="check" size={16} stroke={2.4} />
-            {line}
+            {line === PLAN_TERM_LABEL ? <PlanTermButton placement="pricing-promises">{PLAN_TERM_LABEL}</PlanTermButton> : line}
           </li>
         ))}
       </ul>

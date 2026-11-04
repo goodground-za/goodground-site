@@ -2056,6 +2056,157 @@ body.gg-scroll-locked {
 }
 
 /* ---------------------------------------------------------------------------
+ * "12-month plan": the text-button and its dialog (shared/PlanTermModal.tsx).
+ * The dialog follows the About parable dialog: native, centred, blurred backdrop.
+ * The button is 44px tall for the finger; the negative block margin gives the
+ * extra height back so it sits in a line of small print without opening it up.
+ * ------------------------------------------------------------------------- */
+.gg-term-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 44px;
+  margin-block: -12px;
+  padding-inline: 2px;
+  font: inherit;
+  font-weight: 600;
+  color: inherit;
+  cursor: pointer;
+}
+
+.gg-term-btn__label {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.gg-term-btn .gg-icon {
+  flex: none;
+  opacity: 0.8;
+}
+
+.gg-term-btn:hover .gg-term-btn__label {
+  text-decoration-style: solid;
+}
+
+.gg-term-btn:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 1px;
+  border-radius: 6px;
+}
+
+.gg-dlg {
+  /* The base reset zeroes margins, which pins a modal dialog to the top left; auto centres it. */
+  margin: auto;
+  width: min(520px, calc(100vw - 32px));
+  max-height: 88dvh;
+  padding: 0;
+  border: 0;
+  border-radius: 28px;
+  background: var(--gg-surface);
+  color: var(--gg-ink);
+  font-family: var(--gg-font-body);
+  overflow: auto;
+}
+
+.gg-dlg::backdrop {
+  background: rgba(17, 17, 17, 0.4);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+.gg-dlg[open] {
+  animation: gg-dlg-in var(--gg-motion-sm) var(--gg-ease-out);
+}
+
+@keyframes gg-dlg-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+html[data-motion="off"] .gg-dlg[open] {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gg-dlg[open] {
+    animation: none;
+  }
+}
+
+.gg-dlg__in {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.gg-dlg__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.gg-dlg__head h2 {
+  font-family: var(--gg-font-body);
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-transform: none;
+}
+
+.gg-dlg__close {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--gg-canvas);
+  color: var(--gg-ink);
+}
+
+.gg-dlg__fine {
+  font-size: 14px;
+  color: var(--gg-muted);
+}
+
+.gg-dlg__fine a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.gg-dlg__done {
+  align-self: flex-start;
+  min-height: 44px;
+  padding: 0 24px;
+  border-radius: var(--gg-r-pill);
+  background: var(--gg-ink);
+  color: var(--gg-surface);
+  font-weight: 600;
+}
+
+.gg-dlg__close:focus-visible,
+.gg-dlg__done:focus-visible,
+.gg-dlg__fine a:focus-visible {
+  outline: 2px solid var(--gg-ink);
+  outline-offset: 2px;
+}
+
+@media (min-width: 768px) {
+  .gg-dlg__in {
+    gap: 18px;
+    padding: 32px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
  * Reveals. Hidden start states exist ONLY under html.js, so the page is
  * complete with JavaScript off. The helper (motion/GgMotion.tsx) adds
  * `.is-in` once an element passes 85% of the viewport.

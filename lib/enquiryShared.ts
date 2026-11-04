@@ -1,5 +1,5 @@
 import { formatRand } from "@/components/gg/format";
-import { localPlanBySlug, previewTime } from "@/content/pricing";
+import { localPlanBySlug, buildTime, planDepositFor } from "@/content/pricing";
 
 /**
  * What the redesigned forms (/start-project, /contact, the /pricing quote form,
@@ -110,6 +110,12 @@ export function planSummary(plan: PlanKey): string {
   return found ? `${found.name} · ${formatRand(found.monthly)}/mo` : PLANS[plan];
 }
 
+/** "R1 750 (one month’s fee)": the deposit that starts a plan's build. `local-help` has no price yet. */
+export function depositSummary(plan: PlanKey): string {
+  const found = localPlanBySlug(plan);
+  return found ? `${formatRand(planDepositFor(found))} (one month’s fee)` : "one month’s fee of the plan agreed";
+}
+
 /**
  * ref: the fixed sources, plus case-/service-/industry-/insights- with a slug,
  * and the v2 sources: ai-visibility, ai-report, pricing-monthly, offer,
@@ -160,5 +166,15 @@ export const firstName = (name: string) => name.trim().split(/\s+/)[0] ?? "";
 /** Reply time, one string site-wide. */
 export const REPLY_TIME = "1–2 business days";
 /** The Track A and Track C promises, one string each. */
-export const PREVIEW_TIME = previewTime;
+export const BUILD_TIME = buildTime;
+
+/**
+ * "What happens next" for a monthly plan request (owner decision 2026-11-04): the one list the
+ * /start-project sidebar, the /thanks page and the auto-reply all read. The deposit is one month's fee.
+ */
+export const LOCAL_NEXT_STEPS = [
+  `We email you a deposit invoice within ${REPLY_TIME} (one month’s fee)`,
+  "Once it is paid we send your onboarding link",
+  `You fill in the brief and we build your site in ${BUILD_TIME}`,
+];
 export const CHECK_REPORT_TIME = "2 business days";

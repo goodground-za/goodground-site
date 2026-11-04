@@ -644,8 +644,8 @@ export const steps: Step[] = [
 /* ---------------------------------------------------------------------- v2 tracks */
 
 /**
- * `?track=local`: the short brief for Local plan clients, sent after
- * they approve their preview. It is the same form with five steps, built from the full steps
+ * `?track=local`: the short brief for Local plan clients, sent once
+ * their deposit is paid. It is the same form with five steps, built from the full steps
  * above so a question is only ever defined once:
  *
  *   1 Your business details (full step 2)   2 What you do (full step 3)   3 Your brand (full step 7)

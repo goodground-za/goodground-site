@@ -30,6 +30,7 @@ import {
   countsAsScope,
   gantt,
   monthlySegments,
+  monthlyTime,
   needs,
   payPlans,
   payPlansMobile,
@@ -40,6 +41,7 @@ import {
   tracker,
 } from "@/components/gg/process/data";
 import { ProcessNav, StepCards } from "@/components/gg/process/ProcessClient";
+import { buildTime } from "@/content/pricing";
 import { site } from "@/content/site";
 import { pageSocialMeta } from "@/lib/metadata";
 import "@/components/gg/process/process.css";
@@ -179,12 +181,33 @@ export default function ProcessPage() {
             <div className="gg-wrap">
               <SectionHeader
                 tag="HOW LONG IT TAKES"
-                heading="Your timeline depends on your package."
+                heading="Your timeline depends on how you start."
                 layout="split"
                 id="pc-time-title"
-                sub="Typical durations from kick-off to launch. Your exact dates are confirmed at kick-off and shown in your project plan."
+                sub="Monthly plans and custom builds run to different timelines. Your exact dates are confirmed at kick-off and shown in your project plan."
                 subClassName="hm-hide-phone"
               />
+
+              {/* Monthly plans: one build time for all three. The custom builds follow below, each with its own. */}
+              <div className="pc-plantime" data-reveal="fade-up">
+                <div className="pc-plantime__copy">
+                  <Tag tone="coral">MONTHLY PLANS</Tag>
+                  <h3>{monthlyTime.names}</h3>
+                  <p className="pc-plantime__note">{monthlyTime.note}</p>
+                </div>
+                <div className="pc-plantime__time">
+                  <p className="gg-number pc-plantime__big">{monthlyTime.duration}</p>
+                  <span className="pc-plantime__track" aria-hidden="true">
+                    <i style={{ width: `${monthlyTime.mobile}%` }} />
+                  </span>
+                </div>
+              </div>
+
+              <div className="pc-time__group">
+                <Tag tone="plum">CUSTOM BUILDS</Tag>
+                <h3>Micro, Launch, Grow and Scale</h3>
+                <p>Typical durations from kick-off to launch, in weeks.</p>
+              </div>
 
               {/* Desktop: the Gantt chart. */}
               <div className="pc-gantt" data-reveal="group">
@@ -474,11 +497,11 @@ export default function ProcessPage() {
                 heading="On a monthly plan? It’s simpler."
                 layout="split"
                 id="pc-monthly-title"
-                sub="No deposit. You see a free preview first, and your first payment only runs once you approve it."
+                sub={`A deposit of one month’s fee starts your build. Once it is paid and your onboarding brief is in, we build your site in ${buildTime}.`}
                 subClassName="hm-hide-phone"
                 cta={
                   <ButtonLink href="/start-project?plan=local-plus&ref=process" variant="coral">
-                    Get my free preview
+                    Start my plan
                   </ButtonLink>
                 }
               />

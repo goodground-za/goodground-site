@@ -10,10 +10,11 @@ import {
   GBP,
   INTENTS,
   LIMITS,
+  LOCAL_NEXT_STEPS,
   OFFERS,
   PACKAGES,
   PLANS,
-  PREVIEW_TIME,
+  BUILD_TIME,
   REPLY_TIME,
   SERVICES,
   SIZES,
@@ -23,6 +24,7 @@ import {
   WEBSITE_RE,
   cleanRef,
   cleanUtm,
+  depositSummary,
   firstName,
   pick,
   planSummary,
@@ -337,7 +339,7 @@ export async function POST(request: Request) {
       case "pricing-quote":
         return `New quote request · ${fullName}`;
       case "local-preview":
-        return ["New preview request", plan ? PLANS[plan] : null, offer ? OFFERS[offer] : null, business, where].filter(Boolean).join(" · ");
+        return ["New plan request", plan ? PLANS[plan] : null, offer ? OFFERS[offer] : null, business, where].filter(Boolean).join(" · ");
       case "new-business-offer":
         return [offer === "new-business-waitlist" ? "New Business Offer WAITLIST" : "New Business Offer space request", business, where].filter(Boolean).join(" · ");
       case "ai-check":
@@ -375,7 +377,7 @@ export async function POST(request: Request) {
   }
   if (kind === "local-preview" && gbp) lines.push(`Google Business Profile: ${GBP[gbp]}`);
   if (phone) lines.push(`${kind === "ai-check" ? "WhatsApp" : "Phone"}: ${phone}`);
-  if (plan && isLocal) lines.push(`Plan: ${planSummary(plan)}`);
+  if (plan && isLocal) lines.push(`Plan: ${planSummary(plan)}`, `Deposit: ${depositSummary(plan)}${offer === "new-business" ? ", credited against month 2" : ""}`);
   if (offer) lines.push(`Offer: ${OFFERS[offer]}${offer === "new-business" ? ` (${newBusinessOffer.summary})` : ""}`);
   if (isLocal || kind === "ai-check") {
     lines.push(`WhatsApp updates: ${whatsappOptIn ? `YES, consent given ${new Date(now).toISOString()}` : "no"}`);
@@ -503,9 +505,9 @@ function buildAutoReply(input: ReplyInput) {
       closing = [workLink];
       break;
     case "local-preview":
-      subject = `Your free preview is on its way, ${first}`;
-      opening = `${hello} Your free preview request is in, and a real person will read it.`;
-      steps = [`We build your preview within ${PREVIEW_TIME}`, "You review it and ask for changes", "You approve it to go live. Your first debit runs only then"];
+      subject = `We’ve got your plan request${first ? `, ${first}` : ""}`;
+      opening = `${hello} Your plan request is in, and a real person will read it. A monthly plan runs for 12 months, and the deposit that starts your build is one month’s fee.`;
+      steps = LOCAL_NEXT_STEPS;
       closing = [sampleLink, { text: "Or ", url: `${site.url}/pricing#monthly`, label: "compare the monthly plans again" }];
       break;
     case "new-business-offer":
@@ -514,13 +516,17 @@ function buildAutoReply(input: ReplyInput) {
         : "Your New Business Offer space request is in";
       opening = input.offer === "new-business-waitlist"
         ? `${hello} The offer is fully booked this month, so you’re on the ${month} waitlist.`
-        : `${hello} Your space request is in, and your space is held while we confirm.`;
+        : `${hello} Your space request is in, and your space is held while we confirm. ${newBusinessOffer.depositLine}`;
       steps = input.offer === "new-business-waitlist"
-        ? [`We tell you as soon as a space opens in ${month}`, `We build your free preview within ${PREVIEW_TIME}`, "You approve it to go live. Your first debit runs only then"]
+        ? [
+            `We tell you as soon as a space opens in ${month}`,
+            "You pay a one-month deposit, then we send your onboarding link",
+            `We build your site in ${BUILD_TIME}, counted from when the deposit and your brief are in`,
+          ]
         : [
-            `We confirm your space within ${REPLY_TIME}`,
-            `We build your free preview within ${PREVIEW_TIME}`,
-            "You approve it to go live. Your first month is free, and the business mailbox is free for 12 months",
+            `We confirm your space and email you a deposit invoice within ${REPLY_TIME}`,
+            "Once it is paid we send your onboarding link",
+            `We build your site in ${BUILD_TIME}. Your first month is free, your deposit then covers your second month, and the business mailbox is free for 12 months`,
           ];
       closing = [{ text: "How the offer works: ", url: `${site.url}${newBusinessOffer.path}`, label: "read it again" }];
       break;

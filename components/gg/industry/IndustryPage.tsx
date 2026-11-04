@@ -3,7 +3,7 @@ import type { CSSProperties } from "react";
 import { BreadcrumbSchema } from "@/components/Breadcrumbs";
 import { FAQSchema } from "@/components/Schema";
 import { industryPages } from "@/content/industryPages";
-import { localFromMonthly } from "@/content/pricing";
+import { buildTime, localFromMonthly, PLAN_TERM_LABEL } from "@/content/pricing";
 import { site } from "@/content/site";
 
 import { ButtonLink } from "../Button";
@@ -16,6 +16,7 @@ import { Icon } from "../Icon";
 import { LinkedCard } from "../LinkedCard";
 import { Resp } from "../Resp";
 import { SectionHeader } from "../SectionHeader";
+import { PlanTermButton } from "../shared/PlanTermModal";
 import { SplitHeading } from "../SplitHeading";
 import { Tag } from "../Tag";
 import { INDUSTRY_VIEWS } from "./data";
@@ -58,7 +59,7 @@ export function IndustryPage({ slug }: { slug: string }) {
   // v2: every local industry answers "Can I pay monthly instead?" with the Local plans.
   const monthlyFaq = {
     question: "Can I pay monthly instead?",
-    answer: `Yes. Our Local plans start at ${from}/mo with no deposit: a website, your Google profile and an AI visibility report, looked after every month. You can cancel any month.`,
+    answer: `Yes. Our Local plans start at ${from}/mo: a website, your Google profile and an AI visibility report, looked after every month. A deposit of one month’s fee starts your build, and the plan runs for 12 months.`,
   };
   if (isLocal) faqItems.push({ question: monthlyFaq.question, answer: [monthlyFaq.answer], slug: "pay-monthly", link: { label: "See monthly plans →", href: "/pricing#monthly" } });
   const schemaFaq = isLocal ? [...entry.faq, monthlyFaq] : entry.faq;
@@ -108,7 +109,7 @@ export function IndustryPage({ slug }: { slug: string }) {
               </ul>
               <div className="id-hero__buttons" data-part="cta">
                 <ButtonLink href={startHref} variant="coral" data-cta="hero">
-                  {isLocal ? "Get my free preview" : "Start your project"}
+                  {isLocal ? "Start my plan" : "Start your project"}
                 </ButtonLink>
                 <ButtonLink href={isLocal ? "/pricing#monthly" : "/pricing"} variant="outline" data-cta="hero-secondary">
                   See pricing
@@ -116,7 +117,8 @@ export function IndustryPage({ slug }: { slug: string }) {
               </div>
               {isLocal ? (
                 <p className="id-hero__from" data-part="cta">
-                  From {from}/mo · no deposit · free preview first
+                  From {from}/mo · built in {buildTime} ·{" "}
+                  <PlanTermButton placement="industry-hero">{PLAN_TERM_LABEL}</PlanTermButton>
                 </p>
               ) : null}
             </div>
@@ -357,7 +359,7 @@ export function IndustryPage({ slug }: { slug: string }) {
                       <Tag>MONTHLY</Tag>
                     </span>
                     <span className="gg-kicker id-card__kicker">03 · MONTHLY PLANS</span>
-                    <span className="id-card__title id-card__title--m">From {from}/mo, no deposit.</span>
+                    <span className="id-card__title id-card__title--m">From {from}/mo, 12-month plans.</span>
                     <span className="id-card__rows">
                       {["A website with hosting", "Your Google profile", "A monthly AI report"].map((row) => (
                         <span key={row} className="id-card__row">
@@ -415,7 +417,7 @@ export function IndustryPage({ slug }: { slug: string }) {
                   <span className="gg-kicker">MONTHLY PLAN</span>
                   <SplitHeading as="p" className="id-tile__big" text={`${from}/mo`} />
                   <span className="id-tile__sub">
-                    <Resp long={`Monthly plan from ${from}/mo, no deposit.`} short="No deposit, cancel any month." />
+                    <Resp long={`12-month plan from ${from}/mo, with a one-month deposit.`} short="12-month plan, one-month deposit." />
                   </span>
                 </div>
                 <div className="id-tile id-tile--lilac">
@@ -464,7 +466,7 @@ export function IndustryPage({ slug }: { slug: string }) {
 
       <CtaTracker event="industry_cta_click" slug={entry.slug} track={entry.primaryTrack} />
       <GradientCta variant="inner" tag="READY WHEN YOU ARE" sub={view.ctaSub} track={entry.primaryTrack} refSource={ref} />
-      <StickyBar startHref={startHref} startLabel={isLocal ? "Free preview" : "Start your project"} email={site.email} />
+      <StickyBar startHref={startHref} startLabel={isLocal ? "Start my plan" : "Start your project"} email={site.email} />
     </GgShell>
   );
 }

@@ -25,7 +25,7 @@ type Action = { label: string; href: string };
  *    gradient, centred, Light button + email pill.
  *
  * `track` (v2 funnel, content/funnel.ts) decides the Light button and the one
- * text link under the buttons: local = "Get my free preview", custom = "Start
+ * text link under the buttons: local = "Start my plan", custom = "Start
  * your project", check = "Book a free check"; the link points to the next-best
  * track. `refSource` is the page the visitor is on and becomes ?ref= on every
  * destination. `primary` / `secondary` still replace the two buttons

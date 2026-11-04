@@ -150,7 +150,7 @@ export function ServicesBento() {
                 <div className="hm-statement">
                   <div className="hm-statement__head">
                     <strong>Every month</strong>
-                    <span>No deposit</span>
+                    <span>12-month plans</span>
                   </div>
                   {RUN_ROWS.map((row, i) => (
                     <div key={row} className="hm-statement__row" style={{ "--gg-i": i } as CSSProperties}>
