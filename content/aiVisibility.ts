@@ -21,7 +21,7 @@ import { newBusinessOffer } from "@/content/newBusinessOffer";
 export const aiPage = {
   path: "/services/ai-visibility",
   // Spec 19 SEO block (to confirm).
-  title: "Does AI Recommend Your Business? | AI Visibility Check | GoodGround",
+  title: "AI Visibility Check: Does AI Recommend You? | GoodGround",
   description:
     "Find out how often ChatGPT, Gemini and Google’s AI recommend your business when local customers ask. Free check for Garden Route businesses.",
   breadcrumb: "AI visibility",

@@ -2,12 +2,13 @@
 
 register: brand
 
-> Last verified against the codebase 2026-10-27, after the Figma redesign (local
-> branch, not yet live). The look is now documented in `DESIGN.md`; the earlier
-> cream/purple/orange palette and the Parkinsans/Instrument Sans pairing are
-> retired. The Full Service monthly package (2026-08-25) is the one genuine
-> subscription on the site, distinct from the two one-time-price payment
-> options. Keep this file in step with the code.
+> Last verified against the codebase 2026-11-04, on the `v2-funnel` branch (the
+> monthly-plan funnel, not yet live). The look is documented in `DESIGN.md`; the
+> earlier cream/purple/orange palette and the Parkinsans/Instrument Sans pairing
+> are retired. Since v2 the site sells three kinds of thing: monthly Local plans
+> and Full Service (recurring services), custom builds (a fixed price paid two
+> ways, never a subscription) and a free AI visibility check. Keep this file in
+> step with the code.
 
 ## What this is
 
@@ -17,7 +18,7 @@ Two things make it unusual to build:
 
 **1. The studio has no track record yet.** No clients, no case studies, no testimonials, no logos. Everything a normal agency site leans on for credibility does not exist. The site has to be persuasive without a single borrowed proof point. `/work` says "case studies, coming soon" rather than inventing any.
 
-**2. Pricing is public.** Four packages from R12 000 to R45 000 (starting prices, quoted per project), plus a build-your-own configurator off a R6 000 base fee. Real numbers, published, no "contact us for a quote" before you see any figure at all. Most competitors hide this, so it is a genuine wedge. The quote itself is still one fixed price agreed before work starts.
+**2. Pricing is public.** Monthly Local plans from R299, four custom packages from R12 000 to R45 000 (starting prices, quoted per project), plus a build-your-own configurator off a R6 000 base fee. Real numbers, published, no "contact us for a quote" before you see any figure at all. Most competitors hide this, so it is a genuine wedge. The quote itself is still one fixed price agreed before work starts.
 
 The site itself is also the portfolio. A studio selling custom-coded websites cannot have its own site look templated. If it looks like a template, the pitch dies.
 
@@ -29,6 +30,19 @@ The site itself is also the portfolio. A studio selling custom-coded websites ca
 2. Can I afford to start this month?
 
 The site answers the second question far more directly than most agencies dare to. Most arrive on mobile.
+
+## The v2 funnel: one ladder, three tracks
+
+One pricing collection (`content/pricing.ts`: `localPlans`, `addOns`, `packages`, `fullServicePackage`; offer in `content/newBusinessOffer.ts`) feeds every page, so no page types a price. The ladder, as shown on the public site:
+
+- **Free:** the AI visibility check (by request, one per business per 30 days) and a website preview before the first debit of a monthly plan.
+- **Monthly Local plans:** Local Start R299, Local Plus R449, Local Pro R799 a month (VAT included; the annual price gives two months free). Month to month, domain always the client's, site files the client's after 6 paid months. The New Business Offer is Local Start with the first month free.
+- **Custom builds:** Micro, Launch, Grow, Scale, or build-your-own, paid 50/50 or over 12 months. **Full Service** from R1 500 a month and the **Care Plan** (per site, after a build) are the recurring services for custom clients.
+- **Add-ons:** AI Visibility Fix Pack, Visibility Watch, business email.
+
+Every page has a `primaryTrack` (`local`, `custom` or `check`, defaults in `content/funnel.ts`) that sets its main button, its gradient CTA and the one text link to the next-best track. The three tracks each have their own form, auto-reply and `/thanks?form=` variant: **local** (`/start-project?plan=local-*`, formType `local-preview`), **custom** (`/start-project`, formType `start-project`) and **check** (`/services/ai-visibility#book`, formType `ai-check`). Parameters are whitelisted in `lib/enquiryShared.ts`; the retired `?plan=launch` maps to the New Business Offer. After a preview is approved a monthly-plan client gets the short onboarding (`/onboarding?track=local`, four steps plus review); custom clients get the full one.
+
+The free check never runs a scan on the site: the form stores a request and emails the team, who run it. Guardrails: one request per business per 30 days (matched server-side), a monthly budget (`freeCheck.monthlyBudget` in `content/site.ts`) after which the form takes waitlist requests, a honeypot, the 3-second rule and Cloudflare Turnstile.
 
 ## Two payment options (current, since 2026-08-11)
 
@@ -80,9 +94,9 @@ The full system is in `DESIGN.md`; the values live in `components/gg/gg.css` and
 
 **Motion.** Declared with `data-reveal` and run once by `components/gg/motion/GgMotion.tsx` (fade-up, stagger, header, group, line-mask, count-up, fill). No GSAP, Lenis or Framer Motion on the redesigned pages. Eases out, never bounces except tiny pops. `prefers-reduced-motion` and `html[data-motion="off"]` jump to the end state; pages work with no JavaScript.
 
-**Pages.** Home, Services, Service detail, Industry, Work, Case study, Pricing, Website launch, Start project, Contact, Thanks, 404, About, Process, Insights, Article, FAQ, Legal and the private Onboarding form are all on the redesign. The Home hero is the earlier gradient-video hero, kept on purpose and scoped under `.home-2026`.
+**Pages.** Home, Services, Service detail, Industry, AI visibility (`/services/ai-visibility`), Work, Case study, Pricing, Website launch (the New Business Offer), Start project, Contact, Thanks, 404, About, Process, Insights, Article, FAQ, Legal and the private Onboarding form are all on the redesign. The Home hero is the earlier gradient-video hero, kept on purpose and scoped under `.home-2026`.
 
-**Forms and mail.** Start project, Contact and the Pricing quote form post to `/api/enquiry`; the New Business Offer form and the free AI visibility check post to `/api/enquiry` too (formTypes `new-business-offer` and `ai-check`); the client onboarding brief posts to `/api/onboarding`. All use the studio SMTP settings (live since 2026-10-27: mail.goodground.co.za:465 as webinquiry@goodground.co.za, which is also where enquiries land; SPF, DKIM and DMARC already published at Afrihost; a live test of /api/enquiry delivered both the studio email and the auto-reply) (`SMTP_HOST`, `SMTP_USER`, `SMTP_PASS`, optional `MAIL_TO`, `MAIL_FROM`) in `lib/mailer.ts` and show a "couldn't send" state until they are set. DMARC is still `p=none` (monitor only). Onboarding saves in the visitor's browser only until server storage is built. It takes no file uploads: the client pastes one Google Drive, Dropbox or OneDrive share-folder link, so GoodGround stores none of their files (owner decision, 2026-10-27).
+**Forms and mail.** Every public form posts to `/api/enquiry` with a formType: `contact`, `start-project`, `pricing-quote`, `local-preview`, `new-business-offer` or `ai-check` (the free check is never accepted as a contact topic); the client onboarding brief posts to `/api/onboarding`, with `track: "local"` and an optional `plan` for the short brief. All use the studio SMTP settings (live since 2026-10-27: mail.goodground.co.za:465 as webinquiry@goodground.co.za, which is also where enquiries land; SPF, DKIM and DMARC already published at Afrihost; a live test of /api/enquiry delivered both the studio email and the auto-reply) (`SMTP_HOST`, `SMTP_USER`, `SMTP_PASS`, optional `MAIL_TO`, `MAIL_FROM`) in `lib/mailer.ts` and show a "couldn't send" state until they are set. DMARC is still `p=none` (monitor only). **Environment variables** beyond SMTP, all optional: `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` (or the `KV_REST_API_*` names the Vercel Marketplace injects) hold the 30-day free-check record, the monthly counter and the offer spaces taken; `NEXT_PUBLIC_TURNSTILE_SITE_KEY` and `TURNSTILE_SECRET_KEY` switch Turnstile on (the CSP opens challenges.cloudflare.com only then). With none set the forms still work: requests are emailed, there is no 30-day rule or cap, and the typed values in `content/` are used. Names are in `.env.example`. Onboarding saves in the visitor's browser only (one draft per track) until server storage is built. It takes no file uploads: the client pastes one Google Drive, Dropbox or OneDrive share-folder link, so GoodGround stores none of their files (owner decision, 2026-10-27).
 
 **Cookie consent.** One module (`lib/consent.ts`) drives the banner, the switch on `/legal` and the footer's "Cookie settings" link. Google Analytics loads only after the visitor accepts.
 
@@ -102,4 +116,4 @@ The full system is in `DESIGN.md`; the values live in `components/gg/gg.css` and
 ## Known gaps (not bugs, missing inputs)
 
 - **`site.phone` is `null`.** No phone number appears anywhere, and `telephone`/`geo`/`streetAddress` are therefore absent from the `LocalBusiness` schema. This is the largest remaining local-SEO gap for a George-based business. It stays absent rather than guessed, per the rule in `content/site.ts`.
-- **Open launch items (2026-10-27).** Server storage, retention and recipients for the onboarding brief; the real Terms wording for ownership, warranties and liability, and disputes (the Terms tab on `/legal` is live since 2026-10-27, `termsLive` in `components/gg/legal/data.ts`, and those three sections only point to the signed contract); real project screenshots and an About photo. The full list is `tasks/figma-redesign-questions.md`.
+- **Open launch items (2026-11-04).** Server storage, retention and recipients for the onboarding brief; the real Terms wording for ownership, warranties and liability, disputes, monthly plans (section 17) and ending a 12-instalment build early (section 18): the Terms tab on `/legal` is live (`termsLive` in `components/gg/legal/data.ts`) and those sections only point to the signed contract; the names of the AI providers for the privacy notice's third-party table, which currently has a neutral row; Upstash and Turnstile keys in Vercel (until then the free-check 30-day rule and cap are off); the free-check budget and who runs the checks; the three funnel articles (the Garden Route AI Visibility Index, "Does ChatGPT recommend your business?", "Monthly website or once-off build?"), which need real data and approved copy; real project screenshots and an About photo. The full list is `tasks/figma-redesign-questions.md`.

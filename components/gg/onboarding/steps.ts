@@ -641,6 +641,128 @@ export const steps: Step[] = [
   },
 ];
 
+/* ---------------------------------------------------------------------- v2 tracks */
+
+/**
+ * `?track=local` (v2, spec 17 "v2 changes"): the short brief for Local plan clients, sent after
+ * they approve their preview. It is the same form with five steps, built from the full steps
+ * above so a question is only ever defined once:
+ *
+ *   1 Your business details (full step 2)   2 What you do (full step 3)   3 Your brand (full step 7)
+ *   4 Domain, hosting and access (full step 10, plus Google Business Profile)   5 Review and send
+ *
+ * The other steps are not in this list, so they never reach the steps sheet, the stepper, the
+ * review or the emailed brief. Question ids are shared with the full form on purpose.
+ */
+export type Track = "full" | "local";
+
+export const LOCAL_PLAN_SLUGS = ["local-start", "local-plus", "local-pro"] as const;
+export type LocalPlanSlug = (typeof LOCAL_PLAN_SLUGS)[number];
+
+/** Whitelists: anything else (a typo, a made-up value) is ignored and the full brief is used. */
+export const parseTrack = (v: unknown): Track => (v === "local" ? "local" : "full");
+export const parsePlan = (v: unknown): LocalPlanSlug | "" => (typeof v === "string" && (LOCAL_PLAN_SLUGS as readonly string[]).includes(v) ? (v as LocalPlanSlug) : "");
+
+const DESIGN_ONE = "We’ll design one";
+const byKey = (key: string) => steps.find((s) => s.key === key)!;
+
+/** The brand step for Local plans: "We’ll design one" replaces the full brief's new-brand and refresh options. */
+function localBrand(step: Step): Step {
+  const swap = (cond: Cond): Cond => ({ ...cond, in: cond.in?.map((v) => (v === "New brand" ? DESIGN_ONE : v)).filter((v) => v !== "Brand refresh"), eq: cond.eq === "New brand" ? DESIGN_ONE : cond.eq });
+  return {
+    ...step,
+    minutes: 5,
+    fields: step.fields.map((f) => {
+      if (f.kind === "radio" && f.id === "brandState") {
+        return { ...f, options: od(["Complete brand", "Logo, colours, fonts and guidelines"], ["Logo only", "No full brand guide"], [DESIGN_ONE, "Tell us what you like below"]) };
+      }
+      // Photos still go in the shared folder when we design the logo, so the link stays; it is just not required.
+      if (f.kind === "url" && f.id === "filesLink") {
+        return { ...f, req: false, hint: "Put your logo files (if you have them), photos, fonts and documents in one Google Drive, Dropbox or OneDrive folder, and paste its share link here." };
+      }
+      if ("show" in f && f.show) return { ...f, show: f.show.map(swap) } as Field;
+      return f;
+    }),
+  };
+}
+
+/** The domain step for Local plans: the full step, then how we get into the Google Business Profile. */
+function localAccess(step: Step): Step {
+  return {
+    ...step,
+    minutes: 4,
+    primary: "Save and review",
+    fields: [
+      ...step.fields,
+      { kind: "group", id: "g10-gbp", label: "Google Business Profile", hint: "How customers find you on Google Search and Maps." },
+      {
+        kind: "radio",
+        id: "gbpAccess",
+        label: "How should we get into your Google Business Profile?",
+        req: true,
+        cols: 2,
+        options: od(["We’ll set it up", "You don’t have one yet, or want us to take it on"], ["I’ll add you as a manager", "You already have one"]),
+      },
+      {
+        kind: "note",
+        id: "n10-gbp-setup",
+        tone: "mint",
+        icon: "info",
+        text: "We’ll set up your profile for you. Google may ask you to confirm the business is yours, and we’ll walk you through that.",
+        show: [{ id: "gbpAccess", eq: "We’ll set it up" }],
+      },
+      {
+        kind: "note",
+        id: "n10-gbp-manager",
+        tone: "mint",
+        icon: "info",
+        text: "Open your profile on Google, choose Business Profile settings, then People and access, then Add. We’ll send you the email address to add right after you send this brief. Choose the Manager role. You stay the owner.",
+        show: [{ id: "gbpAccess", eq: "I’ll add you as a manager" }],
+      },
+    ],
+  };
+}
+
+/** The full brief collects these in its first step, which the short brief skips; the confirmation email needs an address. */
+function localBusiness(step: Step): Step {
+  return {
+    ...step,
+    minutes: 5,
+    fields: [
+      { kind: "group", id: "g2-you", label: "Your contact details", hint: "So we can send you a copy and reach you about your site." },
+      { kind: "email", id: "email", label: "Email address", req: true, span: 3, ph: "you@business.co.za" },
+      { kind: "tel", id: "mobile", label: "Mobile number", req: true, span: 3, ph: "082 000 0000", hint: "We’ll only use this about your website." },
+      ...step.fields,
+    ],
+  };
+}
+
+const localSteps: Step[] = [
+  localBusiness(byKey("business")),
+  { ...byKey("offer"), minutes: 6 },
+  localBrand(byKey("brand")),
+  localAccess(byKey("access")),
+].map((s, i) => ({ ...s, n: i + 1 }));
+
+export type TrackConfig = {
+  track: Track;
+  steps: Step[];
+  /** The Review step's number, which is also the step total ("STEP n OF total"). */
+  review: number;
+  /** Per-step minutes round to this when added up for the Welcome line. */
+  roundTo: number;
+};
+
+const configs: Record<Track, TrackConfig> = {
+  full: { track: "full", steps, review: REVIEW_STEP, roundTo: 15 },
+  local: { track: "local", steps: localSteps, review: localSteps.length + 1, roundTo: 5 },
+};
+
+export const trackConfig = (track: Track): TrackConfig => configs[track];
+
+/** "About 20 minutes": the per-step minutes added up and rounded, never an exact-looking figure. */
+export const estimateMinutes = (cfg: TrackConfig) => Math.round(cfg.steps.reduce((sum, s) => sum + s.minutes, 0) / cfg.roundTo) * cfg.roundTo;
+
 /** Time to read the brief out loud, for the Welcome card. */
 export const estimatedMinutes = steps.reduce((sum, s) => sum + s.minutes, 0);
 

@@ -33,7 +33,7 @@ import { newBusinessOffer as newBusiness } from "@/content/newBusinessOffer";
  * from this file and so can never show an old number; this is the date to update
  * with them.
  */
-export const pricesAsOf = "17 September 2026";
+export const pricesAsOf = "4 November 2026";
 
 export const DEPOSIT_PERCENT = 0.5;
 export const depositFor = (total: number) => Math.round(total * DEPOSIT_PERCENT);
@@ -465,9 +465,9 @@ export const pricingFaq: PricingFaqItem[] = [
       "Any package can be extended with items from the à la carte menu at the listed price. We’ll always confirm additions and cost with you before building them.",
   },
   {
-    question: "What looks after the site once it's live?",
+    question: "What looks after the site once it’s live?",
     answer:
-      "While you're paying the build off over 12 months, basic maintenance, basic health checks, and site monitoring are included. A monthly Care Plan picks up from there: the site is checked around the clock, the security certificate is tracked before it lapses, software and content updates are handled as agreed, and your latest Google reviews are added to the site once a month. If you settle the build in full instead, a Care Plan can start from launch. Care Plans are priced per project and run month to month, with 30 days' notice either way.",
+      "While you’re paying the build off over 12 months, basic maintenance, basic health checks, and site monitoring are included. A monthly Care Plan picks up from there: the site is checked around the clock, the security certificate is tracked before it lapses, software and content updates are handled as agreed, and your latest Google reviews are added to the site once a month. If you settle the build in full instead, a Care Plan can start from launch. Care Plans are priced per project and run month to month, with 30 days’ notice either way.",
   },
   {
     question: "Full Service or instalments: which should I choose?",
@@ -477,7 +477,7 @@ export const pricingFaq: PricingFaqItem[] = [
   {
     question: "Do I own my website?",
     answer:
-      "Yes, once it's paid for. On a package, paid by deposit or instalments, the site is yours outright once the last payment clears. On a monthly Local plan your domain is always yours and the site files are yours after 6 months. Full Service works differently. It's a monthly service, and we host and run the site for you while you're on it.",
+      "Yes, once it’s paid for. On a package, paid by deposit or instalments, the site is yours outright once the last payment clears. On a monthly Local plan your domain is always yours and the site files are yours after 6 months. Full Service works differently. It’s a monthly service, and we host and run the site for you while you’re on it.",
   },
   {
     question: "How many rounds of revisions do I get?",

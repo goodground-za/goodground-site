@@ -2,6 +2,7 @@ import { faq } from "@/content/faq";
 import { fullServicePackage, packages } from "@/content/pricing";
 
 import type { FaqItem } from "../FaqAccordion";
+import { sharedFaqItem } from "../shared/sharedFaq";
 import type { IconName } from "../Icon";
 import { formatRand } from "../format";
 import { buildItemById } from "../pricing/data";
@@ -56,7 +57,7 @@ export const beforeSteps: { icon: IconName; title: string; body: string; note: s
     icon: "doc",
     title: "Accept your fixed quote",
     body: "One price, agreed before any work starts. Choose 50/50 or 12 instalments.",
-    note: "You pay: the deposit, or your first instalment, to book your slot.",
+    note: "You pay: the deposit, or your first instalment, to secure your booking.",
   },
   {
     icon: "pen",
@@ -245,7 +246,7 @@ export const payPlans: { name: string; sub: string; cells: (PayCell | null)[] }[
     name: "50 / 50",
     sub: "Deposit + completion",
     cells: [
-      { amount: "50%", caption: "to book your slot", due: true },
+      { amount: "50%", caption: "to secure your booking", due: true },
       null,
       null,
       null,
@@ -258,7 +259,7 @@ export const payPlans: { name: string; sub: string; cells: (PayCell | null)[] }[
     name: "12 instalments",
     sub: "Same total, spread",
     cells: [
-      { amount: "1 of 12", caption: "books your slot", due: true },
+      { amount: "1 of 12", caption: "secures your booking", due: true },
       null,
       null,
       null,
@@ -309,6 +310,14 @@ export const afterSegments = [
   { label: "THEN", text: "Care Plan, Full Service, or look after it yourself", tone: "canvas" },
 ];
 
+/** "On a monthly plan? It's simpler." (v2 panel): the four steps, in the after-launch strip style. */
+export const monthlySegments = [
+  { label: "STEP 1", text: "Request a free preview", tone: "coral" },
+  { label: "STEP 2", text: "Preview within 5 working days", tone: "mint" },
+  { label: "STEP 3", text: "Approve, then your first debit", tone: "canvas" },
+  { label: "STEP 4", text: "Monthly care and an AI report", tone: "canvas" },
+];
+
 export const afterOptions: {
   icon: IconName;
   tone: "surface" | "blush" | "plum";
@@ -349,6 +358,7 @@ export const afterOptions: {
 const live = (question: string) => faq.find((item) => item.question === question)?.answer ?? "";
 
 export const processFaq: FaqItem[] = [
+  sharedFaqItem("monthly-different"),
   {
     question: "What happens if the project scope changes partway through?",
     answer: [live("What happens if the project scope changes partway through?")],

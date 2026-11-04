@@ -7,7 +7,7 @@ import { Icon } from "../Icon";
 import { LinkedCard } from "../LinkedCard";
 import { formatRand } from "../format";
 import { useMedia } from "../useMedia";
-import { PLAN_CARDS, type PlanCardData } from "./plans";
+import { planCardsFor, type PlanCardData } from "./plans";
 
 const motionOff = () =>
   window.matchMedia("(prefers-reduced-motion: reduce)").matches || document.documentElement.dataset.motion === "off";
@@ -383,11 +383,12 @@ export function Checklist({
 
 function PlanCard({ plan }: { plan: PlanCardData }) {
   return (
-    <LinkedCard href={`/pricing#package-${plan.slug}`} className={plan.dark ? "ar-plan ar-plan--dark" : "ar-plan"}>
+    <LinkedCard href={plan.href} className={plan.dark ? "ar-plan ar-plan--dark" : "ar-plan"}>
       <span className="ar-plan__name">{plan.name}</span>
       <span className="ar-plan__price">
-        <small>from</small>
+        {plan.unit ? null : <small>from</small>}
         <strong className="gg-number">{formatRand(plan.total)}</strong>
+        {plan.unit ? <small>{plan.unit}</small> : null}
       </span>
       <span className="ar-plan__chips">
         {plan.chips.map((chip) => (
@@ -409,7 +410,8 @@ function PlanCard({ plan }: { plan: PlanCardData }) {
 }
 
 /** Plan cards, from the pricing data. A 2 x 2 grid; a swipe row with dots on phones. */
-export function PlanCards({ asOf }: { asOf: string }) {
+export function PlanCards({ asOf, ids }: { asOf: string; ids?: string[] }) {
+  const cards = planCardsFor(ids);
   const track = useRef<HTMLUListElement>(null);
   const [active, setActive] = useState(0);
 
@@ -421,7 +423,7 @@ export function PlanCards({ asOf }: { asOf: string }) {
       raf = 0;
       const card = el.children[0] as HTMLElement | undefined;
       if (!card) return;
-      setActive(Math.max(0, Math.min(PLAN_CARDS.length - 1, Math.round(el.scrollLeft / (card.offsetWidth + 12)))));
+      setActive(Math.max(0, Math.min(cards.length - 1, Math.round(el.scrollLeft / (card.offsetWidth + 12)))));
     };
     const request = () => {
       if (!raf) raf = requestAnimationFrame(update);
@@ -431,19 +433,19 @@ export function PlanCards({ asOf }: { asOf: string }) {
       cancelAnimationFrame(raf);
       el.removeEventListener("scroll", request);
     };
-  }, []);
+  }, [cards.length]);
 
   return (
     <div className="ar-plans-wrap">
-      <ul ref={track} className="ar-plans" data-reveal="stagger" style={{ "--gg-stagger-step": "80ms" } as CSSProperties}>
-        {PLAN_CARDS.map((plan) => (
+      <ul ref={track} className={cards.length % 2 ? "ar-plans ar-plans--odd" : "ar-plans"} data-reveal="stagger" style={{ "--gg-stagger-step": "80ms" } as CSSProperties}>
+        {cards.map((plan) => (
           <li key={plan.slug}>
             <PlanCard plan={plan} />
           </li>
         ))}
       </ul>
       <div className="ar-dots" role="group" aria-label="Choose a plan card">
-        {PLAN_CARDS.map((plan, i) => (
+        {cards.map((plan, i) => (
           <button
             key={plan.slug}
             type="button"

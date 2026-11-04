@@ -745,7 +745,8 @@
   color: var(--gg-coral-text);
 }
 
-.gg-cover--pricing {
+.gg-cover--pricing,
+.gg-cover--ai-search {
   background: var(--gg-mint);
   color: var(--gg-ink);
 }

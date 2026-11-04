@@ -2,12 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import { localFromMonthly } from "@/content/pricing";
 import { site } from "@/content/site";
 import { trackEvent } from "@/lib/analytics";
 import { EMAIL_RE, REPLY_TIME, TOPICS, pick, firstName, type TopicKey } from "@/lib/enquiryShared";
 
 import { Button, ButtonLink } from "../Button";
 import { mailtoFor, postEnquiry } from "../enquiry";
+import { formatRand } from "../format";
 import { Field, TextArea } from "../Field";
 import { Icon } from "../Icon";
 
@@ -57,6 +59,7 @@ export function ContactForm() {
   };
 
   const send = async () => {
+    if (topic === "ai-check") return;
     setSubmitted(true);
     const bad = !name.trim() ? "fullName" : !EMAIL_RE.test(email.trim()) ? "email" : !message.trim() ? "message" : null;
     if (bad) {
@@ -103,6 +106,9 @@ export function ContactForm() {
     loadedAt.current = Date.now();
     requestAnimationFrame(() => document.getElementById("ct-fullName")?.focus());
   };
+
+  // The free check is not sent through this form: it has its own, with its own guardrails.
+  const aiCheck = topic === "ai-check";
 
   const emailLink = mailtoFor(`Message · ${TOPICS[topic]}`, [`Name: ${name}`, `Email: ${email}`, `Topic: ${TOPICS[topic]}`, "", message]);
 
@@ -197,11 +203,30 @@ export function ContactForm() {
         <div className="ct-hint__clip">
           <div className="ct-hint__in" inert={topic !== "project"}>
             <p>
-              <strong>For projects, the 4-step form gets you a fixed price faster</strong>
+              <strong>For projects, the 4-step form gets you a price faster, and most small businesses start with a monthly plan from {formatRand(localFromMonthly)}</strong>
               <span>Your message stays here if you’d rather send it this way.</span>
             </p>
-            <ButtonLink href="/start-project?ref=contact" variant="coral">
-              Start your project
+            <span className="ct-hint__btns">
+              <ButtonLink href="/start-project?ref=contact" variant="coral">
+                Start your project
+              </ButtonLink>
+              <ButtonLink href="/pricing#monthly" variant="outline">
+                See monthly plans
+              </ButtonLink>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div className={aiCheck ? "ct-hint is-on" : "ct-hint"} id="ct-aicheck-hint">
+        <div className="ct-hint__clip">
+          <div className="ct-hint__in" inert={!aiCheck}>
+            <p>
+              <strong>The free check has its own short form</strong>
+              <span>It asks for your business, town and website, so we can run the check properly.</span>
+            </p>
+            <ButtonLink href="/services/ai-visibility?ref=contact#book" variant="coral">
+              Book a free check
             </ButtonLink>
           </div>
         </div>
@@ -248,7 +273,7 @@ export function ContactForm() {
         </>
       ) : (
         <div className="ct-form__buttons">
-          <Button type="submit" disabled={status === "submitting"}>
+          <Button type="submit" disabled={status === "submitting" || aiCheck} aria-describedby={aiCheck ? "ct-aicheck-hint" : undefined}>
             {status === "submitting" ? "Sending…" : "Send message"}
           </Button>
           <p className="ct-form__fine">

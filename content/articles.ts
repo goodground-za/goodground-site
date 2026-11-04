@@ -21,8 +21,13 @@ export type Block =
   | { type: "callout"; tone: "tip" | "warning" | "note"; text: string }
   | { type: "table"; head: string[]; rows: string[][] }
   | { type: "bars"; title: string; sub: string; unit: string; bars: { label: string; value: number }[]; note: string }
-  /** Plan cards and add-on chips are pulled from content/pricing.ts, never typed here. */
-  | { type: "plans" }
+  /**
+   * Plan cards and add-on chips are pulled from content/pricing.ts, never typed here.
+   * `plans`: `ids` may mix custom packages (micro | launch | grow | scale) and monthly plans
+   * (local-start | local-plus | local-pro); without `ids` it shows the four custom packages.
+   * `addons`: build-your-own item ids, plus "fixpack" and "watch" for the monthly add-ons.
+   */
+  | { type: "plans"; ids?: string[] }
   | { type: "addons"; ids: string[]; intro: string }
   /** The shared 50/50 vs 12-month component. */
   | { type: "payment" }

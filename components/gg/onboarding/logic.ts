@@ -70,11 +70,12 @@ export function stepStats(step: Step, a: Answers): StepStats {
   return stats;
 }
 
-export function overall(a: Answers) {
+/** `list` is the active track's steps (the full brief by default). */
+export function overall(a: Answers, list: Step[] = steps) {
   let required = 0;
   let answered = 0;
   const missing: Missing[] = [];
-  for (const step of steps) {
+  for (const step of list) {
     const s = stepStats(step, a);
     required += s.required;
     answered += s.answeredRequired;
@@ -129,8 +130,8 @@ const clean = (value: string) =>
     .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "")
     .trim();
 
-export function briefSections(a: Answers): BriefSection[] {
-  return steps.map((step) => {
+export function briefSections(a: Answers, list: Step[] = steps): BriefSection[] {
+  return list.map((step) => {
     const items: BriefItem[] = [];
     for (const field of visibleFields(step, a)) {
       if (!isInput(field)) continue;
@@ -162,17 +163,18 @@ export function briefSections(a: Answers): BriefSection[] {
   });
 }
 
-export function buildBrief(a: Answers, meta: { who: string; business: string; quote: string; sent: Date }): string {
+export function buildBrief(a: Answers, meta: { who: string; business: string; quote: string; sent: Date; track?: string; list?: Step[] }): string {
   const out: string[] = [];
   out.push("# Client onboarding brief");
   out.push("");
   out.push(`Client: ${meta.who}${meta.business ? ` · ${meta.business}` : ""}`);
+  if (meta.track) out.push(`Track: ${meta.track}`);
   if (meta.quote) out.push(`Quote: ${meta.quote}`);
   out.push(`Received ${meta.sent.toISOString().slice(0, 16).replace("T", " ")} UTC`);
-  const summary = overall(a);
+  const summary = overall(a, meta.list);
   out.push(`Required answers: ${summary.answered} of ${summary.required}${summary.missing.length ? ` (${summary.missing.length} missing)` : ""}`);
   out.push("");
-  for (const section of briefSections(a)) {
+  for (const section of briefSections(a, meta.list)) {
     out.push(`## ${String(section.n).padStart(2, "0")}. ${section.name}`, "");
     for (const item of section.items) {
       out.push(`**${item.label}**`, "");
@@ -193,12 +195,12 @@ const text = (value: unknown, max: number) => (typeof value === "string" ? value
  * Rebuilds the answers from untrusted JSON using the question definitions as the whitelist:
  * unknown keys are dropped, choices must be one of the listed options, and every length is capped.
  */
-export function sanitizeAnswers(raw: unknown): Answers {
+export function sanitizeAnswers(raw: unknown, list: Step[] = steps): Answers {
   const out: Answers = {};
   if (!raw || typeof raw !== "object") return out;
   const src = raw as Record<string, unknown>;
 
-  for (const step of steps) {
+  for (const step of list) {
     for (const f of step.fields) {
       if (f.kind === "group" || f.kind === "note" || f.kind === "quote") continue;
       const value = src[f.id];

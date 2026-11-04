@@ -220,6 +220,8 @@ export async function POST(request: Request) {
   if (!email) errors.email = "We need an email to reply to.";
   else if (email.length > LIMITS.email || !EMAIL_RE.test(email)) errors.email = "That email doesn’t look right.";
   if (kind === "contact" && !message) errors.message = "Add a message so we know how to help.";
+  // The free AI check has its own form (guardrails, Turnstile); it is never accepted as a contact message.
+  if (kind === "contact" && pick.topic(get("topic")) === "ai-check") errors.message = "The free check has its own short form on the AI visibility page.";
   if (kind === "new-business-offer" && !message) errors.message = "Tell us a little about your new business.";
   if (kind === "new-business-offer" && launchTiming.length > 120) errors.message = errors.message ?? "One of the fields is too long.";
   if (message.length > LIMITS.message) errors.message = "Please shorten this a little.";

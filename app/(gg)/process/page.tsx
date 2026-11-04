@@ -29,6 +29,7 @@ import {
   countsAsRound,
   countsAsScope,
   gantt,
+  monthlySegments,
   needs,
   payPlans,
   payPlansMobile,
@@ -460,6 +461,36 @@ export default function ProcessPage() {
                 </li>
               ))}
             </ul>
+          </div>
+        </section>
+
+        {/* 09a · On a monthly plan (v2) ------------------------------------------------------------------------------ */}
+        <section id="monthly-plan" className="hm-section hm-section--canvas pc-monthly" aria-labelledby="pc-monthly-title">
+          <div className="gg-wrap">
+            <div className="pc-monthly__panel">
+              <SectionHeader
+                tag="MONTHLY PLANS"
+                tagTone="coral"
+                heading="On a monthly plan? It’s simpler."
+                layout="split"
+                id="pc-monthly-title"
+                sub="No deposit. You see a free preview first, and your first payment only runs once you approve it."
+                subClassName="hm-hide-phone"
+                cta={
+                  <ButtonLink href="/start-project?plan=local-plus&ref=process" variant="coral">
+                    Get my free preview
+                  </ButtonLink>
+                }
+              />
+              <ol className="pc-after__strip pc-monthly__strip" data-reveal="group">
+                {monthlySegments.map((segment, i) => (
+                  <li key={segment.label} className={`pc-after__seg pc-after__seg--${segment.tone}`} style={{ "--i": i } as CSSProperties}>
+                    <span className="gg-kicker">{segment.label}</span>
+                    <strong>{segment.text}</strong>
+                  </li>
+                ))}
+              </ol>
+            </div>
           </div>
         </section>
 

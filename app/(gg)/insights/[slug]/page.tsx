@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 
 import { BreadcrumbSchema } from "@/components/Breadcrumbs";
 import { FAQSchema } from "@/components/Schema";
-import { ArticleCover } from "@/components/gg/ArticleCover";
+import { ArticleCover, coverTopic } from "@/components/gg/ArticleCover";
 import { ButtonLink } from "@/components/gg/Button";
 import { GgShell } from "@/components/gg/GgShell";
 import { GradientCta } from "@/components/gg/GradientCta";
@@ -47,10 +47,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-const topicOf = (article: Article): Topic => {
-  const key = article.category.toLowerCase();
-  return key === "growth" || key === "pricing" ? key : "websites";
-};
+const topicOf = (article: Article): Topic => coverTopic(article.category);
 
 export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

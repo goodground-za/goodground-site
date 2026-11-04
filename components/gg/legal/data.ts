@@ -16,8 +16,8 @@ import type { IconName } from "../Icon";
 export const termsLive = true;
 
 /** "Last updated": changed only when the wording changes (README: from the CMS). */
-export const lastUpdated = { notice: "27 OCT 2026", privacy: "27 OCT 2026", terms: "27 OCT 2026" } as const;
-export const lastUpdatedShort = "27 OCT 2026";
+export const lastUpdated = { notice: "27 OCT 2026", privacy: "4 NOV 2026", terms: "4 NOV 2026" } as const;
+export const lastUpdatedShort = "4 NOV 2026";
 
 export type DocKey = "notice" | "privacy" | "terms";
 
@@ -122,6 +122,7 @@ export const privacySections: Section[] = [
         items: [
           "Submit a contact or project form",
           "Request a quote or proposal",
+          "Request a free AI visibility check",
           "Subscribe to updates",
           "Apply for a job",
           "Communicate with us directly",
@@ -192,6 +193,10 @@ export const privacySections: Section[] = [
       {
         t: "callout",
         text: "All AI-assisted work is reviewed, edited and approved by a member of the GoodGround team before it’s delivered or published. We don’t intentionally use confidential client information to train public AI models.",
+      },
+      {
+        t: "p",
+        text: "Free AI visibility check: if you request one, we process the public details of your business together with the contact details you give us. The AI providers we use to run the check process the business details. We keep the results of a check for 30 days, so a repeat request within that time gets the same report.",
       },
     ],
   },
@@ -343,6 +348,7 @@ export const providers: { name: string; purpose: string; when: string; todo?: bo
   { name: "Google (Analytics 4)", purpose: "Analytics and performance", when: "Only after you accept cookies" },
   { name: "Afrihost", purpose: "Our email server: receiving and replying to enquiries sent through the forms", when: "When you contact us" },
   { name: "Afrihost", purpose: "Hosting and running this website", when: "Every visit" },
+  { name: "AI services for the free AI check", purpose: "Running the check on the public details of your business", when: "Only if you request a free check" },
 ];
 
 export const rights: { key: string; icon: IconName; title: string; copy: string }[] = [
@@ -364,6 +370,8 @@ export type TermsSection = {
   attorney?: boolean;
   /** Full legal wording, once the attorney supplies it. */
   wording?: string[];
+  /** The subjects the section deals with, shown as a plain list under the summary. */
+  topics?: string[];
 };
 
 export const termsSections: TermsSection[] = [
@@ -386,7 +394,7 @@ export const termsSections: TermsSection[] = [
     n: "03",
     title: "Payment options",
     summary:
-      "Pay a 50% deposit and 50% on completion, before handover; or 12 equal monthly instalments, where the first books your slot and the other 11 start once the project is completed. The total is the same either way.",
+      "Pay a 50% deposit and 50% on completion, before handover; or 12 equal monthly instalments, where the first secures your booking and the other 11 start once the project is completed. The total is the same either way.",
   },
   {
     id: "terms-scope",
@@ -472,6 +480,31 @@ export const termsSections: TermsSection[] = [
     n: "16",
     title: "Changes to these terms",
     summary: "We may update these terms; changes apply to new quotes, never to a contract you’ve already signed.",
+  },
+  // Added 4 Nov 2026. Sections 01 to 16 keep their numbers and anchors, so these two follow them.
+  // Like 09, 13 and 15, the body only points to the signed contract; the subjects are listed so the
+  // structure is visible, and no wording is given here.
+  {
+    id: "terms-local-plans",
+    n: "17",
+    title: "Monthly plans",
+    summary: "How a Local Start, Local Plus or Local Pro plan works, from cancelling to who owns what, is set out in your signed quote and contract.",
+    topics: [
+      "Month to month, with cancellation at the end of any paid month",
+      "When your first payment is taken, after you approve your preview",
+      "Your cooling-off period",
+      "Your domain is registered in your name",
+      "When your site files are handed over to you",
+      "The New Business Offer",
+      "No guarantee of AI recommendations or search rankings",
+    ],
+  },
+  {
+    id: "terms-early-exit",
+    n: "18",
+    title: "Ending a 12-instalment build early",
+    summary: "What applies if you end a custom build you are paying over 12 instalments before it is fully paid is set out in your signed quote and contract.",
+    topics: ["Charges when a 12-instalment build ends early"],
   },
 ];
 

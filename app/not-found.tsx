@@ -18,7 +18,7 @@ import "@/components/gg/utility/utility.css";
  */
 export const metadata: Metadata = {
   title: "Page not found",
-  description: "That page doesn't exist. Find GoodGround's website development services, work and contact details.",
+  description: "That page doesn’t exist. Find GoodGround’s website development services, work and contact details.",
 };
 
 const POPULAR = [

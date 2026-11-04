@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import type { Answers } from "./logic";
+import type { Track } from "./steps";
 
 /**
  * Local-first persistence for the brief. Answers live in localStorage (debounced 800ms after the
@@ -24,11 +25,12 @@ export type Persisted = {
 };
 
 const empty: Persisted = { answers: {}, done: [], visited: [], step: 1, started: false, sent: false, savedAt: 0 };
-const KEY = "gg-onboarding-v1";
+/** One draft per track: the full brief keeps its original key, so drafts saved before the Local variant survive. */
+const KEYS: Record<Track, string> = { full: "gg-onboarding-v1", local: "gg-onboarding-local-v1" };
 
-function read(token: string): Persisted {
+function read(token: string, track: Track): Persisted {
   try {
-    const raw = localStorage.getItem(`${KEY}:${token}`);
+    const raw = localStorage.getItem(`${KEYS[track]}:${token}`);
     if (!raw) return empty;
     const parsed = JSON.parse(raw) as Partial<Persisted>;
     return { ...empty, ...parsed, answers: parsed.answers && typeof parsed.answers === "object" ? parsed.answers : {} };
@@ -37,9 +39,9 @@ function read(token: string): Persisted {
   }
 }
 
-function write(token: string, state: Persisted) {
+function write(token: string, track: Track, state: Persisted) {
   try {
-    localStorage.setItem(`${KEY}:${token}`, JSON.stringify(state));
+    localStorage.setItem(`${KEYS[track]}:${token}`, JSON.stringify(state));
     return true;
   } catch {
     return false;
@@ -48,7 +50,8 @@ function write(token: string, state: Persisted) {
 
 export type SaveStatus = "idle" | "saving" | "saved" | "offline" | "failed";
 
-export function useBrief(token: string) {
+/** `track` is null until the page has read its address; nothing is loaded before then. */
+export function useBrief(token: string, track: Track | null) {
   const [state, setState] = useState<Persisted>(empty);
   const [ready, setReady] = useState(false);
   const [status, setStatus] = useState<SaveStatus>("idle");
@@ -58,24 +61,25 @@ export function useBrief(token: string) {
 
   // Read the saved draft after hydration (localStorage does not exist on the server).
   useEffect(() => {
+    if (!track) return;
     const frame = requestAnimationFrame(() => {
-      const saved = read(token);
+      const saved = read(token, track);
       latest.current = saved;
       setState(saved);
       setReady(true);
     });
     return () => cancelAnimationFrame(frame);
-  }, [token]);
+  }, [token, track]);
 
   const flush = useCallback(() => {
     window.clearTimeout(timer.current);
-    if (!dirty.current) return;
+    if (!dirty.current || !track) return;
     dirty.current = false;
     const next = { ...latest.current, savedAt: Date.now() };
     latest.current = next;
-    setStatus(write(token, next) ? (navigator.onLine ? "saved" : "offline") : "failed");
+    setStatus(write(token, track, next) ? (navigator.onLine ? "saved" : "offline") : "failed");
     setState(next);
-  }, [token]);
+  }, [token, track]);
 
   const update = useCallback(
     (patch: Partial<Persisted> | ((s: Persisted) => Partial<Persisted>), immediate = false) => {

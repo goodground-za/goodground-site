@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
 
 import type { Block } from "@/content/articles";
-import { pricesAsOf } from "@/content/pricing";
+import { addOns, pricesAsOf } from "@/content/pricing";
 
 import { ButtonLink } from "../Button";
 import { FaqAccordion } from "../FaqAccordion";
@@ -50,6 +50,9 @@ export function withLinks(text: string): ReactNode {
 }
 
 const CALLOUT_ICON: Record<"tip" | "warning" | "note", IconName> = { tip: "bulb", warning: "alert", note: "doc" };
+
+/** Add-on chip ids for the monthly add-ons, as an article writes them. */
+const MONTHLY_ADDON: Record<string, string> = { fixpack: "fix-pack", watch: "visibility-watch" };
 
 const ADDON_LABEL: Record<string, string> = {
   "pages-standard": "Extra standard page",
@@ -228,7 +231,7 @@ export function ArticleBlocks({ blocks, slug }: { blocks: Block[]; slug: string 
           case "plans":
             return (
               <Soft key={i}>
-                <PlanCards asOf={pricesAsOf} />
+                <PlanCards asOf={pricesAsOf} ids={block.ids} />
               </Soft>
             );
           case "addons": {
@@ -236,10 +239,24 @@ export function ArticleBlocks({ blocks, slug }: { blocks: Block[]; slug: string 
               const item = buildItemById.get(id);
               return item ? [{ item, label: ADDON_LABEL[id] ?? item.short }] : [];
             });
+            // Monthly add-ons ("fixpack", "watch") are read from the pricing data and point at the monthly plans.
+            const monthly = block.ids.flatMap((id) => {
+              const addOn = addOns.find((a) => a.id === MONTHLY_ADDON[id]);
+              return addOn ? [{ addOn, price: `${formatRand(addOn.price)}${addOn.unit.startsWith("/") ? addOn.unit : ` ${addOn.unit}`}` }] : [];
+            });
             return (
               <Soft key={i} className="ar-addons">
                 <p>{block.intro}</p>
                 <ul>
+                  {monthly.map(({ addOn, price }) => (
+                    <li key={addOn.id}>
+                      <Link href="/pricing#monthly" className="ar-chip">
+                        <Icon name="plus" size={14} stroke={2.4} />
+                        <span>{addOn.name}</span>
+                        <strong>{price}</strong>
+                      </Link>
+                    </li>
+                  ))}
                   {items.map(({ item, label }) => (
                     <li key={item.id}>
                       {/* Opens the build-your-own tool with this item already added. */}
@@ -251,9 +268,15 @@ export function ArticleBlocks({ blocks, slug }: { blocks: Block[]; slug: string 
                     </li>
                   ))}
                 </ul>
-                <ButtonLink href="/pricing#build-your-own" variant="outline">
-                  Open the build-your-own tool
-                </ButtonLink>
+                {items.length || !monthly.length ? (
+                  <ButtonLink href="/pricing#build-your-own" variant="outline">
+                    Open the build-your-own tool
+                  </ButtonLink>
+                ) : (
+                  <ButtonLink href="/pricing#monthly" variant="outline">
+                    See monthly plans
+                  </ButtonLink>
+                )}
               </Soft>
             );
           }
@@ -268,7 +291,7 @@ export function ArticleBlocks({ blocks, slug }: { blocks: Block[]; slug: string 
                 <div className="ar-pay__card ar-pay__card--blush">
                   <span className="ar-pay__big gg-number">12 ×</span>
                   <strong>12-month plan</strong>
-                  <p>The first instalment books your slot; the other 11 start once the project is complete.</p>
+                  <p>The first instalment secures your booking; the other 11 start once the project is complete.</p>
                 </div>
               </Soft>
             );

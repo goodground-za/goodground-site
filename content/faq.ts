@@ -46,7 +46,7 @@ export const faq: FAQItem[] = [
   {
     question: "What happens after my website launches?",
     answer:
-      "Launch is the start, not the finish line. If you're paying the build off over 12 months, basic maintenance, basic health checks, and site monitoring are included for that period. After that, or from launch if you settle the build in full, a monthly Care Plan takes over with round-the-clock checks on whether the site is up and fast, certificate tracking, software and content updates, and a monthly refresh of your Google reviews on the site. Prefer to have everything handled from the beginning instead? Our Full Service package bundles hosting, mailboxes, ongoing SEO work, and ongoing updates and maintenance into one monthly price.",
+      "Launch is the start, not the finish line. If you’re paying the build off over 12 months, basic maintenance, basic health checks, and site monitoring are included for that period. After that, or from launch if you settle the build in full, a monthly Care Plan takes over with round-the-clock checks on whether the site is up and fast, certificate tracking, software and content updates, and a monthly refresh of your Google reviews on the site. Prefer to have everything handled from the beginning instead? Our Full Service package bundles hosting, mailboxes, ongoing SEO work, and ongoing updates and maintenance into one monthly price.",
   },
   {
     question: "Do you work with businesses anywhere in South Africa?",
@@ -104,7 +104,8 @@ export type SharedFaqSlug =
   | "new-business-offer"
   | "ai-recommend"
   | "ai-guarantee"
-  | "ai-report";
+  | "ai-report"
+  | "monthly-different";
 
 export type SharedFaqEntry = {
   slug: SharedFaqSlug;
@@ -162,6 +163,14 @@ export const sharedFaq: SharedFaqEntry[] = [
     answer:
       "Each month we ask ChatGPT, Gemini and Google’s AI the questions your customers ask, several times each, and show how often you’re named and who’s named instead.",
     link: { label: "See how it works →", href: "/services/ai-visibility#how" },
+  },
+  {
+    // Added with the Process panel (spec 10-process v2 block names the question, not the answer). Not part of /faq.
+    slug: "monthly-different",
+    question: "How is a monthly plan different?",
+    answer:
+      "A monthly plan is the quicker, simpler route. We build you a free preview first, your first payment only runs once you approve it, and one monthly price covers the site, hosting, your Google profile and ongoing care. A custom build is designed from scratch around your business, with a fixed price you pay as 50% and 50% or over 12 months, and follows the six steps on this page.",
+    link: { label: "See monthly plans →", href: "/pricing#monthly" },
   },
 ];
 

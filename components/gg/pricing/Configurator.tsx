@@ -272,7 +272,7 @@ function BuildSummary({ variant, onSend }: { variant: "aside" | "sheet"; onSend?
             <span>/mo × 12</span>
           </p>
           <p className="pr-split__note">
-            The first instalment books your slot; the other 11 start once your site is finished. Rounded to the rand; the final
+            The first instalment secures your booking; the other 11 start once your site is finished. Rounded to the rand; the final
             instalment balances the total.
           </p>
         </div>

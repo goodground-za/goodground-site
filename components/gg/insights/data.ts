@@ -1,6 +1,6 @@
 import { articles, type Article } from "@/content/articles";
 
-import type { CoverTopic } from "../ArticleCover";
+import { coverTopic, type CoverTopic } from "../ArticleCover";
 
 /**
  * The listing's view of content/articles.ts. Only what the cards render crosses
@@ -9,9 +9,9 @@ import type { CoverTopic } from "../ArticleCover";
  * Figma frames use (max ~180 characters). The hero summary is calculated.
  */
 export type Topic = CoverTopic;
-export const TOPIC_LABEL: Record<Topic, string> = { websites: "Websites", growth: "Growth", pricing: "Pricing" };
-/** Tag tones per topic: Growth coral, Websites plum, Pricing neutral. */
-export const TOPIC_TONE: Record<Topic, "coral" | "plum" | "neutral"> = { growth: "coral", websites: "plum", pricing: "neutral" };
+export const TOPIC_LABEL: Record<Topic, string> = { websites: "Websites", growth: "Growth", pricing: "Pricing", "ai-search": "AI search" };
+/** Tag tones per topic: Growth coral, Websites plum, Pricing neutral, AI search dark. */
+export const TOPIC_TONE: Record<Topic, "coral" | "plum" | "neutral" | "dark"> = { growth: "coral", websites: "plum", pricing: "neutral", "ai-search": "dark" };
 
 export type ArticleCard = {
   slug: string;
@@ -50,10 +50,7 @@ const CARD_EXCERPT: Record<string, { excerpt: string; short?: string }> = {
   },
 };
 
-const topicOf = (article: Article): Topic => {
-  const key = article.category.toLowerCase();
-  return key === "growth" || key === "pricing" ? key : "websites";
-};
+const topicOf = (article: Article): Topic => coverTopic(article.category);
 
 const sorted = [...articles].sort((a, b) => b.date.localeCompare(a.date));
 
@@ -73,6 +70,7 @@ export const articleCards: ArticleCard[] = sorted.map((a, i) => {
   };
 });
 
+/** The filter chips are the topics in use: "AI search" appears as soon as the first article in that category is published. */
 export const topicsPresent = (Object.keys(TOPIC_LABEL) as Topic[]).filter((t) => articleCards.some((a) => a.topic === t));
 export const latestDate = sorted[0]?.date ?? "";
 

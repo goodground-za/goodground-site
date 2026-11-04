@@ -330,6 +330,19 @@ function TermsView() {
               {term.summary}
             </p>
           </div>
+          {term.topics ? (
+            <div className="lg-chips">
+              <p>This section covers:</p>
+              <ul>
+                {term.topics.map((topic) => (
+                  <li key={topic}>
+                    <Icon name="check" size={13} stroke={2.8} />
+                    {topic}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
           {term.wording?.map((paragraph, i) => (
             <p key={i} className="lg-p">
               {paragraph}

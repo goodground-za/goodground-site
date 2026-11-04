@@ -64,6 +64,7 @@ const QUICK: { kicker: string; q: string; a: string; href: string }[] = [
   { kicker: "PRICING", q: "How do the payment options work?", a: "One fixed price: 50/50, or 12 monthly instalments.", href: "/#faq-payment-options" },
   { kicker: "TIMELINES", q: "How long does a project take?", a: "See typical timelines in our FAQ.", href: "/#faq-project-length" },
   { kicker: "PROOF", q: "Can I see your projects first?", a: "Every case study has numbers you can check.", href: "/work" },
+  { kicker: "MONTHLY PLANS", q: "Can I cancel a monthly plan?", a: "Yes, at the end of any paid month, with no penalty.", href: "/faq#cancel-monthly" },
 ];
 
 function RouteBody({
@@ -72,6 +73,7 @@ function RouteBody({
   title: heading,
   body,
   short,
+  sub,
   button,
   dark,
 }: {
@@ -80,6 +82,8 @@ function RouteBody({
   title: string;
   body: string;
   short: string;
+  /** A second line under the title. */
+  sub?: string;
   button: ReactNode;
   dark?: boolean;
 }) {
@@ -92,7 +96,10 @@ function RouteBody({
         <span className="gg-kicker ct-route__kicker">{kicker}</span>
       </span>
       <span className="ct-route__copy">
-        <span className="ct-route__title">{heading}</span>
+        <span className="ct-route__titles">
+          <span className="ct-route__title">{heading}</span>
+          {sub ? <span className="ct-route__sub">{sub}</span> : null}
+        </span>
         <span className="ct-route__body">
           <span className="gg-resp-long">{body}</span>
           <span className="gg-resp-short">{short}</span>
@@ -144,6 +151,7 @@ export default function ContactPage() {
                     icon="sprout"
                     kicker="MOST ENQUIRIES"
                     title="Start a project"
+                    sub="Custom build or monthly plan"
                     body="Four quick questions, about a minute. We’ll come back with a fixed price, split however you’d like to pay it."
                     short="Four quick questions. We’ll come back with a fixed price."
                     button={<ButtonFace variant="coral">Start your project</ButtonFace>}

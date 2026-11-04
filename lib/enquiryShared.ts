@@ -56,6 +56,7 @@ export const GBP = { yes: "Yes", no: "No", "not-sure": "Not sure" } as const;
 export const TOPICS = {
   general: "General question",
   project: "A new project",
+  "ai-check": "Free AI visibility check",
   support: "Existing project or support",
   partnerships: "Partnerships",
   press: "Press",

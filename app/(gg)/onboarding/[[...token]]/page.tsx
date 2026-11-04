@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { Onboarding } from "@/components/gg/onboarding/Onboarding";
+import { parsePlan, parseTrack } from "@/components/gg/onboarding/steps";
 import "@/components/gg/home/home.css";
 import "@/components/gg/onboarding/onboarding.css";
 
@@ -13,13 +14,21 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default async function OnboardingPage({ params }: { params: Promise<{ token?: string[] }> }) {
+type Search = Record<string, string | string[] | undefined>;
+const first = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v);
+
+export default async function OnboardingPage({ params, searchParams }: { params: Promise<{ token?: string[] }>; searchParams: Promise<Search> }) {
   const { token } = await params;
+  const query = await searchParams;
   // The token will select the saved brief once server storage exists (open item 8); for now it only names the local draft.
   const key = (token?.[0] ?? "default").replace(/[^A-Za-z0-9_-]/g, "").slice(0, 64) || "default";
+  // v2: ?track=local is the short brief for monthly-plan clients, ?plan= (local-start | local-plus | local-pro) names their plan.
+  // Both are whitelisted: anything else is ignored and the full brief is used.
+  const track = parseTrack(first(query.track));
+  const plan = track === "local" ? parsePlan(first(query.plan)) : "";
   return (
     <div className="gg">
-      <Onboarding token={key} />
+      <Onboarding token={key} track={track} plan={plan} />
     </div>
   );
 }

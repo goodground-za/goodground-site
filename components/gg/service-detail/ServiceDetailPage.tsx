@@ -6,7 +6,7 @@ import { getArticle } from "@/content/articles";
 import { servicePages } from "@/content/servicePages";
 import { site } from "@/content/site";
 
-import { ArticleCover, type CoverTopic } from "../ArticleCover";
+import { ArticleCover, coverTopic } from "../ArticleCover";
 import { ButtonLink } from "../Button";
 import { CtaTracker } from "../CtaTracker";
 import { FaqAccordion, type FaqItem } from "../FaqAccordion";
@@ -238,7 +238,7 @@ export function ServiceDetailPage({ slug }: { slug: ServiceView["slug"] }) {
               </div>
               <LinkedCard href={`/insights/${article.slug}`} className="sd-article">
                 <span className="sd-article__cover gg-card__cover">
-                  <ArticleCover topic={article.category.toLowerCase() as CoverTopic} />
+                  <ArticleCover topic={coverTopic(article.category)} />
                 </span>
                 <span className="sd-article__body">
                   <Tag tone="plum">{article.category.toUpperCase()}</Tag>

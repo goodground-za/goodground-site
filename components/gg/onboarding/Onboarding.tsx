@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
+import { localPlanBySlug } from "@/content/pricing";
 import { site } from "@/content/site";
 
 import { BottomSheet, type BottomSheetHandle } from "../BottomSheet";
@@ -13,7 +14,7 @@ import { Tag } from "../Tag";
 import { StepFields, type Quote, type StepContext } from "./Controls";
 import { briefSections, overall, stepStats, str, strs } from "./logic";
 import { savedLabel, useBrief } from "./store";
-import { REVIEW_STEP, TOTAL_STEPS, steps, type Step } from "./steps";
+import { estimateMinutes, trackConfig, type LocalPlanSlug, type Step, type Track } from "./steps";
 
 const PAGE_ALLOWANCE: Record<string, number> = { micro: 1, launch: 5, grow: 10, scale: 15 };
 const PACKAGE_NAMES: Record<string, string> = { micro: "Micro", launch: "Launch", grow: "Grow", scale: "Scale" };
@@ -43,6 +44,34 @@ function readPrefill() {
 /** What the "What are you working with us on?" question pre-ticks from the quote. */
 const preticked = (pkgSlug: string): string[] => (pkgSlug ? ["A new website"] : []);
 
+/** Welcome-card lists: [icon, long copy, phone copy] and [number, title, line]. The Local variant asks for less. */
+const readyFull = [
+  ["image", "Logos and photos in a Google Drive, Dropbox or OneDrive folder", "Logos and photos in a shared folder"],
+  ["layout", "Brand colours and fonts, if you have them", "Brand colours and fonts"],
+  ["image", "Photos of your team, premises and work", "Photos of your team and work"],
+  ["doc", "Any text, brochures or menus to reuse", "Text, brochures or menus"],
+  ["star", "Reviews and testimonials", "Reviews and testimonials"],
+  ["compass", "Who manages your domain and email", "Who manages your domain and email"],
+  ["shield", "Your POPIA Information Officer’s details", "POPIA Information Officer details"],
+];
+const readyLocal = [
+  ["doc", "Your business’s registered name and address", "Business name and address"],
+  ["list", "The services you offer and the towns you serve", "Your services and towns"],
+  ["image", "Your logo and photos in a Google Drive, Dropbox or OneDrive folder, if you have them", "Logo and photos in a shared folder"],
+  ["compass", "Who manages your domain and email", "Who manages your domain and email"],
+  ["pin", "Your Google Business Profile, if you have one", "Your Google Business Profile"],
+];
+const howFull = [
+  ["01", "Answer what you can", "Every answer saves as you type, on this device."],
+  ["02", "Share your files", "Put logos, photos and documents in a Google Drive, Dropbox or OneDrive folder and paste the link."],
+  ["03", "Review and send", "We check it, then book your kick-off call."],
+];
+const howLocal = [
+  ["01", "Answer what you can", "Every answer saves as you type, on this device."],
+  ["02", "Share your files", "Put your logo and photos in a Google Drive, Dropbox or OneDrive folder and paste the link."],
+  ["03", "Review and send", "We check it, then get your site ready to go live."],
+];
+
 const firstName = (name: string) => name.split(/\s+/)[0] ?? "";
 
 /* -------------------------------------------------------------------- bits */
@@ -71,8 +100,15 @@ function Ring({ percent }: { percent: number }) {
 
 /* -------------------------------------------------------------------- main */
 
-export function Onboarding({ token }: { token: string }) {
-  const { state, ready, status, update, setAnswer, flush } = useBrief(token);
+export function Onboarding({ token, track = "full", plan = "" }: { token: string; track?: Track; plan?: LocalPlanSlug | "" }) {
+  const cfg = trackConfig(track);
+  const local = track === "local";
+  // The active track's steps. Local plan clients see four steps plus Review; the full brief has twelve plus Review.
+  const steps = cfg.steps;
+  const REVIEW_STEP = cfg.review;
+  const TOTAL_STEPS = cfg.review;
+  const planName = plan ? localPlanBySlug(plan)?.name ?? "" : "";
+  const { state, ready, status, update, setAnswer, flush } = useBrief(token, track);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [prefill, setPrefill] = useState<ReturnType<typeof readPrefill> | null>(null);
   const [now, setNow] = useState(0);
@@ -103,7 +139,7 @@ export function Onboarding({ token }: { token: string }) {
     if (p.name && !str(a, "fullName")) patch.fullName = p.name;
     if (p.email && !str(a, "email")) patch.email = p.email;
     if (p.business && !str(a, "businessName")) patch.businessName = p.business;
-    if (!strs(a, "workingOn").length && preticked(p.pkgSlug).length) patch.workingOn = preticked(p.pkgSlug);
+    if (!local && !strs(a, "workingOn").length && preticked(p.pkgSlug).length) patch.workingOn = preticked(p.pkgSlug);
     if (Object.keys(patch).length) update((s) => ({ answers: { ...s.answers, ...patch } }), true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready]);
@@ -123,16 +159,16 @@ export function Onboarding({ token }: { token: string }) {
   }, []);
   useEffect(() => () => window.clearTimeout(toastTimer.current), []);
 
-  const quote = prefill?.quote ?? null;
+  const quote = local ? null : (prefill?.quote ?? null);
   const pageAllowance = prefill?.pkgSlug ? PAGE_ALLOWANCE[prefill.pkgSlug] ?? null : null;
   const who = firstName(str(a, "fullName") || prefill?.name || "");
   const business = str(a, "businessName") || prefill?.business || "";
 
-  const summary = useMemo(() => overall(a), [a]);
+  const summary = useMemo(() => overall(a, steps), [a, steps]);
   const view: "welcome" | "step" | "sent" = state.sent ? "sent" : state.started ? "step" : "welcome";
   const stepN = Math.min(Math.max(state.step, 1), TOTAL_STEPS);
   const current = steps.find((s) => s.n === stepN);
-  const stats = useMemo(() => Object.fromEntries(steps.map((s) => [s.n, stepStats(s, a)])), [a]);
+  const stats = useMemo(() => Object.fromEntries(steps.map((s) => [s.n, stepStats(s, a)])), [a, steps]);
 
   const stepState = (n: number): "done" | "current" | "upcoming" | "attention" => {
     if (n === stepN && view === "step") return "current";
@@ -187,7 +223,7 @@ export function Onboarding({ token }: { token: string }) {
         }),
       );
     },
-    [stepN, update],
+    [stepN, update, steps, TOTAL_STEPS],
   );
 
   const saveAndContinue = () => {
@@ -208,6 +244,8 @@ export function Onboarding({ token }: { token: string }) {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
+          track,
+          plan: local ? plan : "",
           answers: a,
           confirmName: confirmName.trim(),
           consents,
@@ -244,7 +282,7 @@ export function Onboarding({ token }: { token: string }) {
   const saveLabel = savedLabel(status, state.savedAt, now || state.savedAt);
 
   /* ---- chrome */
-  const subtitle = [business, quote?.package].filter(Boolean).join(" · ") || "Your project brief";
+  const subtitle = [business, local ? planName : quote?.package].filter(Boolean).join(" · ") || (local ? "Your website details" : "Your project brief");
   const showLater = view === "step" && stepN !== REVIEW_STEP;
   const phoneHead = view === "step";
 
@@ -254,7 +292,7 @@ export function Onboarding({ token }: { token: string }) {
         goodground
       </Link>
       <p className="ob-top__title">
-        <strong>Client onboarding</strong>
+        <strong>{local ? "Website onboarding" : "Client onboarding"}</strong>
         <span>{subtitle}</span>
       </p>
       <p className="ob-top__save" role="status">
@@ -275,7 +313,7 @@ export function Onboarding({ token }: { token: string }) {
   const stepper = (
     <nav className="ob-stepper" aria-label="Brief sections">
       <div className="ob-stepper__head">
-        <p className="gg-kicker">YOUR BRIEF</p>
+        <p className="gg-kicker">{local ? "YOUR DETAILS" : "YOUR BRIEF"}</p>
         <p className="ob-stepper__count">
           {doneCount} of {steps.length} sections done
         </p>
@@ -322,7 +360,7 @@ export function Onboarding({ token }: { token: string }) {
 
   const sheets = (
     <>
-      <BottomSheet ref={stepsSheet} title={`Your brief · ${doneCount} of ${steps.length} done`}>
+      <BottomSheet ref={stepsSheet} title={`${local ? "Your details" : "Your brief"} · ${doneCount} of ${steps.length} done`}>
         <ol className="ob-sheetlist">
           {[...steps, { n: REVIEW_STEP, name: "Review & send" } as Step].map((s) => {
             const st = stepState(s.n);
@@ -348,7 +386,7 @@ export function Onboarding({ token }: { token: string }) {
       <BottomSheet ref={laterSheet} title="Saved. Come back any time.">
         <div className="ob-later">
           <p>Your answers are saved on this device. Open this page again in the same browser to carry on where you left off.</p>
-          <p>Prefer to carry on from another device? Message your project lead and we’ll sort it out.</p>
+          <p>Prefer to carry on from another device? {local ? "Message us" : "Message your project lead"} and we’ll sort it out.</p>
           <div className="ob-later__actions">
             <ButtonLink href={site.whatsapp.link} variant="outline">
               WhatsApp us
@@ -366,13 +404,17 @@ export function Onboarding({ token }: { token: string }) {
       <section className="ob-hero" aria-labelledby="ob-welcome-title">
         <Tag tone="on-dark">{who ? `WELCOME, ${who.toUpperCase()}` : "WELCOME"}</Tag>
         <h1 id="ob-welcome-title" className="ob-hero__title">
-          LET’S BUILD YOUR BRIEF.
+          {local ? "LET’S GET YOUR SITE LIVE." : "LET’S BUILD YOUR BRIEF."}
         </h1>
         <p className="ob-hero__lead">
           <span className="ob-hide-phone">
-            Everything we need to design and build your website, in one place. Answer in your own words; rough notes are fine. Skip anything you’re unsure of and come back to it later.
+            {local
+              ? "A few details so we can finish your website and take it live. Answer in your own words; rough notes are fine. Skip anything you’re unsure of and come back to it later."
+              : "Everything we need to design and build your website, in one place. Answer in your own words; rough notes are fine. Skip anything you’re unsure of and come back to it later."}
           </span>
-          <span className="ob-phone-only">Everything we need to build your website, in one place. Rough notes are fine; skip what you’re unsure of.</span>
+          <span className="ob-phone-only">
+            {local ? "A few details so we can take your website live. Rough notes are fine; skip what you’re unsure of." : "Everything we need to build your website, in one place. Rough notes are fine; skip what you’re unsure of."}
+          </span>
         </p>
         <ul className="ob-hero__chips">
           {[`${steps.length} sections plus a review`, "Saves as you go", "Finish in more than one sitting"].map((c, i) => (
@@ -383,7 +425,14 @@ export function Onboarding({ token }: { token: string }) {
           ))}
         </ul>
         <div className="ob-hero__quote">
-          {quote ? (
+          {local && planName ? (
+            <p>
+              <span className="gg-kicker">YOUR PLAN</span>
+              <strong>
+                {planName} · about {estimate()} minutes, saved as you go
+              </strong>
+            </p>
+          ) : quote ? (
             <p>
               <span className="gg-kicker">YOUR ACCEPTED QUOTE</span>
               <strong>{[quote.package, quote.price, quote.payment].filter(Boolean).join(" · ")}</strong>
@@ -391,7 +440,9 @@ export function Onboarding({ token }: { token: string }) {
           ) : (
             <p>
               <span className="gg-kicker">ABOUT THIS BRIEF</span>
-              <strong>About {estimate()} minutes, and it saves as you go, so you can do it in a few sittings</strong>
+              <strong>
+                About {estimate()} minutes, and it saves as you go, so you can do it in {local ? "more than one sitting" : "a few sittings"}
+              </strong>
             </p>
           )}
           <Button
@@ -402,7 +453,7 @@ export function Onboarding({ token }: { token: string }) {
               requestAnimationFrame(() => title.current?.focus({ preventScroll: true }));
             }}
           >
-            {state.visited.length ? "Continue my brief" : "Start my brief"}
+            {state.visited.length ? (local ? "Continue" : "Continue my brief") : local ? "Let’s start" : "Start my brief"}
           </Button>
         </div>
       </section>
@@ -412,15 +463,7 @@ export function Onboarding({ token }: { token: string }) {
           <h2 id="ob-ready">Have these ready</h2>
           <p className="ob-hide-phone">Not essential, but they make it quicker.</p>
           <ul>
-            {[
-              ["image", "Logos and photos in a Google Drive, Dropbox or OneDrive folder", "Logos and photos in a shared folder"],
-              ["layout", "Brand colours and fonts, if you have them", "Brand colours and fonts"],
-              ["image", "Photos of your team, premises and work", "Photos of your team and work"],
-              ["doc", "Any text, brochures or menus to reuse", "Text, brochures or menus"],
-              ["star", "Reviews and testimonials", "Reviews and testimonials"],
-              ["compass", "Who manages your domain and email", "Who manages your domain and email"],
-              ["shield", "Your POPIA Information Officer’s details", "POPIA Information Officer details"],
-            ].map(([icon, long, short]) => (
+            {(local ? readyLocal : readyFull).map(([icon, long, short]) => (
               <li key={long}>
                 <span className="ob-ready__icon ob-hide-phone" aria-hidden="true">
                   <Icon name={icon as "image"} size={16} stroke={2} />
@@ -437,11 +480,7 @@ export function Onboarding({ token }: { token: string }) {
         <section className="ob-card-plain ob-how" aria-labelledby="ob-how">
           <h2 id="ob-how">How it works</h2>
           <ol>
-            {[
-              ["01", "Answer what you can", "Every answer saves as you type, on this device."],
-              ["02", "Share your files", "Put logos, photos and documents in a Google Drive, Dropbox or OneDrive folder and paste the link."],
-              ["03", "Review and send", "We check it, then book your kick-off call."],
-            ].map(([n, t, d]) => (
+            {(local ? howLocal : howFull).map(([n, t, d]) => (
               <li key={n}>
                 <span className="ob-how__n">{n}</span>
                 <p>
@@ -461,10 +500,10 @@ export function Onboarding({ token }: { token: string }) {
     </div>
   );
 
-  // The per-step estimates add up to an exact-looking 78; a quarter hour is
-  // as precise as an honest estimate gets.
+  // The per-step estimates add up to an exact-looking figure (78 for the full brief); round it
+  // (a quarter hour for the full brief, five minutes for the short one) so it reads as an estimate.
   function estimate() {
-    return Math.round(steps.reduce((n, s) => n + s.minutes, 0) / 15) * 15;
+    return estimateMinutes(cfg);
   }
 
   /* ================================================================== STEP */
@@ -480,7 +519,7 @@ export function Onboarding({ token }: { token: string }) {
       {current.noHelp ? null : (
         <div className="ob-help__need">
           <strong>Stuck on a question?</strong>
-          <p>Skip it and keep going, or message your GoodGround project lead.</p>
+          <p>{local ? "Skip it and keep going, or message us." : "Skip it and keep going, or message your GoodGround project lead."}</p>
           <a href={site.whatsapp.link} target="_blank" rel="noopener noreferrer" className="ob-help__wa">
             <Icon name="chat" size={16} stroke={2} />
             WhatsApp us
@@ -647,7 +686,7 @@ export function Onboarding({ token }: { token: string }) {
             <span className="ob-phone-only">PDF</span>
           </button>
           <Button variant="coral" onClick={() => void send()} disabled={!canSend}>
-            {sending ? "Sending…" : "Send my brief"}
+            {sending ? "Sending…" : local ? "Send my details" : "Send my brief"}
           </Button>
         </div>
       </section>
@@ -663,20 +702,29 @@ export function Onboarding({ token }: { token: string }) {
           <Icon name="check" size={34} stroke={2.6} />
         </span>
         <h1 id="ob-sent-title" ref={title} tabIndex={-1}>
-          {who ? `BRIEF RECEIVED. THANK YOU, ${who.toUpperCase()}.` : "BRIEF RECEIVED. THANK YOU."}
+          {local ? (who ? `GOT IT. THANK YOU, ${who.toUpperCase()}.` : "GOT IT. THANK YOU.") : who ? `BRIEF RECEIVED. THANK YOU, ${who.toUpperCase()}.` : "BRIEF RECEIVED. THANK YOU."}
         </h1>
         <p>
-          Your answers are with us. We’ve emailed you a copy. We’ll confirm we’ve read it within one working day.
+          {local
+            ? "Your answers are with us. We’ve emailed you a copy. We’ll have your site live within about 2 working days of receiving everything."
+            : "Your answers are with us. We’ve emailed you a copy. We’ll confirm we’ve read it within one working day."}
         </p>
       </section>
       <section className="ob-next" aria-labelledby="ob-next-title">
         <h2 id="ob-next-title">What happens next</h2>
         <ol>
-          {[
-            ["cal", "We review your brief", missingCount ? `Within one working day we’ll confirm and follow up on the ${missingCount} missing answer${missingCount === 1 ? "" : "s"}.` : "Within one working day we’ll confirm we’ve read it."],
-            ["lock", "We ask for access, securely", "A separate secure link for domain, hosting and email access. Never by email."],
-            ["cal", "Kick-off call", "We walk through the plan, timeline and first designs."],
-          ].map(([icon, t, d], i) => (
+          {(local
+            ? [
+                ["cal", "We check what you’ve sent", missingCount ? `We’ll follow up on the ${missingCount} missing answer${missingCount === 1 ? "" : "s"}.` : "Every required answer is in, so there is nothing to chase."],
+                ["lock", "We ask for access, securely", "A separate secure link for domain, hosting and email access. Never by email."],
+                ["bolt", "Your site goes live", "About 2 working days after we have everything."],
+              ]
+            : [
+                ["cal", "We review your brief", missingCount ? `Within one working day we’ll confirm and follow up on the ${missingCount} missing answer${missingCount === 1 ? "" : "s"}.` : "Within one working day we’ll confirm we’ve read it."],
+                ["lock", "We ask for access, securely", "A separate secure link for domain, hosting and email access. Never by email."],
+                ["cal", "Kick-off call", "We walk through the plan, timeline and first designs."],
+              ]
+          ).map(([icon, t, d], i) => (
             <li key={t}>
               <span className="ob-next__icon" aria-hidden="true">
                 <Icon name={icon as "cal"} size={20} stroke={2} />
@@ -704,7 +752,11 @@ export function Onboarding({ token }: { token: string }) {
           Edit my answers
         </Button>
       </div>
-      <p className="ob-sent__note">You can keep editing until your kick-off call. After that, changes go through your project lead.</p>
+      <p className="ob-sent__note">
+        {local
+          ? "You can keep editing until your site goes live. After that, message us with any changes."
+          : "You can keep editing until your kick-off call. After that, changes go through your project lead."}
+      </p>
     </div>
   );
 
@@ -713,9 +765,13 @@ export function Onboarding({ token }: { token: string }) {
     <div className="ob-print" aria-hidden="true">
       {/* A paragraph, not an h1: the screen page already has its own, and a
           hidden second h1 still counts in the DOM. Print styles size it. */}
-      <p className="ob-print__title">Client onboarding brief{business ? ` · ${business}` : ""}</p>
+      <p className="ob-print__title">
+        {local ? "Website onboarding" : "Client onboarding brief"}
+        {business ? ` · ${business}` : ""}
+      </p>
       {quote ? <p>{[quote.package, quote.price, quote.payment].filter(Boolean).join(" · ")}</p> : null}
-      {briefSections(a).map((section) => (
+      {local && planName ? <p>{planName}</p> : null}
+      {briefSections(a, steps).map((section) => (
         <section key={section.n}>
           <h2>
             {String(section.n).padStart(2, "0")} {section.name}
@@ -776,7 +832,7 @@ export function Onboarding({ token }: { token: string }) {
                 Back
               </Button>
               <Button variant="coral" onClick={() => void send()} disabled={!canSend}>
-                {sending ? "Sending…" : "Send my brief"}
+                {sending ? "Sending…" : local ? "Send my details" : "Send my brief"}
               </Button>
             </>
           ) : (

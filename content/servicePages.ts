@@ -218,7 +218,7 @@ export const servicePages: ServicePageData[] = [
       "The same fixed-price model as every GoodGround build: 50% deposit and the rest on completion, or 12 monthly instalments",
       "SEO foundations rebuilt properly, not just carried over broken",
       "A clean handover from whatever platform or codebase you’re currently on, however messy it’s become over the years",
-      "The same care plan option available at launch as any new build, so the new site doesn't quietly age the same way the old one did",
+      "The same care plan option available at launch as any new build, so the new site doesn’t quietly age the same way the old one did",
     ],
     localProof:
       "We redesign websites for businesses across South Africa, whether the current site was built by a freelancer, an old agency, or a DIY builder you’ve since outgrown. A redesign often surfaces things a fresh build never has to deal with: old tracking codes nobody remembers installing, pages indexed by Google that shouldn’t be, redirects from an even earlier version of the site that were never cleaned up. Part of the audit before we touch anything is finding that clutter and deciding deliberately what carries forward and what finally gets retired. It’s also usually the point where a business realises how much has quietly changed since the original site launched, services added or dropped, a different customer base, a brand that’s matured, none of which the old site was ever updated to reflect.",

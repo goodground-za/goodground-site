@@ -4,15 +4,23 @@ import { Icon, type IconName } from "./Icon";
  * Generated cover art for Insights cards, the article page and "Related
  * reading" — Figma set 41:177. No photos.
  *
- * A new topic needs a colour and icon decision before it is added here.
+ * A new topic needs a colour and icon decision before it is added here. "AI search" (v2, mint
+ * with the search icon) is the spec's suggestion for the funnel articles.
  */
-export type CoverTopic = "websites" | "growth" | "pricing";
+export type CoverTopic = "websites" | "growth" | "pricing" | "ai-search";
 
 const TOPICS: Record<CoverTopic, { icon: IconName; word: string }> = {
   websites: { icon: "code", word: "Websites" },
   growth: { icon: "up", word: "Growth" },
   pricing: { icon: "tag", word: "Pricing" },
+  "ai-search": { icon: "search", word: "AI search" },
 };
+
+/** An article's `category` ("Growth", "AI search" ...) as a cover topic; anything unknown is Websites. */
+export function coverTopic(category: string): CoverTopic {
+  const key = category.trim().toLowerCase().replace(/\s+/g, "-");
+  return key === "growth" || key === "pricing" || key === "ai-search" ? key : "websites";
+}
 
 export function ArticleCover({ topic, className }: { topic: CoverTopic; className?: string }) {
   const { icon, word } = TOPICS[topic];

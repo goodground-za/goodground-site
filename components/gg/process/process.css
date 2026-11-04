@@ -1806,6 +1806,45 @@
   opacity: 1;
 }
 
+/* ---- 09a On a monthly plan (v2): a lilac panel around the same strip ----------------------------- */
+.pc-monthly {
+  padding-bottom: 0;
+}
+
+.pc-monthly__panel {
+  padding: 24px 20px;
+  border-radius: 24px;
+  background: var(--gg-lilac);
+}
+
+@media (min-width: 768px) {
+  .pc-monthly__panel {
+    padding: 40px 32px;
+    border-radius: 28px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .pc-monthly__panel {
+    padding: 48px;
+  }
+}
+
+.pc-monthly__strip {
+  margin-top: 24px;
+}
+
+@media (min-width: 1100px) {
+  .pc-monthly__strip {
+    margin-top: 32px;
+  }
+
+  /* Both light tones sit in the white strip box; separate them with the same hairline. */
+  .pc-monthly__strip .pc-after__seg--canvas {
+    background: var(--gg-surface);
+  }
+}
+
 .pc-after__options {
   display: grid;
   gap: 12px;

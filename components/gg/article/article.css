@@ -1319,6 +1319,11 @@
     flex: none;
   }
 
+  /* Three monthly plans: the last card spans the row instead of leaving a hole. */
+  .ar-plans--odd li:last-child {
+    grid-column: 1 / -1;
+  }
+
   .ar-plan {
     gap: 12px;
     padding: 22px;

@@ -84,7 +84,7 @@ The Home hero keeps the live gradient-video hero, scoped under `.home-2026` (`co
 ## Colour
 
 - **Canvas, surface, ink, muted, line.** The neutral set. Ink on canvas is 17.6:1, muted on canvas 6.2:1.
-- **Plum and plum-deep.** Dark and promotional surfaces: the Full Service band, summary cards, the cookie banner, the menu. White on plum is 15.7:1.
+- **Plum and plum-deep.** Dark and promotional surfaces: the Full Service strip, summary cards, the cookie banner, the menu. White on plum is 15.7:1.
 - **Coral.** `coral` is for fills, icons, focus rings and display-size type only: as small text it is 3.1 to 3.7:1 and fails. Use `coral-text` for small text and links on light surfaces (4.7:1 or better on white, canvas, blush, lilac, mint) and `coral-fill` behind white labels (5.02:1).
 - **Peach.** Accent on dark surfaces (totals, links on plum). Coral would be 4.1:1 there.
 - **Lilac, blush, mint.** Soft tints for icon chips, selected and warning states, success states.
@@ -100,7 +100,7 @@ Content width 1200px. Gutter 20px, 40px from 768, 120px from 1200. Section paddi
 
 ## Components
 
-Button (primary ink, coral, outline, light; pill with an arrow chip that slides on hover), Tag, SectionHeader, SplitHeading, FaqAccordion (one open at a time, first open, anchors), GradientCta, BottomSheet, PillToggle, Field/TextArea/CheckField, LinkedCard, ArticleCover, CountUp, Icon (Lucide shapes at one stroke), SiteHeader and SiteFooter (canonical, with a "Cookie settings" link). All live in `components/gg/`. Page-specific pieces are namespaced per page (`pr-`, `ln-`, `fq-`, `lg-`, `ob-`, `bgd-` and so on) beside their page's CSS.
+Button (primary ink, coral, outline, light; pill with an arrow chip that slides on hover), Tag, SectionHeader, SplitHeading, FaqAccordion (one open at a time, first open, anchors), GradientCta (v2: a `track` prop of `local`, `custom` or `check` sets its main button and adds one text link to the next-best track), the Local plan cards and offer box (`/pricing`, Home, articles), Turnstile (the free-check form only), BottomSheet, PillToggle, Field/TextArea/CheckField, LinkedCard, ArticleCover, CountUp, Icon (Lucide shapes at one stroke), SiteHeader and SiteFooter (canonical, with a "Cookie settings" link). All live in `components/gg/`. Page-specific pieces are namespaced per page (`pr-`, `ln-`, `fq-`, `lg-`, `ob-`, `bgd-` and so on) beside their page's CSS.
 
 ## Elevation
 

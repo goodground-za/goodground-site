@@ -138,7 +138,7 @@ export function PayYourWay() {
               </div>
               <div className="hm-instal__legend">
                 <span className="hm-instal__first">
-                  <Resp long="1st · secures your booking" short="1st · books your slot" />
+                  <Resp long="1st · secures your booking" short="1st · secures booking" />
                 </span>
                 <span>
                   <Resp long="2–12 · after completion" short="2–12 · after launch" />
